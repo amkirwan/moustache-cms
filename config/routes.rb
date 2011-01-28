@@ -1,5 +1,13 @@
-Etherweb::Application.routes.draw do
-  resources :roles
+Etherweb::Application.routes.draw do  
+  
+  namespace "admin" do
+    resources :pages, :roles
+  end
+  
+  match 'admin/logout' => 'admin#destroy'
+  match 'admin/login' => 'admin#show'
+  
+  match 'fake_login' => 'fake_login#login'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

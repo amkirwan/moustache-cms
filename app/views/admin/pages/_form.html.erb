@@ -1,0 +1,57 @@
+<%= form_for(@page) do |f| %>
+  <% if @page.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@page.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+      <ul>
+      <% @page.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :body %><br />
+    <%= f.text_area :body %>
+  </div>
+  <div class="field">
+    <%= f.label :published_on %><br />
+    <%= f.date_select :published_on %>
+  </div>
+  <div class="field">
+    <%= f.label :parent %><br />
+    <%= f.text_field :parent %>
+  </div>  
+  <div class="field">
+    <%= f.label :children %><br />
+    <%= f.text_field :children %>
+  </div>
+  <div class="field">
+    <%= f.label :meta_title %><br />
+    <%= f.text_field :meta_title %>
+  </div>
+  <div class="field">
+    <%= f.label :meta_keywords %><br />
+    <%= f.text_field :meta_keywords %>
+  </div>
+  <div class="field">
+    <%= f.label :meta_description %><br />
+    <%= f.text_field :meta_description %>
+  </div>   
+  <div class="field">
+    <%= f.label :last_editor %><br />
+    <%= f.text_field :last_editor %>
+  </div>  
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>   
