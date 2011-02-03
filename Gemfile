@@ -5,6 +5,8 @@ gem "haml"
 gem "mongoid", "2.0.0.rc.6"
 gem "bson_ext"     
 gem "devise"
+gem "cancan"  
+gem "dynamic_form"
 
 
 group :development, :test do
@@ -17,4 +19,7 @@ group :development, :test do
   gem "machinist" 
   gem "mongoid-rspec", :git => "git://github.com/durran/mongoid-rspec.git" 
   gem 'machinist_mongo', :require => 'machinist/mongoid', :git => 'git://github.com/nmerouze/machinist_mongo.git', :branch => 'machinist2'
+  gem "hpricot"
+  gem "haml2slim"  
+  gem "syntax"
 end
