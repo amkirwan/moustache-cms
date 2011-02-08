@@ -1,15 +1,12 @@
 Etherweb::Application.routes.draw do   
                               
-  devise_for :users, :path => "admin" do
-    get "admin/login", :to => "devise/sessions#new"
-    delete "admin/logout", :to => "devise/sessions#destroy"  
-    get "admin/users", :to => "admin/users#index", :as => :user_root 
-  end 
   namespace :admin do
     resources :users
   end    
-  match "/admin" => redirect("/admin/login")
-
+  
+  match "fake_cas_login" => "fake_cas_login#login", :as => "fake_cas_login"
+  
+  match "/admin" => redirect("/admin/users#index")
    
   root :to => "dashboard#index" 
 end

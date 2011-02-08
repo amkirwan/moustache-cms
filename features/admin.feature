@@ -1,5 +1,10 @@
-Feature: Test admin page
+Feature: Test admin page 
 
+@fake_login
+Scenario: Test Fake Login
+  Given I login as "ak730" with the role of "admin"
+  When I go to the admin page
+  Then I should be on the admin users page
 
 @admin_login
 Scenario: Admin login page

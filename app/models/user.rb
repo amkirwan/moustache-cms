@@ -2,14 +2,11 @@ class User
   include Mongoid::Document
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :lockable and :timeoutable
-  devise :database_authenticatable, :recoverable, :rememberable, 
-         :trackable, :lockable, :timeoutable
          
   field :username
-  field :firstname
-  field :lastname 
+  index :username, :unique => true
+  field :email
   field :role 
-  embeds_many :email_addresses 
                        
   Roles = %w[admin editor]
   
