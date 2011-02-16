@@ -1,4 +1,10 @@
-require 'machinist/mongoid'
+require 'machinist/mongoid' 
+
+User.blueprint do
+  username { "user-#{sn}" } 
+  email { "user-#{sn}@example.com" }
+  role  { "role-#{sn}" }
+end
 
 User.blueprint(:admin) do
   username  { "admin-#{sn}" }
