@@ -9,8 +9,7 @@ class Page
   field :meta_title, :type => String
   field :meta_keywords, :type => String
   field :meta_description, :type => String
-  field :last_editor, :type => String 
-  field :header, :type =>     
+  field :last_editor, :type => String      
   
   
   validates_presence_of :name, :title, :published 

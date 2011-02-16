@@ -6,7 +6,7 @@ gem "mongoid", "2.0.0.rc.6"
 gem "bson_ext"     
 gem "cancan"  
 gem "dynamic_form" 
-gem "rubycas-client", :git => "git://github.com/amkirwan/rubycas-client.git"
+gem "rubycas-client", :git => "git://github.com/amkirwan/rubycas-client.git", :branch => "rails3"
 
 
 group :development, :test do
@@ -22,5 +22,4 @@ group :development, :test do
   gem "hpricot"
   gem "haml2slim"  
   gem "syntax"   
-  gem "webmock"
 end

@@ -1,0 +1,12 @@
+%table{:id => "users"}
+  %thead
+    %tr
+      %th{:class => "bold"}
+  %tbody 
+  - @users.each do |user|
+    %tr
+      %td= user.username
+      %td= user.role
+      %td.destroy= button_to "delete", admin_user_path(user), :method => :delete, :confirm => "Are you sure you want to delete the user #{user.username}"
+      
+  

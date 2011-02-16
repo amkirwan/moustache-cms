@@ -4,9 +4,9 @@ Etherweb::Application.routes.draw do
     resources :users
   end    
   
-  match "fake_cas_login" => "fake_cas_login#login", :as => "fake_cas_login"
-  
   match "/admin" => redirect("/admin/users#index")
    
-  root :to => "dashboard#index" 
+  root :to => "dashboard#index"       
+  
+  match "fake_cas_login" => "fake_cas_login#login", :as => "fake_cas_login"
 end

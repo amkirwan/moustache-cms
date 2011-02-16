@@ -1,6 +1,7 @@
 GIT
   remote: git://github.com/amkirwan/rubycas-client.git
-  revision: 27d514872fe6291d8f56eee3c75da7ee10683b6d
+  revision: 4de27a92350810e75468e7aa6225a2f44f9eb8a0
+  branch: rails3
   specs:
     rubycas-client (2.1.0)
       activesupport
@@ -51,7 +52,6 @@ GEM
       activemodel (= 3.0.3)
       activesupport (= 3.0.3)
     activesupport (3.0.3)
-    addressable (2.2.4)
     arel (2.0.7)
     bson (1.2.0)
     bson_ext (1.2.0)
@@ -69,7 +69,6 @@ GEM
     celerity (0.8.7)
     childprocess (0.1.6)
       ffi (~> 0.6.3)
-    crack (0.1.8)
     cucumber (0.10.0)
       builder (>= 2.1.2)
       diff-lcs (~> 1.1.2)
@@ -163,9 +162,6 @@ GEM
     treetop (1.4.9)
       polyglot (>= 0.3.1)
     tzinfo (0.3.24)
-    webmock (1.6.2)
-      addressable (>= 2.2.2)
-      crack (>= 0.1.7)
     webrat (0.7.3)
       nokogiri (>= 1.2.0)
       rack (>= 1.0)
@@ -196,5 +192,4 @@ DEPENDENCIES
   rspec-rails
   rubycas-client!
   syntax
-  webmock
   webrat

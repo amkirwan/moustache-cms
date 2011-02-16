@@ -1,10 +1,10 @@
-class Admin::UsersController < ApplicationController  
-  
+class Admin::UsersController < ApplicationController    
   before_filter CASClient::Frameworks::Rails::Filter
-  before_filter :identify_user  
+  load_and_authorize_resource 
+  skip_load_resource :only => :index
     
-  def index
-    @users = User.all
+  def index             
+    @users = User.all  
   end
   
   def new
