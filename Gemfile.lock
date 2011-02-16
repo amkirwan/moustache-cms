@@ -1,9 +1,18 @@
 GIT
+  remote: git://github.com/amkirwan/rubycas-client.git
+  revision: 4de27a92350810e75468e7aa6225a2f44f9eb8a0
+  branch: rails3
+  specs:
+    rubycas-client (2.1.0)
+      activesupport
+
+GIT
   remote: git://github.com/durran/mongoid-rspec.git
-  revision: d60faa47d4a7a17b279fda48e8f16b4973bb15d7
+  revision: d08cde221fd07e5c4cb8ee3b5ad71c1ecc305236
   specs:
     mongoid-rspec (1.3.2)
-      mongoid (~> 2.0.0)
+      mongoid (~> 2.0.0.rc.7)
+      mongoid-rspec
       rspec (~> 2)
 
 GIT
@@ -44,12 +53,12 @@ GEM
       activemodel (= 3.0.3)
       activesupport (= 3.0.3)
     activesupport (3.0.3)
-    arel (2.0.7)
-    bcrypt-ruby (2.1.4)
-    bson (1.2.0)
-    bson_ext (1.2.0)
+    arel (2.0.8)
+    bson (1.2.2)
+    bson_ext (1.2.2)
     builder (2.1.2)
-    capybara (0.4.1.1)
+    cancan (1.5.1)
+    capybara (0.4.1.2)
       celerity (>= 0.7.9)
       culerity (>= 0.2.4)
       mime-types (>= 1.16)
@@ -59,7 +68,7 @@ GEM
       selenium-webdriver (>= 0.0.27)
       xpath (~> 0.1.3)
     celerity (0.8.7)
-    childprocess (0.1.6)
+    childprocess (0.1.7)
       ffi (~> 0.6.3)
     cucumber (0.10.0)
       builder (>= 2.1.2)
@@ -70,11 +79,9 @@ GEM
     cucumber-rails (0.3.2)
       cucumber (>= 0.8.0)
     culerity (0.2.15)
-    database_cleaner (0.6.1)
-    devise (1.1.5)
-      bcrypt-ruby (~> 2.1.2)
-      warden (~> 1.0.2)
+    database_cleaner (0.6.3)
     diff-lcs (1.1.2)
+    dynamic_form (1.1.3)
     erubis (2.6.6)
       abstract (>= 1.0.0)
     ffi (0.6.3)
@@ -82,8 +89,13 @@ GEM
     gherkin (2.3.3)
       json (~> 1.4.6)
     haml (3.0.25)
+    haml2slim (0.4.3)
+      haml (~> 3.0.0)
+      nokogiri
+      ruby_parser
+    hpricot (0.8.3)
     i18n (0.5.0)
-    jquery-rails (0.2.6)
+    jquery-rails (0.2.7)
       rails (~> 3.0)
       thor (~> 0.14.4)
     json (1.4.6)
@@ -95,8 +107,8 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.16)
-    mongo (1.2.0)
-      bson (>= 1.2.0)
+    mongo (1.2.2)
+      bson (>= 1.2.2)
     mongoid (2.0.0.rc.6)
       activemodel (~> 3.0)
       mongo (~> 1.2)
@@ -123,25 +135,29 @@ GEM
       rake (>= 0.8.7)
       thor (~> 0.14.4)
     rake (0.8.7)
-    rspec (2.4.0)
-      rspec-core (~> 2.4.0)
-      rspec-expectations (~> 2.4.0)
-      rspec-mocks (~> 2.4.0)
-    rspec-core (2.4.0)
-    rspec-expectations (2.4.0)
+    rspec (2.5.0)
+      rspec-core (~> 2.5.0)
+      rspec-expectations (~> 2.5.0)
+      rspec-mocks (~> 2.5.0)
+    rspec-core (2.5.1)
+    rspec-expectations (2.5.0)
       diff-lcs (~> 1.1.2)
-    rspec-mocks (2.4.0)
-    rspec-rails (2.4.1)
+    rspec-mocks (2.5.0)
+    rspec-rails (2.5.0)
       actionpack (~> 3.0)
       activesupport (~> 3.0)
       railties (~> 3.0)
-      rspec (~> 2.4.0)
+      rspec (~> 2.5.0)
+    ruby_parser (2.0.5)
+      sexp_processor (~> 3.0)
     rubyzip (0.9.4)
-    selenium-webdriver (0.1.2)
+    selenium-webdriver (0.1.3)
       childprocess (~> 0.1.5)
       ffi (~> 0.6.3)
       json_pure
       rubyzip
+    sexp_processor (3.0.5)
+    syntax (1.0.0)
     term-ansicolor (1.0.5)
     thor (0.14.6)
     treetop (1.4.9)
@@ -162,11 +178,14 @@ PLATFORMS
 
 DEPENDENCIES
   bson_ext
+  cancan
   capybara
   cucumber-rails
   database_cleaner
-  devise
+  dynamic_form
   haml
+  haml2slim
+  hpricot
   jquery-rails (>= 0.2.6)
   machinist
   machinist_mongo!
@@ -174,4 +193,6 @@ DEPENDENCIES
   mongoid-rspec!
   rails (= 3.0.3)
   rspec-rails
+  rubycas-client!
+  syntax
   webrat

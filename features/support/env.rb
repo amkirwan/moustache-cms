@@ -3,7 +3,6 @@
 # newer version of cucumber-rails. Consider adding your own code to a new file 
 # instead of editing this one. Cucumber will automatically load all features/**/*.rb
 # files.
-
 ENV["RAILS_ENV"] ||= "test"
 require File.expand_path(File.dirname(__FILE__) + '/../../config/environment')
 
@@ -56,8 +55,8 @@ ActionController::Base.allow_rescue = false
   begin
     require 'database_cleaner'
     DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner.orm = "mongoid" 
+    Before { DatabaseCleaner.clean }
   rescue LoadError => ignore_if_database_cleaner_not_present
-  end
-#end   
-
-
+  end  
+#end  
