@@ -14,9 +14,15 @@ Scenario: Admin login
   | foo    | admin  |
   | bar    | editor |
   | foobar | editor |     
-  When I go to the admin page
-  Then I should be on the admin users page
+  When I go to the admin users page
   And I should see "foo"   
   And I should see "bar"
-  And I should see "foobar"
+  And I should see "foobar"    
   
+  
+@admin_user_new
+Scenario: Create A New user
+  Given I login as "ak730" with the role of "admin"
+  When I go to the admin users page
+  And I follow "New User"
+  Then I should be on the new admin user page 

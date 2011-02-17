@@ -6,7 +6,8 @@ gem "mongoid", "2.0.0.rc.6"
 gem "bson_ext"     
 gem "cancan"  
 gem "dynamic_form" 
-gem "rubycas-client", :git => "git://github.com/amkirwan/rubycas-client.git", :branch => "rails3"
+#gem "rubycas-client", :git => "git://github.com/amkirwan/rubycas-client.git", :branch => "rails3"
+gem "rubycas-client", :path => "/Users/akirwan/code/rubycas-client", :branch => "rails3"
 
 
 group :development, :test do

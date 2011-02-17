@@ -1,5 +1,5 @@
 Given /^cas authenticates with cas user "([^\"]*)"$/ do |username|
-  CASClient::Frameworks::Rails::Filter.fake(username)
+  CASClient::Frameworks::Rails::Filter.fake(username)  
 end 
 
 Given /^the user "([^\"]*)" exists with the role of "([^\"]*)"$/ do |username, role| 
@@ -10,7 +10,7 @@ end
 
 Given /^I login as "([^\"]*)" with the role of "([^\"]*)"$/ do |username, role|
   Given %{the user "#{username}" exists with the role of "#{role}"}
-  Given %{cas authenticates with cas user "#{@user}"}
+  Given %{cas authenticates with cas user "#{username}"}
 end   
 
 Given /^the user with the role exist$/ do |table|

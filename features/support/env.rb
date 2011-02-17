@@ -59,4 +59,4 @@ ActionController::Base.allow_rescue = false
     Before { DatabaseCleaner.clean }
   rescue LoadError => ignore_if_database_cleaner_not_present
   end  
-#end  
+#end   
