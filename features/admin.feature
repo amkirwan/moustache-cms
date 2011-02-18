@@ -21,12 +21,12 @@ Scenario: Admin login
   And I should see "foobar"    
   
   
-@create new admin user
+@create_new_user
 Scenario: Create A New user
   Given I login as "ak730" with the role of "admin"
   When I go to the admin users page
   And I follow "New User" within "ul#new_user"
-  Then I should be on the new admin user page  
+  Then I should be on the new admin user page 
   When I fill in "user_username" with "foobar" within "div#add_new_user" 
   And I fill in "user_email" with "foobar@example.com" within "div#add_new_user"
   And I choose "user_role_admin" within "div#add_new_user"
