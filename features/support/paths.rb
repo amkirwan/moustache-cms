@@ -18,7 +18,7 @@ module NavigationHelpers
     #   when /^(.*)'s profile page$/i
     #     user_profile_path(User.find_by_login($1))
 
-    else 
+    else
       begin
         page_name =~ /the (.*) page/
         path_components = $1.split(/\s+/)

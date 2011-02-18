@@ -1,8 +1,9 @@
 class Admin::UsersController < ApplicationController    
   before_filter CASClient::Frameworks::Rails::Filter
   load_and_authorize_resource 
-  skip_load_resource :only => :index
-    
+  skip_load_resource
+  
+  layout "admin/admin"  
   def index             
     @users = User.all  
   end
@@ -15,11 +16,11 @@ class Admin::UsersController < ApplicationController
     @user = User.new(session[:user_id])
   end
   
-  def create
+  def create   
     @user = User.new(params[:user])
     if @user.save
-      flash[:notice] = "Successfully created User." 
-      redirect_to root_path
+      flash[:notice] = "Successfully created user account for #{@user.username}" 
+      redirect_to admin_users_path
     else
       render :action => 'new'
     end

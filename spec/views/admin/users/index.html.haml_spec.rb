@@ -1,10 +1,12 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')  
 
 describe "admin/users/index.html.haml" do   
-  let(:users) { [mock_model("User", :username => "foo", :role => "admin")] } 
+  let(:users) { [mock_model("User", :username => "foo", :role => "admin")] }
+   
   before(:each) do 
     assign(:users, users) 
-  end   
+  end     
+  
   it "should display the users name" do
     render 
     rendered.should contain("foo")

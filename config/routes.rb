@@ -2,7 +2,7 @@ Etherweb::Application.routes.draw do
                               
   namespace :admin do
     resources :users
-  end    
+  end 
   
   match "/admin" => redirect("/admin/users#index")
    

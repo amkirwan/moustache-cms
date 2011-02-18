@@ -1,0 +1,19 @@
+#sitenav
+  %ul
+    %li#pages 
+      = link_to "Pages", '#'
+    %li#design 
+      = link_to "Design", '#'
+      %ul
+        %li 
+          = link_to "Layout", '#'  
+        %li 
+          = link_to "Snippets", '#'
+    %li#settings
+      = link_to "Settings", '#'
+      %ul 
+        - if can? :manage, User 
+          %li
+            = link_to "Users", '#'
+        %li
+          = link_to "Personal", '#'
