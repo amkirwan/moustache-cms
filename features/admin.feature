@@ -34,5 +34,16 @@ Scenario: Create A New user
   Then I should be on the admin users page 
   And I should see "Successfully created user account for foobar"
   And I should see "foobar"
-  And I should see "admin"
+  And I should see "admin"  
+  
+@edit_user
+Scenario: Given I am logged in as an admin then I can edit any users account
+  Given I login as "ak730" with the role of "admin"
+  And the user with the role exist
+  | user   | role   |
+  | foobar | admin  |
+  | bar    | editor |
+  When I go to the admin users page
+  And I follow "edit" within "tr#foobar"
+  Then I should be on the edit admin user page
                                                     
