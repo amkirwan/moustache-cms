@@ -23,7 +23,7 @@ describe Admin::UsersController do
     
       it "should assign the found users" do
         do_get
-        assigns[:users].should == users
+        assigns(:users).should eq(users)
       end
     
       it "should render index template" do
@@ -81,11 +81,10 @@ describe Admin::UsersController do
   
   describe "POST create" do 
     before(:each) do   
-      @logged_in = mock_model(User, :role? => true).as_null_object  
+      logged_in(:role? => true)   
       @new_user = mock_model(User, :save => nil).as_null_object.as_new_record  
       @params = { "user" => { "username" => "foobar", "email" => "foobar@example.com", "role" => "admin" }}     
       User.stub(:new).and_return(@new_user)
-      stub_current_user(@logged_in)
     end  
     
     def do_post(params=@params, username=@logged_in)       
@@ -98,11 +97,6 @@ describe Admin::UsersController do
       do_post                                                               
       assigns(:user).should eq(@new_user) 
     end  
-  
-    it "should receive save the user" do
-      @new_user.should_receive(:save)
-      do_post
-    end   
     
     context "when it save the new user successfully" do
       before(:each) do
@@ -121,26 +115,83 @@ describe Admin::UsersController do
     end
     
     context "when the save fails" do                    
-      it "should redirect to new template" do             
+      it "should redirect to new template" do 
+        @new_user.stub(:save).and_return(false)            
         do_post
         response.should render_template("admin/users/new")
       end
-    end
-    
-    context "when the user is not an admin the CREATE action should not be actionable" do 
-      before(:each) do
-        @non_admin = mock_model(User, :role? => false).as_null_object
-        stub_current_user(@non_admin)
-      end 
-      
-      it "should not go to the CREATE action" do 
-        controller.stub(:render)
-        controller.should_not_receive(:create)
-        do_post
-      end 
-    end  
+    end 
   end 
   
   describe "Get edit" do
+    def do_get(username="foobar")  
+      cas_faker(username)    
+      get :edit, { :id => user.to_param }
+    end
+    let(:user) { mock_model("User") }       
+    
+    context "when the user is an admin they can edit user records" do
+      before do                                    
+        logged_in(:role? => true)
+        User.stub(:find).and_return(user)     
+      end             
+    
+      it "should receive find all" do   
+        User.should_receive(:find).and_return(user)
+        do_get
+      end
+    
+      it "should assign the found users" do
+        do_get
+        assigns(:user).should eq(user)
+      end
+    
+      it "should render index template" do
+        do_get
+        response.should render_template("admin/users/edit")
+      end  
+    end   
+  end 
+  
+  describe "PUT update" do   
+    before(:each) do   
+      logged_in(:role? => true) 
+      @user = mock_model(User, :update_attribute => nil).as_null_object  
+      @params = { "id" => @user.to_param, "user" => { "username" => "baz", "email" => "baz@example.com", "role" => "editor" }}     
+      User.stub(:find).and_return(@user)
+    end  
+    
+    def do_put(username="foobar") 
+      cas_faker(username)
+      put :update, @params
+    end
+
+    it "should find the record to update" do
+      User.should_receive(:find).with(@params["id"]).and_return(@user)
+      do_put
+    end 
+    
+    it "should update the user record" do
+      @user.should_receive(:update_attributes).with(@params["user"]).and_return(true)
+      do_put
+    end 
+    
+    it "should set a flash[:notice] message" do
+      do_put
+      flash[:notice].should == "Successfully updated user account for #{@user.username}"
+    end                                                                                
+    
+    it "should assign @user for the view" do  
+      do_put
+      assigns(:user).should eq(@user)
+    end                             
+    
+    context "when update_attributes fails" do
+      it "should render the edit template" do
+        @user.stub(:update_attributes).and_return(false)
+        do_put  
+        response.should render_template("admin/users/edit")
+      end
+    end 
   end
 end

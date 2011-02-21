@@ -12,6 +12,8 @@ module NavigationHelpers
       '/' 
     when /the admin page/
       '/admin'
+    when /the edit admin user page for "([^\"]*)"/
+      edit_admin_user_path($1)
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

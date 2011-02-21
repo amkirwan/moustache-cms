@@ -1,5 +1,6 @@
-= form_for user, :url => admin_users_path do |f| 
-  %fieldset
+= form_for([:admin, user]) do |f| 
+  = f.hidden_field :id
+  %fieldset   
     = f.label :username, "Username" 
     = f.text_field :username, :placeholder => "Enter username" 
   %fieldset
@@ -13,3 +14,4 @@
     = f.label :admin
   %fieldset 
     = f.submit button_label
+    = link_to "cancel", admin_users_path, :class => "cancel"

@@ -45,5 +45,14 @@ Scenario: Given I am logged in as an admin then I can edit any users account
   | bar    | editor |
   When I go to the admin users page
   And I follow "edit" within "tr#foobar"
-  Then I should be on the edit admin user page
+  Then I should now be editing the user "foobar"
+  And the "user[username]" field within "div#edit_user" should contain "foobar"
+  And the "user[email]" field within "div#edit_user" should contain "foobar@example.com"
+  And the "user_role_admin" checkbox within "div#edit_user" should be checked 
+  When I fill in "user[username]" with "baz" within "div#edit_user"
+  And I fill in "user[email]" with "baz@example.com" within "div#edit_user"
+  And I choose "user_role_editor" within "div#edit_user" 
+  And I press "Update User" within "div#edit_user" 
+  Then I should be on the admin users page
+  And I should see "Successfully updated user account for baz"
                                                     
