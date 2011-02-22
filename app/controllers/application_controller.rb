@@ -9,7 +9,12 @@ class ApplicationController < ActionController::Base
   def current_user    
     fake_login(params[:cas_user]) unless Rails.env == 'production'                    
     @current_user = User.where(:username => session[:cas_user]).first
-  end 
+  end  
+  
+  protected
+  def admin?     
+    @current_user.role?("admin")
+  end
   
   private
   def fake_login(cas_user) 
