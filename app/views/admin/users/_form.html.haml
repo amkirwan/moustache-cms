@@ -1,17 +1,17 @@
 = form_for([:admin, user]) do |f| 
-  = f.hidden_field :id
   %fieldset   
     = f.label :username, "Username" 
     = f.text_field :username, :placeholder => "Enter username" 
   %fieldset
     = f.label :email, "Email Address"
-    = f.email_field :email, :size => 20
-  %fieldset 
-    = f.label :role
-    = f.radio_button :role, 'editor'
-    = f.label :editor
-    = f.radio_button :role, 'admin'
-    = f.label :admin
+    = f.email_field :email, :size => 20 
+  - if admin?
+    %fieldset 
+      = f.label :role
+      = f.radio_button :role, 'editor'
+      = f.label :editor
+      = f.radio_button :role, 'admin'
+      = f.label :admin
   %fieldset 
     = f.submit button_label
     = link_to "cancel", admin_users_path, :class => "cancel"

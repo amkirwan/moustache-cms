@@ -1,5 +1,5 @@
 module ApplicationHelper  
   def admin?     
-    yield if @current_user.role?("admin")
+    @current_user.role?("admin") ? true : false
   end
 end

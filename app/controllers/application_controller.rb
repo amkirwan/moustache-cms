@@ -11,7 +11,6 @@ class ApplicationController < ActionController::Base
     @current_user = User.where(:username => session[:cas_user]).first
   end  
   
-  protected
   def admin?     
     @current_user.role?("admin")
   end
