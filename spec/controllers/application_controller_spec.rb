@@ -41,9 +41,15 @@ describe "ApplicationController" do
   end
   
   describe "admin? method" do
-    it "should receive admin? method" do
+    it "should receive admin? method and return true" do
       controller.should_receive(:admin?).and_return(true)
       get :index
-    end 
+    end
+    
+    it "should receive admin? method and return false" do 
+      @current_user.stub(:role? => false)
+      controller.should_receive(:admin?).and_return(false)
+      get :index
+    end
   end
 end                                   
