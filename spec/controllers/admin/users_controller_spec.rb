@@ -15,6 +15,44 @@ describe Admin::UsersController do
     it_should_allow_non_admin_for_action :update, :params => "1"   
   end
   
+  describe "DELETE destroy" do
+    let(:current_user) { logged_in(:role? => true) }
+    let(:user) { stub_model(User, :destroy => true) }
+    def do_destroy
+      cas_faker(current_user.username)
+      delete :destroy, :id => "1"
+    end
+    
+    before(:each) do
+      User.stub(:find).and_return(user)
+    end
+    
+    it "should receive the find method and return the user to destroy" do
+      User.should_receive(:find).with("1").and_return(user)
+      do_destroy
+    end 
+    
+    it "should assign the user for the view" do
+      do_destroy
+      assigns(:user).should eq(user)
+    end    
+    
+    it "should destroy the user account" do
+      user.should_receive(:destroy).and_return(true)
+      do_destroy 
+    end
+    
+    it "should set a flash message" do
+      do_destroy
+      flash[:notice].should == "Successfully deleted user account for #{user.username}"
+    end
+    
+    it "should redirect to admin_users index action" do
+      do_destroy
+      response.should redirect_to(admin_users_path) 
+    end
+  end
+  
   describe "GET index" do
     let(:current_user) { logged_in(:role? => true) } 
     
@@ -153,7 +191,7 @@ describe Admin::UsersController do
         response.should render_template("admin/users/edit")
       end  
     end 
-  end 
+  end
 
   describe "PUT update" do
     let(:current_user) { logged_in(:role? => true) }

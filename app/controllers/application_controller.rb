@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base 
+  before_filter :current_user unless Rails.env == 'production'
   protect_from_forgery 
   
   rescue_from CanCan::AccessDenied do |exception|
@@ -20,7 +21,8 @@ class ApplicationController < ActionController::Base
     if Rails.env == "test"   
       session[:cas_user] = CASClient::Frameworks::Rails::Filter.fake_user if session[:cas_user].nil?
     elsif Rails.env == 'development'
-      session[:cas_user] = 'ak730' if session[:cas_user].nil?
+      CASClient::Frameworks::Rails::Filter.fake("ak730")
+      #session[:cas_user] = 'ak730' if session[:cas_user].nil?
       #session[:cas_user] = 'jb509' if session[:cas_user].nil?
       #session[:cas_user] = 'mac0' if session[:cas_user].nil?
       #session[:cas_user] = 'mas3' if session[:cas_user].nil?

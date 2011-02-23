@@ -46,7 +46,7 @@ class Admin::UsersController < ApplicationController
     @user = User.find(params[:id])
     if @user.destroy
       flash[:notice] = "Successfully deleted user account for #{@user.username}"
-      redirect_to root_path
+      redirect_to admin_users_path
     end
   end 
   
