@@ -14,15 +14,15 @@ describe Ability do
   
   context "editor approved actions" do
     it "should allow the user with a role of editor to edit their own record" do
-      editor_ability.should be_able_to(:edit, editor)
+      editor_ability.should be_able_to(:update, editor)
     end  
 
-    it "should allow the user with a role of ediotr to show their own record" do
+    it "should allow the user with a role of editor to show their own record" do
       editor_ability.should be_able_to(:show, editor)
     end
   end
    
-  context "editor not approved" do
+  context "editor not approved actions" do
     it "should not allow the user with a role of editor to run the index action" do
       editor_ability.should_not be_able_to(:index, user)
     end
@@ -40,7 +40,7 @@ describe Ability do
     end
 
     it "should not allow the user with a role of editor to edit other user records" do
-      editor_ability.should_not be_able_to(:edit, user)
+      editor_ability.should_not be_able_to(:update, user)
     end
   end    
 end

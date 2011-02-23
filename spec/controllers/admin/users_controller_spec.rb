@@ -74,6 +74,11 @@ describe Admin::UsersController do
       do_get
       assigns(:user).should eq(user)
     end
+    
+    it "should render the EDIT template" do
+      do_get
+      response.should render_template("admin/users/edit")
+    end
   end
   
   describe "GET new" do    
@@ -205,7 +210,12 @@ describe Admin::UsersController do
     it "should set a flash[:notice] message" do
       do_put
       flash[:notice].should == "Successfully updated user account for #{user.username}"
-    end                                                                                
+    end         
+    
+    it "should redirect to INDEX" do
+      do_put
+      response.should redirect_to(admin_users_path)
+    end                                                                       
   
     context "when update_attributes fails" do
       it "should render the edit template" do
@@ -221,6 +231,12 @@ describe Admin::UsersController do
         params["user"].delete("role")
         user.should_receive(:update_attributes).with(params["user"]).and_return(true)
         do_put
+      end
+      
+      it "should render the template for the users account" do
+        controller.stub(:admin?).and_return(false)
+        do_put
+        response.should render_template("admin/users/edit")
       end
     end 
   end

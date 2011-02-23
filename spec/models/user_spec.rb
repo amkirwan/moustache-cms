@@ -10,10 +10,15 @@ describe User do
       @user.should be_valid
     end
   
-    it "should not be valid without a username" do
-     @user.username = nil
+    it "should not be valid without a Partners ID" do
+     @user.puid = nil
      @user.should_not be_valid
     end  
+    
+    it "should not be vailid without a username" do
+      @user.username = nil
+      @user.should_not be_valid
+    end
   
     it "should not be valid without a email" do
       @user.email = nil
@@ -25,7 +30,11 @@ describe User do
       @user.should_not be_valid
     end 
   
-    it "should not be valid with duplicate username" do  
+    it "should not be valid with duplicate pid" do  
+      User.make(:puid => "#{@user.puid}").should_not be_valid
+    end
+    
+    it "should not be valid with a duplicate username" do
       User.make(:username => "#{@user.username}").should_not be_valid
     end          
   
@@ -35,6 +44,10 @@ describe User do
   
     it "should not be valid without a correctly formated email address" do
       User.make(:email => "abcdefg").should_not be_valid
+    end
+    
+    it "should not be valid with a puid < 3" do
+      User.make(:puid => "ab").should_not be_valid
     end
   
     it "should not be valid with a username length of < 3" do

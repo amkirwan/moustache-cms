@@ -1,9 +1,9 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')  
 
 describe "admin/users/_form.html.haml" do 
-  let(:user) { stub_model(User).as_new_record }
-  let(:current_user) { stub_model(User, :role? => true) }
   context "when the user is a new record" do
+    let(:user) { stub_model(User).as_new_record }
+    let(:current_user) { stub_model(User, :role? => true) }
     before(:each) do 
       assign(:user, user)  
       assign(:current_user, current_user)
@@ -18,7 +18,14 @@ describe "admin/users/_form.html.haml" do
       rendered.should have_selector("form", :method => "post", :action => admin_users_path) do |form|
         form.should have_selector("input", :type => "submit", :value => "Create User")   
       end
-    end                                                                                
+    end 
+    
+    it "should show a field to enter the partners username" do
+      do_render
+      rendered.should have_selector("form") do |form|
+        form.should have_selector("input", :type => "text", :name => "user[puid]")
+      end
+    end                                                                             
 
     it "should show a field to enter the username" do
       do_render
@@ -51,7 +58,7 @@ describe "admin/users/_form.html.haml" do
   end 
   
   context "when editing an existing user record" do
-    let(:user) { stub_model(User) }
+    let(:user) { stub_model(User, :new_record => false) }
     let(:current_user) { stub_model(User, :role? => true) }
     before(:each) do
       assign(:user, user)  
@@ -67,6 +74,11 @@ describe "admin/users/_form.html.haml" do
       rendered.should have_selector("form", :method => "post", :action => admin_user_path(user)) do |form|
         form.should have_selector("input", :type => "submit", :value => "Update User")   
       end
+    end
+    
+    it "should not have field to update Partners UID" do
+      do_render
+      rendered.should_not have_selector("input", :type => "text", :name => "user[puid]")
     end 
     
     it "should show a field to update the username" do      

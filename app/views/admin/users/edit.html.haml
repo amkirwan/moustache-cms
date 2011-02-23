@@ -1,4 +1,4 @@
 #edit_user
-  %h3 Edit User #{@user.username}
+  %h3 User Account for #{@user.username}
   = render :partial => "form",  
            :locals => { :user => @user, :button_label => "Update User"}

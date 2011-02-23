@@ -1,15 +1,4 @@
-module LoginHelpers
-  def login_helper(partners_uid, role)
-    cas_faker(partners_uid)  
-    create_user(partners_uid, role)
-  end
-  
-  def create_user(partners_uid, role)
-    User.create!(:username => partners_uid,
-                  :email => "#{partners_uid}@example.com",
-                  :role => role)
-  end
-  
+module LoginHelpers  
   def cas_faker(partners_uid)
     CASClient::Frameworks::Rails::Filter.fake(partners_uid)
   end
@@ -19,7 +8,7 @@ module LoginHelpers
   end 
   
   def logged_in(role)
-    current_user = mock_model(User, :username => "foobar", :role? => role[:role?]).as_null_object
+    current_user = mock_model(User, :puid => "foobar", :role? => role[:role?]).as_null_object
     stub_current_user(current_user)
     current_user  
   end             

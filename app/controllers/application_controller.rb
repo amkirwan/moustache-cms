@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
                   
   def current_user    
     fake_login(params[:cas_user]) unless Rails.env == 'production'                    
-    @current_user = User.where(:username => session[:cas_user]).first
+    @current_user = User.where(:puid => session[:cas_user]).first
   end  
   
   def admin?     
@@ -22,6 +22,7 @@ class ApplicationController < ActionController::Base
       session[:cas_user] = CASClient::Frameworks::Rails::Filter.fake_user if session[:cas_user].nil?
     elsif Rails.env == 'development'
       CASClient::Frameworks::Rails::Filter.fake("ak730")
+      #CASClient::Frameworks::Rails::Filter.fake("cds27")
       #session[:cas_user] = 'ak730' if session[:cas_user].nil?
       #session[:cas_user] = 'jb509' if session[:cas_user].nil?
       #session[:cas_user] = 'mac0' if session[:cas_user].nil?

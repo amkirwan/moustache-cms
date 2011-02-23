@@ -10,6 +10,7 @@ class Admin::UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
+    render :edit
   end
   
   def new
@@ -22,7 +23,7 @@ class Admin::UsersController < ApplicationController
       flash[:notice] = "Successfully created user account for #{@user.username}" 
       redirect_to admin_users_path
     else
-      render :action => 'new'
+      render :new
     end
   end
   
@@ -30,14 +31,18 @@ class Admin::UsersController < ApplicationController
     @user = User.find(params[:id])
   end
   
-  def update                      
+  def update                    
     params[:user].delete(:role) unless admin?
     @user = User.find(params[:id])
     if @user.update_attributes(params[:user])
       flash[:notice] = "Successfully updated user account for #{@user.username}"
-      redirect_to admin_users_path
+      if admin?
+        redirect_to admin_users_path
+      else
+        render :edit
+      end 
     else
-      render :action => 'edit'
+      render :edit
     end
   end
   

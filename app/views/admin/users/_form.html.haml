@@ -1,4 +1,10 @@
-= form_for([:admin, user]) do |f| 
+= form_for([:admin, user]) do |f|
+  - if user.new_record? 
+    %fieldset
+      = f.label :puid, "Partners UID"
+      = f.text_field :puid, :placeholder => "puid"
+  - else
+    %h5 Partners UID: #{user.puid}
   %fieldset   
     = f.label :username, "Username" 
     = f.text_field :username, :placeholder => "Enter username" 

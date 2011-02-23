@@ -27,6 +27,7 @@ Scenario: Create A New user
   When I go to the admin users page
   And I follow "New User" within "ul#new_user"
   Then I should be on the new admin user page 
+  When I fill in "user_puid" with "foobar" within "div#add_new_user"
   When I fill in "user_username" with "foobar" within "div#add_new_user" 
   And I fill in "user_email" with "foobar@example.com" within "div#add_new_user"
   And I choose "user_role_admin" within "div#add_new_user"
@@ -65,7 +66,8 @@ Scenario: Given I am looged in as an editor then I can edit my record
   And I fill in "user[email]" with "akirwan@example.com" within "div#edit_user"
   And I should not see "user[role]"
   And I press "Update User" within "div#edit_user" 
-  Then I should see "Successfully updated user account for baz"
+  Then I should be on the admin user page for "ak730"
+  And I should see "Successfully updated user account for akirwan"
   
 @delete_user
 Scenario: Delete user account as an admin
@@ -77,6 +79,7 @@ Scenario: Delete user account as an admin
   When I go to the admin users page
   And I press "delete" within "tr#foobar"
   Then I should see "Successfully deleted user account for foobar"
+  And I should be on the admin users page
   
 
 
