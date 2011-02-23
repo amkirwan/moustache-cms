@@ -1,11 +1,9 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')  
 
 describe "admin/users/new.html.haml" do
-  let(:current_user) { logged_in(:role? => true) }
-  let(:user) { stub_model(User).as_new_record }   
   before(:each) do
-    assign(:current_user, current_user)
-    assign(:user, user)
+    @user = assign(:user, stub_model(User))
+    @current_user = assign(:current_user, stub_model(User, :role? => true))
   end
   
   it "should render form title" do
