@@ -9,13 +9,12 @@ class Admin::UsersController < ApplicationController
   end  
   
   def show
-    @users = User.all
-    render :action => index
+    @user = User.find(params[:id])
   end
   
   def new
     @user = User.new
-  end                         
+  end                        
   
   def create   
     @user = User.new(params[:user])

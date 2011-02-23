@@ -10,6 +10,7 @@ class Ability
     
     if user.role? :editor 
       can :edit, User, :username => user.username
+      can :show, User, :username => user.username
       can :edit, Page
     end
   end    

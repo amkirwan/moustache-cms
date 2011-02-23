@@ -4,16 +4,17 @@ describe Admin::UsersController do
   
   # check authorization
   describe "it should require an admin to access these actions" do
-    it_should_require_admin_for_action :index, :new, :update, :create, :edit, :destroy 
+    it_should_require_admin_for_action :index, :show, :new, :update, :create, :edit, :destroy 
   end
   
   describe "it should allow admin to access all actions" do
-    it_should_allow_admin_for_action :index, :new, :update, :create, :edit, :destroy
+    it_should_allow_admin_for_action :index, :show, :new, :update, :create, :edit, :destroy
   end
   
   describe "it should allow non admin to edit & update their record only" do
     it_should_allow_non_admin_for_action :edit, :params => "1"
-    it_should_allow_non_admin_for_action :update, :params => "1"   
+    it_should_allow_non_admin_for_action :update, :params => "1"
+    it_should_allow_non_admin_for_action :show, :params => "1"   
   end
   
   #for actions
@@ -25,7 +26,6 @@ describe Admin::UsersController do
   end
   
   describe "GET index" do
-
     def do_get     
       get :index
     end
@@ -53,6 +53,27 @@ describe Admin::UsersController do
         response.should render_template("admin/users/index")
       end  
     end   
+  end
+  
+  describe "GET show" do
+    let(:params) {{ :id => "1" }}
+    def do_get
+      get :show, :id => "1"
+    end
+    
+    before(:each) do
+      User.stub(:find).and_return(user)
+    end
+    
+    it "should should receive find" do
+      User.should_receive(:find).with(params[:id]).and_return(user)
+      do_get
+    end
+    
+    it "should assign @user for the view" do
+      do_get
+      assigns(:user).should eq(user)
+    end
   end
   
   describe "GET new" do    

@@ -55,4 +55,30 @@ Scenario: Given I am logged in as an admin then I can edit any users account
   And I press "Update User" within "div#edit_user" 
   Then I should be on the admin users page
   And I should see "Successfully updated user account for baz"
+  
+@non_admin_edit_account
+Scenario: Given I am looged in as an editor then I can edit my record
+  Given I login as "ak730" with the role of "editor"
+  When I edit "ak730" account information
+  Then I should now be editing the user "ak730"
+  When I fill in "user[username]" with "akirwan" within "div#edit_user"
+  And I fill in "user[email]" with "akirwan@example.com" within "div#edit_user"
+  And I should not see "user[role]"
+  And I press "Update User" within "div#edit_user" 
+  Then I should see "Successfully updated user account for baz"
+  
+@delete_user
+Scenario: Delete user account as an admin
+  Given I login as "ak730" with the role of "admin"
+  And the user with the role exist
+  | user   | role   |
+  | foobar | admin  |
+  | bar    | editor |
+  When I go to the admin users page
+  And I press "delete" within "tr#foobar"
+  Then I should see "Successfully deleted user account for foobar"
+  
+
+
+  
                                                     

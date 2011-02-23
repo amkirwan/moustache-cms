@@ -38,6 +38,6 @@ module ControllerMacros
         controller.should_receive(action)
         get action, :id => 1        
       end
-    end          
+    end         
   end
 end

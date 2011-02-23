@@ -18,8 +18,3 @@ Given /^the user with the role exist$/ do |table|
     Given %{the user "#{hash[:user]}" exists with the role of "#{hash[:role]}"}
   end
 end 
-
-Then /^(?:|I )should now be editing the user "([^\"]*)"$/ do |user|
-  user = User.where(:username => user).first
-  Then %{I should be on the edit admin user page for "#{user.to_param}"}
-end

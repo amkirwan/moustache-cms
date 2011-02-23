@@ -6,7 +6,7 @@
     = f.label :email, "Email Address"
     = f.email_field :email, :size => 20 
   - if admin?
-    %fieldset 
+    %fieldset#role
       = f.label :role
       = f.radio_button :role, 'editor'
       = f.label :editor
