@@ -11,7 +11,7 @@ describe Ability do
     admin_ability.should be_able_to(:manage, admin)
   end
    
-  it "should allow the user with a role of editor to edit their record" do
+  it "should allow the user with a role of editor to edit their own record" do
     editor_ability.should be_able_to(:edit, editor)
   end  
   

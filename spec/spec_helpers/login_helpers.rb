@@ -19,7 +19,8 @@ module LoginHelpers
   end 
   
   def logged_in(role)
-    @logged_in = mock_model(User, :role? => role[:role?]).as_null_object
-    stub_current_user(@logged_in)  
+    current_user = mock_model(User, :username => "foobar", :role? => role[:role?]).as_null_object
+    stub_current_user(current_user)
+    current_user  
   end             
 end

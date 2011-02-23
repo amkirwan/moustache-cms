@@ -31,7 +31,8 @@ class Admin::UsersController < ApplicationController
     @user = User.find(params[:id])
   end
   
-  def update        
+  def update                      
+    params[:user].delete(:role) unless admin?
     @user = User.find(params[:id])
     if @user.update_attributes(params[:user])
       flash[:notice] = "Successfully updated user account for #{@user.username}"
@@ -44,7 +45,7 @@ class Admin::UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     if @user.destroy
-      flash[:notice] = "Successfully deleted User."
+      flash[:notice] = "Successfully deleted user account for #{@user.username}"
       redirect_to root_path
     end
   end 
