@@ -15,7 +15,7 @@ module ControllerMacros
           setup(false)
           controller.should_not_receive(action)
           get action, :id => 1 
-          flash[:error].should == ("Access Denied!") 
+          response.should render_template("#{Rails.root}/public/403.html") 
         end
       end
     end

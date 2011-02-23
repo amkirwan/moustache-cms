@@ -3,8 +3,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery 
   
   rescue_from CanCan::AccessDenied do |exception|
-    flash[:error] = "Access Denied!"
-    redirect_to root_url
+    #flash[:error] = "Access Denied!"
+    #redirect_to root_url
+    render :file => "#{Rails.root}/public/403.html", :layout => false
   end
                   
   def current_user    

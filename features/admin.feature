@@ -57,8 +57,8 @@ Scenario: Given I am logged in as an admin then I can edit any users account
   Then I should be on the admin users page
   And I should see "Successfully updated user account for baz"
   
-@non_admin_edit_account
-Scenario: Given I am looged in as an editor then I can edit my record
+@non_admin_update_account
+Scenario: Given I am logged in as an editor then I can edit my account
   Given I login as "ak730" with the role of "editor"
   When I edit "ak730" account information
   Then I should now be editing the user "ak730"
@@ -68,6 +68,22 @@ Scenario: Given I am looged in as an editor then I can edit my record
   And I press "Update User" within "div#edit_user" 
   Then I should be on the admin user page for "ak730"
   And I should see "Successfully updated user account for akirwan"
+
+@non_admin_cannot_update_other_account
+Scenario: Given I am logged in as an editor then I cannot edit another users account
+  Given I login as "ak730" with the role of "editor"
+  And the user with the role exist
+  | user   | role   |
+  | foobar | admin  |
+  | bar    | editor |
+  When I edit "bar" account information
+  Then I should see "Whoops!"
+  
+@non_admin_cannot_see_index_page
+Scenario: Given I am looged in as an editor then I cannot list all the users
+  Given I login as "ak730" with the role of "editor"
+  When I go to the admin users page
+  Then I should see "Whoops!"
   
 @delete_user
 Scenario: Delete user account as an admin
