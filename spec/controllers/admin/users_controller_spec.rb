@@ -35,14 +35,14 @@ describe Admin::UsersController do
                     mock_model("User", :username => "bar", :role => "editor")] } 
       
       before(:each) do
-        User.stub(:all).and_return(users)
+        User.stub(:accessible_by).and_return(users)
       end
-
-      it "should receive find all" do   
-        User.should_receive(:all).and_return(users)
+      
+      it "should receive accessible_by" do
+        User.should_receive(:accessible_by).and_return(users)
         do_get
       end
-    
+      
       it "should assign the found users" do
         do_get
         assigns(:users).should eq(users)

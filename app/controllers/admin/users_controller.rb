@@ -1,11 +1,10 @@
 class Admin::UsersController < ApplicationController    
   before_filter CASClient::Frameworks::Rails::Filter
-  load_and_authorize_resource 
-  skip_load_resource
+  authorize_resource 
   
   layout "admin/admin"  
   def index             
-    @users = User.all  
+    @users = User.accessible_by(current_ability)  
   end  
   
   def show
@@ -29,6 +28,7 @@ class Admin::UsersController < ApplicationController
   
   def edit
     @user = User.find(params[:id])
+    authorize! :edit, @user
   end
   
   def update                    
