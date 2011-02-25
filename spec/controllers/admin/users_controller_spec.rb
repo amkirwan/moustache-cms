@@ -4,17 +4,17 @@ describe Admin::UsersController do
   
   # check authorization
   describe "it should require an admin to access these actions" do
-    it_should_require_admin_for_action :index, :show, :new, :update, :create, :edit, :destroy 
+    it_should_require_admin_for_action User, :index, :show, :new, :update, :create, :edit, :destroy 
   end
   
   describe "it should allow admin to access all actions" do
-    it_should_allow_admin_for_action :index, :show, :new, :update, :create, :edit, :destroy
+    it_should_allow_admin_for_action User, :index, :show, :new, :update, :create, :edit, :destroy
   end
   
   describe "it should allow non admin to edit & update their record only" do
-    it_should_allow_non_admin_for_action :edit, :params => "1"
-    it_should_allow_non_admin_for_action :update, :params => "1"
-    it_should_allow_non_admin_for_action :show, :params => "1"   
+    it_should_allow_non_admin_for_action User, :edit, :params => "1"
+    it_should_allow_non_admin_for_action User, :update, :params => "1"
+    it_should_allow_non_admin_for_action User, :show, :params => "1"   
   end
   
   #for actions
@@ -173,7 +173,7 @@ describe Admin::UsersController do
         do_post
       end
     end
-  end 
+  end
   
   describe "GET edit" do 
 
