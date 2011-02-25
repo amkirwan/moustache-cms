@@ -1,4 +1,6 @@
 = form_for([:admin, user]) do |f|
+  = render :partial => "shared/error_messages",  
+           :locals => { :target => user }
   - if user.new_record? 
     %fieldset
       = f.label :puid, "Partners UID"
