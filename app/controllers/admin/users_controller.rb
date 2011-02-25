@@ -3,8 +3,8 @@ class Admin::UsersController < ApplicationController
   authorize_resource 
   
   layout "admin/admin"  
-  def index             
-    @users = User.accessible_by(current_ability)  
+  def index               
+    @users = User.accessible_by(current_ability)
   end  
   
   def show
@@ -18,6 +18,8 @@ class Admin::UsersController < ApplicationController
   
   def create   
     @user = User.new(params[:user])
+    @user.puid = params[:user][:puid] if admin?
+    @user.role = params[:user][:role] if admin?
     if @user.save
       flash[:notice] = "Successfully created user account for #{@user.username}" 
       redirect_to admin_users_path
@@ -32,9 +34,10 @@ class Admin::UsersController < ApplicationController
   end
   
   def update                    
-    params[:user].delete(:role) unless admin?
     @user = User.find(params[:id])
-    if @user.update_attributes(params[:user])
+    @user.attributes = params[:user]
+    @user.role = params[:user][:role] if admin?
+    if @user.save
       flash[:notice] = "Successfully updated user account for #{@user.username}"
       if admin?
         redirect_to admin_users_path

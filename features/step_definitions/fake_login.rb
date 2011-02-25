@@ -3,10 +3,10 @@ Given /^cas authenticates with cas user "([^\"]*)"$/ do |username|
 end 
 
 Given /^the user "([^\"]*)" exists with the role of "([^\"]*)"$/ do |username, role| 
-  User.create!(:puid => username,
-               :username => username,
-               :email => "#{username}@example.com",
-               :role => role)
+  User.make!(:puid => username,
+             :username => username,
+             :email => "#{username}@example.com",
+             :role => role)
 end
 
 Given /^I login as "([^\"]*)" with the role of "([^\"]*)"$/ do |username, role|

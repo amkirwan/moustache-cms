@@ -113,7 +113,8 @@ describe Admin::UsersController do
     let(:params) {{ "user" => { "username" => "foobar", "email" => "foobar@example.com", "role" => "admin" }}}
     
     before(:each) do 
-      user.as_new_record      
+      user.as_new_record   
+      controller.stub(:admin?).and_return(true)
       User.stub(:new).and_return(user)
     end  
     
@@ -122,15 +123,20 @@ describe Admin::UsersController do
     end  
               
     it "should create a new user" do
-      User.should_receive(:new).with(params["user"]).and_return(user) 
-      do_post                                                               
-      assigns(:user).should eq(user) 
-    end  
+      User.should_receive(:new).with(params["user"]).and_return(user)
+      do_post 
+      assigns(:user).should eq(user)                                                              
+    end 
     
     context "when it save the new user successfully" do
       before(:each) do
         user.stub(:save).and_return(true)
-      end         
+      end   
+      
+      it "should receive save" do
+        user.should_receive(:save).and_return(true)
+        do_post
+      end
       
       it "should should create a flash notice" do 
         do_post
@@ -147,9 +153,26 @@ describe Admin::UsersController do
       it "should redirect to new template" do 
         user.stub(:save).and_return(false)            
         do_post
+        puts "user=#{user.username}"
         response.should render_template("admin/users/new")
       end
     end 
+    
+    context "when the user is not an admin" do
+      
+      before(:each) do
+        controller.stub(:admin?).and_return(false)
+      end
+      it "should not set the puid for non-admin" do
+        user.should_not_receive(:puid=).with(params["user"]["puid"])
+        do_post
+      end
+      
+      it "should not set the user role for non-admin" do
+        user.should_not_receive(:role=).with(params["user"]["role"])
+        do_post
+      end
+    end
   end 
   
   describe "GET edit" do 
@@ -203,9 +226,19 @@ describe Admin::UsersController do
     end
     
     it "should update the user record" do
-      user.should_receive(:update_attributes).with(params["user"]).and_return(true)
+      user.should_receive(:save).and_return(true)
       do_put
     end 
+    
+    it "should should set attr_accessable attributes" do
+      user.should_receive(:attributes=).with(params["user"])
+      do_put
+    end
+    
+    it "should set the users role when the current_user is an admin" do
+      user.should_receive(:role=).with(params["user"]["role"])
+      do_put
+    end
       
     it "should set a flash[:notice] message" do
       do_put
@@ -219,22 +252,24 @@ describe Admin::UsersController do
   
     context "when update_attributes fails" do
       it "should render the edit template" do
-        user.stub(:update_attributes).and_return(false)
+        user.stub(:save).and_return(false)
         do_put  
         response.should render_template("admin/users/edit")
       end
     end
     
-    context "if user is not an admin delete role param" do
-      it "should not change the user role to admin" do
-        controller.stub(:admin?).and_return(false)  
-        params["user"].delete("role")
-        user.should_receive(:update_attributes).with(params["user"]).and_return(true)
+    context "it should render the admin users page for non-admin users" do
+      
+      before(:each) do
+        controller.stub(:admin?).and_return(false)
+      end
+      
+      it "should not set the users role when the current_user is not an admin" do
+        user.should_not_receive(:role=).with(params["user"]["role"])
         do_put
       end
       
       it "should render the template for the users account" do
-        controller.stub(:admin?).and_return(false)
         do_put
         response.should render_template("admin/users/edit")
       end

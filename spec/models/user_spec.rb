@@ -5,6 +5,22 @@ describe User do
     @user = User.make!
   end 
   
+  context "mass assignment" do
+    it "should protect against mass assignment of role" do
+      user = User.new(:role => "admin", :puid => "ak730")
+      user.role.should be_nil
+      user.puid.should be_nil
+    end
+    
+    it "should not allow mass assignment of" do
+      @user.should_not allow_mass_assignment_of(:puid => "foobar", :role => "bar")
+    end
+    
+    it "should allow mass assignment of" do
+      @user.should allow_mass_assignment_of(:username => "foobar", :email => "foobar@example.com")
+    end
+  end
+  
   context "validations" do
     it "should create a valid user with valid attributes" do
       @user.should be_valid

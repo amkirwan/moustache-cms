@@ -19,8 +19,7 @@ Scenario: Admin login
   And I should see "foo"   
   And I should see "bar"
   And I should see "foobar"    
-  
-  
+   
 @create_new_user
 Scenario: Create A New user
   Given I login as "ak730" with the role of "admin"
@@ -56,18 +55,25 @@ Scenario: Given I am logged in as an admin then I can edit any users account
   And I press "Update User" within "div#edit_user" 
   Then I should be on the admin users page
   And I should see "Successfully updated user account for baz"
+  When I edit the account information for the user "baz"
+  Then I should now be editing the user "baz"
+  And the "user[username]" field within "div#edit_user" should contain "baz"
+  And the "user[email]" field within "div#edit_user" should contain "baz@example.com"
+  And the "user_role_editor" checkbox within "div#edit_user" should be checked
   
-@non_admin_update_account
+@non_admin_edit_account
 Scenario: Given I am logged in as an editor then I can edit my account
   Given I login as "ak730" with the role of "editor"
-  When I edit "ak730" account information
+  When I edit the account information for the user "ak730"
   Then I should now be editing the user "ak730"
   When I fill in "user[username]" with "akirwan" within "div#edit_user"
   And I fill in "user[email]" with "akirwan@example.com" within "div#edit_user"
   And I should not see "user[role]"
   And I press "Update User" within "div#edit_user" 
-  Then I should be on the admin user page for "ak730"
+  Then I should view the page for "akirwan"
   And I should see "Successfully updated user account for akirwan"
+  And the "user[username]" field within "div#edit_user" should contain "akirwan"
+  And the "user[email]" field within "div#edit_user" should contain "akirwan@example.com"
 
 @non_admin_cannot_update_other_account
 Scenario: Given I am logged in as an editor then I cannot edit another users account
@@ -76,13 +82,19 @@ Scenario: Given I am logged in as an editor then I cannot edit another users acc
   | user   | role   |
   | foobar | admin  |
   | bar    | editor |
-  When I edit "bar" account information
+  When I edit the account information for the user "bar"
   Then I should see "Whoops!"
   
 @non_admin_cannot_see_index_page
-Scenario: Given I am looged in as an editor then I cannot list all the users
+Scenario: Given I am logged in as an editor then I cannot list all the users
   Given I login as "ak730" with the role of "editor"
   When I go to the admin users page
+  Then I should see "Whoops!"
+  
+@non_admin_cannot_create_new_user
+Scenario: Given I am logged in as an editor then I cannot create a new user
+  Given I login as "ak730" with the role of "editor"
+  When I go to the new admin user page
   Then I should see "Whoops!"
   
 @delete_user

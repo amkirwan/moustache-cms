@@ -15,7 +15,7 @@ module NavigationHelpers
     when /the edit admin user page for "([^\"]*)"/
       edit_admin_user_path($1)
     when /the admin user page for "([^\"]*)"/
-      admin_user_path(User.where(:puid => $1).first.to_param)
+      admin_user_path($1)
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
