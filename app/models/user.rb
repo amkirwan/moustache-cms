@@ -11,12 +11,23 @@ class User
                        
   Roles = %w[editor admin]
   
-  validates_presence_of :puid, :username, :role, :email
-  validates_uniqueness_of :puid, :username, :email 
-  validates_format_of :email, :with => /^([^\s]+)((?:[-a-z0-9]\.)[a-z]{2,})$/i
-  validates_length_of :puid, :minimum => 3
-  validates_length_of :username, :minimum => 3, :maximum => 20
+  validates :puid,
+            :presence => true,
+            :uniqueness => true,
+            :length => { :minimum => 3 }
+            
+  validates :username,
+            :presence => true,
+            :uniqueness => true,
+            :length => { :minimum => 3, :maximum => 20 }
   
+  validates :role, :presence => true
+  
+  validates :email,
+            :presence => true,
+            :uniqueness => true,
+            :format => { :with => /^([^\s]+)((?:[-a-z0-9]\.)[a-z]{2,})$/i }
+
   def role?(base_role)
     Roles.index(base_role.to_s) <= Roles.index(role)
   end
