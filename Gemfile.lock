@@ -51,6 +51,7 @@ GEM
       activemodel (= 3.0.3)
       activesupport (= 3.0.3)
     activesupport (3.0.3)
+    acts_as_tree (0.1.1)
     arel (2.0.8)
     bson (1.2.2)
     bson_ext (1.2.2)
@@ -173,6 +174,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts_as_tree
   bson_ext
   cancan
   capybara

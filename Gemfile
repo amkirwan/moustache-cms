@@ -8,6 +8,7 @@ gem "cancan"
 gem "dynamic_form" 
 #gem "rubycas-client", :git => "git://github.com/amkirwan/rubycas-client.git", :branch => "rails3"
 gem "rubycas-client", :path => "/Users/akirwan/code/rubycas-client", :branch => "rails3"
+gem "acts_as_tree"
 
 
 group :development, :test do
