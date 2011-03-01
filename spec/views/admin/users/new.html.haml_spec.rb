@@ -1,9 +1,11 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')  
 
 describe "admin/users/new.html.haml" do
+  let(:user) { stub_model(User) }
+  let(:current_user) { stub_model(User, :role? => true) }
   before(:each) do
-    @user = assign(:user, stub_model(User))
-    @current_user = assign(:current_user, stub_model(User, :role? => true))
+    assign(:user, user)
+    assign(:current_user, current_user)
   end
   
   it "should render form title" do
@@ -13,6 +15,6 @@ describe "admin/users/new.html.haml" do
   
   it "should render partial _form" do
     render
-    view.should render_template(:partial => "form", :locals => { :user => @user, :button_label => "Create User" })
+    view.should render_template(:partial => "form", :locals => { :user => user, :button_label => "Create User" })
   end
 end
