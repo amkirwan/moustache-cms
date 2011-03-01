@@ -2,9 +2,11 @@ require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')
 
 describe "admin/users/index.html.haml" do   
   let(:users) { [stub_model(User, :username => "foo", :role => "admin")] }
+  let(:current_user) { stub_model(User, :role? => true) }
    
   before(:each) do 
     assign(:users, users) 
+    assign(:current_user, current_user)
   end     
   
   it "should display the users name" do
