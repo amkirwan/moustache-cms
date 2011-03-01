@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/benedikt/mongoid-tree
+  revision: 7e2f5fb4c418adc57dd0abb242404d4042f65959
+  specs:
+    mongoid-tree (0.5.0)
+      mongoid (>= 2.0.0.beta.20)
+
+GIT
   remote: git://github.com/durran/mongoid-rspec.git
   revision: d08cde221fd07e5c4cb8ee3b5ad71c1ecc305236
   specs:
@@ -51,7 +58,6 @@ GEM
       activemodel (= 3.0.3)
       activesupport (= 3.0.3)
     activesupport (3.0.3)
-    acts_as_tree (0.1.1)
     arel (2.0.8)
     bson (1.2.2)
     bson_ext (1.2.2)
@@ -174,7 +180,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  acts_as_tree
   bson_ext
   cancan
   capybara
@@ -189,6 +194,7 @@ DEPENDENCIES
   machinist_mongo!
   mongoid (= 2.0.0.rc.6)
   mongoid-rspec!
+  mongoid-tree!
   rails (= 3.0.3)
   rspec-rails
   rubycas-client!

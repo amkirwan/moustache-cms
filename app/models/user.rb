@@ -8,6 +8,8 @@ class User
   field :username
   field :email
   field :role 
+  embedded_in :page, :inverse_of => :created_by
+  embedded_in :page, :inverse_of => :updated_by
                        
   Roles = %w[editor admin]
   
