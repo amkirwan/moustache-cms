@@ -1,6 +1,2 @@
-class DashboardController < ApplicationController 
-  
-  def index 
-    render :nothing => true
-  end
+class DashboardController < ActionController::Base 
 end

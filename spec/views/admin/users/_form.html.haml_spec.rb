@@ -1,3 +1,4 @@
+# user form spec
 require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')  
 
 describe "admin/users/_form.html.haml" do
@@ -9,7 +10,7 @@ describe "admin/users/_form.html.haml" do
   end
   
   def do_render(label)
-    render "form", :user => user, :button_label => label
+    render "admin/users/form", :user => user, :button_label => label
   end
   
   let(:user) { stub_model(User)}

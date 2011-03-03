@@ -1,4 +1,4 @@
-Feature: Test admin page 
+Feature: Admin User Management Features
 
 @admin_login
 Scenario: Admin login page should redirect to /admin/users#index

@@ -1,23 +1,35 @@
 require 'machinist/mongoid' 
 
 User.blueprint do
-  puid { "user-puid-#{sn}" }
-  username { "user-username-#{sn}"}
-  email { "user-#{sn}@example.com" }
-  role  { "role-#{sn}" }
+  puid { "user_#{sn}" }
+  username { "#{object.puid}_#{sn}"}
+  email { "#{object.puid}@example.com" }
+  role  { "role_#{sn}" }
 end
 
 User.blueprint(:admin) do
-  puid { "admin-puid-#{sn}" }
-  username { "admin-username-#{sn}"}
-  email  { "admin-#{sn}@example.com" }
+  puid { "admin_#{sn}" }
+  username { "#{object.puid}_#{sn}"}
+  email  { "#{object.puid}@example.com" }
   role { "admin" }
 end            
 
 
 User.blueprint(:editor) do
-  puid { "editor-puid-#{sn}" }
-  username { "editor-username-#{sn}"}
-  email  { "editor-#{sn}@example.com" }
+  puid { "editor_#{sn}" }
+  username { "#{object.puid}_#{sn}"}
+  email  { "#{object.puid}@example.com" }
   role { "editor" }
 end
+
+Layout.blueprint do
+  name { "layout_#{sn}" }
+  content { "Hello, World!" }
+  created_by { User.make }
+  updated_by { User.make }
+end
+
+TextFilter.blueprint do
+  name { "text_filter_#{sn}" }
+end
+

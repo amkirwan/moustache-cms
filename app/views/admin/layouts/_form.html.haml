@@ -1,0 +1,11 @@
+= form_for([:admin, layout]) do |f|
+  = render :partial => "shared/error_messages",  
+           :locals => { :target => layout }
+  %fieldset
+    = f.label :name, "Name"
+    = f.text_field :name, :placeholder => "Layout name..."
+  %fieldset
+    = f.label :content, "Content"
+    = f.text_area :content, :placeholder => "Layout content..."           
+  %fieldset 
+    = f.submit button_label

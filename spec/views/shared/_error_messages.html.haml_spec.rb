@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "shared/_error_messages.html.haml" do
   
   def do_render
-    render "error_messages", :target => @error_model
+    render "shared/error_messages", :target => @error_model
   end
   
   before(:each) do
