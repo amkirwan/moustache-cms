@@ -128,10 +128,7 @@ describe Admin::UsersController do
       assigns(:user).should eq(user)                                                              
     end 
     
-    context "when it save the new user successfully" do
-      before(:each) do
-        user.stub(:save).and_return(true)
-      end   
+    context "when it save the new user successfully" do  
       
       it "should receive save" do
         user.should_receive(:save).and_return(true)
@@ -153,7 +150,6 @@ describe Admin::UsersController do
       it "should redirect to new template" do 
         user.stub(:save).and_return(false)            
         do_post
-        puts "user=#{user.username}"
         response.should render_template("admin/users/new")
       end
     end 

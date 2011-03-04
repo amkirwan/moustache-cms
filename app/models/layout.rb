@@ -2,6 +2,8 @@ class Layout
   include Mongoid::Document 
   include Mongoid::Timestamps
   
+  attr_accessible :name, :content
+  
   field :name, :type => String
   field :content, :type => String
   embeds_one :created_by, :class_name => "User"
