@@ -274,12 +274,12 @@ describe Admin::UsersController do
   
   describe "DELETE destroy" do
     
-    def do_destroy  
-      delete :destroy, :id => "1"
-    end
-    
     before(:each) do
       User.stub(:find).and_return(user)
+    end
+    
+    def do_destroy  
+      delete :destroy, :id => "1"
     end
     
     it "should receive the find method and return the user to destroy" do

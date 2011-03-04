@@ -2,11 +2,11 @@ require File.expand_path(File.dirname(__FILE__) + '../../../spec_helper')
 
 describe Admin::LayoutsController do
   describe "it should require an admin to access these actions" do
-    it_should_require_admin_for_action Layout, :index, :show, :new, :update, :create, :edit, :destroy 
+    it_should_require_admin_for_action Layout, :index, :new, :update, :create, :edit, :destroy 
   end
   
   describe "it should allow admin to access all actions" do
-    it_should_allow_admin_for_action Layout, :index, :show, :new, :update, :create, :edit, :destroy
+    it_should_allow_admin_for_action Layout, :index, :new, :update, :create, :edit, :destroy
   end
   
   let(:current_user) { logged_in(:role? => true) }
@@ -131,4 +131,139 @@ describe Admin::LayoutsController do
       end
     end
   end
+  
+  describe "GET edit" do
+    let(:params) {{ "id" => layout.to_param }}
+    
+    before(:each) do
+      Layout.stub(:find).and_return(layout)
+    end
+    
+    def do_get
+      get :edit, params
+    end
+    
+    it "should receive Layout#find and return layout" do
+      Layout.should_receive(:find).with(params["id"]).and_return(layout)
+      do_get
+    end
+    
+    it "should assing @layout for the veiw" do
+      do_get
+      assigns(:layout).should == layout
+    end
+    
+    it "should render the edit template" do
+      do_get
+      response.should render_template("admin/layouts/edit")
+    end
+  end
+  
+  describe "PUTS update" do
+    let(:params) {{ "id" => layout.to_param, "layout" => { "name" => "foobar", "content" => "Hello, World" }}}
+    
+    before(:each) do
+      controller.stub(:admin?).and_return(true)
+      Layout.stub(:find).and_return(layout)
+    end
+    
+    def do_post
+      post :update, params
+    end
+    
+    it "should find the record to update with Layout#find" do
+      Layout.should_receive(:find).with(params["id"]).and_return(layout)
+      do_post
+    end
+    
+    it "should assign @layout for the view" do
+      do_post
+      assigns(:layout).should == layout
+    end
+    
+    it "should update the attributes of the layout" do
+      layout.should_receive(:attributes=).with(params["layout"])
+      do_post
+    end
+    
+    it "should update protected attributes" do
+      layout.should_receive(:updated_by=).with(current_user)
+      do_post
+    end
+    
+    context "when the layer saves successfully" do
+      it "should save the layout" do
+        layout.should_receive(:save).and_return(true)
+        do_post
+      end
+    
+      it "should assign the flash message" do
+        do_post
+        flash[:notice].should == "Successfully updated the layout #{layout.name}"
+      end
+      
+      it "should redirect to the admin/layout#index action" do
+        do_post
+        response.should redirect_to(admin_layouts_path)
+      end
+    end
+    
+    context "when the layout fales to save" do
+      before(:each) do
+        layout.stub(:save).and_return(false)
+      end
+      
+      it "should not save the layout" do
+        layout.should_receive(:save).and_return(false)
+        do_post
+      end
+      
+      it "should render the layout edit" do
+        do_post
+        response.should render_template("admin/layouts/edit")
+      end
+    end   
+  end
+  
+  describe "DELETE destroy" do
+    before(:each) do
+      Layout.stub(:find).and_return(layout)
+    end
+    
+    def do_destroy  
+      delete :destroy, :id => "1"
+    end
+    
+    it "should receive Layout#find and return the layout" do
+      Layout.should_receive(:find).with("1").and_return(layout)
+      do_destroy
+    end
+    
+    it "should assign the layout for the view" do
+      do_destroy
+      assigns(:layout).should == layout
+    end
+    
+    it "should destroy the letter" do
+      layout.should_receive(:destroy).and_return(true)
+      do_destroy
+    end
+    
+    it "should assign a flash message that the letter was destroyed" do
+      do_destroy
+      flash[:notice].should == "Successfully deleted the layout #{layout.name}"
+    end
+    
+    it "should redirect to the admin/layout#index" do
+      do_destroy
+      response.should redirect_to(admin_layouts_path)
+    end
+  end
 end
+
+
+
+
+
+
+

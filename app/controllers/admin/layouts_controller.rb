@@ -6,9 +6,6 @@ class Admin::LayoutsController < ApplicationController
   def index 
   end
   
-  def show
-  end
-  
   def new
   end
   
@@ -27,9 +24,21 @@ class Admin::LayoutsController < ApplicationController
   end
   
   def update
+    @layout.attributes = params[:layout]
+    @layout.updated_by = current_user if admin?
+    if @layout.save
+      flash[:notice] = "Successfully updated the layout #{@layout.name}"
+      redirect_to admin_layouts_path
+    else
+      render :edit
+    end
   end
   
   def destroy
+    if @layout.destroy
+      flash[:notice] = "Successfully deleted the layout #{@layout.name}"
+      redirect_to admin_layouts_path
+    end
   end
   
 end
