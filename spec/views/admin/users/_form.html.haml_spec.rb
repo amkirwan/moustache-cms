@@ -4,9 +4,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')
 describe "admin/users/_form.html.haml" do
    
   def form(options)
-    rendered.should have_selector("form", :method => "post", :action => options[:action]) do |form|
-      yield form
-    end
+    rendered.should have_selector("form", :method => "post", :action => options[:action])
   end
   
   def do_render(label)
@@ -29,39 +27,43 @@ describe "admin/users/_form.html.haml" do
   context "when the user is a new record" do
     before(:each) do 
       user.as_new_record
-    end    
+    end  
+    
+    def form_new
+      form(:action => admin_users_path)
+    end  
     
     it "should render a form to create a new user" do
       do_render("Create User") 
-      form(:action => admin_users_path) do |form|
-        form.should have_selector("input", :type => "submit", :value => "Create User")   
+      form_new do |f|
+        f.should have_selector("input", :type => "submit", :value => "Create User")   
       end
     end 
     
     it "should show a field to enter the partners username" do
       do_render("Create User")
-      form(:action => admin_users_path) do |form|
-        form.should have_selector("input", :type => "text", :name => "user[puid]")
+      form_new do |f|
+        f.should have_selector("input", :type => "text", :name => "user[puid]")
       end
     end                                                                             
 
     it "should show a field to enter the username" do
       do_render("Create User")
-      form(:action => admin_users_path) do |form|
-        form.should have_selector("input", :type => "text", :name => "user[username]")
+      form_new do |f|
+        f.should have_selector("input", :type => "text", :name => "user[username]")
       end
     end                                          
 
     it "should show a field to enter an email address" do
       do_render("Create User") 
-      form(:action => admin_users_path) do |form|
-        form.should have_selector("input", :type => "email", :name => "user[email]")
+      form_new do |f|
+        f.should have_selector("input", :type => "email", :name => "user[email]")
       end
     end
 
     it "should show radio button to set user role" do
       do_render("Create User")
-      form(:action => admin_users_path) do |form|
+      form_new do |f|
         form.should have_selector("input", :type => "radio", :name => "user[role]", :value => "editor")
         form.should have_selector("input", :type => "radio", :name => "user[role]", :value => "admin")   
       end
@@ -69,8 +71,8 @@ describe "admin/users/_form.html.haml" do
     
     it "should show a cancel link" do
       do_render("Create User")
-      form(:action => admin_users_path) do |form|
-        form.should have_selector("a.cancel", :href => admin_users_path)
+      form_new do |f|
+        f.should have_selector("a.cancel", :href => admin_users_path)
       end
     end
   end 
@@ -81,58 +83,62 @@ describe "admin/users/_form.html.haml" do
       user.stub(:new_record? => false)
     end 
     
+    def form_update
+      form(:action => admin_user_path(user))
+    end
+    
     it "should render a form to edit a user account" do
       do_render("Update User")
-      form(:action => admin_user_path(user)) do |form|
-        form.should have_selector("input", :type => "submit", :value => "Update User")   
+      form_update do |f|
+        f.should have_selector("input", :type => "submit", :value => "Update User")   
       end
     end
     
     it "should not have field to update Partners UID" do
       do_render("Update User")
-      form(:action => admin_user_path(user)) do |form|
-        rendered.should_not have_selector("input", :type => "text", :name => "user[puid]")
+      form_update do |f|
+        f.should_not have_selector("input", :type => "text", :name => "user[puid]")
       end
     end 
     
     it "should show a field to update the username" do      
       user.stub(:username => "foobar")   
       do_render("Update User")
-      form(:action => admin_user_path(user)) do |form|
-        form.should have_selector("input", :type => "text", :name => "user[username]", :value => "#{user.username}")
+      form_update do |f|
+        f.should have_selector("input", :type => "text", :name => "user[username]", :value => "#{user.username}")
       end
     end                                          
 
     it "should show a field to enter an email address" do  
       user.stub(:email => "foobar@example.com")
       do_render("Update User")
-      form(:action => admin_user_path(user)) do |form|
-        form.should have_selector("input", :type => "email", :name => "user[email]", :value => "#{user.email}")
+      form_update do |f|
+        f.should have_selector("input", :type => "email", :name => "user[email]", :value => "#{user.email}")
       end
     end
 
     it "should show radio button to set user role if user is an admin" do 
       user.stub(:role => "admin")
       do_render("Update User")
-      form(:action => admin_user_path(user)) do |form|
-        form.should have_selector("input", :type => "radio", :name => "user[role]", :value => "editor")
-        form.should have_selector("input", :type => "radio", :name => "user[role]", :checked => "checked", :value => "admin")   
+      form_update do |f|
+        f.should have_selector("input", :type => "radio", :name => "user[role]", :value => "editor")
+        f.should have_selector("input", :type => "radio", :name => "user[role]", :checked => "checked", :value => "admin")   
       end
     end
     
     it "should not show the radio buttons if the user is not an admin" do 
       current_user.stub(:role? => false)
       do_render("Update User")
-      form(:action => admin_user_path(user)) do |form|
-        form.should_not have_selector("input", :type => "radio", :name => "user[role]", :value => "editor")
-        form.should_not have_selector("input", :type => "radio", :name => "user[role]", :value => "admin")   
+      form_update do |f|
+        f.should_not have_selector("input", :type => "radio", :name => "user[role]", :value => "editor")
+        f.should_not have_selector("input", :type => "radio", :name => "user[role]", :value => "admin")   
       end
     end
     
     it "should show a cancel link" do
       do_render("Update User")
-      form(:action => admin_user_path(user)) do |form|
-        form.should have_selector("a.cancel", :href => admin_users_path)
+      form_update do |f|
+        f.should have_selector("a.cancel", :href => admin_users_path)
       end
     end
   end
