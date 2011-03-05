@@ -6,8 +6,8 @@ describe User do
   end 
   
   context "mass assignment" do
-    it "should protect against mass assignment of role" do
-      user = User.new(:role => "admin", :puid => "ak730")
+    it "should protect against mass assignment of puid and role" do
+      user = User.new(:puid => "ak730", :role => "admin")
       user.role.should be_nil
       user.puid.should be_nil
     end
