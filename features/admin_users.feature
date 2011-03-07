@@ -61,6 +61,18 @@ Scenario: Given I am logged in as an admin then I can edit any users account
   And the "user[email]" field within "div#edit_user" should contain "baz@example.com"
   And the "user_role_editor" checkbox within "div#edit_user" should be checked
   
+@delete_user
+Scenario: Delete user account as an admin
+  Given I login as "ak730" with the role of "admin"
+  And the user with the role exist
+  | user   | role   |
+  | foobar | admin  |
+  | bar    | editor |
+  When I go to the admin users page
+  And I press "delete" within "tr#foobar"
+  Then I should see "Successfully deleted user account for foobar"
+  And I should be on the admin users page
+  
 @non_admin_edit_account
 Scenario: Given I am logged in as an editor then I can edit my account
   Given I login as "ak730" with the role of "editor"
@@ -75,7 +87,7 @@ Scenario: Given I am logged in as an editor then I can edit my account
   And the "user[username]" field within "div#edit_user" should contain "akirwan"
   And the "user[email]" field within "div#edit_user" should contain "akirwan@example.com"
 
-@non_admin_cannot_update_other_account
+@non_admin_cannot_update_other_users_accounts
 Scenario: Given I am logged in as an editor then I cannot edit another users account
   Given I login as "ak730" with the role of "editor"
   And the user with the role exist
@@ -95,21 +107,4 @@ Scenario: Given I am logged in as an editor then I cannot list all the users
 Scenario: Given I am logged in as an editor then I cannot create a new user
   Given I login as "ak730" with the role of "editor"
   When I go to the new admin user page
-  Then I should see "Whoops!"
-  
-@delete_user
-Scenario: Delete user account as an admin
-  Given I login as "ak730" with the role of "admin"
-  And the user with the role exist
-  | user   | role   |
-  | foobar | admin  |
-  | bar    | editor |
-  When I go to the admin users page
-  And I press "delete" within "tr#foobar"
-  Then I should see "Successfully deleted user account for foobar"
-  And I should be on the admin users page
-  
-
-
-  
-                                                    
+  Then I should see "Whoops!"                                                    
