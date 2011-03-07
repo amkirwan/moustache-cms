@@ -59,7 +59,6 @@ describe User do
     it "should validate associated user instance in updated_by" do
       @layout.updated_by = User.make(:username => nil)
       @layout.should_not be_valid
-    end
-    
+    end   
   end
 end

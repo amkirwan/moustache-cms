@@ -82,7 +82,7 @@ Scenario: Given I am logged in as an editor then I can edit my account
   And I fill in "user[email]" with "akirwan@example.com" within "div#edit_user"
   And I should not see "user[role]"
   And I press "Update User" within "div#edit_user" 
-  Then I should view the page for "akirwan"
+  Then I should view the page for user "akirwan"
   And I should see "Successfully updated user account for akirwan"
   And the "user[username]" field within "div#edit_user" should contain "akirwan"
   And the "user[email]" field within "div#edit_user" should contain "akirwan@example.com"

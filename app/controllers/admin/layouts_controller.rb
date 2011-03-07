@@ -40,5 +40,4 @@ class Admin::LayoutsController < ApplicationController
       redirect_to admin_layouts_path
     end
   end
-  
 end
