@@ -8,6 +8,10 @@ Etherweb::Application.routes.draw do
     resources :layouts, :except => :show
   end
   
+  namespace :admin do
+    resources :pages, :except => :shwo
+  end
+  
   match "/admin" => redirect("/admin/users#index")
    
   root :to => "dashboard#index"       

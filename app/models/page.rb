@@ -15,6 +15,7 @@ class Page
   field :meta_description, :type => String
   field :published_at, :type => DateTime
   field :content, :type => String
+  embeds_one :filter
   embeds_one :layout
   embeds_one :created_by, :class_name => "User"
   embeds_one :updated_by, :class_name => "User"
