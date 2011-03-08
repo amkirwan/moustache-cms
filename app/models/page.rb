@@ -9,7 +9,6 @@ class Page
   
   field :title, :type => String
   field :path_name, :type => String
-  field :type, :type => String
   field :meta_title, :type => String
   field :meta_keywords, :type => String
   field :meta_description, :type => String

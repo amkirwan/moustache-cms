@@ -11,6 +11,14 @@ class Admin::PagesController < ApplicationController
   end
   
   def create
+    @page.created_by = current_user
+    @page.updated_by = current_user
+    if @page.save
+      flash[:notice] = "Successfully created page #{@page.title}"
+      redirect_to admin_pages_path
+    else
+      render :new
+    end
   end
   
   def edit
