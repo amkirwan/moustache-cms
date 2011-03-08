@@ -1,13 +1,14 @@
 %table{:id => "users"}
   %thead
     %tr
-      %th{:class => "bold"}
+      %th.bold Username
+      %th.bold Role
+      %th.bold Delete
   %tbody 
   - @users.each do |user|
     %tr{:id => user.username}
-      %td= user.username
-      %td= user.role
-      %td= link_to "edit", edit_admin_user_path(user)
+      %td= link_to user.username, edit_admin_user_path(user)
+      %td= user.role 
       %td.destroy= button_to "delete", admin_user_path(user), :method => :delete, :confirm => "Are you sure you want to delete the user #{user.username}" 
 
 - if admin?

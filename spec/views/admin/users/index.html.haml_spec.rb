@@ -10,24 +10,19 @@ describe "admin/users/index.html.haml" do
     assign(:current_user, current_user)
   end     
   
-  it "should display the users name" do
+  it "should render a edit link" do
     render 
-    rendered.should contain("foo")
-  end                             
+    users.each do |user|
+      rendered.should have_selector("tr#foo") do |tr|
+        tr.should have_selector("a", :content => user.username, :href => edit_admin_user_path(user))
+      end
+    end  
+  end                          
   
   it "should display the users role" do
     render
     rendered.should contain("admin")
   end 
-  
-  it "should render a edit link" do
-    render 
-    users.each do |user|
-      rendered.should have_selector("tr#foo") do |tr|
-        tr.should have_selector("a", :content => "edit", :href => edit_admin_user_path(user))
-      end
-    end  
-  end
   
   it "should render a delete button to delete the user" do
     render  

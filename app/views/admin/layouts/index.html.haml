@@ -1,7 +1,8 @@
 %table{:id => "layouts"}
   %thead
     %tr
-      %th.bold
+      %th.bold Layout Name
+      %th.bold Delete
   %tbody
   - @layouts.each do |layout|
     %tr{:id => layout.name}

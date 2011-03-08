@@ -1,7 +1,7 @@
 Feature: Admin Layout Management Features
 
-@create_new_layout
-Scenario: Create a new layout for the views
+@index_layout
+Scenario: Navigate to the Layout#index page
   Given I login as "ak730" with the role of "admin"
   And these layouts exist
   | name   | content       |

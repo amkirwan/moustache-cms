@@ -1,7 +1,9 @@
 %table{:id => "pages"}
   %thead
     %tr
-      %th.bold
+      %th.bold Title
+      %th.bold Status
+      %th.bold Delete
   %tbody
   - @pages.each do |page|
     %tr{:id => page.title}
