@@ -2,10 +2,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')  
 
 describe "admin/layouts/_form.html.haml" do
-  
-  def form(options)
-    rendered.should have_selector("form", :method => "post", :action => options[:action])
-  end
+  include FormHelpers
   
   def do_render(label)
     render "admin/layouts/form", :layout => layout, :button_label => label
@@ -26,31 +23,27 @@ describe "admin/layouts/_form.html.haml" do
   
   context "when the layout is a new record" do
     
-    def form_new
-      form(:action => admin_layouts_path)
-    end
-    
     before(:each) do
       layout.as_new_record
     end
     
     it "should render a form to create a new layout" do
       do_render("Create Layout")
-      form_new do |f|
+      form_new(:action => admin_layouts_path) do |f|
         f.should have_selector("input", :type => "submit", :value => "Create Layout")
       end
     end
     
     it "should show a field to enter the name of the layout" do
       do_render("Create Layout")
-      form_new do |f|
+      form_new(:action => admin_layouts_path) do |f|
         f.should have_selector("input", :type => "text", :name => "layout[name]")
       end
     end
     
     it "should have a textare to enter the content for they layout" do
       do_render("Create Layout")
-      form_new do |f|
+      form_new(:action => admin_layouts_path) do |f|
         f.should have_selector("textarea", :name => "layout[content]")
       end
     end
@@ -61,13 +54,9 @@ describe "admin/layouts/_form.html.haml" do
       layout.stub(:new_record? => false)
     end
     
-    def form_update
-      form(:action => admin_layout_path(layout))
-    end
-    
     it "should render a form to update the layout" do
       do_render("Update Layout")
-      form_update do |f|
+      form_update(:action => admin_layout_path(layout)) do |f|
         f.should have_selector("input", :type => "submit", :value => "Update Layout")
       end
     end
@@ -75,7 +64,7 @@ describe "admin/layouts/_form.html.haml" do
     it "should show a field with the layout name" do
       layout.stub(:name => "foobar")
       do_render("Update Layout")
-      form_update do |f|
+      form_update(:action => admin_layout_path(layout)) do |f|
         f.should have_selector("input", :type => "text", :value => "foobar")
       end
     end
@@ -83,7 +72,7 @@ describe "admin/layouts/_form.html.haml" do
     it "should contain a textarea that has the layout content" do
       layout.stub(:content => "Hello, World!")
       do_render("Update Layout")
-      form_update do |f|
+      form_update(:action => admin_layout_path(layout)) do |f|
         f.should have_selector("textarea", :content => "Hello, World!")
       end
     end
