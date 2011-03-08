@@ -56,13 +56,13 @@ describe Admin::UsersController do
   end
   
   describe "GET show" do
+    before(:each) do
+      User.stub(:find).and_return(user)
+    end
+    
     let(:params) {{ :id => "1" }}
     def do_get
       get :show, :id => "1"
-    end
-    
-    before(:each) do
-      User.stub(:find).and_return(user)
     end
     
     it "should should receive find" do
