@@ -41,6 +41,11 @@ describe User do
       @layout.should_not be_valid
     end
     
+    it "should not be valid without a filter" do
+      @layout.filter = nil
+      @layout.should_not be_valid
+    end
+    
     it "should not be valid without createb_by" do
       @layout.created_by = nil
       @layout.should_not be_valid
@@ -60,5 +65,11 @@ describe User do
       @layout.updated_by = User.make(:username => nil)
       @layout.should_not be_valid
     end   
+  end
+  
+  context "before_save before_create set layout filter" do
+    it "should set the default filter before saving" do
+      @layout.filter.name.should == "haml"
+    end
   end
 end
