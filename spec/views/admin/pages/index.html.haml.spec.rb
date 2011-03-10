@@ -2,7 +2,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')
 
 describe "admin/pages/index.html.haml" do
-  let(:pages) { [stub_model(Page, :title => "foobar", :status => "Published"), stub_model(Page, :title => "bar", :status => "Published")] }
+  let(:pages) { [stub_model(Page, :title => "foobar", :status? => "published"), stub_model(Page, :title => "bar", :status? => "published")] }
   let(:current_user) { stub_model(User, :role? => true) }
   
   before(:each) do
@@ -28,7 +28,7 @@ describe "admin/pages/index.html.haml" do
     render
     pages.each do |page|
       rendered.should have_selector("tr##{page.title}") do |tr|
-        tr.should contain("Published")
+        tr.should contain("published")
       end
     end
   end

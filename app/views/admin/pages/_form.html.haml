@@ -5,16 +5,10 @@
     = f.label :title, "Title"
     = f.text_field :title, :placeholder => "Page title..."
   %fieldset
-    = f.label :filter, "Filter"
-    = f.collection_select :filter, Filter.all, :id, :name
-  %fieldset
-    = f.label :published_at, "Published"
-    = f.check_box :published_at
+    = f.label :current_state, "Status"
+    = f.collection_select :current_state, CurrentState.all, :id, :name
   %fieldset
     = f.label :layout, "Layout"
     = f.collection_select :layout, Layout.all, :id, :name
-  %fieldset
-    = f.label :content, "Content"
-    = f.text_area :content, :cols => "100", :rows => "75", :placeholder => "Page content..."
   %fieldset 
     = f.submit button_label

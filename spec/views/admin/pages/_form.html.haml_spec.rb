@@ -52,21 +52,7 @@ describe "admin/pages/_form.html.haml" do
     it "should render a form select" do
       new_render
       get_new do |f|
-        f.should have_selector("select", :name => "page[filter]")
-      end
-    end
-    
-    it "should render a field to enter the page content" do
-      new_render
-      get_new do |f|
-        f.should have_selector("textarea", :name => "page[content]")
-      end
-    end
-    
-    it "should render a published checkbox" do
-      new_render
-      get_new do |f|
-        f.should have_selector("input", :type => "checkbox", :name => "page[published_at]")
+        f.should have_selector("select", :name => "page[current_state]")
       end
     end
     
