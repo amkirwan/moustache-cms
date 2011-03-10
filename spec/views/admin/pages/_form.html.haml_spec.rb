@@ -52,14 +52,14 @@ describe "admin/pages/_form.html.haml" do
     it "should render a form select" do
       new_render
       get_new do |f|
-        f.should have_selector("select", :name => "page[current_state]")
+        f.should have_selector("select", :name => "page[current_state][id]")
       end
     end
     
     it "should display a layout to use for the page" do
       new_render
       get_new do |f|
-        f.should have_selector("select", :name => "page[layout]")
+        f.should have_selector("select", :name => "page[layout][id]")
       end
     end
   end                                                                                      

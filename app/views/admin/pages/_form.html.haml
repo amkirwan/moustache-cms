@@ -4,11 +4,13 @@
   %fieldset
     = f.label :title, "Title"
     = f.text_field :title, :placeholder => "Page title..."
+  = f.fields_for :layout do |builder|
+    %fieldset
+      = builder.label :layout, "Layout"
+      = builder.collection_select :id, Layout.all, :name, :name
+  = f.fields_for :current_state do |builder|
+    %fieldset
+      = builder.label :current_state, "Status"
+      = builder.collection_select :id, CurrentState.all, :id, :name
   %fieldset
-    = f.label :current_state, "Status"
-    = f.collection_select :current_state, CurrentState.all, :id, :name
-  %fieldset
-    = f.label :layout, "Layout"
-    = f.collection_select :layout, Layout.all, :id, :name
-  %fieldset 
-    = f.submit button_label
+    =f.submit button_label
