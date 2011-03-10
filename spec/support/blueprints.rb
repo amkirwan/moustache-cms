@@ -43,7 +43,7 @@ Page.blueprint do
 end
 
 CurrentState.blueprint do
-  status { "type_#{sn}" }
+  name { "name_#{sn}" }
   set_on { DateTime.now.utc }
 end
 
