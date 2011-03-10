@@ -25,11 +25,38 @@ end
 Layout.blueprint do
   name { "layout_#{sn}" }
   content { "Hello, World!" }
+  filter 
   created_by { User.make }
   updated_by { User.make }
 end
 
-TextFilter.blueprint do
-  name { "text_filter_#{sn}" }
+Page.blueprint do
+  name { "name_#{sn}" }
+  title { "title_#{sn} "}
+  path_name { "path_name_#{sn}" }
+  meta_title { "meta_title_#{sn}" }
+  meta_keywords { "meta_keyword_#{sn}" }
+  meta_description { "meta_description_#{sn}" }
+  current_state
+  created_by { User.make }
+  updated_by { User.make }
 end
+
+CurrentState.blueprint do
+  status { "type_#{sn}" }
+  set_on { DateTime.now.utc }
+end
+
+PagePart.blueprint do
+  name { "page_part_#{sn}" }
+  filter
+end
+
+Filter.blueprint do
+  name { "filter_#{sn}" }
+end
+
+
+
+
 

@@ -5,6 +5,7 @@ class Layout
   attr_accessible :name, :content
   
   field :name, :type => String
+  index :name, :unique => true
   field :content, :type => String
   field :default, :type => Boolean 
   embeds_one :filter
@@ -12,8 +13,7 @@ class Layout
   embeds_one :updated_by, :class_name => "User"
   embedded_in :page, :inverse_of => :layout
   
-  before_create :set_filter
-  before_save :set_filter 
+  before_validation :set_filter
   
   validates :name,
             :presence => true,
@@ -24,6 +24,6 @@ class Layout
   
   private 
   def set_filter
-    self.filter = Filter.find("haml") unless self.filter.nil?
+    self.filter = Filter.find("haml") if self.filter.nil?
   end
 end

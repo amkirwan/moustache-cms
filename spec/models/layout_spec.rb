@@ -42,6 +42,7 @@ describe User do
     end
     
     it "should not be valid without a filter" do
+      @layout.stub(:set_filter).and_return(nil)
       @layout.filter = nil
       @layout.should_not be_valid
     end
@@ -67,8 +68,10 @@ describe User do
     end   
   end
   
-  context "before_save before_create set layout filter" do
-    it "should set the default filter before saving" do
+  context "before_validation set layout filter if it isn't set" do
+    it "should set the default filter to haml before saving" do
+      @layout.filter = nil
+      @layout.save
       @layout.filter.name.should == "haml"
     end
   end
