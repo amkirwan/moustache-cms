@@ -93,8 +93,8 @@ describe Admin::LayoutsController do
     end
     
     it "should assign created_by and updated by to the current user" do
-      layout.should_receive(:created_by=).with(current_user.id)
-      layout.should_receive(:updated_by=).with(current_user.id)
+      layout.should_receive(:created_by_id=).with(current_user.id)
+      layout.should_receive(:updated_by_id=).with(current_user.id)
       do_post
     end
     
@@ -187,7 +187,7 @@ describe Admin::LayoutsController do
     end
     
     it "should update protected attributes" do
-      layout.should_receive(:updated_by=).with(current_user.id)
+      layout.should_receive(:updated_by_id=).with(current_user.id)
       do_post
     end
     
