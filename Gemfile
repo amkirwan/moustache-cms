@@ -1,9 +1,9 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.3'   
+gem 'rails'   
 gem "haml"
-gem "mongoid", "2.0.0.rc.6"
-gem "bson_ext"     
+gem "mongoid", "2.0.0.rc.7"
+gem "bson_ext", "~> 1.2"    
 gem "cancan"  
 gem "dynamic_form" 
 #gem "rubycas-client", :git => "git://github.com/amkirwan/rubycas-client.git", :branch => "rails3"
@@ -24,4 +24,5 @@ group :development, :test do
   gem "hpricot"
   gem "haml2slim"  
   gem "syntax"   
+  gem "relish"
 end
