@@ -1,17 +1,25 @@
 class Filter
-  include Mongoid::Document
-  include Mongoid::Timestamps
+  include Mongoid::Document 
   
-  referenced_in :page
+  field :name
+  key :name
   
   def self.all
     @filters.dup
   end
   
+  def self.find(id)
+    @filters.find { |filter| filter.id == id.to_s.downcase }.dup
+  end
+  
+  def self.find_by_name(name)
+    @filters.find { |filter| filter.name == name.to_s.downcase }.dup
+  end
+  
   @filters = [
-    Filter.new(:id => 1, :name => "markdown"),
-    Filter.new(:id => 2, :name => "textile"),
-    Filter.new(:id => 3, :name => "html"),
-    Filter.new(:id => 4, :name => "haml")
+    Filter.new(:name => "markdown"),
+    Filter.new(:name => "textile"),
+    Filter.new(:name => "html"),
+    Filter.new(:name => "haml")
   ]
 end

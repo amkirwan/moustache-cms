@@ -10,8 +10,10 @@ class User
   field :username
   field :email
   field :role 
-  embedded_in :page, :inverse_of => :created_by
-  embedded_in :page, :inverse_of => :updated_by
+  references_many :layouts_created, :class_name => "Layout"
+  references_many :layouts_updated, :class_name => "Layout"
+  references_many :pages_created, :class_name => "Page"
+  references_many :pages_updated, :class_name => "Page"
                        
   Roles = %w[editor admin]
   

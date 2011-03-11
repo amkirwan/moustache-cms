@@ -7,10 +7,9 @@ module NavigationHelpers
   #
   def path_to(page_name)
     case page_name
-
     when /the home\s?page/
       '/' 
-    when /the admin page/
+    when /^the admin page$/
       '/admin'
     when /the edit admin user page for "([^\"]*)"/
       edit_admin_user_path($1)

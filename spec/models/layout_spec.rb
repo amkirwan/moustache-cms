@@ -7,14 +7,14 @@ describe User do
   end
   
   context "mass assignment" do
-    it "should protect against mass assignment of created_by and updated_by" do
-      layout = Layout.new(:updated_by => mock_model("User"), :created_by => mock_model("User"))
-      layout.created_by.should be_nil
-      layout.updated_by.should be_nil
+    it "should protect against mass assignment of created_by_id and updated_by_id" do
+      layout = Layout.new(:updated_by_id => mock_model("User").id, :created_by_id => mock_model("User").id)
+      layout.created_by_id.should be_nil
+      layout.updated_by_id.should be_nil
     end
     
     it "should not allow mass assignment of" do
-      @layout.should_not allow_mass_assignment_of(:created_by => mock_model("User"), :updated_by => mock_model("User"))
+      @layout.should_not allow_mass_assignment_of(:created_by_id => mock_model("User").id, :updated_by_id => mock_model("User").id)
     end
     
     it "should allow mass assignment of" do
@@ -47,23 +47,23 @@ describe User do
       @layout.should_not be_valid
     end
     
-    it "should not be valid without createb_by" do
-      @layout.created_by = nil
+    it "should not be valid without createb_by_id" do
+      @layout.created_by_id = nil
       @layout.should_not be_valid
     end
     
     it "should validate associated user instance in created_by" do
-      @layout.created_by = User.make(:username => nil)
+      @layout.created_by_id = nil
       @layout.should_not be_valid
     end
     
-    it "should not be valid without updated_by" do
-      @layout.updated_by = nil
+    it "should not be valid without updated_by_id" do
+      @layout.updated_by_id = nil
       @layout.should_not be_valid
     end
     
     it "should validate associated user instance in updated_by" do
-      @layout.updated_by = User.make(:username => nil)
+      @layout.updated_by_id = nil
       @layout.should_not be_valid
     end   
   end

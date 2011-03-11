@@ -8,10 +8,10 @@ class Layout
   index :name, :unique => true
   field :content, :type => String
   field :default, :type => Boolean 
-  embeds_one :filter
-  embeds_one :created_by, :class_name => "User"
-  embeds_one :updated_by, :class_name => "User"
-  embedded_in :page, :inverse_of => :layout
+  field :filter, :type => Filter
+  references_many :pages
+  referenced_in :created_by, :class_name => "User"
+  referenced_in :updated_by, :class_name => "User"
   
   before_validation :set_filter
   
@@ -19,7 +19,7 @@ class Layout
             :presence => true,
             :uniqueness => true
             
-  validates_presence_of :content, :filter, :created_by, :updated_by
+  validates_presence_of :content, :filter, :created_by_id, :updated_by_id
   validates_associated :created_by, :updated_by
   
   private 

@@ -9,7 +9,7 @@ Given /^these layouts exist$/ do |table|
 end
 
 When /^(?:|I )edit the layout "([^\"]*)"$/ do |layout_name|
-  layout = layout = find_layout(layout_name)
+  layout = find_layout(layout_name)
   When %{I go to the edit admin layout page for "#{layout.to_param}"}
 end
 

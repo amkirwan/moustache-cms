@@ -1,4 +1,4 @@
-%table{:id => "pages"}
+%table#pages
   %thead
     %tr
       %th.bold Title
@@ -8,7 +8,7 @@
   - @pages.each do |page|
     %tr{:id => page.title}
       %td= link_to page.title, edit_admin_page_path(page)
-      %td= page.current_state.name
+      %td= page.current_state.name.capitalize
       %td.destroy= button_to "delete", admin_page_path(page), :method => :delete, :confirm => "Are you sure you want to delete the page #{page.title}"
 
 %ul#new_layout

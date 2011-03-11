@@ -7,7 +7,7 @@
   = f.fields_for :layout do |builder|
     %fieldset
       = builder.label :layout, "Layout"
-      = builder.collection_select :id, Layout.all, :name, :name
+      = builder.collection_select :id, Layout.all, :id, :name
   = f.fields_for :current_state do |builder|
     %fieldset
       = builder.label :current_state, "Status"

@@ -44,7 +44,7 @@ Scenario: Given I am logged in as an admin then I can edit any users account
   | foobar | admin  |
   | bar    | editor |
   When I go to the admin users page
-  And I follow "edit" within "tr#foobar"
+  And I follow "foobar" within "tr#foobar"
   Then I should now be editing the user "foobar"
   And the "user[username]" field within "div#edit_user" should contain "foobar"
   And the "user[email]" field within "div#edit_user" should contain "foobar@example.com"

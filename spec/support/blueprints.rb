@@ -2,14 +2,14 @@ require 'machinist/mongoid'
 
 User.blueprint do
   puid { "user_#{sn}" }
-  username { "#{object.puid}_#{sn}"}
+  username { "#{object.puid}"}
   email { "#{object.puid}@example.com" }
   role  { "role_#{sn}" }
 end
 
 User.blueprint(:admin) do
   puid { "admin_#{sn}" }
-  username { "#{object.puid}_#{sn}"}
+  username { "#{object.puid}"}
   email  { "#{object.puid}@example.com" }
   role { "admin" }
 end            
@@ -17,7 +17,7 @@ end
 
 User.blueprint(:editor) do
   puid { "editor_#{sn}" }
-  username { "#{object.puid}_#{sn}"}
+  username { "#{object.puid}"}
   email  { "#{object.puid}@example.com" }
   role { "editor" }
 end
@@ -25,9 +25,9 @@ end
 Layout.blueprint do
   name { "layout_#{sn}" }
   content { "Hello, World!" }
-  filter 
   created_by { User.make }
   updated_by { User.make }
+  filter  { Filter.make }
 end
 
 Page.blueprint do
@@ -38,8 +38,8 @@ Page.blueprint do
   meta_keywords { "meta_keyword_#{sn}" }
   meta_description { "meta_description_#{sn}" }
   current_state
-  created_by { User.make }
-  updated_by { User.make }
+  created_by
+  updated_by 
 end
 
 CurrentState.blueprint do
