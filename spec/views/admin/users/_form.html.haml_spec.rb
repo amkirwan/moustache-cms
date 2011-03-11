@@ -57,8 +57,8 @@ describe "admin/users/_form.html.haml" do
     it "should show radio button to set user role" do
       do_render("Create User")
       form_new(:action => admin_users_path) do |f|
-        form.should have_selector("input", :type => "radio", :name => "user[role]", :value => "editor")
-        form.should have_selector("input", :type => "radio", :name => "user[role]", :value => "admin")   
+        f.should have_selector("input", :type => "radio", :name => "user[role]", :value => "editor")
+        f.should have_selector("input", :type => "radio", :name => "user[role]", :value => "admin")   
       end
     end  
     

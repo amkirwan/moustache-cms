@@ -10,8 +10,8 @@ class Admin::LayoutsController < ApplicationController
   end
   
   def create
-    @layout.created_by = current_user if admin?
-    @layout.updated_by = current_user if admin?
+    @layout.created_by = current_user.id if admin?
+    @layout.updated_by = current_user.id if admin?
     if @layout.save
       flash[:notice] = "Successfully created layout #{@layout.name}"
       redirect_to admin_layouts_path
@@ -25,7 +25,7 @@ class Admin::LayoutsController < ApplicationController
   
   def update
     @layout.attributes = params[:layout]
-    @layout.updated_by = current_user if admin?
+    @layout.updated_by = current_user.id if admin?
     if @layout.save
       flash[:notice] = "Successfully updated the layout #{@layout.name}"
       redirect_to admin_layouts_path

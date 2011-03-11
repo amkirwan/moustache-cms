@@ -4,7 +4,7 @@ module FormHelpers
     form(:action => options[:action], &block)
   end
   
-  def form_update(options)
+  def form_update(options, &block)
     form(:action => options[:action], &block)
   end
   
