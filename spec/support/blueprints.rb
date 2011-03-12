@@ -38,8 +38,8 @@ Page.blueprint do
   meta_keywords { "meta_keyword_#{sn}" }
   meta_description { "meta_description_#{sn}" }
   current_state
-  created_by
-  updated_by 
+  created_by { User.make }
+  updated_by { User.make }
 end
 
 CurrentState.blueprint do

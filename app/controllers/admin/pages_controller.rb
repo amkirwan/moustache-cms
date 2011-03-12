@@ -8,8 +8,8 @@ class Admin::PagesController < ApplicationController
   end
   
   def new
-    @page.build_layout
-    @page.build_current_state
+    #@page.build_layout
+    #@page.build_current_state
   end
   
   def create

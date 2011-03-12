@@ -7,11 +7,10 @@ class Layout
   field :name, :type => String
   index :name, :unique => true
   field :content, :type => String
-  field :default, :type => Boolean 
   field :filter, :type => Filter
   references_many :pages
-  referenced_in :created_by, :class_name => "User"
-  referenced_in :updated_by, :class_name => "User"
+  referenced_in :created_by, :class_name => "User", :inverse_of => :layouts_created
+  referenced_in :updated_by, :class_name => "User", :inverse_of => :layouts_updated
   
   before_validation :set_filter
   
