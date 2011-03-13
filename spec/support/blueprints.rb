@@ -37,14 +37,14 @@ Page.blueprint do
   meta_title { "meta_title_#{sn}" }
   meta_keywords { "meta_keyword_#{sn}" }
   meta_description { "meta_description_#{sn}" }
-  current_state
   created_by { User.make }
   updated_by { User.make }
+  layout { Layout.make }
+  current_state { CurrentState.make }
 end
 
 CurrentState.blueprint do
   name { "name_#{sn}" }
-  set_on { DateTime.now.utc }
 end
 
 PagePart.blueprint do

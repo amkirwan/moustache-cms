@@ -4,10 +4,12 @@
   %fieldset
     = f.label :title, "Title"
     = f.text_field :title, :placeholder => "Page title..."
-  = f.fields_for :layout do |builder|
-    %fieldset
-      = builder.label :layout, "Layout"
-      = builder.collection_select :id, Layout.all, :id, :name
+  %fieldset
+    = f.label :layout, "Layout"
+    = f.collection_select :layout_id, Layout.all, :id, :name
+  %fieldset
+    = f.label :filter, "Filter"
+    = f.collection_select :filter, Filter.all, :id, :name
   = f.fields_for :current_state do |builder|
     %fieldset
       = builder.label :current_state, "Status"

@@ -49,17 +49,26 @@ describe "admin/pages/_form.html.haml" do
       end
     end
     
-    it "should render a form select" do
+    it "should render a form select for page layout" do
+      Layout.stub(:all).and_return([mock_model("Layout", :name => "foobar" )])
       new_render
       get_new do |f|
-        f.should have_selector("select", :name => "page[current_state][id]")
+        f.should have_selector("select", :name => "page[layout_id]")
       end
     end
     
-    it "should display a layout to use for the page" do
+    it "should render a form select for filter" do
       new_render
       get_new do |f|
-        f.should have_selector("select", :name => "page[layout][id]")
+        f.should have_selector("select", :name => "page[filter]")
+      end
+    end
+    
+    it "should render a form select for page current_state" do
+      page.stub(:current_state).and_return(mock_model("CurrentState"))
+      new_render
+      get_new do |f|
+        f.should have_selector("select", :name => "page[current_state_attributes][id]")
       end
     end
   end                                                                                      
