@@ -97,7 +97,7 @@ describe Page do
       @page.should embed_one :current_state
     end
     
-    it "should be referenced in layout" do
+    it "should reference a layout" do
       @page.should be_referenced_in(:layout)
     end
     
