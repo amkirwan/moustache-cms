@@ -96,4 +96,22 @@ describe User do
       @user.role?(:admin).should == false
     end
   end
+  
+  context "associations" do
+    it "should reference many layouts created" do
+      @user.should reference_many(:layouts_created)
+    end
+    
+    it "should reference many layouts updated" do
+      @user.should reference_many(:layouts_updated)
+    end
+    
+    it "should reference many pages created" do
+      @user.should reference_many(:pages_created)
+    end
+    
+    it "should reference many pages updated" do
+      @user.should reference_many(:pages_updated)
+    end
+  end
 end
