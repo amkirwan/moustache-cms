@@ -4,6 +4,10 @@ class Filter
   field :name
   key :name
   
+  validates :name,
+            :presence => true,
+            :uniqueness => true
+  
   def self.all
     @filters.dup
   end

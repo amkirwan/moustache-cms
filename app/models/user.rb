@@ -11,10 +11,10 @@ class User
   field :email
   field :role 
   
-  references_many :layouts_created, :class_name => "Layout", :inverse_of => :created_by_id
-  references_many :layouts_updated, :class_name => "Layout", :inverse_of => :updated_by_id
-  references_many :pages_created, :class_name => "Page", :inverse_of => :created_by_id
-  references_many :pages_updated, :class_name => "Page", :inverse_of => :updated_by_id
+  references_many :layouts_created, :class_name => "Layout", :inverse_of => :created_by
+  references_many :layouts_updated, :class_name => "Layout", :inverse_of => :updated_by
+  references_many :pages_created, :class_name => "Page", :inverse_of => :created_by
+  references_many :pages_updated, :class_name => "Page", :inverse_of => :updated_by
                        
   Roles = %w[editor admin]
   

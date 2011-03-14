@@ -37,9 +37,9 @@ Page.blueprint do
   meta_title { "meta_title_#{sn}" }
   meta_keywords { "meta_keyword_#{sn}" }
   meta_description { "meta_description_#{sn}" }
-  created_by { User.make }
-  updated_by { User.make }
-  layout { Layout.make }
+  created_by { User.make! }
+  updated_by { User.make! }
+  layout { Layout.make! }
   current_state { CurrentState.make }
 end
 

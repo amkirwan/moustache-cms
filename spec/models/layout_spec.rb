@@ -22,6 +22,14 @@ describe User do
     end
   end
   
+  context "before_validation set layout filter if it isn't set" do
+    it "should set the default filter to haml before saving" do
+      @layout.filter = nil
+      @layout.save
+      @layout.filter.name.should == "haml"
+    end
+  end
+  
   context "validations" do
     it "should create a valid user with valid attributes" do
       @layout.should be_valid
@@ -66,13 +74,5 @@ describe User do
       @layout.updated_by_id = nil
       @layout.should_not be_valid
     end   
-  end
-  
-  context "before_validation set layout filter if it isn't set" do
-    it "should set the default filter to haml before saving" do
-      @layout.filter = nil
-      @layout.save
-      @layout.filter.name.should == "haml"
-    end
   end
 end
