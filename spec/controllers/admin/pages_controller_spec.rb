@@ -58,6 +58,11 @@ describe Admin::PagesController do
       assigns(:page).should == page
     end
     
+    it "should build a nested current_state" do
+      page.should_receive(:build_current_state)
+      do_get
+    end
+    
     it "should render new template for page" do
       do_get
       response.should render_template("admin/pages/new")
@@ -65,11 +70,15 @@ describe Admin::PagesController do
   end
   
   describe "POST create" do
+    let(:status) { mock_model("CurrentStatus") }
+    let(:filter) { mock_model("Filter", :name => "foobar") }
     let(:layout) { mock_model("Layout") }
-    let(:params) {{ "page" => { "title" => "foobar", "fitler" => "1", "published" => "1", "layout" => layout.to_param, "content" => "Hello, World!" }}}
+    let(:params) {{ "page" => { "title" => "foobar", "filter"=> { "name" => filter.name }, "current_state_attributes"=> { "id"=> status.to_param }, "layout_id" => layout.to_param, "content" => "Hello, World!" }}}
     
     before(:each) do
       page.as_new_record
+      CurrentState.stub(:find).and_return(status)
+      Filter.stub(:find).and_return(filter)
       Page.stub(:new).with(params["page"]).and_return(page)
     end
     
@@ -85,6 +94,21 @@ describe Admin::PagesController do
     it "should assign @page for the view" do
       do_post
       assigns(:page).should == page
+    end
+    
+    it "should set the filter for the page" do
+      page.should_receive(:filter=).with(filter)
+      do_post
+    end
+    
+    it "should set the page layout_id" do
+      page.should_receive(:layout_id=).with(params["page"]["layout_id"])
+      do_post
+    end
+    
+    it "should set the page's current state" do
+      page.should_receive(:current_state=).with(status)
+      do_post
     end
     
     it "should assign created_by and updated by to the current user" do

@@ -8,13 +8,13 @@ class Admin::PagesController < ApplicationController
   end
   
   def new
-    #@page.build_layout
-    #@page.build_current_state
+    @page.build_current_state
   end
   
   def create
-    #@page.layout = Layout.criteria.id(params[:page][:layout_attributes][:id]).first
-    #@page.current_state = CurrentState.find(params[:page][:current_state_attributes][:id])
+    @page.filter = Filter.find(params[:page][:filter])
+    @page.layout_id = params[:page][:layout_id]
+    @page.current_state = CurrentState.find(params[:page][:current_state_attributes][:id])
     @page.created_by = current_user
     @page.updated_by = current_user
     if @page.save
