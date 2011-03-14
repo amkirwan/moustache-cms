@@ -75,4 +75,14 @@ describe User do
       @layout.should_not be_valid
     end   
   end
+  
+  context "associations" do
+    it "should reference a user with created_by" do
+      @layout.should be_referenced_in(:created_by).of_type(User).as_inverse_of(:layouts_created)
+    end
+    
+    it "should reference a user with updated_by" do
+      @layout.should be_referenced_in(:updated_by).of_type(User).as_inverse_of(:layouts_updated)
+    end
+  end
 end

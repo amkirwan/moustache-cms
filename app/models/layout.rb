@@ -20,7 +20,6 @@ class Layout
             :uniqueness => true
             
   validates_presence_of :content, :filter, :created_by_id, :updated_by_id
-  validates_associated :created_by, :updated_by
   
   private 
   def set_filter
