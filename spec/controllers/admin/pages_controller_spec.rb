@@ -64,12 +64,6 @@ describe Admin::PagesController do
       do_get
     end
     
-    it "should build nested editors" do
-      page.should_receive(:editors).and_return(editors = [])
-      editors.should_receive(:build)
-      do_get
-    end
-    
     it "should render new template for page" do
       do_get
       response.should render_template("admin/pages/new")

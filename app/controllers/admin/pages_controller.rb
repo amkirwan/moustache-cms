@@ -9,7 +9,6 @@ class Admin::PagesController < ApplicationController
   
   def new
     @page.build_current_state
-    @page.editors.build
   end
   
   def create
