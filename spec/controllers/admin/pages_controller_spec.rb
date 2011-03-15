@@ -41,6 +41,7 @@ describe Admin::PagesController do
     
     before(:each) do
       page.as_new_record
+      page.stub_chain(:editors, :build).and_return([mock_model("User")])
       Page.stub(:new).and_return(page)
     end
     
@@ -60,6 +61,12 @@ describe Admin::PagesController do
     
     it "should build a nested current_state" do
       page.should_receive(:build_current_state)
+      do_get
+    end
+    
+    it "should build nested editors" do
+      page.should_receive(:editors).and_return(editors = [])
+      editors.should_receive(:build)
       do_get
     end
     
