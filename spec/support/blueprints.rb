@@ -41,6 +41,7 @@ Page.blueprint do
   updated_by { User.make! }
   layout { Layout.make! }
   current_state { CurrentState.make }
+  editors { [User.make!] }
 end
 
 CurrentState.blueprint do
