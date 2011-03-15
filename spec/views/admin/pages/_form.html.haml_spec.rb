@@ -56,6 +56,14 @@ describe "admin/pages/_form.html.haml" do
       end
     end
     
+    it "should render a field to enter the editors" do
+      User.stub(:all).and_return([mock_model("User", :puid => "foobar")])
+      new_render
+      get_new do |f|
+        f.should have_selector("input", :type => "checkbox", :name => "page[editor_ids][]")
+      end
+    end
+    
     it "should render a text field for the meta_title" do
       new_render
       get_new do |f|
