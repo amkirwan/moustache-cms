@@ -15,6 +15,7 @@ class User
   references_many :layouts_updated, :class_name => "Layout"
   references_many :pages_created, :class_name => "Page"
   references_many :pages_updated, :class_name => "Page"
+  references_and_referenced_in_many :pages, :class_name => "Page"
                        
   Roles = %w[editor admin]
   

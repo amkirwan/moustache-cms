@@ -32,6 +32,9 @@ Scenario: Create a new page
   And I follow "Add New Page"
   Then I should be on the new admin page page
   And I fill in "page_title" with "foobar" within "div#add_new_page"
+  And I fill in "page_meta_title" with "meta_title_foobar" within "div#add_new_page"
+  And I fill in "page_meta_keywords" with "meta_keywords_foobar" within "div#add_new_page"
+  And I fill in "page_meta_description" with "meta_description_foobar" within "div#add_new_page"
   And I select "app" from "page_layout_id" within "div#add_new_page"
   And I select "haml" from "page_filter" within "div#add_new_page"
   And I select "published" from "page_current_state_attributes_id" within "div#add_new_page"

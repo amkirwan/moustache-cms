@@ -32,7 +32,7 @@ end
 
 Page.blueprint do
   name { "name_#{sn}" }
-  title { "title_#{sn} "}
+  title { "title_#{sn}"}
   path_name { "path_name_#{sn}" }
   meta_title { "meta_title_#{sn}" }
   meta_keywords { "meta_keyword_#{sn}" }

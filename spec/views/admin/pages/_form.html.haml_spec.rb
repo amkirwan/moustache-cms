@@ -49,6 +49,34 @@ describe "admin/pages/_form.html.haml" do
       end
     end
     
+    it "should render a field to enter the page path" do
+      new_render
+      get_new do |f|
+        f.should have_selector("input", :type => "text", :name => "page[path_name]")
+      end
+    end
+    
+    it "should render a text field for the meta_title" do
+      new_render
+      get_new do |f|
+        f.should have_selector("input", :type => "text", :name => "page[meta_title]")
+      end
+    end
+    
+    it "should render a text field for the meta_keywords" do
+      new_render
+      get_new do |f|
+        f.should have_selector("input", :type => "text", :name => "page[meta_keywords]")
+      end
+    end
+    
+    it "should render a textarea for the meta_description" do
+      new_render
+      get_new do |f|
+        f.should have_selector("textarea", :name => "page[meta_description]")
+      end
+    end
+    
     it "should render a form select for page layout" do
       Layout.stub(:all).and_return([mock_model("Layout", :name => "foobar" )])
       new_render

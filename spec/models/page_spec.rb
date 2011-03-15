@@ -40,6 +40,33 @@ describe Page do
       @page.save
       @page.filter.name.should == "html"
     end
+    
+    it "should remove any leading or trainling white space from the title" do
+      @page.title = " Hello, World!  \n"
+      @page.save
+      @page.title.should == "Hello, World!"
+    end
+  end
+  
+  context "after_validation set path_name if it isn't set" do
+    it "should set the default path_name to the page name if it is nil" do
+      @page.path_name = nil
+      @page.save
+      @page.path_name.should == @page.title
+    end
+    
+    it "should encode a valid URI with escape characters" do
+      @page.path_name = " Hello, World!  "
+      @page.save
+      @page.path_name.should == "Hello,%20World!"
+    end
+    
+    it "should encode valid URI with escaped characters, uses title when path_name is nil" do
+      @page.title = " Hello, World!"
+      @page.path_name = nil
+      @page.save
+      @page.path_name.should == "Hello,%20World!"
+    end
   end
   
   context "validations" do
@@ -50,15 +77,6 @@ describe Page do
     
     it "should not be valid without a unique title" do
       Page.make(:title => @page.title).should_not be_valid
-    end
-    
-    it "should not be valid without a path name" do
-      @page.path_name = nil
-      @page.should_not be_valid
-    end
-    
-    it "should not be valid without a unique path name" do
-      Page.make(:path_name => @page.path_name).should_not be_valid
     end
     
     it "should not be valid without a unique meta_title" do
@@ -107,6 +125,10 @@ describe Page do
     
     it "should reference a user with updated_by" do
       @page.should be_referenced_in(:updated_by).of_type(User).as_inverse_of(:pages_updated)
+    end
+    
+    it "should have many editors" do
+      @page.should reference_and_be_referenced_in_many(:editors).of_type(User)
     end
   end
   

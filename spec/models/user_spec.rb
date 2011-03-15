@@ -99,19 +99,23 @@ describe User do
   
   context "associations" do
     it "should reference many layouts created" do
-      @user.should reference_many(:layouts_created)
+      @user.should reference_many(:layouts_created).of_type(Layout)
     end
     
     it "should reference many layouts updated" do
-      @user.should reference_many(:layouts_updated)
+      @user.should reference_many(:layouts_updated).of_type(Layout)
     end
     
     it "should reference many pages created" do
-      @user.should reference_many(:pages_created)
+      @user.should reference_many(:pages_created).of_type(Page)
     end
     
     it "should reference many pages updated" do
-      @user.should reference_many(:pages_updated)
+      @user.should reference_many(:pages_updated).of_type(Page)
+    end
+    
+    it "should have many editors" do
+      @user.should reference_and_be_referenced_in_many(:pages).of_type(Page)
     end
   end
 end
