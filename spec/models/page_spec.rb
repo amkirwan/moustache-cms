@@ -136,6 +136,12 @@ describe Page do
     it "should accept nested attributes for current_state" do
       @page.respond_to?(:build_current_state).should == true
     end
+    
+    it "should accept nested attributes for editors" do
+      @page.editors = []
+      @page.editors.build
+      @page.editors.should_not == nil
+    end
   end
 end
 

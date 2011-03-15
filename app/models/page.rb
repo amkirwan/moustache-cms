@@ -27,6 +27,7 @@ class Page
   referenced_in :updated_by, :class_name => "User", :inverse_of => :pages_updated
   #embeds_many :page_parts 
   accepts_nested_attributes_for :current_state
+  accepts_nested_attributes_for :editors
   
   validates :title,
             :presence => true,
