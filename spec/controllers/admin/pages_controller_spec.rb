@@ -74,7 +74,7 @@ describe Admin::PagesController do
     let(:status) { mock_model("CurrentStatus") }
     let(:filter) { mock_model("Filter", :name => "foobar") }
     let(:layout) { mock_model("Layout") }
-    let(:params) {{ "page" => { "title" => "foobar", "filter"=> { "name" => filter.name }, "current_state_attributes"=> { "id"=> status.to_param }, "layout_id" => layout.to_param, "content" => "Hello, World!" }}}
+    let(:params) {{ "page" => { "title" => "foobar", "filter"=> { "name" => filter.name }, "current_state_attributes"=> { "id"=> status.to_param }, "editor_ids"=>["ak730", "cds27"], "layout_id" => layout.to_param, "content" => "Hello, World!" }}}
     
     before(:each) do
       page.as_new_record
@@ -109,6 +109,11 @@ describe Admin::PagesController do
     
     it "should set the page's current state" do
       page.should_receive(:current_state=).with(status)
+      do_post
+    end
+    
+    it "should set the page editors" do
+      controller.should_receive(:assign_editors).with(params["page"]["editor_ids"])
       do_post
     end
     
