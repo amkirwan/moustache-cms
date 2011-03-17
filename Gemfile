@@ -25,4 +25,5 @@ group :development, :test do
   gem "haml2slim"  
   gem "syntax"   
   gem "relish"
+  gem 'spork', '~> 0.9.0.rc'
 end
