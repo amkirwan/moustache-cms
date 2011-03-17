@@ -11,7 +11,10 @@ class Ability
     if user.role? :editor 
       can :update, User, :puid => user.puid
       can :show, User, :puid => user.puid
-      can :manage, Page, :editor_ids => user.puid
+      can :create, Page
+      can [:read, :update, :destroy], Page do |page|
+        page.editors.include?(user)
+      end
     end
   end    
 end

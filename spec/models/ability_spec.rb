@@ -4,7 +4,7 @@ require "cancan/matchers"
 describe Ability do  
   let(:admin) { User.make(:admin) }
   let(:editor) { User.make(:editor) }
-  let(:page) { Page.make }
+  let(:page) { Page.make(:editors => [admin, editor]) }
   let(:user) { User.make }  
   let(:admin_ability) { Ability.new(admin) }
   let(:editor_ability) { Ability.new(editor) }
@@ -22,8 +22,20 @@ describe Ability do
       editor_ability.should be_able_to(:show, editor)
     end
     
-    it "should allow the user with a role of editor to edit pages they have editor rights for" do
-      editor_ability.should be_able_to(:update, Page.make)
+    it "should allow the user with ra role of editor to create pages" do
+      editor_ability.should be_able_to(:create, page)
+    end
+    
+    it "should allow the user with ra role of editor to read pages they are an editor for" do
+      editor_ability.should be_able_to(:read, page)
+    end
+    
+    it "should allow the user with a role of editor to update pages they have editor rights for" do
+      editor_ability.should be_able_to(:update, page)
+    end
+    
+    it "should allow the user with a role of editor to destroy pages they have editor rights for" do
+      editor_ability.should be_able_to(:destroy, page)
     end
   end
    
@@ -46,6 +58,18 @@ describe Ability do
 
     it "should not allow the user with a role of editor to edit other user records" do
       editor_ability.should_not be_able_to(:update, user)
+    end
+    
+    it "should not allow the user with a role of editor to read a page they are not an editor for" do
+      editor_ability.should_not be_able_to(:read, Page.make)
+    end
+    
+    it "should not allow the user with a role of editor to update a page they are not an editor for" do
+      editor_ability.should_not be_able_to(:update, Page.make)
+    end
+    
+    it "should not allow the user with a role of editor to destroy pages they are not an editor for" do
+      editor_ability.should_not be_able_to(:destroy, Page.make)
     end
   end    
 end
