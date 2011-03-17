@@ -21,13 +21,13 @@ class Page
   field :meta_description, :type => String
   field :filter, :type => Filter
   embeds_one :current_state
-  references_and_referenced_in_many :editors, :class_name => "User"
+  references_and_referenced_in_many :editors, :class_name => "User", :uniq => true
   referenced_in :layout
-  referenced_in :created_by, :class_name => "User", :inverse_of => :pages_created
-  referenced_in :updated_by, :class_name => "User", :inverse_of => :pages_updated
+  referenced_in :created_by, :class_name => "User"
+  referenced_in :updated_by, :class_name => "User"
   #embeds_many :page_parts 
   accepts_nested_attributes_for :current_state
-  accepts_nested_attributes_for :editors
+  #accepts_nested_attributes_for :editors
   
   validates :title,
             :presence => true,
@@ -43,6 +43,7 @@ class Page
   
   before_validation :set_filter, :format_title
   after_validation :uri_escape_path_name
+  after_save :update_user_pages
   #before_destroy :move_children_to_parent
   
   private 
@@ -55,10 +56,19 @@ class Page
   end
   
   def uri_escape_path_name
-    if self.path_name.nil?
+    if self.path_name.nil? && !self.title.nil?
       self.path_name = URI.escape(self.title)
     else
       self.path_name = URI.escape(self.path_name.strip)
+    end
+  end
+  
+  ## rc7 temp fixes for relations for mongoid
+  def update_user_pages
+    self.editors.each do |editor|
+      editor.page_ids ||= []
+      editor.pages << self unless editor.pages.include?(self)
+      editor.save
     end
   end
 end

@@ -4,6 +4,7 @@ require "cancan/matchers"
 describe Ability do  
   let(:admin) { User.make(:admin) }
   let(:editor) { User.make(:editor) }
+  let(:page) { Page.make }
   let(:user) { User.make }  
   let(:admin_ability) { Ability.new(admin) }
   let(:editor_ability) { Ability.new(editor) }
@@ -19,6 +20,10 @@ describe Ability do
 
     it "should allow the user with a role of editor to show their own record" do
       editor_ability.should be_able_to(:show, editor)
+    end
+    
+    it "should allow the user with a role of editor to edit pages they have editor rights for" do
+      editor_ability.should be_able_to(:update, Page.make)
     end
   end
    

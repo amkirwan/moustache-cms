@@ -40,6 +40,5 @@ class Admin::PagesController < ApplicationController
   def assign_editors(editors)
     editors.each { |editor| @page.editor_ids << editor}
     @page.editor_ids << current_user.puid
-    @page.editor_ids.unique!
   end
 end

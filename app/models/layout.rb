@@ -9,9 +9,8 @@ class Layout
   field :content, :type => String
   field :filter, :type => Filter
   references_many :pages
-  #references_many :pages
-  referenced_in :created_by, :class_name => "User", :inverse_of => :layouts_created
-  referenced_in :updated_by, :class_name => "User", :inverse_of => :layouts_updated
+  referenced_in :created_by, :class_name => "User"
+  referenced_in :updated_by, :class_name => "User"
   
   before_validation :set_filter
   

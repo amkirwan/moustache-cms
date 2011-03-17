@@ -11,11 +11,11 @@ class User
   field :email
   field :role 
   
-  references_many :layouts_created, :class_name => "Layout"
-  references_many :layouts_updated, :class_name => "Layout"
-  references_many :pages_created, :class_name => "Page"
-  references_many :pages_updated, :class_name => "Page"
-  references_and_referenced_in_many :pages, :class_name => "Page"
+  references_many :layouts_created, :class_name => "Layout", :foreign_key => :created_by_id
+  references_many :layouts_updated, :class_name => "Layout", :foreign_key => :updated_by_id
+  references_many :pages_created, :class_name => "Page", :foreign_key => :created_by_id
+  references_many :pages_updated, :class_name => "Page", :foreign_key => :updated_by_id
+  references_and_referenced_in_many :pages, :class_name => "Page", :uniq => true
                        
   Roles = %w[editor admin]
   

@@ -67,6 +67,11 @@ describe Page do
       @page.save
       @page.path_name.should == "Hello,%20World!"
     end
+    
+    it "should set the user#pages with after_save filter for manually bug in mongoid rc7 habtm to habtm" do
+      @page.save
+      @page.editors.each { |editor| editor.pages.count == 1 }
+    end
   end
   
   context "validations" do
@@ -84,12 +89,12 @@ describe Page do
     end
     
     it "should not be valid without a filter" do
+      @page.stub(:set_filter).and_return(nil)
       @page.filter = nil
       @page.should_not be_valid
     end
     
     it "should not be valid without a current state" do
-      @page.stub(:set_filter).and_return(nil)
       @page.current_state = nil
       @page.should_not be_valid
     end
@@ -120,11 +125,11 @@ describe Page do
     end
     
     it "should reference a user with created_by" do
-      @page.should be_referenced_in(:created_by).of_type(User).as_inverse_of(:pages_created)
+      @page.should be_referenced_in(:created_by).of_type(User)
     end
     
     it "should reference a user with updated_by" do
-      @page.should be_referenced_in(:updated_by).of_type(User).as_inverse_of(:pages_updated)
+      @page.should be_referenced_in(:updated_by).of_type(User)
     end
     
     it "should have many editors" do
