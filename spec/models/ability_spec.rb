@@ -26,8 +26,12 @@ describe Ability do
       editor_ability.should be_able_to(:create, page)
     end
     
-    it "should allow the user with ra role of editor to read pages they are an editor for" do
-      editor_ability.should be_able_to(:read, page)
+    it "should allow the user with a role of editor to index action" do
+      editor_ability.should be_able_to(:index, page)
+    end
+    
+    it "should allow the user with a role of editor to show pages they are an editor for" do
+      editor_ability.should be_able_to(:show, page)
     end
     
     it "should allow the user with a role of editor to update pages they have editor rights for" do
