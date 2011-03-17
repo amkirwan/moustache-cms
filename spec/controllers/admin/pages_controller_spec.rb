@@ -118,8 +118,7 @@ describe Admin::PagesController do
     end
     
     it "should assign created_by and updated by to the current user" do
-      page.should_receive(:created_by=).with(current_user)
-      page.should_receive(:updated_by=).with(current_user)
+      controller.should_receive(:created_updated_by_for).with(page)
       do_post
     end
     

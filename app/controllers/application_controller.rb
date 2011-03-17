@@ -16,7 +16,12 @@ class ApplicationController < ActionController::Base
   def admin?     
     @current_user.role?("admin")
   end
-  
+
+  def created_updated_by_for(obj)
+    obj.created_by = current_user
+    obj.updated_by = current_user
+  end
+    
   private
   def fake_login(cas_user) 
     if Rails.env == "test"   

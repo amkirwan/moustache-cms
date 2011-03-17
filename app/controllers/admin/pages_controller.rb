@@ -17,8 +17,7 @@ class Admin::PagesController < ApplicationController
     @page.layout_id = params[:page][:layout_id]
     @page.current_state = CurrentState.find(params[:page][:current_state_attributes][:id])
     assign_editors(params[:page][:editor_ids])
-    @page.created_by = current_user
-    @page.updated_by = current_user
+    created_updated_by_for @page
     if @page.save
       flash[:notice] = "Successfully created page #{@page.title}"
       redirect_to admin_pages_path

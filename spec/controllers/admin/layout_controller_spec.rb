@@ -93,8 +93,7 @@ describe Admin::LayoutsController do
     end
     
     it "should assign created_by and updated by to the current user" do
-      layout.should_receive(:created_by=).with(current_user)
-      layout.should_receive(:updated_by=).with(current_user)
+      controller.should_receive(:created_updated_by_for).with(layout)
       do_post
     end
     
