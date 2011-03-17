@@ -17,7 +17,7 @@ class User
   references_many :pages_updated, :class_name => "Page", :foreign_key => :updated_by_id
   references_and_referenced_in_many :pages, :class_name => "Page", :uniq => true
                        
-  Roles = %w[editor admin]
+  Roles = %w[editor admin] unless defined?(Roles)
   
   validates :puid,
             :presence => true,
