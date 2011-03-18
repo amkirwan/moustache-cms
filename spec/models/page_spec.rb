@@ -54,6 +54,12 @@ describe Page do
       @page.path_name.should == "Hello, World!"
     end
     
+    it "should remove any leading or trailing white space from the path_name" do
+      @page.path_name = " Hello, World!  \n"
+      @page.save
+      @page.path_name.should == "Hello, World!"
+    end
+    
     it "should make editor_ids array unique" do
       @page.editor_ids = ["ak730", "cds27", "foobar", "ak730", "cds27"]
       @page.save
