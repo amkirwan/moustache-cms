@@ -47,6 +47,13 @@ describe Page do
       @page.title.should == "Hello, World!"
     end
     
+    it "should set the path_name to the page title when the path_name is nil" do
+      @page.title = " Hello, World!    \n"
+      @page.path_name = nil
+      @page.save
+      @page.path_name.should == "Hello, World!"
+    end
+    
     it "should make editor_ids array unique" do
       @page.editor_ids = ["ak730", "cds27", "foobar", "ak730", "cds27"]
       @page.save
@@ -59,19 +66,6 @@ describe Page do
       @page.path_name = nil
       @page.save
       @page.path_name.should == @page.title
-    end
-    
-    it "should encode a valid URI with escape characters" do
-      @page.path_name = " Hello, World!  "
-      @page.save
-      @page.path_name.should == "Hello,%20World!"
-    end
-    
-    it "should encode valid URI with escaped characters, uses title when path_name is nil" do
-      @page.title = " Hello, World!"
-      @page.path_name = nil
-      @page.save
-      @page.path_name.should == "Hello,%20World!"
     end
     
     it "should set the user#pages with after_save filter for manually bug in mongoid rc7 habtm to habtm" do

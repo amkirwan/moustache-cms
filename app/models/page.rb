@@ -21,7 +21,7 @@ class Page
   field :meta_description, :type => String
   field :filter, :type => Filter
   embeds_one :current_state
-  references_and_referenced_in_many :editors, :class_name => "User", :uniq => true
+  references_and_referenced_in_many :editors, :class_name => "User"
   referenced_in :layout
   referenced_in :created_by, :class_name => "User"
   referenced_in :updated_by, :class_name => "User"
@@ -30,8 +30,7 @@ class Page
   #accepts_nested_attributes_for :editors
   
   validates :title,
-            :presence => true,
-            :uniqueness => true
+            :presence => true, :uniqueness => true
             
   validates :path_name,
             :uniqueness => true, :allow_blank => true, :allow_nil => true
@@ -41,8 +40,7 @@ class Page
   
   validates_presence_of :filter, :current_state, :layout, :created_by, :updated_by
   
-  before_validation :set_filter, :format_title, :uniq_editor_ids
-  after_validation :uri_escape_path_name
+  before_validation :set_filter, :format_title, :set_path_name, :uniq_editor_ids
   after_save :update_user_pages
   #before_destroy :move_children_to_parent
   
@@ -55,11 +53,11 @@ class Page
     self.filter = Filter.find("html") if self.filter.nil?
   end
   
-  def uri_escape_path_name
+  def set_path_name
     if self.path_name.nil? && !self.title.nil?
-      self.path_name = URI.escape(self.title)
+      self.path_name = self.title
     else
-      self.path_name = URI.escape(self.path_name.strip)
+      self.path_name = self.path_name.strip!
     end
   end
   
