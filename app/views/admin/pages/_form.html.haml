@@ -19,8 +19,8 @@
   %fieldset
     = f.label :editors, "Editors"
     - User.all.each do |user|
-      = check_box_tag "page[editor_ids][]", user.puid
-      = label_tag user.puid, user.puid.downcase
+      = check_box_tag "page[editor_ids][]", user.puid, page.editor_ids.include?(user.puid), :id => "editor_id_#{user.puid}"
+      = label_tag "page[editor_ids][#{user.puid}]", user.puid.downcase
   %fieldset
     = f.label :layout, "Layout"
     = f.collection_select :layout_id, Layout.all, :id, :name

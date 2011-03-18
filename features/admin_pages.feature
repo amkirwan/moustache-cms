@@ -20,6 +20,11 @@ Scenario: Navigate to the Pages#index page
 @create_new_page
 Scenario: Create a new page
   Given I login as "ak730" with the role of "admin"
+  And the user with the role exist
+  | user   | role   |
+  | foo    | admin  |
+  | bar    | editor |
+  | foobar | editor |
   And these current states exist
   | name      |
   | published |
@@ -35,6 +40,8 @@ Scenario: Create a new page
   And I fill in "page_meta_title" with "meta_title_foobar" within "div#add_new_page"
   And I fill in "page_meta_keywords" with "meta_keywords_foobar" within "div#add_new_page"
   And I fill in "page_meta_description" with "meta_description_foobar" within "div#add_new_page"
+  And I check "editor_id_ak730" within "div#add_new_page"
+  And I check "editor_id_foo" within "div#add_new_page"
   And I select "app" from "page_layout_id" within "div#add_new_page"
   And I select "haml" from "page_filter" within "div#add_new_page"
   And I select "published" from "page_current_state_attributes_id" within "div#add_new_page"
