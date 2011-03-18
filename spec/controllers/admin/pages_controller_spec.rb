@@ -153,6 +153,6 @@ describe Admin::PagesController do
         do_post
         response.should render_template("admin/pages/new")
       end
-    end
+    end 
   end
 end

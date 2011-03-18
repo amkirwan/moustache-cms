@@ -15,7 +15,9 @@ class User
   references_many :layouts_updated, :class_name => "Layout", :foreign_key => :updated_by_id
   references_many :pages_created, :class_name => "Page", :foreign_key => :created_by_id
   references_many :pages_updated, :class_name => "Page", :foreign_key => :updated_by_id
-  references_and_referenced_in_many :pages, :class_name => "Page", :uniq => true
+  references_and_referenced_in_many :pages, :class_name => "Page"
+  
+  before_validation :uniq_page_ids
                        
   Roles = %w[editor admin] unless defined?(Roles)
   
@@ -38,5 +40,10 @@ class User
 
   def role?(base_role)
     Roles.index(base_role.to_s) <= Roles.index(role)
+  end
+  
+  private
+  def uniq_page_ids
+    self.page_ids.uniq!
   end
 end

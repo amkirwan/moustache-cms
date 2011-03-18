@@ -21,6 +21,14 @@ describe User do
     end
   end
   
+  context "before_validation set page filter if it isn't set" do
+    it "should make page_ids array unique" do
+      @user.page_ids = [ "4d7cd4617353202ab6000065", "5d7cd4617353202ab6000065", "4d7cd4617353202ab6000065", "4d7cd4617353202ab6000065"]
+      @user.save
+      @user.page_ids.count.should == 2
+    end
+  end
+  
   context "validations" do
     it "should create a valid user with valid attributes" do
       @user.should be_valid

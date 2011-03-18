@@ -36,8 +36,8 @@ class Admin::PagesController < ApplicationController
   end
   
   private 
-  def assign_editors(editors)
-    editors.each { |editor| @page.editor_ids << editor}
-    @page.editor_ids << current_user.puid
+  def assign_editors(editor_ids)
+    editor_ids.each { |editor_id| @page.editor_ids << editor_id unless @page.editor_ids.include?(editor_id) }
+    @page.editor_ids << current_user.puid unless @page.editor_ids.include?(current_user.puid) 
   end
 end

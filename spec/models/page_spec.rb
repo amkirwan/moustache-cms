@@ -46,6 +46,12 @@ describe Page do
       @page.save
       @page.title.should == "Hello, World!"
     end
+    
+    it "should make editor_ids array unique" do
+      @page.editor_ids = ["ak730", "cds27", "foobar", "ak730", "cds27"]
+      @page.save
+      @page.editor_ids.should == ["ak730", "cds27", "foobar"]
+    end
   end
   
   context "after_validation set path_name if it isn't set" do
@@ -148,6 +154,7 @@ describe Page do
       @page.editors.should_not == nil
     end
   end
+
 end
 
 

@@ -41,7 +41,7 @@ class Page
   
   validates_presence_of :filter, :current_state, :layout, :created_by, :updated_by
   
-  before_validation :set_filter, :format_title
+  before_validation :set_filter, :format_title, :uniq_editor_ids
   after_validation :uri_escape_path_name
   after_save :update_user_pages
   #before_destroy :move_children_to_parent
@@ -61,6 +61,10 @@ class Page
     else
       self.path_name = URI.escape(self.path_name.strip)
     end
+  end
+  
+  def uniq_editor_ids
+    self.editor_ids.uniq!
   end
   
   ## rc7 temp fixes for relations for mongoid
