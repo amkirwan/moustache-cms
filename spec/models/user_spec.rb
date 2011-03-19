@@ -17,7 +17,7 @@ describe User do
     end
     
     it "should allow mass assignment of" do
-      @user.should allow_mass_assignment_of(:username => "foobar", :email => "foobar@example.com")
+      @user.should allow_mass_assignment_of(:firstname => "foobar", :lastname => "foobar", :email => "foobar@example.com")
     end
   end
   

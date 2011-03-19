@@ -2,12 +2,14 @@ class User
   include Mongoid::Document
   include Mongoid::Timestamps
    
-  attr_accessible :username, :email 
+  attr_accessible :username, :firstname, :lastname, :email 
        
   field :puid
   index :puid, :unique => true
   key :puid         
   field :username
+  field :firstname
+  field :lastname
   field :email
   field :role 
   
