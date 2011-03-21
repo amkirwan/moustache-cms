@@ -8,6 +8,7 @@ class Layout
   index :name, :unique => true
   field :content, :type => String
   field :filter, :type => Filter
+  
   references_many :pages
   referenced_in :created_by, :class_name => "User"
   referenced_in :updated_by, :class_name => "User"
