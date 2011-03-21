@@ -2,10 +2,6 @@
 require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
 
 describe CurrentState do   
-  before(:each) do
-    @current_state = CurrentState.make
-  end
-  
   context "CurrentState#all" do
     it "should return all the statuses" do
       CurrentState.all.count.should == 2
