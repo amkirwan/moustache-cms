@@ -1,6 +1,10 @@
 class CurrentState
   include Mongoid::Document 
   
+  class << self
+    attr_accessor :statuses
+  end
+  
   field :name, :type => String
   key :name
   embedded_in :page, :inverse_of => :current_state
