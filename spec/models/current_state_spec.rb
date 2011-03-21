@@ -2,6 +2,22 @@
 require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
 
 describe CurrentState do   
+  
+  context "validations" do
+    before(:each) do
+      @current_state = CurrentState.make
+    end
+    
+    it "should create a valid CurrentState with valid attributes" do
+      @current_state.should be_valid
+    end
+  
+    it "should not be valid without a current_state name" do
+     @current_state.name = nil
+     @current_state.should_not be_valid
+    end
+  end
+  
   context "CurrentState#all" do
     it "should return all the statuses" do
       CurrentState.all.count.should == 2

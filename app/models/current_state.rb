@@ -9,6 +9,9 @@ class CurrentState
   key :name
   embedded_in :page, :inverse_of => :current_state
   
+  validates :name,
+            :presence => true
+  
   def self.all
     @statuses.dup
   end
