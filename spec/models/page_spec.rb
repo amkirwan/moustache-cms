@@ -141,6 +141,10 @@ describe Page do
     it "should have many editors" do
       @page.should reference_and_be_referenced_in_many(:editors).of_type(User)
     end
+    
+    it "should embedd many page_parts" do
+      @page.should embed_many :page_parts
+    end
   end
   
   context "nested attributes" do

@@ -1,9 +1,14 @@
 class PagePart
   include Mongoid::Document 
-  include Mongoid::Timestamps
   
   field :name
   key :name
-  embeds_one :filter
-  #embedded_in :page, :inverse_of => :pages
+  field :content
+  
+  embedded_in :page, :inverse_of => :page_parts
+  
+  validates :name,
+            :presence => true
+            
+  validates_uniqueness_of :name
 end

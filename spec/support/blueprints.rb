@@ -44,7 +44,8 @@ Page.blueprint do
   updated_by { User.make! }
   layout { Layout.make! }
   current_state { CurrentState.make }
-  editors { [User.make!] }
+  editors { [ User.make! ] }
+  page_parts { [ PagePart.make ]}
 end
 
 CurrentState.blueprint do
@@ -53,7 +54,7 @@ end
 
 PagePart.blueprint do
   name { "page_part_#{sn}" }
-  filter
+  content { "Hello, World!" }
 end
 
 Filter.blueprint do

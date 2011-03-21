@@ -1,6 +1,6 @@
 class Page
   include Mongoid::Document 
-  #include Mongoid::Timestamps
+  include Mongoid::Timestamps
   #include Mongoid::Tree
   #include Mongoid::Tree::Traversal
   #include Mongoid::Tree::Ordering
@@ -13,6 +13,7 @@ class Page
                   :filter,
                   :current_state, 
                   :layout_id
+                  :page_parts
   
   field :title, :type => String
   field :path_name, :type => String
@@ -20,20 +21,21 @@ class Page
   field :meta_keywords, :type => String
   field :meta_description, :type => String
   field :filter, :type => Filter
+  
   embeds_one :current_state
+  embeds_many :page_parts 
   references_and_referenced_in_many :editors, :class_name => "User"
   referenced_in :layout
   referenced_in :created_by, :class_name => "User"
   referenced_in :updated_by, :class_name => "User"
-  #embeds_many :page_parts 
+  
   accepts_nested_attributes_for :current_state
-  #accepts_nested_attributes_for :editors
   
   validates :title,
             :presence => true, :uniqueness => true
             
   validates :path_name,
-            :uniqueness => true, :allow_blank => true, :allow_nil => true
+            :uniqueness => true, :allow_nil => true
   
   validates :meta_title,
             :uniqueness => true, :allow_blank => true, :allow_nil => true
