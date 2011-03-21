@@ -18,6 +18,12 @@ describe CurrentState do
     end
   end
   
+  context "association" do
+    it "should be embbeded in page" do
+      should be_embedded_in(:page).as_inverse_of(:current_state)
+    end
+  end
+  
   context "finder methods" do
     before(:each) do
       CurrentState.statuses << CurrentState.new(:name => "foobar")  
@@ -51,12 +57,6 @@ describe CurrentState do
       it "should return the CurrentState with the name given" do
         CurrentState.find_by_name("foobar").name == "foobar"
       end
-    end
-  end
-  
-  context "association" do
-    it "should be embbeded in page" do
-      should be_embedded_in(:page).as_inverse_of(:current_state)
     end
   end
 end
