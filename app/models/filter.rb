@@ -9,8 +9,7 @@ class Filter
   key :name
   
   validates :name,
-            :presence => true,
-            :uniqueness => true
+            :presence => true
   
   def self.all
     @filters.dup

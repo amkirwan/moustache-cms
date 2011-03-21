@@ -12,8 +12,10 @@ class Page
                   :meta_description, 
                   :filter,
                   :current_state, 
-                  :layout_id
-                  :page_parts
+                  :layout_id,
+                  :page_parts,
+                  :type
+                  
   
   field :title, :type => String
   field :path_name, :type => String
@@ -21,6 +23,7 @@ class Page
   field :meta_keywords, :type => String
   field :meta_description, :type => String
   field :filter, :type => Filter
+  field :type
   
   embeds_one :current_state
   embeds_many :page_parts 

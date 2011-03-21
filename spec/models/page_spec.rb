@@ -21,16 +21,20 @@ describe Page do
              :meta_title => "foobar",  
              :meta_keywords => "foobar", 
              :meta_description => "foobar",
-             :layout_id => stub_model(Layout), 
+             :layout_id => BSON::ObjectId('4d7fe2397353202ab60000e9'), 
              :filter => stub_model(Filter), 
-             :current_state => stub_model(CurrentState))
-       page.title.should_not == nil
-       page.meta_title.should_not == nil
-       page.meta_keywords.should_not == nil
-       page.meta_description.should_not == nil
-       page.layout_id.should_not == nil
+             :current_state => stub_model(CurrentState),
+             :page_parts => [stub_model(PagePart)],
+             :type => "foobar")
+       page.title.should == "foobar"
+       page.meta_title.should == "foobar"
+       page.meta_keywords.should == "foobar"
+       page.meta_description.should == "foobar"
+       page.layout_id.should == BSON::ObjectId('4d7fe2397353202ab60000e9')
        page.filter.should_not == nil
        page.current_state.should_not == nil
+       page.page_parts.should_not == nil
+       page.type.should == "foobar"      
     end
   end
   
@@ -118,6 +122,10 @@ describe Page do
     it "should not be valid without a updated_by" do
       @page.updated_by = nil
       @page.should_not be_valid
+    end
+  
+    it "should not be valid if the page_part name already exists" do
+      @page.page_parts.create(:name => @page.page_parts.first.name).should_not be_valid
     end
   end
   
