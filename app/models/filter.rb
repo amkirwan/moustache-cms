@@ -1,6 +1,10 @@
 class Filter
   include Mongoid::Document 
   
+  class << self
+    attr_accessor :filters
+  end
+  
   field :name
   key :name
   
