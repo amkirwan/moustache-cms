@@ -6,7 +6,8 @@ class Page
   #include Mongoid::Tree::Ordering
   
   attr_accessible :title, 
-                  :path_name, 
+                  :path_name,
+                  :breadcrumb, 
                   :meta_title, 
                   :meta_keywords, 
                   :meta_description, 
@@ -17,11 +18,12 @@ class Page
                   :type
                   
   
-  field :title, :type => String
-  field :path_name, :type => String
-  field :meta_title, :type => String
-  field :meta_keywords, :type => String
-  field :meta_description, :type => String
+  field :title
+  field :path_name
+  field :breadcrumb
+  field :meta_title
+  field :meta_keywords
+  field :meta_description
   field :filter, :type => Filter
   field :type
   
@@ -36,17 +38,24 @@ class Page
   accepts_nested_attributes_for :page_parts
   
   validates :title,
-            :presence => true, :uniqueness => true
+            :presence => true, 
+            :uniqueness => true 
             
   validates :path_name,
-            :uniqueness => true, :allow_nil => true
+            :uniqueness => true,
+            :allow_blank => true
+            
+  validates :breadcrumb,
+            :uniqueness => true,
+            :allow_blank => true
   
   validates :meta_title,
-            :uniqueness => true, :allow_blank => true, :allow_nil => true
+            :uniqueness => true, 
+            :allow_blank => true
   
   validates_presence_of :filter, :current_state, :layout, :created_by, :updated_by
   
-  before_validation :set_filter, :format_title, :set_path_name, :uniq_editor_ids
+  after_validation :set_filter, :format_title, :set_path_name, :set_breadcrumb, :uniq_editor_ids
   after_save :update_user_pages
   #before_destroy :move_children_to_parent
   
@@ -60,10 +69,20 @@ class Page
   end
   
   def set_path_name
-    if self.path_name.nil? && !self.title.nil?
-      self.path_name = self.title
+    if self.path_name.blank?
+      self.path_name = self.title.downcase
     else
-      self.path_name = self.path_name.strip!
+      self.path_name.downcase!
+      self.path_name.strip!
+    end
+  end
+  
+  def set_breadcrumb
+    if self.breadcrumb.blank?
+      self.breadcrumb = self.title.downcase
+    else
+      self.breadcrumb.downcase!
+      self.breadcrumb.strip!
     end
   end
   

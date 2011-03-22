@@ -17,7 +17,9 @@ describe Page do
     end
     
     it "should allow mass assignment of" do
-      page = Page.new(:title => "foobar", 
+      page = Page.new(:title => "foobar",
+             :path_name => "foobar",
+             :breadcrumb => "foobar",
              :meta_title => "foobar",  
              :meta_keywords => "foobar", 
              :meta_description => "foobar",
@@ -27,6 +29,8 @@ describe Page do
              :page_parts => [stub_model(PagePart)],
              :type => "foobar")
        page.title.should == "foobar"
+       page.path_name.should == "foobar"
+       page.breadcrumb.should == "foobar"
        page.meta_title.should == "foobar"
        page.meta_keywords.should == "foobar"
        page.meta_description.should == "foobar"
@@ -38,7 +42,7 @@ describe Page do
     end
   end
   
-  context "before_validation set page filter if it isn't set" do
+  context "after_validations" do
     it "should set the default filter to html before saving" do
       @page.filter = nil
       @page.save
@@ -52,35 +56,33 @@ describe Page do
     end
     
     it "should set the path_name to the page title when the path_name is nil" do
-      @page.title = " Hello, World!    \n"
       @page.path_name = nil
       @page.save
-      @page.path_name.should == "Hello, World!"
+      @page.path_name.should == @page.title.downcase
     end
     
     it "should remove any leading or trailing white space from the path_name" do
       @page.path_name = " Hello, World!  \n"
       @page.save
-      @page.path_name.should == "Hello, World!"
+      @page.path_name.should == "hello, world!"
+    end
+    
+    it "should set the breadcrumb to the page title when the path_name is nil" do
+      @page.breadcrumb = nil
+      @page.save
+      @page.breadcrumb.should == @page.title.downcase
+    end
+    
+    it "should remove any leading or trailing white space from the breadcrumb" do
+      @page.breadcrumb = " Hello, World!  \n"
+      @page.save
+      @page.breadcrumb.should == "hello, world!"
     end
     
     it "should make editor_ids array unique" do
       @page.editor_ids = ["ak730", "cds27", "foobar", "ak730", "cds27"]
       @page.save
       @page.editor_ids.should == ["ak730", "cds27", "foobar"]
-    end
-  end
-  
-  context "after_validation set path_name if it isn't set" do
-    it "should set the default path_name to the page name if it is nil" do
-      @page.path_name = nil
-      @page.save
-      @page.path_name.should == @page.title
-    end
-    
-    it "should set the user#pages with after_save filter for manually bug in mongoid rc7 habtm to habtm" do
-      @page.save
-      @page.editors.each { |editor| editor.pages.count == 1 }
     end
   end
   

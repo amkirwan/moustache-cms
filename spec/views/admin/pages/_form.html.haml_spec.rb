@@ -56,6 +56,13 @@ describe "admin/pages/_form.html.haml" do
       end
     end
     
+    it "should render a field to enter the breadcrumb name" do
+      new_render
+      get_new do |f|
+        f.should have_selector("input", :type => "text", :name => "page[breadcrumb]")
+      end
+    end
+    
     it "should render a field to enter the editors" do
       User.stub(:all).and_return([mock_model("User", :puid => "foobar")])
       new_render
