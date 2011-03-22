@@ -38,14 +38,7 @@ describe "admin/users/_form.html.haml" do
       form_new(:action => admin_users_path) do |f|
         f.should have_selector("input", :type => "text", :name => "user[puid]")
       end
-    end                                                                             
-
-    it "should show a field to enter the username" do
-      do_render("Create User")
-      form_new(:action => admin_users_path) do |f|
-        f.should have_selector("input", :type => "text", :name => "user[username]")
-      end
-    end   
+    end                                                                               
     
     it "should show a field to enter a firstname" do
       do_render("Create User")
@@ -102,15 +95,7 @@ describe "admin/users/_form.html.haml" do
       form_update(:action => admin_user_path(user)) do |f|
         f.should_not have_selector("input", :type => "text", :name => "user[puid]")
       end
-    end 
-    
-    it "should show a field to update the username" do      
-      user.stub(:username => "foobar")   
-      do_render("Update User")
-      form_update(:action => admin_user_path(user)) do |f|
-        f.should have_selector("input", :type => "text", :name => "user[username]", :value => "#{user.username}")
-      end
-    end      
+    end  
     
     it "should show a field to update the firstname" do
       user.stub(:firstname => "foobar")

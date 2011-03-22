@@ -6,10 +6,7 @@
       = f.label :puid, "Partners UID"
       = f.text_field :puid, :placeholder => "Enter Partners UID..."
   - else
-    %h5 Partners UID: #{user.puid}
-  %fieldset   
-    = f.label :username, "Username" 
-    = f.text_field :username, :placeholder => "Enter username..." 
+    %h5 Partners UID: #{user.puid} 
   %fieldset
     = f.label :firstname, "Firstname"
     = f.text_field :firstname

@@ -2,7 +2,7 @@ require 'machinist/mongoid'
 
 User.blueprint do
   puid { "user_#{sn}" }
-  username { "user_#{sn}" }
+  #username { "user_#{sn}" }
   firstname { "firstname_#{object.puid}"}
   lastname { "lastname_#{object.puid}"}
   email { "#{object.puid}@example.com" }

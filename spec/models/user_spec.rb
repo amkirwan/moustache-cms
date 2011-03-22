@@ -38,11 +38,6 @@ describe User do
      @user.puid = nil
      @user.should_not be_valid
     end  
-    
-    it "should not be vailid without a username" do
-      @user.username = nil
-      @user.should_not be_valid
-    end
   
     it "should not be valid without a email" do
       @user.email = nil
@@ -57,10 +52,6 @@ describe User do
     it "should not be valid with duplicate pid" do  
       User.make(:puid => "#{@user.puid}").should_not be_valid
     end
-    
-    it "should not be valid with a duplicate username" do
-      User.make(:username => "#{@user.username}").should_not be_valid
-    end          
   
     it "should not be valid with duplicat email addresses" do
       User.make(:email => "#{@user.email}").should_not be_valid
@@ -72,14 +63,6 @@ describe User do
     
     it "should not be valid with a puid < 3" do
       User.make(:puid => "ab").should_not be_valid
-    end
-  
-    it "should not be valid with a username length of < 3" do
-      User.make(:username => "ab").should_not be_valid
-    end
-  
-    it "should not be valid with a username length of > 20" do
-      User.make(:username => "ab"*10 + "c").should_not be_valid
     end 
   end
   
@@ -124,6 +107,36 @@ describe User do
     
     it "should have many editors" do
       @user.should reference_and_be_referenced_in_many(:pages).of_type(Page)
+    end
+  end
+  
+  context "callbacks" do
+    context "before validation it should check that the page_ids are unique" do
+      it "should do something" do
+        @user.page_ids = [BSON::ObjectId('4d7fe2397353202ab60000e9'), BSON::ObjectId('4d7fe2397353202ab60000e9')]
+        @user.save
+        @user.page_ids.count.should == 1
+      end
+    end
+    
+    context "it should lower the fields before saving" do
+      it "should make the puid downcase" do
+        @user.puid = "FOOBAR"
+        @user.save
+        @user.puid.should == "foobar"
+      end
+    
+      it "should make the email downcase" do
+        @user.email = "FOOBAR@EXAMPLE.Com"
+        @user.save
+        @user.email.should == "foobar@example.com"
+      end
+    end
+  
+    context "after save set_username" do
+      it "should set the username to the puid value" do
+        @user.puid.should == @user.username
+      end
     end
   end
 end

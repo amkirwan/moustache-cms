@@ -2,12 +2,13 @@ class User
   include Mongoid::Document
   include Mongoid::Timestamps
    
-  attr_accessible :username, :firstname, :lastname, :email 
+  attr_accessible :firstname, :lastname, :email 
        
   field :puid
   index :puid, :unique => true
   key :puid         
   field :username
+  index :username, :unique => true
   field :firstname
   field :lastname
   field :email
@@ -20,6 +21,7 @@ class User
   references_and_referenced_in_many :pages, :class_name => "Page"
   
   before_validation :uniq_page_ids
+  before_save :lower, :set_username
                        
   Roles = %w[editor admin] unless defined?(Roles)
   
@@ -27,11 +29,6 @@ class User
             :presence => true,
             :uniqueness => true,
             :length => { :minimum => 3 }
-            
-  validates :username,
-            :presence => true,
-            :uniqueness => true,
-            :length => { :minimum => 3, :maximum => 20 }
   
   validates :role, :presence => true
   
@@ -47,5 +44,14 @@ class User
   private
   def uniq_page_ids
     self.page_ids.uniq!
+  end
+  
+  def lower
+    self.puid.downcase!
+    self.email.downcase!
+  end
+  
+  def set_username
+    self.username = self.puid
   end
 end

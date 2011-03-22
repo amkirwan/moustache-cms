@@ -133,11 +133,6 @@ describe Admin::UsersController do
       do_post
     end
     
-    it "should assign the username" do
-      user.should_receive(:username=).with(params["user"]["username"])
-      do_post
-    end
-    
     it "should assign the role value" do
       user.should_receive(:role=).with(params["user"]["role"])
       do_post
@@ -308,7 +303,7 @@ describe Admin::UsersController do
     end    
     
     it "should destroy the user account" do
-      user.should_receive(:destroy).and_return(true)
+      user.should_receive(:delete).and_return(true)
       do_destroy 
     end
     
