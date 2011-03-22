@@ -115,6 +115,13 @@ describe "admin/pages/_form.html.haml" do
       end
     end
     
+    it "should render a form text field for tags" do
+      new_render
+      get_new do |f|
+        f.should have_selector("input", :type => "text", :name => "page[tag_list]")
+      end
+    end
+    
     it "should render a form text field for the page part name" do
       page.stub(:page_parts).and_return([ mock_model("PagePart").as_null_object.as_new_record ])
       new_render

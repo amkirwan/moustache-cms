@@ -34,6 +34,9 @@
     %fieldset
       = builder.label :current_state, "Status"
       = builder.collection_select :id, CurrentState.all, :id, :name
+  %fieldset
+    = f.label :tag_list
+    = f.text_field :tag_list
   = f.fields_for :page_parts do |builder|
     %fieldset
       = builder.label :name, "Page Part Name"

@@ -17,6 +17,7 @@ class Admin::PagesController < ApplicationController
     @page.filter = Filter.find(params[:page][:filter])
     @page.layout_id = params[:page][:layout_id]
     @page.current_state = CurrentState.find(params[:page][:current_state_attributes][:id])
+    @page.tag_list = params[:page][:tag_list]
     assign_page_parts(params[:page][:page_parts_attributes])
     assign_editors(params[:page][:editor_ids])
     created_updated_by_for @page

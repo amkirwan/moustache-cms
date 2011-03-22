@@ -46,6 +46,7 @@ Page.blueprint do
   layout { Layout.make! }
   current_state { CurrentState.make }
   editors { [ User.make! ] }
+  tags { [ "tag"] }
   page_parts { [ PagePart.make ]}
 end
 

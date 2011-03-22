@@ -1,6 +1,7 @@
 class Page
   include Mongoid::Document 
   include Mongoid::Timestamps
+  include Mongoid::Document::Taggable
   #include Mongoid::Tree
   #include Mongoid::Tree::Traversal
   #include Mongoid::Tree::Ordering
