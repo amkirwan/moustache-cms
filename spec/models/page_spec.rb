@@ -64,7 +64,7 @@ describe Page do
     it "should remove any leading or trailing white space from the path_name" do
       @page.path_name = " Hello, World!  \n"
       @page.save
-      @page.path_name.should == "hello, world!"
+      @page.path_name.should == "hello,-world!"
     end
     
     it "should set the breadcrumb to the page title when the path_name is nil" do

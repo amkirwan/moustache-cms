@@ -76,6 +76,7 @@ class Page
       self.path_name.downcase!
       self.path_name.strip!
     end
+    self.path_name.gsub!(/\s/, '-')
   end
   
   def set_breadcrumb
