@@ -41,7 +41,7 @@ describe Admin::PagesController do
     
     before(:each) do
       page.as_new_record
-      page.stub_chain(:editors, :build).and_return([mock_model("User")])
+      page.stub_chain(:page_parts, :build).and_return([mock_model("PagePart")])
       Page.stub(:new).and_return(page)
     end
     
@@ -64,6 +64,11 @@ describe Admin::PagesController do
       do_get
     end
     
+    it "should build a neste page_parts" do
+      page.should_receive(:page_parts)
+      do_get
+    end
+    
     it "should render new template for page" do
       do_get
       response.should render_template("admin/pages/new")
@@ -74,7 +79,14 @@ describe Admin::PagesController do
     let(:status) { mock_model("CurrentStatus") }
     let(:filter) { mock_model("Filter", :name => "foobar") }
     let(:layout) { mock_model("Layout") }
-    let(:params) {{ "page" => { "title" => "foobar", "filter"=> { "name" => filter.name }, "current_state_attributes"=> { "id"=> status.to_param }, "editor_ids"=>["ak730", "cds27"], "layout_id" => layout.to_param, "content" => "Hello, World!" }}}
+    let(:page_parts) { [ mock_model("PagePart") ] }
+    let(:params) {{ "page" => { 
+                    "title" => "foobar", 
+                    "filter"=> { "name" => filter.name }, 
+                    "current_state_attributes"=> { "id"=> status.to_param }, 
+                    "editor_ids"=>["ak730", "cds27"], 
+                    "layout_id" => layout.to_param,
+                    "page_parts_attributes" => { "0" => { "name" => "content", "content" => "Hello, World" }}}}}
     
     before(:each) do
       page.as_new_record
@@ -114,6 +126,11 @@ describe Admin::PagesController do
     
     it "should set the page editors" do
       controller.should_receive(:assign_editors).with(params["page"]["editor_ids"])
+      do_post
+    end
+    
+    it "should set the page parts" do
+      controller.should_receive(:assign_page_parts).with(params["page"]["page_parts_attributes"])
       do_post
     end
     

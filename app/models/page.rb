@@ -33,6 +33,7 @@ class Page
   referenced_in :updated_by, :class_name => "User"
   
   accepts_nested_attributes_for :current_state
+  accepts_nested_attributes_for :page_parts
   
   validates :title,
             :presence => true, :uniqueness => true

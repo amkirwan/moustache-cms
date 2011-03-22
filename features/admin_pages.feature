@@ -45,6 +45,8 @@ Scenario: Create a new page
   And I select "app" from "page_layout_id" within "div#add_new_page"
   And I select "haml" from "page_filter" within "div#add_new_page"
   And I select "published" from "page_current_state_attributes_id" within "div#add_new_page"
+  And I fill in "page_page_parts_attributes_0_name" with "content" within "div#add_new_page"
+  And I fill in "page_page_parts_attributes_0_content" with "Hello, World!" within "div#add_new_page"
   And I press "Create Page" within "div#add_new_page"
   Then I should be on the admin pages page
   And I should see "Successfully created page foobar"

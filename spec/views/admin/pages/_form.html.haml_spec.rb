@@ -107,5 +107,21 @@ describe "admin/pages/_form.html.haml" do
         f.should have_selector("select", :name => "page[current_state_attributes][id]")
       end
     end
+    
+    it "should render a form text field for the page part name" do
+      page.stub(:page_parts).and_return([ mock_model("PagePart").as_null_object.as_new_record ])
+      new_render
+      get_new do |f|
+        f.should have_selector("input", :type => "text", :name => "page[page_parts_attributes][0][name]")
+      end
+    end
+    
+    it "should render a form text area for the page part content" do
+      page.stub(:page_parts).and_return([ mock_model("PageParts").as_null_object.as_new_record ])
+      new_render
+      get_new do |f|
+        f.should have_selector("textarea" , :name => "page[page_parts_attributes][0][content]")
+      end
+    end
   end                                                                                      
 end

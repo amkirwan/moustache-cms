@@ -9,6 +9,7 @@ class Admin::PagesController < ApplicationController
   
   def new
     @page.build_current_state
+    @page.page_parts.build
   end
   
   def create
@@ -16,6 +17,7 @@ class Admin::PagesController < ApplicationController
     @page.filter = Filter.find(params[:page][:filter])
     @page.layout_id = params[:page][:layout_id]
     @page.current_state = CurrentState.find(params[:page][:current_state_attributes][:id])
+    assign_page_parts(params[:page][:page_parts_attributes])
     assign_editors(params[:page][:editor_ids])
     created_updated_by_for @page
     if @page.save
@@ -39,5 +41,11 @@ class Admin::PagesController < ApplicationController
   def assign_editors(editor_ids)
     editor_ids.each { |editor_id| @page.editor_ids << editor_id unless @page.editor_ids.include?(editor_id) }
     @page.editor_ids << current_user.puid unless @page.editor_ids.include?(current_user.puid) 
+  end
+  
+  def assign_page_parts(page_parts)
+    page_parts.each_pair do |key, value|
+      @page.page_parts.create(value)
+    end
   end
 end
