@@ -179,6 +179,19 @@ describe Page do
       @page.should embed_many :page_parts
     end
   end
+  
+  context "methods" do
+    it "shortcut to the current_state published_at property" do
+      @page.published_date.should == @page.current_state.published_at
+    end
+    
+    it "should return the permalink" do
+      year = @page.published_date.year.to_s
+      month = @page.published_date.month.to_s
+      day = @page.published_date.day.to_s
+      @page.permalink.should == year + "/" + month + "/" + day + "/" + @page.path_name
+    end
+  end
 end
 
 

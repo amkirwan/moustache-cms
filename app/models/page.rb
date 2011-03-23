@@ -62,6 +62,17 @@ class Page
   after_save :update_user_pages
   #before_destroy :move_children_to_parent
   
+  def published_date
+    self.current_state.published_at
+  end
+  
+  def permalink
+    year = self.published_date.year.to_s
+    month = self.published_date.month.to_s
+    day = self.published_date.day.to_s
+    year + "/" + month + "/" + day + "/" + self.path_name
+  end    
+  
   private 
   def format_title
     self.title.strip! unless self.title.nil?
