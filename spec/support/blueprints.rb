@@ -34,24 +34,25 @@ Layout.blueprint do
 end
 
 Page.blueprint do
-  name { "name_#{sn}" }
   title { "title_#{sn}"}
-  path_name { "path_name_#{sn}" }
-  breadcrumb { "breadcrumb_#{sn}" }
-  meta_title { "meta_title_#{sn}" }
-  meta_keywords { "meta_keyword_#{sn}" }
-  meta_description { "meta_description_#{sn}" }
-  created_by { User.make! }
-  updated_by { User.make! }
-  layout { Layout.make! }
+  path_name { "path_name_#{object.title}" }
+  breadcrumb { "breadcrumb_#{object.title}" }
+  meta_title { "meta_title_#{object.title}" }
+  meta_keywords { "meta_keyword_#{object.title}" }
+  meta_description { "meta_description_#{object.title}" }
+  created_by { User.make }
+  updated_by { User.make }
+  layout { Layout.make }
   current_state { CurrentState.make }
-  editors { [ User.make! ] }
+  editors { [ User.make ] }
+  filter { Filter.make }
   tags { [ "tag"] }
   page_parts { [ PagePart.make ]}
 end
 
 CurrentState.blueprint do
   name { "name_#{sn}" }
+  published_at { DateTime.now }
 end
 
 PagePart.blueprint do

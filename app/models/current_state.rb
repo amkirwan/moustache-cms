@@ -5,8 +5,9 @@ class CurrentState
     attr_accessor :statuses
   end
   
-  field :name, :type => String
+  field :name
   key :name
+  field :published_at, :type => DateTime
   embedded_in :page, :inverse_of => :current_state
   
   validates :name,
@@ -25,7 +26,7 @@ class CurrentState
   end
   
   @statuses = [
-    CurrentState.new(:name => "published"),
-    CurrentState.new(:name => "draft")
+    CurrentState.new(:name => "published", :published_at => nil),
+    CurrentState.new(:name => "draft", :published_at => nil)
   ]
 end

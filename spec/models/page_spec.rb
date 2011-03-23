@@ -131,6 +131,29 @@ describe Page do
     end
   end
   
+  context "handling published_at" do
+    it "should set the current_state.published_at to the current DateTime when the current_state is published" do
+      @page.current_state.name = "published"
+      @page.save
+      @page.current_state.published_at.should_not == nil
+    end
+    
+    it "should not set the current_state.published_at to the current DateTime when the current_state is not published" do
+      @page.current_state.name = "draft"
+      @page.current_state.published_at = nil
+      @page.save
+      @page.current_state.published_at.should == nil
+    end
+    
+    it "should not set the current_state.published_at to the current DateTime when it is already set and the date is published" do
+      date = DateTime.now
+      @page.current_state.published_at = date
+      sleep(1)
+      @page.save
+      @page.current_state.published_at.to_s.should == date.to_s
+    end
+  end
+  
   context "associations" do
     it "should embed one current state" do
       @page.should embed_one :current_state

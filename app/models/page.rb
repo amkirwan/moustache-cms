@@ -14,6 +14,7 @@ class Page
                   :meta_description, 
                   :filter,
                   :current_state, 
+                  :permlink,
                   :layout_id,
                   :page_parts,
                   :type
@@ -57,6 +58,7 @@ class Page
   validates_presence_of :filter, :current_state, :layout, :created_by, :updated_by
   
   after_validation :set_filter, :format_title, :set_path_name, :set_breadcrumb, :uniq_editor_ids
+  before_save :published_at
   after_save :update_user_pages
   #before_destroy :move_children_to_parent
   
@@ -90,6 +92,10 @@ class Page
   
   def uniq_editor_ids
     self.editor_ids.uniq!
+  end
+  
+  def published_at
+    self.current_state.published_at = DateTime.now if self.current_state.name = "published" && self.current_state.published_at.nil?
   end
   
   ## rc7 temp fixes for relations for mongoid
