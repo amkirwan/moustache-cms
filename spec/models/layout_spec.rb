@@ -30,6 +30,14 @@ describe User do
     end
   end
   
+  context "before save" do
+    it "should remove any leading or trailing whitespace from the content" do
+      @layout.content = " Hello, World! "
+      @layout.save
+      @layout.content.should == "Hello, World!"
+    end
+  end
+  
   context "validations" do
     it "should create a valid user with valid attributes" do
       @layout.should be_valid
