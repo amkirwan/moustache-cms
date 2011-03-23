@@ -4,9 +4,9 @@ class Layout
   
   attr_accessible :name, :content
   
-  field :name, :type => String
+  field :name
   index :name, :unique => true
-  field :content, :type => String
+  field :content
   field :filter, :type => Filter
   
   references_many :pages
@@ -14,6 +14,7 @@ class Layout
   referenced_in :updated_by, :class_name => "User"
   
   before_validation :set_filter
+  before_save :format_content
   
   validates :name,
             :presence => true,
@@ -24,5 +25,9 @@ class Layout
   private 
   def set_filter
     self.filter = Filter.find("haml") if self.filter.nil?
+  end
+  
+  def format_content
+    self.content.strip!
   end
 end
