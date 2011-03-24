@@ -13,6 +13,8 @@ Etherweb::Application.routes.draw do
   end
   
   match "/admin" => redirect("/admin/pages#index")
-   
-  root :to => "dashboard#index"       
+  
+  root :to => 'site#dynamic_page' 
+  # Everything else 
+  match "*url(.:format)", :to => "site#dynamic_page"
 end

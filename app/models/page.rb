@@ -64,6 +64,9 @@ class Page
   after_save :update_user_pages
   #before_destroy :move_children_to_parent
   
+  def self.find_by_path
+  end
+
   def published_date
     self.current_state.published_at
   end
