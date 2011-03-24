@@ -14,6 +14,7 @@ class Admin::PagesController < ApplicationController
   
   def create
     params[:page][:editor_ids] ||= []
+    @page.parent_id = params[:page][:parent_id]
     @page.filter = Filter.find(params[:page][:filter])
     @page.layout_id = params[:page][:layout_id]
     @page.current_state = CurrentState.find(params[:page][:current_state_attributes][:id])

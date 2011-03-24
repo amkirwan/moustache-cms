@@ -18,6 +18,7 @@ describe Page do
     
     it "should allow mass assignment of" do
       page = Page.new(:title => "foobar",
+             :parent_id => BSON::ObjectId('5d7fe2397353202ab60000e9'),
              :path_name => "foobar",
              :breadcrumb => "foobar",
              :meta_title => "foobar",  
@@ -28,6 +29,7 @@ describe Page do
              :current_state => stub_model(CurrentState),
              :page_parts => [stub_model(PagePart)],
              :type => "foobar")
+       page.parent_id.should == BSON::ObjectId('5d7fe2397353202ab60000e9')
        page.title.should == "foobar"
        page.path_name.should == "foobar"
        page.breadcrumb.should == "foobar"
