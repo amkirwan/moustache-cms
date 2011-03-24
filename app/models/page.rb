@@ -2,7 +2,7 @@ class Page
   include Mongoid::Document 
   include Mongoid::Timestamps
   include Mongoid::Document::Taggable
-  #include Mongoid::Tree
+  include Mongoid::Tree
   #include Mongoid::Tree::Traversal
   #include Mongoid::Tree::Ordering
   
@@ -72,6 +72,10 @@ class Page
     day = self.published_date.day.to_s
     year + "/" + month + "/" + day + "/" + self.path_name
   end    
+  
+  def status
+    self.current_state.name
+  end
   
   private 
   def format_title

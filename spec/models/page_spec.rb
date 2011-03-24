@@ -180,16 +180,26 @@ describe Page do
     end
   end
   
-  context "methods" do
+  context "Page#published_date" do
     it "shortcut to the current_state published_at property" do
       @page.published_date.should == @page.current_state.published_at
     end
-    
+  end
+  
+  context "Page#permalink" do
     it "should return the permalink" do
       year = @page.published_date.year.to_s
       month = @page.published_date.month.to_s
       day = @page.published_date.day.to_s
       @page.permalink.should == year + "/" + month + "/" + day + "/" + @page.path_name
+    end
+  end
+  
+  context "Page#status" do
+    it "should return the pages current state" do
+      @page.current_state.name = "published"
+      @page.save
+      @page.status.should == "published"
     end
   end
 end
