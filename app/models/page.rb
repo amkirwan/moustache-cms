@@ -6,7 +6,8 @@ class Page
   #include Mongoid::Tree::Traversal
   #include Mongoid::Tree::Ordering
   
-  attr_accessible :title, 
+  attr_accessible :parent_id,
+                  :title, 
                   :path_name,
                   :breadcrumb, 
                   :meta_title, 
@@ -17,6 +18,7 @@ class Page
                   :permlink,
                   :layout_id,
                   :page_parts,
+                  :tag_list,
                   :type
                   
   
