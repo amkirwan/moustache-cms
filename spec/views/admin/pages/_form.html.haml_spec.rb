@@ -60,7 +60,7 @@ describe "admin/pages/_form.html.haml" do
     it "should render a field to enter the page path" do
       new_render
       get_new do |f|
-        f.should have_selector("input", :type => "text", :name => "page[path_name]")
+        f.should have_selector("input", :type => "text", :name => "page[slug]")
       end
     end
     

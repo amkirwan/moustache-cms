@@ -19,7 +19,7 @@ describe Page do
     it "should allow mass assignment of" do
       page = Page.new(:title => "foobar",
              :parent_id => BSON::ObjectId('5d7fe2397353202ab60000e9'),
-             :path_name => "foobar",
+             :slug => "foobar",
              :breadcrumb => "foobar",
              :meta_title => "foobar",  
              :meta_keywords => "foobar", 
@@ -31,7 +31,7 @@ describe Page do
              :type => "foobar")
        page.parent_id.should == BSON::ObjectId('5d7fe2397353202ab60000e9')
        page.title.should == "foobar"
-       page.path_name.should == "foobar"
+       page.slug.should == "foobar"
        page.breadcrumb.should == "foobar"
        page.meta_title.should == "foobar"
        page.meta_keywords.should == "foobar"
@@ -57,19 +57,19 @@ describe Page do
       @page.title.should == "Hello, World!"
     end
     
-    it "should set the path_name to the page title when the path_name is nil" do
-      @page.path_name = nil
+    it "should set the slug to the page title when the path_name is nil" do
+      @page.slug = nil
       @page.save
-      @page.path_name.should == @page.title.downcase
+      @page.slug.should == @page.title.downcase
     end
     
-    it "should remove any leading or trailing white space from the path_name" do
-      @page.path_name = " Hello, World!  \n"
+    it "should remove any leading or trailing white space from the slug" do
+      @page.slug = " Hello, World!  \n"
       @page.save
-      @page.path_name.should == "hello,-world!"
+      @page.slug.should == "hello,-world!"
     end
     
-    it "should set the breadcrumb to the page title when the path_name is nil" do
+    it "should set the breadcrumb to the page title when the slug is nil" do
       @page.breadcrumb = nil
       @page.save
       @page.breadcrumb.should == @page.title.downcase
@@ -193,7 +193,7 @@ describe Page do
       year = @page.published_date.year.to_s
       month = @page.published_date.month.to_s
       day = @page.published_date.day.to_s
-      @page.permalink.should == year + "/" + month + "/" + day + "/" + @page.path_name
+      @page.permalink.should == year + "/" + month + "/" + day + "/" + @page.slug
     end
   end
   

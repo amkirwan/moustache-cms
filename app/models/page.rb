@@ -8,7 +8,7 @@ class Page
   
   attr_accessible :parent_id,
                   :title, 
-                  :path_name,
+                  :slug,
                   :breadcrumb, 
                   :meta_title, 
                   :meta_keywords, 
@@ -23,7 +23,7 @@ class Page
                   
   
   field :title
-  field :path_name
+  field :slug
   field :breadcrumb
   field :meta_title
   field :meta_keywords
@@ -45,7 +45,7 @@ class Page
             :presence => true, 
             :uniqueness => true 
             
-  validates :path_name,
+  validates :slug,
             :uniqueness => true,
             :allow_blank => true
             
@@ -59,7 +59,7 @@ class Page
   
   validates_presence_of :filter, :current_state, :layout, :created_by, :updated_by
   
-  after_validation :set_filter, :format_title, :set_path_name, :set_breadcrumb, :uniq_editor_ids
+  after_validation :set_filter, :format_title, :set_slug, :set_breadcrumb, :uniq_editor_ids
   before_save :published_at
   after_save :update_user_pages
   #before_destroy :move_children_to_parent
@@ -72,7 +72,7 @@ class Page
     year = self.published_date.year.to_s
     month = self.published_date.month.to_s
     day = self.published_date.day.to_s
-    year + "/" + month + "/" + day + "/" + self.path_name
+    year + "/" + month + "/" + day + "/" + self.slug
   end    
   
   def status
@@ -88,14 +88,14 @@ class Page
     self.filter = Filter.find("html") if self.filter.nil?
   end
   
-  def set_path_name
-    if self.path_name.blank?
-      self.path_name = self.title.downcase
+  def set_slug
+    if self.slug.blank?
+      self.slug = self.title.downcase
     else
-      self.path_name.downcase!
-      self.path_name.strip!
+      self.slug.downcase!
+      self.slug.strip!
     end
-    self.path_name.gsub!(/\s/, '-')
+    self.slug.gsub!(/\s/, '-')
   end
   
   def set_breadcrumb
