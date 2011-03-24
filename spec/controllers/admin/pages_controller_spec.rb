@@ -114,16 +114,6 @@ describe Admin::PagesController do
       do_post
     end
     
-    it "should set the page layout_id" do
-      page.should_receive(:layout_id=).with(params["page"]["layout_id"])
-      do_post
-    end
-    
-    it "should set the tag_list" do
-      page.should_receive(:tag_list=).with(params["page"]["tag_list"])
-      do_post
-    end
-    
     it "should set the page's current state" do
       page.should_receive(:current_state=).with(status)
       do_post
