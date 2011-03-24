@@ -42,6 +42,14 @@ describe "admin/pages/_form.html.haml" do
       end
     end
     
+    it "should render a collection to select the pages parent" do
+      Page.stub_chain(:all, :order).and_return(@pages = [mock_model("Page", :title => "foobar" )])
+      new_render
+      get_new do |f|
+        f.should have_selector("select", :name => "page[parent_id]")
+      end
+    end
+    
     it "should render a field to enter the page title" do
       new_render
       get_new do |f|
