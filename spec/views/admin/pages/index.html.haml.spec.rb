@@ -11,12 +11,12 @@ describe "admin/pages/index.html.haml" do
   end
   
   it "should show the page's parent name when the parent_id is not nil" do
-    
-    Page.stub_chain(:criteria, :id).with(pages[0].parent_id).and_return(@criteria = mock_model("MongoidCriteria"))
-    @criteria.stub(:first => (@page = stub_model(Page)))
-    @page.stub(:title => "foobar")
+    #Page.stub_chain(:criteria, :id).with(pages[0].parent_id).and_return(@criteria = mock_model("MongoidCriteria"))
+    #@criteria.stub(:first => (@page = stub_model(Page)))
+    #@page.stub(:title => "foobar")
     #Page.stub_chain(:criteria, :id).and_return(@criteria = mock_model("MongoidCriteria"))
     #@criteria.stub(:first).and_return(stub_model(Page, ))
+    Page.stub_chain('criteria.id.first.title').and_return('foobar') 
     render
     pages.each do |page|
       rendered.should have_selector("tr##{page.title}") do |tr|

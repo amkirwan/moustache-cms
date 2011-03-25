@@ -3,9 +3,11 @@ require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
 describe Page do   
   before(:each) do
     @page = Page.make!
+    @page.current_state = CurrentState.new(:name => "foobar", :published_at => DateTime.now)
+    puts "#{@page.save}"
   end
   
-  context "mass assignment" do
+  describe "mass assignment" do
     it "should protect against mass assignment of created_by and updated_by" do
       page = Page.new(:updated_by_id => mock_model("User").id, :created_by_id => mock_model("User").id)
       page.created_by_id.should be_nil
@@ -44,51 +46,104 @@ describe Page do
     end
   end
   
-  context "after_validations" do
-    it "should set the default filter to html before saving" do
-      @page.filter = nil
-      @page.save
-      @page.filter.name.should == "html"
+  describe "after_validations callback" do
+    describe "#set_filter" do
+      it "should set the default filter to html before saving" do
+        @page.filter = nil
+        @page.save
+        @page.filter.name.should == "html"
+      end  
     end
     
-    it "should remove any leading or trainling white space from the title" do
-      @page.title = " Hello, World!  \n"
-      @page.save
-      @page.title.should == "Hello, World!"
+    describe "#format_title" do
+      it "should remove any leading or trainling white space from the title" do
+        @page.title = " Hello, World!  \n"
+        @page.save
+        @page.title.should == "Hello, World!"
+      end
+
+      it "should set the slug to the page title when the path_name is nil" do
+        @page.slug = nil
+        @page.save
+        @page.slug.should == @page.title.downcase
+      end
     end
     
-    it "should set the slug to the page title when the path_name is nil" do
-      @page.slug = nil
-      @page.save
-      @page.slug.should == @page.title.downcase
+    describe "#set_slug" do
+      it "should remove any leading or trailing white space from the slug" do
+        @page.slug = " Hello, World!  \n"
+        @page.save
+        @page.slug.should == "hello,-world!"
+      end 
     end
     
-    it "should remove any leading or trailing white space from the slug" do
-      @page.slug = " Hello, World!  \n"
-      @page.save
-      @page.slug.should == "hello,-world!"
+    describe "#set_breadcrumb" do
+      it "should set the breadcrumb to the page title when the slug is nil" do
+        @page.breadcrumb = nil
+        @page.save
+        @page.breadcrumb.should == @page.title.downcase
+      end
+
+      it "should remove any leading or trailing white space from the breadcrumb" do
+        @page.breadcrumb = " Hello, World!  \n"
+        @page.save
+        @page.breadcrumb.should == "hello, world!"
+      end
     end
     
-    it "should set the breadcrumb to the page title when the slug is nil" do
-      @page.breadcrumb = nil
-      @page.save
-      @page.breadcrumb.should == @page.title.downcase
-    end
-    
-    it "should remove any leading or trailing white space from the breadcrumb" do
-      @page.breadcrumb = " Hello, World!  \n"
-      @page.save
-      @page.breadcrumb.should == "hello, world!"
-    end
-    
-    it "should make editor_ids array unique" do
-      @page.editor_ids = ["ak730", "cds27", "foobar", "ak730", "cds27"]
-      @page.save
-      @page.editor_ids.should == ["ak730", "cds27", "foobar"]
+    describe "#uniq_editor_ids" do
+      it "should make editor_ids array unique" do
+        @page.editor_ids = ["ak730", "cds27", "foobar", "ak730", "cds27"]
+        @page.save
+        @page.editor_ids.should == ["ak730", "cds27", "foobar"]
+      end
     end
   end
   
-  context "validations" do
+  describe "before_save callback" do
+    describe "#published_date" do
+      it "shortcut to the current_state published_at property" do
+        @page.published_date.should == @page.current_state.published_at
+      end
+    end
+    
+    describe "root_node" do
+      it "should set the page path to index when there the root node is not set" do
+        @page.slug = nil
+        @page.save
+        @page.slug.should == "index"
+      end
+    end
+  end
+  
+  describe "after_save callback" do
+    describe "#update_user_pages" do
+      it "should add the page association to the users who are editors" do
+        u = User.make!
+        @page.editors << u
+        puts "#{@page.id}"
+        #puts "#{@page.save}"
+        #puts "#{@page.errors}"
+        
+      end
+    end
+    
+  end
+  
+  describe "after destory" do
+    describe "#delete_from_editors" do
+      it "should remove the page from the users editor_ids" do
+        u = User.make!
+        @page.editors << u
+        @page.save
+        u.page_ids.should_not be_empty
+        @page.destroy
+        u.page_ids.should be_empty
+      end
+    end
+  end
+  
+  describe "validations" do
     it "should not be valid without a title" do
       @page.title = nil 
       @page.should_not be_valid
@@ -133,7 +188,7 @@ describe Page do
     end
   end
   
-  context "handling published_at" do
+  describe "handling published_at" do
     it "should set the current_state.published_at to the current DateTime when the current_state is published" do
       @page.current_state.name = "published"
       @page.save
@@ -156,7 +211,7 @@ describe Page do
     end
   end
   
-  context "associations" do
+  describe "associations" do
     it "should embed one current state" do
       @page.should embed_one :current_state
     end
@@ -182,13 +237,7 @@ describe Page do
     end
   end
   
-  context "Page#published_date" do
-    it "shortcut to the current_state published_at property" do
-      @page.published_date.should == @page.current_state.published_at
-    end
-  end
-  
-  context "Page#permalink" do
+  describe "#permalink" do
     it "should return the permalink" do
       year = @page.published_date.year.to_s
       month = @page.published_date.month.to_s
@@ -197,27 +246,27 @@ describe Page do
     end
   end
   
-  context "Page#status" do
+  describe "#status" do
     it "should return the pages current state" do
       @page.current_state.name = "published"
       @page.save
       @page.status.should == "published"
     end
   end
+  
+  describe "Page.find_by_path" do
+    it "should return the root index when the argument" do
+      @page = Page.find_by_path(nil)
+      @page.parent_id.should == nil
+      @page.slug.should == "index"
+    end
+    
+    it "should raise MissingRootPageError when the root node does not exist" do
+      Page.first.destroy
+      lambda { Page.find_by_path(nil) }.should raise_error(Etherweb::MissingRootPageError)      
+    end
+  end
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

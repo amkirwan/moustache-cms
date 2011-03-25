@@ -5,7 +5,7 @@ class Page
   include Mongoid::Tree
   #include Mongoid::Tree::Traversal
   #include Mongoid::Tree::Ordering
-  
+
   attr_accessible :parent_id,
                   :title, 
                   :slug,
@@ -60,13 +60,19 @@ class Page
   validates_presence_of :filter, :current_state, :layout, :created_by, :updated_by
   
   after_validation :set_filter, :format_title, :set_slug, :set_breadcrumb, :uniq_editor_ids
-  before_save :published_at
+  before_save :published_at, :root_node
   after_save :update_user_pages
+  after_destroy :delete_from_editors
   #before_destroy :move_children_to_parent
   
-  def self.find_by_path
+  # Class Methods
+  def self.find_by_path(path=nil)
+    root = Page.root
+    raise Etherweb::MissingRootPageError unless root
+    root
   end
 
+  # Instance Methods
   def published_date
     self.current_state.published_at
   end
@@ -101,6 +107,10 @@ class Page
     self.slug.gsub!(/\s/, '-')
   end
   
+  def root_node
+    self.slug = "index" if Page.root.nil?
+  end
+  
   def set_breadcrumb
     if self.breadcrumb.blank?
       self.breadcrumb = self.title.downcase
@@ -125,5 +135,12 @@ class Page
       editor.pages << self unless editor.pages.include?(self)
       editor.save
     end
+  end
+  
+  def delete_from_editors
+    self.editors.each do |editor| 
+      editor.page_ids.delete(self.id)
+      editor.save
+    end  
   end
 end

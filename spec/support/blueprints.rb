@@ -25,29 +25,16 @@ User.blueprint(:editor) do
   role { "editor" }
 end
 
+Filter.blueprint do
+  name { "filter_#{sn}" }
+end
+
 Layout.blueprint do
   name { "layout_#{sn}" }
   content { "Hello, World!" }
   created_by { User.make }
   updated_by { User.make }
   filter  { Filter.make }
-end
-
-Page.blueprint do
-  title { "title_#{sn}"}
-  slug { "slug_#{object.title}" }
-  breadcrumb { "breadcrumb_#{object.title}" }
-  meta_title { "meta_title_#{object.title}" }
-  meta_keywords { "meta_keyword_#{object.title}" }
-  meta_description { "meta_description_#{object.title}" }
-  created_by { User.make }
-  updated_by { User.make }
-  layout { Layout.make }
-  current_state { CurrentState.make }
-  editors { [ User.make ] }
-  filter { Filter.make }
-  tags { [ "tag"] }
-  page_parts { [ PagePart.make ]}
 end
 
 CurrentState.blueprint do
@@ -60,11 +47,19 @@ PagePart.blueprint do
   content { "Hello, World!" }
 end
 
-Filter.blueprint do
-  name { "filter_#{sn}" }
+Page.blueprint do
+  title { "title_#{sn}"}
+  slug { "slug_#{object.title}" }
+  breadcrumb { "breadcrumb_#{object.title}" }
+  meta_title { "meta_title_#{object.title}" }
+  meta_keywords { "meta_keyword_#{object.title}" }
+  meta_description { "meta_description_#{object.title}" }
+  created_by { User.make! }
+  updated_by { User.make! }
+  layout { Layout.make! }
+  current_state { CurrentState.make }
+  editors { [ User.make! ] }
+  filter { Filter.make! }
+  tags { [ "tag"] }
+  page_parts { [ PagePart.make ]}
 end
-
-
-
-
-
