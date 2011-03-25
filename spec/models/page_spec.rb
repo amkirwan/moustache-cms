@@ -1,10 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
 
 describe Page do   
-  before(:each) do
+  before(:each) do                 
     @page = Page.make!
-    @page.current_state = CurrentState.new(:name => "foobar", :published_at => DateTime.now)
-    puts "#{@page.save}"
   end
   
   describe "mass assignment" do
@@ -108,9 +106,7 @@ describe Page do
     end
     
     describe "root_node" do
-      it "should set the page path to index when there the root node is not set" do
-        @page.slug = nil
-        @page.save
+      it "should set the page path to index when there the root node is not set, when there is one document" do
         @page.slug.should == "index"
       end
     end
@@ -121,24 +117,21 @@ describe Page do
       it "should add the page association to the users who are editors" do
         u = User.make!
         @page.editors << u
-        puts "#{@page.id}"
-        #puts "#{@page.save}"
-        #puts "#{@page.errors}"
-        
+        @page.save
+        u.pages.should include(@page)
       end
     end
     
   end
   
-  describe "after destory" do
+  describe "before destory" do
     describe "#delete_from_editors" do
       it "should remove the page from the users editor_ids" do
         u = User.make!
         @page.editors << u
         @page.save
-        u.page_ids.should_not be_empty
         @page.destroy
-        u.page_ids.should be_empty
+        u.page_ids.should_not include(@page.id)
       end
     end
   end

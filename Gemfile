@@ -18,6 +18,7 @@ group :development, :test do
   gem "cucumber-rails"
   gem "capybara"
   gem "database_cleaner"
+  gem "factory_girl_rails"
   gem "machinist" 
   gem "mongoid-rspec", :git => "git://github.com/durran/mongoid-rspec.git" 
   gem 'machinist_mongo', :require => 'machinist/mongoid', :git => 'git://github.com/nmerouze/machinist_mongo.git', :branch => 'machinist2'

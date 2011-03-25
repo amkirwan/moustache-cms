@@ -62,7 +62,7 @@ class Page
   after_validation :set_filter, :format_title, :set_slug, :set_breadcrumb, :uniq_editor_ids
   before_save :published_at, :root_node
   after_save :update_user_pages
-  after_destroy :delete_from_editors
+  before_destroy :delete_from_editors
   #before_destroy :move_children_to_parent
   
   # Class Methods
@@ -125,7 +125,7 @@ class Page
   end
   
   def published_at
-    self.current_state.published_at = DateTime.now if self.current_state.name = "published" && self.current_state.published_at.nil?
+    self.current_state.published_at = DateTime.now if self.current_state.name == "published" && self.current_state.published_at.nil?
   end
   
   ## rc7 temp fixes for relations for mongoid

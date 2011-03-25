@@ -32,9 +32,9 @@ end
 Layout.blueprint do
   name { "layout_#{sn}" }
   content { "Hello, World!" }
+  filter  { Filter.make }
   created_by { User.make }
   updated_by { User.make }
-  filter  { Filter.make }
 end
 
 CurrentState.blueprint do

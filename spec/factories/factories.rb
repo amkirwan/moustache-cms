@@ -41,10 +41,10 @@ Factory.define :page do |page|
   page.sequence(:title) { |n| "title_#{n}" }
   page.sequence(:slug) { |n| "slug_#{n}" }
   page.sequence(:breadcrumb) { |n| "breadcrumb_#{n}" }
-  page.meta_title "meta_title"
+  page.sequence(:meta_title) { |n| "meta_title_#{n}"}
   page.meta_keywords "meta_keywords"
   page.meta_description "meta_description"
-  page.layout_id { Factory.build(:layout).id }
+  page.layout { Factory.build(:layout) }
   page.current_state { Factory.build(:current_state) }
   page.editors {[ Factory.build(:user) ]}
   page.filter { Factory.build(:filter) }
