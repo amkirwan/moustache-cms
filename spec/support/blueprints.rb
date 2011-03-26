@@ -61,5 +61,5 @@ Page.blueprint do
   editors { [ User.make! ] }
   filter { Filter.make! }
   tags { [ "tag"] }
-  page_parts { [ PagePart.make ]}
+  page_parts { [ PagePart.make(:name => "content") ]}
 end

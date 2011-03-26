@@ -60,7 +60,7 @@ class Page
   validates_presence_of :filter, :current_state, :layout, :created_by, :updated_by
   
   after_validation :set_filter, :format_title, :set_slug, :set_breadcrumb, :uniq_editor_ids
-  before_save :published_at, :root_node
+  before_save :published_at
   after_save :update_user_pages
   before_destroy :delete_from_editors
   #before_destroy :move_children_to_parent
@@ -98,17 +98,15 @@ class Page
   end
   
   def set_slug
-    if self.slug.blank?
+    if Page.root.nil?
+      self.slug = "index"
+    elsif self.slug.blank?
       self.slug = self.title.downcase
     else
       self.slug.downcase!
       self.slug.strip!
     end
     self.slug.gsub!(/\s/, '-')
-  end
-  
-  def root_node
-    self.slug = "index" if Page.root.nil?
   end
   
   def set_breadcrumb

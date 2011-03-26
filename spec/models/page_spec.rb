@@ -2,7 +2,8 @@ require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
 
 describe Page do   
   before(:each) do                 
-    @page = Page.make!
+    #@page = Page.make!
+    @page = Factory(:page)
   end
   
   describe "mass assignment" do
@@ -59,15 +60,18 @@ describe Page do
         @page.save
         @page.title.should == "Hello, World!"
       end
-
-      it "should set the slug to the page title when the path_name is nil" do
-        @page.slug = nil
-        @page.save
-        @page.slug.should == @page.title.downcase
-      end
     end
     
     describe "#set_slug" do
+      it "should set the page path to index when there the root node is not set, when there is one page document" do
+        @page.slug.should == "index"
+      end
+      
+      it "should set the slug to the page title when the slug is blank and when the root.node exists" do
+        @page2 = Factory(:page, :parent_id => @page.id, :slug => nil)
+        @page2.slug.should == @page2.title.downcase
+      end
+      
       it "should remove any leading or trailing white space from the slug" do
         @page.slug = " Hello, World!  \n"
         @page.save
@@ -104,12 +108,6 @@ describe Page do
         @page.published_date.should == @page.current_state.published_at
       end
     end
-    
-    describe "root_node" do
-      it "should set the page path to index when there the root node is not set, when there is one document" do
-        @page.slug.should == "index"
-      end
-    end
   end
   
   describe "after_save callback" do
@@ -121,7 +119,6 @@ describe Page do
         u.pages.should include(@page)
       end
     end
-    
   end
   
   describe "before destory" do
