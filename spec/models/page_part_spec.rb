@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
 
 describe PagePart do   
   before(:each) do
-    @page_part = PagePart.make
+    @page_part = Factory.build(:page_part)
   end
   
   context "valiations" do

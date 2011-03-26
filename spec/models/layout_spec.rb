@@ -1,9 +1,9 @@
 # spec for Layout Model
 require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
 
-describe User do   
+describe Layout do   
   before(:each) do
-    @layout = Layout.make!
+    @layout = Factory(:layout)
   end
   
   context "mass assignment" do

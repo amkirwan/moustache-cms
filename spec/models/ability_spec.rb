@@ -2,10 +2,10 @@ require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
 require "cancan/matchers"
 
 describe Ability do  
-  let(:admin) { User.make(:admin) }
-  let(:editor) { User.make(:editor) }
-  let(:page) { Page.make(:editors => [admin, editor]) }
-  let(:user) { User.make }  
+  let(:admin) { Factory.build(:admin) }
+  let(:editor) { Factory.build(:editor) }
+  let(:page) { Factory.build(:page, :editors => [ admin, editor ]) }
+  let(:user) { Factory.build(:user) }  
   let(:admin_ability) { Ability.new(admin) }
   let(:editor_ability) { Ability.new(editor) }
   

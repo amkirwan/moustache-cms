@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
 
 describe User do   
   before(:each) do
-    @user = User.make!
+    @user = Factory(:user)
   end 
   
   context "mass assignment" do
@@ -13,11 +13,11 @@ describe User do
     end
     
     it "should not allow mass assignment of" do
-      @user.should_not allow_mass_assignment_of(:puid => "foobar", :role => "bar")
+      @user.should_not allow_mass_assignment_of(:puid => "foobar", :username => "foobar", :role => "bar")
     end
     
     it "should allow mass assignment of" do
-      @user.should allow_mass_assignment_of(:firstname => "foobar", :lastname => "foobar", :email => "foobar@example.com")
+      @user.should allow_mass_assignment_of(:firstname => "x", :lastname => "x", :email => "foobar@example.com")
     end
   end
   

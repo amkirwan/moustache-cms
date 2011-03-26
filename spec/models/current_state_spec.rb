@@ -5,7 +5,7 @@ describe CurrentState do
   
   context "validations" do
     before(:each) do
-      @current_state = CurrentState.make
+      @current_state = Factory.build(:current_state)
     end
     
     it "should create a valid CurrentState with valid attributes" do
