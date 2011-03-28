@@ -23,7 +23,8 @@ describe Filter do
     before(:each) do
       Filter.filters << Filter.new(:name => "foobar")  
     end
-    context "Filter#all" do
+    
+    describe "Filter#all" do
       it "should find return all of the filters" do
         Filter.all.should have(5).items
       end
