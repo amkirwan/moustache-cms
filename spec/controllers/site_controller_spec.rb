@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
 describe SiteController do
   describe "dynamic_page" do
     def do_get
-      get :dynamic_page
+      get :render_page
     end
     
     let(:page) { mock_model("Page") }
@@ -12,7 +12,7 @@ describe SiteController do
     end
     
     it "should should receive show method" do
-      controller.should_receive(:dynamic_page)
+      controller.should_receive(:render_page)
       do_get
     end
        

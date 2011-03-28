@@ -1,8 +1,9 @@
 class SiteController < ActionController::Base 
   
-  def dynamic_page
-    @page = Page.find_by_path(params[:url])
-    render :nothing => true
+  def render_page
+    #@page = Page.find_by_path(params[:url])
+    render :inline => "#{params[:cms_path]}"
+    #render :nothing => true
   end
   
   private
