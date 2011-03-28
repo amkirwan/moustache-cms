@@ -30,27 +30,19 @@ describe Filter do
       end
     
       it "should return an array of Filter objects" do
-        Filter.all.first.class == "Filter"
+        Filter.all.first.should be_a(Filter)
       end
     end
   
     describe "Filter#find" do
-      it "should return the Filter object" do
-        Filter.find("foobar").class == "Filter"
-      end
-    
       it "should have the name of foobar for the returned filter" do
-        Filter.find("foobar").name == "foobar"
+        Filter.find("foobar").name.should == "foobar"
       end
     end
   
     describe "Filter#find_by_name" do
-      it "should return the Filter object" do
-        Filter.find_by_name("foobar").class == "Filter"
-      end
-    
       it "should have the name of foobar for the returned filter" do
-        Filter.find_by_name("foobar").name == "foobar"
+        Filter.find_by_name("foobar").name.should == "foobar"
       end
     end
   end
