@@ -59,6 +59,11 @@ describe Admin::PagesController do
       assigns(:page).should == page
     end
     
+    it "should build a nested page_type" do
+      page.should_receive(:build_page_type)
+      do_get
+    end
+    
     it "should build a nested current_state" do
       page.should_receive(:build_current_state)
       do_get
@@ -76,6 +81,7 @@ describe Admin::PagesController do
   end
   
   describe "POST create" do
+    let(:page_type) { mock_model("PageType") }
     let(:status) { mock_model("CurrentStatus") }
     let(:filter) { mock_model("Filter", :name => "foobar") }
     let(:layout) { mock_model("Layout") }
@@ -83,6 +89,7 @@ describe Admin::PagesController do
     let(:params) {{ "page" => { 
                     "title" => "foobar", 
                     "filter"=> { "name" => filter.name }, 
+                    "page_type_attributes"=> { "id" => page_type.to_param },
                     "current_state_attributes"=> { "id"=> status.to_param }, 
                     "editor_ids"=>["ak730", "cds27"], 
                     "layout_id" => layout.to_param,
@@ -90,6 +97,7 @@ describe Admin::PagesController do
     
     before(:each) do
       page.as_new_record
+      PageType.stub(:find).and_return(page_type)
       CurrentState.stub(:find).and_return(status)
       Filter.stub(:find).and_return(filter)
       Page.stub(:new).with(params["page"]).and_return(page)
@@ -107,6 +115,11 @@ describe Admin::PagesController do
     it "should assign @page for the view" do
       do_post
       assigns(:page).should == page
+    end
+    
+    it "should set the page's current state" do
+      page.should_receive(:page_type=).with(page_type)
+      do_post
     end
     
     it "should set the filter for the page" do

@@ -118,9 +118,26 @@ describe Page do
       end
     end
     
-    describe "#published_date" do
-      it "shortcut to the current_state published_at property" do
-        @page.published_date.should == @page.current_state.published_at
+    describe "handling published_at" do
+      it "should set the current_state.published_at to the current DateTime when the current_state is published" do
+        @page.current_state.name = "published"
+        @page.save
+        @page.current_state.published_at.should_not == nil
+      end
+
+      it "should not set the current_state.published_at to the current DateTime when the current_state is not published" do
+        @page.current_state.name = "draft"
+        @page.current_state.published_at = nil
+        @page.save
+        @page.current_state.published_at.should == nil
+      end
+
+      it "should not set the current_state.published_at to the current DateTime when it is already set and the date is published" do
+        date = DateTime.now
+        @page.current_state.published_at = date
+        sleep(1)
+        @page.save
+        @page.current_state.published_at.to_s.should == date.to_s
       end
     end
   end
@@ -151,6 +168,15 @@ describe Page do
 
   # -- Validations  -----------------------------------------------
   describe "validations" do
+    it "should be valid" do
+      @page.should be_valid
+    end
+    
+    it "should not be valid withou a page_type" do
+      @page.page_type = nil
+      @page.should_not be_valid
+    end
+    
     it "should not be valid without a title" do
       @page.title = nil 
       @page.should_not be_valid
@@ -214,29 +240,7 @@ describe Page do
     end
   end
   
-  describe "handling published_at" do
-    it "should set the current_state.published_at to the current DateTime when the current_state is published" do
-      @page.current_state.name = "published"
-      @page.save
-      @page.current_state.published_at.should_not == nil
-    end
-    
-    it "should not set the current_state.published_at to the current DateTime when the current_state is not published" do
-      @page.current_state.name = "draft"
-      @page.current_state.published_at = nil
-      @page.save
-      @page.current_state.published_at.should == nil
-    end
-    
-    it "should not set the current_state.published_at to the current DateTime when it is already set and the date is published" do
-      date = DateTime.now
-      @page.current_state.published_at = date
-      sleep(1)
-      @page.save
-      @page.current_state.published_at.to_s.should == date.to_s
-    end
-  end
-  
+  # --  Associations -----------------------------------------------
   describe "associations" do
     it "should embed one current state" do
       @page.should embed_one :current_state
@@ -263,7 +267,14 @@ describe Page do
     end
   end
   
-  describe "#permalink" do
+  # -- Instance Methods
+  describe "#permalink" do  
+    describe "#published_at" do
+      it "shortcut to the current_state published_at property" do
+        @page.published_date.should == @page.current_state.published_at
+      end
+    end
+    
     it "should return the permalink" do
       year = @page.published_date.year.to_s
       month = @page.published_date.month.to_s

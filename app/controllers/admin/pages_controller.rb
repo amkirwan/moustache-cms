@@ -8,12 +8,14 @@ class Admin::PagesController < ApplicationController
   end
   
   def new
+    @page.build_page_type
     @page.build_current_state
     @page.page_parts.build
   end
   
   def create
     params[:page][:editor_ids] ||= []
+    @page.page_type = PageType.find(params[:page][:page_type_attributes][:id])
     @page.filter = Filter.find(params[:page][:filter])
     @page.current_state = CurrentState.find(params[:page][:current_state_attributes][:id])
     assign_page_parts(params[:page][:page_parts_attributes])

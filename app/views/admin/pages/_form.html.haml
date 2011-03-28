@@ -4,6 +4,10 @@
   %fieldset
     = f.label :parent_id
     = f.collection_select :parent_id, Page.all.order(:title), :id, :title, :include_blank => true
+  = f.fields_for :page_type do |builder|
+    %fieldset
+      = builder.label :page_type, "Page Type"
+      = builder.collection_select :id, PageType.all, :id, :name
   %fieldset
     = f.label :title, "Title"
     = f.text_field :title, :placeholder => "Page title..."

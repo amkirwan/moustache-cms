@@ -22,7 +22,6 @@ describe "admin/pages/_form.html.haml" do
   end      
   
   context "when the page is a new record" do
-    
     before(:each) do
       page.as_new_record
     end
@@ -50,6 +49,14 @@ describe "admin/pages/_form.html.haml" do
       end
     end
     
+    it "should render a collection to select the page type" do
+      page.stub(:page_type).and_return(mock_model("PageType"))
+      new_render
+      get_new do |f|
+        f.should have_selector("select", :name => "page[page_type_attributes][id]")
+      end
+    end
+    
     it "should render a field to enter the page title" do
       new_render
       get_new do |f|
@@ -71,7 +78,7 @@ describe "admin/pages/_form.html.haml" do
       end
     end
     
-    it "should render a field to enter the editors" do
+    it "should render checkboxes to enter the editors" do
       User.stub(:all).and_return([mock_model("User", :puid => "foobar")])
       new_render
       get_new do |f|
