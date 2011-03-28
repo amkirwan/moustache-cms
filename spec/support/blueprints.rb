@@ -50,6 +50,7 @@ end
 Page.blueprint do
   title { "title_#{sn}"}
   slug { "slug_#{object.title}" }
+  full_path { "full_path#{object.full_path}" }
   breadcrumb { "breadcrumb_#{object.title}" }
   meta_title { "meta_title_#{object.title}" }
   meta_keywords { "meta_keyword_#{object.title}" }

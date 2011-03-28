@@ -32,14 +32,20 @@ Factory.define :current_state do |cs|
   cs.published_at DateTime.new
 end
 
+Factory.define :page_type do |page_type|
+  page_type.name "page_type"
+end
+
 Factory.define :page_part do |pp|
   pp.sequence(:name) { |n| "page_part_#{n}" }
   pp.content "Hello, World!"
 end
 
 Factory.define :page do |page|
+  page.parent_id 
   page.sequence(:title) { |n| "title_#{n}" }
   page.sequence(:slug) { |n| "slug_#{n}" }
+  page.sequence(:full_path) { |n| "full_path_#{n}" }
   page.sequence(:breadcrumb) { |n| "breadcrumb_#{n}" }
   page.sequence(:meta_title) { |n| "meta_title_#{n}"}
   page.meta_keywords "meta_keywords"
@@ -50,6 +56,7 @@ Factory.define :page do |page|
   page.filter { Factory.build(:filter) }
   page.tags 
   page.page_parts {[ Factory.build(:page_part) ]}
-  page.created_by Factory.build(:user)
-  page.updated_by Factory.build(:user)
+  page.page_type { Factory.build(:page_type) }
+  page.created_by { Factory.build(:user) }
+  page.updated_by { Factory.build(:user) }
 end
