@@ -9,13 +9,14 @@ class Page
   attr_accessible :parent_id,
                   :title, 
                   :slug,
+                  :full_path,
+                  :permalink,
                   :breadcrumb, 
                   :meta_title, 
                   :meta_keywords, 
                   :meta_description, 
                   :filter,
                   :current_state, 
-                  :permlink,
                   :layout_id,
                   :page_parts,
                   :tag_list,
@@ -24,6 +25,8 @@ class Page
   
   field :title
   field :slug
+  field :full_path
+  field :permalink
   field :breadcrumb
   field :meta_title
   field :meta_keywords
@@ -41,38 +44,44 @@ class Page
   accepts_nested_attributes_for :current_state
   accepts_nested_attributes_for :page_parts
   
+  #-- Validations -----------------------------------------------
   validates :title,
             :presence => true, 
             :uniqueness => true 
             
-  validates :slug,
-            :uniqueness => true,
-            :allow_blank => true
-            
+  validates :full_path,
+            :presence => true,
+            :uniqueness => true
+
   validates :breadcrumb,
-            :uniqueness => true,
-            :allow_blank => true
+            :presence => true
   
   validates :meta_title,
             :uniqueness => true, 
             :allow_blank => true
   
-  validates_presence_of :filter, :current_state, :layout, :created_by, :updated_by
+  validates_presence_of :slug, 
+                        :filter, 
+                        :current_state,
+                        :layout, 
+                        :created_by, 
+                        :updated_by
   
-  after_validation :set_filter, :format_title, :set_slug, :set_breadcrumb, :uniq_editor_ids
-  before_save :published_at
+  # -- Callbacks -----------------------------------------------
+  before_validation :format_title, :assign_slug, :assign_full_path, :assign_filter, :assign_breadcrumb 
+  before_save :uniq_editor_ids, :published_at
   after_save :update_user_pages
   before_destroy :delete_from_editors
   #before_destroy :move_children_to_parent
   
-  # Class Methods
+  # -- Class Methods ----------------------------------------------- 
   def self.find_by_path(path=nil)
     root = Page.root
     raise Etherweb::MissingRootPageError unless root
     root
   end
 
-  # Instance Methods
+  # -- Instance Methods -----------------------------------------------
   def published_date
     self.current_state.published_at
   end
@@ -88,18 +97,19 @@ class Page
     self.current_state.name
   end
   
+  # -- Private Instance Methods
   private 
   def format_title
     self.title.strip! unless self.title.nil?
   end
   
-  def set_filter
+  def assign_filter
     self.filter = Filter.find("html") if self.filter.nil?
   end
   
-  def set_slug
+  def assign_slug
     if Page.root.nil?
-      self.slug = "index"
+      self.slug = "/"
     elsif self.slug.blank?
       self.slug = self.title.downcase
     else
@@ -109,7 +119,11 @@ class Page
     self.slug.gsub!(/\s/, '-')
   end
   
-  def set_breadcrumb
+  def assign_full_path
+    self.full_path = self.parent ? "#{self.parent.full_path}/#{self.slug}".squeeze("/") : "/"
+  end
+  
+  def assign_breadcrumb
     if self.breadcrumb.blank?
       self.breadcrumb = self.title.downcase
     else

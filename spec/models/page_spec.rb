@@ -20,6 +20,7 @@ describe Page do
       page = Page.new(:title => "foobar",
              :parent_id => BSON::ObjectId('5d7fe2397353202ab60000e9'),
              :slug => "foobar",
+             :full_path => "full_path",
              :breadcrumb => "foobar",
              :meta_title => "foobar",  
              :meta_keywords => "foobar", 
@@ -32,6 +33,7 @@ describe Page do
        page.parent_id.should == BSON::ObjectId('5d7fe2397353202ab60000e9')
        page.title.should == "foobar"
        page.slug.should == "foobar"
+       page.full_path.should == "full_path"
        page.breadcrumb.should == "foobar"
        page.meta_title.should == "foobar"
        page.meta_keywords.should == "foobar"
@@ -44,15 +46,8 @@ describe Page do
     end
   end
   
-  describe "after_validations callback" do
-    describe "#set_filter" do
-      it "should set the default filter to html before saving" do
-        @page.filter = nil
-        @page.save
-        @page.filter.name.should == "html"
-      end  
-    end
-    
+  # -- Before Validation Callback -------------------------------------------  
+  describe "before_validation callback" do
     describe "#format_title" do
       it "should remove any leading or trainling white space from the title" do
         @page.title = " Hello, World!  \n"
@@ -61,9 +56,21 @@ describe Page do
       end
     end
     
-    describe "#set_slug" do
+    describe "#assign_full_path" do
+      it "should set the full path of the page to the parent plus page slug" do
+        page2 = Factory(:page, :parent => @page)
+        page2.full_path.should == "#{page2.parent.full_path}/#{page2.slug}".squeeze("/")
+        page2 = nil
+      end
+      
+      it "should set the full path to '/' when it is the root page" do
+        @page.full_path.should == "#{@page.full_path}/#{@page.slug}".squeeze("/")
+      end
+    end
+    
+    describe "#assign_slug" do
       it "should set the page path to index when there the root node is not set, when there is one page document" do
-        @page.slug.should == "index"
+        @page.slug.should == "/"
       end
       
       it "should set the slug to the page title when the slug is blank and when the root.node exists" do
@@ -76,9 +83,17 @@ describe Page do
         @page.save
         @page.slug.should == "hello,-world!"
       end 
+    end  
+    
+    describe "#assign_filter" do
+      it "should set the default filter to html before saving" do
+        @page.filter = nil
+        @page.save
+        @page.filter.name.should == "html"
+      end  
     end
     
-    describe "#set_breadcrumb" do
+    describe "#assign_breadcrumb" do
       it "should set the breadcrumb to the page title when the slug is nil" do
         @page.breadcrumb = nil
         @page.save
@@ -91,7 +106,10 @@ describe Page do
         @page.breadcrumb.should == "hello, world!"
       end
     end
-    
+  end
+  
+  # -- Before Save Callback -------------------------------------------  
+  describe "before_save callback" do
     describe "#uniq_editor_ids" do
       it "should make editor_ids array unique" do
         @page.editor_ids = ["ak730", "cds27", "foobar", "ak730", "cds27"]
@@ -99,9 +117,7 @@ describe Page do
         @page.editor_ids.should == ["ak730", "cds27", "foobar"]
       end
     end
-  end
-  
-  describe "before_save callback" do
+    
     describe "#published_date" do
       it "shortcut to the current_state published_at property" do
         @page.published_date.should == @page.current_state.published_at
@@ -109,6 +125,7 @@ describe Page do
     end
   end
   
+  # -- After Save Callback -------------------------------------------      
   describe "after_save callback" do
     describe "#update_user_pages" do
       it "should add the page association to the users who are editors" do
@@ -131,7 +148,8 @@ describe Page do
       end
     end
   end
-  
+
+  # -- Validations  -----------------------------------------------
   describe "validations" do
     it "should not be valid without a title" do
       @page.title = nil 
@@ -142,12 +160,31 @@ describe Page do
       Page.make(:title => @page.title).should_not be_valid
     end
     
+    it "should not be valid without a slug" do
+      @page.stub(:assign_slug).and_return(nil)
+      @page.slug = nil
+      @page.should_not be_valid
+    end
+
+    
+    it "should not be valid without a full_path" do
+      @page.stub(:assign_full_path).and_return(nil)
+      @page.full_path = nil
+      @page.should_not be_valid
+    end
+    
+    it "should not be valid without a breadcrumb" do
+      @page.stub(:assign_breadcrumb).and_return(nil)
+      @page.breadcrumb = nil
+      @page.should_not be_valid
+    end
+    
     it "should not be valid without a unique meta_title" do
       Page.make(:meta_title => @page.meta_title).should_not be_valid
     end
     
     it "should not be valid without a filter" do
-      @page.stub(:set_filter).and_return(nil)
+      @page.stub(:assign_filter).and_return(nil)
       @page.filter = nil
       @page.should_not be_valid
     end
@@ -247,7 +284,7 @@ describe Page do
     it "should return the root index when the argument" do
       @page = Page.find_by_path(nil)
       @page.parent_id.should == nil
-      @page.slug.should == "index"
+      @page.slug.should == "/"
     end
     
     it "should raise MissingRootPageError when the root node does not exist" do
