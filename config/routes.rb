@@ -6,15 +6,12 @@ Etherweb::Application.routes.draw do
   
   namespace :admin do
     resources :layouts, :except => :show
-  end
-  
-  namespace :admin do
-    resources :pages, :except => :shwo
+    resources :pages, :except => :show
   end
   
   match "/admin" => redirect("/admin/pages#index")
   
-  root :to => 'site#dynamic_page' 
-  # Everything else 
-  match "*url(.:format)", :to => "site#dynamic_page"
+  scope :controller => "site" do
+    get "/" => :render_page, :as => "cms_html", :path => '(*page_path)'
+  end
 end
