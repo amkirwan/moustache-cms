@@ -18,6 +18,7 @@ describe Filter do
     end
   end
   
+   # -- Finder Methods -------------------------------
   describe "finder methods" do
     before(:each) do
       Filter.filters << Filter.new(:name => "foobar")  
