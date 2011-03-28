@@ -2,7 +2,7 @@
 require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
 
 describe CurrentState do   
-  
+  # -- Validations -------------------------------
   context "validations" do
     before(:each) do
       @current_state = Factory.build(:current_state)
@@ -24,6 +24,7 @@ describe CurrentState do
     end
   end
   
+  # -- Finder Methods -------------------------------
   context "finder methods" do
     before(:each) do
       CurrentState.statuses << CurrentState.new(:name => "foobar")  
@@ -35,27 +36,19 @@ describe CurrentState do
       end
     
       it "should return objects with class CurrentState" do
-        CurrentState.all.first.class == "CurrentState"
+         CurrentState.all.first.should be_a(CurrentState)
       end
     end
   
     context "CurrentState#find" do
-      it "should return the CurrentState object" do
-        CurrentState.find("foobar").class == "CurrentState"
-      end
-    
       it "should have the name of foobar" do
-        CurrentState.find("foobar").name == "foobar"
+        CurrentState.find("foobar").name.should == "foobar"
       end
     end
   
     context "CurrentState#find_by_name" do
       it "should return the CurrentState with the name given" do
-        CurrentState.find_by_name("foobar").class == "CurrentState"
-      end
-    
-      it "should return the CurrentState with the name given" do
-        CurrentState.find_by_name("foobar").name == "foobar"
+        CurrentState.find_by_name("foobar").name.should == "foobar"
       end
     end
   end
