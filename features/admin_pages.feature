@@ -36,6 +36,7 @@ Scenario: Create a new page
   When I go to the admin pages page
   And I follow "Add New Page"
   Then I should be on the new admin page page
+  And I select "normal" from "page_page_type_attributes_id" within "div#add_new_page"
   And I fill in "page_title" with "foobar" within "div#add_new_page"
   And I fill in "page_meta_title" with "meta_title_foobar" within "div#add_new_page"
   And I fill in "page_meta_keywords" with "meta_keywords_foobar" within "div#add_new_page"
@@ -51,5 +52,5 @@ Scenario: Create a new page
   Then I should be on the admin pages page
   And I should see "Successfully created page foobar"
   And I should see "foobar" within "tr#foobar"
-  And I should see "Published" within "tr#foobar"
+  And I should see "published" within "tr#foobar"
   And I should see "delete" button within "tr#foobar"
