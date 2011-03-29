@@ -42,7 +42,7 @@ Factory.define :page_part do |pp|
 end
 
 Factory.define :page do |page|
-  page.parent_id 
+  page.parent_id { Factory(:root_page).id }
   page.sequence(:title) { |n| "title_#{n}" }
   page.sequence(:slug) { |n| "slug_#{n}" }
   page.sequence(:full_path) { |n| "full_path_#{n}" }
@@ -59,4 +59,44 @@ Factory.define :page do |page|
   page.page_type { Factory.build(:page_type) }
   page.created_by { Factory.build(:user) }
   page.updated_by { Factory.build(:user) }
+end
+
+Factory.define :root_page, :parent => :page do |pp|
+  pp.parent_id 
+  pp.sequence(:title) { |n| "parent_title_#{n}" }
+  pp.slug 
+  pp.sequence(:full_path) { |n| "parent_full_path_#{n}" }
+  pp.sequence(:breadcrumb) { |n| "parent_breadcrumb_#{n}" }
+  pp.sequence(:meta_title) { |n| "parent_meta_title_#{n}"}
+  pp.meta_keywords "parent_meta_keywords"
+  pp.meta_description "parent_meta_description"
+  pp.layout { Factory.build(:layout) }
+  pp.current_state { Factory.build(:current_state) }
+  pp.editors {[ Factory.build(:user) ]}
+  pp.filter { Factory.build(:filter) }
+  pp.tags 
+  pp.page_parts {[ Factory.build(:page_part) ]}
+  pp.page_type { Factory.build(:page_type) }
+  pp.created_by { Factory.build(:user) }
+  pp.updated_by { Factory.build(:user) }
+end
+
+Factory.define :no_root_page, :parent => :page do |pp|
+  pp.parent_id 
+  pp.sequence(:title) { |n| "page_#{n}" }
+  pp.slug 
+  pp.sequence(:full_path) { |n| "page_full_path_#{n}" }
+  pp.sequence(:breadcrumb) { |n| "page_breadcrumb_#{n}" }
+  pp.sequence(:meta_title) { |n| "page_meta_title_#{n}"}
+  pp.meta_keywords "page_meta_keywords"
+  pp.meta_description "page_meta_description"
+  pp.layout { Factory.build(:layout) }
+  pp.current_state { Factory.build(:current_state) }
+  pp.editors {[ Factory.build(:user) ]}
+  pp.filter { Factory.build(:filter) }
+  pp.tags 
+  pp.page_parts {[ Factory.build(:page_part) ]}
+  pp.page_type { Factory.build(:page_type) }
+  pp.created_by { Factory.build(:user) }
+  pp.updated_by { Factory.build(:user) }
 end

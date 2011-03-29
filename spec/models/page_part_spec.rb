@@ -16,7 +16,7 @@ describe PagePart do
     end
     
     it "should have a unique name when embedded" do
-      page = Page.make!
+      page = Factory(:page)
       pp = page.page_parts.first
       page.page_parts.create(:name => pp.name)
       page.should_not be_valid

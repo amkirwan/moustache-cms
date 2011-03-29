@@ -3,7 +3,7 @@
            :locals => { :target => page }
   %fieldset
     = f.label :parent_id
-    = f.collection_select :parent_id, Page.all.order(:title), :id, :title, :include_blank => true
+    = f.collection_select :parent_id, Page.all.order(:title), :id, :title
   = f.fields_for :page_type do |builder|
     %fieldset
       = builder.label :page_type, "Page Type"

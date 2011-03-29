@@ -58,24 +58,23 @@ describe Page do
     
     describe "#assign_full_path" do
       it "should set the full path of the page to the parent plus page slug" do
-        page2 = Factory(:page, :parent => @page)
-        page2.full_path.should == "#{page2.parent.full_path}/#{page2.slug}".squeeze("/")
-        page2 = nil
+        @page.full_path.should == "#{@page.parent.full_path}/#{@page.slug}".squeeze("/")
       end
       
       it "should set the full path to '/' when it is the root page" do
-        @page.full_path.should == "#{@page.full_path}/#{@page.slug}".squeeze("/")
+        @page.parent.full_path.should == "/"
       end
     end
     
     describe "#assign_slug" do
       it "should set the page path to index when there the root node is not set, when there is one page document" do
-        @page.slug.should == "/"
+        @page.parent.slug.should == "/"
       end
       
       it "should set the slug to the page title when the slug is blank and when the root.node exists" do
-        @page2 = Factory(:page, :parent_id => @page.id, :slug => nil)
-        @page2.slug.should == @page2.title.downcase
+        page2 = Factory(:page, :parent_id => @page.id, :slug => nil)
+        page2.slug.should == page2.title.downcase
+        page2 = nil
       end
       
       it "should remove any leading or trailing white space from the slug" do
@@ -153,8 +152,9 @@ describe Page do
       end
     end
   end
-  
-  describe "before destory" do
+
+  # -- Before Destroy  ----------------------------------------------- 
+  describe "before destroy callback" do
     describe "#delete_from_editors" do
       it "should remove the page from the users editor_ids" do
         u = User.make!
@@ -163,16 +163,16 @@ describe Page do
         @page.destroy
         u.page_ids.should_not include(@page.id)
       end
-    end
+    end  
   end
-
+  
   # -- Validations  -----------------------------------------------
   describe "validations" do
     it "should be valid" do
       @page.should be_valid
     end
     
-    it "should not be valid withou a page_type" do
+    it "should not be valid without a page_type" do
       @page.page_type = nil
       @page.should_not be_valid
     end

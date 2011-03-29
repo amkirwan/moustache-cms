@@ -4,7 +4,7 @@ Feature: Admin User Management Features
 Scenario: Admin login page should redirect to /admin/users#index
   Given I login as "ak730" with the role of "admin"
   When I go to the admin page
-  Then I should be on the admin users page     
+  Then I should be on the admin pages page     
 
 @admin_users_index
 Scenario: Admin login
