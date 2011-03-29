@@ -87,6 +87,7 @@ describe Admin::PagesController do
     let(:layout) { mock_model("Layout") }
     let(:page_parts) { [ mock_model("PagePart") ] }
     let(:params) {{ "page" => { 
+                    "parent_id" => "4d922d505dfe2f082e00006e",
                     "title" => "foobar", 
                     "filter"=> { "name" => filter.name }, 
                     "page_type_attributes"=> { "id" => page_type.to_param },
@@ -97,6 +98,8 @@ describe Admin::PagesController do
     
     before(:each) do
       page.as_new_record
+      @parent_mock = mock_model("Page", :id => "4d922d505dfe2f082e00006e")
+      Page.stub_chain(:criteria, :id).and_return([@parent_mock])
       PageType.stub(:find).and_return(page_type)
       CurrentState.stub(:find).and_return(status)
       Filter.stub(:find).and_return(filter)
@@ -110,6 +113,12 @@ describe Admin::PagesController do
     it "should create a new page from the params" do
       Page.should_receive(:new).with(params["page"]).and_return(page)
       do_post
+    end
+    
+    it "should set the parent_id to the parent selected" do
+      page.should_receive(:parent_id=)
+      do_post
+      page.parent_id.should_not == nil
     end
     
     it "should assign @page for the view" do
@@ -145,6 +154,14 @@ describe Admin::PagesController do
     it "should assign created_by and updated by to the current user" do
       controller.should_receive(:created_updated_by_for).with(page)
       do_post
+    end
+    
+    context "when the parent page is blank" do
+      it "should set the parent_id to nil when the parent_id is blank" do
+        params["page"]["parent_id"] = nil
+        page.should_receive(:parent_id=).with(nil)
+        do_post
+      end
     end
     
     context "when the page saves successfully" do

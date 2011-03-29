@@ -35,12 +35,14 @@ class Page
   field :type
   
   embeds_one :current_state
+  embeds_one :page_type
   embeds_many :page_parts 
-  references_and_referenced_in_many :editors, :class_name => "User"
   referenced_in :layout
+  references_and_referenced_in_many :editors, :class_name => "User"
   referenced_in :created_by, :class_name => "User"
   referenced_in :updated_by, :class_name => "User"
   
+  accepts_nested_attributes_for :page_type
   accepts_nested_attributes_for :current_state
   accepts_nested_attributes_for :page_parts
   
@@ -61,18 +63,19 @@ class Page
             :allow_blank => true
   
   validates_presence_of :slug, 
-                        :filter, 
+                        :filter,    
                         :current_state,
                         :layout, 
+                        :page_type,
                         :created_by, 
-                        :updated_by
+                        :updated_by                    
   
   # -- Callbacks -----------------------------------------------
-  before_validation :format_title, :assign_slug, :assign_full_path, :assign_filter, :assign_breadcrumb 
+  before_validation :format_title, :assign_slug, :assign_full_path, :assign_filter, :assign_breadcrumb
   before_save :uniq_editor_ids, :published_at
   after_save :update_user_pages
   before_destroy :delete_from_editors
-  #before_destroy :move_children_to_parent
+  before_destroy :move_children_to_parent
   
   # -- Class Methods ----------------------------------------------- 
   def self.find_by_path(path=nil)
@@ -81,7 +84,7 @@ class Page
     root
   end
 
-  # -- Instance Methods -----------------------------------------------
+  # -- Instance Methods -----------------------------------------------  
   def published_date
     self.current_state.published_at
   end
@@ -110,6 +113,7 @@ class Page
   def assign_slug
     if Page.root.nil?
       self.slug = "/"
+      self.parent = nil
     elsif self.slug.blank?
       self.slug = self.title.downcase
     else

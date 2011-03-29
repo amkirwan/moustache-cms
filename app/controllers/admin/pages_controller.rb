@@ -15,7 +15,12 @@ class Admin::PagesController < ApplicationController
   
   def create
     params[:page][:editor_ids] ||= []
-    @page.page_type = PageType.find(params[:page][:page_type_attributes][:id])
+    if params[:page][:parent_id].blank?
+      @page.parent_id = nil
+    elsif
+      @page.parent_id = Page.criteria.id(params[:page][:parent_id]).first.id
+    end
+    @page.page_type  = PageType.find(params[:page][:page_type_attributes][:id])
     @page.filter = Filter.find(params[:page][:filter])
     @page.current_state = CurrentState.find(params[:page][:current_state_attributes][:id])
     assign_page_parts(params[:page][:page_parts_attributes])
@@ -44,9 +49,10 @@ class Admin::PagesController < ApplicationController
     @page.editor_ids << current_user.puid unless @page.editor_ids.include?(current_user.puid) 
   end
   
-  def assign_page_parts(page_parts)
+  def assign_page_parts(page_parts={})
     page_parts.each_pair do |key, value|
-      @page.page_parts.create(value)
+      @page.page_parts.build({"name" => "content", "content" => "Hello"})
+      #@page.page_parts.build(value)
     end
   end
 end
