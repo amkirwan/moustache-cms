@@ -8,6 +8,5 @@ class PagePart
   embedded_in :page, :inverse_of => :page_parts
   
   validates :name,
-            :presence => true,
-            :uniqueness => true
+            :presence => true
 end
