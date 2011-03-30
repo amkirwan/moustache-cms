@@ -16,11 +16,13 @@ class Filter
   end
   
   def self.find(id)
-    @filters.find { |filter| filter.id == id.to_s.downcase }.dup
+    filter = @filters.find { |filter| filter.id == id.to_s.downcase }
+    filter.dup if !filter.nil?
   end
   
   def self.find_by_name(name)
-    @filters.find { |filter| filter.name == name.to_s.downcase }.dup
+    filter = @filters.find { |filter| filter.name == name.to_s.downcase }
+    filter.dup if !filter.nil?
   end
   
   @filters = [
