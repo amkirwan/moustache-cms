@@ -16,11 +16,13 @@ class PageType
   end
   
   def self.find(id)
-    @page_types.find { |page_type| page_type.id == id.to_s.downcase }.dup
+    type = @page_types.find { |page_type| page_type.id == id.to_s.downcase }
+    type unless type.nil?
   end
   
   def self.find_by_name(name)
-    @page_types.find { |page_types| page_types.name == name.to_s.downcase }.dup
+    type = @page_types.find { |page_types| page_types.name == name.to_s.downcase }
+    type unless type.nil?
   end
   
   @page_types = [

@@ -18,11 +18,13 @@ class CurrentState
   end
   
   def self.find(id)
-    @statuses.find { |status| status.id == id.to_s.downcase }.dup
+    status = @statuses.find { |status| status.id == id.to_s.downcase }
+    status.dup unless status.nil?
   end
   
   def self.find_by_name(name)
-    @statuses.find { |status| status.name == name.to_s.downcase }.dup
+    status = @statuses.find { |status| status.name == name.to_s.downcase }
+    status.dup unless status.nil?
   end
   
   @statuses = [
