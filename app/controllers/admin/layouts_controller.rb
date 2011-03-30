@@ -1,4 +1,4 @@
-class Admin::LayoutsController < ApplicationController    
+class Admin::LayoutsController < Admin::BaseController  
   before_filter CASClient::Frameworks::Rails::Filter
   load_and_authorize_resource 
   

@@ -1,9 +1,5 @@
-class Admin::PagesController < ApplicationController
-  before_filter CASClient::Frameworks::Rails::Filter
-  load_and_authorize_resource 
-  
-  layout "admin/admin"
-  
+class Admin::PagesController < Admin::BaseController
+    
   def index
   end
   
