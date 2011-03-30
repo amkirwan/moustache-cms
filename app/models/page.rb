@@ -6,7 +6,8 @@ class Page
   #include Mongoid::Tree::Traversal
   #include Mongoid::Tree::Ordering
 
-  attr_accessible :parent_id,
+  attr_accessible :site_id,
+                  :parent_id,
                   :title, 
                   :slug,
                   :full_path,
@@ -34,6 +35,7 @@ class Page
   field :filter, :type => Filter
   field :type
   
+  referenced_in :site
   embeds_one :current_state
   embeds_one :page_type
   embeds_many :page_parts 
@@ -62,7 +64,8 @@ class Page
             :uniqueness => true, 
             :allow_blank => true
   
-  validates_presence_of :slug, 
+  validates_presence_of :site_id,
+                        :slug, 
                         :filter,    
                         :current_state,
                         :layout, 
@@ -71,18 +74,11 @@ class Page
                         :updated_by                    
   
   # -- Callbacks -----------------------------------------------
-  before_validation :format_title, :assign_slug, :assign_full_path, :assign_filter, :assign_breadcrumb
+  before_validation :format_title, :assign_slug, :assign_full_path, :assign_filter, :assign_breadcrumb, :assign_site
   before_save :uniq_editor_ids, :published_at
   after_save :update_user_pages
   before_destroy :delete_from_editors
   before_destroy :move_children_to_parent
-  
-  # -- Class Methods ----------------------------------------------- 
-  def self.find_by_path(path=nil)
-    root = Page.root
-    raise Etherweb::MissingRootPageError unless root
-    root
-  end
 
   # -- Instance Methods -----------------------------------------------  
   def published_date
@@ -142,6 +138,10 @@ class Page
   
   def published_at
     self.current_state.published_at = DateTime.now if self.current_state.name == "published" && self.current_state.published_at.nil?
+  end
+  
+  def assign_site
+    self.site_id = Site.first.id
   end
   
   ## rc7 temp fixes for relations for mongoid

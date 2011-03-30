@@ -5,6 +5,7 @@ describe Page do
     @page = Factory(:page)
   end
   
+  # -- Assignment -------------------------------------------
   describe "mass assignment" do
     it "should protect against mass assignment of created_by and updated_by" do
       page = Page.new(:updated_by_id => mock_model("User").id, :created_by_id => mock_model("User").id)
@@ -105,6 +106,12 @@ describe Page do
         @page.breadcrumb.should == "hello, world!"
       end
     end
+    
+    describe "#page_site" do
+      it "should assign the site to the page before saving" do
+        @page.site.should == Site.first
+      end
+    end
   end
   
   # -- Before Save Callback -------------------------------------------  
@@ -117,7 +124,7 @@ describe Page do
       end
     end
     
-    describe "handling published_at" do
+    describe "#published_at" do
       it "should set the current_state.published_at to the current DateTime when the current_state is published" do
         @page.current_state.name = "published"
         @page.save
@@ -170,6 +177,12 @@ describe Page do
   describe "validations" do
     it "should be valid" do
       @page.should be_valid
+    end
+    
+    it "should not be valid without a site_id" do
+      @page.stub(:assign_site).and_return(nil)
+      @page.site_id = nil
+      @page.should_not be_valid
     end
     
     it "should not be valid without a page_type" do
@@ -246,6 +259,10 @@ describe Page do
       @page.should embed_one :current_state
     end
     
+    it "should reference a site" do
+      @page.should be_referenced_in(:site)
+    end
+    
     it "should reference a layout" do
       @page.should be_referenced_in(:layout)
     end
@@ -288,19 +305,6 @@ describe Page do
       @page.current_state.name = "published"
       @page.save
       @page.status.should == "published"
-    end
-  end
-  
-  describe "Page.find_by_path" do
-    it "should return the root index when the argument" do
-      @page = Page.find_by_path(nil)
-      @page.parent_id.should == nil
-      @page.slug.should == "/"
-    end
-    
-    it "should raise MissingRootPageError when the root node does not exist" do
-      Page.first.destroy
-      lambda { Page.find_by_path(nil) }.should raise_error(Etherweb::MissingRootPageError)      
     end
   end
 end

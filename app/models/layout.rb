@@ -2,7 +2,7 @@ class Layout
   include Mongoid::Document 
   include Mongoid::Timestamps
   
-  attr_accessible :name, :content
+  attr_accessible :layout_id, :name, :content
   
   field :name
   index :name, :unique => true
@@ -10,17 +10,18 @@ class Layout
   field :filter, :type => Filter
   
   references_many :pages
+  referenced_in :site
   referenced_in :created_by, :class_name => "User"
   referenced_in :updated_by, :class_name => "User"
   
-  before_validation :set_filter
+  before_validation :set_filter, :assign_site
   before_save :format_content
   
   validates :name,
             :presence => true,
             :uniqueness => true
             
-  validates_presence_of :content, :filter, :created_by_id, :updated_by_id
+  validates_presence_of :content, :filter, :created_by_id, :updated_by_id, :site_id
   
   private 
   def set_filter
@@ -29,5 +30,9 @@ class Layout
   
   def format_content
     self.content.strip!
+  end
+  
+  def assign_site
+    self.site_id = Site.first.id
   end
 end

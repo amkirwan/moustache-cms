@@ -5,8 +5,9 @@ describe Layout do
   before(:each) do
     @layout = Factory(:layout)
   end
-  
-  context "mass assignment" do
+
+  # -- Assignment -------------------------------------------------------------- 
+  describe "mass assignment" do
     it "should protect against mass assignment of created_by_id and updated_by_id" do
       layout = Layout.new(:updated_by_id => mock_model("User").id, :created_by_id => mock_model("User").id)
       layout.created_by_id.should be_nil
@@ -22,25 +23,44 @@ describe Layout do
     end
   end
   
-  context "before_validation set layout filter if it isn't set" do
-    it "should set the default filter to haml before saving" do
-      @layout.filter = nil
-      @layout.save
-      @layout.filter.name.should == "haml"
+  # -- Before Validation Callback  -----------------------------------------------
+  describe "before_validation callback" do
+    describe "#assign_filter" do
+      it "should set the default filter to haml before saving" do
+        @layout.filter = nil
+        @layout.save
+        @layout.filter.name.should == "haml"
+      end
+    end   
+    
+    describe "#page_site" do
+      it "should assign the site to the page before saving" do
+        @layout.site.should == Site.first
+      end
     end
   end
   
-  context "before save" do
-    it "should remove any leading or trailing whitespace from the content" do
-      @layout.content = " Hello, World! "
-      @layout.save
-      @layout.content.should == "Hello, World!"
+    # -- Before Save Callback -----------------------------------------------------
+  describe "before_save" do
+    describe "#format_content" do
+      it "should remove any leading or trailing whitespace from the content" do
+        @layout.content = " Hello, World! "
+        @layout.save
+        @layout.content.should == "Hello, World!"
+      end
     end
   end
   
-  context "validations" do
+  # -- Validations --------------------------------------------------------------
+  describe "validations" do
     it "should create a valid user with valid attributes" do
       @layout.should be_valid
+    end
+    
+    it "should not be valid without a site_id" do
+      @layout.stub(:assign_site).and_return(nil)
+      @layout.site_id = nil
+      @layout.should_not be_valid
     end
     
     it "should not be valid without a layout name" do
@@ -84,7 +104,16 @@ describe Layout do
     end   
   end
   
+  # -- Associations ----------------------------------------------------
   context "associations" do
+    it "should reference many pages" do
+      @layout.should reference_many(:pages)
+    end
+    
+    it "should reference a layout" do
+      @layout.should be_referenced_in(:site)
+    end
+    
     it "should reference a user with created_by" do
       @layout.should be_referenced_in(:created_by).of_type(User)
     end

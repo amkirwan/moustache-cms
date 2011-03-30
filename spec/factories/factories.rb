@@ -19,7 +19,13 @@ Factory.define :filter do |filter|
   filter.name "filter"
 end
 
+Factory.define :site do |site|
+  site.sequence(:name) { |n| "name_#{n}" }
+  site.sequence(:hostname) { |n| "hostname_#{n}" }
+end
+
 Factory.define :layout do |layout|
+  layout.site_id { Factory(:site).id }
   layout.sequence(:name) { |n| "layout_#{n}" }
   layout.content "Hello, World!"
   layout.filter { Factory.build(:filter) }
@@ -42,6 +48,7 @@ Factory.define :page_part do |pp|
 end
 
 Factory.define :page do |page|
+  page.site_id { Factory(:site).id }
   page.parent_id { Factory(:root_page).id }
   page.sequence(:title) { |n| "title_#{n}" }
   page.sequence(:slug) { |n| "slug_#{n}" }
@@ -62,6 +69,7 @@ Factory.define :page do |page|
 end
 
 Factory.define :root_page, :parent => :page do |pp|
+  pp.site_id { Factory(:site).id }
   pp.parent_id 
   pp.sequence(:title) { |n| "parent_title_#{n}" }
   pp.slug 
@@ -82,6 +90,7 @@ Factory.define :root_page, :parent => :page do |pp|
 end
 
 Factory.define :no_root_page, :parent => :page do |pp|
+  pp.site_id { Factory(:site).id }
   pp.parent_id 
   pp.sequence(:title) { |n| "page_#{n}" }
   pp.slug 
