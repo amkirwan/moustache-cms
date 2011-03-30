@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/amkirwan/rubycas-client.git
+  revision: 4de27a92350810e75468e7aa6225a2f44f9eb8a0
+  branch: rails3
+  specs:
+    rubycas-client (2.1.0)
+      activesupport
+
+GIT
   remote: git://github.com/benedikt/mongoid-tree
   revision: 7e2f5fb4c418adc57dd0abb242404d4042f65959
   specs:
@@ -21,12 +29,6 @@ GIT
   specs:
     machinist_mongo (2.0.0.beta.1)
       machinist (~> 2.0.0.beta2)
-
-PATH
-  remote: /Users/akirwan/code/rubycas-client
-  specs:
-    rubycas-client (2.1.0)
-      activesupport
 
 GEM
   remote: http://rubygems.org/
