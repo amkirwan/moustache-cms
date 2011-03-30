@@ -2,7 +2,6 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe "ApplicationController" do
   controller do
-    before_filter :current_user    
     def index 
       render :nothing => true
     end 
@@ -28,7 +27,6 @@ end
 
 describe "ApplicationController" do
   controller do 
-    before_filter :current_user
     def index    
       admin?
       render :nothing => true
@@ -56,7 +54,6 @@ end
 
 describe "ApplicationController" do
   controller do 
-    before_filter :current_user
     def index   
       created_updated_by_for(params["page"])
       render :nothing => true
