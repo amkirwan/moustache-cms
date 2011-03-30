@@ -1,6 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')  
 
 describe "ApplicationController" do
+  let(:current_user) { logged_in(:role? => true) }
   controller do
     def index 
       render :nothing => true
@@ -8,8 +9,7 @@ describe "ApplicationController" do
   end
   
   before(:each) do
-    @current_user = mock_model("User", :role? => true)
-    User.stub_chain(:where, :first).and_return(@current_user)
+    cas_faker(current_user.username)
   end
   
   describe "handling cancan call to current_user method" do 
@@ -26,6 +26,8 @@ describe "ApplicationController" do
 end 
 
 describe "ApplicationController" do
+  let(:current_user) { logged_in(:role? => true) }
+  
   controller do 
     def index    
       admin?
@@ -34,8 +36,7 @@ describe "ApplicationController" do
   end 
   
   before(:each) do
-    @current_user = mock_model("User", :role? => true)
-    User.stub_chain(:where, :first).and_return(@current_user)
+    cas_faker(current_user.username)
   end
   
   describe "admin? method" do
@@ -45,7 +46,7 @@ describe "ApplicationController" do
     end
     
     it "should receive admin? method and return false" do 
-      @current_user.stub(:role? => false)
+      current_user.stub(:role? => false)
       controller.should_receive(:admin?).and_return(false)
       get :index
     end
@@ -53,6 +54,8 @@ describe "ApplicationController" do
 end 
 
 describe "ApplicationController" do
+  let(:current_user) { logged_in(:role? => true) }
+
   controller do 
     def index   
       created_updated_by_for(params["page"])
@@ -62,8 +65,7 @@ describe "ApplicationController" do
   
   before(:each) do
     @page = Page.new
-    @current_user = mock_model("User", :role? => true).as_null_object
-    User.stub_chain(:where, :first).and_return(@current_user)
+    cas_faker(current_user.username)
   end
   
   describe "created_updated_by method" do
@@ -74,8 +76,8 @@ describe "ApplicationController" do
     
     it "should set created_by and updated_by to the current user" do
       get :index, "page" => @page
-      @page.created_by.should == @current_user
-      @page.updated_by.should == @current_user
+      @page.created_by.should == current_user
+      @page.updated_by.should == current_user
     end    
   end
 end                                
