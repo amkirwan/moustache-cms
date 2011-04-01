@@ -11,6 +11,7 @@ describe Admin::PagesController do
     cas_faker(current_user.username)
   end
   
+  # -- GET Index ----------------------------------------------- 
   describe "GET index" do
     def do_get     
       get :index
@@ -38,6 +39,7 @@ describe Admin::PagesController do
     end
   end
   
+  # -- GET New ----------------------------------------------- 
   describe "GET new" do
     
     before(:each) do
@@ -81,6 +83,7 @@ describe Admin::PagesController do
     end   
   end
   
+  # -- Post Create ----------------------------------------------- 
   describe "POST create" do
     let(:page_type) { mock_model("PageType") }
     let(:status) { mock_model("CurrentStatus") }

@@ -1,4 +1,4 @@
-class Admin::LayoutsController < Admin::BaseController  
+class Admin::LayoutsController < AdminBaseController  
 
   def index 
   end
