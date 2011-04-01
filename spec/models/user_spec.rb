@@ -50,19 +50,19 @@ describe User do
     end 
   
     it "should not be valid with duplicate pid" do  
-      User.make(:puid => "#{@user.puid}").should_not be_valid
+      Factory.build(:user, :puid => "#{@user.puid}").should_not be_valid
     end
   
     it "should not be valid with duplicat email addresses" do
-      User.make(:email => "#{@user.email}").should_not be_valid
+      Factory.build(:user, :email => "#{@user.email}").should_not be_valid
     end      
   
     it "should not be valid without a correctly formated email address" do
-      User.make(:email => "abcdefg").should_not be_valid
+      Factory.build(:user, :email => "abcdefg").should_not be_valid
     end
     
     it "should not be valid with a puid < 3" do
-      User.make(:puid => "ab").should_not be_valid
+      Factory.build(:user, :puid => "ab").should_not be_valid
     end 
   end
   

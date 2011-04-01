@@ -152,7 +152,7 @@ describe Page do
   describe "after_save callback" do
     describe "#update_user_pages" do
       it "should add the page association to the users who are editors" do
-        u = User.make!
+        u = Factory(:user)
         @page.editors << u
         @page.save
         u.pages.should include(@page)
@@ -164,7 +164,7 @@ describe Page do
   describe "before destroy callback" do
     describe "#delete_from_editors" do
       it "should remove the page from the users editor_ids" do
-        u = User.make!
+        u = Factory(:user)
         @page.editors << u
         @page.save
         @page.destroy
@@ -196,7 +196,7 @@ describe Page do
     end
     
     it "should not be valid without a unique title" do
-      Page.make(:title => @page.title).should_not be_valid
+      Factory.build(:page, :parent_id => @page.parent_id, :title => @page.title).should_not be_valid
     end
     
     it "should not be valid without a slug" do
@@ -204,12 +204,18 @@ describe Page do
       @page.slug = nil
       @page.should_not be_valid
     end
-
-    
+   
     it "should not be valid without a full_path" do
       @page.stub(:assign_full_path).and_return(nil)
       @page.full_path = nil
       @page.should_not be_valid
+    end
+    
+    it "should not be valid without a unique full_path" do
+      page2 = Factory(:page, :parent_id => @page.parent_id)
+      page2.stub(:assign_full_path)
+      page2.full_path = @page.full_path
+      page2.should_not be_valid
     end
     
     it "should not be valid without a breadcrumb" do
@@ -219,7 +225,7 @@ describe Page do
     end
     
     it "should not be valid without a unique meta_title" do
-      Page.make(:meta_title => @page.meta_title).should_not be_valid
+      Factory.build(:page, :parent_id => @page.parent_id, :meta_title => @page.meta_title).should_not be_valid
     end
     
     it "should not be valid without a filter" do

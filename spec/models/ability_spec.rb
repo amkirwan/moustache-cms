@@ -57,7 +57,7 @@ describe Ability do
     end 
 
     it "should not allow the user with a role of editor to create a new user record" do
-      editor_ability.should_not be_able_to(:new, User.make)
+      editor_ability.should_not be_able_to(:new, Factory.build(:user))
     end
 
     it "should not allow the user with a role of editor to edit other user records" do
@@ -65,15 +65,15 @@ describe Ability do
     end
     
     it "should not allow the user with a role of editor to read a page they are not an editor for" do
-      editor_ability.should_not be_able_to(:read, Page.make)
+      editor_ability.should_not be_able_to(:read, Factory.build(:page))
     end
     
     it "should not allow the user with a role of editor to update a page they are not an editor for" do
-      editor_ability.should_not be_able_to(:update, Page.make)
+      editor_ability.should_not be_able_to(:update, Factory.build(:page))
     end
     
     it "should not allow the user with a role of editor to destroy pages they are not an editor for" do
-      editor_ability.should_not be_able_to(:destroy, Page.make)
+      editor_ability.should_not be_able_to(:destroy, Factory.build(:page))
     end
   end    
 end

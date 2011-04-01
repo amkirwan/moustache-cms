@@ -69,7 +69,7 @@ describe Layout do
     end
     
     it "should not be valid without a unique layout name" do
-      Layout.make(:name => "#{@layout.name}").should_not be_valid
+      Factory.build(:layout, :name => "#{@layout.name}").should_not be_valid
     end
     
     it "should not be valid without content" do

@@ -23,5 +23,5 @@ end
 Given /^the page "([^"]*)" exists with the layout "([^"]*)"$/ do |page_name, layout_name|
   Factory(:page, :title => page_name,
                  :page_parts => [ Factory.build(:page_part, :name => "content", :content => page_content) ],
-                 :layout => Layout.make!(:name => layout_name, :content => layout_content))
+                 :layout => Factory(:layout, :name => layout_name, :content => layout_content))
 end

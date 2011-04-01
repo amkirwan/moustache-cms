@@ -4,7 +4,7 @@ end
 
 Given /^these layouts exist$/ do |table|
   table.hashes.each do |hash|
-    Layout.make!(:name => hash[:name], :content => hash[:content])
+    Factory(:layout, :name => hash[:name], :content => hash[:content])
   end
 end
 

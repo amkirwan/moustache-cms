@@ -7,6 +7,6 @@ end
 
 Given /^these current states exist$/ do  |table|
   table.hashes.each do |hash|
-    CurrentState.make(:name => hash[:name])
+    Factory.build(:current_state, :name => hash[:name])
   end
 end

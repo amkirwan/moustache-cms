@@ -13,6 +13,7 @@ describe Admin::LayoutsController do
   let(:layout) { mock_model("Layout").as_null_object }
   
   before(:each) do
+    Site.stub(:create).and_return(true)
     cas_faker(current_user.username)
   end
   
