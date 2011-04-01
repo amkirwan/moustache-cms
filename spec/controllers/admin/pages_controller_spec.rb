@@ -7,6 +7,7 @@ describe Admin::PagesController do
   let(:page) { mock_model("Page").as_null_object }
   
   before(:each) do
+    Site.stub(:create).and_return(true)
     cas_faker(current_user.username)
   end
   
@@ -94,7 +95,7 @@ describe Admin::PagesController do
                     "current_state_attributes"=> { "id"=> status.to_param }, 
                     "editor_ids"=>["ak730", "cds27"], 
                     "layout_id" => layout.to_param,
-                    "page_parts_attributes" => { "0" => { "name" => "content", "content" => "Hello, World" }}}}}
+                    "page_parts_attributes" => { "0" => { "name" => "content", "content" => "Hello, World" }}} }}
     
     before(:each) do
       page.as_new_record
