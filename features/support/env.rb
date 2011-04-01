@@ -64,7 +64,6 @@ Spork.prefork do
 end
 #end
 Spork.each_run do
-  require File.join(Rails.root.to_s, 'spec', 'support', 'blueprints')
   load "#{Rails.root}/config/routes.rb"
   Dir["#{Rails.root}/app/**/*.rb"].each { |f| load f }
 end
