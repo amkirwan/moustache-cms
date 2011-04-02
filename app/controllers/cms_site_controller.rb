@@ -1,4 +1,4 @@
-class SiteController < ActionController::Base 
+class CmsSiteController < ActionController::Base 
   
   before_filter :load_site
   before_filter :load_page, :only => :render_page
