@@ -123,28 +123,20 @@ describe Page do
         @page.editor_ids.should == ["ak730", "cds27", "foobar"]
       end
     end
-    
-    describe "#published_at" do
-      it "should set the current_state.published_at to the current DateTime when the current_state is published" do
-        @page.current_state.name = "published"
-        @page.save
-        @page.current_state.published_at.should_not == nil
-      end
+  end
+  
+  # -- Before Update Callback -------------------------------------------  
+  describe "#update_current_state_time" do
+    it "should set the current_state.published_at to the current DateTime when the current_state is published" do
+      @page.current_state.name = "published"
+      @page.save
+      @page.current_state.time.should_not == nil
+    end
 
-      it "should not set the current_state.published_at to the current DateTime when the current_state is not published" do
-        @page.current_state.name = "draft"
-        @page.current_state.published_at = nil
-        @page.save
-        @page.current_state.published_at.should == nil
-      end
-
-      it "should not set the current_state.published_at to the current DateTime when it is already set and the date is published" do
-        date = DateTime.now
-        @page.current_state.published_at = date
-        sleep(1)
-        @page.save
-        @page.current_state.published_at.to_s.should == date.to_s
-      end
+    it "should not set the current_state.published_at to the current DateTime when the current_state is not published" do
+      @page.current_state.name = "draft"
+      @page.save
+      @page.current_state.time.should_not == nil
     end
   end
   
