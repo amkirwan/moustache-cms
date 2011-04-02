@@ -19,6 +19,7 @@ class AdminBaseController < ApplicationController
   def current_user    
     #fake_login(params[:cas_user]) unless Rails.env == 'production'                    
     @current_user = User.where(:puid => session[:cas_user]).first
+    @current_user
   end  
   
   def admin?     
