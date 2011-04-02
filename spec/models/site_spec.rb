@@ -36,5 +36,12 @@ describe Site do
       @site.should reference_many(:pages)
     end  
   end
+  
+  # -- Class Methods _________________________________________
+  describe "Site#find_by_hostname" do
+    it "should return site object from the site hostname" do
+      Site.find_by_hostname(@site.hostname).should == @site
+    end
+  end
 
 end

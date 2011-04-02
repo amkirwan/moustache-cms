@@ -11,7 +11,7 @@ Etherweb::Application.routes.draw do
   
   match "/admin" => redirect("/admin/pages#index")
   
-  scope :controller => "site" do
+  scope :controller => "cms_site" do
     get "/" => :render_html, :as => "cms_html", :path => '(*page_path)'
   end
 end

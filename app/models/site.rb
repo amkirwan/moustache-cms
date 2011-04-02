@@ -18,4 +18,10 @@ class Site
   validates :hostname,
             :presence => true,
             :uniqueness => true
+  
+  # -- Class Methods ---------------------------------------
+  def self.find_by_hostname(hostname)
+    self.where(:hostname => hostname).first
+  end
+  
 end

@@ -172,7 +172,7 @@ describe Page do
       end
     end  
   end
-  
+
   # -- Validations  -----------------------------------------------
   describe "validations" do
     it "should be valid" do
@@ -290,27 +290,39 @@ describe Page do
     end
   end
   
-  # -- Instance Methods
-  describe "#permalink" do  
+  # -- Class Methods -----------------------------------------------
+  describe "Class Methods" do
+    describe "Page#find_by_full_path" do
+      it "should return the page with the full_path" do
+        Page.find_by_full_path(@page.site, @page.full_path).should == @page
+      end
+    end
+    
+  end
+  
+  # -- Instance Methods -----------------------------------------------
+  describe "Instance Methods" do
+    describe "#permalink" do  
+      it "should return the permalink" do
+        year = @page.published_date.year.to_s
+        month = @page.published_date.month.to_s
+        day = @page.published_date.day.to_s
+        @page.permalink.should == year + "/" + month + "/" + day + "/" + @page.slug
+      end
+    end
+    
     describe "#published_at" do
       it "shortcut to the current_state published_at property" do
         @page.published_date.should == @page.current_state.published_at
       end
     end
-    
-    it "should return the permalink" do
-      year = @page.published_date.year.to_s
-      month = @page.published_date.month.to_s
-      day = @page.published_date.day.to_s
-      @page.permalink.should == year + "/" + month + "/" + day + "/" + @page.slug
-    end
-  end
   
-  describe "#status" do
-    it "should return the pages current state" do
-      @page.current_state.name = "published"
-      @page.save
-      @page.status.should == "published"
+    describe "#status" do
+      it "should return the pages current state" do
+        @page.current_state.name = "published"
+        @page.save
+        @page.status.should == "published"
+      end
     end
   end
 end

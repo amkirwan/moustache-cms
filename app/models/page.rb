@@ -79,6 +79,11 @@ class Page
   after_save :update_user_pages
   before_destroy :delete_from_editors
   before_destroy :move_children_to_parent
+  
+  # -- Class Mehtods --------------------------------------------------
+  def self.find_by_full_path(site, full_path)
+    self.where(:site_id => site.id, :full_path => full_path).first
+  end
 
   # -- Instance Methods -----------------------------------------------  
   def published_date

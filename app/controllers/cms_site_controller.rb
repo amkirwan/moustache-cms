@@ -1,7 +1,7 @@
 class CmsSiteController < ActionController::Base 
   
   before_filter :load_site
-  before_filter :load_page, :only => :render_page
+  before_filter :load_page, :only => :render_html
   
   def render_html
     #@page = Page.find_by_path(params[:url])
@@ -11,18 +11,16 @@ class CmsSiteController < ActionController::Base
   private
   
   def load_site
-    @site = Site.load_by_hostname(Etherweb::Application.config.hostname)
-  rescue Mongoid::Errors::DocumentNotFound
-    render :text => "Site Not Found",
+    @site = Site.find_by_hostname(Etherweb::Application.config.hostname)
+    if @site.nil?
+      render :file => "#{Rails.root}/public/404.html", :layout => 'layouts/application', :status => 404
+    end
   end
   
   def load_page
-    @page = Page.load_by_full_path(@site, "/#{params[:page_path]}")
-  rescue Mongoid::Errors::DocumentNotFound
-    if @page = Page.published.load_by_full_path(@site, "/#{params[:page_path]}")
-      render_html(404)
-    else
-      render :text => "Page Not Found", :status => 404
+    @page = Page.find_by_full_path(@site, "/#{params[:page_path]}")
+    if @site.nil?
+      render :file => "#{RAILS_ROOT}/public/404.html", :layout => 'layouts/application', :status => 404
     end
   end
 end
