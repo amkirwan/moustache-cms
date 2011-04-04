@@ -123,28 +123,20 @@ describe Page do
         @page.editor_ids.should == ["ak730", "cds27", "foobar"]
       end
     end
-    
-    describe "#published_at" do
-      it "should set the current_state.published_at to the current DateTime when the current_state is published" do
-        @page.current_state.name = "published"
-        @page.save
-        @page.current_state.published_at.should_not == nil
-      end
+  end
+  
+  # -- Before Update Callback -------------------------------------------  
+  describe "#update_current_state_time" do
+    it "should set the current_state.published_at to the current DateTime when the current_state is published" do
+      @page.current_state.name = "published"
+      @page.save
+      @page.current_state.time.should_not == nil
+    end
 
-      it "should not set the current_state.published_at to the current DateTime when the current_state is not published" do
-        @page.current_state.name = "draft"
-        @page.current_state.published_at = nil
-        @page.save
-        @page.current_state.published_at.should == nil
-      end
-
-      it "should not set the current_state.published_at to the current DateTime when it is already set and the date is published" do
-        date = DateTime.now
-        @page.current_state.published_at = date
-        sleep(1)
-        @page.save
-        @page.current_state.published_at.to_s.should == date.to_s
-      end
+    it "should not set the current_state.published_at to the current DateTime when the current_state is not published" do
+      @page.current_state.name = "draft"
+      @page.save
+      @page.current_state.time.should_not == nil
     end
   end
   
@@ -172,7 +164,7 @@ describe Page do
       end
     end  
   end
-  
+
   # -- Validations  -----------------------------------------------
   describe "validations" do
     it "should be valid" do
@@ -303,6 +295,27 @@ describe Page do
     end
   end
   
+  # -- Class Methods -----------------------------------------------
+  describe "Class Methods" do
+    describe "Page#find_by_full_path" do
+      it "should return the page with the full_path" do
+        Page.find_by_full_path(@page.site, @page.full_path).should == @page
+      end
+    end
+    
+  end
+  
+  # -- Instance Methods -----------------------------------------------
+  describe "Instance Methods" do
+    describe "#permalink" do  
+      it "should return the permalink" do
+        year = @page.published_date.year.to_s
+        month = @page.published_date.month.to_s
+        day = @page.published_date.day.to_s
+        @page.permalink.should == year + "/" + month + "/" + day + "/" + @page.slug
+      end
+    end
+    
   # -- Instance Methods
   describe "published?" do
     it "should return true when the page's current state is published" do
@@ -332,20 +345,13 @@ describe Page do
         @page.published_date.should == @page.current_state.published_at
       end
     end
-    
-    it "should return the permalink" do
-      year = @page.published_date.year.to_s
-      month = @page.published_date.month.to_s
-      day = @page.published_date.day.to_s
-      @page.permalink.should == year + "/" + month + "/" + day + "/" + @page.slug
-    end
-  end
   
-  describe "#status" do
-    it "should return the pages current state" do
-      @page.current_state.name = "published"
-      @page.save
-      @page.status.should == "published"
+    describe "#status" do
+      it "should return the pages current state" do
+        @page.current_state.name = "published"
+        @page.save
+        @page.status.should == "published"
+      end
     end
   end
 end

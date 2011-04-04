@@ -75,10 +75,19 @@ class Page
   
   # -- Callbacks -----------------------------------------------
   before_validation :format_title, :assign_slug, :assign_full_path, :assign_filter, :assign_breadcrumb, :assign_site
-  before_save :uniq_editor_ids, :published_at
+  before_save :uniq_editor_ids
+  before_update :update_current_state_time
   after_save :update_user_pages
   before_destroy :delete_from_editors
   before_destroy :move_children_to_parent
+  
+  # -- Scopes -----------------------------------------------
+  #scope :published, where(:current_state => "published")
+  
+  # -- Class Mehtods --------------------------------------------------
+  def self.find_by_full_path(site, full_path)
+    self.where(:site_id => site.id, :full_path => full_path).first
+  end
 
   #-- Scopes ----------------------------------------------------------
   scope :published, :where => { "current_state.name" => "published" }
@@ -147,8 +156,8 @@ class Page
     self.editor_ids.uniq!
   end
   
-  def published_at
-    self.current_state.published_at = DateTime.now if self.current_state.name == "published" && self.current_state.published_at.nil?
+  def update_current_state_time
+    self.current_state.time = DateTime.now
   end
   
   def assign_site
