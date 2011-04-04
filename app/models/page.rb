@@ -101,7 +101,7 @@ class Page
     self.current_state.draft?
   end
   
-  def published_date
+  def published_at
     self.current_state.published_at
   end
   

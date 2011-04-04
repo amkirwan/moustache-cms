@@ -316,36 +316,34 @@ describe Page do
       end
     end
     
-  # -- Instance Methods
-  describe "published?" do
-    it "should return true when the page's current state is published" do
-      @page.published?.should be_true
-    end
+    describe "published?" do
+      it "should return true when the page's current state is published" do
+        @page.published?.should be_true
+      end
     
-    it "should return false when the page's current state is not published" do
-      @page.current_state.name = "draft"
-      @page.published?.should be_false
-    end
-  end
-  
-  describe "draft?" do
-    it "should return true when the page's current state is draft" do
-      @page.current_state.name = "draft"
-      @page.draft?.should be_true
-    end
-    
-    it "should return false when the page's current state is not draft" do
-      @page.draft?.should be_false
-    end
-  end
-  
-  describe "#permalink" do  
-    describe "#published_at" do
-      it "shortcut to the current_state published_at property" do
-        @page.published_date.should == @page.current_state.published_at
+      it "should return false when the page's current state is not published" do
+        @page.current_state.name = "draft"
+        @page.published?.should be_false
       end
     end
   
+    describe "draft?" do
+      it "should return true when the page's current state is draft" do
+        @page.current_state.name = "draft"
+        @page.draft?.should be_true
+      end
+    
+      it "should return false when the page's current state is not draft" do
+        @page.draft?.should be_false
+      end
+    end
+    
+    describe "#published_at" do
+      it "shortcut to the current_state published_at property" do
+        @page.published_at.should == @page.current_state.published_at
+      end
+    end
+
     describe "#status" do
       it "should return the pages current state" do
         @page.current_state.name = "published"
