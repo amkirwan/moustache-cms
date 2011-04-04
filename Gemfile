@@ -1,15 +1,16 @@
 source 'http://rubygems.org'
 
-gem 'rails'   
+gem "rails"   
 gem "haml"
 gem "mongoid", "2.0.0.rc.7"
 gem "bson_ext", "~> 1.2"    
 gem "cancan"  
-gem "dynamic_form" 
 gem "rubycas-client", :git => "git://github.com/amkirwan/rubycas-client.git", :branch => "rails3"
 #gem "rubycas-client", :path => "/Users/akirwan/code/rubycas-client", :branch => "rails3"
-gem 'mongoid-tree', :git => 'git://github.com/benedikt/mongoid-tree', :require => 'mongoid/tree'
+gem "mongoid-tree", :git => "git://github.com/benedikt/mongoid-tree", :require => "mongoid/tree"
+gem "liquid"
 
+gem "unicorn", :group => :development 
 
 group :development, :test do
   gem "rspec-rails"  
