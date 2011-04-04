@@ -1,13 +1,13 @@
 # spec for CurrentState
 require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
 
-describe CurrentState do   
+describe CurrentState do  
+  before(:each) do
+    @current_state = Factory.build(:current_state)
+  end
+   
   # -- Validations -------------------------------
-  context "validations" do
-    before(:each) do
-      @current_state = Factory.build(:current_state)
-    end
-    
+  context "validations" do    
     it "should create a valid CurrentState with valid attributes" do
       @current_state.should be_valid
     end
@@ -18,14 +18,14 @@ describe CurrentState do
     end
   end
   
-  context "association" do
+  describe "association" do
     it "should be embbeded in page" do
       should be_embedded_in(:page).as_inverse_of(:current_state)
     end
   end
   
-  # -- Finder Methods -------------------------------
-  context "finder methods" do
+  # -- Class Finder Methods -------------------------------
+  describe "finder methods" do
     before(:each) do
       CurrentState.statuses << CurrentState.new(:name => "foobar")  
     end
@@ -52,4 +52,33 @@ describe CurrentState do
       end
     end
   end
+
+  #-- Instance Methods --------------------------------------------------
+  describe "Instance Methods" do
+    describe "#published" do
+      it "should return true when the current_state.name is published" do
+        @current_state.published?.should be_true
+      end
+     
+      it "should return false when the current_state.name is not published" do
+        @current_state.name = "draft"
+        @current_state.published?.should be_false
+      end
+    end  
+    
+    describe "#draft" do
+      it "should return true when the current_state.name is draft" do
+        @current_state.name = "draft"
+        @current_state.draft?.should be_true
+      end
+      
+      it "should return false when the current_state.name is not draft" do
+        @current_state.draft?.should be_false
+      end
+    end
+  end
 end
+
+
+
+

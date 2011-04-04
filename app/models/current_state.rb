@@ -12,7 +12,9 @@ class CurrentState
   
   validates :name,
             :presence => true
-  
+            
+            
+  #-- Class Methods --------------------------------------------------
   def self.all
     @statuses.dup
   end
@@ -21,10 +23,27 @@ class CurrentState
     status = @statuses.find { |status| status.id == id.to_s.downcase }
     status.dup unless status.nil?
   end
-  
+    
   def self.find_by_name(name)
     status = @statuses.find { |status| status.name == name.to_s.downcase }
     status.dup unless status.nil?
+  end
+  
+  #-- Instance Methods --------------------------------------------------
+  def published?
+    if self.name == "published"
+      return true
+    else
+      return false
+    end 
+  end
+  
+  def draft?
+    if self.name == "draft"
+      return true
+    else
+      return false
+    end
   end
   
   @statuses = [
