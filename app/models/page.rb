@@ -80,6 +80,9 @@ class Page
   before_destroy :delete_from_editors
   before_destroy :move_children_to_parent
 
+  #-- Scopes ----------------------------------------------------------
+  scope :published, :where => { "current_state.name" => "published" }
+
   # -- Instance Methods -----------------------------------------------  
   def published_date
     self.current_state.published_at

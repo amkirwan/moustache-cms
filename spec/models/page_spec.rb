@@ -259,6 +259,19 @@ describe Page do
     end
   end
   
+  # --  Scopes -----------------------------------------------------
+  describe "Scopes" do
+    describe "Page#published" do
+      it "should return the published items as a mongoid criteria" do
+        Page.published.should be_an_instance_of(Mongoid::Criteria)
+      end
+      
+      it "should return all the items that have a current_state set to published" do
+        Page.published.count.should be >= 1
+      end
+    end
+  end
+  
   # --  Associations -----------------------------------------------
   describe "associations" do
     it "should embed one current state" do
