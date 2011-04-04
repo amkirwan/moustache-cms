@@ -17,7 +17,6 @@ class Admin::PagesController < AdminBaseController
       @page.parent_id = Page.criteria.id(params[:page][:parent_id]).first.id
     end
     @page.page_type  = PageType.find(params[:page][:page_type_attributes][:id])
-    @page.filter = Filter.find(params[:page][:filter])
     @page.current_state = CurrentState.find(params[:page][:current_state_attributes][:id])
     assign_page_parts(params[:page][:page_parts_attributes])
     assign_editors(params[:page][:editor_ids])
@@ -46,9 +45,18 @@ class Admin::PagesController < AdminBaseController
   end
   
   def assign_page_parts(page_parts={})
-    page_parts.each_pair do |key, value|
-      @page.page_parts.build({"name" => "content", "content" => "Hello"})
-      #@page.page_parts.build(value)
+    page_parts.each_value do |value|
+      page_part = PagePart.new
+      value.each_pair do |k, v|
+        if k == "filter"
+          page_part.filter = Filter.find(v)
+        elsif k == "name"
+          page_part.name = v
+        elsif k == "content"
+          page_part.content = v
+        end
+      end
+      @page.page_parts << page_part
     end
   end
 end

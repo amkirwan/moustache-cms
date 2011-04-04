@@ -50,6 +50,14 @@ class CurrentState
     end 
   end
   
+  def published_at
+    if published?
+      return self.time
+    else
+      return nil
+    end
+  end
+  
   def draft?
     if self.name == "draft"
       return true

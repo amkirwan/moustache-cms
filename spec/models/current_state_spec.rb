@@ -66,6 +66,17 @@ describe CurrentState do
       end
     end  
     
+    describe "#published_at" do
+      it "should return the DateTime if published" do
+        @current_state.published_at.should == @current_state.time
+      end
+      
+      it "should not return DateTime if published is false" do
+        @current_state.name = "draft"
+        @current_state.published_at.should be_nil
+      end
+    end
+    
     describe "#draft" do
       it "should return true when the current_state.name is draft" do
         @current_state.name = "draft"

@@ -16,7 +16,6 @@ class Page
                   :meta_title, 
                   :meta_keywords, 
                   :meta_description, 
-                  :filter,
                   :current_state, 
                   :layout_id,
                   :page_parts,
@@ -32,9 +31,9 @@ class Page
   field :meta_title
   field :meta_keywords
   field :meta_description
-  field :filter, :type => Filter
   field :type
   
+  #-- Associations  -----------------------------------------------
   referenced_in :site
   embeds_one :current_state
   embeds_one :page_type
@@ -66,7 +65,6 @@ class Page
   
   validates_presence_of :site_id,
                         :slug, 
-                        :filter,    
                         :current_state,
                         :layout, 
                         :page_type,
@@ -74,15 +72,12 @@ class Page
                         :updated_by                    
   
   # -- Callbacks -----------------------------------------------
-  before_validation :format_title, :assign_slug, :assign_full_path, :assign_filter, :assign_breadcrumb, :assign_site
+  before_validation :format_title, :assign_slug, :assign_full_path, :assign_breadcrumb, :assign_site
   before_save :uniq_editor_ids
   before_update :update_current_state_time
   after_save :update_user_pages
   before_destroy :delete_from_editors
   before_destroy :move_children_to_parent
-  
-  # -- Scopes -----------------------------------------------
-  #scope :published, where(:current_state => "published")
   
   # -- Class Mehtods --------------------------------------------------
   def self.find_by_full_path(site, full_path)
@@ -106,9 +101,9 @@ class Page
   end
   
   def permalink
-    year = self.published_date.year.to_s
-    month = self.published_date.month.to_s
-    day = self.published_date.day.to_s
+    year = self.published_at.year.to_s
+    month = self.published_at.month.to_s
+    day = self.published_at.day.to_s
     year + "/" + month + "/" + day + "/" + self.slug
   end    
   
@@ -116,16 +111,12 @@ class Page
     self.current_state.name
   end
   
-  # -- Private Instance Methods
+  # -- Private Instance Methods -----------------------------------------------
   private 
   def format_title
     self.title.strip! unless self.title.nil?
   end
-  
-  def assign_filter
-    self.filter = Filter.find("html") if self.filter.nil?
-  end
-  
+    
   def assign_slug
     if Page.root.nil?
       self.slug = "/"

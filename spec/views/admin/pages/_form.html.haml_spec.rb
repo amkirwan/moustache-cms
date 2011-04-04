@@ -21,7 +21,8 @@ describe "admin/pages/_form.html.haml" do
     view.should render_template(:partial => "shared/error_messages", :locals => { :target => page })
   end      
   
-  context "when the page is a new record" do
+  # -- New Page ----------------------------------------------------------
+  describe "When the page is a new record" do
     before(:each) do
       page.as_new_record
     end
@@ -115,13 +116,6 @@ describe "admin/pages/_form.html.haml" do
       end
     end
     
-    it "should render a form select for filter" do
-      new_render
-      get_new do |f|
-        f.should have_selector("select", :name => "page[filter]")
-      end
-    end
-    
     it "should render a form select for page current_state" do
       page.stub(:current_state).and_return(mock_model("CurrentState"))
       new_render
@@ -137,19 +131,30 @@ describe "admin/pages/_form.html.haml" do
       end
     end
     
-    it "should render a form text field for the page part name" do
-      page.stub(:page_parts).and_return([ mock_model("PagePart").as_null_object.as_new_record ])
-      new_render
-      get_new do |f|
-        f.should have_selector("input", :type => "text", :name => "page[page_parts_attributes][0][name]")
+    describe "page part" do
+      before(:each) do
+        page.stub(:page_parts).and_return([ mock_model("PagePart").as_null_object.as_new_record ])
       end
-    end
-    
-    it "should render a form text area for the page part content" do
-      page.stub(:page_parts).and_return([ mock_model("PageParts").as_null_object.as_new_record ])
-      new_render
-      get_new do |f|
-        f.should have_selector("textarea" , :name => "page[page_parts_attributes][0][content]")
+      
+      it "should render a form text field for the page part name" do    
+        new_render
+        get_new do |f|
+          f.should have_selector("input", :type => "text", :name => "page[page_parts_attributes][0][name]")
+        end
+      end
+
+      it "should render a filter for the page part" do
+        new_render
+        get_new do |f|
+          f.should have_selector("select", :name => "page[page_parts_attributes][0][filter]")
+        end
+      end
+
+      it "should render a form text area for the page part content" do
+        new_render
+        get_new do |f|
+          f.should have_selector("textarea" , :name => "page[page_parts_attributes][0][content]")
+        end
       end
     end
   end                                                                                      

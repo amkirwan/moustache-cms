@@ -27,7 +27,6 @@ describe Page do
              :meta_keywords => "foobar", 
              :meta_description => "foobar",
              :layout_id => BSON::ObjectId('4d7fe2397353202ab60000e9'), 
-             :filter => stub_model(Filter), 
              :current_state => stub_model(CurrentState),
              :page_parts => [stub_model(PagePart)],
              :type => "foobar")
@@ -40,7 +39,6 @@ describe Page do
        page.meta_keywords.should == "foobar"
        page.meta_description.should == "foobar"
        page.layout_id.should == BSON::ObjectId('4d7fe2397353202ab60000e9')
-       page.filter.should_not == nil
        page.current_state.should_not == nil
        page.page_parts.should_not == nil
        page.type.should == "foobar"      
@@ -84,14 +82,6 @@ describe Page do
         @page.slug.should == "hello,-world!"
       end 
     end  
-    
-    describe "#assign_filter" do
-      it "should set the default filter to html before saving" do
-        @page.filter = nil
-        @page.save
-        @page.filter.name.should == "html"
-      end  
-    end
     
     describe "#assign_breadcrumb" do
       it "should set the breadcrumb to the page title when the slug is nil" do
@@ -220,12 +210,6 @@ describe Page do
       Factory.build(:page, :parent_id => @page.parent_id, :meta_title => @page.meta_title).should_not be_valid
     end
     
-    it "should not be valid without a filter" do
-      @page.stub(:assign_filter).and_return(nil)
-      @page.filter = nil
-      @page.should_not be_valid
-    end
-    
     it "should not be valid without a current state" do
       @page.current_state = nil
       @page.should_not be_valid
@@ -309,14 +293,14 @@ describe Page do
   describe "Instance Methods" do
     describe "#permalink" do  
       it "should return the permalink" do
-        year = @page.published_date.year.to_s
-        month = @page.published_date.month.to_s
-        day = @page.published_date.day.to_s
+        year = @page.published_at.year.to_s
+        month = @page.published_at.month.to_s
+        day = @page.published_at.day.to_s
         @page.permalink.should == year + "/" + month + "/" + day + "/" + @page.slug
       end
     end
     
-    describe "published?" do
+    describe "#published?" do
       it "should return true when the page's current state is published" do
         @page.published?.should be_true
       end
@@ -327,7 +311,7 @@ describe Page do
       end
     end
   
-    describe "draft?" do
+    describe "#draft?" do
       it "should return true when the page's current state is draft" do
         @page.current_state.name = "draft"
         @page.draft?.should be_true

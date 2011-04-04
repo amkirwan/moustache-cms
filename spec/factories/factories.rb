@@ -35,7 +35,7 @@ end
 
 Factory.define :current_state do |cs|
   cs.name "published"
-  cs.published_at DateTime.new
+  cs.time DateTime.new
 end
 
 Factory.define :page_type do |page_type|
@@ -45,6 +45,7 @@ end
 Factory.define :page_part do |pp|
   pp.sequence(:name) { |n| "page_part_#{n}" }
   pp.content "Hello, World!"
+  pp.filter { Factory.build(:filter) }
 end
 
 Factory.define :page do |page|
@@ -60,7 +61,6 @@ Factory.define :page do |page|
   page.layout { Factory.build(:layout) }
   page.current_state { Factory.build(:current_state) }
   page.editors {[ Factory.build(:user) ]}
-  page.filter { Factory.build(:filter) }
   page.tags 
   page.page_parts {[ Factory.build(:page_part) ]}
   page.page_type { Factory.build(:page_type) }
@@ -81,7 +81,6 @@ Factory.define :root_page, :parent => :page do |pp|
   pp.layout { Factory.build(:layout) }
   pp.current_state { Factory.build(:current_state) }
   pp.editors {[ Factory.build(:user) ]}
-  pp.filter { Factory.build(:filter) }
   pp.tags 
   pp.page_parts {[ Factory.build(:page_part) ]}
   pp.page_type { Factory.build(:page_type) }
@@ -102,7 +101,6 @@ Factory.define :no_root_page, :parent => :page do |pp|
   pp.layout { Factory.build(:layout) }
   pp.current_state { Factory.build(:current_state) }
   pp.editors {[ Factory.build(:user) ]}
-  pp.filter { Factory.build(:filter) }
   pp.tags 
   pp.page_parts {[ Factory.build(:page_part) ]}
   pp.page_type { Factory.build(:page_type) }

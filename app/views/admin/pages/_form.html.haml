@@ -34,9 +34,6 @@
   %fieldset
     = f.label :layout, "Layout"
     = f.collection_select :layout_id, Layout.all, :id, :name
-  %fieldset
-    = f.label :filter, "Filter"
-    = f.collection_select :filter, Filter.all, :id, :name
   = f.fields_for :current_state do |builder|
     %fieldset
       = builder.label :current_state, "Status"
@@ -48,6 +45,8 @@
     %fieldset
       = builder.label :name, "Page Part Name"
       = builder.text_field :name
+      = builder.label :filter, "Filter"
+      = builder.collection_select :filter, Filter.all, :id, :name
       = builder.label :content, "Page Part Content"
       = builder.text_area :content, :cols => "40", :rows => "12"
   %fieldset
