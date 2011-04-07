@@ -26,6 +26,7 @@ class Filter
   end
   
   @filters = [
+    Filter.new(:name => "liquid"),
     Filter.new(:name => "markdown"),
     Filter.new(:name => "textile"),
     Filter.new(:name => "html"),
