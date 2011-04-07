@@ -22,7 +22,7 @@ class Page
                   :tag_list,
                   :type
                   
-  
+  #-- Fields -----------------------------------------------
   field :title
   field :slug
   field :full_path
@@ -33,7 +33,7 @@ class Page
   field :meta_description
   field :type
   
-  #-- Associations  -----------------------------------------------
+  #-- Associations-----------------------------------------------
   referenced_in :site
   embeds_one :current_state
   embeds_one :page_type
