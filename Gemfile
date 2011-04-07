@@ -9,6 +9,8 @@ gem "rubycas-client", :git => "git://github.com/amkirwan/rubycas-client.git", :b
 #gem "rubycas-client", :path => "/Users/akirwan/code/rubycas-client", :branch => "rails3"
 gem "mongoid-tree", :git => "git://github.com/benedikt/mongoid-tree", :require => "mongoid/tree"
 gem "liquid"
+gem "RedCloth"
+gem "rdiscount"
 
 gem "unicorn", :group => :development 
 

@@ -33,6 +33,7 @@ GIT
 GEM
   remote: http://rubygems.org/
   specs:
+    RedCloth (4.2.7)
     abstract (1.0.0)
     actionmailer (3.0.5)
       actionpack (= 3.0.5)
@@ -148,6 +149,7 @@ GEM
       rake (>= 0.8.7)
       thor (~> 0.14.4)
     rake (0.8.7)
+    rdiscount (1.6.8)
     relish (0.2.1)
       archive-tar-minitar (~> 0.5.2)
       json (~> 1.4.6)
@@ -198,6 +200,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  RedCloth
   bson_ext (~> 1.2)
   cancan
   capybara
@@ -215,6 +218,7 @@ DEPENDENCIES
   mongoid-rspec!
   mongoid-tree!
   rails
+  rdiscount
   relish
   rspec-rails
   rubycas-client!
