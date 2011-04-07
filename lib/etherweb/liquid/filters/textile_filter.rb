@@ -5,3 +5,4 @@ module TextileFilter
   end
 
 end
+::Liquid::Template.register_filter(TextileFilter)
