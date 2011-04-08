@@ -11,6 +11,7 @@ gem "mongoid-tree", :git => "git://github.com/benedikt/mongoid-tree", :require =
 gem "liquid"
 gem "RedCloth"
 gem "rdiscount"
+gem "coderay"
 
 gem "unicorn", :group => :development 
 
