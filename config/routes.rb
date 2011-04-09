@@ -2,9 +2,6 @@ Etherweb::Application.routes.draw do
                               
   namespace :admin do
     resources :users
-  end  
-  
-  namespace :admin do
     resources :layouts, :except => :show
     resources :pages, :except => :show
   end

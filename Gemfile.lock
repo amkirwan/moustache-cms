@@ -113,7 +113,6 @@ GEM
       thor (~> 0.14.4)
     json (1.4.6)
     json_pure (1.5.1)
-    kgio (2.3.3)
     liquid (2.2.2)
     machinist (2.0.0.beta2)
     mail (2.2.15)
@@ -186,9 +185,6 @@ GEM
     treetop (1.4.9)
       polyglot (>= 0.3.1)
     tzinfo (0.3.24)
-    unicorn (3.5.0)
-      kgio (~> 2.3)
-      rack
     webrat (0.7.3)
       nokogiri (>= 1.2.0)
       rack (>= 1.0)
@@ -226,5 +222,4 @@ DEPENDENCIES
   rubycas-client!
   spork (~> 0.9.0.rc)
   syntax
-  unicorn
   webrat

@@ -18,7 +18,7 @@ class CmsSiteController < ActionController::Base
   end
   
   def load_page
-    @page = Page.find_by_full_path(@site, "/#{params[:page_path]}")
+    @page = @current_site.pages.find_by_full_path(@current_site, "/#{params[:page_path]}")
     if @current_site.nil?
       render :file => "#{RAILS_ROOT}/public/404.html", :layout => 'layouts/application', :status => 404
     end

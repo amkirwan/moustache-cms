@@ -2,9 +2,8 @@ class AdminBaseController < ApplicationController
   protect_from_forgery
   
   before_filter :fake_login unless Rails.env == "production"
-  #before_filter :current_user unless Rails.env == 'production'
   before_filter CASClient::Frameworks::Rails::Filter
-  before_filter :assign_site
+  #before_filter :assign_site
   
   load_and_authorize_resource 
   
@@ -16,10 +15,8 @@ class AdminBaseController < ApplicationController
     render :file => "#{Rails.root}/public/403.html", :layout => false
   end
                   
-  def current_user    
-    #fake_login(params[:cas_user]) unless Rails.env == 'production'                    
+  def current_user                      
     @current_user = User.where(:puid => session[:cas_user]).first
-    @current_user
   end  
   
   def admin?     
@@ -34,7 +31,7 @@ class AdminBaseController < ApplicationController
   protected
   
   def assign_site
-    hostname = Etherweb::Application.config.hostname.downcase
+    hostname = Etherweb::Application.config.domain.downcase
     
     if hostname.nil?
       flash[:error] = "No hostname defined"

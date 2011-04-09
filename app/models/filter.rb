@@ -29,7 +29,6 @@ class Filter
     Filter.new(:name => "liquid"),
     Filter.new(:name => "markdown"),
     Filter.new(:name => "textile"),
-    Filter.new(:name => "html"),
-    Filter.new(:name => "haml")
+    Filter.new(:name => "html")
   ]
 end

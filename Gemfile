@@ -13,8 +13,6 @@ gem "RedCloth"
 gem "rdiscount"
 gem "coderay"
 
-gem "unicorn", :group => :development 
-
 group :development, :test do
   gem "rspec-rails"  
   gem 'jquery-rails', ">= 0.2.6" 
