@@ -11,15 +11,15 @@ class CmsSiteController < ActionController::Base
   private
   
   def load_site
-    @site = Site.find_by_hostname(Etherweb::Application.config.hostname)
-    if @site.nil?
+    @current_site ||= Site.match_domain(request.host.downcase).first
+    if @current_site.nil?
       render :file => "#{Rails.root}/public/404.html", :layout => 'layouts/application', :status => 404
     end
   end
   
   def load_page
     @page = Page.find_by_full_path(@site, "/#{params[:page_path]}")
-    if @site.nil?
+    if @current_site.nil?
       render :file => "#{RAILS_ROOT}/public/404.html", :layout => 'layouts/application', :status => 404
     end
   end

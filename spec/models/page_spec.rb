@@ -23,9 +23,6 @@ describe Page do
              :slug => "foobar",
              :full_path => "full_path",
              :breadcrumb => "foobar",
-             :meta_title => "foobar",  
-             :meta_keywords => "foobar", 
-             :meta_description => "foobar",
              :layout_id => BSON::ObjectId('4d7fe2397353202ab60000e9'), 
              :current_state => stub_model(CurrentState),
              :page_parts => [stub_model(PagePart)],
@@ -35,9 +32,6 @@ describe Page do
        page.slug.should == "foobar"
        page.full_path.should == "full_path"
        page.breadcrumb.should == "foobar"
-       page.meta_title.should == "foobar"
-       page.meta_keywords.should == "foobar"
-       page.meta_description.should == "foobar"
        page.layout_id.should == BSON::ObjectId('4d7fe2397353202ab60000e9')
        page.current_state.should_not == nil
        page.page_parts.should_not == nil
@@ -204,10 +198,6 @@ describe Page do
       @page.stub(:assign_breadcrumb).and_return(nil)
       @page.breadcrumb = nil
       @page.should_not be_valid
-    end
-    
-    it "should not be valid without a unique meta_title" do
-      Factory.build(:page, :parent_id => @page.parent_id, :meta_title => @page.meta_title).should_not be_valid
     end
     
     it "should not be valid without a current state" do

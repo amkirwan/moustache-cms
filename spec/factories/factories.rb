@@ -21,7 +21,11 @@ end
 
 Factory.define :site do |site|
   site.sequence(:name) { |n| "name_#{n}" }
-  site.sequence(:hostname) { |n| "hostname_#{n}" }
+  site.subdomain "foobar"
+  site.default_domain  "example.com" 
+  site.domains  { [] }
+  site.meta_keywords "meta_keywords"
+  site.meta_description "meta_description"
 end
 
 Factory.define :layout do |layout|
@@ -55,9 +59,6 @@ Factory.define :page do |page|
   page.sequence(:slug) { |n| "slug_#{n}" }
   page.sequence(:full_path) { |n| "full_path_#{n}" }
   page.sequence(:breadcrumb) { |n| "breadcrumb_#{n}" }
-  page.sequence(:meta_title) { |n| "meta_title_#{n}"}
-  page.meta_keywords "meta_keywords"
-  page.meta_description "meta_description"
   page.layout { Factory.build(:layout) }
   page.current_state { Factory.build(:current_state) }
   page.editors {[ Factory.build(:user) ]}

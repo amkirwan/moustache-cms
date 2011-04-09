@@ -13,9 +13,6 @@ class Page
                   :full_path,
                   :permalink,
                   :breadcrumb, 
-                  :meta_title, 
-                  :meta_keywords, 
-                  :meta_description, 
                   :current_state, 
                   :layout_id,
                   :page_parts,
@@ -28,9 +25,6 @@ class Page
   field :full_path
   field :permalink
   field :breadcrumb
-  field :meta_title
-  field :meta_keywords
-  field :meta_description
   field :type
   
   #-- Associations-----------------------------------------------
@@ -58,10 +52,6 @@ class Page
 
   validates :breadcrumb,
             :presence => true
-  
-  validates :meta_title,
-            :uniqueness => true, 
-            :allow_blank => true
   
   validates_presence_of :site_id,
                         :slug, 
