@@ -8,10 +8,10 @@ gem "cancan"
 gem "rubycas-client", :git => "git://github.com/amkirwan/rubycas-client.git", :branch => "rails3"
 #gem "rubycas-client", :path => "/Users/akirwan/code/rubycas-client", :branch => "rails3"
 gem "mongoid-tree", :git => "git://github.com/benedikt/mongoid-tree", :require => "mongoid/tree"
-gem "liquid"
 gem "RedCloth"
 gem "rdiscount"
 gem "coderay"
+
 
 group :development, :test do
   gem "rspec-rails"  

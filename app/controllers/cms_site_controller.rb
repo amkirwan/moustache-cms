@@ -5,7 +5,9 @@ class CmsSiteController < ActionController::Base
   
   def render_html
     #@page = Page.find_by_path(params[:url])
-    render :text => "#{@page.page_parts[0].content}"
+    #render :text => "#{@page.page_parts[0].content}"
+    page = Liquid::Template.parse(@page.page_parts[0].content)
+    page.render
   end
   
   private
