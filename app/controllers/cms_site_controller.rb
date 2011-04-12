@@ -1,13 +1,16 @@
+
+
 class CmsSiteController < ActionController::Base 
   
   before_filter :load_site
   before_filter :load_page, :only => :render_html
+  layout nil
   
   def render_html
-    #@page = Page.find_by_path(params[:url])
-    #render :text => "#{@page.page_parts[0].content}"
-    page = Liquid::Template.parse(@page.page_parts[0].content)
-    page.render
+    view = ::Etherweb::CmsPage.new self
+    view[:content] = "Hello, World!"
+    view.template = @page.layout.try(:content)
+    render :text => view.render
   end
   
   private
