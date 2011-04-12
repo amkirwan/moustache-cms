@@ -1,5 +1,3 @@
-
-
 class CmsSiteController < ActionController::Base 
   
   before_filter :load_site
@@ -7,10 +5,13 @@ class CmsSiteController < ActionController::Base
   layout nil
   
   def render_html
-    view = ::Etherweb::CmsPage.new self
-    view[:content] = "Hello, World!"
-    view.template = @page.layout.try(:content)
-    render :text => view.render
+    #view = Mustache.new
+    #@page.page_parts.each { |part| view[part.name.to_sym] = part.content }
+    #view.template = @page.layout.try(:content)
+    #render :text => view.render
+    #render :text => Mustache.render(@page.layout.try(:content), view)
+    #render :text => Mustache.render(@page.layout.try(:content), { :content => "C", :sidebar => "**S**" })
+    render :text => Mustache.render(@page.layout.content, @page.page_parts.inject({}) {|hash,item| hash[item.name.to_sym] = item.content; hash })
   end
   
   private
