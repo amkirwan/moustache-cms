@@ -21,7 +21,7 @@ end
 
 Factory.define :site do |site|
   site.sequence(:name) { |n| "name_#{n}" }
-  site.subdomain "foobar"
+  site.sequence(:subdomain)  { |n| "foobar_#{n}" }
   site.default_domain  "example.com" 
   site.domains  { [] }
   site.meta_keywords "meta_keywords"
@@ -76,9 +76,6 @@ Factory.define :root_page, :parent => :page do |pp|
   pp.slug 
   pp.sequence(:full_path) { |n| "parent_full_path_#{n}" }
   pp.sequence(:breadcrumb) { |n| "parent_breadcrumb_#{n}" }
-  pp.sequence(:meta_title) { |n| "parent_meta_title_#{n}"}
-  pp.meta_keywords "parent_meta_keywords"
-  pp.meta_description "parent_meta_description"
   pp.layout { Factory.build(:layout) }
   pp.current_state { Factory.build(:current_state) }
   pp.editors {[ Factory.build(:user) ]}
@@ -96,9 +93,6 @@ Factory.define :no_root_page, :parent => :page do |pp|
   pp.slug 
   pp.sequence(:full_path) { |n| "page_full_path_#{n}" }
   pp.sequence(:breadcrumb) { |n| "page_breadcrumb_#{n}" }
-  pp.sequence(:meta_title) { |n| "page_meta_title_#{n}"}
-  pp.meta_keywords "page_meta_keywords"
-  pp.meta_description "page_meta_description"
   pp.layout { Factory.build(:layout) }
   pp.current_state { Factory.build(:current_state) }
   pp.editors {[ Factory.build(:user) ]}
