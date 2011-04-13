@@ -13,4 +13,8 @@ class PagePart
             :uniqueness => true
   validates :filter,
             :presence => true
+            
+  def self.find_by_name(name)
+    self.where(:name => name).first
+  end
 end

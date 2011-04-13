@@ -26,6 +26,7 @@ class Page
   field :permalink
   field :breadcrumb
   field :type
+  field :template
   
   #-- Associations-----------------------------------------------
   referenced_in :site

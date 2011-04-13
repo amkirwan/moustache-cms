@@ -5,13 +5,7 @@ class CmsSiteController < ActionController::Base
   layout nil
   
   def render_html
-    #view = Mustache.new
-    #@page.page_parts.each { |part| view[part.name.to_sym] = part.content }
-    #view.template = @page.layout.try(:content)
-    #render :text => view.render
-    #render :text => Mustache.render(@page.layout.try(:content), view)
-    #render :text => Mustache.render(@page.layout.try(:content), { :content => "C", :sidebar => "**S**" })
-    render :text => Mustache.render(@page.layout.content, @page.page_parts.inject({}) {|hash,item| hash[item.name.to_sym] = item.content; hash })
+    render :text => Etherweb::CmsPage.new(self).render
   end
   
   private
@@ -28,5 +22,9 @@ class CmsSiteController < ActionController::Base
     if @page.nil?
       render :file => "#{Rails.root}/public/404.html", :status => 404
     end
+  end
+  
+  def mustache_params
+    @page.page_parts.inject({}) {|hash,item| hash[item.name.to_sym] = item.content; hash }
   end
 end

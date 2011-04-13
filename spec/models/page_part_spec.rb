@@ -36,4 +36,15 @@ describe PagePart do
       @page_part.should be_embedded_in(:page).as_inverse_of(:page_parts)
     end
   end
+  
+  # -- Class Methods -----------------------------------------------
+  describe "Class Methods" do
+    describe "PagePart#find_by_name" do
+      it "should return the page_part with the given name" do
+        page = Factory(:page)
+        page.page_parts.find_by_name(page.page_parts.first.name).should == page.page_parts.first
+      end
+    end
+    
+  end
 end
