@@ -11,6 +11,7 @@ class Filter
   validates :name,
             :presence => true
   
+  # -- ClassMethods
   def self.all
     @filters.dup
   end
@@ -26,7 +27,6 @@ class Filter
   end
   
   @filters = [
-    Filter.new(:name => "liquid"),
     Filter.new(:name => "markdown"),
     Filter.new(:name => "textile"),
     Filter.new(:name => "html")
