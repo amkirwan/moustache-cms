@@ -7,7 +7,8 @@ class Etherweb::CmsPage < Mustache
   end
   
   def yield
-    render @page.template
+    part = @page.page_parts.first
+    render page_part_filter(part)
   end
   
   def respond_to?(method)
@@ -41,16 +42,20 @@ class Etherweb::CmsPage < Mustache
     def define_editable_text_method(name, part_name)
       self.class.send(:define_method, name) do  
         part = @page.page_parts.find_by_name(part_name)
-        case part.filter["name"]
-        when "markdown"
-          Markdown.new(part.content).to_html
-        when "textile"
-          RedCloth.new(part.content).to_html
-        when "html"
-          RedCloth.new(part.content).to_html
-        else
-          part.content.to_s
-        end
+        render page_part_filter(part)
+      end
+    end
+    
+    def page_part_filter(part)
+      case part.filter["name"]
+      when "markdown"
+        Markdown.new(part.content).to_html
+      when "textile"
+        RedCloth.new(part.content).to_html
+      when "html"
+        RedCloth.new(part.content).to_html
+      else
+        part.content.to_s
       end
     end
 end
