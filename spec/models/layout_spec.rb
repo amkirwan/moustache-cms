@@ -24,15 +24,7 @@ describe Layout do
   end
   
   # -- Before Validation Callback  -----------------------------------------------
-  describe "before_validation callback" do
-    describe "#assign_filter" do
-      it "should set the default filter to haml before saving" do
-        @layout.filter = nil
-        @layout.save
-        @layout.filter.name.should == "haml"
-      end
-    end   
-    
+  describe "before_validation callback" do    
     describe "#page_site" do
       it "should assign the site to the page before saving" do
         @layout.site.should == Site.first
@@ -74,12 +66,6 @@ describe Layout do
     
     it "should not be valid without content" do
       @layout.content = nil
-      @layout.should_not be_valid
-    end
-    
-    it "should not be valid without a filter" do
-      @layout.stub(:set_filter).and_return(nil)
-      @layout.filter = nil
       @layout.should_not be_valid
     end
     

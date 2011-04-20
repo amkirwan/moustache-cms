@@ -2,8 +2,11 @@ class Etherweb::CmsPage < Mustache
   
   def initialize(controller)
     @controller = controller
-    assign_controller_ivars
-    assign_template
+    controller_ivars_set
+  end
+  
+  def template
+    @page.layout.content
   end
   
   def yield
@@ -28,16 +31,12 @@ class Etherweb::CmsPage < Mustache
   end
   
   private 
-    def assign_controller_ivars
+    def controller_ivars_set
       variables = @controller.instance_variable_names
       variables.each do |var_name|
         self.instance_variable_set(var_name, @controller.instance_variable_get(var_name))
       end
     end  
-    
-    def assign_template
-      self.template = @page.layout.content
-    end
     
     def define_editable_text_method(name, part_name)
       self.class.send(:define_method, name) do  

@@ -41,7 +41,7 @@ describe Site do
   # -- Scope ------------------------------------------------------
   describe "#match_domain" do
     it "should return a site when the domain exists" do
-      sites = Site.match_domain("foobar.example.com")
+      sites = Site.match_domain("#{@site.subdomain}.example.com")
       sites.size.should == 1
       sites.first.should == @site
     end
@@ -49,8 +49,7 @@ describe Site do
     it "should return empty Criteria if it cannot find the domain" do
       sites = Site.match_domain("unknown.com")
       sites.should be_empty
-      sites.first.should be_nil
-      
+      sites.first.should be_nil     
     end
   end
 
@@ -59,7 +58,7 @@ describe Site do
   describe "instance methods" do
     describe "#full_subdomain" do
       it "should return the full domain" do
-        @site.full_subdomain.should == "foobar.example.com"
+        @site.full_subdomain.should == "#{@site.subdomain}.example.com"
       end
     end
     

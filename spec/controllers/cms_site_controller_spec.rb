@@ -6,7 +6,7 @@ describe CmsSiteController do
   describe "GET dynamic_page" do
     
     let(:current_site) { mock_model("Site") }
-    let(:page) { mock_model("Page") }
+    let(:page) { mock_model("Page").as_null_object }
     
     before(:each) do
       Site.stub(:match_domain).with("test.host").and_return(@criteria_sites = [current_site])

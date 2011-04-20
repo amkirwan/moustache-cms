@@ -22,6 +22,7 @@ class Filter
   end
   
   def self.find_by_name(name)
+    name = name.to_s
     filter = @filters.find { |filter| filter.name == name.to_s.downcase }
     filter.dup unless filter.nil?
   end

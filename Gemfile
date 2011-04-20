@@ -2,8 +2,8 @@ source 'http://rubygems.org'
 
 gem "rails", "~> 3.0"   
 gem "haml"
-gem "mongoid", "~> 2.0.0"
-gem "bson_ext", "~> 1.2"    
+gem "mongoid", "~> 2.0"
+gem "bson_ext", "~> 1.3"    
 gem "cancan"  
 gem "rubycas-client", :git => "git://github.com/amkirwan/rubycas-client.git", :branch => "rails3"
 #gem "rubycas-client", :path => "/Users/akirwan/code/rubycas-client", :branch => "rails3"
@@ -29,5 +29,5 @@ group :development, :test do
   gem "haml2slim"  
   gem "syntax"   
   gem "relish"
-  gem 'spork', '~> 0.9.0.rc'
+  gem 'spork'
 end

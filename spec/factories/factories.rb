@@ -32,9 +32,8 @@ Factory.define :layout do |layout|
   layout.site_id { Factory(:site).id }
   layout.sequence(:name) { |n| "layout_#{n}" }
   layout.content "Hello, World!"
-  layout.filter { Factory.build(:filter) }
-  layout.created_by Factory.build(:user)
-  layout.updated_by Factory.build(:user)
+  layout.created_by Factory(:user)
+  layout.updated_by Factory(:user)
 end
 
 Factory.define :current_state do |cs|
@@ -48,7 +47,7 @@ end
 
 Factory.define :page_part do |pp|
   pp.sequence(:name) { |n| "page_part_#{n}" }
-  pp.content "Hello, World!"
+  pp.content "Page Part Hello, World!"
   pp.filter { Factory.build(:filter) }
 end
 

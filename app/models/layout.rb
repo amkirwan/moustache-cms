@@ -8,7 +8,6 @@ class Layout
   field :name
   index :name, :unique => true
   field :content
-  field :filter, :type => Filter
   
   #-- Associations-----------------------------------------------
   references_many :pages
@@ -17,20 +16,17 @@ class Layout
   referenced_in :updated_by, :class_name => "User"
   
   #-- Validations -----------------------------------------------
-  before_validation :set_filter, :assign_site
+  before_validation :assign_site
   before_save :format_content
   
   validates :name,
             :presence => true,
             :uniqueness => true
             
-  validates_presence_of :content, :filter, :created_by_id, :updated_by_id, :site_id
+  validates_presence_of :content, :created_by_id, :updated_by_id, :site_id
 
   #-- Private Instance Methods ----------------------------------
   private 
-  def set_filter
-    self.filter = Filter.find("liquid") if self.filter.nil?
-  end
   
   def format_content
     self.content.strip!
