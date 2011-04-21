@@ -1,10 +1,12 @@
 require "spec_helper"
 
 describe Etherweb::CmsPage do
+  let(:user) { Factory(:user) }
+  let(:layout) { Factory(:layout, :created_by => user, :updated_by => user) }
   
   before(:each) do
     @controller = CmsSiteController.new
-    @page = Factory.build(:no_root_page)
+    @page = Factory(:page, :layout => layout, :created_by => user, :updated_by => user)
     @page.page_parts << Factory.build(:page_part, 
                                       :name => "content", 
                                       :content => "define_editable_text_method **strong**", 

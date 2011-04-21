@@ -78,7 +78,3 @@ Factory.define :parent_page, :parent => :page do |pp|
   pp.page_parts {[ Factory.build(:page_part) ]}
   pp.page_type { Factory.build(:page_type) }
 end
-
-Factory.define :no_root_page, :parent => :page do |page|
-  page.parent
-end

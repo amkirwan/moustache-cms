@@ -1,7 +1,15 @@
 Given /^these pages exist with current state$/ do |table|
-  root_page = Factory(:root_page)
+  user = Factory(:user)
+  layout = Factory(:layout, :created_by => user, :updated_by => user)
+  site = Factory(:site) 
+  parent = Factory(:page, :site => site, :layout => layout, :created_by => user, :updated_by => user)
   table.hashes.each do |hash|
-    Factory(:no_root_page, :parent_id => root_page.id, :title => hash[:title], :current_state => Factory.build(:current_state, :name => hash[:status]))
+    Factory(:page, :parent => parent, 
+                   :layout => layout,
+                   :created_by => user,
+                   :updated_by => user,
+                   :title => hash[:title], 
+                   :current_state => Factory.build(:current_state, :name => hash[:status]))
   end
 end
 

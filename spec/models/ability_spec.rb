@@ -4,7 +4,7 @@ require "cancan/matchers"
 describe Ability do  
   let(:admin) { Factory.build(:admin) }
   let(:editor) { Factory.build(:editor) }
-  let(:page) { Factory.build(:no_root_page, :editors => [ admin, editor ]) }
+  let(:page) { Factory.build(:page, :editors => [ admin, editor ]) }
   let(:user) { Factory.build(:user) }  
   let(:admin_ability) { Ability.new(admin) }
   let(:editor_ability) { Ability.new(editor) }
@@ -65,15 +65,15 @@ describe Ability do
     end
     
     it "should not allow the user with a role of editor to read a page they are not an editor for" do
-      editor_ability.should_not be_able_to(:read, Factory.build(:no_root_page))
+      editor_ability.should_not be_able_to(:read, Factory.build(:page))
     end
     
     it "should not allow the user with a role of editor to update a page they are not an editor for" do
-      editor_ability.should_not be_able_to(:update, Factory.build(:no_root_page))
+      editor_ability.should_not be_able_to(:update, Factory.build(:page))
     end
     
     it "should not allow the user with a role of editor to destroy pages they are not an editor for" do
-      editor_ability.should_not be_able_to(:destroy, Factory.build(:no_root_page))
+      editor_ability.should_not be_able_to(:destroy, Factory.build(:page))
     end
   end    
 end
