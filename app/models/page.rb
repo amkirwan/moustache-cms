@@ -143,7 +143,7 @@ class Page
   end
   
   def site_set
-    self.site_id = Site.first.id
+    self.site = Site.first
   end
   
   ## rc7 temp fixes for relations for mongoid
