@@ -1,8 +1,12 @@
 require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
 
 describe Page do   
+  let(:user) { Factory(:user) }
+  let(:layout) { Factory(:layout, :created_by => user, :updated_by => user) }
+  let(:site) { Factory(:site) }
+  let(:parent) { Factory(:page, :site => site, :layout => layout, :created_by => user, :updated_by => user) }
   before(:each) do                 
-    @page = Factory(:page)
+    @page = Factory(:page, :site => site, :parent => parent , :layout => layout, :created_by => user, :updated_by => user)
   end
   
   # -- Assignment -------------------------------------------
@@ -19,7 +23,7 @@ describe Page do
     
     it "should allow mass assignment of" do
       page = Page.new(:title => "foobar",
-             :parent_id => BSON::ObjectId('5d7fe2397353202ab60000e9'),
+             :parent => parent,
              :slug => "foobar",
              :full_path => "full_path",
              :breadcrumb => "foobar",
@@ -27,7 +31,7 @@ describe Page do
              :current_state => stub_model(CurrentState),
              :page_parts => [stub_model(PagePart)],
              :type => "foobar")
-       page.parent_id.should == BSON::ObjectId('5d7fe2397353202ab60000e9')
+       page.parent.should == parent
        page.title.should == "foobar"
        page.slug.should == "foobar"
        page.full_path.should == "full_path"
@@ -59,13 +63,13 @@ describe Page do
       end
     end
     
-    describe "#assign_slug" do
+    describe "#slug_set" do
       it "should set the page path to index when there the root node is not set, when there is one page document" do
         @page.parent.slug.should == "/"
       end
       
       it "should set the slug to the page title when the slug is blank and when the root.node exists" do
-        page2 = Factory(:page, :parent_id => @page.id, :slug => nil)
+        page2 = Factory(:page, :slug => nil, :parent => parent, :site => site, :layout => layout, :created_by => user, :updated_by => user)
         page2.slug.should == page2.title.downcase
         page2 = nil
       end
@@ -156,8 +160,8 @@ describe Page do
     end
     
     it "should not be valid without a site_id" do
-      @page.stub(:assign_site).and_return(nil)
-      @page.site_id = nil
+      @page.stub(:site_set).and_return(nil)
+      @page.site = nil
       @page.should_not be_valid
     end
     
@@ -172,30 +176,35 @@ describe Page do
     end
     
     it "should not be valid without a unique title" do
-      Factory.build(:page, :parent_id => @page.parent_id, :title => @page.title).should_not be_valid
+      Factory.build(:page, 
+                    :title => @page.title, 
+                    :site_id => site.id, 
+                    :layout => layout, 
+                    :created_by => user, 
+                    :updated_by => user).should_not be_valid
     end
     
     it "should not be valid without a slug" do
-      @page.stub(:assign_slug).and_return(nil)
+      @page.stub(:slug_set).and_return(nil)
       @page.slug = nil
       @page.should_not be_valid
     end
    
     it "should not be valid without a full_path" do
-      @page.stub(:assign_full_path).and_return(nil)
+      @page.stub(:full_path_set).and_return(nil)
       @page.full_path = nil
       @page.should_not be_valid
     end
     
     it "should not be valid without a unique full_path" do
-      page2 = Factory(:page, :parent_id => @page.parent_id)
-      page2.stub(:assign_full_path)
+      page2 = Factory.build(:page, :parent => parent, :site => site, :layout => layout, :created_by => user, :updated_by => user)
+      page2.stub(:full_path_set)
       page2.full_path = @page.full_path
       page2.should_not be_valid
     end
     
     it "should not be valid without a breadcrumb" do
-      @page.stub(:assign_breadcrumb).and_return(nil)
+      @page.stub(:breadcrumb_set).and_return(nil)
       @page.breadcrumb = nil
       @page.should_not be_valid
     end

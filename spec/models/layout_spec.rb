@@ -3,7 +3,8 @@ require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
 
 describe Layout do   
   before(:each) do
-    @layout = Factory(:layout)
+    @user = Factory(:user)
+    @layout = Factory(:layout, :created_by => @user, :updated_by => @user)
   end
 
   # -- Assignment -------------------------------------------------------------- 
@@ -61,7 +62,7 @@ describe Layout do
     end
     
     it "should not be valid without a unique layout name" do
-      Factory.build(:layout, :name => "#{@layout.name}").should_not be_valid
+      Factory.build(:layout, :name => "#{@layout.name}", :created_by => @user, :updated_by => @user).should_not be_valid
     end
     
     it "should not be valid without content" do

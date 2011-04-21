@@ -6,8 +6,8 @@ class Page
   #include Mongoid::Tree::Traversal
   #include Mongoid::Tree::Ordering
 
-  attr_accessible :site_id,
-                  :parent_id,
+  attr_accessible :site,
+                  :parent,
                   :title, 
                   :slug,
                   :full_path,
@@ -54,7 +54,7 @@ class Page
   validates :breadcrumb,
             :presence => true
   
-  validates_presence_of :site_id,
+  validates_presence_of :site,
                         :slug, 
                         :current_state,
                         :layout, 
@@ -63,7 +63,7 @@ class Page
                         :updated_by                    
   
   # -- Callbacks -----------------------------------------------
-  before_validation :format_title, :assign_slug, :assign_full_path, :assign_breadcrumb, :assign_site
+  before_validation :format_title, :slug_set, :full_path_set, :breadcrumb_set, :site_set
   before_save :uniq_editor_ids
   before_update :update_current_state_time
   after_save :update_user_pages
@@ -108,7 +108,7 @@ class Page
     self.title.strip! unless self.title.nil?
   end
     
-  def assign_slug
+  def slug_set
     if Page.root.nil?
       self.slug = "/"
       self.parent = nil
@@ -121,11 +121,11 @@ class Page
     self.slug.gsub!(/\s/, '-')
   end
   
-  def assign_full_path
+  def full_path_set
     self.full_path = self.parent ? "#{self.parent.full_path}/#{self.slug}".squeeze("/") : "/"
   end
   
-  def assign_breadcrumb
+  def breadcrumb_set
     if self.breadcrumb.blank?
       self.breadcrumb = self.title.downcase
     else
@@ -142,7 +142,7 @@ class Page
     self.current_state.time = DateTime.now
   end
   
-  def assign_site
+  def site_set
     self.site_id = Site.first.id
   end
   

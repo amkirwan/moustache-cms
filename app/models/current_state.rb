@@ -7,8 +7,8 @@ class CurrentState
   
   field :name
   key :name
-  field :time, :type => DateTime
-  embedded_in :page, :inverse_of => :current_state
+  field :time, type: DateTime
+  embedded_in :page, inverse_of: :current_state
   
   validates :name,
             :presence => true

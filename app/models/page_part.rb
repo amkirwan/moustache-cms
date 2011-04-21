@@ -4,7 +4,7 @@ class PagePart
   field :name
   key :name
   field :content
-  field :filter, :type => Filter
+  field :filter, type: Filter
   
   embedded_in :page, :inverse_of => :page_parts
   
@@ -15,6 +15,6 @@ class PagePart
             :presence => true
             
   def self.find_by_name(name)
-    self.where(:name => name).first
+    self.where(:name => name.to_s).first
   end
 end

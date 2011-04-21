@@ -1,4 +1,3 @@
-
 Factory.define :user do |user|
   user.sequence(:puid) { |n| "foobar_#{n}"}
   user.firstname "foobar" 
@@ -14,6 +13,7 @@ end
 Factory.define :editor, :parent => :user do |editor|
   editor.role "editor"
 end
+
 
 Factory.define :filter do |filter|
   filter.name "filter"
@@ -32,8 +32,8 @@ Factory.define :layout do |layout|
   layout.site_id { Factory(:site).id }
   layout.sequence(:name) { |n| "layout_#{n}" }
   layout.content "Hello, World!"
-  layout.created_by Factory(:user).id
-  layout.updated_by Factory(:user).id
+  layout.created_by Factory.build(:user)
+  layout.updated_by Factory.build(:user) 
 end
 
 Factory.define :current_state do |cs|
@@ -52,8 +52,8 @@ Factory.define :page_part do |pp|
 end
 
 Factory.define :page do |page|
-  page.site_id { Factory(:site).id }
-  page.parent_id { Factory(:root_page).id }
+  page.site { Factory.build(:site) }
+  page.parent 
   page.sequence(:title) { |n| "title_#{n}" }
   page.sequence(:slug) { |n| "slug_#{n}" }
   page.sequence(:full_path) { |n| "full_path_#{n}" }
@@ -68,36 +68,17 @@ Factory.define :page do |page|
   page.updated_by { Factory.build(:user) }
 end
 
-Factory.define :root_page, :parent => :page do |pp|
-  pp.site_id { Factory(:site).id }
-  pp.parent_id 
+Factory.define :parent_page, :parent => :page do |pp|
+  pp.parent
   pp.sequence(:title) { |n| "parent_title_#{n}" }
   pp.slug 
   pp.sequence(:full_path) { |n| "parent_full_path_#{n}" }
   pp.sequence(:breadcrumb) { |n| "parent_breadcrumb_#{n}" }
-  pp.layout { Factory.build(:layout) }
   pp.current_state { Factory.build(:current_state) }
-  pp.editors {[ Factory.build(:user) ]}
-  pp.tags 
   pp.page_parts {[ Factory.build(:page_part) ]}
   pp.page_type { Factory.build(:page_type) }
-  pp.created_by { Factory.build(:user) }
-  pp.updated_by { Factory.build(:user) }
 end
 
-Factory.define :no_root_page, :parent => :page do |pp|
-  pp.site_id { Factory(:site).id }
-  pp.parent_id 
-  pp.sequence(:title) { |n| "page_#{n}" }
-  pp.slug 
-  pp.sequence(:full_path) { |n| "page_full_path_#{n}" }
-  pp.sequence(:breadcrumb) { |n| "page_breadcrumb_#{n}" }
-  pp.layout { Factory.build(:layout) }
-  pp.current_state { Factory.build(:current_state) }
-  pp.editors {[ Factory.build(:user) ]}
-  pp.tags 
-  pp.page_parts {[ Factory.build(:page_part) ]}
-  pp.page_type { Factory.build(:page_type) }
-  pp.created_by { Factory.build(:user) }
-  pp.updated_by { Factory.build(:user) }
+Factory.define :no_root_page, :parent => :page do |page|
+  page.parent
 end

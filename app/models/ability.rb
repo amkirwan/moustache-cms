@@ -9,8 +9,8 @@ class Ability
     end
     
     if user.role? :editor 
-      can :update, User, :puid => user.puid
-      can :show, User, :puid => user.puid
+      can :update, User, puid: user.puid
+      can :show, User, puid: user.puid
       can :create, Page
       can :index, Page
       can [:show, :update, :destroy], Page do |page|
