@@ -9,6 +9,10 @@ Given /^the user "([^\"]*)" exists with the role of "([^\"]*)"$/ do |username, r
                  :role => role)
 end
 
+Given /^the site "([^\"]*)" exists$/ do |site|
+  Factory(:site, :name => "foobar", :subdomain => "foobar" )
+end
+
 Given /^I login as "([^\"]*)" with the role of "([^\"]*)"$/ do |username, role|
   Given %{the user "#{username}" exists with the role of "#{role}"}
   Given %{cas authenticates with cas user "#{username}"}

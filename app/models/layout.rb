@@ -16,7 +16,7 @@ class Layout
   referenced_in :updated_by, :class_name => "User"
   
   #-- Validations -----------------------------------------------
-  before_validation :assign_site
+  before_validation :site_set
   before_save :format_content
   
   validates :name,
@@ -32,7 +32,7 @@ class Layout
     self.content.strip!
   end
   
-  def assign_site
-    self.site_id = Site.first.id
+  def site_set
+    self.site = Site.first
   end
 end
