@@ -6,7 +6,7 @@ class Layout
 
   #-- Fields -----------------------------------------------  
   field :name
-  index :name, :unique => true
+  index :name, unique: true
   field :content
   
   #-- Associations-----------------------------------------------

@@ -8,7 +8,7 @@ class Site
   key :name
   field :subdomain
   field :default_domain
-  field :domains, :type => Array, :default => []
+  field :domains, type: Array, default: []
   field :meta_keywords
   field :meta_description
   

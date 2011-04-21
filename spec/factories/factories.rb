@@ -3,7 +3,7 @@ Factory.define :user do |user|
   user.sequence(:puid) { |n| "foobar_#{n}"}
   user.firstname "foobar" 
   user.lastname  "baz" 
-  user.sequence(:email) { |n| "fbaz_#{n}@example.com" }
+  user.sequence(:email) { |n| "foobar_#{n}@example.com" }
   user.role "admin" 
 end
 
@@ -32,8 +32,8 @@ Factory.define :layout do |layout|
   layout.site_id { Factory(:site).id }
   layout.sequence(:name) { |n| "layout_#{n}" }
   layout.content "Hello, World!"
-  layout.created_by Factory(:user)
-  layout.updated_by Factory(:user)
+  layout.created_by Factory(:user).id
+  layout.updated_by Factory(:user).id
 end
 
 Factory.define :current_state do |cs|

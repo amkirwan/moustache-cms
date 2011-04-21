@@ -19,7 +19,7 @@ class Page
                   :tag_list,
                   :type
                   
-  #-- Fields -----------------------------------------------
+  # -- Fields -----------------------------------------------
   field :title
   field :slug
   field :full_path
@@ -28,7 +28,7 @@ class Page
   field :type
   field :template
   
-  #-- Associations-----------------------------------------------
+  # -- Associations-----------------------------------------------
   referenced_in :site
   embeds_one :current_state
   embeds_one :page_type
@@ -42,7 +42,7 @@ class Page
   accepts_nested_attributes_for :current_state
   accepts_nested_attributes_for :page_parts
   
-  #-- Validations -----------------------------------------------
+  # -- Validations -----------------------------------------------
   validates :title,
             :presence => true, 
             :uniqueness => true 

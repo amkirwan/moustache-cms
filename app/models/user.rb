@@ -3,23 +3,26 @@ class User
   include Mongoid::Timestamps
    
   attr_accessible :firstname, :lastname, :email 
-       
+  
+  # -- Fields -----------------------------------------------    
   field :puid
-  index :puid, :unique => true
+  index :puid, unique: true
   key :puid         
   field :username
-  index :username, :unique => true
+  index :username, unique: true
   field :firstname
   field :lastname
   field :email
   field :role 
   
+  #-- Associations-----------------------------------------------
   references_many :layouts_created, :class_name => "Layout", :foreign_key => :created_by_id
   references_many :layouts_updated, :class_name => "Layout", :foreign_key => :updated_by_id
   references_many :pages_created, :class_name => "Page", :foreign_key => :created_by_id
   references_many :pages_updated, :class_name => "Page", :foreign_key => :updated_by_id
   references_and_referenced_in_many :pages, :class_name => "Page"
   
+  # -- Validations -----------------------------------------------
   before_validation :uniq_page_ids
   before_save :lower, :set_username
                        
@@ -37,21 +40,22 @@ class User
             :uniqueness => true,
             :format => { :with => /^([^\s]+)((?:[-a-z0-9]\.)[a-z]{2,})$/i }
 
+  # -- Instance Methods -----------------------------------------------
   def role?(base_role)
     Roles.index(base_role.to_s) <= Roles.index(role)
   end
   
   private
-  def uniq_page_ids
-    self.page_ids.uniq!
-  end
+    def uniq_page_ids
+      self.page_ids.uniq!
+    end
   
-  def lower
-    self.puid.downcase!
-    self.email.downcase!
-  end
+    def lower
+      self.puid.downcase!
+      self.email.downcase!
+    end
   
-  def set_username
-    self.username = self.puid
-  end
+    def set_username
+      self.username = self.puid
+    end
 end
