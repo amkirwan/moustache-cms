@@ -99,6 +99,20 @@ describe User do
     end
   end
   
+  # -- Before Destroy  ----------------------------------------------- 
+  describe "before destroy callback" do
+    describe "#delete_from_pages" do
+      it "should remove the editor from the pages" do
+        layout = Factory(:layout, :created_by => @user, :updated_by => @user)
+        site = Factory(:site)
+        page = Factory(:page, :site => site, :layout => layout, :created_by => @user, :updated_by => @user, :editor_ids => [@user.id])
+        u = User.criteria.for_ids(@user.id).first
+        u.destroy
+        Page.criteria.for_ids(page.id).first.editor_ids.should_not include(@user.id)
+      end
+    end  
+  end
+  
   # -- Associations ----------------------------------------------------
   context "associations" do
     it "should reference many layouts created" do

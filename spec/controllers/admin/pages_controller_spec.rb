@@ -98,7 +98,7 @@ describe Admin::PagesController do
     before(:each) do
       page.as_new_record
       @parent_mock = mock_model("Page", :id => "4d922d505dfe2f082e00006e")
-      Page.stub_chain(:criteria, :id).and_return([@parent_mock])
+      Page.stub_chain(:criteria, :for_ids).and_return([@parent_mock])
       CurrentState.stub(:find).and_return(status)
       Filter.stub(:find).and_return(filter)
       Page.stub(:new).with(params["page"]).and_return(page)

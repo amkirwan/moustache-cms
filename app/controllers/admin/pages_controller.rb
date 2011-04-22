@@ -13,7 +13,7 @@ class Admin::PagesController < AdminBaseController
     if params[:page][:parent_id].blank?
       @page.parent_id = nil
     elsif
-      @page.parent_id = Page.criteria.id(params[:page][:parent_id]).first.id
+      @page.parent_id = Page.criteria.for_ids(params[:page][:parent_id]).first.id
     end
     @page.current_state = CurrentState.find(params[:page][:current_state_attributes][:id])
     assign_page_parts(params[:page][:page_parts_attributes])

@@ -150,7 +150,6 @@ describe Page do
       it "should remove the page from the users editor_ids" do
         u = Factory(:user)
         @page.editors << u
-        @page.save
         @page.destroy
         u.page_ids.should_not include(@page.id)
       end

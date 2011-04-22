@@ -25,6 +25,7 @@ class User
   # -- Before Validations -----------------------------------------------
   before_validation :uniq_page_ids
   before_save :lower, :set_username
+  before_destroy :delete_from_pages
                        
   Roles = %w[editor admin] unless defined?(Roles)
   
@@ -63,5 +64,13 @@ class User
   
     def set_username
       self.username = self.puid
+    end
+    
+    def delete_from_pages
+      pages = Page.criteria.for_ids(self.page_ids)
+      pages.each do |page|
+        page.editor_ids.delete(self.id)
+        page.save
+      end 
     end
 end

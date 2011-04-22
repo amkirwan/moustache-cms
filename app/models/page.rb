@@ -73,8 +73,7 @@ class Page
   before_save :uniq_editor_ids
   before_update :update_current_state_time
   after_save :update_user_pages
-  before_destroy :delete_from_editors
-  before_destroy :move_children_to_parent
+  before_destroy :delete_from_editors, :move_children_to_parent
   
   # -- Class Mehtods --------------------------------------------------
   def self.find_by_full_path(site, full_path)
