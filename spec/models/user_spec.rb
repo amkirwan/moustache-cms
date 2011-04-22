@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
 
 describe User do   
   before(:each) do
-    @user = Factory(:user)
+    @user = Factory(:user, :puid => "foobar")
   end 
   
   context "mass assignment" do
@@ -66,28 +66,6 @@ describe User do
     end 
   end
   
-  context "role?" do
-    it "should return true when the user role equals the base role" do
-      @user.role = "admin"
-      @user.role?(:admin).should == true
-    end 
-    
-    it "should return true when the user role is greater than the base role" do
-      @user.role = "admin"
-      @user.role?(:editor).should == true
-    end    
-    
-    it "should return true when the user role is greater than or equal to the base role" do
-     @user.role = "editor"
-     @user.role?(:editor).should == true
-    end
-    
-    it "should return false when the user role is less than the base role" do
-      @user.role = "editor"
-      @user.role?(:admin).should == false
-    end
-  end
-  
   context "associations" do
     it "should reference many layouts created" do
       @user.should reference_many(:layouts_created).of_type(Layout)
@@ -136,6 +114,40 @@ describe User do
     context "after save set_username" do
       it "should set the username to the puid value" do
         @user.puid.should == @user.username
+      end
+    end
+  end
+  
+  # -- Class Methods -----------------------------------------------
+  describe "Class Methods" do
+    describe "User#find_by_name" do
+      it "should return the user when they exist" do
+        User.find_by_username("foobar").should == @user
+      end
+    end
+  end
+  
+  # -- Instance Methods -----------------------------------------------
+  describe "Instance Methods" do
+    describe "#role?" do
+      it "should return true when the user role equals the base role" do
+        @user.role = "admin"
+        @user.role?(:admin).should == true
+      end 
+    
+      it "should return true when the user role is greater than the base role" do
+        @user.role = "admin"
+        @user.role?(:editor).should == true
+      end    
+    
+      it "should return true when the user role is greater than or equal to the base role" do
+       @user.role = "editor"
+       @user.role?(:editor).should == true
+      end
+    
+      it "should return false when the user role is less than the base role" do
+        @user.role = "editor"
+        @user.role?(:admin).should == false
       end
     end
   end

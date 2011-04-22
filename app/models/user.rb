@@ -40,6 +40,11 @@ class User
             :uniqueness => true,
             :format => { :with => /^([^\s]+)((?:[-a-z0-9]\.)[a-z]{2,})$/i }
 
+  # -- Class Methods -----------------------------------------------
+  def self.find_by_username(name)
+    User.where(:username => name.to_s).first
+  end
+
   # -- Instance Methods -----------------------------------------------
   def role?(base_role)
     Roles.index(base_role.to_s) <= Roles.index(role)
