@@ -1,17 +1,16 @@
 source 'http://rubygems.org'
 
 gem "rails", "~> 3.0"   
-gem "haml"
+gem "haml", ">= 3.0.25"
 gem "mongoid", "~> 2.0"
 gem "bson_ext", "~> 1.3"    
-gem "cancan"  
+gem "cancan", ">= 1.6"
 gem "rubycas-client", :git => "git://github.com/amkirwan/rubycas-client.git", :branch => "rails3"
 #gem "rubycas-client", :path => "/Users/akirwan/code/rubycas-client", :branch => "rails3"
 gem "mongoid-tree", :git => "git://github.com/benedikt/mongoid-tree", :require => "mongoid/tree"
-gem "mustache"
-gem "RedCloth"
-gem "rdiscount"
-gem "coderay"
+gem "mustache", ">= 0.99"
+gem "RedCloth", "~> 4.2"
+gem "rdiscount", ">= 1.6"
 
 
 group :development, :test do
