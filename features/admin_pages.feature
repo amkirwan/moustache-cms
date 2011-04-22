@@ -38,7 +38,6 @@ Scenario: Create a new page
   When I go to the admin pages page
   And I follow "Add New Page"
   Then I should be on the new admin page page
-  And I select "normal" from "page_page_type_attributes_id" within "div#add_new_page"
   And I fill in "page_title" with "foobar" 
   And I fill in "page_meta_title" with "meta_title_foobar"
   And I fill in "page_meta_keywords" with "meta_keywords_foobar"
