@@ -2,9 +2,11 @@ def find_layout(layout_name)
   layout = Layout.where(:name => layout_name).first
 end
 
-Given /^these layouts exist$/ do |table|
+Given /^these layouts exist in the site "([^\"]*)" with the user "([^\"]*)"$/ do |site, username, table|
+  user = User.find_by_username(username)
+  site = Site.match_domain(site).first
   table.hashes.each do |hash|
-    Factory(:layout, :name => hash[:name], :content => hash[:content])
+    Factory(:layout, :site => site, :name => hash[:name], :content => hash[:content])
   end
 end
 

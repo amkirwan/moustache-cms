@@ -2,27 +2,26 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')
 
 describe "admin/pages/index.html.haml" do
-  let(:pages) { [stub_model(Page, :title => "foobar", :status => "published", :parent_id => "4d8908d15dfe2f273300005b") ] }
+  let(:parent) { stub_model(Page, :title => "Home Page", :parent => nil)}
+  let(:pages) { [stub_model(Page, :title => "foobar", :status => "published", :parent => parent) ] }
   let(:current_user) { stub_model(User, :role? => true) }
   
   before(:each) do
-    Page.stub_chain(:criteria, :id).and_return([mock_model("Page", :title => 
-    "foobar")])
     assign(:pages, pages)
     assign(:current_user, current_user)
   end
   
-  it "should show the page's parent name when the parent_id is not nil" do   
+  it "should show the page's parent name when the parent is not nil" do   
     render
     pages.each do |page|
       rendered.should have_selector("tr##{page.title}") do |tr|
-        tr.should contain("#{Page.criteria.id(page.parent_id).first.title}")
+        tr.should contain("#{parent.title}")
       end
     end
   end
   
-  it "should not show the page's parent name when the parent_id is nil" do
-    pages[0].stub(:parent_id).and_return(nil)
+  it "should not show the page's parent name when the parent is nil" do
+    pages[0].stub(:parent).and_return(nil)
     render
     pages.each do |page|
       render.should have_selector("tr##{page.title}") do |tr|

@@ -18,6 +18,16 @@
     = f.label :breadcrumb, "Breadcrumb"
     = f.text_field :breadcrumb
   %fieldset
+    = f.label :meta_title, "Meta-Title"
+    = f.text_field :meta_title
+  %fieldset
+    = f.label :meta_keywords, "Meta-Keywords"
+    = f.text_field :meta_keywords
+  %fieldset
+    = f.label :meta_description, "Meta-Description"
+    = f.text_area :meta_description, :cols => "40", :rows => "12"
+  %fieldset
+  %fieldset
     = f.label :editors, "Editors"
     - User.all.each do |user|
       = check_box_tag "page[editor_ids][]", user.puid, page.editor_ids.include?(user.puid), :id => "editor_id_#{user.puid}"

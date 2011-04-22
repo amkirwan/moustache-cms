@@ -79,6 +79,28 @@ describe "admin/pages/_form.html.haml" do
       end
     end
     
+    it "should render a text field for the meta_title" do
+      new_render
+      get_new do |f|
+        f.should have_selector("input", :type => "text", :name => "page[meta_title]")
+      end
+    end
+    
+    it "should render a text field for the meta_keywords" do
+      new_render
+      get_new do |f|
+        f.should have_selector("input", :type => "text", :name => "page[meta_keywords]")
+      end
+    end
+    
+    it "should render a textarea for the meta_description" do
+      new_render
+      get_new do |f|
+        f.should have_selector("textarea", :name => "page[meta_description]")
+      end
+    end
+    
+    
     it "should render checkboxes to enter the editors" do
       User.stub(:all).and_return([mock_model("User", :puid => "foobar")])
       new_render

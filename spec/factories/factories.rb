@@ -29,7 +29,7 @@ Factory.define :site do |site|
 end
 
 Factory.define :layout do |layout|
-  layout.site_id { Factory(:site).id }
+  layout.site { Factory(:site) }
   layout.sequence(:name) { |n| "layout_#{n}" }
   layout.content "Hello, World!"
   layout.created_by Factory.build(:user)
@@ -58,6 +58,9 @@ Factory.define :page do |page|
   page.sequence(:slug) { |n| "slug_#{n}" }
   page.sequence(:full_path) { |n| "full_path_#{n}" }
   page.sequence(:breadcrumb) { |n| "breadcrumb_#{n}" }
+  page.sequence(:meta_title) { |n| "meta_title_#{n}"}
+  page.meta_keywords "meta_keywords"
+  page.meta_description "meta_description"
   page.layout { Factory.build(:layout) }
   page.current_state { Factory.build(:current_state) }
   page.editors {[ Factory.build(:user) ]}

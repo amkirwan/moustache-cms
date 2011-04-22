@@ -2,9 +2,11 @@
 require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
 
 describe Layout do   
+  let(:user) { Factory(:user) }
+  let(:site) { Factory(:site) }
+  
   before(:each) do
-    @user = Factory(:user)
-    @layout = Factory(:layout, :created_by => @user, :updated_by => @user)
+    @layout = Factory(:layout, :site => site, :created_by => user, :updated_by => user)
   end
 
   # -- Assignment -------------------------------------------------------------- 

@@ -8,10 +8,10 @@
   %tbody
   - @pages.each do |page|
     %tr{:id => page.title}
-      - if page.parent_id.nil?
+      - if page.parent.nil?
         %td 
       - else
-        %td= Page.criteria.id(page.parent_id).first.title
+        %td= page.parent.title
       %td= link_to page.title, edit_admin_page_path(page)
       %td= page.status
       %td.destroy= button_to "delete", admin_page_path(page), :method => :delete, :confirm => "Are you sure you want to delete the page #{page.title}"

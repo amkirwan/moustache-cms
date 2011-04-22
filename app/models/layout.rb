@@ -2,7 +2,7 @@ class Layout
   include Mongoid::Document 
   include Mongoid::Timestamps
   
-  attr_accessible :layout_id, :name, :content
+  attr_accessible :layout, :name, :content
 
   #-- Fields -----------------------------------------------  
   field :name
@@ -21,7 +21,7 @@ class Layout
   
   validates :name,
             :presence => true,
-            :uniqueness => true
+            :uniqueness => { :scope => :site_id }
             
   validates_presence_of :content, :created_by_id, :updated_by_id, :site_id
 

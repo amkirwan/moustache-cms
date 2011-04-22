@@ -1,10 +1,12 @@
 Feature: Admin Layout Management Features
 
+Background: Login create default site
+Given I login as "ak730" with the role of "admin"
+And the site "foobar" exists
+
 @index_layout
 Scenario: Navigate to the Layout#index page
-  Given I login as "ak730" with the role of "admin"
-  And the site "foobar" exists
-  And these layouts exist
+  Given these layouts exist in the site "foobar" with the user "ak730"
   | name   | content       |
   | foobar | Hello, World! |
   | bar    | Hello, World! |
@@ -16,8 +18,6 @@ Scenario: Navigate to the Layout#index page
   
 @create_new_layout
 Scenario: Create a New Layout
-  Given I login as "ak730" with the role of "admin"
-  And the site "foobar" exists
   When I go to the admin layouts page
   And I follow "Add New Layout" within "ul#new_layout"
   And I fill in "layout_name" with "foobar" within "div#add_new_layout"
@@ -30,9 +30,7 @@ Scenario: Create a New Layout
 
 @edit_layout
 Scenario: Given I am logged in as an admin then I can edit a layout
-  Given I login as "ak730" with the role of "admin"
-  And the site "foobar" exists
-  And these layouts exist
+  Given these layouts exist in the site "foobar" with the user "ak730"
   | name   | content       |
   | foobar | Hello, World! |
   | bar    | Hello, World! |
@@ -53,9 +51,7 @@ Scenario: Given I am logged in as an admin then I can edit a layout
   
 @delete_layout
 Scenario: Delete user account as an admin
-  Given I login as "ak730" with the role of "admin"
-  And the site "foobar" exists
-  And these layouts exist
+  Given these layouts exist in the site "foobar" with the user "ak730"
   | name   | content       |
   | foobar | Hello, World! |
   | bar    | Hello, World! |
