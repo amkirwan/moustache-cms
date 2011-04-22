@@ -45,11 +45,11 @@ class Page
   # -- Validations -----------------------------------------------
   validates :title,
             :presence => true, 
-            :uniqueness => true 
+            :uniqueness => { :scope => :site_id }
             
   validates :full_path,
             :presence => true,
-            :uniqueness => true
+            :uniqueness => { :scope => :site_id }
 
   validates :breadcrumb,
             :presence => true
