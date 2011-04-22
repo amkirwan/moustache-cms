@@ -4,7 +4,6 @@ class Admin::PagesController < AdminBaseController
   end
   
   def new
-    @page.build_page_type
     @page.build_current_state
     @page.page_parts.build
   end
@@ -16,7 +15,6 @@ class Admin::PagesController < AdminBaseController
     elsif
       @page.parent_id = Page.criteria.id(params[:page][:parent_id]).first.id
     end
-    @page.page_type  = PageType.find(params[:page][:page_type_attributes][:id])
     @page.current_state = CurrentState.find(params[:page][:current_state_attributes][:id])
     assign_page_parts(params[:page][:page_parts_attributes])
     assign_editors(params[:page][:editor_ids])

@@ -62,11 +62,6 @@ describe Admin::PagesController do
       assigns(:page).should == page
     end
     
-    it "should build a nested page_type" do
-      page.should_receive(:build_page_type)
-      do_get
-    end
-    
     it "should build a nested current_state" do
       page.should_receive(:build_current_state)
       do_get
@@ -104,7 +99,6 @@ describe Admin::PagesController do
       page.as_new_record
       @parent_mock = mock_model("Page", :id => "4d922d505dfe2f082e00006e")
       Page.stub_chain(:criteria, :id).and_return([@parent_mock])
-      PageType.stub(:find).and_return(page_type)
       CurrentState.stub(:find).and_return(status)
       Filter.stub(:find).and_return(filter)
       Page.stub(:new).with(params["page"]).and_return(page)
@@ -128,11 +122,6 @@ describe Admin::PagesController do
     it "should assign @page for the view" do
       do_post
       assigns(:page).should == page
-    end
-    
-    it "should set the page's current state" do
-      page.should_receive(:page_type=).with(page_type)
-      do_post
     end
     
     it "should set the page's current state" do
