@@ -16,7 +16,9 @@ class Site
   index :domains
   
   # -- Associations ---------------------------------------
-  references_many :pages 
+  has_many :pages 
+  has_many :layouts
+  
   
   # -- Validations ----------------------------------------
   validates :name,

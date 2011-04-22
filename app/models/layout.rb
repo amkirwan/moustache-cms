@@ -11,9 +11,9 @@ class Layout
   
   #-- Associations-----------------------------------------------
   references_many :pages
-  referenced_in :site
-  referenced_in :created_by, :class_name => "User"
-  referenced_in :updated_by, :class_name => "User"
+  belongs_to :site
+  belongs_to :created_by, :class_name => "User"
+  belongs_to :updated_by, :class_name => "User"
   
   #-- Validations -----------------------------------------------
   before_validation :site_set

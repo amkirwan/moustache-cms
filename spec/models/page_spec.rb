@@ -4,9 +4,9 @@ describe Page do
   let(:user) { Factory(:user) }
   let(:layout) { Factory(:layout, :created_by => user, :updated_by => user) }
   let(:site) { Factory(:site) }
-  let(:parent) { Factory(:page, :site => site, :layout => layout, :created_by => user, :updated_by => user) }
+  let(:parent) { Factory(:page, :site => site, :layout => layout, :created_by => user, :updated_by => user, :editor_ids => [user.id]) }
   before(:each) do                 
-    @page = Factory(:page, :site => site, :parent => parent , :layout => layout, :created_by => user, :updated_by => user)
+    @page = Factory(:page, :site => site, :parent => parent , :layout => layout, :created_by => user, :updated_by => user, :editor_ids => [user.id])
   end
   
   # -- Assignment -------------------------------------------
@@ -32,8 +32,7 @@ describe Page do
              :meta_description => "foobar",
              :layout_id => BSON::ObjectId('4d7fe2397353202ab60000e9'), 
              :current_state => stub_model(CurrentState),
-             :page_parts => [stub_model(PagePart)],
-             :type => "foobar")
+             :page_parts => [stub_model(PagePart)])
        page.parent.should == parent
        page.title.should == "foobar"
        page.slug.should == "foobar"
@@ -44,8 +43,7 @@ describe Page do
        page.meta_description.should == "foobar"
        page.layout_id.should == BSON::ObjectId('4d7fe2397353202ab60000e9')
        page.current_state.should_not == nil
-       page.page_parts.should_not == nil
-       page.type.should == "foobar"      
+       page.page_parts.should_not == nil      
     end
   end
   
@@ -171,11 +169,6 @@ describe Page do
       @page.should_not be_valid
     end
     
-    it "should not be valid without a page_type" do
-      @page.page_type = nil
-      @page.should_not be_valid
-    end
-    
     it "should not be valid without a title" do
       @page.title = nil 
       @page.should_not be_valid
@@ -259,28 +252,28 @@ describe Page do
       @page.should embed_one :current_state
     end
     
+    it "should embed many page_parts" do
+      @page.should embed_many :page_parts
+    end
+    
     it "should reference a site" do
-      @page.should be_referenced_in(:site)
+      @page.should belong_to(:site)
     end
     
     it "should reference a layout" do
-      @page.should be_referenced_in(:layout)
+      @page.should belong_to(:layout)
     end
     
     it "should reference a user with created_by" do
-      @page.should be_referenced_in(:created_by).of_type(User)
+      @page.should belong_to(:created_by).of_type(User)
     end
     
     it "should reference a user with updated_by" do
-      @page.should be_referenced_in(:updated_by).of_type(User)
+      @page.should belong_to(:updated_by).of_type(User)
     end
     
     it "should have many editors" do
-      @page.should reference_and_be_referenced_in_many(:editors).of_type(User)
-    end
-    
-    it "should embedd many page_parts" do
-      @page.should embed_many :page_parts
+      @page.should have_and_belong_to_many(:editors).of_type(User)
     end
   end
   

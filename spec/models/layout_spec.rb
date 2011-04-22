@@ -100,15 +100,15 @@ describe Layout do
     end
     
     it "should reference a layout" do
-      @layout.should be_referenced_in(:site)
+      @layout.should belong_to(:site)
     end
     
     it "should reference a user with created_by" do
-      @layout.should be_referenced_in(:created_by).of_type(User)
+      @layout.should belong_to(:created_by).of_type(User)
     end
     
     it "should reference a user with updated_by" do
-      @layout.should be_referenced_in(:updated_by).of_type(User)
+      @layout.should belong_to(:updated_by).of_type(User)
     end
   end
 end

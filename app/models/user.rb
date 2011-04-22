@@ -16,18 +16,19 @@ class User
   field :role 
   
   #-- Associations-----------------------------------------------
-  references_many :layouts_created, :class_name => "Layout", :foreign_key => :created_by_id
-  references_many :layouts_updated, :class_name => "Layout", :foreign_key => :updated_by_id
-  references_many :pages_created, :class_name => "Page", :foreign_key => :created_by_id
-  references_many :pages_updated, :class_name => "Page", :foreign_key => :updated_by_id
-  references_and_referenced_in_many :pages, :class_name => "Page"
+  has_many :layouts_created, :class_name => "Layout", :foreign_key => :created_by_id
+  has_many :layouts_updated, :class_name => "Layout", :foreign_key => :updated_by_id
+  has_many :pages_created, :class_name => "Page", :foreign_key => :created_by_id
+  has_many :pages_updated, :class_name => "Page", :foreign_key => :updated_by_id
+  has_and_belongs_to_many :pages, :class_name => "Page"
   
-  # -- Validations -----------------------------------------------
+  # -- Before Validations -----------------------------------------------
   before_validation :uniq_page_ids
   before_save :lower, :set_username
                        
   Roles = %w[editor admin] unless defined?(Roles)
   
+  # -- Validations -----------------------------------------------
   validates :puid,
             :presence => true,
             :uniqueness => true,

@@ -5,6 +5,7 @@ describe User do
     @user = Factory(:user, :puid => "foobar")
   end 
   
+  # -- Mass Assignment -------------------------------------------
   context "mass assignment" do
     it "should protect against mass assignment of puid and role" do
       user = User.new(:puid => "ak730", :role => "admin")
@@ -13,7 +14,7 @@ describe User do
     end
     
     it "should not allow mass assignment of" do
-      @user.should_not allow_mass_assignment_of(:puid => "foobar", :username => "foobar", :role => "bar")
+      @user.should_not allow_mass_assignment_of(:puid => "baz", :username => "baz", :role => "bar")
     end
     
     it "should allow mass assignment of" do
@@ -29,6 +30,7 @@ describe User do
     end
   end
   
+  # -- Validations -----------------------------------------------
   context "validations" do
     it "should create a valid user with valid attributes" do
       @user.should be_valid
@@ -66,28 +68,7 @@ describe User do
     end 
   end
   
-  context "associations" do
-    it "should reference many layouts created" do
-      @user.should reference_many(:layouts_created).of_type(Layout)
-    end
-    
-    it "should reference many layouts updated" do
-      @user.should reference_many(:layouts_updated).of_type(Layout)
-    end
-    
-    it "should reference many pages created" do
-      @user.should reference_many(:pages_created).of_type(Page)
-    end
-    
-    it "should reference many pages updated" do
-      @user.should reference_many(:pages_updated).of_type(Page)
-    end
-    
-    it "should have many editors" do
-      @user.should reference_and_be_referenced_in_many(:pages).of_type(Page)
-    end
-  end
-  
+  # -- Before Validation Callback -------------------------------------------
   context "callbacks" do
     context "before validation it should check that the page_ids are unique" do
       it "should do something" do
@@ -115,6 +96,29 @@ describe User do
       it "should set the username to the puid value" do
         @user.puid.should == @user.username
       end
+    end
+  end
+  
+  # -- Associations ----------------------------------------------------
+  context "associations" do
+    it "should reference many layouts created" do
+      @user.should have_many(:layouts_created).of_type(Layout)
+    end
+    
+    it "should reference many layouts updated" do
+      @user.should have_many(:layouts_updated).of_type(Layout)
+    end
+    
+    it "should reference many pages created" do
+      @user.should have_many(:pages_created).of_type(Page)
+    end
+    
+    it "should reference many pages updated" do
+      @user.should have_many(:pages_updated).of_type(Page)
+    end
+    
+    it "should have many editors" do
+      @user.should have_and_belong_to_many(:pages)
     end
   end
   

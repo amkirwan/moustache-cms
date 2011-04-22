@@ -19,8 +19,7 @@ class Page
                   :current_state, 
                   :layout_id,
                   :page_parts,
-                  :tag_list,
-                  :type
+                  :tag_list
                   
   # -- Fields -----------------------------------------------
   field :title
@@ -37,14 +36,12 @@ class Page
   # -- Associations-----------------------------------------------
   referenced_in :site
   embeds_one :current_state
-  embeds_one :page_type
   embeds_many :page_parts 
-  referenced_in :layout
-  references_and_referenced_in_many :editors, :class_name => "User"
-  referenced_in :created_by, :class_name => "User"
-  referenced_in :updated_by, :class_name => "User"
+  belongs_to :layout
+  belongs_to :created_by, :class_name => "User"
+  belongs_to :updated_by, :class_name => "User"
+  has_and_belongs_to_many :editors, :class_name => "User"
   
-  accepts_nested_attributes_for :page_type
   accepts_nested_attributes_for :current_state
   accepts_nested_attributes_for :page_parts
   
@@ -68,7 +65,6 @@ class Page
                         :slug, 
                         :current_state,
                         :layout, 
-                        :page_type,
                         :created_by, 
                         :updated_by                    
   
@@ -156,11 +152,11 @@ class Page
     self.site = Site.first
   end
   
-  ## rc7 temp fixes for relations for mongoid
+  #rc7 temp fixes for relations for mongoid
   def update_user_pages
     self.editors.each do |editor|
       editor.page_ids ||= []
-      editor.pages << self unless editor.pages.include?(self)
+      editor.page_ids << self.id unless editor.page_ids.include?(self)
       editor.save
     end
   end

@@ -33,8 +33,12 @@ describe Site do
   # -- Associations -------------------------------------------
   describe "Associations" do
     it "should have many pages" do
-      @site.should reference_many(:pages)
+      @site.should have_many(:pages)
     end  
+    
+    it "should have many layouts" do
+      @site.should have_many(:layouts)
+    end
   end
   
   

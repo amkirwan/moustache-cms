@@ -66,7 +66,6 @@ Factory.define :page do |page|
   page.editors {[ Factory.build(:user) ]}
   page.tags 
   page.page_parts {[ Factory.build(:page_part) ]}
-  page.page_type { Factory.build(:page_type) }
   page.created_by { Factory.build(:user) }
   page.updated_by { Factory.build(:user) }
 end
