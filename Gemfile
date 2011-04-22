@@ -22,7 +22,7 @@ group :development, :test do
   gem "database_cleaner"
   gem "factory_girl_rails"
   gem "machinist" 
-  gem "mongoid-rspec", :git => "git://github.com/durran/mongoid-rspec.git" 
+  gem "mongoid-rspec", :git => "git://github.com/evansagge/mongoid-rspec.git", :tag => "v1.4.2"
   gem 'machinist_mongo', :require => 'machinist/mongoid', :git => 'git://github.com/nmerouze/machinist_mongo.git', :branch => 'machinist2'
   gem "hpricot"
   gem "haml2slim"  
