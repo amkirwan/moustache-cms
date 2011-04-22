@@ -45,17 +45,17 @@ Scenario: Given I am logged in as an admin then I can edit any users account
   When I go to the admin users page
   And I follow "foobar" within "tr#foobar"
   Then I should now be editing the user "foobar"
-  And the "user[email]" field within "div#edit_user" should contain "foobar@example.com"
-  And the "user_role_admin" checkbox within "div#edit_user" should be checked 
-  And I fill in "user[email]" with "baz@example.com" within "div#edit_user"
-  And I choose "user_role_editor" within "div#edit_user" 
+  And the "user[email]" field should contain "foobar@example.com"
+  And the "user_role_admin" checkbox should be checked 
+  And I fill in "user[email]" with "baz@example.com" 
+  Then I choose "user_role_editor" 
   And I press "Update User" within "div#edit_user" 
   Then I should be on the admin users page
   And I should see "Successfully updated user account for foobar"
   When I edit the account information for the user "foobar"
   Then I should now be editing the user "foobar"
-  And the "user[email]" field within "div#edit_user" should contain "baz@example.com"
-  And the "user_role_editor" checkbox within "div#edit_user" should be checked
+  And the "user[email]" field should contain "baz@example.com"
+  And the "user_role_editor" checkbox should be checked
   
 @delete_user
 Scenario: Delete user account as an admin
@@ -74,16 +74,16 @@ Scenario: Given I am logged in as an editor then I can edit my account
   Given I login as "ak730" with the role of "editor"
   When I edit the account information for the user "ak730"
   Then I should now be editing the user "ak730"
-  And I fill in "user[firstname]" with "Foobar" within "div#edit_user"
-  And I fill in "user[lastname]" with "Baz" within "div#edit_user"
-  And I fill in "user[email]" with "akirwan@example.com" within "div#edit_user"
+  And I fill in "user[firstname]" with "Foobar" 
+  And I fill in "user[lastname]" with "Baz" 
+  And I fill in "user[email]" with "akirwan@example.com" 
   And I should not see "user[role]"
   And I press "Update User" within "div#edit_user" 
   Then I should view the page for user "ak730"
   And I should see "Successfully updated user account for ak730"
-  And the "user[firstname]" field within "div#edit_user" should contain "Foobar"
-  And the "user[lastname]" field within "div#edit_user" should contain "Baz"
-  And the "user[email]" field within "div#edit_user" should contain "akirwan@example.com"
+  And the "user[firstname]" field should contain "Foobar"
+  And the "user[lastname]" field should contain "Baz"
+  And the "user[email]" field should contain "akirwan@example.com"
 
 @non_admin_cannot_update_other_users_accounts
 Scenario: Given I am logged in as an editor then I cannot edit another users account
