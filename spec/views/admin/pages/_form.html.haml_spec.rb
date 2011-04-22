@@ -50,14 +50,6 @@ describe "admin/pages/_form.html.haml" do
       end
     end
     
-    it "should render a collection to select the page type" do
-      page.stub(:page_type).and_return(mock_model("PageType"))
-      new_render
-      get_new do |f|
-        f.should have_selector("select", :name => "page[page_type_attributes][id]")
-      end
-    end
-    
     it "should render a field to enter the page title" do
       new_render
       get_new do |f|
