@@ -91,10 +91,9 @@ describe "admin/pages/_form.html.haml" do
         f.should have_selector("textarea", :name => "page[meta_description]")
       end
     end
-    
-    
+        
     it "should render checkboxes to enter the editors" do
-      User.stub(:all).and_return([mock_model("User", :puid => "foobar")])
+      User.stub(:all).and_return([mock_model("User", :username => "foobar")])
       new_render
       get_new do |f|
         f.should have_selector("input", :type => "checkbox", :name => "page[editor_ids][]")

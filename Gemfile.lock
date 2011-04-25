@@ -23,6 +23,15 @@ GIT
       rspec (~> 2)
 
 GIT
+  remote: git://github.com/mongoid/mongoid.git
+  revision: 2ea6a755ddd862ff81d4df73675df47f1c730afd
+  specs:
+    mongoid (2.0.1)
+      activemodel (~> 3.0)
+      mongo (~> 1.3)
+      tzinfo (~> 0.3.22)
+
+GIT
   remote: git://github.com/nmerouze/machinist_mongo.git
   revision: fa4819c4e1233a4e3ce527b68af8aeee85dfc6c3
   branch: machinist2
@@ -123,11 +132,6 @@ GEM
     mime-types (1.16)
     mongo (1.3.0)
       bson (>= 1.3.0)
-    mongoid (2.0.1)
-      activemodel (~> 3.0)
-      mongo (~> 1.3)
-      tzinfo (~> 0.3.22)
-      will_paginate (~> 3.0.pre)
     mustache (0.99.3)
     nokogiri (1.4.4)
     polyglot (0.3.1)
@@ -189,7 +193,6 @@ GEM
       nokogiri (>= 1.2.0)
       rack (>= 1.0)
       rack-test (>= 0.5.3)
-    will_paginate (3.0.pre2)
     xpath (0.1.3)
       nokogiri (~> 1.3)
 
@@ -210,7 +213,7 @@ DEPENDENCIES
   jquery-rails (>= 0.2.6)
   machinist
   machinist_mongo!
-  mongoid (~> 2.0)
+  mongoid!
   mongoid-rspec!
   mongoid-tree!
   mustache (>= 0.99)

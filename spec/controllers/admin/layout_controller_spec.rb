@@ -243,7 +243,7 @@ describe Admin::LayoutsController do
       assigns(:layout).should == layout
     end
     
-    it "should destroy the letter" do
+    it "should destroy the layout" do
       layout.should_receive(:destroy).and_return(true)
       do_destroy
     end

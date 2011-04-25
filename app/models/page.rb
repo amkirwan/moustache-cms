@@ -107,6 +107,13 @@ class Page
     self.current_state.name
   end
   
+  def delete_association_of_editor_id(editor_id)
+    editor = User.find_by_username(editor_id)
+    self.editor_ids.delete(editor.id)
+    editor.page_ids.delete(self.id)
+    editor.save
+  end
+  
   # -- Private Instance Methods -----------------------------------------------
   private 
   def format_title

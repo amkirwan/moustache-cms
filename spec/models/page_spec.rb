@@ -324,6 +324,17 @@ describe Page do
         @page.published_at.should == @page.current_state.published_at
       end
     end
+    
+    describe "#delete_editor" do
+      it "should remove the editor from the editor_ids and editor fields" do
+        user = Factory(:user)
+        @page.editors << @user
+        @page.save
+        @page.delete_association_of_editor_id(user.username)
+        @page.save
+        @page.editor_ids.should_not include(user.username)
+      end
+    end
 
     describe "#status" do
       it "should return the pages current state" do

@@ -15,7 +15,7 @@ class Admin::PagesController < AdminBaseController
     elsif
       @page.parent_id = Page.criteria.for_ids(params[:page][:parent_id]).first.id
     end
-    @page.current_state = CurrentState.find(params[:page][:current_state_attributes][:id])
+    @page.current_state = CurrentState.find(params[:page][:current_state_attributes][:name])
     assign_page_parts(params[:page][:page_parts_attributes])
     assign_editors(params[:page][:editor_ids])
     created_updated_by_for @page
@@ -31,30 +31,57 @@ class Admin::PagesController < AdminBaseController
   end
   
   def update
+    @page.write_attributes(params[:page])
+    @page.current_state = CurrentState.find(params[:page][:current_state_attributes][:name]) 
+    update_page_parts(params[:page][:page_parts_attributes])
+    update_editors(params[:page][:editor_ids])
+    @page.updated_by(current_user)
+    if @page.save
+      flash[:notice] = "Successfully updated the page #{@page.title}"
+      redirect_to admin_pages_path
+    else
+      render :edit
+    end
   end
-  
+
   def destroy
+    if @page.destroy
+      flash[:notice] = "Successfully deleted the page #{@page.title}"
+      redirect_to admin_pages_path
+    end
   end
   
   private 
-  def assign_editors(editor_ids)
-    editor_ids.each { |editor_id| @page.editor_ids << editor_id unless @page.editor_ids.include?(editor_id) }
-    @page.editor_ids << current_user.puid unless @page.editor_ids.include?(current_user.puid) 
-  end
-  
-  def assign_page_parts(page_parts={})
-    page_parts.each_value do |value|
-      page_part = PagePart.new
-      value.each_pair do |k, v|
-        if k == "filter"
-          page_part.filter = Filter.find(v)
-        elsif k == "name"
-          page_part.name = v
-        elsif k == "content"
-          page_part.content = v
-        end
+    def assign_editors(editor_ids)
+      editor_ids.each do |editor_id|
+        editor = User.find_by_username(editor_id)
+        @page.editors << editor unless @page.editors.include?(editor)
       end
-      @page.page_parts << page_part
+      @page.editors << current_user unless @page.editors.include?(current_user) 
     end
-  end
+  
+    def assign_page_parts(page_parts={})
+      page_parts.each_value do |hash|
+        page_part = PagePart.new
+        page_part.write_attributes(hash)
+        page_part.filter = Filter.find(hash[:filter])
+        @page.page_parts << page_part
+      end
+    end
+  
+    def update_page_parts(page_parts={})
+      page_parts.each do |index, hash|
+        hash[:filter] = Filter.find(hash[:filter])
+        @page.page_parts[index.to_i].write_attributes(hash)
+      end
+    end
+    
+    def update_editors(editor_ids)
+      remove_editor_ids = @page.editor_ids - editor_ids
+      remove_editor_ids.each do |editor_id|
+        @page.delete_association_of_editor_id(editor_id)
+      end
+      assign_editors(editor_ids)
+    end
+
 end

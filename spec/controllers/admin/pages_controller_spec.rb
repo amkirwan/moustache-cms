@@ -185,4 +185,164 @@ describe Admin::PagesController do
       end
     end 
   end
+  
+  # -- GETE edit ----------------------------------------------- 
+  describe "GET edit" do
+    let(:params) {{ "id" => page.to_param }}
+    
+    before(:each) do
+      Page.stub(:find).and_return(page)
+    end
+    
+    def do_get
+      get :edit, params
+    end
+    
+    it "should receive Layout#find and return layout" do
+      Page.should_receive(:find).with(params["id"]).and_return(page)
+      do_get
+    end
+    
+    it "should assing @layout for the veiw" do
+      do_get
+      assigns(:page).should == page
+    end
+    
+    it "should render the edit template" do
+      do_get
+      response.should render_template("admin/pages/edit")
+    end
+  end
+  
+  # -- Puts Update ----------------------------------------------- 
+  describe "PUTS update" do
+    let(:user) { mock_model("User", :username => "ak730") }
+    let(:page_type) { mock_model("PageType") }
+    let(:status) { mock_model("CurrentStatus") }
+    let(:filter) { mock_model("Filter", :name => "foobar") }
+    let(:layout) { mock_model("Layout") }
+    let(:page_parts) { [ mock_model("PagePart") ] }
+    let(:params) {{ "id" => page.to_param,
+                    "page" => { 
+                    "parent_id" => "4d922d505dfe2f082e00006e",
+                    "title" => "foobar", 
+                    "filter"=> { "name" => filter.name }, 
+                    "page_type_attributes"=> { "id" => page_type.to_param },
+                    "current_state_attributes"=> { "id"=> status.to_param }, 
+                    "editor_ids"=>[ user.username ], 
+                    "layout_id" => layout.to_param,
+                    "page_parts_attributes" => { "0" => { "name" => "content", "content" => "Hello, World" }}} }}
+    
+    before(:each) do
+      controller.stub(:admin?).and_return(true)
+      @parent_mock = mock_model("Page", :id => "4d922d505dfe2f082e00006e")
+      Page.stub_chain(:criteria, :for_ids).and_return([@parent_mock])
+      CurrentState.stub(:find).and_return(status)
+      Filter.stub(:find).and_return(filter)
+      Page.stub(:new).with(params["page"]).and_return(page)
+      Page.stub(:find).and_return(page)
+    end
+    
+    def do_post
+       post :update, params
+    end
+    
+    it "should find the record to update with Page#find" do
+      Page.should_receive(:find).with(params["id"]).and_return(page)
+      do_post
+    end
+    
+    it "should assign @page for the view" do
+      do_post
+      assigns(:page).should == page
+    end
+    
+    it "should update the attributes of the page" do
+      page.should_receive(:write_attributes).with(params["page"]) 
+      do_post
+    end
+    
+    it "should update the page's current state" do
+      page.should_receive(:current_state=).and_return(status)
+      do_post
+    end
+    
+    it "should update the page editors" do
+      controller.should_receive(:update_editors).with(params["page"]["editor_ids"])
+      do_post
+    end
+    
+    it "should update the page_parts" do
+      controller.should_receive(:update_page_parts).with(params["page"]["page_parts_attributes"])
+      do_post
+    end
+    
+    context "when the page saves successfully" do
+      it "should save the page" do
+        page.should_receive(:save).and_return(true)
+        do_post
+      end
+    
+      it "should assign the flash message" do
+        do_post
+        flash[:notice].should == "Successfully updated the page #{page.title}"
+      end
+      
+      it "should redirect to the admin/layout#index action" do
+        do_post
+        response.should redirect_to(admin_pages_path)
+      end
+    end
+    
+    context "when the page fales to save" do
+      before(:each) do
+        page.stub(:save).and_return(false)
+      end
+      
+      it "should not save the page" do
+        page.should_receive(:save).and_return(false)
+        do_post
+      end
+      
+      it "should render the page edit" do
+        do_post
+        response.should render_template("admin/pages/edit")
+      end
+    end
+  end
+  
+  describe "DELETE destroy" do
+    before(:each) do
+      Page.stub(:find).and_return(page)
+    end
+    
+    def do_destroy  
+      delete :destroy, :id => "1"
+    end
+    
+    it "should receive Page#find and return the page" do
+      Page.should_receive(:find).with("1").and_return(page)
+      do_destroy
+    end
+    
+    it "should assign the page for the view" do
+      do_destroy
+      assigns(:page).should == page
+    end
+    
+    it "should destroy the page" do
+      page.should_receive(:destroy).and_return(true)
+      do_destroy
+    end
+    
+    it "should assign a flash message that the letter was destroyed" do
+      do_destroy
+      flash[:notice].should == "Successfully deleted the page #{page.title}"
+    end
+    
+    it "should redirect to the admin/layout#index" do
+      do_destroy
+      response.should redirect_to(admin_pages_path)
+    end
+  end
 end

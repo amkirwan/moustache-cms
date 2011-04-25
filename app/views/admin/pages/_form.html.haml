@@ -3,7 +3,7 @@
            :locals => { :target => page }
   %fieldset
     = f.label :parent_id
-    = f.collection_select :parent_id, Page.all.order(:title), :id, :title
+    = f.collection_select :parent_id, Page.all.order(:title), :id, :title, { :include_blank => true }
   %fieldset
     = f.label :title, "Title"
     = f.text_field :title, :placeholder => "Page title..."
@@ -26,15 +26,15 @@
   %fieldset
     = f.label :editors, "Editors"
     - User.all.each do |user|
-      = check_box_tag "page[editor_ids][]", user.puid, page.editor_ids.include?(user.puid), :id => "editor_id_#{user.puid}"
-      = label_tag "page[editor_ids][#{user.puid}]", user.puid.downcase
+      = check_box_tag "page[editor_ids][]", user.username, page.editor_ids.include?(user.username), :id => "editor_id_#{user.username}"
+      = label_tag "page[editor_ids][#{user.username}]", user.username.downcase
   %fieldset
     = f.label :layout, "Layout"
     = f.collection_select :layout_id, Layout.all, :id, :name
   = f.fields_for :current_state do |builder|
     %fieldset
       = builder.label :current_state, "Status"
-      = builder.collection_select :id, CurrentState.all, :id, :name
+      = builder.collection_select :name, CurrentState.all, :id, :name
   %fieldset
     = f.label :tag_list
     = f.text_field :tag_list

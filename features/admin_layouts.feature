@@ -50,7 +50,7 @@ Scenario: Given I am logged in as an admin then I can edit a layout
   And the "layout[content]" field should contain "Hello, <b>World!</b>"
   
 @delete_layout
-Scenario: Delete user account as an admin
+Scenario: Delete layout as an admin
   Given these layouts exist in the site "foobar" with the user "ak730"
   | name   | content       |
   | foobar | Hello, World! |

@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem "rails", "~> 3.0"   
 gem "haml", ">= 3.0.25"
-gem "mongoid", "~> 2.0"
+gem "mongoid", :git => "git://github.com/mongoid/mongoid.git"
 gem "bson_ext", "~> 1.3"    
 gem "cancan", ">= 1.6"
 gem "rubycas-client", :git => "git://github.com/amkirwan/rubycas-client.git", :branch => "rails3"
