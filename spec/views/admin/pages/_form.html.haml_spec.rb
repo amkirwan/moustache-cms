@@ -22,7 +22,7 @@ describe "admin/pages/_form.html.haml" do
   end      
   
   # -- New Page ----------------------------------------------------------
-  describe "When the page is a new record" do
+  context "When the page is a new record" do
     before(:each) do
       page.as_new_record
     end
@@ -150,5 +150,27 @@ describe "admin/pages/_form.html.haml" do
         end
       end
     end
-  end                                                                                      
+  end  
+  
+  # -- Existing Page ----------------------------------------------------------
+  context "when the page is an existing page" do
+    before(:each) do
+      page.stub(:new_record? => false)
+    end
+    
+    def get_edit(&block)
+      form_update(:action => admin_page_path(page)) { |f| yield f }
+    end
+    
+    def edit_render
+      do_render("Update Page")
+    end
+      
+    it "should render a form to create new page" do
+      edit_render
+      get_edit do |f|
+        f.should have_selector("input", :type => "submit", :value => "Update Page")
+      end
+    end
+  end                                                                                    
 end

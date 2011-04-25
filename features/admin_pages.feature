@@ -6,7 +6,7 @@ And the site "foobar" exists
 
 @index_page_view
 Scenario: Navigate to the Pages#index page
-  Given these pages exist with current state in the site "foobar" with the user "ak730"
+  Given these pages exist in the site "foobar" with the user "ak730"
   | title  | status    | 
   | foobar | published | 
   | bar    | draft     | 
@@ -55,3 +55,13 @@ Scenario: Create a new page
   And I should see "foobar" 
   And I should see "published" 
   And I should see the "delete" button
+  
+@edit_a_existing_page
+Scenario: Edit a page
+  Given these pages exist in the site "foobar" with the user "ak730"
+  | title  | status    | 
+  | foobar | published | 
+  | bar    | draft     |
+  When I go to the admin pages page
+  And I follow "foobar"
+  
