@@ -1,7 +1,8 @@
 source 'http://rubygems.org'
 
 gem "rails", "~> 3.0"   
-gem "haml", ">= 3.0.25"
+gem "haml", "~> 3.1.0.alpha"
+gem "sass", "3.1.0.alpha.263"
 gem "mongoid", :git => "git://github.com/mongoid/mongoid.git"
 gem "bson_ext", "~> 1.3"    
 gem "cancan", ">= 1.6"
@@ -11,6 +12,7 @@ gem "mongoid-tree", :git => "git://github.com/benedikt/mongoid-tree", :require =
 gem "mustache", ">= 0.99"
 gem "RedCloth", "~> 4.2"
 gem "redcarpet", "~> 1.11"
+gem "compass", ">= 0.11.1"
 
 group :development, :test do
   gem "rspec-rails"  
@@ -24,7 +26,6 @@ group :development, :test do
   gem "mongoid-rspec", :git => "git://github.com/evansagge/mongoid-rspec.git", :tag => "v1.4.2"
   gem 'machinist_mongo', :require => 'machinist/mongoid', :git => 'git://github.com/nmerouze/machinist_mongo.git', :branch => 'machinist2'
   gem "hpricot"
-  gem "haml2slim"  
   gem "syntax"   
   gem "relish"
   gem 'spork'

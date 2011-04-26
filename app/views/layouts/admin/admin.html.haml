@@ -30,8 +30,9 @@
     = content_tag :div, msg, :id => "flash_#{name}"
   #wrapper
     #header
-      %h1= "#{Site.first.name.humanize} Site" 
-    #nav
+      %h1#site_name
+        = link_to "#{Site.first.name.humanize} Site", "/" 
+    #nav_wrapper
       = render :partial => "layouts/admin/nav"
     #content
       = yield
