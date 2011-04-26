@@ -2,7 +2,10 @@
 %html
   %head{:charset => "UTF-8"}
     %title Etherweb Admin
-    = stylesheet_link_tag "admin/admin"
+    = stylesheet_link_tag "screen.css", :media => "screen, projection"
+    = stylesheet_link_tag "print.css", :media => "print"
+    /[if lt IE 8]
+      = stylesheet_link_tag "ie.css", :media => "screen, projection"
    
     = javascript_include_tag "jquery.min"
     = javascript_include_tag "application"
@@ -22,11 +25,14 @@
     = javascript_include_tag "codemirror/mode/htmlmixed/htmlmixed"
     
     = csrf_meta_tag
-  %body
+  %body.blueprint
   - flash.each do |name, msg|
     = content_tag :div, msg, :id => "flash_#{name}"
   #wrapper
     #header
+      %h1= "#{Site.first.name.humanize} Site" 
+    #nav
       = render :partial => "layouts/admin/nav"
     #content
       = yield
+    #footer
