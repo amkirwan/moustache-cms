@@ -9,6 +9,7 @@ class Ability
     end
     
     if user.role? :editor 
+      cannot :manage, Site
       can :update, User, puid: user.puid
       can :show, User, puid: user.puid
       can :create, Page

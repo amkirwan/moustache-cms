@@ -6,6 +6,7 @@ describe Ability do
   let(:editor) { Factory.build(:editor) }
   let(:page) { Factory.build(:page, :editors => [ admin, editor ]) }
   let(:user) { Factory.build(:user) }  
+  let(:site) { Factory.build(:site)}
   let(:admin_ability) { Ability.new(admin) }
   let(:editor_ability) { Ability.new(editor) }
   
@@ -44,36 +45,46 @@ describe Ability do
   end
    
   context "editor not approved actions" do
-    it "should not allow the user with a role of editor to run the index action" do
-      editor_ability.should_not be_able_to(:index, user)
-    end
-
-    it "should not allow the user with a role of editor to read other users records" do
-      editor_ability.should_not be_able_to(:read, user)
-    end
-
-    it "should not allow the user with a role of editor to delete their record" do
-      editor_ability.should_not be_able_to(:destroy, editor)
-    end 
-
-    it "should not allow the user with a role of editor to create a new user record" do
-      editor_ability.should_not be_able_to(:new, Factory.build(:user))
-    end
-
-    it "should not allow the user with a role of editor to edit other user records" do
-      editor_ability.should_not be_able_to(:update, user)
+    describe "Site Model" do
+      it "should not allow a the user as an editor to manage sites" do
+        editor_ability.should_not be_able_to(:manage, site)
+      end
     end
     
-    it "should not allow the user with a role of editor to read a page they are not an editor for" do
-      editor_ability.should_not be_able_to(:read, Factory.build(:page))
+    describe "User Model" do
+      it "should not allow the user with a role of editor to list user records" do
+        editor_ability.should_not be_able_to(:index, user)
+      end
+
+      it "should not allow the user with a role of editor to read other users records" do
+        editor_ability.should_not be_able_to(:read, user)
+      end
+
+      it "should not allow the user with a role of editor to delete their record" do
+        editor_ability.should_not be_able_to(:destroy, editor)
+      end 
+
+      it "should not allow the user with a role of editor to create a new user record" do
+        editor_ability.should_not be_able_to(:new, Factory.build(:user))
+      end
+
+      it "should not allow the user with a role of editor to edit other user records" do
+        editor_ability.should_not be_able_to(:update, user)
+      end    
     end
-    
-    it "should not allow the user with a role of editor to update a page they are not an editor for" do
-      editor_ability.should_not be_able_to(:update, Factory.build(:page))
-    end
-    
-    it "should not allow the user with a role of editor to destroy pages they are not an editor for" do
-      editor_ability.should_not be_able_to(:destroy, Factory.build(:page))
+
+    describe "Page Model" do
+      it "should not allow the user with a role of editor to read a page they are not an editor for" do
+        editor_ability.should_not be_able_to(:read, Factory.build(:page))
+      end
+
+      it "should not allow the user with a role of editor to update a page they are not an editor for" do
+        editor_ability.should_not be_able_to(:update, Factory.build(:page))
+      end
+
+      it "should not allow the user with a role of editor to destroy pages they are not an editor for" do
+        editor_ability.should_not be_able_to(:destroy, Factory.build(:page))
+      end
     end
   end    
 end
