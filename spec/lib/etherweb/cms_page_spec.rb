@@ -1,4 +1,5 @@
 require "spec_helper"
+require File.expand_path(File.dirname(__FILE__) + '/meta_head_shared_examples') 
 
 describe Etherweb::CmsPage do
   let(:user) { Factory(:user) }
@@ -14,6 +15,8 @@ describe Etherweb::CmsPage do
     @controller.instance_variable_set(:@page, @page)
     @cmsp = Etherweb::CmsPage.new(@controller)
   end
+  
+  it_behaves_like "MetaHead"
   
   describe "initialize" do
     it "should set controller ivars to cms_page instance" do
