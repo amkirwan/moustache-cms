@@ -63,7 +63,7 @@ describe Etherweb::CmsPage do
     it "should render as plain html" do
       @page.page_parts.last.filter = Filter.find_by_name(:html)
       if @cmsp.editable_text_content
-        @cmsp.editable_text_content.should == "<p>define_editable_text_method <b>strong</b></p>"    
+        @cmsp.editable_text_content.should == "define_editable_text_method **strong**"    
       end
     end
   end 

@@ -49,11 +49,11 @@ class Etherweb::CmsPage < Mustache
     def page_part_filter(part)
       case part.filter["name"]
       when "markdown"
-        Markdown.new(part.content).to_html
+        Redcarpet.new(part.content).to_html
       when "textile"
         RedCloth.new(part.content).to_html
       when "html"
-        RedCloth.new(part.content).to_html
+        part.content.to_s
       else
         part.content.to_s
       end
