@@ -10,8 +10,7 @@ gem "rubycas-client", :git => "git://github.com/amkirwan/rubycas-client.git", :b
 gem "mongoid-tree", :git => "git://github.com/benedikt/mongoid-tree", :require => "mongoid/tree"
 gem "mustache", ">= 0.99"
 gem "RedCloth", "~> 4.2"
-gem "rdiscount", ">= 1.6"
-
+gem "redcarpet"
 
 group :development, :test do
   gem "rspec-rails"  
