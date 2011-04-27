@@ -1,8 +1,8 @@
 source 'http://rubygems.org'
 
 gem "rails", "~> 3.0"   
-gem "haml", "~> 3.1.0.alpha"
-gem "sass", "3.1.0.alpha.263"
+gem "haml", "~> 3.1"
+gem "sass", "~> 3.1"
 gem "mongoid", :git => "git://github.com/mongoid/mongoid.git"
 gem "bson_ext", "~> 1.3"    
 gem "cancan", ">= 1.6"

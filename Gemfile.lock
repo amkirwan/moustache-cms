@@ -176,7 +176,7 @@ GEM
       railties (~> 3.0)
       rspec (~> 2.5.0)
     rubyzip (0.9.4)
-    sass (3.1.0.alpha.263)
+    sass (3.1.1)
     selenium-webdriver (0.2.0)
       childprocess (>= 0.1.7)
       ffi (>= 1.0.7)
@@ -208,7 +208,7 @@ DEPENDENCIES
   cucumber-rails
   database_cleaner
   factory_girl_rails
-  haml (~> 3.1.0.alpha)
+  haml (~> 3.1)
   hpricot
   jquery-rails (>= 0.2.6)
   machinist
@@ -222,7 +222,7 @@ DEPENDENCIES
   relish
   rspec-rails
   rubycas-client!
-  sass (= 3.1.0.alpha.263)
+  sass (~> 3.1)
   spork
   syntax
   webrat
