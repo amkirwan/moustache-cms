@@ -1,10 +1,12 @@
 
 /* colors */
 $background_color: #2B2C34;
+$admin_nav_background: #40414F;
 
 /* text */
 $dark_text: #222;
 $light_text: #FFF;
+$hover_text: #8B999A;
 $base_text: 13px/18px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, sans-serif;
 /* end text */
 
@@ -62,46 +64,59 @@ h1 {
 
 #nav_wrapper {
   @include column(24);
+  background: $background_color;
   margin-right: 0;
 }
 
-#admin_nav {
-  float: left; 
-  height: 54px;
-  width: 100%;
-  background: #3F3F46;
-}
-
-#admin_nav ul {
-  margin-left: 0;
-  list-style: none;  
-  position: relative;
-  li {
-    float: left;   
+div#admin_nav { 
+  ul {
+    position: relative;
     display: block;
-    margin-left: 5px;
-    @include light_text_links(14px, 14px);
-    a {
-      display: block;  
-      padding: 5px 20px;
+    list-type: none;
+    li {
+      display: inline;
+      margin: 0;
+      padding: 0;
+      a:link, a:visited {
+        float: left;
+        font-size: 14px;
+        line-height: 14px;
+        padding: 4px 10px;
+        margin-right: 8px;
+        text-decoration: none;
+        color: $light_text;
+        text-decoration: none;
+        -webkit-transition: color 0.3s ease;
+        -moz-transition: color 0.3s ease;
+        -o-transition: color 0.3s ease;
+        transition: color 0.3s ease;
+        background: $admin_nav_background;
+      }
+      a:hover, a:focus {
+        color: $hover_text; 
+        text-decoration: none;
+        background: $admin_nav_background;
+      }
+      ul {
+        display: none;
+      }
     }
   }
 }
 
-#admin_nav li ul {
-  display: none;
+body#layout div#admin_nav li#site_layout ul {
+  display: block;
+  width: 100%;
   position: absolute;
-  top: 28px;
-  height: 26px;
-  left: 0; 
-  width: 100%;  
-  a {
-    float: left; 
-    display: block;
-    color: #222; 
-    font-size: 16px;
-    line-height: 16px;
-    width: auto;
+  top: 22px;
+  left: 0px;
+  margin: 0;
+  background: $admin_nav_background;
+  a:link, a:visited {
+    margin: 0;
+  }
+  a:hover, a:focus {
+    margin: 0;
   }
 }
 

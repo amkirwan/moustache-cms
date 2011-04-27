@@ -25,7 +25,7 @@
     = javascript_include_tag "codemirror/mode/htmlmixed/htmlmixed"
     
     = csrf_meta_tag
-  %body.blueprint
+  %body{:id => "layout", :class => "blueprint"}
   - flash.each do |name, msg|
     = content_tag :div, msg, :id => "flash_#{name}"
   #wrapper
