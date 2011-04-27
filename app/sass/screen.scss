@@ -72,7 +72,7 @@ div#admin_nav {
     position: relative;
     display: block;
     list-type: none;
-	height: 46px;
+	height: 44px;
 	padding: 0;
 	margin: 0;
     li {
@@ -99,22 +99,29 @@ div#admin_nav {
         text-decoration: none;
         background: $admin_nav_bg;
       }
-      a.selected {
-        color: $nav_selected;
-      }
       ul {
         display: none;
-		height: 24px;
+				height: 22px;
       }
     }
+		li.selected {
+			background: #FFF;
+			a {
+				color: $nav_selected;	
+			}
+		}
   }
 }
-body#layout div#admin_nav li#site_layout a {
+body#layouts div#admin_nav li#layout a,
+body#pages div#admin_nav li#pages a,
+body#settings div#admin_nav li#settings a {
   background: $admin_nav_bg_selected;
 }
 
 
-body#layout div#admin_nav li#site_layout ul {
+body#layouts div#admin_nav li#layout ul,
+body#pages div#admin_nav li#pages ul,
+body#settings div#admin_nav li#settings ul {
   display: block;
   width: 100%;
   position: absolute;
@@ -122,13 +129,6 @@ body#layout div#admin_nav li#site_layout ul {
   left: 0px;
   margin: 0;
   background: $admin_nav_bg_selected;
-  a:link, a:visited {
-    margin: 0;
-    background: $admin_nav_bg_selected;
-  }
-  a:hover, a:focus {
-    margin: 0;
-  }
 }
 
 

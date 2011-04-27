@@ -1,27 +1,27 @@
 #admin_nav
   %ul
-    %li#pages 
+    %li#pages
       = link_to "Pages", admin_pages_path
-    %li#site_layout
-      = link_to "Site Layout", '#'
       %ul
+        - li_current_page(admin_pages_path) do |path|
+          = link_to "Pages", path
+    %li#layout
+      = link_to "Site Layout", admin_layouts_path
+      %ul
+        - li_current_page(admin_layouts_path) do |path|
+          = link_to "Layouts", path
         %li
-          - if controller.controller_name == "layout"
-            = link_to "Layout", admin_layouts_path, :class => "selected"
-          - else
-            = link_to "Layout", admin_layouts_path, :class => "selected"
-        %li
-          = link_to "CSS & JS", '#'
+          = link_to_unless_current "CSS & JS", '#'
         %li 
-          = link_to "Snippets", '#'
-    %li#site_settings
-      = link_to "Site Settings", '#'
+          = link_to_unless_current "Snippets", '#'
+    %li#settings
+      = link_to "Site Settings", admin_users_path
       %ul 
         - if can? :manage, Site
           %li
-            = link_to "Site Setup", '#'
+            = link_to_unless_current "Site Setup", '#'
         - if can? :manage, User 
-          %li
-            = link_to "Users", '#'
+          - li_current_page(admin_users_path) do |path|
+            = link_to "Users", path
         %li
-          = link_to "Personal", '#'
+          = link_to_unless_current "Personal", '#'

@@ -3,9 +3,6 @@
   %head{:charset => "UTF-8"}
     %title Etherweb Admin
     = stylesheet_link_tag "screen.css", :media => "screen, projection"
-    = stylesheet_link_tag "print.css", :media => "print"
-    /[if lt IE 8]
-      = stylesheet_link_tag "ie.css", :media => "screen, projection"
    
     = javascript_include_tag "jquery.min"
     = javascript_include_tag "application"
@@ -25,7 +22,7 @@
     = javascript_include_tag "codemirror/mode/htmlmixed/htmlmixed"
     
     = csrf_meta_tag
-  %body{:id => "layout"}
+  %body{:id => body_id_set}
   - flash.each do |name, msg|
     = content_tag :div, msg, :id => "flash_#{name}"
   #wrapper
