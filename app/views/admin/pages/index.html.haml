@@ -1,20 +1,8 @@
-%table#pages
-  %thead
-    %tr
-      %th.bold Parent Title
-      %th.bold Title
-      %th.bold Status
-      %th.bold Delete
-  %tbody
-  - @pages.each do |page|
-    %tr{:id => page.title}
-      - if page.parent.nil?
-        %td 
-      - else
-        %td= page.parent.title
-      %td= link_to page.title, edit_admin_page_path(page)
-      %td= page.status
-      %td.destroy= button_to "delete", admin_page_path(page), :method => :delete, :confirm => "Are you sure you want to delete the page #{page.title}"
+#page_list_heading
+  %h2 Page Listing
+  %ul#new_layout
+    %li= link_to "Add New Pages", new_admin_page_path
 
-%ul#new_layout
-  %li= link_to "Add New Pages", new_admin_page_path
+#pages_list
+  = tree_ul(@pages) { |page| link_to page.title, edit_admin_page_path(page) }
+

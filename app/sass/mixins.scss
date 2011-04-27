@@ -1,0 +1,19 @@
+@mixin light_text_links($size: 13px, $line_height: 13px) {
+  a {
+    font-size: $size;
+    line-height: $line_height;
+  }
+  a:link, a:visited {
+    color: $light_text;
+    text-decoration: none;
+    -webkit-transition: color 0.3s ease;
+    -moz-transition: color 0.3s ease;
+    -o-transition: color 0.3s ease;
+    transition: color 0.3s ease;
+  }
+  a:hover, a:focus {
+    color: #8B999A; 
+    text-decoration: none;
+    backgound: #FFF;
+  }
+}

@@ -5,8 +5,11 @@
     %li#site_layout
       = link_to "Site Layout", '#'
       %ul
-        %li 
-          = link_to "Layout", admin_layouts_path 
+        %li
+          - if controller.controller_name == "layout"
+            = link_to "Layout", admin_layouts_path, :class => "selected"
+          - else
+            = link_to "Layout", admin_layouts_path, :class => "selected"
         %li
           = link_to "CSS & JS", '#'
         %li 
