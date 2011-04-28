@@ -3,12 +3,12 @@
     %li#pages
       = link_to "Pages", admin_pages_path
       %ul
-        - li_current_page(admin_pages_path) do |path|
+        = li_current_page(admin_pages_path) do |path|
           = link_to "Pages", path
     %li#layout
       = link_to "Site Layout", admin_layouts_path
       %ul
-        - li_current_page(admin_layouts_path) do |path|
+        = li_current_page(admin_layouts_path) do |path|
           = link_to "Layouts", path
         %li
           = link_to_unless_current "CSS & JS", '#'
@@ -21,7 +21,7 @@
           %li
             = link_to_unless_current "Site Setup", '#'
         - if can? :manage, User 
-          - li_current_page(admin_users_path) do |path|
+          = li_current_page(admin_users_path) do |path|
             = link_to "Users", path
         %li
           = link_to_unless_current "Personal", '#'
