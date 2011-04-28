@@ -12,7 +12,7 @@ gem "mongoid-tree", :git => "git://github.com/benedikt/mongoid-tree", :require =
 gem "mustache", ">= 0.99"
 gem "RedCloth", "~> 4.2"
 gem "redcarpet", "~> 1.11"
-gem "compass", ">= 0.11.1"
+gem "rack-ssl-enforcer", "~> 0.2"
 
 group :development, :test do
   gem "rspec-rails"  
