@@ -88,7 +88,8 @@ describe Admin::PagesController do
     let(:params) {{ "page" => { 
                     "parent_id" => "4d922d505dfe2f082e00006e",
                     "title" => "foobar", 
-                    "filter"=> { "name" => filter.name }, 
+                    "filter" => { "name" => filter.name }, 
+                    "meta_data" => { "title" => "foobar", "keywords" => "foobar, keywords", "description" => "foobar description"},
                     "page_type_attributes"=> { "id" => page_type.to_param },
                     "current_state_attributes"=> { "id"=> status.to_param }, 
                     "editor_ids"=>["ak730", "cds27"], 
@@ -98,7 +99,7 @@ describe Admin::PagesController do
     before(:each) do
       page.as_new_record
       @parent_mock = mock_model("Page", :id => "4d922d505dfe2f082e00006e")
-      Page.stub_chain(:criteria, :for_ids).and_return([@parent_mock])
+      Page.stub(:parent_id_set).and_return([@parent_mock])
       CurrentState.stub(:find).and_return(status)
       Filter.stub(:find).and_return(filter)
       Page.stub(:new).with(params["page"]).and_return(page)
