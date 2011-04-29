@@ -18,7 +18,7 @@ module ApplicationHelper
         ret += '</strong>'
         ret += '<div class="page_last_update">'
         ret += '<em>'
-        ret += item.updated_at.strftime("Last updated at %B %d %H:%M")
+        ret += item.updated_at.strftime("Last updated %B %d @ %H:%M by #{item.updated_by.username}")
         ret += '</em>'
         ret += '</div>'
         ret += tree_ul(item.children, false, &block) if item.children.size > 0
