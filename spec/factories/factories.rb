@@ -61,9 +61,7 @@ Factory.define :page do |page|
   page.sequence(:slug) { |n| "slug_#{n}" }
   page.sequence(:full_path) { |n| "full_path_#{n}" }
   page.sequence(:breadcrumb) { |n| "breadcrumb_#{n}" }
-  page.sequence(:meta_title) { |n| "meta_title_#{n}"}
-  page.meta_keywords "meta_keywords"
-  page.meta_description "meta_description"
+  page.meta_data { Factory.build(:meta_data) }
   page.layout { Factory.build(:layout) }
   page.current_state { Factory.build(:current_state) }
   page.editors {[ Factory.build(:user) ]}
