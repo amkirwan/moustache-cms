@@ -32,6 +32,7 @@ class Page
   field :meta_description
   field :type
   field :template
+  field :meta_tags, :type => Hash
   
   # -- Associations-----------------------------------------------
   referenced_in :site

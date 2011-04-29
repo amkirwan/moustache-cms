@@ -14,6 +14,9 @@ Factory.define :editor, :parent => :user do |editor|
   editor.role "editor"
 end
 
+Factory.define :meta_data do |meta|
+
+end
 
 Factory.define :filter do |filter|
   filter.name "filter"
