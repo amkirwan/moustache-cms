@@ -9,7 +9,7 @@ class Admin::LayoutsController < AdminBaseController
   def create
     created_updated_by_for @layout if admin?
     if @layout.save
-      flash[:notice] = "Successfully created layout #{@layout.name}"
+      flash[:notice] = "Successfully created the layout #{@layout.name}"
       redirect_to admin_layouts_path
     else
       render :new

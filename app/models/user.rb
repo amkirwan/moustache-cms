@@ -8,8 +8,8 @@ class User
   field :puid
   index :puid, unique: true
   key :puid         
-  field :username
-  index :username, unique: true
+  field :puid
+  index :puid, unique: true
   field :firstname
   field :lastname
   field :email
@@ -24,7 +24,7 @@ class User
   
   # -- Before Validations -----------------------------------------------
   before_validation :uniq_page_ids
-  before_save :lower, :set_username
+  before_save :lower, :set_puid
   before_destroy :delete_from_pages
                        
   Roles = %w[editor admin] unless defined?(Roles)
@@ -43,8 +43,8 @@ class User
             :format => { :with => /^([^\s]+)((?:[-a-z0-9]\.)[a-z]{2,})$/i }
 
   # -- Class Methods -----------------------------------------------
-  def self.find_by_username(name)
-    User.where(:username => name.to_s).first
+  def self.find_by_puid(name)
+    User.where(:puid => name.to_s).first
   end
 
   # -- Instance Methods -----------------------------------------------
@@ -62,8 +62,8 @@ class User
       self.email.downcase!
     end
   
-    def set_username
-      self.username = self.puid
+    def set_puid
+      self.puid = self.puid
     end
     
     def delete_from_pages

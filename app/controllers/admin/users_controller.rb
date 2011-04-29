@@ -14,7 +14,7 @@ class Admin::UsersController < AdminBaseController
     @user.puid = params[:user][:puid] if admin?
     @user.role = params[:user][:role] if admin?
     if @user.save
-      flash[:notice] = "Successfully created user account for #{@user.username}" 
+      flash[:notice] = "Successfully created user account for #{@user.puid}" 
       redirect_to admin_users_path
     else
       render :new
@@ -28,7 +28,7 @@ class Admin::UsersController < AdminBaseController
     @user.attributes = params[:user]
     @user.role = params[:user][:role] if admin?
     if @user.save
-      flash[:notice] = "Successfully updated user account for #{@user.username}"
+      flash[:notice] = "Successfully updated user account for #{@user.puid}"
       if admin?
         redirect_to admin_users_path
       else
@@ -41,7 +41,7 @@ class Admin::UsersController < AdminBaseController
   
   def destroy
     if @user.delete
-      flash[:notice] = "Successfully deleted user account for #{@user.username}"
+      flash[:notice] = "Successfully deleted user account for #{@user.puid}"
       redirect_to admin_users_path
     end
   end 

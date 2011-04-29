@@ -54,7 +54,7 @@ class Admin::PagesController < AdminBaseController
   private 
     def assign_editors(editor_ids)
       editor_ids.each do |editor_id|
-        editor = User.find_by_username(editor_id)
+        editor = User.find_by_puid(editor_id)
         @page.editors << editor unless @page.editors.include?(editor)
       end
       @page.editors << current_user unless @page.editors.include?(current_user) 

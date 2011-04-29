@@ -8,7 +8,7 @@ describe Admin::PagesController do
   
   before(:each) do
     Site.stub(:create).and_return(true)
-    cas_faker(current_user.username)
+    cas_faker(current_user.puid)
   end
   
   # -- GET Index ----------------------------------------------- 
@@ -216,7 +216,7 @@ describe Admin::PagesController do
   
   # -- Puts Update ----------------------------------------------- 
   describe "PUTS update" do
-    let(:user) { mock_model("User", :username => "ak730") }
+    let(:user) { mock_model("User", :puid => "ak730") }
     let(:page_type) { mock_model("PageType") }
     let(:status) { mock_model("CurrentStatus") }
     let(:filter) { mock_model("Filter", :name => "foobar") }
@@ -229,7 +229,7 @@ describe Admin::PagesController do
                     "filter"=> { "name" => filter.name }, 
                     "page_type_attributes"=> { "id" => page_type.to_param },
                     "current_state_attributes"=> { "id"=> status.to_param }, 
-                    "editor_ids"=>[ user.username ], 
+                    "editor_ids"=>[ user.puid ], 
                     "layout_id" => layout.to_param,
                     "page_parts_attributes" => { "0" => { "name" => "content", "content" => "Hello, World" }}} }}
     

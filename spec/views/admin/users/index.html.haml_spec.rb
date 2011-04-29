@@ -2,7 +2,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')  
 
 describe "admin/users/index.html.haml" do   
-  let(:users) { [stub_model(User, :username => "foo", :role => "admin")] }
+  let(:users) { [stub_model(User, :puid => "foo", :role => "admin")] }
   let(:current_user) { stub_model(User, :role? => true) }
    
   before(:each) do 
@@ -14,7 +14,7 @@ describe "admin/users/index.html.haml" do
     render 
     users.each do |user|
       rendered.should have_selector("tr#foo") do |tr|
-        tr.should have_selector("a", :content => user.username, :href => edit_admin_user_path(user))
+        tr.should have_selector("a", :content => user.puid, :href => edit_admin_user_path(user))
       end
     end  
   end                          

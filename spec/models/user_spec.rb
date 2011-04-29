@@ -14,7 +14,7 @@ describe User do
     end
     
     it "should not allow mass assignment of" do
-      @user.should_not allow_mass_assignment_of(:puid => "baz", :username => "baz", :role => "bar")
+      @user.should_not allow_mass_assignment_of(:puid => "baz", :puid => "baz", :role => "bar")
     end
     
     it "should allow mass assignment of" do
@@ -92,9 +92,9 @@ describe User do
       end
     end
   
-    context "after save set_username" do
-      it "should set the username to the puid value" do
-        @user.puid.should == @user.username
+    context "after save set_puid" do
+      it "should set the puid to the puid value" do
+        @user.puid.should == @user.puid
       end
     end
   end
@@ -140,7 +140,7 @@ describe User do
   describe "Class Methods" do
     describe "User#find_by_name" do
       it "should return the user when they exist" do
-        User.find_by_username("foobar").should == @user
+        User.find_by_puid("foobar").should == @user
       end
     end
   end

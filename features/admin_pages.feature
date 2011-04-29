@@ -93,7 +93,7 @@ Scenario: Delete page as an admin
   | foobar | published | 
   | bar    | draft     |
   When I go to the admin pages page
-  And I press "delete" within "tr#foobar"
+  And I press "delete" within "li#foobar"
   Then I should see "Successfully deleted the page foobar"
   And I should be on the admin pages page
   

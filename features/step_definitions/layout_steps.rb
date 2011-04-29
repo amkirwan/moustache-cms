@@ -2,8 +2,8 @@ def find_layout(layout_name)
   layout = Layout.where(:name => layout_name).first
 end
 
-Given /^these layouts exist in the site "([^\"]*)" created by user "([^\"]*)"$/ do |site, username, table|
-  user = User.find_by_username(username)
+Given /^these layouts exist in the site "([^\"]*)" created by user "([^\"]*)"$/ do |site, puid, table|
+  user = User.find_by_puid(puid)
   site = Site.match_domain(site).first
   table.hashes.each do |hash|
     Factory(:layout, :site => site, :name => hash[:name], :content => hash[:content])

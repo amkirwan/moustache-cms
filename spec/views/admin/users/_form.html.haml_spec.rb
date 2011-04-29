@@ -33,7 +33,7 @@ describe "admin/users/_form.html.haml" do
       end
     end 
     
-    it "should show a field to enter the partners username" do
+    it "should show a field to enter the partners puid" do
       do_render("Create User")
       form_new(:action => admin_users_path) do |f|
         f.should have_selector("input", :type => "text", :name => "user[puid]")

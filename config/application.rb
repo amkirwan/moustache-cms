@@ -47,7 +47,7 @@ module Etherweb
     config.hostname = "localhost"
     config.auto_manage_sites = true
     
-    config.middleware.use Rack::SslEnforcer, :only => ["/admin"], :strict => true
+    config.middleware.use Rack::SslEnforcer, :only => ["/admin"], :strict => true if Rails.env == "production"
     
     # Add this for Spork 
     if Rails.env.test?

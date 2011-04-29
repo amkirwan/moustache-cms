@@ -330,9 +330,9 @@ describe Page do
         user = Factory(:user)
         @page.editors << @user
         @page.save
-        @page.delete_association_of_editor_id(user.username)
+        @page.delete_association_of_editor_id(user.puid)
         @page.save
-        @page.editor_ids.should_not include(user.username)
+        @page.editor_ids.should_not include(user.puid)
       end
     end
 

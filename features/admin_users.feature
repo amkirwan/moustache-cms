@@ -1,14 +1,16 @@
 Feature: Admin User Management Features
 
+Background: Login create default site
+  Given I login as "ak730" with the role of "admin"
+  And the site "foobar" exists
+
 @admin_login
 Scenario: Admin login page should redirect to /admin/users#index
-  Given I login as "ak730" with the role of "admin"
   When I go to the admin page
   Then I should be on the admin pages page     
 
 @admin_users_index
 Scenario: Admin login
-  Given I login as "ak730" with the role of "admin" 
   And the user with the role exist
   | user   | role   |
   | foo    | admin  |
@@ -22,7 +24,6 @@ Scenario: Admin login
    
 @create_new_user
 Scenario: Create A New user
-  Given I login as "ak730" with the role of "admin"
   When I go to the admin users page
   And I follow "New User" within "ul#new_user"
   Then I should be on the new admin user page 
@@ -37,7 +38,6 @@ Scenario: Create A New user
   
 @edit_user
 Scenario: Given I am logged in as an admin then I can edit any users account
-  Given I login as "ak730" with the role of "admin"
   And the user with the role exist
   | user   | role   |
   | foobar | admin  |
@@ -59,7 +59,6 @@ Scenario: Given I am logged in as an admin then I can edit any users account
   
 @delete_user
 Scenario: Delete user account as an admin
-  Given I login as "ak730" with the role of "admin"
   And the user with the role exist
   | user   | role   |
   | foobar | admin  |
@@ -71,7 +70,6 @@ Scenario: Delete user account as an admin
   
 @non_admin_edit_account
 Scenario: Given I am logged in as an editor then I can edit my account
-  Given I login as "ak730" with the role of "editor"
   When I edit the account information for the user "ak730"
   Then I should now be editing the user "ak730"
   And I fill in "user[firstname]" with "Foobar" 
@@ -79,15 +77,16 @@ Scenario: Given I am logged in as an editor then I can edit my account
   And I fill in "user[email]" with "akirwan@example.com" 
   And I should not see "user[role]"
   And I press "Update User" within "div#edit_user" 
-  Then I should view the page for user "ak730"
+  Then I should be on the admin users page
   And I should see "Successfully updated user account for ak730"
+  When I edit the account information for the user "ak730"
   And the "user[firstname]" field should contain "Foobar"
   And the "user[lastname]" field should contain "Baz"
   And the "user[email]" field should contain "akirwan@example.com"
 
 @non_admin_cannot_update_other_users_accounts
 Scenario: Given I am logged in as an editor then I cannot edit another users account
-  Given I login as "ak730" with the role of "editor"
+  Given I login as "cds27" with the role of "editor"
   And the user with the role exist
   | user   | role   |
   | foobar | admin  |
@@ -97,12 +96,12 @@ Scenario: Given I am logged in as an editor then I cannot edit another users acc
   
 @non_admin_cannot_see_index_page
 Scenario: Given I am logged in as an editor then I cannot list all the users
-  Given I login as "ak730" with the role of "editor"
+  Given I login as "cds27" with the role of "editor"
   When I go to the admin users page
   Then I should see "Whoops!"
   
 @non_admin_cannot_create_new_user
 Scenario: Given I am logged in as an editor then I cannot create a new user
-  Given I login as "ak730" with the role of "editor"
+  Given I login as "cds27" with the role of "editor"
   When I go to the new admin user page
   Then I should see "Whoops!"                                                    

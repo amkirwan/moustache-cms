@@ -3,6 +3,8 @@
   %head{:charset => "UTF-8"}
     %title Etherweb Admin
     = stylesheet_link_tag "screen.css", :media => "screen, projection"
+    
+    = javascript_include_tag :defaults
    
     = javascript_include_tag "jquery.min"
     = javascript_include_tag "application"
@@ -23,8 +25,6 @@
     
     = csrf_meta_tag
   %body{:id => body_id_set}
-  - flash.each do |name, msg|
-    = content_tag :div, msg, :id => "flash_#{name}"
   #wrapper
     #header
       %h1#site_name
@@ -32,5 +32,7 @@
     #nav_wrapper
       = render :partial => "layouts/admin/nav"
     #content
+      - flash.each do |name, msg|
+        = content_tag :div, msg, :id => "flash_#{name}"
       = yield
     #footer

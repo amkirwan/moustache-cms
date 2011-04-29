@@ -13,7 +13,7 @@ describe Admin::LayoutsController do
   let(:layout) { mock_model("Layout").as_null_object }
   
   before(:each) do
-    cas_faker(current_user.username)
+    cas_faker(current_user.puid)
   end
   
   describe "GET index" do    

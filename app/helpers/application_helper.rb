@@ -11,15 +11,16 @@ module ApplicationHelper
         if item.root?
           ret += '<li id="root_node">'
         else
-          ret += '<li>'
+          ret += "<li id=\"#{item.title}\">"
         end
         ret += '<strong>'
         ret += yield item
         ret += '</strong>'
         ret += '<div class="page_last_update">'
         ret += '<em>'
-        ret += item.updated_at.strftime("Last updated %B %d @ %H:%M by #{item.updated_by.username}")
+        ret += item.updated_at.strftime("Last updated %B %d @ %H:%M by #{item.updated_by.puid}")
         ret += '</em>'
+        ret += button_to "delete", admin_page_path(item), :method => :delete, :confirm => "Are you sure you want to delete the page #{item.title}" 
         ret += '</div>'
         ret += tree_ul(item.children, false, &block) if item.children.size > 0
         ret += '</li>'

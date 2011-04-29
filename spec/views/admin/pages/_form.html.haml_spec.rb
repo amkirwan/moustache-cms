@@ -93,7 +93,7 @@ describe "admin/pages/_form.html.haml" do
     end
         
     it "should render checkboxes to enter the editors" do
-      User.stub(:all).and_return([mock_model("User", :username => "foobar")])
+      User.stub(:all).and_return([mock_model("User", :puid => "foobar")])
       new_render
       get_new do |f|
         f.should have_selector("input", :type => "checkbox", :name => "page[editor_ids][]")
@@ -109,10 +109,10 @@ describe "admin/pages/_form.html.haml" do
     end
     
     it "should render a form select for page current_state" do
-      page.stub(:current_state).and_return(mock_model("CurrentState"))
+      page.stub(:current_state).and_return(mock_model("CurrentState", :name => "foobar"))
       new_render
       get_new do |f|
-        f.should have_selector("select", :name => "page[current_state_attributes][id]")
+        f.should have_selector("select", :name => "page[current_state_attributes][name]")
       end
     end
     

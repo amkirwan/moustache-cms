@@ -12,7 +12,7 @@ describe "admin/pages/edit.html.haml" do
   
   it "should show the form title" do
     render
-    rendered.should have_selector("h3", :content => "Update Page #{page.title}")
+    rendered.should have_selector("h3", :content => "Edit Page #{page.title}")
   end
   
   it "should render layout partial" do

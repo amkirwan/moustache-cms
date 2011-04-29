@@ -108,7 +108,7 @@ class Page
   end
   
   def delete_association_of_editor_id(editor_id)
-    editor = User.find_by_username(editor_id)
+    editor = User.find_by_puid(editor_id)
     self.editor_ids.delete(editor.id)
     editor.page_ids.delete(self.id)
     editor.save

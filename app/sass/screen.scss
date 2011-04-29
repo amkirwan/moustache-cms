@@ -169,8 +169,13 @@ div#pages_list {
 			div {
 				color: $light_text;
 				position: absolute;
-				right: 20px;
+				right: 70px;
 				top: 10px;
+				div {
+				  position: absolute;
+				  right: -60px;
+				  top: -3px;
+				}
 			}
 			a:link, a:visited {
 			  font-size: 14px;

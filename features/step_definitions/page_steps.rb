@@ -2,8 +2,8 @@ def find_page(page_title)
   page = Page.where(:title => page_title).first
 end
 
-Given /^these pages exist in the site "([^\"]*)" created by user "([^\"]*)"$/ do |site, username, table|
-  user = User.find_by_username(username)
+Given /^these pages exist in the site "([^\"]*)" created by user "([^\"]*)"$/ do |site, puid, table|
+  user = User.find_by_puid(puid)
   site = Site.match_domain(site).first
   layout = Factory(:layout, :site => site, :created_by => user, :updated_by => user)
   parent = Factory(:page, :site => site, :layout => layout, :created_by => user, :updated_by => user)
