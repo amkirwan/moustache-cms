@@ -5,16 +5,18 @@ class CurrentState
     attr_accessor :statuses
   end
   
+  # -- Fields --------------------------------------------------
   field :name
   key :name
   field :time, type: DateTime
   embedded_in :page, inverse_of: :current_state
   
+  # -- Validations --------------------------------------------------
   validates :name,
             :presence => true
             
             
-  #-- Class Methods --------------------------------------------------
+  # -- Class Methods --------------------------------------------------
   def self.all
     @statuses.dup
   end
@@ -41,7 +43,7 @@ class CurrentState
     end
   end
   
-  #-- Instance Methods --------------------------------------------------
+  # -- Instance Methods --------------------------------------------------
   def published?
     if self.name == "published"
       return true
