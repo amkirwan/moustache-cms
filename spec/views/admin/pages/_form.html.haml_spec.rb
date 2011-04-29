@@ -74,21 +74,21 @@ describe "admin/pages/_form.html.haml" do
     it "should render a text field for the meta_title" do
       new_render
       get_new do |f|
-        f.should have_selector("input", :type => "text", :name => "page[meta_title]")
+        f.should have_selector("input", :type => "text", :name => "page[meta_data][title]")
       end
     end
     
     it "should render a text field for the meta_keywords" do
       new_render
       get_new do |f|
-        f.should have_selector("input", :type => "text", :name => "page[meta_keywords]")
+        f.should have_selector("input", :type => "text", :name => "page[meta_data][keywords]")
       end
     end
     
     it "should render a textarea for the meta_description" do
       new_render
       get_new do |f|
-        f.should have_selector("textarea", :name => "page[meta_description]")
+        f.should have_selector("textarea", :name => "page[meta_data][description]")
       end
     end
         

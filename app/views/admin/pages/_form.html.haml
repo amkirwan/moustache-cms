@@ -13,16 +13,17 @@
   %fieldset
     = f.label :breadcrumb, "Breadcrumb"
     = f.text_field :breadcrumb
-  %fieldset
-    = f.label :meta_title, "Meta-Title"
-    = f.text_field :meta_title
-  %fieldset
-    = f.label :meta_keywords, "Meta-Keywords"
-    = f.text_field :meta_keywords
-  %fieldset
-    = f.label :meta_description, "Meta-Description"
-    = f.text_area :meta_description, :cols => "40", :rows => "12"
-  %fieldset
+  = f.fields_for :meta_data do |builder|
+    %fieldset
+      = builder.label :meta_title, "Meta-Title"
+      = builder.text_field :title
+    %fieldset
+      = builder.label :meta_keywords, "Meta-Keywords"
+      = builder.text_field :keywords
+    %fieldset
+      = builder.label :meta_description, "Meta-Description"
+      = builder.text_area :description, :cols => "40", :rows => "12"
+    %fieldset
   %fieldset
     = f.label :editors, "Editors"
     - User.all.each do |user|
