@@ -13,26 +13,18 @@ class Page
                   :full_path,
                   :permalink,
                   :breadcrumb,
-                  :meta_title, 
-                  :meta_keywords, 
-                  :meta_description, 
                   :current_state, 
                   :layout_id,
                   :page_parts,
-                  :tag_list
+                  :meta_data
                   
   # -- Fields -----------------------------------------------
   field :title
+  field :meta_data, :type => MetaData, :default => MetaData.new
   field :slug
   field :full_path
   field :permalink
   field :breadcrumb
-  field :meta_title
-  field :meta_keywords
-  field :meta_description
-  field :type
-  field :template
-  field :meta_tags, :type => Hash
   
   # -- Associations-----------------------------------------------
   referenced_in :site
@@ -50,10 +42,6 @@ class Page
   validates :title,
             :presence => true, 
             :uniqueness => { :scope => :site_id }
-
-  validates :meta_title,
-            :uniqueness => true, 
-            :allow_blank => true
             
   validates :full_path,
             :presence => true,
@@ -77,6 +65,10 @@ class Page
   before_destroy :delete_from_editors, :move_children_to_parent
   
   # -- Class Mehtods --------------------------------------------------
+  def self.find_by_id(page_id)
+    Page.criteria.for_ids(page_id).first
+  end
+  
   def self.find_by_full_path(site, full_path)
     self.where(:site_id => site.id, :full_path => full_path).first
   end

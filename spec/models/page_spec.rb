@@ -2,8 +2,8 @@ require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
 
 describe Page do   
   let(:user) { Factory(:user) }
-  let(:layout) { Factory(:layout, :created_by => user, :updated_by => user) }
   let(:site) { Factory(:site) }
+  let(:layout) { Factory(:layout, :site => site, :created_by => user, :updated_by => user) }
   let(:parent) { Factory(:page, :site => site, :layout => layout, :created_by => user, :updated_by => user, :editor_ids => [user.id]) }
   before(:each) do                 
     @page = Factory(:page, :site => site, :parent => parent , :layout => layout, :created_by => user, :updated_by => user, :editor_ids => [user.id])
@@ -27,9 +27,6 @@ describe Page do
              :slug => "foobar",
              :full_path => "full_path",
              :breadcrumb => "foobar",
-             :meta_title => "foobar",  
-             :meta_keywords => "foobar", 
-             :meta_description => "foobar",
              :layout_id => BSON::ObjectId('4d7fe2397353202ab60000e9'), 
              :current_state => stub_model(CurrentState),
              :page_parts => [stub_model(PagePart)])
@@ -38,12 +35,10 @@ describe Page do
        page.slug.should == "foobar"
        page.full_path.should == "full_path"
        page.breadcrumb.should == "foobar"
-       page.meta_title.should == "foobar"
-       page.meta_keywords.should == "foobar"
-       page.meta_description.should == "foobar"
        page.layout_id.should == BSON::ObjectId('4d7fe2397353202ab60000e9')
        page.current_state.should_not == nil
-       page.page_parts.should_not == nil      
+       page.page_parts.should_not == nil  
+       page.meta_data.should_not == nil    
     end
   end
   
@@ -284,6 +279,11 @@ describe Page do
       end
     end
     
+    describe "Page#find_by_id" do
+      it "should return the page when searching by id" do
+        Page.find_by_id(@page.id).should == @page
+      end            
+    end  
   end
   
   # -- Instance Methods -----------------------------------------------

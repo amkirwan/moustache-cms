@@ -14,7 +14,7 @@ class Admin::PagesController < AdminBaseController
       @page.parent_id = nil
     elsif
 
-      @page.parent_id = Page.parent_id_set(params[:page][:parent_id])
+      @page.parent_id = Page.find_by_id(params[:page][:parent_id]).id
     end
     @page.current_state = CurrentState.find(params[:page][:current_state_attributes][:name])
     assign_page_parts(params[:page][:page_parts_attributes])
