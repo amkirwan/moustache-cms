@@ -2,15 +2,14 @@ class Site
   include Mongoid::Document
   include Mongoid::Timestamps
   
-  attr_accessible :name, :subdomain
+  attr_accessible :name, :subdomain, :meta_data
   
   field :name
   key :name
   field :subdomain
   field :default_domain
   field :domains, type: Array, default: []
-  field :meta_keywords
-  field :meta_description
+  field :meta_data, :type => MetaData, :default => MetaData.new
   
   # -- Index ---------------------------------------
   index :domains

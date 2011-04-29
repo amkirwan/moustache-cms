@@ -27,8 +27,7 @@ Factory.define :site do |site|
   site.sequence(:subdomain)  { |n| "foobar_#{n}" }
   site.default_domain  "example.com" 
   site.domains  { [] }
-  site.meta_keywords "meta_keywords"
-  site.meta_description "meta_description"
+  site.meta_data { Factory.build(:meta_data) }
 end
 
 Factory.define :layout do |layout|

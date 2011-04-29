@@ -5,6 +5,23 @@ describe Site do
     @site = Factory(:site)
   end
   
+  # -- Assignment -------------------------------------------
+  describe "mass assignment" do
+    it "should protect against mass assignment of default_domain and domains field" do
+      site = Site.new(:default_domain => "example.com", :domains => ["foobar.example.com"] )
+      site.default_domain.should be_nil
+      site.domains.should be_empty
+    end
+    
+    
+    it "should allow mass assignment of" do
+      page = Site.new(:name => "foobar", :subdomain => "foobar", :meta_data => stub_model(MetaData))
+      page.name.should == "foobar"
+      page.subdomain.should == "foobar" 
+      page.meta_data.should_not == nil
+    end
+  end
+  
   # -- Validations -------------------------------------------
   describe "Validations" do
     it "should be valid" do
