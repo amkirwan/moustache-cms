@@ -3,6 +3,7 @@ class Page
   include Mongoid::Timestamps
   include Mongoid::Document::Taggable
   include Mongoid::Tree
+  include Etherweb::Mongoid::MetaData
   #include Mongoid::Tree::Traversal
   #include Mongoid::Tree::Ordering
 
@@ -15,12 +16,10 @@ class Page
                   :breadcrumb,
                   :current_state, 
                   :layout_id,
-                  :page_parts,
-                  :meta_data
+                  :page_parts
                   
   # -- Fields -----------------------------------------------
   field :title
-  field :meta_data, :type => MetaData, :default => MetaData.new
   field :slug
   field :full_path
   field :permalink

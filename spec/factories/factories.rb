@@ -14,10 +14,6 @@ Factory.define :editor, :parent => :user do |editor|
   editor.role "editor"
 end
 
-Factory.define :meta_data do |meta|
-
-end
-
 Factory.define :filter do |filter|
   filter.name "filter"
 end
@@ -27,7 +23,6 @@ Factory.define :site do |site|
   site.sequence(:subdomain)  { |n| "foobar_#{n}" }
   site.default_domain  "example.com" 
   site.domains  { [] }
-  site.meta_data { Factory.build(:meta_data) }
 end
 
 Factory.define :layout do |layout|
@@ -60,7 +55,6 @@ Factory.define :page do |page|
   page.sequence(:slug) { |n| "slug_#{n}" }
   page.sequence(:full_path) { |n| "full_path_#{n}" }
   page.sequence(:breadcrumb) { |n| "breadcrumb_#{n}" }
-  page.meta_data { Factory.build(:meta_data) }
   page.layout { Factory.build(:layout) }
   page.current_state { Factory.build(:current_state) }
   page.editors {[ Factory.build(:user) ]}

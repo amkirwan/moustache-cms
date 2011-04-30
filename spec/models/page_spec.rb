@@ -1,4 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
+require File.expand_path(File.dirname(__FILE__) + '/../lib/etherweb/mongoid/meta_data_shared_examples') 
 
 describe Page do   
   let(:user) { Factory(:user) }
@@ -8,6 +9,8 @@ describe Page do
   before(:each) do                 
     @page = Factory(:page, :site => site, :parent => parent , :layout => layout, :created_by => user, :updated_by => user, :editor_ids => [user.id])
   end
+  
+  it_behaves_like "meta_data"
   
   # -- Assignment -------------------------------------------
   describe "mass assignment" do

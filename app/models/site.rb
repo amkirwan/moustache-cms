@@ -1,6 +1,7 @@
 class Site
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Etherweb::Mongoid::MetaData
   
   attr_accessible :name, :subdomain, :meta_data
   
@@ -9,7 +10,6 @@ class Site
   field :subdomain
   field :default_domain
   field :domains, type: Array, default: []
-  field :meta_data, :type => MetaData, :default => MetaData.new
   
   # -- Index ---------------------------------------
   index :domains

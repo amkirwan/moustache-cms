@@ -1,9 +1,12 @@
 require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
+require File.expand_path(File.dirname(__FILE__) + '/../lib/etherweb/mongoid/meta_data_shared_examples') 
 
 describe Site do   
   before(:each) do
     @site = Factory(:site)
   end
+  
+  it_behaves_like "meta_data"
   
   # -- Assignment -------------------------------------------
   describe "mass assignment" do
