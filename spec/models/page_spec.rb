@@ -32,7 +32,8 @@ describe Page do
              :breadcrumb => "foobar",
              :layout_id => BSON::ObjectId('4d7fe2397353202ab60000e9'), 
              :current_state => stub_model(CurrentState),
-             :page_parts => [stub_model(PagePart)])
+             :page_parts => [stub_model(PagePart)],
+             :meta_data => { "title" => "foobar"})
        page.parent.should == parent
        page.title.should == "foobar"
        page.slug.should == "foobar"

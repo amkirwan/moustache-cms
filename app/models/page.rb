@@ -16,7 +16,8 @@ class Page
                   :breadcrumb,
                   :current_state, 
                   :layout_id,
-                  :page_parts
+                  :page_parts,
+                  :meta_data
                   
   # -- Fields -----------------------------------------------
   field :title
