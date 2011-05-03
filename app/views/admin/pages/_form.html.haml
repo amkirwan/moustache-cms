@@ -13,17 +13,10 @@
   %fieldset
     = f.label :breadcrumb, "Breadcrumb"
     = f.text_field :breadcrumb
-  = f.fields_for :meta_data do |builder|
-    %fieldset
-      = builder.label :meta_title, "Meta-Title"
-      = builder.text_field :title
-    %fieldset
-      = builder.label :meta_keywords, "Meta-Keywords"
-      = builder.text_field :keywords
-    %fieldset
-      = builder.label :meta_description, "Meta-Description"
-      = builder.text_area :description, :cols => "40", :rows => "12"
-    %fieldset
+  %fieldset
+  - page.meta_data.each do |k, v|
+    = label_tag "page[meta_data][#{k}]", "#{k.humanize}"
+    = text_field_tag "page[meta_data][#{k}]", "#{v}"
   %fieldset
     = f.label :editors, "Editors"
     - User.all.each do |user|
