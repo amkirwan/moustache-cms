@@ -12,6 +12,9 @@ describe Etherweb::CmsPage do
                                       :name => "content", 
                                       :content => "define_editable_text_method **strong**", 
                                       :filter => Filter.find_by_name(:markdown))
+    @page.meta_data["title"] = "foobar"
+    @page.meta_data["keywords"] = "foobar, keywords"
+    @page.meta_data["description"] = "foobar description"                                    
     @controller.instance_variable_set(:@page, @page)
     @cmsp = Etherweb::CmsPage.new(@controller)
   end

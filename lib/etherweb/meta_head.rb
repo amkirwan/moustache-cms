@@ -1,16 +1,13 @@
 module Etherweb
   module MetaHead
-  
-    def meta_title
-      %(<meta name="DC.title" lang="en" content="#{@page.meta_title}">)
+    
+    def meta_data
+      meta_data = ""
+      @page.meta_data.each_pair do |k, v|
+        meta_data += %(<meta name="#{k}" content="#{v}">\n)
+      end
+      meta_data
     end
     
-    def meta_keywords
-      %(<meta name="keywords" content="#{@page.meta_keywords}">)
-    end
-    
-    def meta_description
-      %(<meta name="description" content="#{@page.meta_description}")
-    end
   end
 end
