@@ -15,7 +15,7 @@
     = f.text_field :breadcrumb
   %fieldset
   - page.meta_data.each do |k, v|
-    = label_tag "page[meta_data][#{k}]", "#{k.humanize}"
+    = label_tag "page[meta_data][#{k}]", "Meta #{k.humanize}"
     = text_field_tag "page[meta_data][#{k}]", "#{v}"
   %fieldset
     = f.label :editors, "Editors"
