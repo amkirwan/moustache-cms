@@ -28,7 +28,7 @@ class Page
   field :full_path
   field :permalink
   field :breadcrumb
-  field :post_container, :type => Boolean
+  field :post_container, :type => Boolean, :default => false
   
   # -- Associations-----------------------------------------------
   referenced_in :site
@@ -176,4 +176,5 @@ class Page
       editor.save
     end  
   end
+  
 end

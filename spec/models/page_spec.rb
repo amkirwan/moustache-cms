@@ -363,6 +363,13 @@ describe Page do
         @page.status.should == "published"
       end
     end
+    
+    describe "#post_container?" do
+      it "should return true when the current page is a container" do
+        @page.post_container = false
+        @page.post_container?.should == false
+      end
+    end
   end
 end
 

@@ -116,17 +116,43 @@ describe "admin/pages/_form.html.haml" do
       end
     end
     
-    it "should render a checkbox to select if the page is a post container" do
-      new_render
-      get_new do |f|
-        f.should have_selector("input", :type => "checkbox", :name => "page[post_container]")
+    context "When the page's parent is not a post_container" do
+      before(:each) do
+        page.stub_chain(:parent, :post_container?).and_return(false)
+      end
+      
+      it "should render a checkbox to select if the page should be a post container" do 
+        new_render
+        get_new do |f|
+          f.should have_selector("input", :type => "checkbox", :name => "page[post_container]")
+        end
+      end
+    
+      it "should not render a form text field for tags" do
+        new_render
+        get_new do |f|
+          f.should_not have_selector("input", :type => "text", :name => "page[tag_list]")
+        end
       end
     end
     
-    it "should render a form text field for tags" do
-      new_render
-      get_new do |f|
-        f.should have_selector("input", :type => "text", :name => "page[tag_list]")
+    context "When the page's parent is a post_container" do
+      before(:each) do
+        page.stub_chain(:parent, :post_container?).and_return(true)
+      end
+      
+      it "should not render a checkbox to select if the page should be a post container" do 
+        new_render
+        get_new do |f|
+          f.should_not have_selector("input", :type => "checkbox", :name => "page[post_container]")
+        end
+      end
+    
+      it "should render a form text field for tags" do
+        new_render
+        get_new do |f|
+          f.should have_selector("input", :type => "text", :name => "page[tag_list]")
+        end
       end
     end
     

@@ -30,12 +30,14 @@
     %fieldset
       = builder.label :current_state, "Status"
       = builder.collection_select :name, CurrentState.all, :id, :name
-  %fieldset 
-    = f.label :post_container
-    = f.check_box :post_container
-  %fieldset
-    = f.label :tag_list
-    = f.text_field :tag_list
+  - if !@page.parent.try(:post_container?)
+    %fieldset 
+      = f.label :post_container
+      = f.check_box :post_container
+  - if @page.parent.try(:post_container?)
+    %fieldset
+      = f.label :tag_list
+      = f.text_field :tag_list
   = f.fields_for :page_parts do |builder|
     %fieldset
       = builder.label :name, "Page Part Name"
