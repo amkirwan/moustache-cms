@@ -57,5 +57,9 @@ module ApplicationHelper
       end
     end
   end
+  
+  def hash_to_open_struct(hash)
+    OpenStruct.new(hash)
+  end
     
 end

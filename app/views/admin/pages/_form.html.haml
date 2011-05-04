@@ -14,9 +14,10 @@
     = f.label :breadcrumb, "Breadcrumb"
     = f.text_field :breadcrumb
   %fieldset
-  - page.meta_data.each do |k, v|
-    = label_tag "page[meta_data][#{k}]", "Meta #{k.humanize}"
-    = text_field_tag "page[meta_data][#{k}]", "#{v}"
+  = f.fields_for :meta_data, hash_to_open_struct(@page.meta_data) do |os|
+    - os.object.marshal_dump.each_key do |key|
+      = os.label key
+      = os.text_field key
   %fieldset
     = f.label :editors, "Editors"
     - User.all.each do |user|
