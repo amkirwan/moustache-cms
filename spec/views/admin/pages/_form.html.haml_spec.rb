@@ -4,7 +4,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')
 describe "admin/pages/_form.html.haml" do
   include FormHelpers
  
-  let(:page) { stub_model(Page) }
+  let(:page) { stub_model(Page).as_null_object }
   let(:current_user) { stub_model(User, :role? => true) }
    
   before(:each) do 
@@ -116,6 +116,13 @@ describe "admin/pages/_form.html.haml" do
       end
     end
     
+    it "should render a checkbox to select if the page is a post container" do
+      new_render
+      get_new do |f|
+        f.should have_selector("input", :type => "checkbox", :name => "page[post_container]")
+      end
+    end
+    
     it "should render a form text field for tags" do
       new_render
       get_new do |f|
@@ -165,7 +172,7 @@ describe "admin/pages/_form.html.haml" do
       do_render("Update Page")
     end
       
-    it "should render a form to create new page" do
+    it "should render a form to update an existing page" do
       edit_render
       get_edit do |f|
         f.should have_selector("input", :type => "submit", :value => "Update Page")

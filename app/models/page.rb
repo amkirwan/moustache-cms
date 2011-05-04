@@ -19,7 +19,8 @@ class Page
                   :current_state, 
                   :layout_id,
                   :page_parts,
-                  :meta_data
+                  :meta_data,
+                  :post_container
                   
   # -- Fields -----------------------------------------------
   field :title
@@ -27,6 +28,7 @@ class Page
   field :full_path
   field :permalink
   field :breadcrumb
+  field :post_container, :type => Boolean
   
   # -- Associations-----------------------------------------------
   referenced_in :site
