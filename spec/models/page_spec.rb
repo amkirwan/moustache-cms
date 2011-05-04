@@ -5,7 +5,7 @@ describe Page do
   let(:user) { Factory(:user) }
   let(:site) { Factory(:site) }
   let(:layout) { Factory(:layout, :site => site, :created_by => user, :updated_by => user) }
-  let(:parent) { Factory(:page, :site => site, :layout => layout, :created_by => user, :updated_by => user, :editor_ids => [user.id]) }
+  let(:parent) { Factory(:page, :site => site, :layout => layout, :created_by => user, :updated_by => user, :editor_ids => [user.id], :post_container => true) }
   before(:each) do                 
     @page = Factory(:page, :site => site, :parent => parent , :layout => layout, :created_by => user, :updated_by => user, :editor_ids => [user.id])
   end
@@ -33,7 +33,8 @@ describe Page do
              :layout_id => BSON::ObjectId('4d7fe2397353202ab60000e9'), 
              :current_state => stub_model(CurrentState),
              :page_parts => [stub_model(PagePart)],
-             :meta_data => { "title" => "foobar"})
+             :meta_data => { "title" => "foobar"},
+             :post_container => true)
        page.parent.should == parent
        page.title.should == "foobar"
        page.slug.should == "foobar"
@@ -43,6 +44,7 @@ describe Page do
        page.current_state.should_not == nil
        page.page_parts.should_not == nil  
        page.meta_data.should_not == nil    
+       page.post_container.should == true
     end
   end
   
@@ -73,7 +75,7 @@ describe Page do
       
       it "should set the slug to the page title when the slug is blank and when the root.node exists" do
         page2 = Factory(:page, :slug => nil, :parent => parent, :site => site, :layout => layout, :created_by => user, :updated_by => user)
-        page2.slug.should == page2.title.downcase
+        page2.slug.should == page2.title.downcase.gsub(/[\s_]/, '-')
         page2 = nil
       end
       
@@ -101,6 +103,19 @@ describe Page do
     describe "#page_site" do
       it "should assign the site to the page before saving" do
         @page.site.should == Site.first
+      end
+    end
+  end
+  
+  # -- Before Create Callback -------------------------------------------      
+  describe "before_create callback" do
+    describe "#permalink_set" do
+      it "it should set the permalink in the format http://example.com/year/month/day/post-title" do
+        time = DateTime.now
+        year = time.year.to_s
+        month = time.month.to_s
+        day = time.day.to_s
+        @page.permalink.should == "http://#{@page.site.full_subdomain}/#{year}/#{month}/#{day}/#{@page.slug}"
       end
     end
   end
@@ -293,11 +308,12 @@ describe Page do
   # -- Instance Methods -----------------------------------------------
   describe "Instance Methods" do
     describe "#permalink" do  
-      it "should return the permalink" do
-        year = @page.published_at.year.to_s
-        month = @page.published_at.month.to_s
-        day = @page.published_at.day.to_s
-        @page.permalink.should == year + "/" + month + "/" + day + "/" + @page.slug
+      it "should return the permalink in the format http://example.com/year/month/day/post-title" do
+        time = DateTime.now
+        year = time.year.to_s
+        month = time.month.to_s
+        day = time.day.to_s
+        @page.permalink.should == "http://#{@page.site.full_subdomain}/#{year}/#{month}/#{day}/#{@page.slug}"
       end
     end
     

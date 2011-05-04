@@ -65,6 +65,7 @@ class Page
   before_validation :format_title, :slug_set, :full_path_set, :breadcrumb_set, :site_set
   before_save :uniq_editor_ids
   before_update :update_current_state_time
+  before_create :permalink_set
   after_save :update_user_pages
   before_destroy :delete_from_editors, :move_children_to_parent
   
@@ -91,14 +92,7 @@ class Page
   
   def published_at
     self.current_state.published_at
-  end
-  
-  def permalink
-    year = self.published_at.year.to_s
-    month = self.published_at.month.to_s
-    day = self.published_at.day.to_s
-    year + "/" + month + "/" + day + "/" + self.slug
-  end    
+  end  
   
   def status
     self.current_state.name
@@ -127,7 +121,7 @@ class Page
       self.slug.downcase!
       self.slug.strip!
     end
-    self.slug.gsub!(/\s/, '-')
+    self.slug.gsub!(/[\s_]/, '-')
   end
   
   def full_path_set
@@ -153,6 +147,18 @@ class Page
   
   def site_set
     self.site = Site.first
+  end
+  
+  def permalink_set
+    if self.parent.try(:post_container)
+      time = DateTime.now
+      year = time.year.to_s
+      month = time.month.to_s
+      day = time.day.to_s
+      self.permalink = "http://#{self.site.full_subdomain}/#{year}/#{month}/#{day}/#{self.slug}"
+    else
+      permalink = nil
+    end
   end
   
   #rc7 temp fixes for relations for mongoid
