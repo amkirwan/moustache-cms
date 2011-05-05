@@ -35,7 +35,7 @@ Scenario: Given I am logged in as an admin then I can edit a layout
   | foobar | Hello, World! |
   | bar    | Hello, World! |
   When I go to the admin layouts page
-  And I follow "foobar" within "tr#foobar"
+  And I follow "foobar" within "li#foobar"
   Then I should now be editing the layout "foobar"
   And the "layout[name]" field should contain "foobar"
   And the "layout[content]" field should contain "Hello, World!"
@@ -56,6 +56,6 @@ Scenario: Delete layout as an admin
   | foobar | Hello, World! |
   | bar    | Hello, World! |
   When I go to the admin layouts page
-  And I press "delete" within "tr#foobar"
+  And I press "delete" within "li#foobar"
   Then I should see "Successfully deleted the layout foobar"
   And I should be on the admin layouts page
