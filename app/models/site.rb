@@ -17,8 +17,7 @@ class Site
   # -- Associations ---------------------------------------
   has_many :pages 
   has_many :layouts
-  
-  
+    
   # -- Validations ----------------------------------------
   validates :name,
             :presence => true,
@@ -34,7 +33,7 @@ class Site
   # -- Scopes ---------------------------------------
   scope :match_domain, lambda { |domain| { :any_in => { :domains => [*domain] }}}
   
-  
+ 
   # -- Instance Methods ----------------------------------------
   def full_subdomain
     "#{self.subdomain}.#{self.default_domain}"
