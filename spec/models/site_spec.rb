@@ -18,7 +18,7 @@ describe Site do
     
     
     it "should allow mass assignment of" do
-      page = Site.new(:name => "foobar", :subdomain => "foobar", :meta_data => stub_model(MetaData))
+      page = Site.new(:name => "foobar", :subdomain => "foobar", :meta_data => { "title" => "foobar"})
       page.name.should == "foobar"
       page.subdomain.should == "foobar" 
       page.meta_data.should_not == nil

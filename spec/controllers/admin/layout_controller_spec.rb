@@ -105,7 +105,7 @@ describe Admin::LayoutsController do
       
       it "should assign a flash message that the layout was saved" do
         do_post
-        flash[:notice].should == "Successfully created layout #{layout.name}"
+        flash[:notice].should == "Successfully created the layout #{layout.name}"
       end
       
       it "should redirect to admin/layout#index" do

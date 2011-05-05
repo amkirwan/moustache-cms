@@ -18,6 +18,7 @@ group :development, :test do
   gem "rspec-rails"  
   gem 'jquery-rails', ">= 0.2.6" 
   gem "webrat"
+  gem "rcov"
   gem "cucumber-rails"
   gem "capybara"
   gem "database_cleaner"

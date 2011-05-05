@@ -151,6 +151,7 @@ GEM
       rake (>= 0.8.7)
       thor (~> 0.14.4)
     rake (0.8.7)
+    rcov (0.9.9)
     redcarpet (1.11.2)
     relish (0.0.3)
       archive-tar-minitar (~> 0.5.2)
@@ -213,6 +214,7 @@ DEPENDENCIES
   mustache (>= 0.99)
   rack-ssl-enforcer (~> 0.2)
   rails (~> 3.0)
+  rcov
   redcarpet (~> 1.11)
   relish
   rspec-rails
