@@ -2,6 +2,7 @@ source 'http://rubygems.org'
 
 gem "rails", "~> 3.0"   
 gem "haml", "~> 3.1"
+gem "haml-rails", "~> 0.3"
 gem "sass", "~> 3.1"
 gem "mongoid", :git => "git://github.com/mongoid/mongoid.git"
 gem "bson_ext", "~> 1.3"    
