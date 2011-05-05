@@ -25,11 +25,9 @@ Scenario: Navigate to the Pages#index page
   | bar    | draft     | 
   When I go to the admin pages page
   Then I should be on the admin pages page
-  And I should see "foobar" within "tr#foobar"
-  And I should see "published" within "tr#foobar"
+  And I should see "foobar" within "li#foobar"
   And I should see the "delete" button
-  And I should see "bar" within "tr#bar"
-  And I should see "draft" within "tr#bar"
+  And I should see "bar" within "li#bar"
   And I should see the "delete" button
   And I should see "Add New Page"
   
