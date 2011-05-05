@@ -51,7 +51,6 @@ Scenario: Create a new page
   Then I should be on the admin pages page
   And I should see "Successfully created page foobar"
   And I should see "foobar" 
-  And I should see "published" 
   And I should see the "delete" button
   
 @edit_a_existing_page
@@ -77,7 +76,6 @@ Scenario: Edit a page
   Then I should be on the admin pages page
   And I should see "Successfully updated the page foobar"
   And I should see "foobar" 
-  And I should see "draft" 
   And I should see the "delete" button
   When I edit the page "foobar"
   Then I should now be editing the page "foobar"
