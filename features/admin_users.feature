@@ -43,7 +43,7 @@ Scenario: Given I am logged in as an admin then I can edit any users account
   | foobar | admin  |
   | bar    | editor |
   When I go to the admin users page
-  And I follow "foobar" within "tr#foobar"
+  And I follow "foobar" within "li#foobar"
   Then I should now be editing the user "foobar"
   And the "user[email]" field should contain "foobar@example.com"
   And the "user_role_admin" checkbox should be checked 
@@ -64,7 +64,7 @@ Scenario: Delete user account as an admin
   | foobar | admin  |
   | bar    | editor |
   When I go to the admin users page
-  And I press "delete" within "tr#foobar"
+  And I press "delete" within "li#foobar"
   Then I should see "Successfully deleted user account for foobar"
   And I should be on the admin users page
   
