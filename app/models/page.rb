@@ -31,9 +31,9 @@ class Page
   field :post_container, :type => Boolean, :default => false
   
   # -- Associations-----------------------------------------------
-  referenced_in :site
   embeds_one :current_state
   embeds_many :page_parts 
+  belongs_to :site
   belongs_to :layout
   belongs_to :created_by, :class_name => "User"
   belongs_to :updated_by, :class_name => "User"
