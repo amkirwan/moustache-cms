@@ -13,7 +13,7 @@ describe "admin/users/index.html.haml" do
   it "should render a edit link" do
     render 
     users.each do |user|
-      rendered.should have_selector("tr#foo") do |tr|
+      rendered.should have_selector("li#foo") do |tr|
         tr.should have_selector("a", :content => user.puid, :href => edit_admin_user_path(user))
       end
     end  

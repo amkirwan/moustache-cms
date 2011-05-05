@@ -18,7 +18,7 @@ describe "admin/layouts/index.html.haml" do
   it "should make the layout name a link to edit the template" do
     render 
     layouts.each do |layout|
-      rendered.should have_selector("tr##{layout.name}") do |tr|
+      rendered.should have_selector("li##{layout.name}") do |tr|
         tr.should have_selector("a", :content => "#{layout.name}", :href => edit_admin_layout_path(layout))
       end
     end 
