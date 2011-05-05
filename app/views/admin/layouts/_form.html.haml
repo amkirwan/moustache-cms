@@ -3,10 +3,10 @@
            :locals => { :target => layout }
   %fieldset
     = f.label :name, "Name"
-    = f.text_field :name, :placeholder => "Layout name..." 
+    = f.text_field :name
   %fieldset
     = f.label :content, "Content"
     %code.html
-      = f.text_area :content, :cols => "50", :rows => "30", :placeholder => "Layout content..."           
+      = f.text_area :content, :cols => "50", :rows => "30"
   %fieldset 
     = f.submit button_label

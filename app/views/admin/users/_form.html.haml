@@ -15,7 +15,7 @@
     = f.text_field :lastname
   %fieldset
     = f.label :email, "Email Address"
-    = f.email_field :email, :placeholder => "Enter email...", :size => 20 
+    = f.email_field :email, :size => 20 
   - if admin?
     %fieldset#role
       = f.label :role

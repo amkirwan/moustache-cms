@@ -6,7 +6,7 @@
     = f.collection_select :parent_id, Page.all.order(:title), :id, :title, { :include_blank => true }
   %fieldset
     = f.label :title, "Title"
-    = f.text_field :title, :placeholder => "Page title..."
+    = f.text_field :title
   %fieldset
     = f.label :slug, "Path Name"
     = f.text_field :slug
