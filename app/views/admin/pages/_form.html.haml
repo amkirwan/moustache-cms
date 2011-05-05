@@ -13,6 +13,9 @@
   %fieldset
     = f.label :breadcrumb, "Breadcrumb"
     = f.text_field :breadcrumb
+  - if @page.permalink
+    = f.label :permalink
+    = f.text_field :permalink
   %fieldset
   = f.fields_for :meta_data, hash_to_open_struct(@page.meta_data) do |os|
     - os.object.marshal_dump.each_key do |key|

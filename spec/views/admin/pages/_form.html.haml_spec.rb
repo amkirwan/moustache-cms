@@ -204,5 +204,17 @@ describe "admin/pages/_form.html.haml" do
         f.should have_selector("input", :type => "submit", :value => "Update Page")
       end
     end
+    
+    it "should render the permalink field if the permalink is not nil" do
+      time = DateTime.now
+      year = time.year.to_s
+      month = time.month.to_s
+      day = time.day.to_s
+      page.permalink = "http://example.com/#{year}/#{month}/#{day}/foobar" 
+      edit_render
+      get_edit do |f|
+        f.should have_selector("input", :type => "text", :value => "http://example.com/#{year}/#{month}/#{day}/foobar")
+      end
+    end
   end                                                                                    
 end
