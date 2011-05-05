@@ -50,6 +50,13 @@ module Etherweb
     
     config.middleware.use Rack::SslEnforcer, :only => ["/admin"], :strict => true if Rails.env == "production"
     
+    # Configure generators values. Many other options are available, be sure to check the documentation.  
+    config.generators do |g|  
+      g.template_engine :haml
+      g.test_framework :rspec
+      g.stylesheets false  
+    end
+    
     # Add this for Spork 
     if Rails.env.test?
       initializer :after => :initialize_dependency_mechanism do 
@@ -59,10 +66,3 @@ module Etherweb
   end
 end
 
-# Configure generators values. Many other options are available, be sure to check the documentation.  
-config.generators do |g|  
-  g.template_engine :haml
-  g.test_framework :rspec, :fixture => true, :views => false
-  g.fixture_replacement :factory_girl, :dir => "spec/factories"
-  g.stylesheets false  
-end
