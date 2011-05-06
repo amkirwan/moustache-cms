@@ -1,13 +1,14 @@
-%table{:id => "layouts"}
-  %thead
-    %tr
-      %th.bold Layout Name
-      %th.bold Delete
-  %tbody
-  - @layouts.each do |layout|
-    %tr{:id => layout.name}
-      %td= link_to layout.name, edit_admin_layout_path(layout)
-      %td.destroy= button_to "delete", admin_layout_path(layout), :method => :delete, :confirm => "Are you sure you want to delete the layout #{layout.name}"
+#layouts
+  %ul
+    %li#layout_header
+      %div Layout Name
+      %div Delete
+    - @layouts.each do |layout|
+      %li{ :id => "#{layout.name}"}
+        %div= link_to layout.name, edit_admin_layout_path(layout)
+        %div.destroy= button_to "delete", admin_layout_path(layout), :method => :delete, :confirm => "Are you sure you want to delete the layout #{layout.name}" 
+  
 
-%ul#new_layout
-  %li= link_to "Add New Layout", new_admin_layout_path
+#add_layout
+  %ul#new_layout
+    %li= link_to "Add New Layout", new_admin_layout_path

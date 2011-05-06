@@ -1,0 +1,10 @@
+= form_for @admin_media_file do |f|
+  -if @admin_media_file.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@admin_media_file.errors.count, "error")} prohibited this admin_media_file from being saved:"
+      %ul
+        - @admin_media_file.errors.full_messages.each do |msg|
+          %li= msg
+
+  .actions
+    = f.submit 'Save'
