@@ -6,15 +6,40 @@ require 'spec_helper'
 
 describe Admin::MediaFilesController do
 
-  def mock_media_file(stubs={})
-    @mock_media_file ||= mock_model(Admin::MediaFile, stubs).as_null_object
+  #for actions
+  let(:current_user) { logged_in(:role? => true) }
+  let(:media_file) { mock_model("MediaFile").as_null_object }
+  
+  before(:each) do
+    cas_faker(current_user.puid)
   end
 
+  # -- GET Index ----------------------------------------------- 
   describe "GET index" do
-    it "assigns all admin_media_files as @admin_media_files" do
-      Admin::MediaFile.stub(:all) { [mock_media_file] }
+    def do_get     
       get :index
-      assigns(:admin_media_files).should eq([mock_media_file])
+    end
+    
+    let(:media_files) { [mock_model("MediaFile"), mock_model("MediaFile")] }
+    
+    before(:each) do
+      MediaFile.stub(:accessible_by).and_return(media_files)
+    end
+    
+    
+    it "should receive accessible_by" do
+      MediaFile.should_receive(:accessible_by).and_return(media_files)
+      do_get
+    end
+    
+    it "should assign the found media_files" do
+      do_get
+      assigns(:media_files).should == media_files
+    end
+    
+    it "should render the index template" do
+      do_get
+      response.should render_template("admin/media_files/index")
     end
   end
 

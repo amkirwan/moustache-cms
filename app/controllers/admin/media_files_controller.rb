@@ -1,13 +1,7 @@
-class Admin::MediaFilesController < ApplicationController
+class Admin::MediaFilesController < AdminBaseController
   # GET /admin/media_files
   # GET /admin/media_files.xml
   def index
-    @admin_media_files = Admin::MediaFile.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @admin_media_files }
-    end
   end
 
   # GET /admin/media_files/1
