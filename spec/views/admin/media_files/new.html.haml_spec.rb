@@ -1,15 +1,21 @@
 require 'spec_helper'
 
-describe "admin_media_files/new.html.haml" do
+describe "admin/media_files/new.html.haml" do
+  let(:media_file) { stub_model(MediaFile) }
+  let(:current_user) { stub_model(User, :role? => true) }
+  
   before(:each) do
-    assign(:media_file, stub_model(Admin::MediaFile).as_new_record)
+    assign(:media_file, media_file.as_new_record)
+    assign(:current_user, current_user)
   end
 
   it "renders new media_file form" do
     render
-
-    # Run the generator again with the --webrat flag if you want to use webrat matchers
-    assert_select "form", :action => admin_media_files_path, :method => "post" do
-    end
+    rendered.should have_selector("h3", :content => "Create New Media")
+  end
+  
+  it "should render the form partial" do
+    render
+    view.should render_template(:partial => "form", :locals => { :media_file => media_file, :button_label => "Upload File" })
   end
 end

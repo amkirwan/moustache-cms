@@ -1,5 +1,4 @@
-%h1 New admin_media_file
-
-= render 'form'
-
-= link_to 'Back', admin_media_files_path
+#add_new_media
+  %h3 Create New Media
+  = render :partial => "form",  
+           :locals => { :media_file => @media_file, :button_label => "Upload File" }
