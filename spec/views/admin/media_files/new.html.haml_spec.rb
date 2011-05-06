@@ -1,3 +1,4 @@
+# NEW media_files
 require 'spec_helper'
 
 describe "admin/media_files/new.html.haml" do
