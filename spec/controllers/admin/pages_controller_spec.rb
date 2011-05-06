@@ -7,7 +7,6 @@ describe Admin::PagesController do
   let(:page) { mock_model("Page").as_null_object }
   
   before(:each) do
-    Site.stub(:create).and_return(true)
     cas_faker(current_user.puid)
   end
   
@@ -17,7 +16,7 @@ describe Admin::PagesController do
       get :index
     end
     
-    let(:pages) { [mock_model("Pages"), mock_model("Pges")] }
+    let(:pages) { [mock_model("Pages"), mock_model("Pages")] }
     
     before(:each) do
       Page.stub(:accessible_by).and_return(pages)
