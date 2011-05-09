@@ -17,6 +17,6 @@ describe "admin/media_files/new.html.haml" do
   
   it "should render the form partial" do
     render
-    view.should render_template(:partial => "form", :locals => { :media_file => media_file, :button_label => "Upload File" })
+    view.should render_template(:partial => "form", :locals => { :media_file => media_file, :button_label => "Save Media" })
   end
 end

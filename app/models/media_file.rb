@@ -5,8 +5,8 @@ class MediaFile
   field :name
   field :description
   field :alt_text
-  field :caption
-  field :local_path
+  field :url
+  field :current_path
   field :content_type
   
   # -- Associations -------------
