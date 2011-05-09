@@ -212,7 +212,6 @@ DEPENDENCIES
   haml-rails (~> 0.3)
   hpricot
   jquery-rails (>= 0.2.6)
-  machinist
   machinist_mongo!
   mongoid!
   mongoid-rspec!
