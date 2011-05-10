@@ -112,7 +112,7 @@ describe Admin::LayoutsController do
         layout.stub(:save).and_return(false)
       end
       
-      it "should render the layout new" do
+      it "should receive save and return false" do
         layout.should_receive(:save).and_return(false)
         do_post
       end
