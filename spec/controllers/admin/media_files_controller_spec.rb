@@ -42,57 +42,88 @@ describe Admin::MediaFilesController do
       response.should render_template("admin/media_files/index")
     end
   end
-
-  describe "GET show" do
-    it "assigns the requested media_file as @media_file" do
-      Admin::MediaFile.stub(:find).with("37") { mock_media_file }
-      get :show, :id => "37"
-      assigns(:media_file).should be(mock_media_file)
-    end
-  end
-
+  
   describe "GET new" do
-    it "assigns a new media_file as @media_file" do
-      Admin::MediaFile.stub(:new) { mock_media_file }
+    def do_get
       get :new
-      assigns(:media_file).should be(mock_media_file)
+    end
+    
+    before(:each) do
+      media_file.as_new_record
+      MediaFile.stub(:new).and_return(media_file)
+    end
+    
+    it "should receive new and return a new media_file" do
+      MediaFile.should_receive(:new).and_return(media_file)
+      do_get
+    end
+    
+    it "should assign the new media_file for the view" do
+      do_get
+      assigns(:media_file).should == media_file
+    end
+    
+    it "should render the new template" do
+      do_get
+      response.should render_template("admin/media_files/new")
     end
   end
-
-  describe "GET edit" do
-    it "assigns the requested media_file as @media_file" do
-      Admin::MediaFile.stub(:find).with("37") { mock_media_file }
-      get :edit, :id => "37"
-      assigns(:media_file).should be(mock_media_file)
-    end
-  end
-
+  
   describe "POST create" do
-    describe "with valid params" do
-      it "assigns a newly created media_file as @media_file" do
-        Admin::MediaFile.stub(:new).with({'these' => 'params'}) { mock_media_file(:save => true) }
-        post :create, :media_file => {'these' => 'params'}
-        assigns(:media_file).should be(mock_media_file)
+    before(:each) do
+      media_file.as_new_record
+      MediaFile.stub(:new).and_return(media_file)
+    end
+    
+    def do_post(params={})
+      post :create, "media_file" => params
+    end
+    
+    it "should create a new media_file from the params" do
+      MediaFile.should_receive(:new).with({"these" => "params"}).and_return(media_file)
+      do_post({ "these" => "params" })
+    end
+    
+    it "should assign the @media_file for the view" do
+      do_post
+      assigns(:media_file).should == media_file
+    end
+    
+    it "should assign created_by and updated_by to the current user" do
+      controller.should_receive(:created_updated_by_for).with(media_file)
+      do_post
+    end
+      
+    context "with valid params" do
+      it "should receive and save the media_file" do
+        media_file.should_receive(:save).and_return(true)
+        do_post
       end
-
-      it "redirects to the created media_file" do
-        Admin::MediaFile.stub(:new) { mock_media_file(:save => true) }
-        post :create, :media_file => {}
-        response.should redirect_to(admin_media_file_url(mock_media_file))
+      
+      it "should assign a flash message that the media_file was saved" do
+        do_post
+        flash[:notice].should == "Successfully created the media file #{media_file.name}"
+      end
+      
+      it "should redirect to the admin/media_files/index" do
+        do_post
+        response.should redirect_to(admin_media_files_path)
       end
     end
-
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved media_file as @media_file" do
-        Admin::MediaFile.stub(:new).with({'these' => 'params'}) { mock_media_file(:save => false) }
-        post :create, :media_file => {'these' => 'params'}
-        assigns(:media_file).should be(mock_media_file)
+    
+    context "with invalid params" do
+      before(:each) do
+        media_file.stub(:save).and_return(false)
       end
-
-      it "re-renders the 'new' template" do
-        Admin::MediaFile.stub(:new) { mock_media_file(:save => false) }
-        post :create, :media_file => {}
-        response.should render_template("new")
+      
+      it "should receive save and return false" do
+        media_file.should_receive(:save).and_return(false)
+        do_post
+      end
+      
+      it "should render the new template" do
+        do_post
+        response.should render_template("admin/media_files/new")
       end
     end
   end
