@@ -26,7 +26,7 @@ describe "admin/media_files/_form.html.haml" do
       do_render("Save Media")
     end
     
-    it "should render a form to create a new media_file " do    
+    it "should render a button to save the new media_file" do    
       form_new(:action => admin_media_files_path) do |f|
         f.should have_selector("input", :type => "submit", :value => "Save Media")
       end
@@ -55,5 +55,48 @@ describe "admin/media_files/_form.html.haml" do
         f.should have_selector("input", :type => "text", :name => "media_file[alt_text]")
       end
     end
+  end
+  
+  context "when EDITing the media file" do
+    before(:each) do
+      media_file.stub(:new_record? => false)
+    end
+    
+    it "should render a button to update the media file" do
+      do_render("Update File")
+      form_update(:action => admin_media_file_path(media_file)) do |f|
+        f.should have_selector("input", :type => "submit", :value => "Update File")
+      end
+    end
+    
+    it "should render a field with the media file name" do
+      media_file.stub(:name => "foobar")
+      do_render("Update File")
+      form_update(:action => admin_media_file_path(media_file)) do |f|
+        f.should have_selector("input", :type => "text", :value => "foobar")      
+      end
+    end
+    
+    it "should render a field with the description" do
+      media_file.stub(:description => "foobar description")
+      do_render("Update File")
+      form_update(:action => admin_media_file_path(media_file)) do |f|
+        f.should have_selector("textarea", :content => "foobar description")
+      end
+    end
+    
+    it "should show the location of the file" do
+      media_file.stub_chain(:media_asset, :url => "/image/path/file.png")
+      do_render("Update File")
+      rendered.should have_selector("a", :content => "The current file is available at #{media_file.media_asset.url}")
+    end   
+    
+    it "should render a field with the alt_text" do
+      media_file.stub(:alt_text => "upload alternate text")
+      do_render("Update File")
+      form_update(:action => admin_media_file_path(media_file)) do |f|
+        f.should have_selector("input", :type => "text", :value => "upload alternate text")
+      end
+    end   
   end
 end
