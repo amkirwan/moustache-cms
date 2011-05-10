@@ -5,11 +5,11 @@
     = f.label :name
     = f.text_field :name
   %fieldset
-    = f.label :url
-    = f.file_field :url
-  %fieldset
     = f.label :description
     = f.text_area :description, :cols => "25", :rows => "10"
+  %fieldset
+    = f.label :media_asset, "Asset Source"
+    = f.file_field :media_asset
   %fieldset
     = f.label :alt_text
     = f.text_field :alt_text

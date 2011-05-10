@@ -38,15 +38,15 @@ describe "admin/media_files/_form.html.haml" do
       end
     end
     
-    it "should render a file upload field" do
-      form_new(:action => admin_media_files_path) do |f|
-        f.should have_selector("input", :type => "file", :name => "media_file[url]")
-      end
-    end
-    
     it "should render a field to enter a description" do
       form_new(:action => admin_media_files_path) do |f|
         f.should have_selector("textarea", :name => "media_file[description]")
+      end
+    end
+    
+    it "should render a field to upload file" do
+      form_new(:action => admin_media_files_path) do |f|
+        f.should have_selector("input", :type => "file", :name => "media_file[media_asset]")
       end
     end
     
