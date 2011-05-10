@@ -1,13 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '../../../spec_helper')
 
 describe Admin::LayoutsController do
-  describe "it should require an admin to access these actions" do
-    it_should_require_admin_for_action Layout, :index, :new, :update, :create, :edit, :destroy 
-  end
-  
-  describe "it should allow admin to access all actions" do
-    it_should_allow_admin_for_action Layout, :index, :new, :update, :create, :edit, :destroy
-  end
   
   let(:current_user) { logged_in(:role? => true) }
   let(:layout) { mock_model("Layout").as_null_object }
