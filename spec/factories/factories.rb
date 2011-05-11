@@ -75,3 +75,12 @@ Factory.define :parent_page, :parent => :page do |pp|
   pp.page_parts {[ Factory.build(:page_part) ]}
   pp.page_type { Factory.build(:page_type) }
 end
+
+Factory.define :media_file do |mf|
+  mf.sequence(:name) { |n| "name_#{n}"}
+  mf.description "media file description"
+  mf.alt_txt "media file alt_txt"
+  mf.sequence(:media_asset) { |n| "media_asset_#{n}" }
+  mf.created_by { Factory.build(:user) }
+  mf.updated_by { Factory.build(:user) }
+end

@@ -1,12 +1,12 @@
 class MediaFile
   include Mongoid::Document
   
-  attr_accessible :name, :description, :alt_text, :media_asset
+  attr_accessible :name, :description, :alt_txt, :media_asset
   
   # -- Fields --------------- 
   field :name
   field :description
-  field :alt_text
+  field :alt_txt
   field :media_asset
   
   # -- Associations -------------
@@ -14,4 +14,9 @@ class MediaFile
   belongs_to :updated_by, :class_name => "User"
   belongs_to :site
   mount_uploader :media_asset, MediaAssetUploader
+  
+  # -- Validations --------------
+  validates :name,
+            :presence => true,
+            :uniqueness => true
 end
