@@ -17,6 +17,7 @@ class Site
   # -- Associations ---------------------------------------
   has_many :pages 
   has_many :layouts
+  has_many :media_files
     
   # -- Validations ----------------------------------------
   validates :name,

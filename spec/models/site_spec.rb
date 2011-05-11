@@ -54,7 +54,11 @@ describe Site do
   describe "Associations" do
     it "should have many pages" do
       @site.should have_many(:pages)
-    end  
+    end 
+    
+    it "should reference many media_files" do
+      @site.should have_many(:media_files).of_type(MediaFile)
+    end 
     
     it "should have many layouts" do
       @site.should have_many(:layouts)

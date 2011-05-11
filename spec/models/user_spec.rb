@@ -131,6 +131,10 @@ describe User do
       @user.should have_many(:pages_updated).of_type(Page)
     end
     
+    it "should reference many media_files" do
+      @user.should have_many(:media_files).of_type(MediaFile)
+    end
+    
     it "should have many editors" do
       @user.should have_and_belong_to_many(:pages)
     end
