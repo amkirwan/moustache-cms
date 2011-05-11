@@ -159,6 +159,55 @@ describe Admin::MediaFilesController do
     end
     
     def do_put
+      post :update, { "id" => media_file.to_param, "media_file" => { "name" => "foobar" }}
+    end
+    
+    it "should receive the MediaFile#find and return the media file" do
+      MediaFile.should_receive(:find).with(media_file.to_param).and_return(media_file)
+      do_put
+    end
+    
+    it "should assign @media_file for the view" do
+      do_put
+      assigns(:media_file).should == media_file
+    end
+    
+    it "should update updated_by attribute" do
+      media_file.should_receive(:updated_by=).with(current_user)
+      do_put
+    end
+    
+    describe "with valid params" do
+      it "should receive update_attributes and return true" do
+        media_file.should_receive(:update_attributes).and_return(true)
+        do_put
+      end
+      
+      it "should assign the flash message with successful update" do
+        do_put
+        flash[:notice].should == "Successfully updated the media file #{media_file.name}"
+      end
+      
+      it "should redirect to the media_file index page" do
+        do_put
+        response.should redirect_to(admin_media_files_path)
+      end
+    end
+    
+    describe "without valid params" do
+      before(:each) do
+        media_file.stub(:update_attributes).and_return(false)
+      end
+      
+      it "should receive update_attributes and return false" do
+        media_file.should_receive(:update_attributes).and_return(false)
+        do_put
+      end
+      
+      it "should render the media_file edit template on failed update" do
+        do_put
+        response.should render_template("admin/media_files/edit")
+      end
     end
   end
 

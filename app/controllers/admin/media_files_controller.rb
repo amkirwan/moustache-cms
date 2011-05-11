@@ -34,23 +34,19 @@ class Admin::MediaFilesController < AdminBaseController
   # PUT /admin/media_files/1
   # PUT /admin/media_files/1.xml
   def update
-    @admin_media_file = Admin::MediaFile.find(params[:id])
-
-    respond_to do |format|
-      if @admin_media_file.update_attributes(params[:admin_media_file])
-        format.html { redirect_to(@admin_media_file, :notice => 'Media file was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @admin_media_file.errors, :status => :unprocessable_entity }
-      end
+    @media_file.updated_by = current_user
+    if @media_file.update_attributes(params[:id])
+      flash[:notice] = "Successfully updated the media file #{@media_file.name}"
+      redirect_to admin_media_files_path
+    else
+      render :edit
     end
   end
 
   # DELETE /admin/media_files/1
   # DELETE /admin/media_files/1.xml
   def destroy
-    @admin_media_file = Admin::MediaFile.find(params[:id])
+    @admin_media_file = Admin::MediaFile.find(params[:media_file])
     @admin_media_file.destroy
 
     respond_to do |format|
