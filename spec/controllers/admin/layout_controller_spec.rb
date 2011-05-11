@@ -159,43 +159,43 @@ describe Admin::LayoutsController do
       Layout.stub(:find).and_return(layout)
     end
     
-    def do_post
+    def do_put
       post :update, params
     end
     
     it "should find the record to update with Layout#find" do
       Layout.should_receive(:find).with(params["id"]).and_return(layout)
-      do_post
+      do_put
     end
     
     it "should assign @layout for the view" do
-      do_post
+      do_put
       assigns(:layout).should == layout
     end
     
     it "should update the attributes of the layout" do
       layout.should_receive(:attributes=).with(params["layout"])
-      do_post
+      do_put
     end
     
     it "should update protected attributes" do
       layout.should_receive(:updated_by=).with(current_user)
-      do_post
+      do_put
     end
     
     context "when the layer saves successfully" do
       it "should save the layout" do
         layout.should_receive(:save).and_return(true)
-        do_post
+        do_put
       end
     
       it "should assign the flash message" do
-        do_post
+        do_put
         flash[:notice].should == "Successfully updated the layout #{layout.name}"
       end
       
       it "should redirect to the admin/layout#index action" do
-        do_post
+        do_put
         response.should redirect_to(admin_layouts_path)
       end
     end
@@ -207,11 +207,11 @@ describe Admin::LayoutsController do
       
       it "should not save the layout" do
         layout.should_receive(:save).and_return(false)
-        do_post
+        do_put
       end
       
       it "should render the layout edit" do
-        do_post
+        do_put
         response.should render_template("admin/layouts/edit")
       end
     end   
