@@ -99,12 +99,6 @@ describe Page do
         @page.breadcrumb.should == "hello, world!"
       end
     end
-    
-    describe "#page_site" do
-      it "should assign the site to the page before saving" do
-        @page.site.should == Site.first
-      end
-    end
   end
   
   # -- Before Create Callback -------------------------------------------      

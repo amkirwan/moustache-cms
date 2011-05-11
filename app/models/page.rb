@@ -62,7 +62,7 @@ class Page
                         :updated_by                    
   
   # -- Callbacks -----------------------------------------------
-  before_validation :format_title, :slug_set, :full_path_set, :breadcrumb_set, :site_set
+  before_validation :format_title, :slug_set, :full_path_set, :breadcrumb_set
   before_save :uniq_editor_ids
   before_update :update_current_state_time
   before_create :permalink_set
@@ -143,10 +143,6 @@ class Page
   
   def update_current_state_time
     self.current_state.time = DateTime.now
-  end
-  
-  def site_set
-    self.site = Site.first
   end
   
   def permalink_set

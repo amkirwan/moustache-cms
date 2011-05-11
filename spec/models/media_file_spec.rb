@@ -43,4 +43,12 @@ describe MediaFile do
        @media_file.should belong_to(:updated_by).of_type(User)
      end
    end
+   
+   describe "before validation callbacks" do
+     describe "#media_file_site" do
+       it "should assign the site to the media_file before saving" do
+         @media_file.site.should == Site.first
+       end
+     end
+   end
 end

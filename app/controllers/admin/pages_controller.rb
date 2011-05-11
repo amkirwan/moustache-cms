@@ -13,10 +13,10 @@ class Admin::PagesController < AdminBaseController
     if params[:page][:parent_id].blank?
       @page.parent_id = nil
     elsif
-
       @page.parent_id = Page.find_by_id(params[:page][:parent_id]).id
     end
     @page.current_state = CurrentState.find(params[:page][:current_state_attributes][:name])
+    @page.site = @current_site
     assign_page_parts(params[:page][:page_parts_attributes])
     assign_editors(params[:page][:editor_ids])
     created_updated_by_for @page
@@ -32,7 +32,7 @@ class Admin::PagesController < AdminBaseController
   end
   
   def update
-    @page.write_attributes(params[:page])
+    @page.update_attributes(params[:page])
     @page.current_state = CurrentState.find(params[:page][:current_state_attributes][:name]) 
     update_page_parts(params[:page][:page_parts_attributes])
     update_editors(params[:page][:editor_ids])

@@ -8,6 +8,7 @@ describe Admin::PagesController do
   
   before(:each) do
     cas_faker(current_user.puid)
+    current_site_faker
   end
   
   # -- GET Index ----------------------------------------------- 
@@ -125,7 +126,12 @@ describe Admin::PagesController do
     end
     
     it "should set the page's current state" do
-      page.should_receive(:current_state=).and_return(status)
+      page.should_receive(:current_state=)
+      do_post
+    end
+    
+    it "should assign the current site" do
+      page.should_receive(:site=)
       do_post
     end
     
@@ -258,7 +264,7 @@ describe Admin::PagesController do
     end
     
     it "should update the attributes of the page" do
-      page.should_receive(:write_attributes).with(params["page"]) 
+      page.should_receive(:update_attributes).with(params["page"]) 
       do_post
     end
     
