@@ -212,17 +212,27 @@ describe Admin::MediaFilesController do
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested media_file" do
-      Admin::MediaFile.stub(:find).with("37") { mock_media_file }
-      mock_admin_media_file.should_receive(:destroy)
-      delete :destroy, :id => "37"
+    before(:each) do
+      MediaFile.stub(:find).and_return(media_file)
     end
-
-    it "redirects to the admin_media_files list" do
-      Admin::MediaFile.stub(:find) { mock_media_file }
-      delete :destroy, :id => "1"
-      response.should redirect_to(admin_media_files_url)
+    
+    def do_destroy
+      delete :destroy, "id" => media_file.to_param
+    end
+    
+    it "should receive the MediaFile#find and return the media file" do
+      MediaFile.should_receive(:find).with(media_file.to_param).and_return(media_file)
+      do_destroy
+    end
+    
+    it "should assign the flash message that the media file was successfully destroyed" do
+      do_destroy
+      flash[:notice].should == "Successfully deleted the media file #{media_file.name}"
+    end
+    
+    it "should redirect to admin/media_file/index when the file is destroyed" do
+      do_destroy
+      response.should redirect_to(admin_media_files_path)
     end
   end
-
 end
