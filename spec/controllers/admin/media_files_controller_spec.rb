@@ -127,40 +127,38 @@ describe Admin::MediaFilesController do
       end
     end
   end
-
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested media_file" do
-        Admin::MediaFile.stub(:find).with("37") { mock_media_file }
-        mock_admin_media_file.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => "37", :media_file => {'these' => 'params'}
-      end
-
-      it "assigns the requested media_file as @media_file" do
-        Admin::MediaFile.stub(:find) { mock_media_file(:update_attributes => true) }
-        put :update, :id => "1"
-        assigns(:media_file).should be(mock_media_file)
-      end
-
-      it "redirects to the media_file" do
-        Admin::MediaFile.stub(:find) { mock_media_file(:update_attributes => true) }
-        put :update, :id => "1"
-        response.should redirect_to(admin_media_file_url(mock_media_file))
-      end
+  
+  describe "GET edit" do
+    before(:each) do
+      MediaFile.stub(:find).and_return(media_file)
+    end
+    
+    def do_get
+      get :edit, "id" => media_file.to_param
+    end
+    
+    it "should should receive MediaFile#find and return the media_file" do
+      MediaFile.should_receive(:find).and_return(media_file)
+      do_get
     end
 
-    describe "with invalid params" do
-      it "assigns the media_file as @media_file" do
-        Admin::MediaFile.stub(:find) { mock_media_file(:update_attributes => false) }
-        put :update, :id => "1"
-        assigns(:media_file).should be(mock_media_file)
-      end
+    it "should assign @media_file for the view" do
+      do_get
+      assigns(:media_file).should == media_file
+    end
 
-      it "re-renders the 'edit' template" do
-        Admin::MediaFile.stub(:find) { mock_media_file(:update_attributes => false) }
-        put :update, :id => "1"
-        response.should render_template("edit")
-      end
+    it "should render the template admin/media_file/edit" do
+      do_get
+      response.should render_template("admin/media_files/edit")
+    end    
+  end
+
+  describe "PUT update" do
+    before(:each) do
+      MediaFile.stub(:find).and_return(media_file)
+    end
+    
+    def do_put
     end
   end
 
