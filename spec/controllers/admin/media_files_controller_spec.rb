@@ -12,6 +12,7 @@ describe Admin::MediaFilesController do
   
   before(:each) do
     cas_faker(current_user.puid)
+    current_site_faker
   end
 
   # -- GET Index ----------------------------------------------- 
@@ -91,6 +92,11 @@ describe Admin::MediaFilesController do
     
     it "should assign created_by and updated_by to the current user" do
       controller.should_receive(:created_updated_by_for).with(media_file)
+      do_post
+    end
+    
+    it "should assign the @current_site to the media_file" do
+      media_file.should_receive(:attributes=)
       do_post
     end
       

@@ -19,6 +19,7 @@ class Admin::MediaFilesController < AdminBaseController
   # POST /admin/media_files
   def create
     created_updated_by_for @media_file
+    @media_file.attributes = { :site => @current_site }
     if @media_file.save
       flash[:notice] = "Successfully created the media file #{@media_file.name}"
       redirect_to admin_media_files_path

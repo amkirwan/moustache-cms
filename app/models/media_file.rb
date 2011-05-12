@@ -15,16 +15,8 @@ class MediaFile
   belongs_to :site
   mount_uploader :media_asset, MediaAssetUploader
   
-  # -- Callbacks -----------------------------------------------
-  before_validation :site_set
-  
   # -- Validations --------------
   validates :name,
             :presence => true,
             :uniqueness => true
-
-  private 
-    def site_set
-      self.site = Site.first
-    end
 end
