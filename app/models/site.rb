@@ -52,6 +52,10 @@ class Site
     end
   end
   
+  def add_full_subdomain(domain)
+    (domains << domain).uniq!
+  end
+  
   private
   
   def old_domain

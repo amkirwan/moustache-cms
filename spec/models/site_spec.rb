@@ -99,6 +99,14 @@ describe Site do
         @site.domains.should have(1).item
       end
     end
+    
+    describe "#add_domain" do
+      it "should add an additional domains" do
+        @site.add_full_subdomain("baz.chicago-cubs.com")
+        @site.save
+        @site.domains.should have(2).items
+      end
+    end
   end
 end
 
