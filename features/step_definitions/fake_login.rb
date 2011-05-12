@@ -10,7 +10,8 @@ Given /^the user "([^\"]*)" exists with the role of "([^\"]*)"$/ do |puid, role|
 end
 
 Given /^the site "([^\"]*)" exists$/ do |site|
-  Factory(:site, :name => "foobar", :subdomain => "foobar" )
+  Factory(:site, :name => site, :subdomain => site)
+  Capybara.default_host = "#{site}.example.com"
 end
 
 Given /^I login as "([^\"]*)" with the role of "([^\"]*)"$/ do |puid, role|

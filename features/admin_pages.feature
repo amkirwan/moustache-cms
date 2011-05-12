@@ -19,12 +19,12 @@ And the user with the role exist
 
 @index_page_view
 Scenario: Navigate to the Pages#index page
-  Given these pages exist in the site "foobar" created by user "ak730"
+  Given these pages exist in the site "foobar.example.com" created by user "ak730"
   | title  | status    | 
   | foobar | published | 
   | bar    | draft     | 
   When I go to the admin pages page
-  Then I should be on the admin pages page
+  Then I should be on the admin pages page 
   And I should see "foobar" within "li#foobar"
   And I should see the "delete" button
   And I should see "bar" within "li#bar"
@@ -55,7 +55,7 @@ Scenario: Create a new page
   
 @edit_a_existing_page
 Scenario: Edit a page
-  Given these pages exist in the site "foobar" created by user "ak730"
+  Given these pages exist in the site "foobar.example.com" created by user "ak730"
   | title  | status    | 
   | foobar | published | 
   | bar    | draft     |
@@ -84,7 +84,7 @@ Scenario: Edit a page
   
 @delete_page
 Scenario: Delete page as an admin
-  Given these pages exist in the site "foobar" created by user "ak730"
+  Given these pages exist in the site "foobar.example.com" created by user "ak730"
   | title  | status    | 
   | foobar | published | 
   | bar    | draft     |
