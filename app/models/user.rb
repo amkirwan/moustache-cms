@@ -22,7 +22,7 @@ class User
   has_many :pages_updated, :class_name => "Page", :foreign_key => :updated_by_id
   has_many :media_files
   has_and_belongs_to_many :pages, :class_name => "Page"
-  has_and_belongs_to_many :sites
+  belongs_to :site
   
   # -- Before Validations -----------------------------------------------
   before_validation :uniq_page_ids
@@ -34,15 +34,16 @@ class User
   # -- Validations -----------------------------------------------
   validates :puid,
             :presence => true,
-            :uniqueness => true,
             :length => { :minimum => 3 }
   
   validates :role, :presence => true
   
   validates :email,
             :presence => true,
-            :uniqueness => true,
+            :uniqueness => { :scope => :site },
             :format => { :with => /^([^\s]+)((?:[-a-z0-9]\.)[a-z]{2,})$/i }
+  
+  validates_uniqueness_of :puid, :if => :tester?
 
   # -- Class Methods -----------------------------------------------
   def self.find_by_puid(name)
@@ -55,6 +56,11 @@ class User
   end
   
   private
+  
+    def tester?
+      true
+    end
+    
     def uniq_page_ids
       self.page_ids.uniq!
     end

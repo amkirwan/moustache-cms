@@ -64,8 +64,8 @@ describe Site do
       @site.should have_many(:layouts)
     end
     
-    it "should have and belong to many users" do
-      @site.should have_and_belong_to_many(:users)
+    it "should have many users" do
+      @site.should have_many(:users)
     end
   end
   

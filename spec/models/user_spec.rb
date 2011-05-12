@@ -139,8 +139,8 @@ describe User do
       @user.should have_and_belong_to_many(:pages)
     end
     
-    it "should have and belong to many sites" do
-      @user.should have_and_belong_to_many(:sites)
+    it "should belong to many sites" do
+      @user.should belong_to(:site)
     end
   end
   

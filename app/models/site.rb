@@ -18,7 +18,7 @@ class Site
   has_many :pages 
   has_many :layouts
   has_many :media_files
-  has_and_belongs_to_many :users
+  has_many :users
     
   # -- Validations ----------------------------------------
   validates :name,
