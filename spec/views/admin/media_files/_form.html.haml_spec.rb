@@ -3,10 +3,12 @@ require "spec_helper"
 describe "admin/media_files/_form.html.haml" do
   include FormHelpers
     
+  let(:site) { stub_model(Site, :full_subdomain => "foobar.example.com") }
   let(:media_file) { stub_model(MediaFile) }
   let(:current_user) { stub_model(User, :role? => true) }
   
   before(:each) do
+    assign(:current_site, site)
     assign(:media_file, media_file)
     assign(:current_user, current_user)
   end
@@ -88,7 +90,7 @@ describe "admin/media_files/_form.html.haml" do
     it "should show the location of the file" do
       media_file.stub_chain(:media_asset, :url => "/image/path/file.png")
       do_render("Update File")
-      rendered.should have_selector("a", :content => "The current file is available at #{media_file.media_asset.url}")
+      rendered.should have_selector("a", :content => "http://#{site.full_subdomain}#{media_file.media_asset.url}")
     end   
     
     it "should render a field with the alt_text" do
