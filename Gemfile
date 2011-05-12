@@ -23,6 +23,7 @@ group :development, :test do
   gem "rcov"
   gem "cucumber-rails"
   gem "capybara"
+  gem "launchy"
   gem "database_cleaner"
   gem "factory_girl_rails"
   gem "mongoid-rspec", :git => "git://github.com/evansagge/mongoid-rspec.git", :tag => "v1.4.2"
