@@ -25,7 +25,7 @@ class Admin::UsersController < AdminBaseController
   end
   
   def update                    
-    @user.attributes = params[:user]
+    @user.update_attributes(params[:user])
     @user.role = params[:user][:role] if admin?
     if @user.save
       flash[:notice] = "Successfully updated user account for #{@user.puid}"

@@ -8,6 +8,7 @@ describe Admin::UsersController do
   
   before(:each) do
     cas_faker(current_user.puid)
+    current_site_faker
   end
   
   describe "GET index" do
@@ -222,7 +223,7 @@ describe Admin::UsersController do
     end 
     
     it "should should set attr_accessable attributes" do
-      user.should_receive(:attributes=).with(params["user"])
+      user.should_receive(:update_attributes).with(params["user"])
       do_put
     end
     

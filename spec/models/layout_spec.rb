@@ -26,15 +26,6 @@ describe Layout do
     end
   end
   
-  # -- Before Validation Callback  -----------------------------------------------
-  describe "before_validation callback" do    
-    describe "#page_site" do
-      it "should assign the site to the page before saving" do
-        @layout.site.should == Site.first
-      end
-    end
-  end
-  
     # -- Before Save Callback -----------------------------------------------------
   describe "before_save" do
     describe "#format_content" do

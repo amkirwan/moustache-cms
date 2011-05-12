@@ -7,7 +7,8 @@ class Admin::LayoutsController < AdminBaseController
   end
   
   def create
-    created_updated_by_for @layout if admin?
+    created_updated_by_for @layout
+    @layout.attributes = { :site => @current_site }
     if @layout.save
       flash[:notice] = "Successfully created the layout #{@layout.name}"
       redirect_to admin_layouts_path

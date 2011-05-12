@@ -16,7 +16,6 @@ class Layout
   belongs_to :updated_by, :class_name => "User"
   
   #-- Validations -----------------------------------------------
-  before_validation :site_set
   before_save :format_content
   
   validates :name,
@@ -30,9 +29,5 @@ class Layout
   
   def format_content
     self.content.strip!
-  end
-  
-  def site_set
-    self.site = Site.first
   end
 end

@@ -91,6 +91,11 @@ describe Admin::LayoutsController do
       do_post
     end
     
+    it "should assign the current_site" do
+      layout.should_receive(:attributes=)
+      do_post
+    end
+    
     context "when it saves the layout successfully" do
       it "should receive save the layout" do
         layout.should_receive(:save).and_return(true)
