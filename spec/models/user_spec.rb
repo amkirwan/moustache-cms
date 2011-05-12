@@ -138,6 +138,10 @@ describe User do
     it "should have many editors" do
       @user.should have_and_belong_to_many(:pages)
     end
+    
+    it "should have and belong to many sites" do
+      @user.should have_and_belong_to_many(:sites)
+    end
   end
   
   # -- Class Methods -----------------------------------------------

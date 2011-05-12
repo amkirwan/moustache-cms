@@ -22,6 +22,7 @@ class User
   has_many :pages_updated, :class_name => "Page", :foreign_key => :updated_by_id
   has_many :media_files
   has_and_belongs_to_many :pages, :class_name => "Page"
+  has_and_belongs_to_many :sites
   
   # -- Before Validations -----------------------------------------------
   before_validation :uniq_page_ids

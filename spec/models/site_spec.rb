@@ -63,6 +63,10 @@ describe Site do
     it "should have many layouts" do
       @site.should have_many(:layouts)
     end
+    
+    it "should have and belong to many users" do
+      @site.should have_and_belong_to_many(:users)
+    end
   end
   
   
