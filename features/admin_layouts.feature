@@ -6,7 +6,7 @@ And the site "foobar" exists
 
 @index_layout
 Scenario: Navigate to the Layout#index page
-  Given these layouts exist in the site "foobar" created by user "ak730"
+  Given these layouts exist in the site "foobar.example.com" created by user "ak730"
   | name   | content       |
   | foobar | Hello, World! |
   | bar    | Hello, World! |
@@ -30,7 +30,7 @@ Scenario: Create a New Layout
 
 @edit_layout
 Scenario: Given I am logged in as an admin then I can edit a layout
-  Given these layouts exist in the site "foobar" created by user "ak730"
+  Given these layouts exist in the site "foobar.example.com" created by user "ak730"
   | name   | content       |
   | foobar | Hello, World! |
   | bar    | Hello, World! |
@@ -51,7 +51,7 @@ Scenario: Given I am logged in as an admin then I can edit a layout
   
 @delete_layout
 Scenario: Delete layout as an admin
-  Given these layouts exist in the site "foobar" created by user "ak730"
+  Given these layouts exist in the site "foobar.example.com" created by user "ak730"
   | name   | content       |
   | foobar | Hello, World! |
   | bar    | Hello, World! |

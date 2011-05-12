@@ -7,6 +7,7 @@ describe Admin::LayoutsController do
   
   before(:each) do
     cas_faker(current_user.puid)
+    current_site_faker
   end
   
   describe "GET index" do    
@@ -174,7 +175,7 @@ describe Admin::LayoutsController do
     end
     
     it "should update the attributes of the layout" do
-      layout.should_receive(:attributes=).with(params["layout"])
+      layout.should_receive(:update_attributes).with(params["layout"])
       do_put
     end
     
