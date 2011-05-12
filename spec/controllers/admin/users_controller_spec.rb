@@ -96,7 +96,7 @@ describe Admin::UsersController do
   
   
   describe "POST create" do 
-    let(:params) {{ "user" => { "puid" => "foobar", "puid" => "foobar", "firstname" => "foo", "lastname" => "bar", "email" => "foobar@example.com", "role" => "admin" }}}
+    let(:params) {{ "user" => { "puid" => "foobar", "firstname" => "foo", "lastname" => "bar", "email" => "foobar@example.com", "role" => "admin" }}}
     
     before(:each) do 
       user.as_new_record   
@@ -117,6 +117,10 @@ describe Admin::UsersController do
     it "should assign the puid value" do
       user.should_receive(:puid=).with(params["user"]["puid"])
       do_post
+    end
+    
+    it "should assign the current_site" do
+      user.should_receiv(:attributes=)
     end
     
     it "should assign the role value" do

@@ -11,8 +11,10 @@ class Admin::UsersController < AdminBaseController
   end                        
   
   def create   
-    @user.puid = params[:user][:puid] if admin?
-    @user.role = params[:user][:role] if admin?
+    # set because attr_accessible
+    @user.puid = params[:user][:puid]
+    @user.role = params[:user][:role]
+    @user.attributes = { :site => @current_site }
     if @user.save
       flash[:notice] = "Successfully created user account for #{@user.puid}" 
       redirect_to admin_users_path
