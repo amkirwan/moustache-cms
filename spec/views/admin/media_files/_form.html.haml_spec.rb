@@ -52,7 +52,7 @@ describe "admin/media_files/_form.html.haml" do
     
     it "should render a field for the alt_text" do
       form_new(:action => admin_media_files_path) do |f|
-        f.should have_selector("input", :type => "text", :name => "media_file[alt_text]")
+        f.should have_selector("input", :type => "text", :name => "media_file[alt_txt]")
       end
     end
   end
@@ -92,7 +92,7 @@ describe "admin/media_files/_form.html.haml" do
     end   
     
     it "should render a field with the alt_text" do
-      media_file.stub(:alt_text => "upload alternate text")
+      media_file.stub(:alt_txt => "upload alternate text")
       do_render("Update File")
       form_update(:action => admin_media_file_path(media_file)) do |f|
         f.should have_selector("input", :type => "text", :value => "upload alternate text")
