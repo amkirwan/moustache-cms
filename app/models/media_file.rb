@@ -17,6 +17,5 @@ class MediaFile
   
   # -- Validations --------------
   validates :name,
-            :presence => true,
-            :uniqueness => true
+            :presence => true
 end

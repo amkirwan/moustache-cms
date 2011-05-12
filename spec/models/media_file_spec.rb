@@ -23,10 +23,6 @@ describe MediaFile do
       @media_file.name = nil
       @media_file.should_not be_valid
     end
-    
-    it "should not be valid without a unique name" do
-      Factory.build(:media_file, :name => @media_file.name).should_not be_valid
-    end
   end
   
   # --  Associations -----------------------------------------------
