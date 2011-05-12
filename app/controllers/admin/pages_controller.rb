@@ -15,8 +15,7 @@ class Admin::PagesController < AdminBaseController
     elsif
       @page.parent_id = Page.find_by_id(params[:page][:parent_id]).id
     end
-    @page.current_state = CurrentState.find(params[:page][:current_state_attributes][:name])
-    @page.site = @current_site
+    @page.attributes = { :site => @current_site, :current_state => CurrentState.find(params[:page][:current_state_attributes][:name]) }
     assign_page_parts(params[:page][:page_parts_attributes])
     assign_editors(params[:page][:editor_ids])
     created_updated_by_for @page
