@@ -7,7 +7,7 @@ And these current states exist
 | name      |
 | published |
 | draft     |
-And these layouts exist in the site "foobar" created by user "ak730"
+And these layouts exist in the site "foobar.example.com" created by user "ak730"
 | name | content              |
 | app  | Hello, World         |
 | baz  | Hello, <b>World!</b> |

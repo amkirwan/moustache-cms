@@ -92,7 +92,7 @@ describe Admin::LayoutsController do
     end
     
     it "should assign the current_site" do
-      layout.should_receive(:attributes=)
+      layout.should_receive(:site=)
       do_post
     end
     
