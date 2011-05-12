@@ -51,13 +51,25 @@ describe User do
       @user.should_not be_valid
     end 
   
-    it "should not be valid with duplicate pid" do  
-      Factory.build(:user, :puid => "#{@user.puid}").should_not be_valid
+    it "should not be valid with duplicate pid within the same site" do  
+      Factory.build(:user, :puid => "#{@user.puid}", :site => @user.site).should_not be_valid
+    end
+    
+    context "duplicate pid should be valid on a different site" do
+      it "should be valid with duplicate pid on a different site" do  
+        Factory.build(:user, :puid => "#{@user.puid}", :site => Factory.build(:site)).should be_valid
+      end     
     end
   
-    it "should not be valid with duplicat email addresses" do
-      Factory.build(:user, :email => "#{@user.email}").should_not be_valid
+    it "should not be valid with duplicat email addresses within the same site" do
+      Factory.build(:user, :email => "#{@user.email}", :site => @user.site).should_not be_valid
     end      
+    
+    context "duplicate email should be valid on a different site" do
+      it "should be valid with duplicate email on a different site" do  
+        Factory.build(:user, :email => "#{@user.email}", :site => Factory.build(:site)).should be_valid
+      end     
+    end
   
     it "should not be valid without a correctly formated email address" do
       Factory.build(:user, :email => "abcdefg").should_not be_valid

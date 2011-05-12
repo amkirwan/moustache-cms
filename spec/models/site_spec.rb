@@ -84,6 +84,41 @@ describe Site do
       sites.first.should be_nil     
     end
   end
+  
+  # -- After Destroy Callback ------------------------------------------- 
+  describe "after_destroy callback" do
+    describe "#destroy_pages" do
+      it "should destroy all the pages associated with the site" do
+        @site.pages << Factory(:page, :site => @site)
+        @site.destroy
+        @site.pages.count.should == 0
+      end
+    end
+    
+    describe "#destroy_users" do
+      it "should destroy all the users associated with the site" do
+        @site.users << Factory(:user, :site => @site)
+        @site.destroy
+        @site.users.count.should == 0
+      end
+    end
+    
+    describe "#destroy_layouts" do
+      it "should destroy all the layouts associated with the site" do
+        @site.layouts << Factory(:layout, :site => @site)
+        @site.destroy
+        @site.layouts.count.should == 0
+      end
+    end
+    
+    describe "#destroy_media_files" do
+      it "should destroy all the media_files associated with the site" do
+        @site.media_files << Factory(:media_file, :site => @site)
+        @site.destroy
+        @site.media_files.count.should == 0
+      end
+    end
+  end
 
 
   # -- Instance Methods ------------------------------------------------------

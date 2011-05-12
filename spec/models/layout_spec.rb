@@ -55,7 +55,13 @@ describe Layout do
     end
     
     it "should not be valid without a unique layout name" do
-      Factory.build(:layout, :name => "#{@layout.name}", :created_by => @user, :updated_by => @user).should_not be_valid
+      Factory.build(:layout, :name => "#{@layout.name}", :site => @layout.site).should_not be_valid
+    end     
+    
+    context "should be valid when the layout name is associated with a different site" do
+      it "should be valid " do
+        Factory.build(:layout, :name => "#{@layout.name}", :site => Factory.build(:site)).should be_valid
+      end
     end
     
     it "should not be valid without content" do

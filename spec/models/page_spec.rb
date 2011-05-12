@@ -125,18 +125,20 @@ describe Page do
     end
   end
   
-  # -- Before Update Callback -------------------------------------------  
-  describe "#update_current_state_time" do
-    it "should set the current_state.published_at to the current DateTime when the current_state is published" do
-      @page.current_state.name = "published"
-      @page.save
-      @page.current_state.time.should_not == nil
-    end
+  # -- Before Update Callback -------------------------------------------
+  describe "before_update callback" do 
+    describe "#update_current_state_time" do
+      it "should set the current_state.published_at to the current DateTime when the current_state is published" do
+        @page.current_state.name = "published"
+        @page.save
+        @page.current_state.time.should_not == nil
+      end
 
-    it "should not set the current_state.published_at to the current DateTime when the current_state is not published" do
-      @page.current_state.name = "draft"
-      @page.save
-      @page.current_state.time.should_not == nil
+      it "should not set the current_state.published_at to the current DateTime when the current_state is not published" do
+        @page.current_state.name = "draft"
+        @page.save
+        @page.current_state.time.should_not == nil
+      end
     end
   end
   
@@ -190,6 +192,17 @@ describe Page do
                     :updated_by => user).should_not be_valid
     end
     
+    context "it should be valid when the title is associated with a different site" do
+      it "should be valid" do
+        Factory.build(:page, 
+                      :title => @page.title, 
+                      :site => Factory.build(:site), 
+                      :layout => layout, 
+                      :created_by => user, 
+                      :updated_by => user).should be_valid
+      end
+    end
+    
     it "should not be valid without a slug" do
       @page.stub(:slug_set).and_return(nil)
       @page.slug = nil
@@ -203,10 +216,13 @@ describe Page do
     end
     
     it "should not be valid without a unique full_path" do
-      page2 = Factory.build(:page, :parent => parent, :site => site, :layout => layout, :created_by => user, :updated_by => user)
-      page2.stub(:full_path_set)
-      page2.full_path = @page.full_path
-      page2.should_not be_valid
+      Factory.build(:page, :full_path => "#{@page.full_path}", :site => @page.site).should_not be_valid
+    end
+    
+    context "it should be valid when the full_path is associated with a different site" do
+      it "should be valid" do
+        Factory.build(:page, :full_path => "#{@page.full_path}", :site => Factory.build(:site)).should be_valid
+      end
     end
     
     it "should not be valid without a breadcrumb" do

@@ -34,16 +34,16 @@ class User
   # -- Validations -----------------------------------------------
   validates :puid,
             :presence => true,
+            :uniqueness => { :scope => :site_id },
             :length => { :minimum => 3 }
   
   validates :role, :presence => true
   
   validates :email,
             :presence => true,
-            :uniqueness => { :scope => :site },
+            :uniqueness => { :scope => :site_id },
             :format => { :with => /^([^\s]+)((?:[-a-z0-9]\.)[a-z]{2,})$/i }
-  
-  validates_uniqueness_of :puid, :if => :tester?
+
 
   # -- Class Methods -----------------------------------------------
   def self.find_by_puid(name)

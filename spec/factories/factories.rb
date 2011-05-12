@@ -1,9 +1,17 @@
+Factory.define :site do |site|
+  site.sequence(:name) { |n| "name_#{n}" }
+  site.sequence(:subdomain)  { |n| "foobar_#{n}" }
+  site.default_domain  "example.com" 
+  site.domains  { [] }
+end
+
 Factory.define :user do |user|
   user.sequence(:puid) { |n| "foobar_#{n}"}
   user.firstname "foobar" 
   user.lastname  "baz" 
   user.sequence(:email) { |n| "foobar_#{n}@example.com" }
   user.role "admin" 
+  user.site { Factory.build(:site) }
 end
 
 Factory.define :admin, :parent => :user do |admin|
@@ -16,13 +24,6 @@ end
 
 Factory.define :filter do |filter|
   filter.name "filter"
-end
-
-Factory.define :site do |site|
-  site.sequence(:name) { |n| "name_#{n}" }
-  site.sequence(:subdomain)  { |n| "foobar_#{n}" }
-  site.default_domain  "example.com" 
-  site.domains  { [] }
 end
 
 Factory.define :layout do |layout|

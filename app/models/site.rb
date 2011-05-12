@@ -30,7 +30,7 @@ class Site
             
   # -- Callbacks -----------------------------------------------
   before_save :add_subdomain_to_domains
-  after_destroy :destroy_pages
+  after_destroy :destroy_associated
             
   # -- Scopes ---------------------------------------
   scope :match_domain, lambda { |domain| { :any_in => { :domains => [*domain] }}}
@@ -59,11 +59,30 @@ class Site
   
   private
   
-  def old_domain
-    "#{self.subdomain_was}.#{self.default_domain_was}"
-  end
+    def old_domain
+      "#{self.subdomain_was}.#{self.default_domain_was}"
+    end
+    
+    def destroy_associated
+      destroy_pages
+      destroy_users
+      destroy_layouts
+      destroy_media_files
+    end
   
-  def destroy_pages
-    self.pages.root.destroy
-  end
+    def destroy_pages
+      self.pages.destroy
+    end
+  
+    def destroy_users
+      self.users.destroy
+    end
+  
+    def destroy_layouts
+      self.layouts.destroy
+    end
+    
+    def destroy_media_files
+      self.media_files.destroy
+    end
 end
