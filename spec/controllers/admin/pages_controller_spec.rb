@@ -125,8 +125,13 @@ describe Admin::PagesController do
       assigns(:page).should == page
     end
     
-    it "should assign the current_site and current_state" do
-      page.should_receive(:attributes=)
+    it "should assign the current_state" do
+      page.should_receive(:current_state=)
+      do_post
+    end
+    
+    it "should assign the current_site to the page" do
+      page.should_receive(:site=)
       do_post
     end
     

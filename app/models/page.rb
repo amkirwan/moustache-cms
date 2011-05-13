@@ -9,8 +9,7 @@ class Page
   #include Mongoid::Tree::Traversal
   #include Mongoid::Tree::Ordering
 
-  attr_accessible :site,
-                  :parent,
+  attr_accessible :parent,
                   :title, 
                   :slug,
                   :full_path,
