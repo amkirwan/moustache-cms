@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
 require "cancan/matchers"
 
 describe Ability do  
-  let(:site) { Factory(:site) }
+  let(:site) { Factory.build(:site) }
   let(:site2) { Factory.build(:site) }
   let(:admin) { Factory.build(:admin, :site => site) }
   let(:admin2) { Factory.build(:admin, :site => site2) }
@@ -20,24 +20,33 @@ describe Ability do
   
   before(:each) do
    site.users << admin
+   site2.users << admin2
   end
   
   describe "admin" do
     it "should allow the admin to manage all" do 
-      admin_ability.should be_able_to(:manage, site)
       admin_ability.should be_able_to(:manage, admin)
       admin_ability.should be_able_to(:manage, page)
       admin_ability.should be_able_to(:manage, layout)
+      admin_ability.should be_able_to(:manage, site)
     end
     
     context "should not be able to manage any item that does not have an associated site as the admin" do
       it "should not allow the admin to manage sites they are not associatied with" do
         admin_ability.should_not be_able_to(:manage, admin2)
+        admin_ability.should_not be_able_to(:manage, editor2)
+        admin_ability.should_not be_able_to(:manage, page2)
+        admin_ability.should_not be_able_to(:manage, layout2)
+        admin_ability.should_not be_able_to(:manage, site2)
       end
     end
   end
   
   describe "editor approved actions" do
+    it "should allow the user with a role of editor to list user records" do
+      editor_ability.should be_able_to(:index, user)
+    end
+    
     it "should allow the user with a role of editor to edit their own record" do
       editor_ability.should be_able_to(:update, editor)
     end  
@@ -67,9 +76,13 @@ describe Ability do
     end
   end
    
-  context "editor not approved actions" do
-    it "should not allow the editor to mangage sites they are not associated with" do
+  context "editor not approved actions" do    
+    it "should not allow the editor to manage sites they are not associatied with" do
+      editor_ability.should_not be_able_to(:manage, admin2)
       editor_ability.should_not be_able_to(:manage, editor2)
+      editor_ability.should_not be_able_to(:manage, page2)
+      editor_ability.should_not be_able_to(:manage, layout2)
+      editor_ability.should_not be_able_to(:manage, site2)
     end
     
     describe "Site Model" do
@@ -79,10 +92,6 @@ describe Ability do
     end
     
     describe "User Model" do
-      it "should not allow the user with a role of editor to list user records" do
-        editor_ability.should_not be_able_to(:index, user)
-      end
-
       it "should not allow the user with a role of editor to read other users records" do
         editor_ability.should_not be_able_to(:read, user)
       end
