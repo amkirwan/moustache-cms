@@ -8,6 +8,7 @@ describe "admin/users/index.html.haml" do
   before(:each) do 
     assign(:users, users) 
     assign(:current_user, current_user)
+    controller.stub(:current_user).and_return(current_user)
   end     
   
   it "should render a edit link" do
@@ -24,16 +25,32 @@ describe "admin/users/index.html.haml" do
     rendered.should contain("admin")
   end 
   
-  it "should render a delete button to delete the user" do
-    render  
-    users.each do |user|
-      render.should have_selector("form", 
-        :method => "post", :action => admin_user_path(user)
-      ) do |form|
-        form.should have_selector("input", :value => "delete") 
-      end 
+  context "when the user has the ability to destroy user records" do
+    it "should render a delete button" do  
+      render  
+      users.each do |user|
+        render.should have_selector("form", 
+          :method => "post", :action => admin_user_path(user)
+        ) do |form|
+          form.should have_selector("input", :value => "delete") 
+        end 
+      end
+    end 
+  end 
+  
+  context "when the user does not have the ability to destroy the user records" do
+    it "should not render a delete button" do
+      controller.stub(:current_user).and_return(stub_model(User, :role? => false))
+      render
+      users.each do |user|
+        render.should_not have_selector("form", 
+          :method => "post", :action => admin_user_path(user)
+        ) do |form|
+          form.should_not have_selector("input", :value => "delete") 
+        end 
+      end  
     end
-  end  
+  end
   
   it "should render a new user link" do
     render
