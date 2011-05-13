@@ -18,4 +18,7 @@ class MediaFile
   # -- Validations --------------
   validates :name,
             :presence => true
+  
+  validates :site,
+            :presence => true
 end

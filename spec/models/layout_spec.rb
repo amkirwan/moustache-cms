@@ -69,25 +69,20 @@ describe Layout do
       @layout.should_not be_valid
     end
     
-    it "should not be valid without createb_by_id" do
-      @layout.created_by_id = nil
+    it "should not be valid without createb_by" do
+      @layout.created_by = nil
       @layout.should_not be_valid
     end
     
-    it "should validate associated user instance in created_by" do
-      @layout.created_by_id = nil
+    it "should not be valid without updated_by" do
+      @layout.updated_by = nil
+      @layout.should_not be_valid
+    end  
+    
+    it "should not be valid without an associated site" do
+      @layout.site = nil
       @layout.should_not be_valid
     end
-    
-    it "should not be valid without updated_by_id" do
-      @layout.updated_by_id = nil
-      @layout.should_not be_valid
-    end
-    
-    it "should validate associated user instance in updated_by" do
-      @layout.updated_by_id = nil
-      @layout.should_not be_valid
-    end   
   end
   
   # -- Associations ----------------------------------------------------

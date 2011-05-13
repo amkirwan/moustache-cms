@@ -1,10 +1,11 @@
 require 'spec_helper'
 
 describe MediaFile do  
+  let(:site) { Factory(:site) }
   let(:user) { Factory(:user) }
 
   before(:each) do
-    @media_file = Factory(:media_file, :created_by => user, :updated_by => user)
+    @media_file = Factory(:media_file, :site => site, :created_by => user, :updated_by => user)
   end
   
   describe "it should allow mass assignment of the fields" do
@@ -21,6 +22,11 @@ describe MediaFile do
     
     it "should not be valid without a name" do
       @media_file.name = nil
+      @media_file.should_not be_valid
+    end
+    
+    it "should not be valid without an associated site" do
+      @media_file.site = nil
       @media_file.should_not be_valid
     end
   end
