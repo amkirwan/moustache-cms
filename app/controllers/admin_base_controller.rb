@@ -11,9 +11,7 @@ class AdminBaseController < ApplicationController
   layout "admin/admin"
   
   rescue_from CanCan::AccessDenied do |exception|
-    #flash[:error] = "Access Denied!"
-    #redirect_to root_url
-    render :file => "#{Rails.root}/public/403.html", :layout => false
+    render :file => "#{Rails.root}/public/403.html", :status => 403, :layout => false
   end
   
   def admin?     
@@ -70,4 +68,5 @@ class AdminBaseController < ApplicationController
         render :file => "#{Rails.root}/public/404.html", :status => 404
       end
     end
+
 end
