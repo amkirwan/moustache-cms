@@ -5,9 +5,7 @@ class Ability
     user ||= User.new    
 
     if user.role? :admin
-      can :manage, Site do |site|
-        site.users.include?(user)
-      end
+      can :manage, Site 
       can :manage, :all, :site_id => user.site_id
     end
     

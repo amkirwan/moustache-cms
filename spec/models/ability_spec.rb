@@ -2,12 +2,14 @@ require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
 require "cancan/matchers"
 
 describe Ability do  
-  let(:site) { Factory.build(:site) }
+  let(:site) { Factory(:site) }
   let(:site2) { Factory.build(:site) }
   let(:admin) { Factory.build(:admin, :site => site) }
   let(:admin2) { Factory.build(:admin, :site => site2) }
   let(:editor) { Factory.build(:editor, :site => site) }
   let(:editor2) { Factory.build(:editor, :site => site2) }
+  let(:layout) { Factory.build(:layout, :site => site) }
+  let(:layout2) { Factory.build(:layout, :site => site2) }
   let(:page) { Factory.build(:page, :site => site, :editors => [ admin, editor ]) }
   let(:page2) { Factory.build(:page, :site => site2, :editors => [ admin2, editor2 ]) } 
   let(:admin_ability) { Ability.new(admin) }
@@ -16,10 +18,16 @@ describe Ability do
   let(:editor_ability2) { Ability.new(editor2) }
   let(:user) { Factory.build(:user, :site => site) } 
   
+  before(:each) do
+   site.users << admin
+  end
+  
   describe "admin" do
-    it "should allow the admin to manage all" do
+    it "should allow the admin to manage all" do 
       admin_ability.should be_able_to(:manage, site)
       admin_ability.should be_able_to(:manage, admin)
+      admin_ability.should be_able_to(:manage, page)
+      admin_ability.should be_able_to(:manage, layout)
     end
     
     context "should not be able to manage any item that does not have an associated site as the admin" do
