@@ -13,7 +13,7 @@ class Ability
     
     if user.role? :editor 
       can :index, User, :site_id => user.site_id
-      can [:show, :update], User, :puid => user.puid, :site_id => user.site_id
+      can [:show, :update, :destroy], User, :puid => user.puid, :site_id => user.site_id
       can [:create, :read], Page, :site_id => user.site_id
       can [:update, :destroy], Page do |page|
         page.editors.include?(user) && page.site_id == user.site_id

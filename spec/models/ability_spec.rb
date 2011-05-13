@@ -68,6 +68,10 @@ describe Ability do
           it "should allow the user with a role of editor to show their own record" do
             editor_ability.should be_able_to(:show, editor)
           end
+          
+          it "should allow the user with a role of editor to delete their record" do
+            editor_ability.should be_able_to(:destroy, editor)
+          end
         end
 
         describe "Page Approved" do
@@ -127,10 +131,6 @@ describe Ability do
         it "should not allow the user with a role of editor to read other users records" do
           editor_ability.should_not be_able_to(:read, user)
         end
-
-        it "should not allow the user with a role of editor to delete their record" do
-          editor_ability.should_not be_able_to(:destroy, editor)
-        end 
 
         it "should not allow the user with a role of editor to create a new user record" do
           editor_ability.should_not be_able_to(:new, Factory.build(:user))
