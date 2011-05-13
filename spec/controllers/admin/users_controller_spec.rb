@@ -120,7 +120,7 @@ describe Admin::UsersController do
     end
     
     it "should assign the current_site" do
-      user.should_receiv(:attributes=)
+      user.should_receiv(:site=)
     end
     
     it "should assign the role value" do
@@ -153,22 +153,6 @@ describe Admin::UsersController do
         response.should render_template("admin/users/new")
       end
     end 
-    
-    context "when the user is not an admin" do
-      
-      before(:each) do
-        controller.stub(:admin?).and_return(false)
-      end
-      it "should not set the puid for non-admin" do
-        user.should_not_receive(:puid=).with(params["user"]["puid"])
-        do_post
-      end
-      
-      it "should not set the user role for non-admin" do
-        user.should_not_receive(:role=).with(params["user"]["role"])
-        do_post
-      end
-    end
   end
   
   describe "GET edit" do 
