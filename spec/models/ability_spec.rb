@@ -2,19 +2,34 @@ require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
 require "cancan/matchers"
 
 describe Ability do  
-  let(:admin) { Factory.build(:admin) }
-  let(:editor) { Factory.build(:editor) }
-  let(:page) { Factory.build(:page, :editors => [ admin, editor ]) }
-  let(:user) { Factory.build(:user) }  
-  let(:site) { Factory.build(:site)}
+  let(:site) { Factory.build(:site) }
+  let(:site2) { Factory.build(:site) }
+  let(:admin) { Factory.build(:admin, :site => site) }
+  let(:admin2) { Factory.build(:admin, :site => site2) }
+  let(:editor) { Factory.build(:editor, :site => site) }
+  let(:editor2) { Factory.build(:editor, :site => site2) }
+  let(:page) { Factory.build(:page, :site => site, :editors => [ admin, editor ]) }
+  let(:page2) { Factory.build(:page, :site => site2, :editors => [ admin2, editor2 ]) } 
   let(:admin_ability) { Ability.new(admin) }
+  let(:admin_ability2) { Ability.new(admin2) }
   let(:editor_ability) { Ability.new(editor) }
+  let(:editor_ability2) { Ability.new(editor2) }
+  let(:user) { Factory.build(:user, :site => site) } 
   
-  it "should allow the admin to manage all" do
-    admin_ability.should be_able_to(:manage, admin)
+  describe "admin" do
+    it "should allow the admin to manage all" do
+      admin_ability.should be_able_to(:manage, site)
+      admin_ability.should be_able_to(:manage, admin)
+    end
+    
+    context "should not be able to manage any item that does not have an associated site as the admin" do
+      it "should not allow the admin to manage sites they are not associatied with" do
+        admin_ability.should_not be_able_to(:manage, admin2)
+      end
+    end
   end
   
-  context "editor approved actions" do
+  describe "editor approved actions" do
     it "should allow the user with a role of editor to edit their own record" do
       editor_ability.should be_able_to(:update, editor)
     end  
@@ -23,7 +38,7 @@ describe Ability do
       editor_ability.should be_able_to(:show, editor)
     end
     
-    it "should allow the user with ra role of editor to create pages" do
+    it "should allow the user with a role of editor to create pages" do
       editor_ability.should be_able_to(:create, page)
     end
     
@@ -45,6 +60,10 @@ describe Ability do
   end
    
   context "editor not approved actions" do
+    it "should not allow the editor to mangage sites they are not associated with" do
+      editor_ability.should_not be_able_to(:manage, editor2)
+    end
+    
     describe "Site Model" do
       it "should not allow a the user as an editor to manage sites" do
         editor_ability.should_not be_able_to(:manage, site)
