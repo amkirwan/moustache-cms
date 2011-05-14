@@ -52,7 +52,7 @@ class User
 
   # -- Instance Methods -----------------------------------------------
   def role?(base_role)
-    Roles.index(base_role.to_s) <= Roles.index(role)
+    role.nil? ? false : Roles.index(base_role.to_s) <= Roles.index(role)
   end
   
   private

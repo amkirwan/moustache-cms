@@ -23,10 +23,9 @@ class AdminBaseController < ApplicationController
     obj.updated_by = current_user
   end
   
-  protected
-  
+  protected  
     def current_user                      
-      @current_user = User.where(:puid => session[:cas_user]).first
+      @current_user = User.where(:puid => session[:cas_user], :site_id => @current_site.id).first
     end  
   
     def assign_site

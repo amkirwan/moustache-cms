@@ -181,6 +181,11 @@ describe User do
       it "should return true when the user role is greater than or equal to the base role" do
        @user.role = "editor"
        @user.role?(:editor).should == true
+      end 
+      
+      it "should return false when the user does not have a role defined" do
+        @user.role = nil
+        @user.role?(:admin).should == false
       end
     
       it "should return false when the user role is less than the base role" do
