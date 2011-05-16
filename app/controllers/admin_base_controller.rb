@@ -14,10 +14,6 @@ class AdminBaseController < ApplicationController
     render :file => "#{Rails.root}/public/403.html", :status => 403, :layout => false
   end
   
-  def here
-    puts "*"*20 + "here"
-  end
-  
   def admin?     
     @current_user.role?("admin")
   end
@@ -27,7 +23,7 @@ class AdminBaseController < ApplicationController
     obj.updated_by = current_user
   end
   
-  private  
+  protected  
     def current_user
       current_site if @current_site.nil?
       @current_user = User.where(:puid => session[:cas_user], :site_id => @current_site.id).first
