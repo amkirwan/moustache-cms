@@ -1,8 +1,9 @@
 Feature: Admin Layout Management Features
 
 Background: Login create default site
-Given I login as "ak730" with the role of "admin"
-And the site "foobar" exists
+Given the site "foobar" exists with the domain "example.com"
+And the user "ak730" exists with the role of "admin" in the site "foobar.example.com"
+And I authenticates as cas user "ak730"
 
 @index_layout
 Scenario: Navigate to the Layout#index page

@@ -1,8 +1,8 @@
 Feature: Admin Pages Management Features
 
 Background: Login create default site
-Given I login as "ak730" with the role of "admin"
-And the site "foobar" exists
+Given the site "foobar" exists with the domain "example.com"
+And the user "ak730" exists with the role of "admin" in the site "foobar.example.com"
 And these current states exist
 | name      |
 | published |
@@ -12,10 +12,11 @@ And these layouts exist in the site "foobar.example.com" created by user "ak730"
 | app  | Hello, World         |
 | baz  | Hello, <b>World!</b> |
 And the user with the role exist
-| user   | role   |
-| foo    | admin  |
-| cds27  | admin |
-| foobar | editor |
+ | user  | role   | site               |
+ | foo   | admin  | foobar.example.com |
+ | bar   | editor | foobar.example.com |
+ | cds27 | editor | foobar.example.com |
+And I authenticates as cas user "ak730"
 
 @index_page_view
 Scenario: Navigate to the Pages#index page
