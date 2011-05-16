@@ -1,4 +1,4 @@
-Feature: Admin Layout Management Features
+Feature: Admin Layout Management Features as Admin user
 
 Background: Login create default site
 Given the site "foobar" exists with the domain "example.com"
@@ -16,6 +16,12 @@ Scenario: Navigate to the Layout#index page
   And I should see "foobar"
   And I should see the "delete" button
   And I should see "Add New Layout"
+
+@admin_should_not_access_other_site 
+Scenario: Should not be able to access another sites layout the admin is not associated with
+  Given the site "baz" exists with the domain "example.dev"
+  When I go to the admin layouts page
+  Then I should see "403"
   
 @create_new_layout
 Scenario: Create a New Layout

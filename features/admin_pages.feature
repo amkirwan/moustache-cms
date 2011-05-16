@@ -93,4 +93,5 @@ Scenario: Delete page as an admin
   And I press "delete" within "li#foobar"
   Then I should see "Successfully deleted the page foobar"
   And I should be on the admin pages page
+
   

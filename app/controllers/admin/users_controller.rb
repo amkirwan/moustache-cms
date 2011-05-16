@@ -39,8 +39,13 @@ class Admin::UsersController < AdminBaseController
   
   def destroy
     if @user.delete
-      flash[:notice] = "Successfully deleted user account for #{@user.puid}"
-      redirect_to admin_users_path
+      if @user == current_user
+        reset_session
+        redirect_to "http://#{Site.first.full_subdomain}"
+      else
+        flash[:notice] = "Successfully deleted user account for #{@user.puid}"
+        redirect_to admin_users_path
+      end
     end
   end 
 end

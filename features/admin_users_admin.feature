@@ -10,7 +10,7 @@ Scenario: Admin login page should redirect to /admin/users#index
   When I go to the admin page
   Then I should be on the admin pages page 
 
-@admin_should_not_login    
+@admin_should_not_access_other_site 
 Scenario: Should not be able to access site the user is not associated with
   Given the site "baz" exists with the domain "example.dev"
   When I go to the admin page

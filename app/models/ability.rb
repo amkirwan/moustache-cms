@@ -2,9 +2,11 @@ class Ability
   include CanCan::Ability
   
   def initialize(user)      
-    user ||= User.new    
+    user ||= User.new   
+    debugger 
 
     if user.role? :admin
+      debugger
       can :manage, [User, Layout, Page, MediaFile], :site_id => user.site_id
       can :manage, Site do |site|
         site.users.include?(user)

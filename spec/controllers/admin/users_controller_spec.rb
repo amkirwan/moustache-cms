@@ -3,12 +3,13 @@ require File.expand_path(File.dirname(__FILE__) + '../../../spec_helper')
 describe Admin::UsersController do
   
   #for actions
-  let(:current_user) { logged_in(:role? => true) }
+  let(:site) { mock_model(Site) }
+  let(:current_user) { logged_in(:role? => "admin", :site => site) }
   let(:user) { mock_model("User").as_null_object }
   
   before(:each) do
     cas_faker(current_user.puid)
-    current_site_faker
+    current_site_faker(site)
   end
   
   describe "GET index" do
@@ -67,8 +68,7 @@ describe Admin::UsersController do
     end
   end
   
-  describe "GET new" do    
-    
+  describe "GET new" do        
     before(:each) do 
       user.as_new_record
       User.stub(:new).and_return(user)   
@@ -156,7 +156,6 @@ describe Admin::UsersController do
   end
   
   describe "GET edit" do 
-
     def do_get    
       get :edit, { :id => user.to_param }
     end     
@@ -177,7 +176,7 @@ describe Admin::UsersController do
         assigns(:user).should eq(user)
       end
     
-      it "should render index template" do
+      it "should render the user to edit" do
         do_get
         response.should render_template("admin/users/edit")
       end  
@@ -243,6 +242,8 @@ describe Admin::UsersController do
     
     before(:each) do
       User.stub(:find).and_return(user)
+      Site.stub(:first).and_return(mock_model(Site, :full_subdomain => "foobar.example.com"))
+      #controller.stub(:current_user).and_return(false)
     end
     
     def do_destroy  
@@ -264,14 +265,32 @@ describe Admin::UsersController do
       do_destroy 
     end
     
-    it "should set a flash message" do
-      do_destroy
-      flash[:notice].should == "Successfully deleted user account for #{user.puid}"
+    context "when destroying the current logged in user account" do
+      it "should destroy the current session" do
+        controller.should_receive(:reset_session)
+        do_destroy
+      end
+      
+      it "should redirecto to the index page of the cms" do
+        do_destroy
+        response.should redirect_to("http://foobar.example.com")
+      end
     end
     
-    it "should redirect to admin_users index action" do
-      do_destroy
-      response.should redirect_to(admin_users_path) 
+    context "when destroying another users record" do
+      before(:each) do
+        controller.stub(:current_user).and_return(false)
+      end
+      
+      it "should set a flash message" do
+        do_destroy
+        flash[:notice].should == "Successfully deleted user account for #{user.puid}"
+      end
+
+      it "should redirect to admin_users index action" do
+        do_destroy
+        response.should redirect_to(admin_users_path) 
+      end
     end
   end
 end
