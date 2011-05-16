@@ -3,7 +3,7 @@ Feature: Admin User Management Features
 Background: Login create default site
   Given the site "foobar" exists
   And the user "ak730" exists with the role of "admin" in the site "foobar"
-  And cas authenticates with cas user "ak730"
+  And I authenticates as cas user "ak730"
 
 @admin_login
 Scenario: Admin login page should redirect to /admin/users#index

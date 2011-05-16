@@ -1,4 +1,4 @@
-Given /^cas authenticates with cas user "([^\"]*)"$/ do |puid|
+Given /^I authenticates as cas user "([^\"]*)"$/ do |puid|
   CASClient::Frameworks::Rails::Filter.fake(puid)  
 end 
 
@@ -24,3 +24,7 @@ Given /^the user with the role exist$/ do |table|
     Given %{the user "#{hash[:user]}" exists with the role of "#{hash[:role]}" in the site "#{hash[:site]}"}
   end
 end 
+
+When /^I want to go to the site "([^\"]*)"$/ do |site|
+ Capybara.default_host = "#{site}.example.com"
+end

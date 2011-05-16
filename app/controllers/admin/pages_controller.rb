@@ -1,5 +1,5 @@
 class Admin::PagesController < AdminBaseController
-    
+  
   def index
   end
   

@@ -1,12 +1,13 @@
 class AdminBaseController < ApplicationController
-  protect_from_forgery
-
+  protect_from_forgery   
+    
   before_filter :fake_login unless Rails.env == "production"
   before_filter CASClient::Frameworks::Rails::Filter
   before_filter :current_site
   #before_filter :assign_site
-  
-  load_and_authorize_resource 
+
+  check_authorization
+  load_and_authorize_resource
   
   layout "admin/admin"
   
@@ -14,20 +15,21 @@ class AdminBaseController < ApplicationController
     render :file => "#{Rails.root}/public/403.html", :status => 403, :layout => false
   end
   
-  def admin?     
-    @current_user.role?("admin")
-  end
-
-  def created_updated_by_for(obj)
-    obj.created_by = current_user
-    obj.updated_by = current_user
-  end
-  
-  protected  
+  protected 
     def current_user
+      puts "*"*10 + "current_user"
       current_site if @current_site.nil?
       @current_user = User.where(:puid => session[:cas_user], :site_id => @current_site.id).first
     end  
+    
+    def admin?     
+      current_user.role?("admin")
+    end
+
+    def created_updated_by_for(obj)
+      obj.created_by = current_user
+      obj.updated_by = current_user
+    end
   
     def assign_site
       hostname = Etherweb::Application.config.domain.downcase
@@ -48,6 +50,14 @@ class AdminBaseController < ApplicationController
       end
     end
     
+    def current_site
+      puts "&"*10 + "current_site"
+      @current_site ||= Site.match_domain(request.host.downcase).first
+      if @current_site.nil?
+        render :file => "#{Rails.root}/public/404.html", :status => 404
+      end
+    end
+    
   private
     def fake_login
       if Rails.env == "test"   
@@ -61,12 +71,4 @@ class AdminBaseController < ApplicationController
         #session[:cas_user] = 'mas3' if session[:cas_user].nil?
       end
     end
-    
-    def current_site
-      @current_site ||= Site.match_domain(request.host.downcase).first
-      if @current_site.nil?
-        render :file => "#{Rails.root}/public/404.html", :status => 404
-      end
-    end
-
 end
