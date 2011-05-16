@@ -6,12 +6,12 @@ Given /^the user "([^\"]*)" exists with the role of "([^\"]*)" in the site "([^\
   user = Factory(:user, :puid => puid,
                  :email => "#{puid}@example.com",
                  :role => role,
-                 :site => Site.where(:name => site).first)
+                 :site => Site.match_domain(site).first)
 end
 
-Given /^the site "([^\"]*)" exists$/ do |site|
-  Factory(:site, :name => site, :subdomain => site)
-  Capybara.default_host = "#{site}.example.com"
+Given /^the site "([^\"]*)" exists with the domain "([^\"]*)"$/ do |site, domain|
+  Factory(:site, :name => site, :subdomain => site, :default_domain => domain)
+  Capybara.default_host = "#{site}.#{domain}"
 end
 
 Given /^I login to the site "([^\"]*)" as "([^\"]*)" with the role of "([^\"]*)"$/ do |site, puid, role|

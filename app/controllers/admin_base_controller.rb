@@ -17,7 +17,6 @@ class AdminBaseController < ApplicationController
   
   protected 
     def current_user
-      puts "*"*10 + "current_user"
       current_site if @current_site.nil?
       @current_user = User.where(:puid => session[:cas_user], :site_id => @current_site.id).first
     end  
@@ -51,7 +50,6 @@ class AdminBaseController < ApplicationController
     end
     
     def current_site
-      puts "&"*10 + "current_site"
       @current_site ||= Site.match_domain(request.host.downcase).first
       if @current_site.nil?
         render :file => "#{Rails.root}/public/404.html", :status => 404

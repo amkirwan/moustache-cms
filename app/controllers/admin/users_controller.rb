@@ -31,11 +31,7 @@ class Admin::UsersController < AdminBaseController
     @user.role = params[:user][:role] if admin?
     if @user.save
       flash[:notice] = "Successfully updated user account for #{@user.puid}"
-      if admin?
-        redirect_to admin_users_path
-      else
-        render :edit
-      end 
+      redirect_to admin_users_path
     else
       render :edit
     end

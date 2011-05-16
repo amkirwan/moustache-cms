@@ -237,23 +237,6 @@ describe Admin::UsersController do
         response.should render_template("admin/users/edit")
       end
     end
-    
-    context "it should render the admin users page for non-admin users" do
-      
-      before(:each) do
-        controller.stub(:admin?).and_return(false)
-      end
-      
-      it "should not set the users role when the current_user is not an admin" do
-        user.should_not_receive(:role=).with(params["user"]["role"])
-        do_put
-      end
-      
-      it "should render the template for the users account" do
-        do_put
-        response.should render_template("admin/users/edit")
-      end
-    end 
   end
   
   describe "DELETE destroy" do

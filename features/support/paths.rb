@@ -11,10 +11,6 @@ module NavigationHelpers
       '/' 
     when /^the admin page$/
       '/admin'
-    when /^the 403 page$/
-      '/403.html'
-    when /^the 404 page$/
-      '/404.html'
     when /the edit admin user page for "([^\"]*)"/
       edit_admin_user_path($1)
     when /the admin user page for "([^\"]*)"/
