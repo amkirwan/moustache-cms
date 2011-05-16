@@ -1,6 +1,6 @@
 class AdminBaseController < ApplicationController
   protect_from_forgery
-  
+
   before_filter :fake_login unless Rails.env == "production"
   before_filter CASClient::Frameworks::Rails::Filter
   before_filter :current_site
@@ -14,6 +14,10 @@ class AdminBaseController < ApplicationController
     render :file => "#{Rails.root}/public/403.html", :status => 403, :layout => false
   end
   
+  def here
+    puts "*"*20 + "here"
+  end
+  
   def admin?     
     @current_user.role?("admin")
   end
@@ -23,8 +27,9 @@ class AdminBaseController < ApplicationController
     obj.updated_by = current_user
   end
   
-  protected  
-    def current_user                      
+  private  
+    def current_user
+      current_site if @current_site.nil?
       @current_user = User.where(:puid => session[:cas_user], :site_id => @current_site.id).first
     end  
   

@@ -2,7 +2,7 @@ Feature: Admin User Management Features
 
 Background: Login create default site
   Given the site "foobar" exists
-  And the user "ak730" exists with the role of "admin" in the site "foobar.example.com"
+  And the user "ak730" exists with the role of "admin" in the site "foobar"
   And cas authenticates with cas user "ak730"
 
 @admin_login
@@ -14,7 +14,6 @@ Scenario: Admin login page should redirect to /admin/users#index
 Scenario: Should not be able to access site the user is not associated with
   Given the site "baz" exists
   When I go to the admin page
-  Then show me the page
   Then I should see "Whoops!"
   
 @admin_users_index

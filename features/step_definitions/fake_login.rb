@@ -3,10 +3,10 @@ Given /^cas authenticates with cas user "([^\"]*)"$/ do |puid|
 end 
 
 Given /^the user "([^\"]*)" exists with the role of "([^\"]*)" in the site "([^\"]*)"$/ do |puid, role, site| 
-  Factory(:user, :puid => puid,
+  user = Factory(:user, :puid => puid,
                  :email => "#{puid}@example.com",
                  :role => role,
-                 :site => site)
+                 :site => Site.where(:name => site).first)
 end
 
 Given /^the site "([^\"]*)" exists$/ do |site|
