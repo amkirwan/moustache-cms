@@ -3,15 +3,16 @@ class Ability
   
   def initialize(user)      
     user ||= User.new   
-    debugger 
 
     if user.role? :admin
-      debugger
       can :manage, [User, Layout, Page, MediaFile], :site_id => user.site_id
       can :manage, Site do |site|
         site.users.include?(user)
       end
     end
+    
+    puts "#{can? :manage, user}"
+    puts "#{user.id}"
     
     if user.role? :editor 
       can :index, User, :site_id => user.site_id

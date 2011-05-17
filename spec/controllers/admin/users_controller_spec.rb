@@ -3,13 +3,14 @@ require File.expand_path(File.dirname(__FILE__) + '../../../spec_helper')
 describe Admin::UsersController do
   
   #for actions
-  let(:site) { mock_model(Site) }
-  let(:current_user) { logged_in(:role? => "admin", :site => site) }
+  let(:site) { stub_model(Site).as_null_object }
+  let(:current_user) { logged_in(:role? => true, :site => site) }
   let(:user) { mock_model("User").as_null_object }
   
   before(:each) do
     cas_faker(current_user.puid)
     current_site_faker(site)
+    controller.stub(:current_site).and_return(site)
   end
   
   describe "GET index" do
