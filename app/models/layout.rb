@@ -2,7 +2,7 @@ class Layout
   include Mongoid::Document 
   include Mongoid::Timestamps
   
-  attr_accessible :layout, :name, :content
+  attr_accessible :name, :content
 
   #-- Fields -----------------------------------------------  
   field :name

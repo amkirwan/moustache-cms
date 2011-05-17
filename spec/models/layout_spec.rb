@@ -43,9 +43,8 @@ describe Layout do
       @layout.should be_valid
     end
     
-    it "should not be valid without a site_id" do
-      @layout.stub(:site_set).and_return(nil)
-      @layout.site_id = nil
+    it "should not be valid without a site" do
+      @layout.site = nil
       @layout.should_not be_valid
     end
     
