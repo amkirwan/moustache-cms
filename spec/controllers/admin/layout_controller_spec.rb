@@ -1,13 +1,13 @@
 require File.expand_path(File.dirname(__FILE__) + '../../../spec_helper')
 
 describe Admin::LayoutsController do
-  
-  let(:current_user) { logged_in(:role? => true) }
-  let(:layout) { mock_model("Layout").as_null_object }
+  let(:site) { mock_model(Site, :id => "1") }
+  let(:current_user) { logged_in(:role? => "admin", :site_id => site.id) }
+  let(:layout) { mock_model("Layout", :site_id => site.id).as_null_object }
   
   before(:each) do
     cas_faker(current_user.puid)
-    current_site_faker
+    stub_c_site_c_user(site, current_user)
   end
   
   describe "GET index" do    

@@ -1,14 +1,13 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')  
 
 describe Admin::PagesController do
-  
-  #for actions
-  let(:current_user) { logged_in(:role? => true) }
-  let(:page) { mock_model("Page").as_null_object }
+  let(:site) { mock_model(Site, :id => "1") }
+  let(:current_user) { logged_in(:role? => "admin", :site_id => site.id) }
+  let(:page) { mock_model("Page", :site_id => site.id).as_null_object }
   
   before(:each) do
     cas_faker(current_user.puid)
-    current_site_faker
+    stub_c_site_c_user(site, current_user)
   end
   
   # -- GET Index ----------------------------------------------- 
