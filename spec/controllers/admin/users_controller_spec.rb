@@ -5,7 +5,7 @@ describe Admin::UsersController do
   #for actions
   let(:site) { mock_model(Site, :id => "1") }
   let(:current_user) { logged_in(:role? => "admin", :site_id => site.id) }
-  let(:user) { mock_model("User", :site_id => "1").as_null_object }
+  let(:user) { mock_model("User", :site_id => site.id).as_null_object }
   
   before(:each) do
     cas_faker(current_user.puid)

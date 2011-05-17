@@ -7,12 +7,13 @@ require 'spec_helper'
 describe Admin::MediaFilesController do
 
   #for actions
-  let(:current_user) { logged_in(:role? => true) }
-  let(:media_file) { mock_model("MediaFile").as_null_object }
+  let(:site) { mock_model(Site, :id => "1") }
+  let(:current_user) { logged_in(:role? => "admin", :site_id => site.id) }
+  let(:media_file) { mock_model("MediaFile", :site_id => site.id).as_null_object }
   
   before(:each) do
     cas_faker(current_user.puid)
-    current_site_faker
+    stub_c_site_c_user(site, current_user)
   end
 
   # -- GET Index ----------------------------------------------- 
