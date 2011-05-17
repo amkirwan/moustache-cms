@@ -113,7 +113,7 @@ GEM
       railties (>= 3.0.0)
     ffi (1.0.7)
       rake (>= 0.8.7)
-    gherkin (2.3.6)
+    gherkin (2.3.8)
       json (>= 1.4.6)
     haml (3.1.1)
     haml-rails (0.3.4)
@@ -165,26 +165,25 @@ GEM
       rake (>= 0.8.7)
       thor (~> 0.14.4)
     rake (0.8.7)
-    rcov (0.9.9)
     redcarpet (1.11.2)
     relish (0.0.3)
       archive-tar-minitar (~> 0.5.2)
       rest-client (~> 1.6.1)
     rest-client (1.6.1)
       mime-types (>= 1.16)
-    rspec (2.5.0)
-      rspec-core (~> 2.5.0)
-      rspec-expectations (~> 2.5.0)
-      rspec-mocks (~> 2.5.0)
-    rspec-core (2.5.1)
-    rspec-expectations (2.5.0)
+    rspec (2.6.0)
+      rspec-core (~> 2.6.0)
+      rspec-expectations (~> 2.6.0)
+      rspec-mocks (~> 2.6.0)
+    rspec-core (2.6.0)
+    rspec-expectations (2.6.0)
       diff-lcs (~> 1.1.2)
-    rspec-mocks (2.5.0)
-    rspec-rails (2.5.0)
+    rspec-mocks (2.6.0)
+    rspec-rails (2.6.0)
       actionpack (~> 3.0)
       activesupport (~> 3.0)
       railties (~> 3.0)
-      rspec (~> 2.5.0)
+      rspec (~> 2.6.0)
     ruby-debug-base19 (0.11.25)
       columnize (>= 0.3.1)
       linecache19 (>= 0.5.11)
@@ -225,7 +224,7 @@ DEPENDENCIES
   cancan (>= 1.6)
   capybara
   carrierwave (~> 0.5)
-  cucumber-rails
+  cucumber-rails (~> 0.4)
   database_cleaner
   factory_girl_rails
   haml (~> 3.1)
@@ -240,10 +239,9 @@ DEPENDENCIES
   mustache (>= 0.99)
   rack-ssl-enforcer (~> 0.2)
   rails (~> 3.0)
-  rcov
   redcarpet (~> 1.11)
   relish
-  rspec-rails
+  rspec-rails (~> 2.6)
   ruby-debug19
   rubycas-client!
   sass (~> 3.1)

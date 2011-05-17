@@ -49,8 +49,7 @@ describe Ability do
           admin_ability.should_not be_able_to(:manage, layout2)
           admin_ability.should_not be_able_to(:manage, site2)
         end
-      end
-      
+      end      
     end
   end
   

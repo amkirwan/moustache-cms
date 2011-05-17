@@ -7,9 +7,16 @@ module LoginHelpers
     controller.stub(:current_user).and_return(user)
   end 
   
-  def logged_in(opts)
-    current_user = mock_model(User, :puid => "foobar", :role? => opts[:role?], :site => opts[:site]).as_null_object
+  def stub_current_site(site)
+    controller.stub(:current_site).and_return(site)
+  end
+  
+  def stub_c_site_c_user(site, current_user)
+    stub_current_site(site)
     stub_current_user(current_user)
-    current_user  
+  end
+  
+  def logged_in(opts)
+    current_user = mock_model(User, :puid => "foobar", :role? => opts[:role?], :site_id => opts[:site_id])
   end             
 end

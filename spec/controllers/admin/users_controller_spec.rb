@@ -1,15 +1,15 @@
-require File.expand_path(File.dirname(__FILE__) + '../../../spec_helper')
+require 'spec_helper'
 
 describe Admin::UsersController do
   
   #for actions
-  let(:site) { mock_model(Site) }
-  let(:current_user) { logged_in(:role? => "admin", :site => site) }
-  let(:user) { mock_model("User").as_null_object }
+  let(:site) { mock_model(Site, :id => "1") }
+  let(:current_user) { logged_in(:role? => "admin", :site_id => site.id) }
+  let(:user) { mock_model("User", :site_id => "1").as_null_object }
   
   before(:each) do
     cas_faker(current_user.puid)
-    current_site_faker(site)
+    stub_c_site_c_user(site, current_user)
   end
   
   describe "GET index" do
@@ -25,10 +25,16 @@ describe Admin::UsersController do
         User.stub(:accessible_by).and_return(users)
       end
       
+      it "should receive current_site" do
+        controller.should_receive(:current_site)
+        do_get
+      end
+      
       it "should receive accessible_by" do
         User.should_receive(:accessible_by).and_return(users)
         do_get
       end
+      
       
       it "should assign the found users" do
         do_get
@@ -43,15 +49,16 @@ describe Admin::UsersController do
   end
   
   describe "GET show" do
+    let(:params) {{ :id => "1" }}
+    
     before(:each) do
       User.stub(:find).and_return(user)
     end
     
-    let(:params) {{ :id => "1" }}
     def do_get
       get :show, :id => "1"
     end
-    
+        
     it "should should receive find" do
       User.should_receive(:find).with(params[:id]).and_return(user)
       do_get
@@ -238,12 +245,10 @@ describe Admin::UsersController do
     end
   end
   
-  describe "DELETE destroy" do
-    
+  describe "DELETE destroy" do   
     before(:each) do
       User.stub(:find).and_return(user)
       Site.stub(:first).and_return(mock_model(Site, :full_subdomain => "foobar.example.com"))
-      #controller.stub(:current_user).and_return(false)
     end
     
     def do_destroy  
@@ -257,15 +262,18 @@ describe Admin::UsersController do
     
     it "should assign the user for the view" do
       do_destroy
-      assigns(:user).should eq(user)
+      assigns(:user).should == user
     end    
     
-    it "should destroy the user account" do
+    it "should delete the user account" do
       user.should_receive(:delete).and_return(true)
       do_destroy 
     end
     
     context "when destroying the current logged in user account" do
+      before(:each) do
+        controller.stub(:current_user?).and_return(true)
+      end
       it "should destroy the current session" do
         controller.should_receive(:reset_session)
         do_destroy
@@ -279,7 +287,7 @@ describe Admin::UsersController do
     
     context "when destroying another users record" do
       before(:each) do
-        controller.stub(:current_user).and_return(false)
+        controller.stub(:current_user?).and_return(false)
       end
       
       it "should set a flash message" do

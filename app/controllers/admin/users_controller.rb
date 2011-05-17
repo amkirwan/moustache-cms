@@ -39,7 +39,7 @@ class Admin::UsersController < AdminBaseController
   
   def destroy
     if @user.delete
-      if @user == current_user
+      if current_user? @user
         reset_session
         redirect_to "http://#{Site.first.full_subdomain}"
       else
