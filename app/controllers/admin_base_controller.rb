@@ -12,9 +12,6 @@ class AdminBaseController < ApplicationController
   layout "admin/admin"
   
   rescue_from CanCan::AccessDenied do |exception|
-    puts "#{can? :manage, exception.subject}"
-    puts "#{exception.subject.id}"
-    Rails.logger.debug "Access denied on #{exception.action} #{exception.subject.inspect}"
     render :file => "#{Rails.root}/public/403.html", :status => 403, :layout => false
   end
   
@@ -57,7 +54,6 @@ class AdminBaseController < ApplicationController
     end
     
     def current_site
-      puts "*"*10 + "current_site"
       @current_site ||= Site.match_domain(request.host.downcase).first
       if @current_site.nil?
         render :file => "#{Rails.root}/public/404.html", :status => 404
