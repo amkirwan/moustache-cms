@@ -216,12 +216,22 @@ describe Page do
     end
     
     it "should not be valid without a unique full_path" do
-      Factory.build(:page, :full_path => "#{@page.full_path}", :site => @page.site).should_not be_valid
+      Factory.build(:page, 
+                    :full_path => @page.full_path,
+                    :site_id => site.id, 
+                    :layout => layout, 
+                    :created_by => user, 
+                    :updated_by => user).should_not be_valid
     end
     
     context "it should be valid when the full_path is associated with a different site" do
       it "should be valid" do
-        Factory.build(:page, :full_path => "#{@page.full_path}", :site => Factory.build(:site)).should be_valid
+        Factory.build(:page, 
+                      :full_path => @page.full_path,
+                      :site_id => Factory.build(:site).id, 
+                      :layout => layout, 
+                      :created_by => user, 
+                      :updated_by => user).should_not be_valid
       end
     end
     

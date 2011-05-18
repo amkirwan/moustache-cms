@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
+require 'spec_helper'
 require File.expand_path(File.dirname(__FILE__) + '/../lib/etherweb/mongoid/meta_data_shared_examples') 
 
 describe Site do   
@@ -87,9 +87,16 @@ describe Site do
   
   # -- After Destroy Callback ------------------------------------------- 
   describe "after_destroy callback" do
+    before(:each) do
+      @user = Factory(:user, :site => @site)
+      @layout = Factory(:layout, :site => @site, :created_by => @user, :updated_by => @user)
+      @page = Factory(:page, :site => @site, :layout => @layout, :created_by => @user, :updated_by => @user, :editor_ids => [@user.id])
+      @media_file = Factory(:media_file, :site => @site, :created_by => @user, :updated_by => @user) 
+    end
+    
     describe "#destroy_pages" do
       it "should destroy all the pages associated with the site" do
-        @site.pages << Factory(:page, :site => @site)
+        @site.pages.count.should == 1
         @site.destroy
         @site.pages.count.should == 0
       end
@@ -97,7 +104,7 @@ describe Site do
     
     describe "#destroy_users" do
       it "should destroy all the users associated with the site" do
-        @site.users << Factory(:user, :site => @site)
+        @site.users.count.should == 1
         @site.destroy
         @site.users.count.should == 0
       end
@@ -105,7 +112,7 @@ describe Site do
     
     describe "#destroy_layouts" do
       it "should destroy all the layouts associated with the site" do
-        @site.layouts << Factory(:layout, :site => @site)
+        @site.layouts.count.should == 1
         @site.destroy
         @site.layouts.count.should == 0
       end
@@ -113,7 +120,7 @@ describe Site do
     
     describe "#destroy_media_files" do
       it "should destroy all the media_files associated with the site" do
-        @site.media_files << Factory(:media_file, :site => @site)
+        @site.media_files.count.should == 1
         @site.destroy
         @site.media_files.count.should == 0
       end
