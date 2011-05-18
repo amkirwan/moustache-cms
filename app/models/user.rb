@@ -43,6 +43,9 @@ class User
             :presence => true,
             :uniqueness => { :scope => :site_id },
             :format => { :with => /^([^\s]+)((?:[-a-z0-9]\.)[a-z]{2,})$/i }
+  
+  validates :site_id,
+            :presence => true
 
 
   # -- Class Methods -----------------------------------------------

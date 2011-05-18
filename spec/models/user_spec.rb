@@ -50,6 +50,11 @@ describe User do
       @user.role = nil
       @user.should_not be_valid
     end 
+    
+    it "should not be valid without an associated site" do
+      @user.site = nil
+      @user.should_not be_valid
+    end
   
     it "should not be valid with duplicate pid within the same site" do  
       Factory.build(:user, :puid => "#{@user.puid}", :site => @user.site).should_not be_valid
