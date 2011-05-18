@@ -43,7 +43,7 @@ describe "admin/pages/_form.html.haml" do
     end
     
     it "should render a collection to select the pages parent" do
-      Page.stub_chain(:all, :order).and_return(@pages = [mock_model("Page", :title => "foobar" )])
+      Page.stub_chain(:all, :order).and_return([mock_model("Page", :title => "foobar" )])
       new_render
       get_new do |f|
         f.should have_selector("select", :name => "page[parent_id]")
@@ -158,8 +158,8 @@ describe "admin/pages/_form.html.haml" do
     
     describe "page part" do
       before(:each) do
-        page.stub(:page_parts).and_return([mock_model("PagePart").as_null_object ])
-        Filter.stub(:all).and_return([mock_model("Filter", :name => "foobar").as_null_object])
+        page.stub(:page_parts).and_return([mock_model("PagePart", :name => "foobar", :content => "foobar",
+                                                                  :filter => [mock_model("Filter").as_null_object])])
       end
       
       it "should render a form text field for the page part name" do    
@@ -172,8 +172,7 @@ describe "admin/pages/_form.html.haml" do
       it "should render a filter for the page part" do
         new_render
         get_new do |f|
-           f.should have_selector("input", :type => "text")
-          #f.should have_selector("select", :name => "page[page_parts_attributes][0][filter]")
+          f.should have_selector("select", :name => "page[page_parts_attributes][0][filter]")
         end
       end
 
