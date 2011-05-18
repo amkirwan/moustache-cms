@@ -47,7 +47,6 @@
       = builder.text_field :name
       = builder.label :filter, "Filter"
       = builder.collection_select :filter, Filter.all, :id, :name
-      = builder.text_area :filter
       = builder.label :content, "Page Part Content"
       = builder.text_area :content, :cols => "40", :rows => "12"
   %fieldset

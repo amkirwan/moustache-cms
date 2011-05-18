@@ -46,7 +46,7 @@ Scenario: Given I am logged in as an editor then I can delete my account
 @editor_should_not_access_other_site 
 Scenario: Should not be able to access site the user is not associated with
   Given the site "baz" exists with the domain "example.dev"
-  When I go to the admin page
+  When I go to the admin users page
   Then I should see "403"
   
 @editor_cannot_create_new_user

@@ -13,6 +13,7 @@ Given /^these pages exist in the site "([^\"]*)" created by user "([^\"]*)"$/ do
                    :layout => layout,
                    :created_by => user,
                    :updated_by => user,
+                   :editors => [user],
                    :title => hash[:title], 
                    :current_state => Factory.build(:current_state, :name => hash[:status]))
   end

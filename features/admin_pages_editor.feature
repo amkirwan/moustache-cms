@@ -16,10 +16,10 @@ And the user with the role exist
  | foo   | admin  | foobar.example.com |
  | bar   | editor | foobar.example.com |
  | cds27 | editor | foobar.example.com |
-And I authenticates as cas user "ak730"
+And I authenticates as cas user "cds27"
 
-@index_page_view
-Scenario: Navigate to the Pages#index page
+@editor_can_see_page_index_page
+Scenario: Given I am logged in as an editor then I can see the pages
   Given these pages exist in the site "foobar.example.com" created by user "ak730"
   | title  | status    | 
   | foobar | published | 
@@ -32,11 +32,15 @@ Scenario: Navigate to the Pages#index page
   And I should see the "delete" button
   And I should see "Add New Page"
   
-@create_new_page_root_page
+@create_new_page_page
 Scenario: Create a new page
+  Given these pages exist in the site "foobar.example.com" created by user "ak730"
+  | title     | status    | 
+  | Home Page | published | 
   When I go to the admin pages page
   And I follow "Add New Page"
   Then I should be on the new admin page page
+  And I select "Home Page" from "page_parent_id"
   And I fill in "page_title" with "foobar" 
   And I fill in "page_meta_data_title" with "meta_title_foobar"
   And I fill in "page_meta_data_keywords" with "meta_keywords_foobar"
@@ -55,8 +59,8 @@ Scenario: Create a new page
   And I should see the "delete" button
   
 @edit_a_existing_page
-Scenario: Edit a page
-  Given these pages exist in the site "foobar.example.com" created by user "ak730"
+Scenario: Edit an existing page the user is an editor of
+  Given these pages exist in the site "foobar.example.com" created by user "cds27"
   | title  | status    | 
   | foobar | published | 
   | bar    | draft     |
@@ -72,7 +76,7 @@ Scenario: Edit a page
   And I select "draft" from "page_current_state_attributes_name" 
   And I fill in "page_page_parts_attributes_0_name" with "content" 
   And I select "markdown" from "page_page_parts_attributes_0_filter" 
-  And I fill in "page_page_parts_attributes_0_content" with "Hello, World!" 
+  And I fill in "page_page_parts_attributes_0_content" with "This is some new text" 
   And I press "Update Page"
   Then I should be on the admin pages page
   And I should see "Successfully updated the page foobar"
@@ -81,11 +85,11 @@ Scenario: Edit a page
   When I edit the page "foobar"
   Then I should now be editing the page "foobar"
   And the "editor_id_cds27" checkbox should be checked
-  And the "page_page_parts_attributes_0_content" field should contain "Hello, World!"
-  
+  And the "page_page_parts_attributes_0_content" field should contain "This is some new text"
+
 @delete_page
-Scenario: Delete page as an admin
-  Given these pages exist in the site "foobar.example.com" created by user "ak730"
+Scenario: Delete page the user is an editor of
+  Given these pages exist in the site "foobar.example.com" created by user "cds27"
   | title  | status    | 
   | foobar | published | 
   | bar    | draft     |
@@ -93,5 +97,33 @@ Scenario: Delete page as an admin
   And I press "delete" within "li#foobar"
   Then I should see "Successfully deleted the page foobar"
   And I should be on the admin pages page
-
   
+
+# Actions_Blocked  
+
+@editor_should_not_access_other_site 
+Scenario: Should not be able to access site the user is not associated with
+  Given the site "baz" exists with the domain "example.dev"
+  When I go to the admin pages page
+  Then I should see "403"
+  
+@editor_cannot_edit_a_page
+Scenario: Cannot edit a page the user is not an editor of
+  Given these pages exist in the site "foobar.example.com" created by user "ak730"
+  | title  | status    | 
+  | foobar | published | 
+  | bar    | draft     |
+  When I go to the admin pages page
+  And I follow "foobar"
+  Then I should see "403"
+  
+@editor_cannot_delete_page
+Scenario: Cannot delete page the user is an editor of
+  Given these pages exist in the site "foobar.example.com" created by user "ak730"
+  | title  | status    | 
+  | foobar | published | 
+  | bar    | draft     |
+  When I go to the admin pages page
+  Then I should not see "delete" within "li#foobar"
+  Then I should not see "delete" within "li#bar"
+
