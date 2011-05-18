@@ -4,8 +4,12 @@ Background: Login create default site
 Given the site "foobar" exists with the domain "example.com"
 And the user "ak730" exists with the role of "admin" in the site "foobar.example.com"
 And I authenticates as cas user "ak730"
+And the user with the role exist
+ | user  | role   | site               |
+ | rg874 | admin  | foobar.example.com |
+ | jmb42 | editor | foobar.example.com |
 
-@index_layout
+@admin_index_layout
 Scenario: Navigate to the Layout#index page
   Given these layouts exist in the site "foobar.example.com" created by user "ak730"
   | name   | content       |
@@ -56,9 +60,35 @@ Scenario: Given I am logged in as an admin then I can edit a layout
   And the "layout[name]" field should contain "baz"
   And the "layout[content]" field should contain "Hello, <b>World!</b>"
   
+@admin_edit_other_user_layout
+Scenario: Given I am logged in as an admin then I can edit a layout created by another user
+  Given these layouts exist in the site "foobar.example.com" created by user "rg874"
+  | name   | content       |
+  | foobar | Hello, World! |
+  | bar    | Hello, World! |
+  When I go to the admin layouts page
+  And I follow "foobar" within "li#foobar"
+  When I fill in "layout[name]" with "baz" within "div#edit_layout"
+  And I fill in "layout[content]" with "Hello, <b>World!</b>" within "div#edit_layout"
+  And I press "Update Layout" within "div#edit_layout"
+  Then I should be on the admin layouts page
+  And I should see "Successfully updated the layout baz"
+
+  
 @delete_layout
 Scenario: Delete layout as an admin
   Given these layouts exist in the site "foobar.example.com" created by user "ak730"
+  | name   | content       |
+  | foobar | Hello, World! |
+  | bar    | Hello, World! |
+  When I go to the admin layouts page
+  And I press "delete" within "li#foobar"
+  Then I should see "Successfully deleted the layout foobar"
+  And I should be on the admin layouts page
+  
+@admin_delete_other_user_layout
+Scenario: Given I am logged in as an admin then I can delete a layout created by another user
+  Given these layouts exist in the site "foobar.example.com" created by user "rg874"
   | name   | content       |
   | foobar | Hello, World! |
   | bar    | Hello, World! |

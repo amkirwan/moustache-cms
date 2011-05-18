@@ -18,7 +18,7 @@ Scenario: Should not be able to access site the user is not associated with
   
 @admin_users_index
 Scenario: Admin login
-  And the user with the role exist
+  Given the user with the role exist
   | user   | role   | site               |
   | foo    | admin  | foobar.example.com |
   | bar    | editor | foobar.example.com |
@@ -41,11 +41,28 @@ Scenario: Create A New user
   Then I should be on the admin users page 
   And I should see "Successfully created user account for foobar"
   And I should see "foobar"
-  And I should see "admin"  
+  And I should see "admin" 
+
+@admin_edit_own_account
+Scenario: Given I am logged in as an admin then I can edit my account
+  When I go to the admin users page
+  And I follow "ak730" within "li#ak730"
+  Then I should now be editing the user "ak730"
+  And I fill in "user[firstname]" with "Foobar" 
+  And I fill in "user[lastname]" with "Baz" 
+  And I fill in "user[email]" with "akirwan@example.com" 
+  And I should not see "user[role]"
+  And I press "Update User" within "div#edit_user" 
+  Then I should be on the admin users page
+  And I should see "Successfully updated user account for ak730"
+  When I edit the account information for the user "ak730"
+  And the "user[firstname]" field should contain "Foobar"
+  And the "user[lastname]" field should contain "Baz"
+  And the "user[email]" field should contain "akirwan@example.com" 
   
-@edit_user
+@admin_edit_user_other_user_account
 Scenario: Given I am logged in as an admin then I can edit any users account
-  And the user with the role exist
+  Given the user with the role exist
   | user   | role   | site               |
   | foo    | admin  | foobar.example.com |
   | bar    | editor | foobar.example.com |
@@ -64,9 +81,15 @@ Scenario: Given I am logged in as an admin then I can edit any users account
   And the "user[email]" field should contain "baz@example.com"
   And the "user_role_editor" checkbox should be checked
   
-@delete_user
+@admin_can_delete_own_account
+Scenario: Given I am logged in as an admin then I can delete my account
+  When I go to the admin users page
+  And I press "delete" within "li#ak730"
+  Then I should be on the cms html page
+  
+@admin_delete_other_user_account
 Scenario: Delete user account as an admin
-  And the user with the role exist
+  Given the user with the role exist
   | user   | role   | site               |
   | foobar | admin  | foobar.example.com |
   | bar    | editor | foobar.example.com |

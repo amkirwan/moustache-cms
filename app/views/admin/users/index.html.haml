@@ -9,7 +9,7 @@
       %div= link_to user.puid, edit_admin_user_path(user)
       %div= user.role 
       - if can? :destroy, user
-        %div.destroy= button_to "delete", admin_user_path(user), :method => :delete, :confirm => "Are you sure you"
+        %div.delete= button_to "delete", admin_user_path(user), :method => :delete, :confirm => "Are you sure you"
 
 #add_user
 - if admin?

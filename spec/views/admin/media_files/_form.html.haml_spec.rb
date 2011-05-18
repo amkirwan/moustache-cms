@@ -65,9 +65,9 @@ describe "admin/media_files/_form.html.haml" do
     end
     
     it "should render a button to update the media file" do
-      do_render("Update File")
+      do_render("Update Media File")
       form_update(:action => admin_media_file_path(media_file)) do |f|
-        f.should have_selector("input", :type => "submit", :value => "Update File")
+        f.should have_selector("input", :type => "submit", :value => "Update Media File")
       end
     end
     

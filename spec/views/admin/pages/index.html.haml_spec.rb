@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')
 
 describe "admin/pages/index.html.haml" do
   let(:current_user) { stub_model(User, :role? => true) }
-  let(:parent) { stub_model(Page, :title => "root_node", :parent => nil, :updated_at => Time.now, :updated_by => current_user) }
+  let(:parent) { stub_model(Page, :title => "home_page", :parent => nil, :updated_at => Time.now, :updated_by => current_user) }
   let(:pages) { [parent, stub_model(Page, :parent => parent, :title => "foobar", :status => "published", :updated_at => Time.now, :updated_by => current_user) ] }
   
   

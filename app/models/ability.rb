@@ -19,7 +19,7 @@ class Ability
         page.editors.include?(user) && page.site_id == user.site_id
       end
       can [:create, :read, :update], MediaFile, :site_id => user.site_id
-      can :destroy, MediaFile, :site_id => user.site_id, :created_by => user
+      can :destroy, MediaFile, :site_id => user.site_id, :created_by_id => user.id
     end
   end    
 end

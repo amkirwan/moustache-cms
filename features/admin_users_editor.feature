@@ -39,7 +39,7 @@ Scenario: Given I am logged in as an editor then I can edit my account
 Scenario: Given I am logged in as an editor then I can delete my account
   When I go to the admin users page
   And I press "delete" within "li#ak730"
-  And I should see "403"
+  Then I should be on the cms html page
 
 # Actions_Blocked   
   

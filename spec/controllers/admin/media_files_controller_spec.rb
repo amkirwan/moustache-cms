@@ -165,8 +165,10 @@ describe Admin::MediaFilesController do
       MediaFile.stub(:find).and_return(media_file)
     end
     
+    let(:params) { { "id" => media_file.to_param, "media_file" => { "name" => "foobar" }} }
+    
     def do_put
-      post :update, { "id" => media_file.to_param, "media_file" => { "name" => "foobar" }}
+      post :update, params
     end
     
     it "should receive the MediaFile#find and return the media file" do
@@ -186,7 +188,7 @@ describe Admin::MediaFilesController do
     
     describe "with valid params" do
       it "should receive update_attributes and return true" do
-        media_file.should_receive(:update_attributes).and_return(true)
+        media_file.should_receive(:update_attributes).with(params["media_file"]).and_return(true)
         do_put
       end
       

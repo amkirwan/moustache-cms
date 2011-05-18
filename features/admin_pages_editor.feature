@@ -107,7 +107,7 @@ Scenario: Should not be able to access site the user is not associated with
   When I go to the admin pages page
   Then I should see "403"
   
-@editor_cannot_edit_a_page
+@editor_cannot_edit_a_page_not_editor_of
 Scenario: Cannot edit a page the user is not an editor of
   Given these pages exist in the site "foobar.example.com" created by user "ak730"
   | title  | status    | 
@@ -117,7 +117,7 @@ Scenario: Cannot edit a page the user is not an editor of
   And I follow "foobar"
   Then I should see "403"
   
-@editor_cannot_delete_page
+@editor_cannot_delete_page_not_editor_of
 Scenario: Cannot delete page the user is an editor of
   Given these pages exist in the site "foobar.example.com" created by user "ak730"
   | title  | status    | 

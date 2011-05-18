@@ -9,7 +9,7 @@ module ApplicationHelper
       mongoid_tree_set.each do |item|
         next if item.parent_id && init
         if item.root?
-          ret += '<li id="root_node">'
+          ret += '<li id="home_page">'
         else
           ret += "<li id=\"#{item.title}\">"
         end

@@ -13,9 +13,8 @@ And these layouts exist in the site "foobar.example.com" created by user "ak730"
 | baz  | Hello, <b>World!</b> |
 And the user with the role exist
  | user  | role   | site               |
- | foo   | admin  | foobar.example.com |
- | bar   | editor | foobar.example.com |
- | cds27 | editor | foobar.example.com |
+ | rg874 | admin  | foobar.example.com |
+ | jmb42 | editor | foobar.example.com |
 And I authenticates as cas user "ak730"
 
 @index_page_view
@@ -42,7 +41,7 @@ Scenario: Create a new page
   And I fill in "page_meta_data_keywords" with "meta_keywords_foobar"
   And I fill in "page_meta_data_description" with "meta_description_foobar" 
   And I check "editor_id_ak730" 
-  And I check "editor_id_foo"
+  And I check "editor_id_rg874"
   And I select "app" from "page_layout_id" 
   And I select "published" from "page_current_state_attributes_name" 
   And I fill in "page_page_parts_attributes_0_name" with "content" 
@@ -68,7 +67,7 @@ Scenario: Create a new page
   And I fill in "page_meta_data_keywords" with "meta_keywords_foobar"
   And I fill in "page_meta_data_description" with "meta_description_foobar" 
   And I check "editor_id_ak730" 
-  And I check "editor_id_foo"
+  And I check "editor_id_rg874"
   And I select "app" from "page_layout_id" 
   And I select "published" from "page_current_state_attributes_name" 
   And I fill in "page_page_parts_attributes_0_name" with "content" 
@@ -93,7 +92,7 @@ Scenario: Edit a page
   And I fill in "page_meta_data_keywords" with "meta_keywords_foobar"
   And I fill in "page_meta_data_description" with "meta_description_foobar" 
   And I check "editor_id_ak730" 
-  And I check "editor_id_cds27"
+  And I check "editor_id_jmb42"
   And I select "app" from "page_layout_id" 
   And I select "draft" from "page_current_state_attributes_name" 
   And I fill in "page_page_parts_attributes_0_name" with "content" 
@@ -106,12 +105,37 @@ Scenario: Edit a page
   And I should see the "delete" button
   When I edit the page "foobar"
   Then I should now be editing the page "foobar"
-  And the "editor_id_cds27" checkbox should be checked
+  And the "editor_id_jmb42" checkbox should be checked
   And the "page_page_parts_attributes_0_content" field should contain "This is some new text"
+  
+@edit_a_page_created_by_another_user
+Scenario: Edit a page
+  Given these pages exist in the site "foobar.example.com" created by user "rg874"
+  | title  | status    | 
+  | foobar | published | 
+  | bar    | draft     |
+  When I go to the admin pages page
+  And I follow "foobar"
+  Then I should now be editing the page "foobar"
+  And I fill in "page_meta_data_title" with "meta_title_foobar"
+  And I press "Update Page"
+  Then I should be on the admin pages page
+  And I should see "Successfully updated the page foobar"
   
 @delete_page
 Scenario: Delete page as an admin
   Given these pages exist in the site "foobar.example.com" created by user "ak730"
+  | title  | status    | 
+  | foobar | published | 
+  | bar    | draft     |
+  When I go to the admin pages page
+  And I press "delete" within "li#foobar"
+  Then I should see "Successfully deleted the page foobar"
+  And I should be on the admin pages page
+  
+@delete_page_created_by_another_user
+Scenario: Delete page as an admin
+  Given these pages exist in the site "foobar.example.com" created by user "rg874"
   | title  | status    | 
   | foobar | published | 
   | bar    | draft     |

@@ -31,7 +31,7 @@ class Admin::MediaFilesController < AdminBaseController
   # PUT /admin/media_files/1
   def update
     @media_file.updated_by = current_user
-    if @media_file.update_attributes(params[:id])
+    if @media_file.update_attributes(params[:media_file])
       flash[:notice] = "Successfully updated the media file #{@media_file.name}"
       redirect_to admin_media_files_path
     else

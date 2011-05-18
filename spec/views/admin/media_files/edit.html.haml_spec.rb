@@ -16,6 +16,6 @@ describe "admin/media_files/edit.html.haml" do
   
   it "should render the form partial to edit the media file" do
     render
-    view.should render_template(:partial => "form", :locals => {:media_file => media_file, :button_label => "Update File" })
+    view.should render_template(:partial => "form", :locals => {:media_file => media_file, :button_label => "Update Media File" })
   end
 end

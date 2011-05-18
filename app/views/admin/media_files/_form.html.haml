@@ -16,7 +16,7 @@
       The current file is available at
       = link_to "http://#{@current_site.full_subdomain}#{media_file.media_asset.url}", media_file.media_asset.url
   %fieldset
-    = f.label :alt_txt
+    = f.label :alt_txt, "Alt Text"
     = f.text_field :alt_txt
   %fieldset
     = f.submit button_label             

@@ -41,7 +41,7 @@ class Admin::UsersController < AdminBaseController
     if @user.delete
       if current_user? @user
         reset_session
-        redirect_to "http://#{Site.first.full_subdomain}"
+        redirect_to "http://#{@current_site.full_subdomain}"
       else
         flash[:notice] = "Successfully deleted user account for #{@user.puid}"
         redirect_to admin_users_path
