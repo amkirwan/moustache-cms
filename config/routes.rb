@@ -2,9 +2,10 @@ Etherweb::Application.routes.draw do
                               
   namespace :admin do
     resources :users
-    resources :media_files
     resources :layouts, :except => :show
     resources :pages, :except => :show
+    resources :media_files
+    resources :css_files
   end
   
   match "/admin" => redirect("/admin/pages")
