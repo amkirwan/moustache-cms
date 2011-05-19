@@ -8,7 +8,9 @@ module LoginHelpers
   end 
   
   def stub_current_site(site)
-    controller.stub(:current_site).and_return(site)
+    Site.match_domain(request.host.downcase).first
+    Site.stub(:match_domain).and_return(@sites = [site])
+    @sites.stub(:first).and_return(site)
   end
   
   def stub_c_site_c_user(site, current_user)

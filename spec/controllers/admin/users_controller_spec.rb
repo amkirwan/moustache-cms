@@ -8,6 +8,7 @@ describe Admin::UsersController do
   let(:user) { mock_model("User", :site_id => site.id).as_null_object }
   
   before(:each) do
+    @current_site = site.stub(:full_subdomain => "foobar.example.com")
     cas_faker(current_user.puid)
     stub_c_site_c_user(site, current_user)
   end
@@ -23,11 +24,6 @@ describe Admin::UsersController do
       
       before(:each) do
         User.stub(:accessible_by).and_return(users)
-      end
-      
-      it "should receive current_site" do
-        controller.should_receive(:current_site)
-        do_get
       end
       
       it "should receive accessible_by" do
