@@ -20,7 +20,7 @@ And I authenticates as cas user "cds27"
 
 @editor_can_see_page_index_page
 Scenario: Given I am logged in as an editor then I can see the pages
-  Given these pages exist in the site "foobar.example.com" created by user "ak730"
+  Given these pages exist in the site "foobar.example.com" created by user "cds27"
   | title  | status    | 
   | foobar | published | 
   | bar    | draft     | 
@@ -29,7 +29,6 @@ Scenario: Given I am logged in as an editor then I can see the pages
   And I should see "foobar" within "li#foobar"
   And I should see the "delete" button
   And I should see "bar" within "li#bar"
-  And I should see the "delete" button
   And I should see "Add New Page"
   
 @create_new_page_page

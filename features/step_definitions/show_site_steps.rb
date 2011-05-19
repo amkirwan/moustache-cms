@@ -1,18 +1,18 @@
 def layout_content
 '
-  !!! 5
-  %html
-    %head{:charset => "UTF-8"}
-      %title Etherweb Admin
-      = stylesheet_link_tag :all
-      = javascript_include_tag :defaults
-      = csrf_meta_tag
-    %body
-    - flash.each do |name, msg|
-      = content_tag :div, msg, :id => "flash_#{name}"
-    #wrapper
-      #content
-      = yield
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    {{{ meta_data }}}
+    <title>BWH Anesthesia, Perioperative and Pain Medicine</title>
+  </head>
+  <body id="index" class="home">
+    <div id="content">
+      {{{ yield }}}
+    </div>
+  </body>
+</htm
 '
 end
 
@@ -20,8 +20,9 @@ def page_content
   "<p>Hello, World!</p>"
 end
 
-Given /^the page "([^"]*)" exists with the layout "([^"]*)"$/ do |page_name, layout_name|
+Given /^the page "([^"]*)" exists with the layout "([^"]*)" in the site "([^"]*)"$/ do |page_name, layout_name, site|
   Factory(:page, :title => page_name,
+                 :site => Site.match_domain(site).first,
                  :page_parts => [ Factory.build(:page_part, :name => "content", :content => page_content) ],
                  :layout => Factory(:layout, :name => layout_name, :content => layout_content))
 end

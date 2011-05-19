@@ -11,7 +11,7 @@ And the user with the role exist
 
 
 @editor_index_media_file
-Scenario: Navigate to the Layout#index page
+Scenario: Navigate to the MediaFile#index page
   Given these media files exist in the site "foobar.example.com" created by user "ak730"
   | name   | 
   | foobar | 
