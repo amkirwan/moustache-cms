@@ -1,10 +1,6 @@
 #media_files
+  #h3 Media Files
   %ul
-    %li#media_files_header
-      %div Name
-      %div Author
-      %div Date
-      %div Delete
     - @media_files.each do |media_file|
       %li{ :id => "#{media_file.name}"}
         %div= link_to media_file.name, edit_admin_media_file_path(media_file)

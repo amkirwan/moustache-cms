@@ -2,11 +2,12 @@
 require 'spec_helper'
 
 describe "admin/media_files/index.html.haml" do
-  let(:user) { stub_model(User, :username => "ak730") }
+  let(:user) { stub_model(User, :puid => "ak730") }
   let(:media_files) { [stub_model(MediaFile, :name => "foobar", :created_by => user), stub_model(MediaFile, :name => "foo", :created_by => user)] }
   
   before(:each) do
     assign(:media_files, media_files)
+    view.stub(:can?).and_return(true)
   end
 
   it "renders a list of admin_media_files" do
@@ -32,7 +33,7 @@ describe "admin/media_files/index.html.haml" do
     render
     media_files.each do |media|
       rendered.should have_selector("li##{media.name}") do |li|
-        li.should have_selector("div", :content => "#{media.created_by.username}")
+        li.should have_selector("div", :content => "#{media.created_by.puid}")
       end
     end
   end

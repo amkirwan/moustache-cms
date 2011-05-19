@@ -10,6 +10,7 @@ describe "admin/pages/index.html.haml" do
   before(:each) do
     assign(:pages, pages)
     assign(:current_user, current_user)
+    view.stub(:can?).and_return(true)
   end
   
   it "should make the layout name a link to edit the page" do
