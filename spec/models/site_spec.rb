@@ -85,8 +85,8 @@ describe Site do
     end
   end
   
-  # -- After Destroy Callback ------------------------------------------- 
-  describe "after_destroy callback" do
+  # -- Check :dependent => :delete ------------------------------------------- 
+  describe ":dependent => :delete" do
     before(:each) do
       @user = Factory(:user, :site => @site)
       @layout = Factory(:layout, :site => @site, :created_by => @user, :updated_by => @user)
