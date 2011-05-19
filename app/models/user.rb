@@ -29,7 +29,7 @@ class User
   before_save :lower, :set_puid
   before_destroy :delete_from_pages
                        
-  Roles = %w[editor admin] unless defined?(Roles)
+  Roles = %w[editor designer admin] unless defined?(Roles)
   
   # -- Validations -----------------------------------------------
   validates :puid,

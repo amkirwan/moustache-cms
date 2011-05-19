@@ -4,18 +4,27 @@ require "cancan/matchers"
 describe Ability do  
   let(:site) { Factory.build(:site) }
   let(:site2) { Factory.build(:site) }
+  
   let(:admin) { Factory.build(:admin, :site => site) }
   let(:admin2) { Factory.build(:admin, :site => site2) }
+  let(:designer) { Factory.build(:designer, :site => site) }
+  let(:desinger2) { Factory.build(:designer, :site => site2) }
   let(:editor) { Factory.build(:editor, :site => site) }
   let(:editor2) { Factory.build(:editor, :site => site2) }
+  
   let(:layout) { Factory.build(:layout, :site => site) }
   let(:layout2) { Factory.build(:layout, :site => site2) }
+  
   let(:page) { Factory.build(:page, :site => site, :editors => [ admin, editor ]) }
   let(:page2) { Factory.build(:page, :site => site2, :editors => [ admin2, editor2 ]) } 
+  
   let(:media_file) { Factory.build(:media_file, :site => site, :created_by => editor) }
   let(:media_file2) { Factory.build(:media_file, :site => site2, :created_by => editor2) }
+  
   let(:admin_ability) { Ability.new(admin) }
   let(:admin_ability2) { Ability.new(admin2) }
+  let(:designer_ability) { Ability.new(designer) }
+  let(:designer_ability2) { Ability.new(designer2) }
   let(:editor_ability) { Ability.new(editor) }
   let(:editor_ability2) { Ability.new(editor2) }
   let(:user) { Factory.build(:user, :site => site) } 
@@ -36,6 +45,7 @@ describe Ability do
         admin_ability.should be_able_to(:manage, admin)
         admin_ability.should be_able_to(:manage, page)
         admin_ability.should be_able_to(:manage, layout)
+        admin_ability.should be_able_to(:manage, media_file)
         admin_ability.should be_able_to(:manage, site)
       end
     end
@@ -50,6 +60,36 @@ describe Ability do
           admin_ability.should_not be_able_to(:manage, site2)
         end
       end      
+    end
+  end
+  
+  describe "Designer" do
+    context "Designer Approved" do
+      describe "User Model Approved" do
+        it "should allow the user with a role of designer to list user records" do
+          designer_ability.should be_able_to(:index, user)
+        end  
+      
+        it "should allow the user with a role of designer to edit their own record" do
+          designer_ability.should be_able_to(:update, designer)
+        end
+      
+        it "should allow the user with a role of designer to show their own record" do
+          designer_ability.should be_able_to(:show, designer)
+        end
+        it "should allow the user with a role of designer to delete their record" do
+          designer_ability.should be_able_to(:destroy, designer)
+        end
+      end
+      
+      describe "Page Layout MediaFile Approved" do
+        it "should allow the designer to edit all pages, layouts and mediafiles" do
+          admin_ability.should be_able_to(:manage, page)
+          admin_ability.should be_able_to(:manage, layout)
+          admin_ability.should be_able_to(:manage, site)
+          admin_ability.should be_able_to(:manage, media_file)  
+        end
+      end
     end
   end
   

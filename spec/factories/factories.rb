@@ -18,6 +18,10 @@ Factory.define :admin, :parent => :user do |admin|
   admin.role "admin" 
 end
 
+Factory.define :designer, :parent => :user do |designer|
+  designer.role "designer"
+end
+
 Factory.define :editor, :parent => :user do |editor|
   editor.role "editor"
 end

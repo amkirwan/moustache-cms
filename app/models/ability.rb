@@ -10,6 +10,12 @@ class Ability
         site.users.include?(user)
       end
     end
+    
+    if user.role? :designer
+      can :index, User, :site_id => user.site_id
+      can [:show, :update, :destroy], User, :puid => user.puid, :site_id => user.site_id
+      can :manage, [Layout, Page, MediaFile], :site_id => user.site_id
+    end
 
     if user.role? :editor 
       can :index, User, :site_id => user.site_id
