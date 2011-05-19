@@ -124,6 +124,6 @@ Scenario: Cannot delete page the user is an editor of
   | foobar | published | 
   | bar    | draft     |
   When I go to the admin pages page
-  Then I should not see "delete" within "li#foobar"
-  Then I should not see "delete" within "li#bar"
+  Then I should not see the "delete" button in "li#foobar"
+  And I should not see the "delete" button in "li#bar"
 

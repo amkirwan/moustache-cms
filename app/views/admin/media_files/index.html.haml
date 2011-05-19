@@ -10,7 +10,7 @@
         %div= link_to media_file.name, edit_admin_media_file_path(media_file)
         %div= media_file.created_by.puid
         - if can? :delete, media_file
-          %div.destroy= button_to "delete", admin_media_file_path(media_file), :method => :delete, :confirm => "Are you sure you want to delete #{media_file.name}" 
+          %div.delete= button_to "delete", admin_media_file_path(media_file), :method => :delete, :confirm => "Are you sure you want to delete #{media_file.name}" 
   
 
 #add_media_file

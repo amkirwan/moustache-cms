@@ -81,5 +81,5 @@ Scenario: Given I am logged in as an editor then I can delete media files I crea
   When I go to the admin media files page
   Then I should be on the admin media files page
   And I should not see the "delete" button in "li#foobar"
-  And I should not see "delete" within "li#bar"
-  And show me the page
+  And I should not see the "delete" button in "li#bar"
+

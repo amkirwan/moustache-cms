@@ -70,5 +70,5 @@ Scenario: Given I am logged in as an editor then I cannot edit another users acc
   | foo    | admin  | foobar.example.com |
   | bar    | editor | foobar.example.com |
   When I go to the admin users page
-  Then I should not see "delete" within "li#foo"
-  Then I should not see "delete" within "li#bar"
+  Then I should not see the "delete" button in "li#foo"
+  And I should not see the "delete" button in "li#bar"
