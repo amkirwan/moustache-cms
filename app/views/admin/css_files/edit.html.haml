@@ -1,0 +1,4 @@
+#edit_new_css_file
+  %h3 Edit CSS File #{@css_file.name}
+  = render :partial => "form",  
+           :locals => { :css_file => @css_file, :button_label => "Update CSS File" }
