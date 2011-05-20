@@ -1,0 +1,11 @@
+= form_for([:admin, css_file]) do |f|
+  = render :partial => "shared/error_messages", 
+           :locals => { :target => css_file }
+  %fieldset
+    = f.label :name
+    = f.text_field :name
+  %fieldset 
+    = f.label :content
+    = f.text_area :content
+  %fieldset
+    = f.submit button_label

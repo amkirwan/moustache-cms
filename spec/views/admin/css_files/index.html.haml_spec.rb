@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe "admin/css_files/index.html.haml" do
-  let(:css_files) { [mock_model("CssFile", :name => "foobar")] }
+  let(:css_files) { [stub_model(CssFile, :name => "foobar")] }
   
   before(:each) do
     assign(:css_files, css_files)

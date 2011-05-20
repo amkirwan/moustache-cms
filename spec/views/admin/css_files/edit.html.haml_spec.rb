@@ -3,7 +3,7 @@ require "spec_helper"
 
 describe "admin/css_files/edit.html.haml" do
   
-  let(:css_file) { mock_model("CssFile", :name => "foobar") }
+  let(:css_file) { stub_model(CssFile, :name => "foobar") }
   let(:current_user) { stub_model(User, :role? => true) }
    
   before(:each) do 
