@@ -5,7 +5,7 @@ class Ability
     user ||= User.new   
 
     if user.role? :admin
-      can :manage, [User, Layout, Page, MediaFile], :site_id => user.site_id
+      can :manage, [User, Layout, Page, MediaFile, CssFile], :site_id => user.site_id
       can :manage, Site do |site|
         site.users.include?(user)
       end
@@ -14,7 +14,7 @@ class Ability
     if user.role? :designer
       can :index, User, :site_id => user.site_id
       can [:show, :update, :destroy], User, :puid => user.puid, :site_id => user.site_id
-      can :manage, [Layout, Page, MediaFile], :site_id => user.site_id
+      can :manage, [Layout, Page, MediaFile, CssFile], :site_id => user.site_id
     end
 
     if user.role? :editor 

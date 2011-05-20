@@ -11,7 +11,7 @@ describe Admin::LayoutsController do
   end
   
   describe "GET index" do    
-    let(:layouts) { [mock_model(Layout, :name => "foobar"), mock_model(Layout, :name => "bar")] }
+    let(:layouts) { [layout] }
       
     before(:each) do
       Layout.stub(:accessible_by).and_return(layouts)
