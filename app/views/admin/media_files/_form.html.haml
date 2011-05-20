@@ -12,8 +12,8 @@
       = f.label :media_asset, "Asset Source"
       = f.file_field :media_asset
   - else
-    %p 
-      The current file is available at
+    %div 
+      %h6 The current file is available at
       = link_to "http://#{@current_site.full_subdomain}#{media_file.media_asset.url}", media_file.media_asset.url
   %fieldset
     = f.label :alt_txt, "Alt Text"

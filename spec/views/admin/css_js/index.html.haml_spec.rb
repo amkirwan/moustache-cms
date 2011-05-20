@@ -2,10 +2,10 @@
 require 'spec_helper'
 
 describe "admin/css_files/index.html.haml" do
-  let(:css_files) { [stub_model(CssFile, :name => "foobar")] }
+  let(:theme_css_js_files) { [stub_model(ThemeCssFile, :name => "foobar")] }
   
   before(:each) do
-    assign(:css_files, css_files)
+    assign(:theme_css_js_files, theme_css_js_files)
   end
   
   it "should display the css filename" do
@@ -16,7 +16,7 @@ describe "admin/css_files/index.html.haml" do
   
   it "should make the css filename a clickable link to edit" do
     render
-    css_files.each do |css|
+    theme_css_js_files.each do |css|
       rendered.should have_selector("li##{css.name}") do |li|
         li.should have_selector("a", :content => "#{css.name}", :href => edit_admin_css_file_path(css))
       end
@@ -25,7 +25,7 @@ describe "admin/css_files/index.html.haml" do
   
   it "should render a delete button to destroy the css file" do
     render
-    css_files.each do |css|
+    theme_css_js_files.each do |css|
       rendered.should have_selector("form", :method => "post", :action => admin_css_file_path(css)) do |f|
         f.should have_selector("input", :value => "delete")
       end

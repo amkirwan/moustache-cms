@@ -1,0 +1,11 @@
+#theme_css_js
+  #h3 Theme CSS & JavaScript Files
+  %ul
+    - @theme_css_js_files.each do |css_js|
+      %li{ :id => "#{css_js.name}"}
+        %div= link_to css_js.name, edit_admin_css_js_file_path(css_js)
+        %div.delete= button_to "delete", admin_css_js_file_path(css_js), :method => :delete, :confirm => "Are you sure you want to delete the css_js file #{css_js.name}"
+        
+#add_theme_css_js
+  %ul#new_theme_css_js_file
+    %li= link_to "Add CSS or JS File", new_admin_css_js_file_path

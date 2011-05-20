@@ -7,5 +7,12 @@
   %fieldset 
     = f.label :content
     = f.text_area :content
+  %div Or Upload File
+  - if media_file.new_record?
+    %fieldset
+      = f.label :media_asset, "Asset Source"
+      = f.file_field :media_asset
+  %fieldset
+    =
   %fieldset
     = f.submit button_label

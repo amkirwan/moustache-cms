@@ -45,5 +45,11 @@ describe "admin/css_files/_form.html.haml" do
         f.should have_selector("textarea", :name => "css_file[content]")
       end
     end
+    
+    it "should render an upload button" do
+      form_new(:action => admin_css_files_path) do |f|
+        f.should have_selector("input", :type => "file", :name => "css_file[media_asset]")
+      end
+    end
   end
 end
