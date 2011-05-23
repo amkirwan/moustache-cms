@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Asset do  
   let(:site) { Factory(:site) }
-  let(:user) { Factory(:user) }
+  let(:user) { Factory(:user, :site => site) }
   
   after(:all) do
     AssetFixtureHelper.reset!
