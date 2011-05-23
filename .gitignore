@@ -4,3 +4,4 @@ log/*.log
 tmp/**/*
 tmp/*
 public/uploads
+spec/tmp/**/*

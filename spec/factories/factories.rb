@@ -81,11 +81,12 @@ Factory.define :parent_page, :parent => :page do |pp|
   pp.page_type { Factory.build(:page_type) }
 end
 
-Factory.define :media_file do |mf|
-  mf.sequence(:name) { |n| "name_#{n}"}
-  mf.description "media file description"
-  mf.alt_txt "media file alt_txt"
-  mf.sequence(:media_asset) { |n| "media_asset_#{n}" }
-  mf.created_by { Factory.build(:user) }
-  mf.updated_by { Factory.build(:user) }
+Factory.define :asset do |asset|
+  asset.sequence(:name) { |n| "name_#{n}"}
+  asset.content_type "content_type"
+  asset.width 200
+  asset.height 200
+  asset.size 200
+  asset.created_by { Factory.build(:user) }
+  asset.updated_by { Factory.build(:user) }
 end
