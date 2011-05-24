@@ -19,8 +19,8 @@ module NavigationHelpers
       edit_admin_layout_path($1)
     when /the edit admin page page for "([^\"]*)"/
       edit_admin_page_path($1)      
-    when /the edit admin media file page for "([^\"]*)"/
-      edit_admin_media_file_path($1)
+    when /the edit admin site asset page for "([^\"]*)"/
+      edit_admin_site_asset_path($1)
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

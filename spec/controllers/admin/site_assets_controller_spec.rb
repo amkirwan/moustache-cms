@@ -109,7 +109,7 @@ describe Admin::SiteAssetsController do
       
       it "should assign a flash message that the site_asset was saved" do
         do_post
-        flash[:notice].should == "Successfully created the media file #{site_asset.name}"
+        flash[:notice].should == "Successfully created the asset #{site_asset.name}"
       end
       
       it "should redirect to the admin/site_assets/index" do
@@ -194,7 +194,7 @@ describe Admin::SiteAssetsController do
       
       it "should assign the flash message with successful update" do
         do_put
-        flash[:notice].should == "Successfully updated the media file #{site_asset.name}"
+        flash[:notice].should == "Successfully updated the asset #{site_asset.name}"
       end
       
       it "should redirect to the site_asset index page" do
@@ -236,7 +236,7 @@ describe Admin::SiteAssetsController do
     
     it "should assign the flash message that the media file was successfully destroyed" do
       do_destroy
-      flash[:notice].should == "Successfully deleted the media file #{site_asset.name}"
+      flash[:notice].should == "Successfully deleted the asset #{site_asset.name}"
     end
     
     it "should redirect to admin/site_asset/index when the file is destroyed" do

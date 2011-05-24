@@ -53,7 +53,8 @@ Spork.prefork do
     Before { DatabaseCleaner.clean }
   rescue NameError
     raise "You need to add database_cleaner to your Gemfile (in the :test group) if you wish to use it."
-  end
+  end        
+  require File.expand_path("#{Rails.root}" + '/spec/spec_helpers/asset_fixture_helper')
 end
 
 Spork.each_run do

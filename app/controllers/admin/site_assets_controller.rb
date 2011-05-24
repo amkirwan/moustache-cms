@@ -21,7 +21,7 @@ class Admin::SiteAssetsController < AdminBaseController
     created_updated_by_for @site_asset
     @site_asset.attributes = { :site => @current_site }
     if @site_asset.save
-      flash[:notice] = "Successfully created the media file #{@site_asset.name}"
+      flash[:notice] = "Successfully created the asset #{@site_asset.name}"
       redirect_to admin_site_assets_path
     else
       render :new
@@ -32,7 +32,7 @@ class Admin::SiteAssetsController < AdminBaseController
   def update
     @site_asset.updated_by = current_user
     if @site_asset.update_attributes(params[:site_asset])
-      flash[:notice] = "Successfully updated the media file #{@site_asset.name}"
+      flash[:notice] = "Successfully updated the asset #{@site_asset.name}"
       redirect_to admin_site_assets_path
     else
       render :edit
@@ -42,7 +42,7 @@ class Admin::SiteAssetsController < AdminBaseController
   # DELETE /admin/site_assets/1
   def destroy
     if @site_asset.destroy
-      flash[:notice] = "Successfully deleted the media file #{@site_asset.name}"
+      flash[:notice] = "Successfully deleted the asset #{@site_asset.name}"
       redirect_to admin_site_assets_path
     end
   end

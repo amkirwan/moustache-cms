@@ -24,7 +24,8 @@ class Ability
       can [:update, :destroy], Page do |page|
         page.editors.include?(user) && page.site_id == user.site_id
       end
-      can [:manage], SiteAsset, :site_id => user.site_id
+      can [:read, :create, :update], SiteAsset, :site_id => user.site_id  
+      can :destroy, SiteAsset, :created_by_id => user.id, :site_id => user.site_id
     end
   end    
 end
