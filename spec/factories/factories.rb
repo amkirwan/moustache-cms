@@ -81,7 +81,7 @@ Factory.define :parent_page, :parent => :page do |pp|
   pp.page_type { Factory.build(:page_type) }
 end
 
-Factory.define :asset do |asset|
+Factory.define :site_asset do |asset|
   asset.sequence(:name) { |n| "name_#{n}"}
   asset.content_type "content_type"
   asset.width 200

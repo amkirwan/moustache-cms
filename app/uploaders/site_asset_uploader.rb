@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-class AssetUploader < CarrierWave::Uploader::Base
+class SiteAssetUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or ImageScience support:
   # include CarrierWave::RMagick

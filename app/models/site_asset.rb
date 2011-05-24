@@ -1,4 +1,4 @@
-class Asset
+class SiteAsset
   include Mongoid::Document
   
   attr_accessible :name, :content_type, :width, :height, :size, :source
@@ -9,7 +9,7 @@ class Asset
   field :width, :type => Integer
   field :height, :type => Integer
   field :size, :type => Integer
-  mount_uploader :source, AssetUploader
+  mount_uploader :source, SiteAssetUploader
   
   # -- Associations -------------
   belongs_to :created_by, :class_name => "User"
