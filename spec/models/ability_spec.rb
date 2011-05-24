@@ -18,8 +18,8 @@ describe Ability do
   let(:page) { Factory.build(:page, :site => site, :editors => [ admin, editor ]) }
   let(:page2) { Factory.build(:page, :site => site2, :editors => [ admin2, editor2 ]) } 
   
-  let(:media_file) { Factory.build(:media_file, :site => site, :created_by => editor) }
-  let(:media_file2) { Factory.build(:media_file, :site => site2, :created_by => editor2) }
+  let(:site_asset) { Factory.build(:site_asset, :site => site, :created_by => editor) }
+  let(:site_asset2) { Factory.build(:site_asset, :site => site2, :created_by => editor2) }
   
   let(:admin_ability) { Ability.new(admin) }
   let(:admin_ability2) { Ability.new(admin2) }
@@ -45,7 +45,7 @@ describe Ability do
         admin_ability.should be_able_to(:manage, admin)
         admin_ability.should be_able_to(:manage, page)
         admin_ability.should be_able_to(:manage, layout)
-        admin_ability.should be_able_to(:manage, media_file)
+        admin_ability.should be_able_to(:manage, site_asset)
         admin_ability.should be_able_to(:manage, site)
       end
     end
@@ -87,7 +87,7 @@ describe Ability do
           admin_ability.should be_able_to(:manage, page)
           admin_ability.should be_able_to(:manage, layout)
           admin_ability.should be_able_to(:manage, site)
-          admin_ability.should be_able_to(:manage, media_file)  
+          admin_ability.should be_able_to(:manage, site_asset)  
         end
       end
     end
@@ -136,20 +136,20 @@ describe Ability do
         end
 
         describe "MediaFile Approved" do
-          it "should allow the user with a role of editor to read(:index, :show) media_files" do
-            editor_ability.should be_able_to(:read, media_file)
+          it "should allow the user with a role of editor to read(:index, :show) site_assets" do
+            editor_ability.should be_able_to(:read, site_asset)
           end
 
-          it "should allow the user with a role of editor to create media_files" do
-            editor_ability.should be_able_to(:create, media_file)
+          it "should allow the user with a role of editor to create site_assets" do
+            editor_ability.should be_able_to(:create, site_asset)
           end
 
-          it "should allow the user witha role of editor to update media_files they created" do
-            editor_ability.should be_able_to(:update, media_file)
+          it "should allow the user witha role of editor to update site_assets they created" do
+            editor_ability.should be_able_to(:update, site_asset)
           end
 
           it "should do something" do
-            editor_ability.should be_able_to(:destroy, media_file)
+            editor_ability.should be_able_to(:destroy, site_asset)
           end
         end
       end
@@ -209,7 +209,7 @@ describe Ability do
           editor_ability.should_not be_able_to(:destroy, Factory.build(:page))
         end
 
-        it "should not allow the user to manage pages on another site" do
+        it "should not allow the user to manage pages on another site" do 
           editor_ability.should_not be_able_to(:read, page2)
           editor_ability.should_not be_able_to(:create, page2)
           editor_ability.should_not be_able_to(:update, page2)
@@ -218,15 +218,11 @@ describe Ability do
       end
 
       describe "MediaFile Model Not Approved" do
-        it "should not allow the user to destroy media_files they didn't create" do
-          editor_ability.should_not be_able_to(:destroy, Factory.build(:media_file, :created_by => admin, :site => site))
-        end
-        
-        it "should not allow the user to manage media_files on another site" do
-          editor_ability.should_not be_able_to(:read, media_file2)
-          editor_ability.should_not be_able_to(:create, media_file2)
-          editor_ability.should_not be_able_to(:update, media_file2)
-          editor_ability.should_not be_able_to(:destroy, media_file2)
+        it "should not allow the user to manage site_assets on another site" do
+          editor_ability.should_not be_able_to(:read, site_asset2)
+          editor_ability.should_not be_able_to(:create, site_asset2)
+          editor_ability.should_not be_able_to(:update, site_asset2)
+          editor_ability.should_not be_able_to(:destroy, site_asset2)
         end
       end
   end   

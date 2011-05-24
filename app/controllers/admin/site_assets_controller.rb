@@ -18,32 +18,32 @@ class Admin::SiteAssetsController < AdminBaseController
 
   # POST /admin/media_files
   def create
-    created_updated_by_for @media_file
-    @media_file.attributes = { :site => @current_site }
-    if @media_file.save
-      flash[:notice] = "Successfully created the media file #{@media_file.name}"
-      redirect_to admin_media_files_path
+    created_updated_by_for @site_asset
+    @site_asset.attributes = { :site => @current_site }
+    if @site_asset.save
+      flash[:notice] = "Successfully created the media file #{@site_asset.name}"
+      redirect_to admin_site_assets_path
     else
       render :new
     end
   end
 
-  # PUT /admin/media_files/1
+  # PUT /admin/site_assets/1
   def update
-    @media_file.updated_by = current_user
-    if @media_file.update_attributes(params[:media_file])
-      flash[:notice] = "Successfully updated the media file #{@media_file.name}"
-      redirect_to admin_media_files_path
+    @site_asset.updated_by = current_user
+    if @site_asset.update_attributes(params[:site_asset])
+      flash[:notice] = "Successfully updated the media file #{@site_asset.name}"
+      redirect_to admin_site_assets_path
     else
       render :edit
     end
   end
 
-  # DELETE /admin/media_files/1
+  # DELETE /admin/site_assets/1
   def destroy
-    if @media_file.destroy
-      flash[:notice] = "Successfully deleted the media file #{@media_file.name}"
-      redirect_to admin_media_files_path
+    if @site_asset.destroy
+      flash[:notice] = "Successfully deleted the media file #{@site_asset.name}"
+      redirect_to admin_site_assets_path
     end
   end
 end
