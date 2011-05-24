@@ -4,7 +4,7 @@ Etherweb::Application.routes.draw do
     resources :users
     resources :layouts, :except => :show
     resources :pages, :except => :show
-    resources :media_files
+    resources :site_assets
     resources :theme_css_js
   end
   

@@ -4,8 +4,9 @@ class SiteAsset
   attr_accessible :name, :content_type, :width, :height, :size, :source
   
   # -- Fields --------------- 
-  field :name, :type => String
-  field :content_type, :type => String
+  field :name
+  field :description
+  field :content_type
   field :width, :type => Integer
   field :height, :type => Integer
   field :size, :type => Integer

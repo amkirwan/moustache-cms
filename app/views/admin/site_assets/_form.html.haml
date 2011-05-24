@@ -1,0 +1,19 @@
+= form_for([:admin, site_asset], :html => {:multipart => true}) do |f|
+  = render :partial => "shared/error_messages", 
+           :locals => { :target => site_asset }
+  %fieldset
+    = f.label :name
+    = f.text_field :name
+  %fieldset
+    = f.label :description
+    = f.text_area :description, :cols => "25", :rows => "10"
+  - if site_asset.new_record?
+    %fieldset
+      = f.label :source, "Asset Source"
+      = f.file_field :source
+  - else
+    %div 
+      %h6 The current file is available at
+      = link_to "http://#{@current_site.full_subdomain}#{site_asset.source.url}", site_asset.source.url
+  %fieldset
+    = f.submit button_label             

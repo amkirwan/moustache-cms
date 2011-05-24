@@ -1,4 +1,4 @@
-class Admin::MediaFilesController < AdminBaseController
+class Admin::SiteAssetsController < AdminBaseController
   # GET /admin/media_files
   def index
   end
