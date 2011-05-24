@@ -1,4 +1,4 @@
-#edit_media_file
-  %h3 Edit Media File #{@media_file.name.humanize}
+#edit_site_asset
+  %h3 Edit Asset #{@site_asset.name.humanize}
   = render :partial => "form",
-           :locals => { :media_file => @media_file, :button_label => "Update Media File"}
+           :locals => { :site_asset => @site_asset, :button_label => "Update Asset"}
