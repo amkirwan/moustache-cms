@@ -13,9 +13,9 @@ end
 Given /^"([^\"]*)" has created the site asset "([^\"]*)"$/ do |puid, asset_name|
   user = User.find_by_puid(puid)
   When %{I go to the new admin site asset page}
-  Given %{I fill in "site_asset_name" with "#{asset_name}" within "div#new_site_asset"}
+  Given %{I fill in "site_asset_name" with "#{asset_name}" within "div#add_new_site_asset"}
   Given %{I attach the file "spec/fixtures/assets/rails.png" to "site_asset_source"}
-  Given %{I press "Save Asset" within "div#new_site_asset"}
+  Given %{I press "Save Asset" within "div#add_new_site_asset"}
 end
 
 Then /^I should see the url for the file "([^\"]*)"$/ do |site_asset_name|

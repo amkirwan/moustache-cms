@@ -26,10 +26,10 @@ Scenario: Navigate to the MediaFile#index page
 Scenario: Editor can create a new media file
   When I go to the admin site assets page
   And I follow "Add Asset" within "ul#new_site_asset"
-  And I fill in "site_asset_name" with "foobar" within "div#new_site_asset"
-  And I fill in "site_asset_description" with "Hello, World!" within "div#new_site_asset"
+  And I fill in "site_asset_name" with "foobar" within "div#add_new_site_asset"
+  And I fill in "site_asset_description" with "Hello, World!" within "div#add_new_site_asset"
   And I attach the file "public/images/rails.png" to "site_asset_source"
-  And I press "Save Asset" within "div#new_site_asset"
+  And I press "Save Asset" within "div#add_new_site_asset"
   Then I should be on the admin site assets page
   And I should see "Successfully created the asset foobar"
   And I should see "foobar"
