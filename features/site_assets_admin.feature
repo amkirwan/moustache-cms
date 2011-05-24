@@ -12,83 +12,81 @@ And the user with the role exist
 
 @admin_index_site_asset
 Scenario: Navigate to the Layout#index page
-  Given these media files exist in the site "foobar.example.com" created by user "ak730"
+  Given these site assets exist in the site "foobar.example.com" created by user "ak730"
   | name   | 
   | foobar | 
   | bar    |
-  When I go to the admin media files page
-  Then I should be on the admin media files page
+  When I go to the admin site assets page
+  Then I should be on the admin site assets page
   And I should see "foobar"
   And I should see the "delete" button
-  And I should see "Add Media File"
+  And I should see "Add Asset"
   
 @admin_should_not_access_other_site 
-Scenario: Should not be able to access another sites media files
+Scenario: Should not be able to access another sites site assets
   Given the site "baz" exists with the domain "example.dev"
-  When I go to the admin media files page
+  When I go to the admin site assets page
   Then I should see "403"
 
 @create_new_site_asset
 Scenario: Create a new media file
-  When I go to the admin media files page
-  And I follow "Add Media File" within "ul#new_site_asset"
-  And I fill in "site_asset_name" with "foobar" within "div#new_site_asset"
+  When I go to the admin site assets page
+  And I follow "Add Asset" within "ul#new_site_asset"
+  And I fill in "site_asset_name" with "foobar" within "div#add_new_site_asset"
   And I fill in "site_asset_description" with "Hello, World!" within "div#add_new_site_asset"
-  And I attach the file "public/images/rails.png" to "site_asset_media_asset"
-  And I fill in "site_asset_alt_txt" with "foobar" within "div#add_new_site_asset"  
-  And I press "Save Media" within "div#add_new_site_asset"
-  Then I should be on the admin media files page
-  And I should see "Successfully created the media file foobar"
+  And I attach the file "spec/fixtures/assets/rails.png" to "site_asset_source" 
+  And I press "Save Asset" within "div#add_new_site_asset"
+  Then I should be on the admin site assets page
+  And I should see "Successfully created the asset foobar"
   And I should see "foobar"
   And I should see the "delete" button
 
 @edit_site_asset
-Scenario: Given I am logged in as an admin then I can edit the media files I created 
-  Given "ak730" has created the media asset "rails"
-  When I go to the admin media files page
+Scenario: Given I am logged in as an admin then I can edit the site assets I created 
+  Given "ak730" has created the site asset "rails"
+  When I go to the admin site assets page
   And I follow "rails" within "li#rails"
-  Then I should now be editing the media file "rails"
+  Then I should now be editing the site asset "rails"
   And I fill in "site_asset_name" with "foobar" within "div#edit_site_asset"
   And I fill in "site_asset_description" with "New Text" within "div#edit_site_asset"
   And I should see the url for the file "rails"
-  And I fill in "site_asset_alt_txt" with "other alt text" within "div#edit_site_asset"  
-  And I press "Update Media File" within "div#edit_site_asset"
-  Then I should be on the admin media files page
-  And I should see "Successfully updated the media file foobar"
+  And I press "Update Asset" within "div#edit_site_asset"
+  Then I should be on the admin site assets page
+  And I should see "Successfully updated the asset foobar"
   And I should see "foobar"
   And I should see the "delete" button
   
 @edit_site_asset_created_by_another_user
-Scenario: Given I am logged in as an admin then I can edit the media files created by another user
-  Given "rg874" has created the media asset "rails"
-  When I go to the admin media files page
+Scenario: Given I am logged in as an admin then I can edit the site assets created by another user
+  Given "rg874" has created the site asset "rails"
+  When I go to the admin site assets page
   And I follow "rails" within "li#rails"
-  Then I should now be editing the media file "rails"
+  Then I should now be editing the site asset "rails"
   And I fill in "site_asset_name" with "foobar" within "div#edit_site_asset" 
-  And I press "Update Media File" within "div#edit_site_asset"
-  Then I should be on the admin media files page
-  And I should see "Successfully updated the media file foobar"
+  And I press "Update Asset" within "div#edit_site_asset"
+  Then I should be on the admin site assets page
+  And I should see "Successfully updated the asset foobar"
   
 @admin_delete_site_asset
-Scenario: Admin can delete media files
-  Given these media files exist in the site "foobar.example.com" created by user "ak730"
+Scenario: Admin can delete site assets
+  Given these site assets exist in the site "foobar.example.com" created by user "ak730"
   | name   | 
   | foobar | 
   | bar    |
-  When I go to the admin media files page
-  Then I should be on the admin media files page
+  When I go to the admin site assets page
+  Then I should be on the admin site assets page
   And I press "delete" within "li#foobar"
-  And I should see "Successfully deleted the media file foobar"
-  And I should be on the admin media files page
+  And I should see "Successfully deleted the asset foobar"
+  And I should be on the admin site assets page
   
 @admin_delete_site_asset_created_by_another_user
 Scenario: Given I am logged in as an admin then I can delete files created by another user
-  Given these media files exist in the site "foobar.example.com" created by user "rg874"
+  Given these site assets exist in the site "foobar.example.com" created by user "rg874"
   | name   | 
   | foobar | 
   | bar    |
-  When I go to the admin media files page
-  Then I should be on the admin media files page
+  When I go to the admin site assets page
+  Then I should be on the admin site assets page
   And I press "delete" within "li#foobar"
-  And I should see "Successfully deleted the media file foobar"
-  And I should be on the admin media files page
+  And I should see "Successfully deleted the asset foobar"
+  And I should be on the admin site assets page
