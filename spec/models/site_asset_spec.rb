@@ -14,12 +14,12 @@ describe SiteAsset do
   
   describe "it should allow mass assignment of the fields" do
     it "should allow mass assignment of" do
-      site_asset = SiteAsset.new(:name => "foobar", :content_type => "css", :width => 10, :height => 10, :size => 10, :source => AssetFixtureHelper.open("rails.png"))
+      site_asset = SiteAsset.new(:name => "foobar", :content_type => "css", :width => 10, :height => 10, :file_size => 10, :source => AssetFixtureHelper.open("rails.png"))
       site_asset.name.should == "foobar"
       site_asset.content_type.should == "css"
       site_asset.width.should == 10
       site_asset.height.should == 10
-      site_asset.size.should == 10
+      site_asset.file_size.should == 10
       site_asset.source.should_not be_nil
     end 
   end
@@ -44,6 +44,20 @@ describe SiteAsset do
       @site_asset.remove_source!
       @site_asset.should_not be_valid
     end
+  end   
+  
+  # -- Callbacks -----------
+  describe "before_save" do
+    describe "#update_asset_attributes" do
+      it "should set the size of the file" do
+        @site_asset.file_size.should == 6646
+      end  
+      
+      it "should set the file content_type" do   
+        pending("can only seem to set content_type when uploading")
+        @site_asset.content_type.should == "image/png"         
+      end
+    end
   end
   
   # --  Associations -----------------------------------------------
@@ -58,6 +72,21 @@ describe SiteAsset do
 
      it "should belong_to a user with updated_by" do
        @site_asset.should belong_to(:updated_by).of_type(User)
+     end
+   end 
+   
+   # -- Methods ----------
+   describe "Instance Methods" do
+     describe "#image?" do
+       it "should return true that the site_asset is an image" do
+         @site_asset.content_type = "image/png"
+         @site_asset.image?.should be_true
+       end     
+       
+       it "should return false when the site_asset is not an image" do  
+          @site_asset.content_type = "text/html"
+          @site_asset.image?.should be_false
+       end  
      end
    end
 end

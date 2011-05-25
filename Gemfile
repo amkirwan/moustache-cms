@@ -15,7 +15,8 @@ gem "mustache", ">= 0.99"
 gem "RedCloth", "~> 4.2"
 gem "redcarpet", "~> 1.11"
 gem "rack-ssl-enforcer", "~> 0.2"
-gem "carrierwave", "~> 0.5"
+gem "carrierwave", :git => "git://github.com/jnicklas/carrierwave.git"
+gem "mini_magick"
 
 group :development, :test do
   gem "rspec-rails", "~> 2.6" 

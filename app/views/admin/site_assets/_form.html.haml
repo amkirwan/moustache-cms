@@ -9,7 +9,8 @@
     = f.text_area :description, :cols => "25", :rows => "10"
   - if !site_asset.new_record?
     %h6 The current file is available at
-    = link_to "http://#{@current_site.full_subdomain}#{site_asset.source.url}", site_asset.source.url  
+    = link_to "http://#{@current_site.full_subdomain}#{site_asset.source.url}", site_asset.source.url 
+  = image_tag(site_asset.source.url) if site_asset.source? 
   = f.label :source, "Asset Source"
   = f.file_field :source
   = f.hidden_field :source_cache

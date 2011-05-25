@@ -82,11 +82,11 @@ Factory.define :parent_page, :parent => :page do |pp|
 end
 
 Factory.define :site_asset do |asset|
-  asset.sequence(:name) { |n| "name_#{n}"}
+  asset.name "asset_name"
   asset.content_type "content_type"
   asset.width 200
   asset.height 200
-  asset.size 200
+  asset.file_size 200
   asset.created_by { Factory.build(:user) }
   asset.updated_by { Factory.build(:user) }
 end

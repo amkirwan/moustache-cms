@@ -116,6 +116,13 @@ describe Admin::SiteAssetsController do
         do_post
         response.should redirect_to(admin_site_assets_path)
       end
+    end    
+    
+    context "when the source_cache is not nil and source is nil" do
+      it "should set the source to the source_cache" do   
+        site_asset.should_receive(:source=)
+        do_post
+      end
     end
     
     context "with invalid params" do
