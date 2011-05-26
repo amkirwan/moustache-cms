@@ -58,6 +58,15 @@ describe SiteAsset do
         @site_asset.content_type.should == "image/png"         
       end
     end
+    
+    describe "#before_update" do
+      it "should update the filename and recreate version when a new name is given" do
+        @site_asset.name = "new_name"
+        @site_asset.save
+        @site_asset.source.filename.should == "new_name.png"
+        @site_asset.source.url.should =~ /new_name.png/
+      end
+    end
   end
   
   # --  Associations -----------------------------------------------

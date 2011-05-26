@@ -14,10 +14,11 @@ class SiteAsset
   
   # -- Callbacks
   before_save :update_asset_attributes
-  before_update :recreate
+  before_update :recreate, :if => "self.name_changed?"
     
   def recreate
     self.source.recreate_versions!
+    self.source_filename = "#{self.name}.#{self.source.file.extension}"
   end
   
   def update_asset_attributes         

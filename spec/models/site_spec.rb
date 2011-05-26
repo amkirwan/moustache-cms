@@ -56,8 +56,8 @@ describe Site do
       @site.should have_many(:pages)
     end 
     
-    it "should reference many media_files" do
-      @site.should have_many(:media_files).of_type(MediaFile)
+    it "should reference many site_assets" do
+      @site.should have_many(:site_assets).of_type(SiteAsset)
     end 
     
     it "should have many layouts" do
@@ -91,7 +91,7 @@ describe Site do
       @user = Factory(:user, :site => @site)
       @layout = Factory(:layout, :site => @site, :created_by => @user, :updated_by => @user)
       @page = Factory(:page, :site => @site, :layout => @layout, :created_by => @user, :updated_by => @user, :editor_ids => [@user.id])
-      @media_file = Factory(:media_file, :site => @site, :created_by => @user, :updated_by => @user) 
+      @site_asset = Factory(:site_asset, :site => @site, :created_by => @user, :updated_by => @user) 
     end
     
     describe "#destroy_pages" do
@@ -118,11 +118,11 @@ describe Site do
       end
     end
     
-    describe "#destroy_media_files" do
-      it "should destroy all the media_files associated with the site" do
-        @site.media_files.count.should == 1
+    describe "#destroy_site_assets" do
+      it "should destroy all the site_assets associated with the site" do
+        @site.site_assets.count.should == 1
         @site.destroy
-        @site.media_files.count.should == 0
+        @site.site_assets.count.should == 0
       end
     end
   end

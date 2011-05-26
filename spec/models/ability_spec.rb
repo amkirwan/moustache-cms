@@ -82,7 +82,7 @@ describe Ability do
         end
       end
       
-      describe "Page Layout MediaFile Approved" do
+      describe "Page Layout SiteAsset Approved" do
         it "should allow the designer to edit all pages, layouts and mediafiles" do
           admin_ability.should be_able_to(:manage, page)
           admin_ability.should be_able_to(:manage, layout)
@@ -135,7 +135,7 @@ describe Ability do
           end      
         end
 
-        describe "MediaFile Approved" do
+        describe "SiteAsset Approved" do
           it "should allow the user with a role of editor to read(:index, :show) site_assets" do
             editor_ability.should be_able_to(:read, site_asset)
           end
@@ -217,7 +217,7 @@ describe Ability do
         end
       end
 
-      describe "MediaFile Model Not Approved" do
+      describe "SiteAsset Model Not Approved" do
         it "should not allow the user to manage site_assets on another site" do
           editor_ability.should_not be_able_to(:read, site_asset2)
           editor_ability.should_not be_able_to(:create, site_asset2)

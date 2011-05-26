@@ -17,7 +17,7 @@ class Site
   # -- Associations ---------------------------------------
   has_many :pages, :dependent => :delete
   has_many :layouts, :dependent => :delete
-  has_many :media_files, :dependent => :delete
+  has_many :site_assets, :dependent => :delete
   has_many :users, :dependent => :delete
     
   # -- Validations ----------------------------------------

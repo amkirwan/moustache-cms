@@ -148,8 +148,8 @@ describe User do
       @user.should have_many(:pages_updated).of_type(Page)
     end
     
-    it "should reference many media_files" do
-      @user.should have_many(:media_files).of_type(MediaFile)
+    it "should reference many site_asset" do
+      @user.should have_many(:site_assets).of_type(SiteAsset)
     end
     
     it "should have many editors" do

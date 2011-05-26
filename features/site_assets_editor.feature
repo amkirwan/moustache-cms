@@ -11,7 +11,7 @@ And the user with the role exist
 
 
 @editor_site_asset_file
-Scenario: Navigate to the MediaFile#index page
+Scenario: Navigate to the SiteAsset#index page
   Given these site assets exist in the site "foobar.example.com" created by user "ak730"
   | name   | 
   | foobar | 
