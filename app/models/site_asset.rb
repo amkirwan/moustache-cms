@@ -13,7 +13,12 @@ class SiteAsset
   mount_uploader :source, SiteAssetUploader  
   
   # -- Callbacks
-  before_save :update_asset_attributes  
+  before_save :update_asset_attributes
+  before_update :recreate
+    
+  def recreate
+    self.source.recreate_versions!
+  end
   
   def update_asset_attributes         
     self.content_type = source.file.content_type
@@ -37,6 +42,6 @@ class SiteAsset
             
   # -- Instance Methods     
   def image?
-    self.source.image?
+    self.source.image?(self)
   end
 end

@@ -19,7 +19,10 @@ class Admin::SiteAssetsController < AdminBaseController
   # POST /admin/media_files
   def create
     created_updated_by_for @site_asset
-    @site_asset.attributes = { :site => @current_site }
+    @site_asset.site = @current_site 
+    if !params[:site_asset][:source_cache].empty? && params[:site_asset][:source].nil?
+      set_from_cache(params[:site_asset][:source_cache])
+    end
     if @site_asset.save
       flash[:notice] = "Successfully created the asset #{@site_asset.name}"
       redirect_to admin_site_assets_path
@@ -31,6 +34,9 @@ class Admin::SiteAssetsController < AdminBaseController
   # PUT /admin/site_assets/1
   def update
     @site_asset.updated_by = current_user
+    if !params[:site_asset][:source_cache].empty? && params[:site_asset][:source].nil?
+      set_from_cache(params[:site_asset][:source_cache])
+    end
     if @site_asset.update_attributes(params[:site_asset])
       flash[:notice] = "Successfully updated the asset #{@site_asset.name}"
       redirect_to admin_site_assets_path
@@ -46,4 +52,10 @@ class Admin::SiteAssetsController < AdminBaseController
       redirect_to admin_site_assets_path
     end
   end
+  
+  private 
+    def set_from_cache(cache_name)
+      @site_asset.source.retrieve_from_cache!(cache_name)
+      @site_asset.source.store!
+    end
 end

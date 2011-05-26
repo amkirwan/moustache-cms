@@ -51,6 +51,33 @@ describe "admin/site_assets/_form.html.haml" do
         f.should have_selector("input", :type => "file", :name => "site_asset[source]")
       end
     end
+    
+    it "should render a hidden field to cache the file tmp path on redisplay" do
+      form_new(:action => admin_site_assets_path) do |f|
+        f.should have_selector("input", :type => "hidden", :name => "site_asset[source_cache]")
+      end
+    end
+  end
+  
+  context "when redisplaying new field form because of validation error should cache the image source from tmp" do
+    before(:each) do
+      site_asset.as_new_record
+    end
+    
+    it "should show the cached image" do
+      site_asset.stub(:source? => true)
+      site_asset.stub_chain(:source, :thumb, :url => "/spec/fixtures/assets/rails.png")
+      do_render("Save Media")
+      rendered.should have_selector("img", :src => "/spec/fixtures/assets/rails.png")
+    end
+    
+    it "should cache the file tmp path on redisplay" do
+      site_asset.stub(:source_cache => "/tmp/rails.png")
+      do_render("Save Media")
+      form_new(:action => admin_site_assets_path) do |f|
+        f.should have_selector("input", :type => "hidden", :name => "site_asset[source_cache]", :value => "/tmp/rails.png")
+      end
+    end
   end
   
   context "when EDITing the site_asset" do
@@ -85,6 +112,35 @@ describe "admin/site_assets/_form.html.haml" do
       site_asset.stub_chain(:source, :url => "/image/path/file.png")
       do_render("Update Asset")
       rendered.should have_selector("a", :content => "http://#{site.full_subdomain}#{site_asset.source.url}")
-    end     
+    end 
+    
+    it "should render a hidden field to cache the file on redisplay" do
+      do_render("Update Asset")
+      form_update(:action => admin_site_asset_path(site_asset)) do |f|
+        f.should have_selector("input", :type => "hidden", :name => "site_asset[source_cache]")
+      end
+    end    
+  end
+  
+  context "when redisplaying edit form because of validation error should cache the image source from tmp" do
+    before(:each) do
+      site_asset.stub(:new_record? => false)
+    end
+    
+    it "should show the cached image" do
+      site_asset.stub(:source? => true)
+      site_asset.stub_chain(:source, :url => "/image/path/file.png")
+      site_asset.stub_chain(:source, :thumb, :url => "/spec/fixtures/assets/rails.png")
+      do_render("Update Asset")
+      rendered.should have_selector("img", :src => "/spec/fixtures/assets/rails.png")
+    end
+    
+    it "should cache the file tmp path on redisplay" do
+      site_asset.stub(:source_cache => "/tmp/rails.png")
+      do_render("Update Asset")
+      form_update(:action => admin_site_asset_path(site_asset)) do |f|
+        f.should have_selector("input", :type => "hidden", :name => "site_asset[source_cache]", :value => "/tmp/rails.png")
+      end
+    end
   end
 end

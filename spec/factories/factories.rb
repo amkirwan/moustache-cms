@@ -84,6 +84,7 @@ end
 Factory.define :site_asset do |asset|
   asset.name "asset_name"
   asset.content_type "content_type"
+  asset.source { File.open("#{Rails.root}/spec/fixtures/assets/rails.png") }
   asset.width 200
   asset.height 200
   asset.file_size 200
