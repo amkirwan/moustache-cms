@@ -148,8 +148,12 @@ describe User do
       @user.should have_many(:pages_updated).of_type(Page)
     end
     
-    it "should reference many site_asset" do
+    it "should reference many site_assets" do
       @user.should have_many(:site_assets).of_type(SiteAsset)
+    end
+    
+    it "should reference many theme_assets" do
+      @user.should have_many(:theme_assets).of_type(ThemeAsset)
     end
     
     it "should have many editors" do

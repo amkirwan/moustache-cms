@@ -67,6 +67,10 @@ describe Site do
     it "should have many users" do
       @site.should have_many(:users)
     end
+    
+    it "should have many theme_assets" do
+      @site.should have_many(:theme_assets).of_type(ThemeAsset)
+    end
   end
   
   
