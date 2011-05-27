@@ -13,13 +13,13 @@ And the user with the role exist
 @admin_index_theme_asset
 Scenario: Navigate to the Layout#index page
   Given these theme assets exist in the site "foobar.example.com" created by user "ak730"
-   | name      | file          |
-   | theme_css | theme_css.css |
-   | theme_js  | theme_js.js   |
-   | rails     | rails.png     |
+   | name      | file          | 
+   | theme_css | theme_css.css | 
+   | theme_js  | theme_js.js   | 
+   | rails     | rails.png     | 
   When I go to the admin theme assets page
   Then I should be on the admin theme assets page
   And I should see "theme_css"
   And I should see "theme_js"
   And I should see "rails"
-  And I should see "Add Asset"
+  And I should see "Add Theme Asset"
