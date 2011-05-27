@@ -33,18 +33,46 @@ describe SiteAsset do
    end
    
    # -- Scopes ------------------------------------------------------
-   describe "css_files" do
-     it "should return all the theme assets css files" do
-       css_files = ThemeAsset.css_files(site)
-       css_files.size.should == 1
-       css_files.first.should == @theme_asset_css
-     end
+   describe "scopes" do
+     describe "css_files" do
+       it "should return all the theme assets css files" do
+         css_files = ThemeAsset.css_files(site)
+         css_files.size.should == 1
+         css_files.first.should == @theme_asset_css
+       end
 
-     it "should return empty Criteria if it cannot find the domain" do
-       @theme_asset_css.delete(site)
-       ThemeAsset.css_files(site).should be_empty
+       it "should return empty Criteria if it cannot find any css files in the theme" do
+         @theme_asset_css.delete(site)
+         ThemeAsset.css_files(site).should be_empty
+       end
      end
-   end
+     
+     describe "js_files" do
+       it "should return all the theme assets js files" do
+         js_files = ThemeAsset.js_files(site)
+         js_files.size.should == 1
+         js_files.first.should == @theme_asset_js
+       end
+
+       it "should return empty Criteria if it cannot find any js files in the theme" do
+         @theme_asset_js.delete(site)
+         ThemeAsset.js_files(site).should be_empty
+       end  
+     end   
+     
+     describe "images" do
+       it "should return all the theme image files" do
+         images = ThemeAsset.images(site)
+         images.size.should == 1
+         images.first.should == @theme_asset_image
+       end
+
+       it "should return empty Criteria if it cannot find any images in the theme" do
+         @theme_asset_image.delete(site)
+         ThemeAsset.images(site).should be_empty
+       end  
+     end
+   end 
    
    # -- Class Methods ------------------------
    describe "Dynamic Scoped for content_type" do
