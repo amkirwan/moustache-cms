@@ -10,7 +10,7 @@ class ThemeAsset
   field :width, :type => Integer
   field :height, :type => Integer
   field :file_size, :type => Integer
-  mount_uploader :source, SiteAssetUploader
+  mount_uploader :source, ThemeAssetUploader
   
   
   # -- Associations ----------
