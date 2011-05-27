@@ -12,4 +12,10 @@ class ThemeAsset
   field :file_size, :type => Integer
   mount_uploader :source, SiteAssetUploader
   
+  
+  # -- Associations ----------
+  belongs_to :site
+  belongs_to :created_by, :class_name => "User"
+  belongs_to :updated_by, :class_name => "User"
+  
 end
