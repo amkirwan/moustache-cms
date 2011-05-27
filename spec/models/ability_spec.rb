@@ -8,18 +8,22 @@ describe Ability do
   let(:admin) { Factory.build(:admin, :site => site) }
   let(:admin2) { Factory.build(:admin, :site => site2) }
   let(:designer) { Factory.build(:designer, :site => site) }
-  let(:desinger2) { Factory.build(:designer, :site => site2) }
+  let(:designer2) { Factory.build(:designer, :site => site2) }
   let(:editor) { Factory.build(:editor, :site => site) }
   let(:editor2) { Factory.build(:editor, :site => site2) }
   
   let(:layout) { Factory.build(:layout, :site => site) }
   let(:layout2) { Factory.build(:layout, :site => site2) }
   
-  let(:page) { Factory.build(:page, :site => site, :editors => [ admin, editor ]) }
-  let(:page2) { Factory.build(:page, :site => site2, :editors => [ admin2, editor2 ]) } 
+  let(:page) { Factory.build(:page, :site => site, :editors => [ admin, designer, editor ]) }
+  let(:page2) { Factory.build(:page, :site => site2, :editors => [ admin2, designer2, editor2 ]) } 
   
   let(:site_asset) { Factory.build(:site_asset, :site => site, :created_by => editor) }
   let(:site_asset2) { Factory.build(:site_asset, :site => site2, :created_by => editor2) }
+  let(:site_asset3) { Factory.build(:site_asset, :site => site, :created_by => admin) }
+  
+  let(:theme_asset) { Factory.build(:theme_asset, :site => site, :created_by => admin) }
+  let(:theme_asset2) { Factory.build(:theme_asset, :site => site2, :created_by => admin2) }
   
   let(:admin_ability) { Ability.new(admin) }
   let(:admin_ability2) { Ability.new(admin2) }
@@ -42,22 +46,25 @@ describe Ability do
   describe "Admin" do
     context "Admin Approved" do
       it "should allow the admin to manage all" do 
+        admin_ability.should be_able_to(:manage, site)
         admin_ability.should be_able_to(:manage, admin)
         admin_ability.should be_able_to(:manage, page)
         admin_ability.should be_able_to(:manage, layout)
         admin_ability.should be_able_to(:manage, site_asset)
-        admin_ability.should be_able_to(:manage, site)
+        admin_ability.should be_able_to(:manage, theme_asset)
       end
     end
     
     context "Admin Not Approved" do
       describe "should not be able to manage any item that does not have an associated site as the admin" do
         it "should not allow the admin to manage sites they are not associatied with" do
+          admin_ability.should_not be_able_to(:manage, site2)
           admin_ability.should_not be_able_to(:manage, admin2)
           admin_ability.should_not be_able_to(:manage, editor2)
           admin_ability.should_not be_able_to(:manage, page2)
           admin_ability.should_not be_able_to(:manage, layout2)
-          admin_ability.should_not be_able_to(:manage, site2)
+          admin_ability.should_not be_able_to(:manage, site_asset2)
+          admin_ability.should_not be_able_to(:manage, theme_asset2)
         end
       end      
     end
@@ -83,11 +90,11 @@ describe Ability do
       end
       
       describe "Page Layout SiteAsset Approved" do
-        it "should allow the designer to edit all pages, layouts and mediafiles" do
-          admin_ability.should be_able_to(:manage, page)
-          admin_ability.should be_able_to(:manage, layout)
-          admin_ability.should be_able_to(:manage, site)
-          admin_ability.should be_able_to(:manage, site_asset)  
+        it "should allow the designer to edit all pages, layouts, site_assets and theme_assets" do
+          designer_ability.should be_able_to(:manage, page)
+          designer_ability.should be_able_to(:manage, layout)
+          designer_ability.should be_able_to(:manage, site_asset)
+          designer_ability.should be_able_to(:manage, theme_asset)  
         end
       end
     end
@@ -96,7 +103,7 @@ describe Ability do
   describe "Editor" do
     context "Editor Approved" do
         describe "User Model Approved" do
-          it "should allow the user with a role of editor to list user records" do
+          it "should allow the user with a role of editor to list editor records" do
             editor_ability.should be_able_to(:index, user)
           end
 
@@ -166,7 +173,7 @@ describe Ability do
         end
       end
 
-      describe "User Model Not Approved" do
+      describe "editor Model Not Approved" do
         it "should not allow the user with a role of editor to read other users records" do
           editor_ability.should_not be_able_to(:read, user)
         end
@@ -179,7 +186,7 @@ describe Ability do
           editor_ability.should_not be_able_to(:update, user)
         end    
 
-        it "should not allow the user to manage users on another site" do
+        it "should not allow the editor to manage users on another site" do
           editor_ability.should_not be_able_to(:read, editor2)
           editor_ability.should_not be_able_to(:create, editor2)
           editor_ability.should_not be_able_to(:update, editor2)
@@ -188,7 +195,7 @@ describe Ability do
       end
 
       describe "Layout Model Not Approved" do
-        it "should not allow the user to mange layouts" do
+        it "should not allow the editor to mange layouts" do
           editor_ability.should_not be_able_to(:read, layout)
           editor_ability.should_not be_able_to(:create, layout)
           editor_ability.should_not be_able_to(:update, layout)
@@ -209,7 +216,7 @@ describe Ability do
           editor_ability.should_not be_able_to(:destroy, Factory.build(:page))
         end
 
-        it "should not allow the user to manage pages on another site" do 
+        it "should not allow the editor to manage pages on another site" do 
           editor_ability.should_not be_able_to(:read, page2)
           editor_ability.should_not be_able_to(:create, page2)
           editor_ability.should_not be_able_to(:update, page2)
@@ -218,12 +225,24 @@ describe Ability do
       end
 
       describe "SiteAsset Model Not Approved" do
-        it "should not allow the user to manage site_assets on another site" do
+        it "should not allow the editor to delete site_assets created by another user" do
+          editor_ability.should_not be_able_to(:destroy, site_asset3)
+        end
+        it "should not allow the editor to manage site_assets on another site" do
           editor_ability.should_not be_able_to(:read, site_asset2)
           editor_ability.should_not be_able_to(:create, site_asset2)
           editor_ability.should_not be_able_to(:update, site_asset2)
           editor_ability.should_not be_able_to(:destroy, site_asset2)
         end
+      end
+      
+      describe "ThemeAsset Model Not Approved" do
+        it "should not allow the editor to manage the theme_assets" do
+          editor_ability.should_not be_able_to(:read, theme_asset)
+          editor_ability.should_not be_able_to(:create, theme_asset)
+          editor_ability.should_not be_able_to(:update, theme_asset)
+          editor_ability.should_not be_able_to(:destroy, theme_asset)
+        end     
       end
   end   
 end
