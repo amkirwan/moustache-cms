@@ -5,7 +5,7 @@ Etherweb::Application.routes.draw do
     resources :layouts, :except => :show
     resources :pages, :except => :show
     resources :site_assets
-    resources :theme_css_js
+    resources :theme_assets
   end
   
   match "/admin" => redirect("/admin/pages")

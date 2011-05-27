@@ -1,8 +1,8 @@
 require "spec_helper"
 
-describe "admin/css_js_files/new.html.haml" do
+describe "admin/theme_asset/new.html.haml" do
   
-  let(:css_js_file) { mock_model("CssFile", :name => "foobar") }
+  let(:theme_asset) { mock_model("ThemeAsset", :name => "foobar") }
   let(:current_user) { stub_model(User, :role? => true) }
    
   before(:each) do 

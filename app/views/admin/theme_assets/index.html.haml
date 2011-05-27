@@ -1,0 +1,29 @@
+#theme_assets
+  %h3 Theme Asset Files
+  #theme_assets_css
+    %h5 CSS
+    %ul
+      - @theme_assets.css_files.each do |css|
+        %li{ :id => "#{css.name}"}
+          %div= link_to css.name, edit_admin_theme_asset_path(css)
+          %div.delete= button_to "delete", admin_theme_asset_path(css), :method => :delete, :confirm => "Are you sure you want to delete the CSS theme file #{css.name}"
+  #theme_assets_js
+    %h5 JavaScript
+    %ul
+      - @theme_assets.js_files.each do |js|
+        %li{ :id => "#{js.name}"}
+          %div= link_to js.name, edit_admin_theme_asset_path(js)
+          %div.delete= button_to "delete", admin_theme_asset_path(js), :method => :delete, :confirm => "Are you sure you want to delete the JavaScript theme file #{js.name}"
+  #theme_assets_js
+    %h5 Images
+    %ul
+      - @theme_assets.images.each do |image|
+        %li{ :id => "#{image.name}"}
+          %div= link_to image.name, edit_admin_theme_asset_path(image)
+          %div.delete= button_to "delete", admin_theme_asset_path(image), :method => :delete, :confirm => "Are you sure you want to delete the JavaScript theme file #{image.name}"
+        
+
+        
+#add_theme_asset
+  %ul#new_theme_asset
+    %li= link_to "Add Theme Asset", new_admin_theme_asset_path
