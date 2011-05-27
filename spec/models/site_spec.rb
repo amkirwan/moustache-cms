@@ -6,8 +6,6 @@ describe Site do
     @site = Factory(:site)
   end
   
-  it_behaves_like "meta_data"
-  
   # -- Assignment -------------------------------------------
   describe "mass assignment" do
     it "should protect against mass assignment of default_domain and domains field" do
