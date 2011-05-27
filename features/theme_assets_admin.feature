@@ -17,7 +17,7 @@ Scenario: Navigate to the Layout#index page
    | theme_css | theme_css.css |
    | theme_js  | theme_js.js   |
    | rails     | rails.png     |
-  When I go to the admin site assets page
+  When I go to the admin theme assets page
   Then I should be on the admin theme assets page
   And I should see "theme_css"
   And I should see "theme_js"
