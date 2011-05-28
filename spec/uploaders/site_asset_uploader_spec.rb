@@ -4,7 +4,7 @@ require "carrierwave/test/matchers"
 describe SiteAssetUploader do
   include CarrierWave::Test::Matchers
   
-  let(:site_asset) { SiteAsset.new(:name => "foobar") }
+  let(:site_asset) { SiteAsset.new(:name => "foobar", :content_type => "image/png") }
   
   before do
     SiteAssetUploader.enable_processing = true
@@ -27,5 +27,9 @@ describe SiteAssetUploader do
   
   it "should make a thumbnail exactly 50 by 50 pixels" do
     @uploader.thumb.should have_dimensions(50, 50)
+  end
+  
+  it "should return true when the file is an image" do
+    @uploader.image?(site_asset).should == true
   end
 end
