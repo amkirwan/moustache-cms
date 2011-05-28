@@ -47,8 +47,7 @@ describe Admin::SiteAssetsController do
     end
     
     before(:each) do
-      site_asset.as_new_record
-      SiteAsset.stub(:new).and_return(site_asset)
+      SiteAsset.stub(:new).and_return(site_asset.as_new_record)
     end
     
     it "should receive new and return a new site_asset" do
@@ -72,8 +71,7 @@ describe Admin::SiteAssetsController do
     let(:params) { { "name" => "foobar", "source_cache" => "1/rails.png", "source" => AssetFixtureHelper.open("rails.png") } }
     
     before(:each) do
-      site_asset.as_new_record
-      SiteAsset.stub(:new).and_return(site_asset)
+      SiteAsset.stub(:new).and_return(site_asset.as_new_record)
     end
     
     def do_post(post_params=params)
@@ -121,7 +119,7 @@ describe Admin::SiteAssetsController do
       it "should set the source to the source_cache when the source_cache is not empty and the source is nil" do   
         site_asset.stub_chain(:source, :retrieve_from_cache!)
         site_asset.stub_chain(:source, :store!)
-        controller.should_receive(:set_from_cache).with("1/rails.png")
+        controller.should_receive(:set_from_cache)
         do_post({ "source_cache" => "1/rails.png"})
       end
     end
@@ -215,7 +213,7 @@ describe Admin::SiteAssetsController do
       it "should set the source to the source_cache when the source_cache is not empty and the source is nil" do   
         site_asset.stub_chain(:source, :retrieve_from_cache!)
         site_asset.stub_chain(:source, :store!)
-        controller.should_receive(:set_from_cache).with("1/rails.png")
+        controller.should_receive(:set_from_cache)
         do_put("id" => site_asset.to_param, "site_asset" => { "source_cache" => "1/rails.png"})
       end
     end
