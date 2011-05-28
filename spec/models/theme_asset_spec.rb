@@ -11,7 +11,6 @@ describe SiteAsset do
   before(:each) do
     @theme_asset_image = Factory(:theme_asset, :site => site, :source => AssetFixtureHelper.open("rails.png"), :content_type => "image/png", :created_by => user, :updated_by => user)
     @theme_asset_css = Factory(:theme_asset, :site => site, :source => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css", :created_by => user, :updated_by => user)
-    @theme_asset_css.content_type = "text/css"
     @theme_asset_js = Factory(:theme_asset, :site => site, :source => AssetFixtureHelper.open("theme_js.js"), :content_type => "text/javascript", :created_by => user, :updated_by => user)
     @theme_assets = ThemeAsset.all
   end
@@ -29,6 +28,31 @@ describe SiteAsset do
 
      it "should belong_to a user with updated_by" do
        @theme_asset_image.should belong_to(:updated_by).of_type(User)
+     end
+   end
+   
+   # -- Callbacks -----------
+   describe "before_save" do
+     describe "#update_asset_attributes" do
+       it "should set the size of the file" do
+         @theme_asset_image.file_size.should == 6646
+       end  
+
+       it "should set the file content_type" do   
+         pending("can only seem to set content_type when uploading")
+         @theme_asset_image.content_type.should == "image/png"         
+       end
+     end
+   end
+
+   describe "before_update" do
+     describe "#recreate" do
+       it "should update the filename and recreate version when a new name is given" do
+         @theme_asset_image.name = "new_name"
+         @theme_asset_image.save
+         @theme_asset_image.source.filename.should == "new_name.png"
+         @theme_asset_image.source.url.should =~ /new_name.png/
+       end  
      end
    end
    

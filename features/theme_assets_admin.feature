@@ -38,7 +38,7 @@ Scenario: Create a new media file
   And I fill in "theme_asset_description" with "Hello, World!" within "div#add_new_theme_asset"
   And I attach the file "spec/fixtures/assets/rails.png" to "theme_asset_source" 
   And I press "Save Theme Asset" within "div#add_new_theme_asset"
-  Then I should be on the admin site assets page
-  And I should see "Successfully created the asset foobar"
+  Then I should be on the admin theme assets page
+  And I should see "Successfully created the theme asset foobar"
   And I should see "foobar"
   And I should see the "delete" button

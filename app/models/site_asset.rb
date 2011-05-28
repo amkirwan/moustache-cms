@@ -12,6 +12,11 @@ class SiteAsset
   field :file_size, :type => Integer
   mount_uploader :source, SiteAssetUploader  
   
+  # -- Associations -------------
+  belongs_to :created_by, :class_name => "User"
+  belongs_to :updated_by, :class_name => "User"
+  belongs_to :site
+  
   # -- Callbacks
   before_save :update_asset_attributes
   before_update :recreate, :if => "self.name_changed?"
@@ -25,11 +30,6 @@ class SiteAsset
     self.content_type = source.file.content_type
     self.file_size = source.file.size 
   end
-  
-  # -- Associations -------------
-  belongs_to :created_by, :class_name => "User"
-  belongs_to :updated_by, :class_name => "User"
-  belongs_to :site
   
   # -- Validations --------------
   validates :name,
