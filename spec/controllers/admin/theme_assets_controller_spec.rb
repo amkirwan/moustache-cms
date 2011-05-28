@@ -86,6 +86,65 @@ describe Admin::ThemeAssetsController do
     it "should render the view template admin/theme_assets/new" do
       do_get
       response.should render_template("admin/theme_assets/new")
+    end  
+  end
+  
+  describe "POST create" do
+    let(:params) { { "name" => "foobar", "source_cache" => "1/rails.png", "source" => AssetFixtureHelper.open("rails.png") } }
+    
+    before(:each) do
+      ThemeAsset.stub(:new).and_return(theme_asset.as_new_record)
+    end
+    
+    def do_post(post_params=params)
+      post :create, "theme_asset" => post_params
+    end
+    
+    it "should receive new and return the new theme_asset from the params" do
+      ThemeAsset.should_receive(:new).and_return(theme_asset)
+      do_post
+    end
+    
+    it "should assign @theme_asset" do
+      do_post
+      assigns(:theme_asset).should == theme_asset
+    end
+    
+    context "with valid params" do
+      it "should receive and save the theme_asset" do
+        theme_asset.should_receive(:save).and_return(true)
+        do_post
+      end
+      
+      it "should assign to the flash message" do
+        do_post
+        flash[:notice].should == "Successfully created the theme asset #{theme_asset.name}"
+      end
+    end
+    
+    context "using source_cache when source is nil on redisplay, ie validation fails" do
+      it "should set the source to the source_cache when the source_cache is not empty and the source is nil" do   
+        theme_asset.stub_chain(:source, :retrieve_from_cache!)
+        theme_asset.stub_chain(:source, :store!)
+        controller.should_receive(:set_from_cache)
+        do_post({ "source_cache" => "1/rails.png"})
+      end
+    end
+    
+    context "with invalid params" do
+      before(:each) do
+        theme_asset.stub(:save).and_return(false)
+      end
+      
+      it "should receive save and return false " do
+        theme_asset.should_receive(:save).and_return(false)
+        do_post
+      end
+      
+      it "should render the new template" do
+        do_post
+        response.should render_template("admin/theme_assets/new")
+      end
     end
     
   end
