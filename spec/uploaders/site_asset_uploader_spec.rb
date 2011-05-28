@@ -26,7 +26,6 @@ describe SiteAssetUploader do
   end       
   
   it "should make a thumbnail exactly 50 by 50 pixels" do
-    pending
-    @uploader.thumb.should have_demensions(50, 50)
+    @uploader.thumb.should have_dimensions(50, 50)
   end
 end

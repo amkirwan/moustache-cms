@@ -34,10 +34,10 @@ Scenario: Should not be able to access another sites site theme assets
 Scenario: Create a new media file
   When I go to the admin theme assets page
   And I follow "Add Theme Asset" within "ul#new_theme_asset"
-  And I fill in "site_asset_name" with "foobar" within "div#add_new_site_asset"
-  And I fill in "site_asset_description" with "Hello, World!" within "div#add_new_site_asset"
-  And I attach the file "spec/fixtures/assets/rails.png" to "site_asset_source" 
-  And I press "Save Asset" within "div#add_new_site_asset"
+  And I fill in "theme_asset_name" with "foobar" within "div#add_new_theme_asset"
+  And I fill in "theme_asset_description" with "Hello, World!" within "div#add_new_theme_asset"
+  And I attach the file "spec/fixtures/assets/rails.png" to "theme_asset_source" 
+  And I press "Save Theme Asset" within "div#add_new_theme_asset"
   Then I should be on the admin site assets page
   And I should see "Successfully created the asset foobar"
   And I should see "foobar"
