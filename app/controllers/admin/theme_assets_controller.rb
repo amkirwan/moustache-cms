@@ -6,4 +6,10 @@ class Admin::ThemeAssetsController < AdminBaseController
     @images = ThemeAsset.images(@current_site)
   end
   
+  def new
+  end
+  
+  def create
+  end
+  
 end

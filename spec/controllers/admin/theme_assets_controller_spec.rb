@@ -61,6 +61,31 @@ describe Admin::ThemeAssetsController do
     it "should render in the index template" do
       do_get
       response.should render_template("admin/theme_assets/index")
+    end    
+  end
+  
+  describe "GET new" do
+    before(:each) do
+      ThemeAsset.stub(:new).and_return(theme_asset.as_new_record)
+    end
+    
+    def do_get
+      get :new
+    end
+    
+    it "should receive new and return the new theme_asset" do
+      ThemeAsset.should_receive(:new).and_return(theme_asset)
+      do_get
+    end
+    
+    it "should assign the new theme_asset to an ivar" do
+      do_get
+      assigns(:theme_asset).should == theme_asset
+    end
+    
+    it "should render the view template admin/theme_assets/new" do
+      do_get
+      response.should render_template("admin/theme_assets/new")
     end
     
   end
