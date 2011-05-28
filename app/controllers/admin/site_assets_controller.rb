@@ -3,7 +3,7 @@ class Admin::SiteAssetsController < AdminBaseController
   def index
   end
 
-  # GET /admin/media_files/1
+  # GET /admin/media_files/1/edit
   def show
     render :edit
   end
