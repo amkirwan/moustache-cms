@@ -1,18 +1,18 @@
-= form_for([:admin, css_file]) do |f|
+= form_for([:admin, theme_asset], :html => {:multipart => true, :autocomplete => "off"}) do |f|
   = render :partial => "shared/error_messages", 
-           :locals => { :target => css_file }
+           :locals => { :target => theme_asset }
   %fieldset
     = f.label :name
     = f.text_field :name
-  %fieldset 
-    = f.label :content
-    = f.text_area :content
-  %div Or Upload File
-  - if media_file.new_record?
-    %fieldset
-      = f.label :media_asset, "Asset Source"
-      = f.file_field :media_asset
   %fieldset
-    =
+    = f.label :description
+    = f.text_area :description, :cols => "25", :rows => "10"
+  - if !theme_asset.new_record?
+    %h6 The current file is available at
+    = link_to "http://#{@current_site.full_subdomain}#{theme_asset.source.url}", theme_asset.source.url 
+  = image_tag(theme_asset.source.thumb.url) if theme_asset.source? 
+  = f.label :source, "Asset Source"
+  = f.file_field :source
+  = f.hidden_field :source_cache
   %fieldset
     = f.submit button_label

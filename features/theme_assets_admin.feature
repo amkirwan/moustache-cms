@@ -23,3 +23,22 @@ Scenario: Navigate to the Layout#index page
   And I should see "theme_js"
   And I should see "rails"
   And I should see "Add Theme Asset"
+  
+@admin_should_not_access_other_site 
+Scenario: Should not be able to access another sites site theme assets
+  Given the site "baz" exists with the domain "example.dev"
+  When I go to the admin theme assets page
+  Then I should see "403"
+  
+@create_new_theme_asset
+Scenario: Create a new media file
+  When I go to the admin theme assets page
+  And I follow "Add Theme Asset" within "ul#new_theme_asset"
+  And I fill in "site_asset_name" with "foobar" within "div#add_new_site_asset"
+  And I fill in "site_asset_description" with "Hello, World!" within "div#add_new_site_asset"
+  And I attach the file "spec/fixtures/assets/rails.png" to "site_asset_source" 
+  And I press "Save Asset" within "div#add_new_site_asset"
+  Then I should be on the admin site assets page
+  And I should see "Successfully created the asset foobar"
+  And I should see "foobar"
+  And I should see the "delete" button
