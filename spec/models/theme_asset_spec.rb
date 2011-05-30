@@ -50,8 +50,9 @@ describe SiteAsset do
        it "should update the filename and recreate version when a new name is given" do
          @theme_asset_image.name = "new_name"
          @theme_asset_image.save
-         @theme_asset_image.source.filename.should == "new_name.png"
-         @theme_asset_image.source.url.should =~ /new_name.png/
+         theme_image = ThemeAsset.where(:name => "new_name", :site_id => site.id).first
+         theme_image.source_filename.should == "new_name.png"
+         theme_image.source.url.should =~ /new_name.png/
        end  
      end
    end

@@ -27,7 +27,7 @@ class ThemeAsset
   end
   
   def update_asset_attributes         
-    self.content_type = source.file.content_type
+    self.content_type = source.file.content_type unless source.file.content_type.nil?
     self.file_size = source.file.size 
   end
   
