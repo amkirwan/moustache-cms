@@ -1,7 +1,7 @@
 class SiteAsset
   include Mongoid::Document
   
-  attr_accessible :name, :description, :content_type, :width, :height, :file_size, :source
+  attr_accessible :name, :description, :content_type, :width, :height, :file_size, :asset
   
   # -- Fields --------------- 
   field :name
@@ -10,7 +10,7 @@ class SiteAsset
   field :width, :type => Integer
   field :height, :type => Integer
   field :file_size, :type => Integer
-  mount_uploader :source, SiteAssetUploader  
+  mount_uploader :asset, SiteAssetUploader  
   
   # -- Associations -------------
   belongs_to :created_by, :class_name => "User"
@@ -22,13 +22,13 @@ class SiteAsset
   before_update :recreate, :if => "self.name_changed?"
     
   def recreate
-    self.source.recreate_versions!
-    self.source_filename = "#{self.name}.#{self.source.file.extension}"
+    self.asset.recreate_versions!
+    self.asset_filename = "#{self.name}.#{self.asset.file.extension}"
   end
   
   def update_asset_attributes         
-    self.content_type = source.file.content_type unless source.file.content_type.nil?
-    self.file_size = source.file.size 
+    self.content_type = asset.file.content_type unless asset.file.content_type.nil?
+    self.file_size = asset.file.size 
   end
   
   # -- Validations --------------
@@ -38,11 +38,11 @@ class SiteAsset
   validates :site,
             :presence => true
             
-  validates :source,
+  validates :asset,
             :presence => true   
             
   # -- Instance Methods     
   def image?
-    self.source.image?(self.source.file)
+    self.asset.image?(self.asset.file)
   end
 end

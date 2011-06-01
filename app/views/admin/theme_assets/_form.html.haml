@@ -8,7 +8,7 @@
     = f.label :description
     = f.text_area :description, :cols => "25", :rows => "10"
   - if theme_asset.new_record?
-    = render :partial => "new_theme_asset", :locals => { :f => f }
+    = render :partial => "new_theme_asset", :locals => { :f => f, :theme_asset => theme_asset }
   - else
     %h6 The current file is available at
     = link_to "http://#{@current_site.full_subdomain}#{theme_asset.source.url}", theme_asset.source.url 

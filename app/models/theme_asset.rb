@@ -1,7 +1,7 @@
 class ThemeAsset
   include Mongoid::Document
   
-  attr_accessible :name, :description, :content_type, :width, :height, :file_size, :source
+  attr_accessible :name, :description, :content_type, :width, :height, :file_size, :asset
   
   # -- Fields --------------- 
   field :name
@@ -10,7 +10,7 @@ class ThemeAsset
   field :width, :type => Integer
   field :height, :type => Integer
   field :file_size, :type => Integer
-  mount_uploader :source, ThemeAssetUploader
+  mount_uploader :asset, ThemeAssetUploader
    
   # -- Associations ----------
   belongs_to :site
@@ -22,13 +22,13 @@ class ThemeAsset
   before_update :recreate, :if => "self.name_changed?"
     
   def recreate
-    self.source.recreate_versions!
-    self.source_filename = "#{self.name}.#{self.source.file.extension}"
+    self.asset.recreate_versions!
+    self.asset_filename = "#{self.name}.#{self.asset.file.extension}"
   end
   
   def update_asset_attributes         
-    self.content_type = source.file.content_type unless source.file.content_type.nil?
-    self.file_size = source.file.size 
+    self.content_type = asset.file.content_type unless asset.file.content_type.nil?
+    self.file_size = asset.file.size 
   end
   
   # -- Class Methods --------
@@ -43,7 +43,10 @@ class ThemeAsset
   end
   
   # -- Instance Methods ----------
-  def image?
-    self.source.image?(self.source.file)
+  %w{image stylesheet javascript}.each do |type|
+    define_method("#{type}?") do
+      self.asset.send("#{type}?", self.asset.file)
+    end
   end
+  
 end

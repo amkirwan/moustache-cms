@@ -8,7 +8,7 @@ describe SiteAssetUploader do
   
   before do
     SiteAssetUploader.enable_processing = true
-    @uploader = SiteAssetUploader.new(site_asset, :source)
+    @uploader = SiteAssetUploader.new(site_asset, :asset)
     @uploader.store!(AssetFixtureHelper.open("rails.png"))
   end
   
@@ -34,7 +34,7 @@ describe SiteAssetUploader do
   end
   
   it "should not make a thumbnail when content_type is not an image" do
-    uploader = SiteAssetUploader.new(site_asset, :source)
+    uploader = SiteAssetUploader.new(site_asset, :asset)
     uploader.store!(AssetFixtureHelper.open("hello.pdf"))
     uploader.thumb.should be_blank
   end

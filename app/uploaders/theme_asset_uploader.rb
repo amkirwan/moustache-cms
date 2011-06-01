@@ -11,7 +11,7 @@ class ThemeAssetUploader < CarrierWave::Uploader::Base
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
-    "sites/#{model.site_id}/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    "sites/#{model.site_id}/#{model.class.to_s.underscore}/#{model.asset_filename}/#{model.id}"
   end              
 
   version :thumb, :if => :image? do                     
@@ -31,7 +31,49 @@ class ThemeAssetUploader < CarrierWave::Uploader::Base
    end    
 
    def image?(sanitized_file)    
-     MIME::Types.of(sanitized_file.extension).first.content_type.include? 'image'
+     types = mime_types(sanitized_file)
+     if types.empty?
+       false
+      else
+        types.first.content_type.include? 'image'
+      end
    end
-
+  
+   def stylesheet?(sanitized_file)
+     types = mime_types(sanitized_file)
+     if types.empty?
+       false
+      else
+        types.first.content_type.include? 'css'
+      end
+   end
+   
+   def javascript?(sanitized_file)
+     types = mime_types(sanitized_file)
+     if types.empty?
+       false
+      else
+        types.first.content_type.include? 'javascript'
+      end
+   end
+          
+   private
+   
+    def mime_types(file)
+      MIME::Types.of(file.extension)
+    end
+    
+    def asset_type(filename)
+      sanitized_file = CarrierWave::SanitizedFile.new(filename)
+      case 
+      when stylesheet?(sanitized_file)
+        "stylesheets"
+      when image?(sanitized_file)
+        "images"
+      when javascript?(sanitized_file)
+        "javascripts"
+      else
+        "assets"
+      end
+    end
 end

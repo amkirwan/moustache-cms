@@ -28,6 +28,18 @@ class SiteAssetUploader < CarrierWave::Uploader::Base
    end    
 
    def image?(sanitized_file)    
-     MIME::Types.of(sanitized_file.extension).first.content_type.include? 'image'
+     types = mime_types(sanitized_file)
+     if types.empty?
+       false
+      else
+        types.first.content_type.include? 'image'
+      end
    end
+   
+   
+   private
+   
+    def mime_types(file)
+      MIME::Types.of(file.extension)
+    end
 end

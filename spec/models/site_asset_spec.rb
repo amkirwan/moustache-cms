@@ -9,18 +9,18 @@ describe SiteAsset do
   end
 
   before(:each) do
-    @site_asset = Factory(:site_asset, :site => site, :source => AssetFixtureHelper.open("rails.png"), :created_by => user, :updated_by => user)
+    @site_asset = Factory(:site_asset, :site => site, :asset => AssetFixtureHelper.open("rails.png"), :created_by => user, :updated_by => user)
   end
   
   describe "it should allow mass assignment of the fields" do
     it "should allow mass assignment of" do
-      site_asset = SiteAsset.new(:name => "foobar", :content_type => "css", :width => 10, :height => 10, :file_size => 10, :source => AssetFixtureHelper.open("rails.png"))
+      site_asset = SiteAsset.new(:name => "foobar", :content_type => "css", :width => 10, :height => 10, :file_size => 10, :asset => AssetFixtureHelper.open("rails.png"))
       site_asset.name.should == "foobar"
       site_asset.content_type.should == "css"
       site_asset.width.should == 10
       site_asset.height.should == 10
       site_asset.file_size.should == 10
-      site_asset.source.should_not be_nil
+      site_asset.asset.should_not be_nil
     end 
   end
   
@@ -40,8 +40,8 @@ describe SiteAsset do
       @site_asset.should_not be_valid
     end
     
-    it "should not be valid without a source file" do
-      @site_asset.remove_source!
+    it "should not be valid without a asset file" do
+      @site_asset.remove_asset!
       @site_asset.should_not be_valid
     end
   end   
@@ -65,8 +65,8 @@ describe SiteAsset do
       it "should update the filename and recreate version when a new name is given" do
         @site_asset.name = "new_name"
         @site_asset.save
-        @site_asset.source.filename.should == "new_name.png"
-        @site_asset.source.url.should =~ /new_name.png/
+        @site_asset.asset.filename.should == "new_name.png"
+        @site_asset.asset.url.should =~ /new_name.png/
       end  
     end
   end
@@ -94,7 +94,7 @@ describe SiteAsset do
        end     
        
        it "should return false when the site_asset is not an image" do 
-          site_asset = Factory(:site_asset, :site => site, :source => AssetFixtureHelper.open("hello.pdf"), :created_by => user, :updated_by => user) 
+          site_asset = Factory(:site_asset, :site => site, :asset => AssetFixtureHelper.open("hello.pdf"), :created_by => user, :updated_by => user) 
           site_asset.should_not be_image
        end  
      end
