@@ -4,11 +4,11 @@ require "carrierwave/test/matchers"
 describe SiteAssetUploader do
   include CarrierWave::Test::Matchers
   
-  let(:site_asset) { SiteAsset.new(:name => "foobar", :content_type => "image/png") }
+  let(:theme_asset) { ThemeAsset.new(:name => "foobar", :content_type => "image/png") }
   
   before do
-    SiteAssetUploader.enable_processing = true
-    @uploader = SiteAssetUploader.new(site_asset, :source)
+    ThemeAssetUploader.enable_processing = true
+    @uploader = ThemeAssetUploader.new(theme_asset, :source)
     @uploader.store!(AssetFixtureHelper.open("rails.png"))
   end
   
@@ -21,19 +21,19 @@ describe SiteAssetUploader do
     @uploader.store_dir.should == "sites/#{@uploader.model.site_id}/#{@uploader.model.class.to_s.underscore}/#{@uploader.mounted_as}/#{@uploader.model.id}"
   end
   
-  it "should change the uploaded filename to the name of the site_asset" do
+  it "should change the uploaded filename to the name of the theme_asset" do
     @uploader.filename.should == "foobar.png"
   end
   
   it "should white list these extenstiosn" do
-    @uploader.extension_white_list.should == %w(jpg jpeg gif png pdf swf flv svg)
+    @uploader.extension_white_list.should == %w(jpg jpeg gif png css js swf flv eot svg ttf woff otf ico)
   end       
   
-  it "should make a thumbnail exactly 50 by 50 pixels" do
-    @uploader.thumb.should have_dimensions(50, 50)
+  it "should make a thumbnail exactly 80 by 80 pixels" do
+    @uploader.thumb.should have_dimensions(80, 80)
   end
   
   it "should return true when the file is an image" do
-    @uploader.image?(site_asset).should == true
+    @uploader.image?(theme_asset).should == true
   end
 end
