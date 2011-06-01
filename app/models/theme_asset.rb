@@ -16,6 +16,14 @@ class ThemeAsset
   belongs_to :site
   belongs_to :created_by, :class_name => "User"
   belongs_to :updated_by, :class_name => "User"
+
+  # -- Validations --------------
+  validates :name, :presence => true
+  
+  validates :site, :presence => true
+            
+  validates :asset, :presence => true
+  
   
   # -- Callbacks
   before_save :update_asset_attributes

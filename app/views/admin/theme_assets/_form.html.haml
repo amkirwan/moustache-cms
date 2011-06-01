@@ -6,11 +6,22 @@
     = f.text_field :name
   %fieldset
     = f.label :description
-    = f.text_area :description, :cols => "25", :rows => "10"
+    = f.text_area :description, :cols => "10", :rows => "10"
   - if theme_asset.new_record?
-    = render :partial => "new_theme_asset", :locals => { :f => f, :theme_asset => theme_asset }
-  - else
+    = image_tag(theme_asset.asset.thumb.url) if theme_asset.asset? 
+    = f.label :asset, "Theme Asset Source"
+    = f.file_field :asset
+    = f.hidden_field :asset_cache
+  - elsif !theme_asset.new_record? && theme_asset.image?
     %h6 The current file is available at
-    = link_to "http://#{@current_site.full_subdomain}#{theme_asset.source.url}", theme_asset.source.url 
+    = link_to "http://#{@current_site.full_subdomain}#{theme_asset.asset.url}", theme_asset.asset.url
+    = image_tag(theme_asset.asset.thumb.url) if theme_asset.asset? 
+    = f.label :asset, "Theme Asset Source"
+    = f.file_field :asset
+    = f.hidden_field :asset_cache
+  - elsif !theme_asset.new_record? && (theme_asset.stylesheet? || theme_asset.javascript?)
+    %h6 The current file is available at
+    = link_to "http://#{@current_site.full_subdomain}#{theme_asset.asset.url}", theme_asset.asset.url
+    = text_area_tag :file_content, theme_asset.asset.read, :cols => "80", :rows => "30"
   %fieldset
     = f.submit button_label

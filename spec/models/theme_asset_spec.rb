@@ -15,7 +15,6 @@ describe SiteAsset do
     @theme_assets = ThemeAsset.all
   end
   
-  
   # --  Associations -----------------------------------------------
    describe "associations" do
      it "should belong_to a site" do
@@ -28,6 +27,28 @@ describe SiteAsset do
 
      it "should belong_to a user with updated_by" do
        @theme_asset_image.should belong_to(:updated_by).of_type(User)
+     end
+   end
+   
+   # -- Validations  -----------------------------------------------
+   describe "Validation" do
+     it "should be valid" do
+       @theme_asset_image.should be_valid
+     end
+
+     it "should not be valid without a name" do
+       @theme_asset_image.name = nil
+       @theme_asset_image.should_not be_valid
+     end
+
+     it "should not be valid without an associated site" do
+       @theme_asset_image.site = nil
+       @theme_asset_image.should_not be_valid
+     end
+
+     it "should not be valid without a asset file" do
+       @theme_asset_image.remove_asset!
+       @theme_asset_image.should_not be_valid
      end
    end
    

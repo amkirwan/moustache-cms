@@ -68,7 +68,7 @@ describe Admin::SiteAssetsController do
   
   describe "POST create" do
     
-    let(:params) { { "name" => "foobar", "source_cache" => "1/rails.png", "source" => AssetFixtureHelper.open("rails.png") } }
+    let(:params) { { "name" => "foobar", "asset_cache" => "1/rails.png", "asset" => AssetFixtureHelper.open("rails.png") } }
     
     before(:each) do
       SiteAsset.stub(:new).and_return(site_asset.as_new_record)
@@ -115,12 +115,12 @@ describe Admin::SiteAssetsController do
       end
     end    
     
-    context "using source_cache when source is nil on redisplay, ie validation fails" do
-      it "should set the source to the source_cache when the source_cache is not empty and the source is nil" do   
-        site_asset.stub_chain(:source, :retrieve_from_cache!)
-        site_asset.stub_chain(:source, :store!)
+    context "using asset_cache when asset is nil on redisplay, ie validation fails" do
+      it "should set the asset to the asset_cache when the asset_cache is not empty and the asset is nil" do   
+        site_asset.stub_chain(:asset, :retrieve_from_cache!)
+        site_asset.stub_chain(:asset, :store!)
         controller.should_receive(:set_from_cache)
-        do_post({ "source_cache" => "1/rails.png"})
+        do_post({ "asset_cache" => "1/rails.png"})
       end
     end
     
@@ -171,7 +171,7 @@ describe Admin::SiteAssetsController do
       SiteAsset.stub(:find).and_return(site_asset)
     end
     
-    let(:params) { { "id" => site_asset.to_param, "site_asset" => { "name" => "foobar", "source_cache" => "1/rails.png", "source" => AssetFixtureHelper.open("rails.png")}} }
+    let(:params) { { "id" => site_asset.to_param, "site_asset" => { "name" => "foobar", "asset_cache" => "1/rails.png", "asset" => AssetFixtureHelper.open("rails.png")}} }
     
     def do_put(put_params=params)
       post :update, put_params
@@ -209,12 +209,12 @@ describe Admin::SiteAssetsController do
       end
     end
     
-    context "using source_cache when source is nil on redisplay, ie validation fails" do
-      it "should set the source to the source_cache when the source_cache is not empty and the source is nil" do   
-        site_asset.stub_chain(:source, :retrieve_from_cache!)
-        site_asset.stub_chain(:source, :store!)
+    context "using asset_cache when asset is nil on redisplay, ie validation fails" do
+      it "should set the asset to the asset_cache when the asset_cache is not empty and the asset is nil" do   
+        site_asset.stub_chain(:asset, :retrieve_from_cache!)
+        site_asset.stub_chain(:asset, :store!)
         controller.should_receive(:set_from_cache)
-        do_put("id" => site_asset.to_param, "site_asset" => { "source_cache" => "1/rails.png"})
+        do_put("id" => site_asset.to_param, "site_asset" => { "asset_cache" => "1/rails.png"})
       end
     end
     

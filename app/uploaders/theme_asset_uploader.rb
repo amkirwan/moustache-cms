@@ -11,7 +11,7 @@ class ThemeAssetUploader < CarrierWave::Uploader::Base
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
-    "sites/#{model.site_id}/#{model.class.to_s.underscore}/#{model.asset_filename}/#{model.id}"
+    "sites/#{model.site_id}/#{model.class.to_s.underscore}/#{asset_type(model.asset_filename)}"
   end              
 
   version :thumb, :if => :image? do                     

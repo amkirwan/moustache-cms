@@ -12,7 +12,7 @@ class Admin::ThemeAssetsController < AdminBaseController
   def create
     created_updated_by_for @theme_asset
     @theme_asset.site = @current_site     
-    set_from_cache(:asset => @theme_asset, :cache_name => params[:theme_asset][:source_cache], :source => params[:theme_asset][:source])
+    set_from_cache(:asset => @theme_asset, :cache_name => params[:theme_asset][:asset_cache], :asset => params[:theme_asset][:asset])
     if @theme_asset.save
       flash[:notice] = "Successfully created the theme asset #{@theme_asset.name}"
       redirect_to admin_theme_assets_path
@@ -23,9 +23,9 @@ class Admin::ThemeAssetsController < AdminBaseController
   
   private 
     def set_from_cache(cache_name)
-      if !params[:theme_asset][:source_cache].empty? && params[:theme_asset][:source].nil?
-        @theme_asset.source.retrieve_from_cache!(cache_name)
-        @theme_asset.source.store!
+      if !params[:theme_asset][:asset_cache].empty? && params[:theme_asset][:asset].nil?
+        @theme_asset.asset.retrieve_from_cache!(cache_name)
+        @theme_asset.asset.store!
       end
     end
   
