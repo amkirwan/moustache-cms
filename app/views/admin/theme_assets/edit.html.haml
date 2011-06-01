@@ -1,4 +1,4 @@
-#edit_new_css_file
-  %h3 Edit CSS File #{@css_file.name}
+#edit_theme_asset
+  %h3 Edit Theme Asset #{@theme_asset.name}
   = render :partial => "form",  
-           :locals => { :css_file => @css_file, :button_label => "Update CSS File" }
+           :locals => { :theme_asset => @theme_asset, :button_label => "Update Theme Asset" }

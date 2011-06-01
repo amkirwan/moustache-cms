@@ -1,24 +1,23 @@
 # edit css file spec
 require "spec_helper"
 
-describe "admin/css_files/edit.html.haml" do
+describe "admin/theme_assets/edit.html.haml" do
   
-  let(:css_file) { stub_model(CssFile, :name => "foobar") }
+  let(:theme_asset) { stub_model(ThemeAsset, :name => "foobar") }
   let(:current_user) { stub_model(User, :role? => true) }
    
   before(:each) do 
-    assign(:css_file, css_file)
+    assign(:theme_asset, theme_asset)
     assign(:current_user, current_user)
   end
   
   it "should render form title" do
     render
-    rendered.should have_selector("h3", :content => "Edit CSS File #{css_file.name}")
+    rendered.should have_selector("h3", :content => "Edit Theme Asset #{theme_asset.name}")
   end
   
-  it "should render partial form with button to save new css file" do
+  it "should render partial form with button to update theme asset" do
     render
-    view.should  render_template(:partial => "form", :locals => { :css_file => css_file, :button_label => "Update CSS File" })
-  end
-  
+    view.should  render_template(:partial => "form", :locals => { :theme_asset => theme_asset, :button_label => "Update Theme Asset" })
+  end  
 end
