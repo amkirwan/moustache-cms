@@ -241,6 +241,7 @@ DEPENDENCIES
   jquery-rails (>= 0.2.6)
   launchy
   machinist_mongo!
+  mime-types
   mini_magick
   mongoid!
   mongoid-rspec!

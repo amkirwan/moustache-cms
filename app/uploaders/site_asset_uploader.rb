@@ -1,12 +1,9 @@
 # encoding: utf-8
+require 'mime/types'
 
 class SiteAssetUploader < CarrierWave::Uploader::Base
 
   include CarrierWave::MiniMagick
-
-  # Choose what kind of storage to use for this uploader:
-  #storage :file
-  # storage :s3
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
@@ -14,8 +11,8 @@ class SiteAssetUploader < CarrierWave::Uploader::Base
     "sites/#{model.site_id}/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end              
 
-  version :thumb do                     
-    process :resize_to_fill => [50, 50] 
+  version :thumb, :if => :image? do     
+      process :resize_to_fill => [50, 50] 
   end
                              
 
@@ -30,7 +27,7 @@ class SiteAssetUploader < CarrierWave::Uploader::Base
      "#{model.name}.#{file.extension}" if original_filename
    end    
 
-   def image?(f)
-     f.content_type.include? 'image'
+   def image?(sanitized_file)    
+     MIME::Types.of(sanitized_file.extension).first.content_type.include? 'image'
    end
 end

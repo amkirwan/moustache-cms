@@ -29,11 +29,17 @@ describe SiteAssetUploader do
     @uploader.extension_white_list.should == %w(jpg jpeg gif png pdf swf flv svg)
   end       
   
-  it "should make a thumbnail exactly 50 by 50 pixels" do
+  it "should make a thumbnail exactly 50 by 50 pixels when content_type is an image" do
     @uploader.thumb.should have_dimensions(50, 50)
   end
   
+  it "should not make a thumbnail when content_type is not an image" do
+    uploader = SiteAssetUploader.new(site_asset, :source)
+    uploader.store!(AssetFixtureHelper.open("hello.pdf"))
+    uploader.thumb.should be_blank
+  end
+  
   it "should return true when the file is an image" do
-    @uploader.image?(site_asset).should == true
+    @uploader.image?(@uploader.file).should be_true
   end
 end

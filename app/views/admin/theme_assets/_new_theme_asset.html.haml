@@ -1,0 +1,4 @@
+= image_tag(theme_asset.source.thumb.url) if theme_asset.source? 
+= f.label :source, "Theme Asset Source"
+= f.file_field :source
+= f.hidden_field :source_cache

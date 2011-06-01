@@ -1,4 +1,5 @@
 # encoding: utf-8
+require 'mime/types'
 
 class ThemeAssetUploader < CarrierWave::Uploader::Base
 
@@ -6,7 +7,6 @@ class ThemeAssetUploader < CarrierWave::Uploader::Base
 
   # Choose what kind of storage to use for this uploader:
   storage :file
-  # storage :s3
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
@@ -14,7 +14,7 @@ class ThemeAssetUploader < CarrierWave::Uploader::Base
     "sites/#{model.site_id}/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end              
 
-  version :thumb do                     
+  version :thumb, :if => :image? do                     
     process :resize_to_fill => [80, 80] 
   end
                              
@@ -30,8 +30,8 @@ class ThemeAssetUploader < CarrierWave::Uploader::Base
      "#{model.name}.#{file.extension}" if original_filename
    end    
 
-   def image?(f)
-     f.content_type.include? 'image'
+   def image?(sanitized_file)    
+     MIME::Types.of(sanitized_file.extension).first.content_type.include? 'image'
    end
 
 end

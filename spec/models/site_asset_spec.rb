@@ -86,17 +86,16 @@ describe SiteAsset do
      end
    end 
    
-   # -- Methods ----------
+   # -- Instance Methods ----------
    describe "Instance Methods" do
      describe "#image?" do
        it "should return true that the site_asset is an image" do
-         @site_asset.content_type = "image/png"
-         @site_asset.image?.should be_true
+         @site_asset.should be_image
        end     
        
-       it "should return false when the site_asset is not an image" do  
-          @site_asset.content_type = "text/html"
-          @site_asset.image?.should be_false
+       it "should return false when the site_asset is not an image" do 
+          site_asset = Factory(:site_asset, :site => site, :source => AssetFixtureHelper.open("hello.pdf"), :created_by => user, :updated_by => user) 
+          site_asset.should_not be_image
        end  
      end
    end

@@ -41,4 +41,9 @@ class ThemeAsset
       combined_scope.where(attr => opts[attr])
     end
   end
+  
+  # -- Instance Methods ----------
+  def image?
+    self.source.image?(self.source.file)
+  end
 end

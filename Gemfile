@@ -17,6 +17,7 @@ gem "redcarpet", "~> 1.11"
 gem "rack-ssl-enforcer", "~> 0.2"
 gem "carrierwave", :git => "git://github.com/jnicklas/carrierwave.git"
 gem "mini_magick"
+gem "mime-types"
 
 group :development, :test do
   gem "rspec-rails", "~> 2.6" 

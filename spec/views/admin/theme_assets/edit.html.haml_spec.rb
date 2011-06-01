@@ -18,6 +18,6 @@ describe "admin/theme_assets/edit.html.haml" do
   
   it "should render partial form with button to update theme asset" do
     render
-    view.should  render_template(:partial => "form", :locals => { :theme_asset => theme_asset, :button_label => "Update Theme Asset" })
+    view.should render_template(:partial => "form", :locals => { :theme_asset => theme_asset, :button_label => "Update Theme Asset" })
   end  
 end

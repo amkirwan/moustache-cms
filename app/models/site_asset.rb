@@ -43,6 +43,6 @@ class SiteAsset
             
   # -- Instance Methods     
   def image?
-    self.source.image?(self)
+    self.source.image?(self.source.file)
   end
 end

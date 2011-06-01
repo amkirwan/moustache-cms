@@ -110,7 +110,20 @@ describe SiteAsset do
      it "should return empty Criteria if it cannot find the domain" do
        @theme_asset_css.delete(site)
        ThemeAsset.find_by_content_type_and_site_id(:content_type => "text/css", :site_id => site.id).should be_empty
+     end   
+   end
+   
+   # -- Instance Methods ----------
+   describe "Instance Methods" do
+     describe "#image?" do
+       it "should return true that the theme_asset is an image" do
+         @theme_asset_image.should be_image
+       end     
+       
+       it "should return false when the site_asset is not an image" do  
+          @theme_asset_css.content_type = "text/html"
+          @theme_asset_css.image?.should be_false
+       end  
      end
-     
    end
 end

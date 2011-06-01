@@ -33,7 +33,13 @@ describe SiteAssetUploader do
     @uploader.thumb.should have_dimensions(80, 80)
   end
   
+  it "should not make a thumbnail when content_type is not an image" do
+    uploader = ThemeAssetUploader.new(theme_asset, :source)
+    uploader.store!(AssetFixtureHelper.open("theme_css.css"))
+    uploader.thumb.should be_blank
+  end
+  
   it "should return true when the file is an image" do
-    @uploader.image?(theme_asset).should == true
+    @uploader.image?(@uploader.file).should be_true
   end
 end
