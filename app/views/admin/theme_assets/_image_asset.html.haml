@@ -1,0 +1,6 @@
+%h6 The current file is available at
+= link_to "http://#{@current_site.full_subdomain}#{theme_asset.asset.url}", theme_asset.asset.url
+= image_tag(theme_asset.asset.thumb.url) if theme_asset.asset? 
+= image_asset.label :asset, "Theme Asset Source"
+= image_asset.file_field :asset
+= image_asset.hidden_field :asset_cache

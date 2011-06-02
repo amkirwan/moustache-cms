@@ -10,12 +10,7 @@
   - if theme_asset.new_record?
     = render :partial => "new_theme_asset", :object => f, :locals => { :theme_asset => theme_asset }
   - elsif !theme_asset.new_record? && theme_asset.image?
-    %h6 The current file is available at
-    = link_to "http://#{@current_site.full_subdomain}#{theme_asset.asset.url}", theme_asset.asset.url
-    = image_tag(theme_asset.asset.thumb.url) if theme_asset.asset? 
-    = f.label :asset, "Theme Asset Source"
-    = f.file_field :asset
-    = f.hidden_field :asset_cache
+    = render :partial => "image_asset", :object => f, :locals => { :theme_asset => theme_asset }
   - elsif !theme_asset.new_record? && (theme_asset.stylesheet? || theme_asset.javascript?)
     %h6 The current file is available at
     = link_to "http://#{@current_site.full_subdomain}#{theme_asset.asset.url}", theme_asset.asset.url

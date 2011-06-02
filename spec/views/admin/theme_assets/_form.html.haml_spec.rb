@@ -52,13 +52,13 @@ describe "admin/theme_assets/_form.html.haml" do
     end
   end
   
-  context "when EDITing the theme_asset" do
+  context "when EDITing the theme_asset image" do
     before(:each) do
-      theme_asset.stub(:new_record? => false)
+      theme_asset.stub(:new_record? => false, :image? => true)
     end
     
     it "should render a button to update the theme_asset" do
-      do_render("Update Asset")
+      do_render("Update Theme Asset")
       form_update(:action => admin_theme_asset_path(theme_asset)) do |f|
         f.should have_selector("input", :type => "submit", :value => "Update Theme Asset")
       end
@@ -66,7 +66,7 @@ describe "admin/theme_assets/_form.html.haml" do
     
     it "should render a field with the theme_asset name" do
       theme_asset.stub(:name => "foobar")
-      do_render("Update Asset")
+      do_render("Update Theme Asset")
       form_update(:action => admin_theme_asset_path(theme_asset)) do |f|
         f.should have_selector("input", :type => "text", :value => "foobar")      
       end
@@ -74,45 +74,15 @@ describe "admin/theme_assets/_form.html.haml" do
     
     it "should render a field with the description" do
       theme_asset.stub(:description => "foobar description")
-      do_render("Update Asset")
+      do_render("Update Theme Asset")
       form_update(:action => admin_theme_asset_path(theme_asset)) do |f|
         f.should have_selector("textarea", :content => "foobar description")
       end
     end
     
-    it "should show the location of the file" do
-      theme_asset.stub_chain(:asset, :url => "/image/path/file.png")
-      do_render("Update Asset")
-      rendered.should have_selector("a", :content => "http://#{site.full_subdomain}#{theme_asset.asset.url}")
-    end 
-    
-    it "should render a hidden field to cache the file on redisplay" do
-      do_render("Update Asset")
-      form_update(:action => admin_theme_asset_path(theme_asset)) do |f|
-        f.should have_selector("input", :type => "hidden", :name => "theme_asset[asset_cache]")
-      end
-    end    
-  end
-  
-  context "when redisplaying edit form because of validation error should cache the image asset from tmp" do
-    before(:each) do
-      theme_asset.stub(:new_record? => false)
-    end
-    
-    it "should show the cached image" do
-      theme_asset.stub(:asset? => true)
-      theme_asset.stub_chain(:asset, :url => "/image/path/file.png")
-      theme_asset.stub_chain(:asset, :thumb, :url => "/spec/fixtures/assets/rails.png")
+    it "should render the image_asset partial" do
       do_render("Update Theme Asset")
-      rendered.should have_selector("img", :src => "/spec/fixtures/assets/rails.png")
-    end
-    
-    it "should cache the file tmp path on redisplay" do
-      theme_asset.stub(:asset_cache => "/tmp/rails.png")
-      do_render("Update Theme Asset")
-      form_update(:action => admin_theme_asset_path(theme_asset)) do |f|
-        f.should have_selector("input", :type => "hidden", :name => "theme_asset[asset_cache]", :value => "/tmp/rails.png")
-      end
+      view.should render_template(:partial => "image_asset", :locals => { :theme_asset => theme_asset })
     end
   end
 end
