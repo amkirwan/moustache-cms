@@ -73,7 +73,7 @@ describe Admin::ThemeAssetsController do
       get :new
     end
     
-    it "should receive new and return the new theme_asset" do
+    it "should receive ThemeAsset#new and return the new theme_asset" do
       ThemeAsset.should_receive(:new).and_return(theme_asset)
       do_get
     end
@@ -100,7 +100,7 @@ describe Admin::ThemeAssetsController do
       post :create, "theme_asset" => post_params
     end
     
-    it "should receive new and return the new theme_asset from the params" do
+    it "should receive ThemeAsset#new and return the new theme_asset from the params" do
       ThemeAsset.should_receive(:new).and_return(theme_asset)
       do_post
     end
@@ -145,7 +145,94 @@ describe Admin::ThemeAssetsController do
         do_post
         response.should render_template("admin/theme_assets/new")
       end
+    end    
+  end  
+
+  describe "GET edit" do
+    before(:each) do
+      ThemeAsset.stub(:find).and_return(theme_asset)
+    end                                                      
+    
+    def do_get
+      get :edit, "id" => theme_asset.to_param
+    end
+    
+    it "should receive ThemeAsset#find and return the theme_asset" do
+      ThemeAsset.should_receive(:find).and_return(theme_asset)
+      do_get
+    end
+    
+    it "should assign the theme_asset for the view" do
+      do_get
+      assigns(:theme_asset).should == theme_asset
+    end                                          
+    
+    it "should render the view" do
+      do_get
+      response.should render_template("admin/theme_assets/edit")
+    end
+  end
+  
+  
+  describe "POST update" do    
+    before(:each) do
+      ThemeAsset.stub(:find).and_return(theme_asset)
+    end                                            
+    
+    let(:params) { { "id" => theme_asset.to_param, "theme_asset" => { "name" => "foobar", "asset_cache" => "1/rails.png", "asset" => AssetFixtureHelper.open("rails.png")}} }
+    def do_put(put_params=params)
+      post :update, put_params
+    end
+    
+    it "should receive ThemeAsset#find" do
+      ThemeAsset.should_receive(:find).and_return(theme_asset)
+      do_put
+    end                                                      
+    
+    it "should assign the theme_asset for the view" do
+      do_put
+      assigns(:theme_asset).should == theme_asset
+    end     
+    
+    describe "with valid params" do
+      it "should receive update_attributes and return true" do
+        theme_asset.should_receive(:update_attributes).with(params["theme_asset"]).and_return(true)
+        do_put
+      end
+      
+      it "should assign the flash message" do
+        do_put                               
+        flash[:notice].should == "Successfully updated the theme asset #{theme_asset.name}"
+      end           
+      
+      it "should redirect to the index action" do
+        do_put
+        response.should redirect_to(admin_theme_assets_path)
+      end
+    end                                  
+    
+    describe "with invalid params" do                      
+      before(:each) do
+        theme_asset.stub(:update_attributes).and_return(false)
+      end
+      
+      it "should receive update_attributes and return false" do
+        theme_asset.should_receive(:update_attributes).and_return(false)
+        do_put
+      end             
+      
+      it "should render the templete for edit" do
+        do_put
+        response.should render_template("admin/theme_assets/edit")
+      end
     end
     
   end
-end
+end 
+
+
+
+
+
+
+

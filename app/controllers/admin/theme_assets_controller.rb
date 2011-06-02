@@ -35,8 +35,13 @@ class Admin::ThemeAssetsController < AdminBaseController
   end
    
   # PUT /admin/theme_assets/1 
-  def update
-    
+  def update                           
+    if @theme_asset.update_attributes(params[:theme_asset])
+      flash[:notice] = "Successfully updated the theme asset #{@theme_asset.name}"
+      redirect_to admin_theme_assets_path
+    else                                                        
+      render :edit
+    end  
   end
   
   private 
