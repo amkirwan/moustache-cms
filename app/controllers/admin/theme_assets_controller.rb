@@ -1,14 +1,23 @@
 class Admin::ThemeAssetsController < AdminBaseController
-  include Etherweb::AssetCache
+  include Etherweb::AssetCache  
+  
+  # GET /admin/theme_assets 
   def index
     @css_files = ThemeAsset.css_files(@current_site)
     @js_files = ThemeAsset.js_files(@current_site)
     @images = ThemeAsset.images(@current_site)
+  end  
+  
+  # GET /admin/theme_assets/1/edit
+  def show
+    render :edit
   end
   
+   # GET /admin/theme_assets/new 
   def new
   end
-  
+   
+  # POST /admin/theme_assets
   def create
     created_updated_by_for @theme_asset
     @theme_asset.site = @current_site     
@@ -19,6 +28,15 @@ class Admin::ThemeAssetsController < AdminBaseController
     else
       render :new
     end
+  end    
+  
+  # GET /admin/theme_asset/1/edit
+  def edit
+  end
+   
+  # PUT /admin/theme_assets/1 
+  def update
+    
   end
   
   private 
