@@ -9,19 +9,19 @@ class Admin::SiteAssetsController < AdminBaseController
     render :edit
   end
 
-  # GET /admin/site_assets/new
+  # GET /admin/media_files/new
   def new
   end
 
-  # GET /admin/site_assets/1/edit
+  # GET /admin/media_files/1/edit
   def edit
   end
 
-  # POST /admin/site_assets
+  # POST /admin/media_files
   def create
     created_updated_by_for @site_asset
     @site_asset.site = @current_site     
-    set_from_cache(:asset => @site_asset, :cache_name => params[:site_asset][:asset_cache], :asset => params[:site_asset][:asset])
+    try_site_asset_cache
     if @site_asset.save
       flash[:notice] = "Successfully created the asset #{@site_asset.name}"
       redirect_to admin_site_assets_path
@@ -33,7 +33,7 @@ class Admin::SiteAssetsController < AdminBaseController
   # PUT /admin/site_assets/1
   def update
     @site_asset.updated_by = current_user
-    set_from_cache(:asset => @site_asset, :cache_name => params[:site_asset][:asset_cache], :asset => params[:site_asset][:asset])
+    try_site_asset_cache
     if @site_asset.update_attributes(params[:site_asset])
       flash[:notice] = "Successfully updated the asset #{@site_asset.name}"
       redirect_to admin_site_assets_path
@@ -48,5 +48,12 @@ class Admin::SiteAssetsController < AdminBaseController
       flash[:notice] = "Successfully deleted the asset #{@site_asset.name}"
       redirect_to admin_site_assets_path
     end
-  end 
+  end
+  
+  private
+    def try_site_asset_cache 
+      if params[:site_asset][:asset_cache].empty? && params[:site_asset][:asset].nil?
+        set_from_cache(:cache_name => params[:site_asset][:asset_cache], :asset => params[:site_asset][:asset]) 
+      end
+    end 
 end
