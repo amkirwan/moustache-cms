@@ -1,0 +1,3 @@
+%h6 The current file is available at
+= link_to "http://#{@current_site.full_subdomain}#{theme_asset.asset.url}", theme_asset.asset.url
+= text_area_tag :file_content, theme_asset.asset.read, :cols => "80", :rows => "30"

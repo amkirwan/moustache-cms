@@ -22,6 +22,7 @@ describe "admin/theme_assets/_form.html.haml" do
     view.should render_template(:partial => "shared/error_messages", :locals => { :target => theme_asset })
   end
   
+  # -- NEW ---
   context "when the theme_asset is NEW" do
     before(:each) do
       theme_asset.as_new_record
@@ -52,6 +53,7 @@ describe "admin/theme_assets/_form.html.haml" do
     end
   end
   
+  # -- Existing Record ------
   context "when EDITing the theme_asset image" do
     before(:each) do
       theme_asset.stub(:new_record? => false, :image? => true)
@@ -84,5 +86,39 @@ describe "admin/theme_assets/_form.html.haml" do
       do_render("Update Theme Asset")
       view.should render_template(:partial => "image_asset", :locals => { :theme_asset => theme_asset })
     end
-  end
+  end  
+  
+  context "when EDITing a theme stylesheet or javascript" do
+    before(:each) do
+      theme_asset.stub(:new_record? => false, :image? => false, :stylesheet? => true)
+    end
+    
+    it "should render a button to update the theme_asset" do
+      do_render("Update Theme Asset")
+      form_update(:action => admin_theme_asset_path(theme_asset)) do |f|
+        f.should have_selector("input", :type => "submit", :value => "Update Theme Asset")
+      end
+    end
+    
+    it "should render a field with the theme_asset name" do
+      theme_asset.stub(:name => "foobar")
+      do_render("Update Theme Asset")
+      form_update(:action => admin_theme_asset_path(theme_asset)) do |f|
+        f.should have_selector("input", :type => "text", :value => "foobar")      
+      end
+    end
+    
+    it "should render a field with the description" do
+      theme_asset.stub(:description => "foobar description")
+      do_render("Update Theme Asset")
+      form_update(:action => admin_theme_asset_path(theme_asset)) do |f|
+        f.should have_selector("textarea", :content => "foobar description")
+      end
+    end 
+    
+    it "should render the image_asset partial" do
+      do_render("Update Theme Asset")
+      view.should render_template(:partial => "css_js_asset", :locals => { :theme_asset => theme_asset })
+    end
+  end                                                          
 end

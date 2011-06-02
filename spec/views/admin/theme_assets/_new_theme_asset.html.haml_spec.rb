@@ -1,7 +1,6 @@
 require "spec_helper"
 
 describe "admin/theme_assets/_new_theme_asset.html.haml" do
-  include FormHelpers
     
   let(:site) { stub_model(Site, :full_subdomain => "foobar.example.com") }
   let(:theme_asset) { stub_model(ThemeAsset, :site => site) }
