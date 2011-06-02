@@ -46,37 +46,9 @@ describe "admin/theme_assets/_form.html.haml" do
       end
     end
     
-    it "should render a field to upload file" do
-      form_new(:action => admin_theme_assets_path) do |f|
-        f.should have_selector("input", :type => "file", :name => "theme_asset[asset]")
-      end
-    end
-    
-    it "should render a hidden field to cache the file tmp path on redisplay" do
-      form_new(:action => admin_theme_assets_path) do |f|
-        f.should have_selector("input", :type => "hidden", :name => "theme_asset[asset_cache]")
-      end
-    end
-  end
-  
-  context "when redisplaying new field form because of validation error should cache the image asset from tmp" do
-    before(:each) do
-      theme_asset.as_new_record
-    end
-    
-    it "should show the cached image" do
-      theme_asset.stub(:asset? => true)
-      theme_asset.stub_chain(:asset, :thumb, :url => "/spec/fixtures/assets/rails.png")
+    it "should render the new_theme_asset partial" do
       do_render("Save Theme Asset")
-      rendered.should have_selector("img", :src => "/spec/fixtures/assets/rails.png")
-    end
-    
-    it "should cache the file tmp path on redisplay" do
-      theme_asset.stub(:asset_cache => "/tmp/rails.png")
-      do_render("Save Theme Asset")
-      form_new(:action => admin_theme_assets_path) do |f|
-        f.should have_selector("input", :type => "hidden", :name => "theme_asset[asset_cache]", :value => "/tmp/rails.png")
-      end
+      view.should render_template(:partial => "_new_theme_asset", :locals => { :theme_asset => theme_asset })
     end
   end
   
