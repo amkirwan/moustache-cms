@@ -177,7 +177,7 @@ describe Admin::ThemeAssetsController do
       ThemeAsset.stub(:find).and_return(theme_asset)
     end                                            
     
-    let(:params) { { "id" => theme_asset.to_param, "theme_asset" => { "name" => "foobar", "asset_cache" => "1/rails.png", "asset" => AssetFixtureHelper.open("rails.png")}} }
+    let(:params) { { "id" => theme_asset.to_param, "theme_asset_file_content" => "foobar", "theme_asset" => { "name" => "foobar", "asset_cache" => "1/rails.png", "asset" => AssetFixtureHelper.open("theme_css.css")}} }
     def do_put(put_params=params)
       post :update, put_params
     end
@@ -201,6 +201,11 @@ describe Admin::ThemeAssetsController do
       it "should receive update_attributes and return true" do
         theme_asset.should_receive(:update_attributes).with(params["theme_asset"]).and_return(true)
         do_put
+      end             
+      
+      it "should receive @theme_asset.update_file_content" do
+        theme_asset.should_receive(:update_file_content).with(params["theme_asset_file_content"]).and_return(true)
+        do_put
       end
       
       it "should assign the flash message" do
@@ -212,12 +217,6 @@ describe Admin::ThemeAssetsController do
         do_put
         response.should redirect_to(admin_theme_assets_path)
       end 
-      
-      context "when the param[file_content] is returned" do
-        before(:each) do
-         # file_param = { "id" => theme_asset.to_param, "file_content" => "hello, world", "theme_asset" => { "name" => "foobar", "asset" => AssetFixtureHelper.open("theme_css.css")}} }}
-        end     
-      end
     end 
     
     context "using asset_cache when asset is nil on redisplay, ie validation fails" do

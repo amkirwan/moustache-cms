@@ -38,7 +38,7 @@ class Admin::ThemeAssetsController < AdminBaseController
   def update   
     @theme_asset.updated_by = current_user       
     try_theme_asset_cache                  
-    if @theme_asset.update_attributes(params[:theme_asset])
+    if @theme_asset.update_attributes(params[:theme_asset]) && @theme_asset.update_file_content(params[:theme_asset_file_content])
       flash[:notice] = "Successfully updated the theme asset #{@theme_asset.name}"
       redirect_to admin_theme_assets_path
     else                                                        

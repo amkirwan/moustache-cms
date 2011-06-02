@@ -142,9 +142,31 @@ describe SiteAsset do
        end     
        
        it "should return false when the site_asset is not an image" do  
-          @theme_asset_css.content_type = "text/html"
           @theme_asset_css.image?.should be_false
        end  
+     end 
+     
+     describe "update_file_content" do
+       it "should return when true when saving the updated file content" do
+         @theme_asset_css   
+       end
      end
    end
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

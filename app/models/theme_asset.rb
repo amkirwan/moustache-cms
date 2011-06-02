@@ -24,7 +24,6 @@ class ThemeAsset
             
   validates :asset, :presence => true
   
-  
   # -- Callbacks
   before_save :update_asset_attributes
   before_update :recreate, :if => "self.name_changed?"

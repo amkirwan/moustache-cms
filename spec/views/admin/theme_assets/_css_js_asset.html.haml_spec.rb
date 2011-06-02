@@ -30,7 +30,7 @@ describe "admin/theme_assets/_css_js_asset.html.haml" do
 
     it "should render a text_area to display to file content" do
       do_render
-      rendered.should have_selector("textarea", :name => "file_content", :content => "Hello, World!")
+      rendered.should have_selector("textarea", :name => "theme_asset_file_content", :content => "Hello, World!")
     end 
   end   
 end
