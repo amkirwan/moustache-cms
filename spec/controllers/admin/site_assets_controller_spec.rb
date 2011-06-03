@@ -117,9 +117,7 @@ describe Admin::SiteAssetsController do
     
     context "using asset_cache when asset is nil on redisplay, ie validation fails" do
       it "should set the asset to the asset_cache when the asset_cache is not empty and the asset is nil" do   
-        site_asset.stub_chain(:asset, :retrieve_from_cache!)
-        site_asset.stub_chain(:asset, :store!)
-        controller.should_receive(:set_from_cache)
+        controller.should_receive(:try_site_asset_cache)
         do_post({ "asset_cache" => "1/rails.png"})
       end
     end
@@ -211,9 +209,7 @@ describe Admin::SiteAssetsController do
     
     context "using asset_cache when asset is nil on redisplay, ie validation fails" do
       it "should set the asset to the asset_cache when the asset_cache is not empty and the asset is nil" do   
-        site_asset.stub_chain(:asset, :retrieve_from_cache!)
-        site_asset.stub_chain(:asset, :store!)
-        controller.should_receive(:set_from_cache)
+        controller.should_receive(:try_site_asset_cache)
         do_put("id" => site_asset.to_param, "site_asset" => { "asset_cache" => "1/rails.png"})
       end
     end
@@ -247,16 +243,23 @@ describe Admin::SiteAssetsController do
     it "should receive the SiteAsset#find and return the media file" do
       SiteAsset.should_receive(:find).with(site_asset.to_param).and_return(site_asset)
       do_destroy
-    end
+    end       
     
-    it "should assign the flash message that the media file was successfully destroyed" do
+    it "should assign the site_asset" do
       do_destroy
-      flash[:notice].should == "Successfully deleted the asset #{site_asset.name}"
+      assigns(:site_asset).should == site_asset
     end
+     
+    context "when destroying site_asset is successful" do
+      it "should assign the flash message that the media file was successfully destroyed" do
+        do_destroy
+        flash[:notice].should == "Successfully deleted the asset #{site_asset.name}"
+      end
     
-    it "should redirect to admin/site_asset/index when the file is destroyed" do
-      do_destroy
-      response.should redirect_to(admin_site_assets_path)
+      it "should redirect to admin/site_asset/index when the file is destroyed" do
+        do_destroy
+        response.should redirect_to(admin_site_assets_path)
+      end 
     end
   end
 end
