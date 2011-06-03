@@ -146,9 +146,9 @@ describe SiteAsset do
        end  
      end 
      
-     describe "update_file_content" do
+     describe "#update_file_content" do
        it "should return when true when saving the updated file content" do
-         @theme_asset_css   
+          @theme_asset_css.update_file_content("hello, world").should be_true
        end
      end
    end

@@ -6,6 +6,9 @@ describe SiteAssetUploader do
   
   let(:site) { Factory(:site) }
   let(:theme_asset) { Factory(:theme_asset, :name => "foobar", :site => site) }
+  let(:theme_asset_css) { Factory(:theme_asset, :name => "foobar", :site => site, :asset => AssetFixtureHelper.open("theme_css.css")) }
+  let(:theme_asset_js) { Factory(:theme_asset, :name => "foobar", :site => site, :asset => AssetFixtureHelper.open("theme_js.js")) }
+  let(:theme_asset_otf) { Factory(:theme_asset, :name => "foobar", :site => site, :asset => AssetFixtureHelper.open("Inconsolata.otf")) }
   
   before do
     ThemeAssetUploader.enable_processing = true
@@ -42,12 +45,12 @@ describe SiteAssetUploader do
   
   describe "storeage paths" do
     before(:each) do
-      @uploader_css = ThemeAssetUploader.new(theme_asset, :asset)
+      @uploader_css = ThemeAssetUploader.new(theme_asset_css, :asset)
       @uploader_css.store!(AssetFixtureHelper.open("theme_css.css"))
-      @uploader_js = ThemeAssetUploader.new(theme_asset, :asset)
+      @uploader_js = ThemeAssetUploader.new(theme_asset_js, :asset)
       @uploader_js.store!(AssetFixtureHelper.open("theme_js.js"))
-      @uploader_asset = ThemeAssetUploader.new(theme_asset, :asset)
-      @uploader_asset.store!(AssetFixtureHelper.open("LindenHill.otf"))
+      @uploader_otf = ThemeAssetUploader.new(theme_asset_otf, :asset)
+      @uploader_otf.store!(AssetFixtureHelper.open("Inconsolata.otf"))
     end
     
     it "should set the storage directory to image for image files" do
@@ -63,7 +66,7 @@ describe SiteAssetUploader do
     end
     
     it "should set the storage dir to asset for other files" do
-      @uploader_asset.store_dir.should == "sites/#{@uploader_asset.model.site_id}/#{@uploader_asset.model.class.to_s.underscore}/assets"
+      @uploader_otf.store_dir.should == "sites/#{@uploader_otf.model.site_id}/#{@uploader_otf.model.class.to_s.underscore}/assets"
     end
   end
 end

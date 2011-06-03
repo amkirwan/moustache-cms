@@ -56,4 +56,18 @@ class ThemeAsset
     end
   end
   
+  def update_file_content(file_contents)
+    File.open(self.asset.path, "wb") { |f| f.write(file_contents) }
+  end
+  
 end
+
+
+
+
+
+
+
+
+
+
