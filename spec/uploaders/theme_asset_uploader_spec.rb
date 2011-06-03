@@ -5,7 +5,7 @@ describe SiteAssetUploader do
   include CarrierWave::Test::Matchers
   
   let(:site) { Factory(:site) }
-  let(:theme_asset) { ThemeAsset.new(:name => "foobar", :site => site) }
+  let(:theme_asset) { Factory(:theme_asset, :name => "foobar", :site => site) }
   
   before do
     ThemeAssetUploader.enable_processing = true
@@ -51,23 +51,19 @@ describe SiteAssetUploader do
     end
     
     it "should set the storage directory to image for image files" do
-      pending("can't set model in spec")
-      @uploader.store_dir.should == "sites/#{@uploader.model.site_id}/#{@uploader.model.class.to_s.underscore}/images/#{@uploader.model.id}"
+      @uploader.store_dir.should == "sites/#{@uploader.model.site_id}/#{@uploader.model.class.to_s.underscore}/images"
     end
     
     it "should set the storage dir to stylesheet for css files" do
-      pending("can't set model in spec")
-      @uploader_css.store_dir.should == "sites/#{@uploader_css.model.site_id}/#{@uploader_css.model.class.to_s.underscore}/stylesheets/#{@uploader_css.model.id}"
+      @uploader_css.store_dir.should == "sites/#{@uploader_css.model.site_id}/#{@uploader_css.model.class.to_s.underscore}/stylesheets"
     end
     
     it "should set the storage dir to javascript for js files" do
-      pending("can't set model in spec")
-      @uploader_js.store_dir.should == "sites/#{@uploader_js.model.site_id}/#{@uploader_js.model.class.to_s.underscore}/javascripts/#{@uploader_js.model.id}"
+      @uploader_js.store_dir.should == "sites/#{@uploader_js.model.site_id}/#{@uploader_js.model.class.to_s.underscore}/javascripts"
     end
     
     it "should set the storage dir to asset for other files" do
-      pending("can't set model in spec")
-      @uploader_asset.store_dir.should == "sites/#{@uploader_asset.model.site_id}/#{@uploader_asset.model.class.to_s.underscore}/assets/#{@uploader_asset.model.id}"
+      @uploader_asset.store_dir.should == "sites/#{@uploader_asset.model.site_id}/#{@uploader_asset.model.class.to_s.underscore}/assets"
     end
   end
 end

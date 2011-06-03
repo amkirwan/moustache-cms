@@ -4,7 +4,8 @@ require "carrierwave/test/matchers"
 describe SiteAssetUploader do
   include CarrierWave::Test::Matchers
   
-  let(:site_asset) { SiteAsset.new(:name => "foobar", :content_type => "image/png") }
+  let(:site) { Factory(:site) }
+  let(:site_asset) { Factory(:theme_asset, :name => "foobar", :site_id => site.id) }  
   
   before do
     SiteAssetUploader.enable_processing = true
