@@ -36,7 +36,7 @@ Scenario: Create a new media file
   And I follow "Add Theme Asset" within "ul#new_theme_asset"
   And I fill in "theme_asset_name" with "foobar" within "div#add_new_theme_asset"
   And I fill in "theme_asset_description" with "Hello, World!" within "div#add_new_theme_asset"
-  And I attach the file "spec/fixtures/assets/rails.png" to "theme_asset_source" 
+  And I attach the file "spec/fixtures/assets/rails.png" to "theme_asset_asset" 
   And I press "Save Theme Asset" within "div#add_new_theme_asset"
   Then I should be on the admin theme assets page
   And I should see "Successfully created the theme asset foobar"

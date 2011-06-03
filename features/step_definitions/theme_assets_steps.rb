@@ -21,7 +21,7 @@ Given /^these theme assets exist in the site "([^\"]*)" created by user "([^\"]*
                           :name => hash[:name], 
                           :created_by => user, 
                           :updated_by => user, 
-                          :source => AssetFixtureHelper.open(hash[:file]),
+                          :asset => AssetFixtureHelper.open(hash[:file]),
                           :content_type => content_type(hash[:file]))
   end
 end

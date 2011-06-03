@@ -55,8 +55,8 @@ class Admin::ThemeAssetsController < AdminBaseController
   
   private
     def try_theme_asset_cache 
-      if params[:theme_asset][:asset_cache].empty? && params[:theme_asset][:asset].nil?
-        set_from_cache(:cache_name => params[:theme_asset][:asset_cache], :asset => params[:theme_asset][:asset])
+      if !params[:theme_asset][:asset_cache].empty? && params[:theme_asset][:asset].nil?
+        set_from_cache(:cache_name => params[:theme_asset][:asset_cache], :asset => @theme_asset)
       end
     end
 end

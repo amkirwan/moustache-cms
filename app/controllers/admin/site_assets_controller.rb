@@ -51,9 +51,10 @@ class Admin::SiteAssetsController < AdminBaseController
   end
   
   private
-    def try_site_asset_cache 
-      if params[:site_asset][:asset_cache].empty? && params[:site_asset][:asset].nil?
-        set_from_cache(:cache_name => params[:site_asset][:asset_cache], :asset => params[:site_asset][:asset]) 
+    def try_site_asset_cache                                                                  
+      logger.debug "*"*10 + "#{params[:site_asset][:asset]}"
+      if !params[:site_asset][:asset_cache].empty? && params[:site_asset][:asset].nil?
+        set_from_cache(:cache_name => params[:site_asset][:asset_cache], :asset => @site_asset) 
       end
     end 
 end
