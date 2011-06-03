@@ -28,7 +28,7 @@ Scenario: Editor can create a new media file
   And I follow "Add Asset" within "ul#new_site_asset"
   And I fill in "site_asset_name" with "foobar" within "div#add_new_site_asset"
   And I fill in "site_asset_description" with "Hello, World!" within "div#add_new_site_asset"
-  And I attach the file "spec/fixtures/assets/rails.png" to "site_asset_source"
+  And I attach the file "spec/fixtures/assets/rails.png" to "site_asset_asset"
   And I press "Save Asset" within "div#add_new_site_asset"
   Then I should be on the admin site assets page
   And I should see "Successfully created the asset foobar"
