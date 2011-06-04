@@ -49,7 +49,7 @@ Scenario: Given I am logged in as an admin then I can edit the site assets I cre
   Then I should now be editing the site asset "rails"
   And I fill in "site_asset_name" with "foobar" within "div#edit_site_asset"
   And I fill in "site_asset_description" with "New Text" within "div#edit_site_asset"
-  And I should see the url for the file "rails"
+  And I should see the url for the site asset file "rails"
   And I press "Update Asset" within "div#edit_site_asset"
   Then I should be on the admin site assets page
   And I should see "Successfully updated the asset foobar"
