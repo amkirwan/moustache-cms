@@ -14,15 +14,6 @@ GIT
       mongoid (~> 2.0.0)
 
 GIT
-  remote: git://github.com/evansagge/mongoid-rspec.git
-  revision: 838dbe822bbc4836633ee982c398962608ec957f
-  tag: v1.4.2
-  specs:
-    mongoid-rspec (1.4.2)
-      mongoid (~> 2.0)
-      rspec (~> 2)
-
-GIT
   remote: git://github.com/jnicklas/carrierwave.git
   revision: a72997a28dee579e95c2378d63d5e85803f265f6
   specs:
@@ -146,6 +137,9 @@ GEM
       subexec (~> 0.0.4)
     mongo (1.3.0)
       bson (>= 1.3.0)
+    mongoid-rspec (1.4.4)
+      mongoid (~> 2.0)
+      rspec (~> 2)
     mustache (0.99.3)
     nokogiri (1.4.4)
     polyglot (0.3.1)
@@ -231,7 +225,7 @@ DEPENDENCIES
   mime-types
   mini_magick
   mongoid!
-  mongoid-rspec!
+  mongoid-rspec (~> 1.4.4)
   mongoid-tree!
   mustache (>= 0.99)
   rack-ssl-enforcer (~> 0.2)

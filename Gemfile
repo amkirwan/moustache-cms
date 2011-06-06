@@ -27,7 +27,7 @@ group :development, :test do
   gem "launchy"
   gem "database_cleaner"
   gem "factory_girl_rails"
-  gem "mongoid-rspec", :git => "git://github.com/evansagge/mongoid-rspec.git", :tag => "v1.4.2"
+  gem "mongoid-rspec", "~> 1.4.4"
   gem 'machinist_mongo', :require => 'machinist/mongoid', :git => 'git://github.com/nmerouze/machinist_mongo.git', :branch => 'machinist2'
   gem "hpricot"
   gem "syntax"   
