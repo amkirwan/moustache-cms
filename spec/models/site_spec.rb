@@ -34,6 +34,11 @@ describe Site do
       @site.should_not be_valid
     end
     
+    it "should not be valid without a default_domain" do
+      @site.default_domain = nil
+      @site.should_not be_valid
+    end
+    
     it "should not be valid with a duplicate name" do
       Factory.build(:site, :name => @site.name).should_not be_valid
     end

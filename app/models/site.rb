@@ -26,6 +26,8 @@ class Site
   validates :name,
             :presence => true,
             :uniqueness => true
+  validates :default_domain,
+            :presence => true
   validates :subdomain,
             :presence => true,
             :uniqueness => true
