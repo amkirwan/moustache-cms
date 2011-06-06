@@ -95,7 +95,6 @@ GEM
     celerity (0.8.9)
     childprocess (0.1.8)
       ffi (~> 1.0.6)
-    columnize (0.3.2)
     configuration (1.2.0)
     cucumber (0.10.2)
       builder (>= 2.1.2)
@@ -136,8 +135,6 @@ GEM
     launchy (0.3.7)
       configuration (>= 0.0.5)
       rake (>= 0.8.1)
-    linecache19 (0.5.12)
-      ruby_core_source (>= 0.1.4)
     machinist (2.0.0.beta2)
     mail (2.2.19)
       activesupport (>= 2.3.6)
@@ -191,16 +188,6 @@ GEM
       activesupport (~> 3.0)
       railties (~> 3.0)
       rspec (~> 2.6.0)
-    ruby-debug-base19 (0.11.25)
-      columnize (>= 0.3.1)
-      linecache19 (>= 0.5.11)
-      ruby_core_source (>= 0.1.4)
-    ruby-debug19 (0.11.6)
-      columnize (>= 0.3.1)
-      linecache19 (>= 0.5.11)
-      ruby-debug-base19 (>= 0.11.19)
-    ruby_core_source (0.1.5)
-      archive-tar-minitar (>= 0.5.2)
     rubyzip (0.9.4)
     sass (3.1.1)
     selenium-webdriver (0.2.0)
@@ -252,7 +239,6 @@ DEPENDENCIES
   redcarpet (~> 1.11)
   relish
   rspec-rails (~> 2.6)
-  ruby-debug19
   rubycas-client!
   sass (~> 3.1)
   spork

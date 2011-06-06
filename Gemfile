@@ -33,5 +33,4 @@ group :development, :test do
   gem "syntax"   
   gem "relish"
   gem 'spork'
-  gem 'ruby-debug19',:platform => :ruby_19
 end
