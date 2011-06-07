@@ -1,4 +1,4 @@
-# admin::media_files index spec
+# admin::site_assets index spec
 require 'spec_helper'
 
 describe "admin/site_assets/index.html.haml" do

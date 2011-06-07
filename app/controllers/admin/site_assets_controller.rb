@@ -9,15 +9,15 @@ class Admin::SiteAssetsController < AdminBaseController
     render :edit
   end
 
-  # GET /admin/media_files/new
+  # GET /admin/site_assets/new
   def new
   end
 
-  # GET /admin/media_files/1/edit
+  # GET /admin/site_assets/1/edit
   def edit
   end
 
-  # POST /admin/media_files
+  # POST /admin/site_assets
   def create
     created_updated_by_for @site_asset
     @site_asset.site = @current_site     
