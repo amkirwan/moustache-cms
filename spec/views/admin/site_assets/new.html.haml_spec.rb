@@ -1,4 +1,4 @@
-# NEW media_files
+# NEW site_asset
 require 'spec_helper'
 
 describe "admin/site_assets/new.html.haml" do
