@@ -79,6 +79,10 @@ Factory.define :parent_page, :parent => :page do |pp|
   pp.current_state { Factory.build(:current_state) }
   pp.page_parts {[ Factory.build(:page_part) ]}
   pp.page_type { Factory.build(:page_type) }
+end     
+
+Factory.define :asset_collection do |collection|
+  collection.sequence(:name) { |n| "name_#{n}" }
 end
 
 Factory.define :site_asset do |asset|

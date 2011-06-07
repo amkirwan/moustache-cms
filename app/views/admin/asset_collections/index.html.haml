@@ -1,0 +1,14 @@
+#asset_collections
+  #h3 Asset Collections
+  %ul
+    - @asset_collections.each do |collection|
+      %li{ :id => "#{collection.name}"}
+        %div= link_to collection.name, admin_asset_collection_path(collection)
+        %div= collection.created_by.puid
+        - if can? :destroy, collection
+          %div.delete= button_to "delete", admin_asset_collection_path(collection), :method => :delete, :confirm => "Are you sure you want to delete #{collection.name}" 
+  
+
+%div
+  %ul#new_asset_collection
+    %li= link_to "Add Asset", new_admin_asset_collection_path
