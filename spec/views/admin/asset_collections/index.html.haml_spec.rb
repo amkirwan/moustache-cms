@@ -18,13 +18,35 @@ describe "admin/asset_collections/index.html.haml" do
     end
   end
   
-  it "should render a link to show the asset collections nested collection" do
+  it "should render a link to with the collection name to show the assets" do
     render
     asset_collections.each do |collection|
       rendered.should have_selector("li##{collection.name}") do |li|
         li.should have_selector("div") do |div|
-          div.should have_selector("a", :content => "#{collection.name}", :href => admin_asset_collection_path)
+          div.should have_selector("a", :content => "#{collection.name}", :href => admin_asset_collection_site_assets_path(collection))
         end
+      end
+    end
+  end
+  
+  it "should render a delete button to destroy a collection" do
+    render
+    asset_collections.each do |collection|
+      rendered.should have_selector("li##{collection.name}") do |li|
+        li.should have_selector("div") do |div|
+          div.should have_selector("form", :method => "post", :action => admin_asset_collection_path(collection)) do |form|
+            form.should have_selector("input", :value => "delete")
+          end          
+        end
+      end
+    end
+  end
+  
+  it "should render a button to create a new asset collection" do
+    render
+    rendered.should have_selector("ul#new_asset_collection") do |ul|
+      ul.should have_selector("li") do |li|
+        li.should have_selector("a", :content => "New Collection", :href => new_admin_asset_collection_path)
       end
     end
   end
