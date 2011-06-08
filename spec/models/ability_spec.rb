@@ -46,6 +46,7 @@ describe Ability do
     site2.users = []
   end
   
+  # -- Admin ----
   describe "Admin" do
     context "Admin Approved" do
       it "should allow the admin to manage all" do 
@@ -75,6 +76,7 @@ describe Ability do
     end
   end
   
+  # -- Designer Approved ----
   describe "Designer" do
     context "Designer Approved" do
       describe "User Model Approved" do
@@ -176,6 +178,7 @@ describe Ability do
       end
     end
     
+    # -- Editor Not Approved ----
     context "Editor Not Approved Actions" do    
       describe "Site Model" do
         it "should not allow a the user as an editor to manage sites" do
