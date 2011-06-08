@@ -18,6 +18,9 @@ describe Ability do
   let(:page) { Factory.build(:page, :site => site, :editors => [ admin, designer, editor ]) }
   let(:page2) { Factory.build(:page, :site => site2, :editors => [ admin2, designer2, editor2 ]) } 
   
+  let(:asset_collection) { Factory.build(:asset_collection, :site => site, :created_by => admin) }
+  let(:asset_collection2) { Factory.build(:asset_collection, :site => site2, :created_by => admin) }
+  
   let(:site_asset) { Factory.build(:site_asset, :site => site, :created_by => editor) }
   let(:site_asset2) { Factory.build(:site_asset, :site => site2, :created_by => editor2) }
   let(:site_asset3) { Factory.build(:site_asset, :site => site, :created_by => admin) }
@@ -52,6 +55,7 @@ describe Ability do
         admin_ability.should be_able_to(:manage, layout)
         admin_ability.should be_able_to(:manage, site_asset)
         admin_ability.should be_able_to(:manage, theme_asset)
+        admin_ability.should be_able_to(:manage, asset_collection)
       end
     end
     
@@ -65,6 +69,7 @@ describe Ability do
           admin_ability.should_not be_able_to(:manage, layout2)
           admin_ability.should_not be_able_to(:manage, site_asset2)
           admin_ability.should_not be_able_to(:manage, theme_asset2)
+          admin_ability.should_not be_able_to(:manage, asset_collection2)
         end
       end      
     end
@@ -84,15 +89,17 @@ describe Ability do
         it "should allow the user with a role of designer to show their own record" do
           designer_ability.should be_able_to(:show, designer)
         end
+        
         it "should allow the user with a role of designer to delete their record" do
           designer_ability.should be_able_to(:destroy, designer)
         end
       end
       
-      describe "Page Layout SiteAsset Approved" do
-        it "should allow the designer to edit all pages, layouts, site_assets and theme_assets" do
+      describe "Models user with role of designer can manage" do
+        it "should allow the designer to edit all pages, layouts, asset_collection, site_assets and theme_assets" do
           designer_ability.should be_able_to(:manage, page)
           designer_ability.should be_able_to(:manage, layout)
+          designer_ability.should be_able_to(:manage, asset_collection)
           designer_ability.should be_able_to(:manage, site_asset)
           designer_ability.should be_able_to(:manage, theme_asset)  
         end
@@ -100,6 +107,7 @@ describe Ability do
     end
   end
   
+  # -- Editor Approved ----
   describe "Editor" do
     context "Editor Approved" do
         describe "User Model Approved" do
@@ -141,6 +149,12 @@ describe Ability do
             editor_ability.should be_able_to(:destroy, page)
           end      
         end
+        
+        describe "AssetCollection Approved" do
+          it "should allow the user with a role of editor to read(:index, :show) asset_collection" do
+            editor_ability.should be_able_to(:read, asset_collection)
+          end
+        end
 
         describe "SiteAsset Approved" do
           it "should allow the user with a role of editor to read(:index, :show) site_assets" do
@@ -151,11 +165,11 @@ describe Ability do
             editor_ability.should be_able_to(:create, site_asset)
           end
 
-          it "should allow the user witha role of editor to update site_assets they created" do
+          it "should allow the user with a role of editor to update site_assets they created" do
             editor_ability.should be_able_to(:update, site_asset)
           end
 
-          it "should do something" do
+          it "should allow the user with a role of ediitor to delete a site_asset they created" do
             editor_ability.should be_able_to(:destroy, site_asset)
           end
         end
@@ -223,11 +237,33 @@ describe Ability do
           editor_ability.should_not be_able_to(:destroy, page2)
         end
       end
+      
+      describe "AssetCollection Approved" do
+        it "should not allow the user with a role of editor to create asset_collections" do
+          editor_ability.should_not be_able_to(:create, asset_collection)
+        end
+        
+        it "should not allow the user with a role of editor to update asset_collections" do
+          editor_ability.should_not be_able_to(:update, asset_collection)
+        end
+        
+        it "should not allow the user with a role of editor to delte asset_collections" do
+          editor_ability.should_not be_able_to(:destroy, asset_collection)
+        end
+        
+        it "should not allow the editor to manage the asset_collections on another site" do
+          editor_ability.should_not be_able_to(:read, asset_collection2)
+          editor_ability.should_not be_able_to(:create, asset_collection2)
+          editor_ability.should_not be_able_to(:update, asset_collection2)
+          editor_ability.should_not be_able_to(:destroy, asset_collection2)
+        end
+      end
 
       describe "SiteAsset Model Not Approved" do
         it "should not allow the editor to delete site_assets created by another user" do
           editor_ability.should_not be_able_to(:destroy, site_asset3)
         end
+        
         it "should not allow the editor to manage site_assets on another site" do
           editor_ability.should_not be_able_to(:read, site_asset2)
           editor_ability.should_not be_able_to(:create, site_asset2)
@@ -242,7 +278,14 @@ describe Ability do
           editor_ability.should_not be_able_to(:create, theme_asset)
           editor_ability.should_not be_able_to(:update, theme_asset)
           editor_ability.should_not be_able_to(:destroy, theme_asset)
-        end     
+        end  
+        
+        it "should not allow the editor to manage theme_assets on another site" do
+          editor_ability.should_not be_able_to(:read, theme_asset2)
+          editor_ability.should_not be_able_to(:create, theme_asset2)
+          editor_ability.should_not be_able_to(:update, theme_asset2)
+          editor_ability.should_not be_able_to(:destroy, theme_asset2)
+        end   
       end
   end   
 end
