@@ -4,7 +4,8 @@ module LoginHelpers
   end
   
   def stub_current_user(user)
-    controller.stub(:current_user).and_return(user)
+    User.stub(:where).and_return(@user = [user])
+    @user.stub(:first).and_return(user)
   end 
   
   def stub_current_site(site)
