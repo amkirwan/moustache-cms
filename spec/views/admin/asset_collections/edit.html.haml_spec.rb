@@ -16,7 +16,7 @@ describe "admin/asset_collections/edit.html.haml" do
   
   it "should render the form partial" do
     render
-    view.should render_template(:partial => "form", :locals => { :button_label => "Update Collection" })
+    view.should render_template(:partial => "form", :locals => { :asset_collection => asset_collection, :button_label => "Update Collection" })
   end
   
 end
