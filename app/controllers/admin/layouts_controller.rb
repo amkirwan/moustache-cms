@@ -9,7 +9,6 @@ class Admin::LayoutsController < AdminBaseController
   def create
     created_updated_by_for @layout
     @layout.site = @current_site
-    #@layout.attributes = { :site => @current_site }
     if @layout.save
       flash[:notice] = "Successfully created the layout #{@layout.name}"
       redirect_to admin_layouts_path
@@ -23,7 +22,7 @@ class Admin::LayoutsController < AdminBaseController
   
   def update
     @layout.update_attributes(params[:layout])
-    @layout.updated_by = current_user
+    @layout.updated_by = @current_user
     if @layout.save
       flash[:notice] = "Successfully updated the layout #{@layout.name}"
       redirect_to admin_layouts_path
