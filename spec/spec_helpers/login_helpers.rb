@@ -4,12 +4,13 @@ module LoginHelpers
   end
   
   def stub_current_user(user)
-    controller.stub(:current_user).and_return(user)
+    User.stub(:where).and_return(users = [user])
+    users.stub(:first).and_return(user)
   end 
   
   def stub_current_site(site)
-    Site.stub(:match_domain).and_return(@sites = [site])
-    @sites.stub(:first).and_return(site)
+    Site.stub(:match_domain).and_return(sites = [site])
+    sites.stub(:first).and_return(site)
   end
   
   def stub_c_site_c_user(site, current_user)
