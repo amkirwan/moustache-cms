@@ -8,7 +8,6 @@ module LoginHelpers
   end 
   
   def stub_current_site(site)
-    Site.match_domain(request.host.downcase).first
     Site.stub(:match_domain).and_return(@sites = [site])
     @sites.stub(:first).and_return(site)
   end
