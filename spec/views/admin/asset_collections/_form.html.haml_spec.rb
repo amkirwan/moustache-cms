@@ -36,7 +36,11 @@ describe "admin/asset_collections/_form.html.haml" do
       form_new(:action => admin_asset_collections_path) do |f|
         f.should have_selector("input", :type => "submit", :value => "Save Collection")
       end
-    end    
+    end     
+    
+    it "should render a cancel link" do
+      rendered.should have_selector("a", :content => "Cancel", :href => admin_asset_collections_path)
+    end
   end  
   
   describe "when EDITING the asset collection " do   
@@ -58,6 +62,10 @@ describe "admin/asset_collections/_form.html.haml" do
         f.should have_selector("input", :type => "submit", :value => "Update Collection") 
       end
     end
-  end
-  
+    
+    it "should render a cancel link" do
+      do_render("Update Collection")
+      rendered.should have_selector("a", :content => "Cancel", :href => admin_asset_collections_path)
+    end
+  end  
 end
