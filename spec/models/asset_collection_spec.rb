@@ -28,4 +28,35 @@ describe "AssetCollection" do
     end
   end
   
+  # -- Validations ------------
+  describe "Validations" do
+    it "should create a valid asset_collection" do
+      @asset_collection.should be_valid
+    end
+    
+    it "should not be valid without a name" do
+      @asset_collection.name = nil
+      @asset_collection.should_not be_valid
+    end
+    
+    it "should not be valid without a unique name" do
+      Factory.build(:asset_collection, :name => @asset_collection.name, :site => @asset_collection.site).should_not be_valid
+    end
+    
+    it "should not be valid without a site_id" do
+      @asset_collection.site_id = nil
+      @asset_collection.should_not be_valid
+    end
+    
+    it "should not be valid without created_by" do
+      @asset_collection.created_by_id = nil
+      @asset_collection.should_not be_valid      
+    end
+    
+    it "should not be valid without updated_by" do
+      @asset_collection.updated_by_id = nil
+      @asset_collection.should_not be_valid      
+    end
+  end
+  
 end
