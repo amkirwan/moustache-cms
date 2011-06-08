@@ -1,0 +1,10 @@
+= form_for([:admin, asset_collection], :html => { :autocomplete => "off" }) do |f|
+  = render :partial => "shared/error_messages", 
+           :locals => { :target => asset_collection }    
+  %fieldset         
+    = f.label :name
+    = f.text_field :name 
+  %fieldset
+    = f.submit button_label
+    = link_to "Cancel", admin_asset_collections_path
+      
