@@ -1,5 +1,9 @@
 class Admin::SiteAssetsController < AdminBaseController
-  include Etherweb::AssetCache
+  include Etherweb::AssetCache                          
+  
+  load_and_authorize_resource :asset_collection
+  load_and_authorize_resource :site_asset, :through => :asset_collection  
+    
   # GET /admin/site_assets
   def index
   end
@@ -23,8 +27,7 @@ class Admin::SiteAssetsController < AdminBaseController
     @site_asset.site = @current_site     
     try_site_asset_cache
     if @site_asset.save
-      flash[:notice] = "Successfully created the asset #{@site_asset.name}"
-      redirect_to admin_site_assets_path
+      redirect_to admin_asset_collection_site_assets_path, :notice => "Successfully created the asset #{@site_asset.name}"
     else
       render :new
     end
@@ -35,8 +38,7 @@ class Admin::SiteAssetsController < AdminBaseController
     @site_asset.updated_by = current_user
     try_site_asset_cache
     if @site_asset.update_attributes(params[:site_asset])
-      flash[:notice] = "Successfully updated the asset #{@site_asset.name}"
-      redirect_to admin_site_assets_path
+      redirect_to admin_asset_collection_site_assets_path, :notice => "Successfully updated the asset #{@site_asset.name}"
     else
       render :edit
     end
@@ -45,8 +47,7 @@ class Admin::SiteAssetsController < AdminBaseController
   # DELETE /admin/site_assets/1
   def destroy
     if @site_asset.destroy
-      flash[:notice] = "Successfully deleted the asset #{@site_asset.name}"
-      redirect_to admin_site_assets_path
+      redirect_to admin_asset_collection_site_assets_path, :notice => "Successfully deleted the asset #{@site_asset.name}"
     end
   end
   
