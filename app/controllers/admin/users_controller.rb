@@ -11,9 +11,9 @@ class Admin::UsersController < AdminBaseController
   end                        
   
   def create   
-    # set because attr_accessible
-    @user.puid = params[:user][:puid]
-    @user.role = params[:user][:role]
+    # set because attr_accessible   
+    @user.puid = params[:user][:puid] if admin?
+    @user.role = params[:user][:role] if admin?
     @user.site = @current_site
     if @user.save
       flash[:notice] = "Successfully created user account for #{@user.puid}" 
@@ -27,9 +27,8 @@ class Admin::UsersController < AdminBaseController
   end
   
   def update                    
-    @user.update_attributes(params[:user])
     @user.role = params[:user][:role] if admin?
-    if @user.save
+    if @user.update_attributes(params[:user]) 
       flash[:notice] = "Successfully updated user account for #{@user.puid}"
       redirect_to admin_users_path
     else

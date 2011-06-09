@@ -207,18 +207,15 @@ describe Admin::UsersController do
       assigns(:user).should eq(user)
     end
     
-    it "should update the user record" do
-      user.should_receive(:save).and_return(true)
-      do_put
-    end 
-    
-    it "should should set attr_accessable attributes" do
-      user.should_receive(:update_attributes).with(params["user"])
-      do_put
-    end
     
     it "should set the users role when the current_user is an admin" do
       user.should_receive(:role=).with(params["user"]["role"])
+      do_put
+    end
+    
+    
+    it "should should set attr_accessable attributes" do
+      user.should_receive(:update_attributes).with(params["user"])
       do_put
     end
       
@@ -234,7 +231,7 @@ describe Admin::UsersController do
   
     context "when update_attributes fails" do
       it "should render the edit template" do
-        user.stub(:save).and_return(false)
+        user.stub(:update_attributes).and_return(false)
         do_put  
         response.should render_template("admin/users/edit")
       end
