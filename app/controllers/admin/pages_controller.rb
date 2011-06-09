@@ -21,8 +21,7 @@ class Admin::PagesController < AdminBaseController
     assign_editors(params[:page][:editor_ids])
     created_updated_by_for @page
     if @page.save
-      flash[:notice] = "Successfully created page #{@page.title}"
-      redirect_to admin_pages_path
+      redirect_to admin_pages_path, :notice => "Successfully created page #{@page.title}"
     else
       render :new
     end
@@ -37,8 +36,7 @@ class Admin::PagesController < AdminBaseController
     update_editors(params[:page][:editor_ids])
     @page.updated_by(current_user)
     if @page.update_attributes(params[:page]) 
-      flash[:notice] = "Successfully updated the page #{@page.title}"
-      redirect_to admin_pages_path
+      redirect_to admin_pages_path, :notice => "Successfully updated the page #{@page.title}"
     else
       render :edit
     end
@@ -46,8 +44,7 @@ class Admin::PagesController < AdminBaseController
 
   def destroy
     if @page.destroy
-      flash[:notice] = "Successfully deleted the page #{@page.title}"
-      redirect_to admin_pages_path
+      redirect_to admin_pages_path, :notice => "Successfully deleted the page #{@page.title}"
     end
   end
   
@@ -62,9 +59,9 @@ class Admin::PagesController < AdminBaseController
   
     def assign_page_parts(page_parts={})
       page_parts.each_value do |hash|
-        page_part = PagePart.new
+        page_part = PagePart.new    
+        hash[:filter] = Filter.find(hash[:filter]) 
         page_part.write_attributes(hash)
-        page_part.filter = Filter.find(hash[:filter])
         @page.page_parts << page_part
       end
     end

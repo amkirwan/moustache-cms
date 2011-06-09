@@ -9,6 +9,8 @@ class CurrentState
   field :name
   key :name
   field :time, type: DateTime
+  
+  # -- Associations ---
   embedded_in :page, inverse_of: :current_state
   
   # -- Validations --------------------------------------------------

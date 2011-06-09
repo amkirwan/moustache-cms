@@ -92,8 +92,6 @@ Factory.define :site_asset do |asset|
   asset.width 200
   asset.height 200
   asset.file_size 200
-  asset.created_by { Factory.build(:user) }
-  asset.updated_by { Factory.build(:user) }
 end
 
 Factory.define :theme_asset do |asset|

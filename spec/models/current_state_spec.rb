@@ -20,7 +20,7 @@ describe CurrentState do
   
   describe "association" do
     it "should be embbeded in page" do
-      should be_embedded_in(:page).as_inverse_of(:current_state)
+      @current_state.should be_embedded_in(:page).as_inverse_of(:current_state)
     end
   end
   

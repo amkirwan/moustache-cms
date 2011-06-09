@@ -12,15 +12,13 @@ class SiteAsset
   field :file_size, :type => Integer
   mount_uploader :asset, SiteAssetUploader  
   
-  # -- Associations -------------
-  belongs_to :created_by, :class_name => "User"
-  belongs_to :updated_by, :class_name => "User"
-  belongs_to :site
+  # -- Associations -------------        
+  embedded_in :asset_collection  
+  embeds_one :creator
+  embeds_one :updator
   
   # -- Validations --------------
   validates :name, :presence => true
-  
-  validates :site, :presence => true
             
   validates :asset, :presence => true
   

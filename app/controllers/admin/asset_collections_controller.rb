@@ -21,8 +21,7 @@ class Admin::AssetCollectionsController < AdminBaseController
     created_updated_by_for @asset_collection
     @asset_collection.site = @current_site
     if @asset_collection.save  
-      flash[:notice] = "Successfully created the asset collection #{@asset_collection.name}"
-      redirect_to admin_asset_collections_path
+      redirect_to admin_asset_collections_path, :notice => "Successfully created the asset collection #{@asset_collection.name}"
     else
       render :new
     end
@@ -32,8 +31,7 @@ class Admin::AssetCollectionsController < AdminBaseController
   def update
     @asset_collection.updated_by = @current_user
     if @asset_collection.update_attributes(params[:asset_collection])
-      flash[:notice] = "Successfully updated the asset collection #{@asset_collection.name}"
-      redirect_to admin_asset_collection_path(@asset_collection)
+      redirect_to [:admin, @asset_collection], :notice => "Successfully updated the asset collection #{@asset_collection.name}"
     else
       render :edit
     end
@@ -42,8 +40,7 @@ class Admin::AssetCollectionsController < AdminBaseController
   #DELETE /admin/asset_collections/1
   def destroy
     if @asset_collection.destroy
-      flash[:notice] = "Successfully deleted the asset collection #{@asset_collection.name}"
-      redirect_to admin_asset_collections_path
+      redirect_to admin_asset_collections_path, :notice => "Successfully deleted the asset collection #{@asset_collection.name}"
     end
   end
 end

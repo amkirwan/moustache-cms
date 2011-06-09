@@ -23,8 +23,7 @@ class Admin::ThemeAssetsController < AdminBaseController
     @theme_asset.site = @current_site       
     try_theme_asset_cache 
     if @theme_asset.save
-      flash[:notice] = "Successfully created the theme asset #{@theme_asset.name}"
-      redirect_to admin_theme_assets_path
+      redirect_to admin_theme_assets_path, :notice => "Successfully created the theme asset #{@theme_asset.name}" 
     else
       render :new
     end
@@ -39,8 +38,7 @@ class Admin::ThemeAssetsController < AdminBaseController
     @theme_asset.updated_by = current_user       
     try_theme_asset_cache                  
     if @theme_asset.update_attributes(params[:theme_asset]) && @theme_asset.update_file_content(params[:theme_asset_file_content])
-      flash[:notice] = "Successfully updated the theme asset #{@theme_asset.name}"
-      redirect_to admin_theme_assets_path
+      redirect_to admin_theme_assets_path, :notice => "Successfully updated the theme asset #{@theme_asset.name}"
     else                                                        
       render :edit
     end  
@@ -48,8 +46,7 @@ class Admin::ThemeAssetsController < AdminBaseController
   
   def destroy
     if @theme_asset.destroy
-      flash[:notice] = "Successfully deleted the theme asset #{@theme_asset.name}"
-      redirect_to admin_theme_assets_path
+      redirect_to admin_theme_assets_path, :notice => "Successfully deleted the theme asset #{@theme_asset.name}"
     end
   end   
   

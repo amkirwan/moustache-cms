@@ -235,7 +235,7 @@ describe Admin::PagesController do
                     "current_state_attributes"=> { "id"=> status.to_param }, 
                     "editor_ids"=>[ user.puid ], 
                     "layout_id" => layout.to_param,
-                    "page_parts_attributes" => { "0" => { "name" => "content", "content" => "Hello, World", "filter"=> { "id" => filter.name } }}} }}
+                    "page_parts_attributes" => { "0" => { "name" => "content", "content" => "Hello, World", "filter"=> filter }}} }}
     
     before(:each) do
       controller.stub(:admin?).and_return(true)
@@ -276,7 +276,7 @@ describe Admin::PagesController do
       do_post
     end
     
-    context "when the page saves successfully" do
+    context "with valid params" do
       it "should update the attributes of the page" do
         page.should_receive(:update_attributes).with(params["page"]) 
         do_post
@@ -293,7 +293,7 @@ describe Admin::PagesController do
       end
     end
     
-    context "when the page fales to save" do
+    context "with invalid params" do
       before(:each) do
         page.stub(:update_attributes).and_return(false)
       end
