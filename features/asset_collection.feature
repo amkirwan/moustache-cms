@@ -15,8 +15,7 @@ Scenario: Navigate to the Layout#index page
  | name   | 
  | foobar | 
  | bar    |
- When I go to the admin site assets page
- Then I should be on the admin site assets page
+ When I go to the admin asset collections page
+ Then I should be on the admin asset collections page
  And I should see "foobar"
- And I should see the "delete" button
- And I should see "Add Asset"      
+ And I should see "New Collection"      
