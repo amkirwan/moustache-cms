@@ -179,19 +179,14 @@ describe Admin::LayoutsController do
       assigns(:layout).should == layout
     end
     
-    it "should update the attributes of the layout" do
-      layout.should_receive(:update_attributes).with(params["layout"])
-      do_put
-    end
-    
     it "should update protected attributes" do
       layout.should_receive(:updated_by=).with(current_user)
       do_put
     end
     
     context "when the layer saves successfully" do
-      it "should save the layout" do
-        layout.should_receive(:save).and_return(true)
+      it "should update the attributes of the layout" do
+        layout.should_receive(:update_attributes).with(params["layout"])
         do_put
       end
     
@@ -208,11 +203,11 @@ describe Admin::LayoutsController do
     
     context "when the layout fales to save" do
       before(:each) do
-        layout.stub(:save).and_return(false)
+        layout.stub(:update_attributes).and_return(false)
       end
       
       it "should not save the layout" do
-        layout.should_receive(:save).and_return(false)
+        layout.should_receive(:update_attributes).and_return(false)
         do_put
       end
       

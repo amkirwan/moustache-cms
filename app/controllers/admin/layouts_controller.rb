@@ -20,10 +20,9 @@ class Admin::LayoutsController < AdminBaseController
   def edit
   end
   
-  def update
-    @layout.update_attributes(params[:layout])
+  def update    
     @layout.updated_by = @current_user
-    if @layout.save
+    if @layout.update_attributes(params[:layout]) 
       flash[:notice] = "Successfully updated the layout #{@layout.name}"
       redirect_to admin_layouts_path
     else
