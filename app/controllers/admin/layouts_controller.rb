@@ -10,8 +10,7 @@ class Admin::LayoutsController < AdminBaseController
     created_updated_by_for @layout
     @layout.site = @current_site
     if @layout.save
-      flash[:notice] = "Successfully created the layout #{@layout.name}"
-      redirect_to admin_layouts_path
+      redirect_to [:index], :notice => "Successfully created the layout #{@layout.name}"  
     else
       render :new
     end
@@ -23,8 +22,7 @@ class Admin::LayoutsController < AdminBaseController
   def update    
     @layout.updated_by = @current_user
     if @layout.update_attributes(params[:layout]) 
-      flash[:notice] = "Successfully updated the layout #{@layout.name}"
-      redirect_to admin_layouts_path
+      redirect_to admin_layouts_path, :notice => "Successfully updated the layout #{@layout.name}"
     else
       render :edit
     end
@@ -32,8 +30,7 @@ class Admin::LayoutsController < AdminBaseController
   
   def destroy
     if @layout.destroy
-      flash[:notice] = "Successfully deleted the layout #{@layout.name}"
-      redirect_to admin_layouts_path
+      redirect_to admin_layouts_path, :notice => "Successfully deleted the layout #{@layout.name}"
     end
   end
 end
