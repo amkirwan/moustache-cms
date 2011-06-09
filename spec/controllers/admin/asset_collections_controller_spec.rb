@@ -215,12 +215,12 @@ describe Admin::AssetCollectionsController do
       
       it "should assign the flash message" do
         do_put
-        flash[:notice].should == "Successfully updated the asset #{asset_collection.name}"
+        flash[:notice].should == "Successfully updated the asset collection #{asset_collection.name}"
       end
       
       it "should redirect to index template" do
         do_put
-        response.should redirect_to admin_asset_collection_path
+        response.should redirect_to admin_asset_collection_path(asset_collection)
       end
     end
     

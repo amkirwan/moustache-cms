@@ -32,8 +32,8 @@ class Admin::AssetCollectionsController < AdminBaseController
   def update
     @asset_collection.updated_by = @current_user
     if @asset_collection.update_attributes(params[:asset_collection])
-      flash[:notice] = "Successfully updated the asset #{@asset_collection.name}"
-      redirect_to admin_asset_collection_path
+      flash[:notice] = "Successfully updated the asset collection #{@asset_collection.name}"
+      redirect_to admin_asset_collection_path(@asset_collection)
     else
       render :edit
     end

@@ -1,7 +1,7 @@
 #manage_collection
   %ul
-    %li= link_to "Edit Collection Properties", edit_admin_asset_collection_path(@asset_collection)
-    %li= button_to "Delete Collection", admin_asset_collection_path(@asset_collection), :method => :delete, :confirm => "Are you sure you want to delete this collection?"
+    %li= link_to "edit collection properties", edit_admin_asset_collection_path(@asset_collection)
+    %li.delete= button_to "delete collection", admin_asset_collection_path(@asset_collection), :method => :delete, :confirm => "Are you sure you want to delete this collection?"
   
 
 %div{ :id => "collection_#{@asset_collection.name}"}

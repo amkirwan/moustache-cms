@@ -21,7 +21,7 @@ describe "admin/asset_collections/show.html.haml" do
       render
       rendered.should have_selector("div#manage_collection > ul") do |ul|
         ul.should have_selector("li") do |li|
-          li.should have_selector("a", :content => "Edit Collection Properties", :href => edit_admin_asset_collection_path(asset_collection))
+          li.should have_selector("a", :content => "edit collection properties", :href => edit_admin_asset_collection_path(asset_collection))
         end
       end
     end
@@ -31,7 +31,7 @@ describe "admin/asset_collections/show.html.haml" do
       rendered.should have_selector("div#manage_collection > ul") do |ul|
         ul.should have_selector("li") do |li|
           li.should have_selector("form", :method => "post", :action => admin_asset_collection_path(asset_collection)) do |form|
-            form.should have_selector("input", :value => "Delete Collection")
+            form.should have_selector("input", :value => "delete collection")
             form.should have_selector("input", :value => "delete")
           end
         end

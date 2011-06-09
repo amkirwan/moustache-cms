@@ -9,8 +9,8 @@ And the user with the role exist
  | rg874 | admin  | foobar.example.com |
  | jmb42 | editor | foobar.example.com |  
  
-@index
-Scenario: Navigate to the Layout#index page
+@index_asset_collection
+Scenario: Navigate to the AssetCollection#index page
  Given these collections exist in the site "foobar.example.com" created by user "ak730"
  | name   | 
  | foobar | 
@@ -18,4 +18,61 @@ Scenario: Navigate to the Layout#index page
  When I go to the admin asset collections page
  Then I should be on the admin asset collections page
  And I should see "foobar"
- And I should see "New Collection"      
+ And I should see "New Collection"    
+ 
+@other_site_denied_asset_collection
+Scenario: Should not be able to access another sites asset_collections the admin is not associated with
+ Given the site "baz" exists with the domain "example.dev"
+ When I go to the admin asset collections page
+ Then I should see "403"    
+ 
+
+@show_asset_collection
+Scenario: Navigate to the AssetCollection#show page
+  Given these collections exist in the site "foobar.example.com" created by user "ak730"
+  | name   | 
+  | foobar | 
+  | bar    |   
+  When I view the collection "foobar"
+  Then I should see "edit collection properties"
+  And I should see the "delete collection" button     
+  
+@create_asset_collection
+Scenario: New Asset Collection
+  When I go to the admin asset collections page
+  And I follow "New Collection"
+  And I fill in "asset_collection_name" with "foobar"
+  And I press "Save Collection"
+  Then I should be on the admin asset collections page
+  And I should see "Successfully created the asset collection foobar"
+  And I should see "foobar"   
+  
+@update_asset_collection
+Scenario: Update Asset Collection Properties
+  Given these collections exist in the site "foobar.example.com" created by user "ak730"
+  | name   | 
+  | foobar | 
+  | bar    | 
+  When I go to the admin asset collections page 
+  And I view the collection "foobar"
+  And I follow "edit collection properties"
+  Then I should now be editing the asset collection "foobar"
+  When I fill in "asset_collection_name" with "baz"
+  And I press "Update Collection"
+  Then I should be viewing the collection "baz"
+  And I should see "Successfully updated the asset collection baz"
+  And I should see "baz"
+  
+@delete_asset_collection
+Scenario: Delete Asset Collection
+  Given these collections exist in the site "foobar.example.com" created by user "ak730"
+  | name   | 
+  | foobar | 
+  | bar    |   
+  When I go to the admin asset collections page 
+  And I view the collection "foobar"
+  And I press "delete collection"
+  Then I should see "Successfully deleted the asset collection foobar"
+  And I should be on the admin asset collections page    
+ 
+  
