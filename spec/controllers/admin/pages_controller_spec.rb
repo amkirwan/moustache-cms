@@ -231,12 +231,11 @@ describe Admin::PagesController do
                     "page" => { 
                     "parent_id" => "4d922d505dfe2f082e00006e",
                     "title" => "foobar", 
-                    "filter"=> { "name" => filter.name }, 
                     "page_type_attributes"=> { "id" => page_type.to_param },
                     "current_state_attributes"=> { "id"=> status.to_param }, 
                     "editor_ids"=>[ user.puid ], 
                     "layout_id" => layout.to_param,
-                    "page_parts_attributes" => { "0" => { "name" => "content", "content" => "Hello, World" }}} }}
+                    "page_parts_attributes" => { "0" => { "name" => "content", "content" => "Hello, World", "filter"=> { "id" => filter.name } }}} }}
     
     before(:each) do
       controller.stub(:admin?).and_return(true)
@@ -262,11 +261,6 @@ describe Admin::PagesController do
       assigns(:page).should == page
     end
     
-    it "should update the attributes of the page" do
-      page.should_receive(:update_attributes).with(params["page"]) 
-      do_post
-    end
-    
     it "should update the page's current state" do
       page.should_receive(:current_state=).and_return(status)
       do_post
@@ -283,8 +277,8 @@ describe Admin::PagesController do
     end
     
     context "when the page saves successfully" do
-      it "should save the page" do
-        page.should_receive(:save).and_return(true)
+      it "should update the attributes of the page" do
+        page.should_receive(:update_attributes).with(params["page"]) 
         do_post
       end
     
@@ -301,11 +295,11 @@ describe Admin::PagesController do
     
     context "when the page fales to save" do
       before(:each) do
-        page.stub(:save).and_return(false)
+        page.stub(:update_attributes).and_return(false)
       end
       
       it "should not save the page" do
-        page.should_receive(:save).and_return(false)
+        page.should_receive(:update_attributes).and_return(false)
         do_post
       end
       

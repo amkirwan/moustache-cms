@@ -32,12 +32,11 @@ class Admin::PagesController < AdminBaseController
   end
   
   def update
-    @page.update_attributes(params[:page])
     @page.current_state = CurrentState.find(params[:page][:current_state_attributes][:name]) 
     update_page_parts(params[:page][:page_parts_attributes])
     update_editors(params[:page][:editor_ids])
     @page.updated_by(current_user)
-    if @page.save
+    if @page.update_attributes(params[:page]) 
       flash[:notice] = "Successfully updated the page #{@page.title}"
       redirect_to admin_pages_path
     else
