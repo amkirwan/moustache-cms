@@ -10,7 +10,7 @@ class Layout
   field :content
   
   #-- Associations-----------------------------------------------
-  references_many :pages
+  has_many :pages
   belongs_to :site
   belongs_to :created_by, :class_name => "User"
   belongs_to :updated_by, :class_name => "User"

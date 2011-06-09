@@ -87,7 +87,7 @@ describe Layout do
   # -- Associations ----------------------------------------------------
   context "associations" do
     it "should reference many pages" do
-      @layout.should reference_many(:pages)
+      @layout.should have_many(:pages)
     end
     
     it "should reference a layout" do
