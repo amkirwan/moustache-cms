@@ -17,6 +17,14 @@ describe "admin/asset_collections/show.html.haml" do
   
   # -- Manage Collection Links
   describe "manage collection links" do
+    it "should render a link to add to the collection" do
+      render
+      rendered.should have_selector("div#manage_collection > ul") do |ul|
+        ul.should have_selector("li") do |li|
+          li.should have_selector("a", :content => "add asset", :href => new_admin_asset_collection_site_asset_path(asset_collection))
+        end
+      end
+    end
     it "should render the link to edit the collections properties" do
       render
       rendered.should have_selector("div#manage_collection > ul") do |ul|

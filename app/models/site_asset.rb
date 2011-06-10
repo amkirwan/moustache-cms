@@ -1,5 +1,6 @@
 class SiteAsset
   include Mongoid::Document
+  include Mongoid::Timestamps
   
   attr_accessible :name, :description, :content_type, :width, :height, :file_size, :asset
   
@@ -10,6 +11,8 @@ class SiteAsset
   field :width, :type => Integer
   field :height, :type => Integer
   field :file_size, :type => Integer
+  field :creator, :type => User
+  field :updator, :type => User
   mount_uploader :asset, SiteAssetUploader  
   
   # -- Associations -------------        

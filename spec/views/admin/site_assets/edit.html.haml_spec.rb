@@ -2,9 +2,13 @@ require 'spec_helper'
 
 describe "admin/site_assets/edit.html.haml" do
   let(:site_asset) { stub_model(SiteAsset, :name => "foobar") }
+  let(:asset_collection) { stub_model(AssetCollection) }
+  let(:current_site) { stub_model(Site)}
   let(:current_user) { stub_model(User, :role? => true) }
   
   before(:each) do
+    assign(:asset_collection, asset_collection)
+    assign(:current_site, current_site)
     assign(:site_asset, site_asset)
     assign(:current_user, current_user)
   end
@@ -16,6 +20,6 @@ describe "admin/site_assets/edit.html.haml" do
   
   it "should render the form partial to edit the media file" do
     render
-    view.should render_template(:partial => "form", :locals => {:site_asset => site_asset, :button_label => "Update Asset" })
+    view.should render_template(:partial => "form", :locals => {:current_site => current_site, :asset_collection => asset_collection, :site_asset => site_asset, :button_label => "Update Asset" })
   end
 end

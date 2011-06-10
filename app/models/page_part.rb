@@ -4,7 +4,7 @@ class PagePart
   field :name
   key :name
   field :content
-  field :filter, type: Filter
+  field :filter, :type => Filter
   
   embedded_in :page, :inverse_of => :page_parts
   
