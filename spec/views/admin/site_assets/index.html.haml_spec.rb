@@ -3,10 +3,12 @@ require 'spec_helper'
 
 describe "admin/site_assets/index.html.haml" do
   let(:user) { stub_model(User, :puid => "ak730") }
-  let(:site_assets) { [stub_model(SiteAsset, :name => "foobar", :created_by => user), stub_model(SiteAsset, :name => "foo", :created_by => user)] }
+  let(:site_assets) { [stub_model(SiteAsset, :name => "foobar")] }
+  let(:asset_collection) { stub_model(AssetCollection, :site_assets => site_assets)}
   
-  before(:each) do
-    assign(:site_assets, site_assets)
+  before(:each) do        
+    assign(:asset_collection, asset_collection)
+    #assign(:site_assets, site_assets)
     view.stub(:can?).and_return(true)
   end
 
@@ -20,10 +22,10 @@ describe "admin/site_assets/index.html.haml" do
   
   it "should render a link to edit the file" do
     render
-    site_assets.each do |asset|
+    asset_collection.site_assets.each do |asset|
       rendered.should have_selector("li##{asset.name}") do |li|
         li.should have_selector("div") do |div|
-          div.should have_selector("a", :content => "#{asset.name}", :href => edit_admin_site_asset_path(asset))
+          div.should have_selector("a", :content => "#{asset.name}", :href => edit_admin_asset_collection_site_asset_path(asset_collection, asset))
         end
       end
     end

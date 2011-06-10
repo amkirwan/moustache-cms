@@ -14,8 +14,8 @@ class SiteAsset
   
   # -- Associations -------------        
   embedded_in :asset_collection  
-  embeds_one :creator, :class_name => :user
-  embeds_one :updator, :class_name => :user
+  embeds_one :creator, :class_name => "User"
+  embeds_one :updator, :class_name => "User"
   
   # -- Validations --------------
   validates :name, :presence => true
