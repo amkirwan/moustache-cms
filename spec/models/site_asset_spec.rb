@@ -64,11 +64,11 @@ describe SiteAsset do
      end                     
      
      it "should embed one creator" do
-       @site_asset.should embed_one :creator
+       @site_asset.should embed_one(:creator)
      end                           
      
      it "should embed one updator" do
-       @site_asset.should embed_one :updator
+       @site_asset.should embed_one(:updator)
      end
    end 
    
