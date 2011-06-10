@@ -5,6 +5,6 @@ log/*.log
 tmp/**/*
 tmp/*
 public/uploads
-public/sites
+public/sites/**/*
 public/cached
 spec/tmp/**/*
