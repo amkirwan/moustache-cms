@@ -1,6 +1,7 @@
 class Admin::SiteAssetsController < AdminBaseController
-  include Etherweb::AssetCache                          
-  
+  include Etherweb::AssetCache                    
+        
+  prepend_before_filter :find_site_asset, :only => [:edit, :update, :destroy]
   load_and_authorize_resource :asset_collection
   load_and_authorize_resource :site_asset, :through => :asset_collection  
     
@@ -23,10 +24,9 @@ class Admin::SiteAssetsController < AdminBaseController
 
   # POST /admin/site_assets
   def create
-    created_updated_by_for @site_asset
-    @site_asset.site = @current_site     
+    creator_updator_by_for @site_asset    
     try_site_asset_cache
-    if @site_asset.save
+    if @asset_collection.site_assets.push(@site_asset)
       redirect_to admin_asset_collection_site_assets_path, :notice => "Successfully created the asset #{@site_asset.name}"
     else
       render :new
@@ -35,7 +35,7 @@ class Admin::SiteAssetsController < AdminBaseController
 
   # PUT /admin/site_assets/1
   def update
-    @site_asset.updated_by = current_user
+    @site_asset.updator = @current_user
     try_site_asset_cache
     if @site_asset.update_attributes(params[:site_asset])
       redirect_to admin_asset_collection_site_assets_path, :notice => "Successfully updated the asset #{@site_asset.name}"
@@ -53,9 +53,18 @@ class Admin::SiteAssetsController < AdminBaseController
   
   private
     def try_site_asset_cache                                                                  
-      logger.debug "*"*10 + "#{params[:site_asset][:asset]}"
       if !params[:site_asset][:asset_cache].empty? && params[:site_asset][:asset].nil?
         set_from_cache(:cache_name => params[:site_asset][:asset_cache], :asset => @site_asset) 
       end
     end 
+    
+    def creator_updator_by_for(site_asset)
+      site_asset.creator = @current_user
+      site_asset.updator = @current_user
+    end
+    
+    def find_site_asset
+      @asset_collection = AssetCollection.where(:site_id => current_site.id).find(params["asset_collection_id"])
+      @site_asset = @asset_collection.site_assets.find(params["id"])
+    end
 end

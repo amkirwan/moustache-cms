@@ -35,7 +35,7 @@ describe SiteAssetUploader do
   end
   
   it "should set the storage directory" do
-    @uploader.store_dir.should == "sites/#{@uploader.model.site_id}/#{@uploader.model.class.to_s.underscore}/#{@uploader.mounted_as}/#{@uploader.model.id}"
+    @uploader.store_dir.should == "sites/#{@uploader.model.site_id}/#{@uploader.mounted_as}/#{@uploader.model.id}"
   end
   
   it "should change the uploaded filename to the name of the site_asset" do

@@ -8,7 +8,7 @@ class SiteAssetUploader < CarrierWave::Uploader::Base
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
-    "sites/#{model.site_id}/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    "sites/#{model._parent.site_id}/#{mounted_as}/#{model.id}"
   end    
   
   before :store, :remember_cache_id

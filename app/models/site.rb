@@ -17,7 +17,7 @@ class Site
   # -- Associations ---------------------------------------
   has_many :pages, :dependent => :delete
   has_many :layouts, :dependent => :delete
-  has_many :site_assets, :dependent => :delete
+  has_many :asset_collections, :dependent => :delete
   has_many :theme_assets, :dependent => :delete
   has_many :users, :dependent => :delete
 
@@ -36,7 +36,7 @@ class Site
   before_save :add_subdomain_to_domains
             
   # -- Scopes ---------------------------------------
-  scope :match_domain, lambda { |domain| { :any_in => { :domains => [*domain] }}}
+  scope :match_domain, lambda { |domain| { :any_in => { :domains => [*domain] }} }
   
  
   # -- Instance Methods ----------------------------------------

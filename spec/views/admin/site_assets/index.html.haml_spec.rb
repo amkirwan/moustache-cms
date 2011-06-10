@@ -14,7 +14,7 @@ describe "admin/site_assets/index.html.haml" do
 
   it "renders a list of admin_site_assets" do
     render
-    site_assets.each do |asset|
+    asset_collection.site_assets.each do |asset|
       rendered.should have_selector("li##{asset.name}") do |li|
       end
     end
@@ -22,7 +22,7 @@ describe "admin/site_assets/index.html.haml" do
   
   it "should render a link to edit the file" do
     render
-    site_assets.each do |asset|
+    asset_collection.site_assets.each do |asset|
       rendered.should have_selector("li##{asset.name}") do |li|
         li.should have_selector("div") do |div|
           div.should have_selector("a", :content => "#{asset.name}", :href => edit_admin_asset_collection_site_asset_path(asset_collection, asset))
@@ -33,7 +33,7 @@ describe "admin/site_assets/index.html.haml" do
   
   it "should render a delete button to destroy the asset file" do
     render
-    site_assets.each do |asset|
+    asset_collection.site_assets.each do |asset|
       rendered.should have_selector("li##{asset.name}") do |li|
         li.should have_selector("div") do |div|   
           div.should have_selector("form", :method => "post", :action => admin_asset_collection_site_asset_path(asset_collection, asset)) do |form|

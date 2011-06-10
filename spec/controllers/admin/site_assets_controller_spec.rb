@@ -4,9 +4,10 @@ describe Admin::SiteAssetsController do
 
   #for actions
   let(:site) { mock_model(Site, :id => "1") }            
-  let(:asset_collection) { mock_model(AssetCollection, :site_id => site.id).as_null_object }
   let(:current_user) { logged_in(:role? => "admin", :site_id => site.id) }
   let(:site_asset) { mock_model("SiteAsset", :site_id => site.id).as_null_object }
+  let(:site_assets) { [site_asset]}
+  let(:asset_collection) { mock_model(AssetCollection, :site_assets => site_assets, :site_id => site.id).as_null_object }
   
   before(:each) do
     cas_faker(current_user.puid)
@@ -83,6 +84,7 @@ describe Admin::SiteAssetsController do
     
     before(:each) do
       SiteAsset.stub(:new).and_return(site_asset.as_new_record)
+      asset_collection.stub_chain(:site_assets, create).and_return(site_asset)
     end
     
     def do_post(post_params=params)
@@ -99,19 +101,15 @@ describe Admin::SiteAssetsController do
       assigns(:site_asset).should == site_asset
     end
     
-    it "should assign created_by and updated_by to the current user" do
-      controller.should_receive(:created_updated_by_for).with(site_asset)
-      do_post
-    end
-    
-    it "should assign the @current_site to the site_asset" do
-      site_asset.should_receive(:site=)
+    it "should assign creator and updator to the current user" do
+      controller.should_receive(:creator_updator_by_for).with(site_asset)
       do_post
     end
       
     context "with valid params" do
       it "should receive and save the site_asset" do
-        site_asset.should_receive(:save).and_return(true)
+        asset_collection.should_receive(:site_assets).and_return(site_assets)
+        #site_assets.should_receive(:create).and_return(site_asset)
         do_post
       end
       
@@ -196,8 +194,8 @@ describe Admin::SiteAssetsController do
       assigns(:site_asset).should == site_asset
     end
     
-    it "should update updated_by attribute" do
-      site_asset.should_receive(:updated_by=).with(current_user)
+    it "should update updator attribute" do
+      site_asset.should_receive(:updator=).with(current_user)
       do_put
     end
     

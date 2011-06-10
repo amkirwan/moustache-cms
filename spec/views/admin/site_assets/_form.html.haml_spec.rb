@@ -78,6 +78,7 @@ describe "admin/site_assets/_form.html.haml" do
   context "when EDITing the site_asset" do
     before(:each) do
       site_asset.stub(:new_record? => false)
+      site_asset.stub(:asset_filename => "file.png")
       site_asset.stub_chain(:asset, :url => "/image/path/file.png")
     end
     
@@ -104,9 +105,9 @@ describe "admin/site_assets/_form.html.haml" do
       end
     end
     
-    it "should show the location of the file" do
+    it "should show the name of the file" do
       do_render("Update Asset")
-      rendered.should have_selector("a", :content => "http://#{site.full_subdomain}#{site_asset.asset.url}")
+      rendered.should have_selector("a", :content => site_asset.asset_filename, :href => "http://test.host#{site_asset.asset.url}")
     end 
     
     it "should render a hidden field to cache the file on redisplay" do
@@ -120,7 +121,7 @@ describe "admin/site_assets/_form.html.haml" do
   context "when redisplaying edit form because of validation error should cache the image asset from tmp" do
     before(:each) do
       site_asset.stub(:new_record? => false)
-      site_asset.stub_chain(:asset, :url => "/image/path/file.png")
+      site_asset.stub(:asset_filename => "file.png")
     end
     
     it "should show the cached image" do

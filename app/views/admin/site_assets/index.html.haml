@@ -1,11 +1,10 @@
 #site_assets
   #h3 Media Files
   %ul
-    - @site_assets.each do |site_asset|
+    - @asset_collection.site_assets.each do |site_asset|
       %li{ :id => "#{site_asset.name}"}
         %div= link_to site_asset.name, [:edit, :admin, @asset_collection, site_asset]
-        - if can? :destroy, site_asset
-          %div.delete= button_to "delete", [:admin, @asset_collection, site_asset], :method => :delete, :confirm => "Are you sure you want to delete #{site_asset.name}" 
+        %div.delete= button_to "delete", [:admin, @asset_collection, site_asset], :method => :delete, :confirm => "Are you sure you want to delete #{site_asset.name}" 
   
 
 %div
