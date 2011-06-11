@@ -5,9 +5,14 @@ class Filter
     attr_accessor :filters
   end
   
+  # -- Fields -------
   field :name
   key :name
   
+  # -- Associations -------
+  embedded_in :filterable, polymorphic: true
+  
+  # -- Validates -------
   validates :name,
             :presence => true
   

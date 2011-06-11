@@ -60,7 +60,7 @@ class Admin::PagesController < AdminBaseController
     def assign_page_parts(page_parts={})
       page_parts.each_value do |hash|
         page_part = PagePart.new    
-        hash[:filter] = Filter.find(hash[:filter]) 
+        hash[:filter] = Filter.find_by_name(hash[:filter]) 
         page_part.write_attributes(hash)
         @page.page_parts << page_part
       end
@@ -68,7 +68,7 @@ class Admin::PagesController < AdminBaseController
   
     def update_page_parts(page_parts={})
       page_parts.each do |index, hash|
-        hash[:filter] = Filter.find(hash[:filter])
+        hash[:filter] = Filter.find_by_name(hash[:filter])
         @page.page_parts[index.to_i].write_attributes(hash)
       end
     end

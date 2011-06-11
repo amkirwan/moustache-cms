@@ -3,7 +3,7 @@
            :locals => { :target => page }
   %fieldset
     = f.label :parent_id
-    = f.collection_select :parent_id, Page.all.order(:title), :id, :title, { :include_blank => true }
+    = f.collection_select :parent_id, Page.all.order(:title), :id, :title, { :prompt => true }
   %fieldset
     = f.label :title, "Title"
     = f.text_field :title
@@ -28,11 +28,11 @@
       = label_tag "page[editor_ids][#{user.puid}]", user.puid.downcase
   %fieldset
     = f.label :layout, "Layout"
-    = f.collection_select :layout_id, Layout.all, :id, :name
+    = f.collection_select :layout_id, Layout.all, :id, :name, :prompt => true
   = f.fields_for :current_state do |builder|
     %fieldset
       = builder.label :current_state, "Status"
-      = builder.collection_select :name, CurrentState.all, :id, :name
+      = builder.collection_select :name, CurrentState.all, :id, :name, :prompt => true
   - if !@page.parent.try(:post_container?)
     %fieldset 
       = f.label :post_container
@@ -46,7 +46,7 @@
       = builder.label :name, "Page Part Name"
       = builder.text_field :name
       = builder.label :filter, "Filter"
-      = builder.collection_select :filter, Filter.all, :name, :name
+      = builder.collection_select :filter, Filter.all, :id, :name, :selected => "#{builder.object.filter.name}"
       = builder.label :content, "Page Part Content"
       = builder.text_area :content, :cols => "40", :rows => "12"
   %fieldset
