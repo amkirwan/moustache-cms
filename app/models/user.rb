@@ -8,8 +8,6 @@ class User
   field :puid
   index :puid, unique: true
   key :puid         
-  field :puid
-  index :puid, unique: true
   field :firstname
   field :lastname
   field :email
