@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SiteAsset do  
+describe ThemeAsset do  
   let(:site) { Factory(:site) }
   let(:user) { Factory(:user, :site => site) }
   
