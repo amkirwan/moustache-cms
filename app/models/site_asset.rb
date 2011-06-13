@@ -1,4 +1,4 @@
-class SiteAsset
+class SiteAsset 
   include Mongoid::Document
   include Mongoid::Timestamps
   

@@ -15,4 +15,7 @@
   = f.file_field :asset
   = f.hidden_field :asset_cache
   %fieldset
-    = f.submit button_label             
+    = f.submit button_label   
+- if !site_asset.new_record?
+  %div#delete_asset
+    = button_to "Delete Asset", [:admin, asset_collection, site_asset], :confirm => "Are you sure you want to delete the asset #{site_asset.name}", :method => :delete

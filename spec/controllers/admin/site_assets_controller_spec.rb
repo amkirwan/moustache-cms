@@ -151,6 +151,8 @@ describe Admin::SiteAssetsController do
   
   describe "GET edit" do
     before(:each) do
+      AssetCollection.stub(:where).and_return(asset_collection)
+      asset_collection.stub(:site_assets).and_return(site_asset)
       SiteAsset.stub(:find).and_return(site_asset)
     end
     
@@ -158,8 +160,8 @@ describe Admin::SiteAssetsController do
       get :edit, { "asset_collection_id" => asset_collection.id, "id" => site_asset.to_param }
     end
     
-    it "should should receive SiteAsset#find and return the site_asset" do
-      SiteAsset.should_receive(:find).and_return(site_asset)
+    it "receive prepend_before_filter to assign site_asset instead of cancan load filter " do
+      controller.should_receive(:find_site_asset)
       do_get
     end
 
@@ -176,6 +178,8 @@ describe Admin::SiteAssetsController do
 
   describe "PUT update" do
     before(:each) do
+      AssetCollection.stub(:where).and_return(asset_collection)
+      asset_collection.stub(:site_assets).and_return(site_asset)
       SiteAsset.stub(:find).and_return(site_asset)
     end
     
@@ -185,8 +189,8 @@ describe Admin::SiteAssetsController do
       post :update, put_params
     end
     
-    it "should receive the SiteAsset#find and return the media file" do
-      SiteAsset.should_receive(:find).with(site_asset.to_param).and_return(site_asset)
+    it "receive prepend_before_filter to assign site_asset instead of cancan load filter " do
+      controller.should_receive(:find_site_asset)
       do_put
     end
     
@@ -196,7 +200,7 @@ describe Admin::SiteAssetsController do
     end
     
     it "should update updator attribute" do
-      site_asset.should_receive(:updator=).with(current_user)
+      site_asset.should_receive(:updator=).with(current_user.id)
       do_put
     end
     
@@ -243,6 +247,8 @@ describe Admin::SiteAssetsController do
 
   describe "DELETE destroy" do
     before(:each) do
+      AssetCollection.stub(:where).and_return(asset_collection)
+      asset_collection.stub(:site_assets).and_return(site_asset)
       SiteAsset.stub(:find).and_return(site_asset)
     end
     
@@ -250,10 +256,10 @@ describe Admin::SiteAssetsController do
       delete :destroy, { "asset_collection_id" => asset_collection.id, "id" => site_asset.to_param }
     end
     
-    it "should receive the SiteAsset#find and return the media file" do
-      SiteAsset.should_receive(:find).with(site_asset.to_param).and_return(site_asset)
+    it "receive prepend_before_filter to assign site_asset instead of cancan load filter " do
+      controller.should_receive(:find_site_asset)
       do_destroy
-    end       
+    end
     
     it "should assign the site_asset" do
       do_destroy

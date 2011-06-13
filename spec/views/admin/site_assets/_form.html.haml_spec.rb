@@ -115,7 +115,15 @@ describe "admin/site_assets/_form.html.haml" do
       form_update(:action => admin_asset_collection_site_asset_path(asset_collection, site_asset)) do |f|
         f.should have_selector("input", :type => "hidden", :name => "site_asset[asset_cache]")
       end
-    end    
+    end 
+    
+    it "should render a delete button to destroy the site_asset" do
+      do_render("Update Asset")      
+      rendered.should have_selector("div#delete_asset") do |div|
+        div.should have_selector("input", :type => "hidden", :value => "delete")
+        div.should have_selector("input", :type => "submit", :value => "Delete Asset")
+      end
+    end
   end
   
   context "when redisplaying edit form because of validation error should cache the image asset from tmp" do

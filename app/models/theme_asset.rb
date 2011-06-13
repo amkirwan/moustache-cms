@@ -1,5 +1,6 @@
-class ThemeAsset
+class ThemeAsset 
   include Mongoid::Document
+  include Mongoid::Timestamps
   
   attr_accessible :name, :description, :content_type, :width, :height, :file_size, :asset
   
