@@ -84,7 +84,6 @@ describe Admin::SiteAssetsController do
     
     before(:each) do
       SiteAsset.stub(:new).and_return(site_asset.as_new_record)
-      asset_collection.stub_chain(:site_assets, create).and_return(site_asset)
     end
     
     def do_post(post_params=params)
@@ -102,14 +101,14 @@ describe Admin::SiteAssetsController do
     end
     
     it "should assign creator and updator to the current user" do
-      controller.should_receive(:creator_updator_by_for).with(site_asset)
+      controller.should_receive(:creator_updator_set_id).with(site_asset)
       do_post
     end
       
     context "with valid params" do
-      it "should receive and save the site_asset" do
+      it "should save the site_asset to the collection" do
         asset_collection.should_receive(:site_assets).and_return(site_assets)
-        #site_assets.should_receive(:create).and_return(site_asset)
+        site_assets.should_receive(:<<).and_return(site_asset)
         do_post
       end
       
@@ -133,11 +132,13 @@ describe Admin::SiteAssetsController do
     
     context "with invalid params" do
       before(:each) do
-        site_asset.stub(:save).and_return(false)
+        asset_collection.stub(:site_assets).and_return(site_assets)
+        site_assets.stub(:<<).and_return(false)
       end
       
       it "should receive save and return false" do
-        site_asset.should_receive(:save).and_return(false)
+        asset_collection.should_receive(:site_assets).and_return(site_assets)
+        site_assets.should_receive(:<<).and_return(false)
         do_post
       end
       

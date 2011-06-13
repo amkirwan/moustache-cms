@@ -7,6 +7,10 @@ class ThemeAssetUploader < CarrierWave::Uploader::Base
 
   # Choose what kind of storage to use for this uploader:
   storage :file
+
+  def store_dir
+    "sites/#{model.site_id}/#{model.class.to_s.underscore}/#{asset_type(model.asset_filename)}"
+  end
   
   before :store, :remember_cache_id
   after :store, :delete_tmp_dir
@@ -25,13 +29,7 @@ class ThemeAssetUploader < CarrierWave::Uploader::Base
         FileUtils.rm_rf(File.join(Rails.root, cache_dir, @cache_id_was))
       end
     end
-  end
-
-  # Override the directory where uploaded files will be stored.
-  # This is a sensible default for uploaders that are meant to be mounted:
-  def store_dir
-    "sites/#{model.site_id}/#{model.class.to_s.underscore}/#{asset_type(model.asset_filename)}"
-  end              
+  end             
 
   version :thumb, :if => :image? do                     
     process :resize_to_fill => [80, 80] 

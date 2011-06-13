@@ -11,14 +11,12 @@ class SiteAsset
   field :width, :type => Integer
   field :height, :type => Integer
   field :file_size, :type => Integer
-  field :creator, :type => User
-  field :updator, :type => User
+  field :creator_id
+  field :updator_id
   mount_uploader :asset, SiteAssetUploader  
   
   # -- Associations -------------        
   embedded_in :asset_collection  
-  embeds_one :creator, :class_name => "User"
-  embeds_one :updator, :class_name => "User"
   
   # -- Validations --------------
   validates :name, :presence => true

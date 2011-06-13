@@ -1,15 +1,17 @@
 require 'spec_helper'
 
 describe SiteAsset do  
-  let(:site) { Factory(:site) }
-  let(:user) { Factory(:user, :site => site) }
+  
+  let(:user) { Factory(:user)}
+  let(:site) { Factory(:site, :users => [user]) }
   
   after(:all) do
     AssetFixtureHelper.reset!
   end
 
   before(:each) do
-    @site_asset = Factory.build(:site_asset, :asset => AssetFixtureHelper.open("rails.png"))
+    @site_asset = Factory.build(:site_asset, :asset => AssetFixtureHelper.open("rails.png"), :content_type => "image/png")
+    @ac = Factory(:asset_collection, :site => site, :site_assets => [@site_asset], :created_by => user, :updated_by => user)
   end
   
   describe "it should allow mass assignment of the fields" do
@@ -40,7 +42,6 @@ describe SiteAsset do
       end  
       
       it "should set the file content_type" do   
-        pending("can only seem to set content_type when uploading")
         @site_asset.content_type.should == "image/png"         
       end
     end
@@ -49,10 +50,11 @@ describe SiteAsset do
   describe "before_update" do
     describe "#recreate" do
       it "should update the filename and recreate version when a new name is given" do
-        pending "can no longer save and update url because site aset is embedded"
-        @site_asset.name = "new_name"
-        @site_asset.asset.filename.should == "new_name.png"
-        @site_asset.asset.url.should =~ /new_name.png/
+        @ac.site_assets.first.update_attributes(:name => "new_name")
+        site_asset = @ac.site_assets.first
+        
+        site_asset.asset.filename.should == "new_name.png"
+        site_asset.asset.url.should =~ /new_name.png/
       end  
     end
   end
@@ -62,14 +64,6 @@ describe SiteAsset do
      it "should be embeeded within a asset_collection" do
        @site_asset.should be_embedded_in(:asset_collection)
      end                     
-     
-     it "should embed one creator" do
-       @site_asset.should embed_one(:creator)
-     end                           
-     
-     it "should embed one updator" do
-       @site_asset.should embed_one(:updator)
-     end
    end 
    
    # -- Instance Methods ----------

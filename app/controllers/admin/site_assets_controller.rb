@@ -2,6 +2,7 @@ class Admin::SiteAssetsController < AdminBaseController
   include Etherweb::AssetCache                    
         
   prepend_before_filter :find_site_asset, :only => [:edit, :update, :destroy]
+  
   load_and_authorize_resource :asset_collection
   load_and_authorize_resource :site_asset, :through => :asset_collection  
     
@@ -24,9 +25,9 @@ class Admin::SiteAssetsController < AdminBaseController
 
   # POST /admin/site_assets
   def create
-    creator_updator_by_for @site_asset    
+    creator_updator_set_id @site_asset    
     try_site_asset_cache
-    if @asset_collection.site_assets.push(@site_asset)
+    if @asset_collection.site_assets << @site_asset
       redirect_to admin_asset_collection_site_assets_path, :notice => "Successfully created the asset #{@site_asset.name}"
     else
       render :new
@@ -58,9 +59,9 @@ class Admin::SiteAssetsController < AdminBaseController
       end
     end 
     
-    def creator_updator_by_for(site_asset)
-      site_asset.creator = @current_user
-      site_asset.updator = @current_user
+    def creator_updator_set_id(site_asset)
+      site_asset.creator = @current_user.id
+      site_asset.updator = @current_user.id
     end
     
     def find_site_asset

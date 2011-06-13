@@ -9,7 +9,7 @@ describe ThemeAsset do
   end
 
   before(:each) do
-    @theme_asset_image = Factory(:theme_asset, :site => site, :asset => "AssetFixtureHelper.open("rails.png")", :content_type => "image/png", :created_by => user, :updated_by => user)
+    @theme_asset_image = Factory(:theme_asset, :site => site, :asset => AssetFixtureHelper.open("rails.png"), :content_type => "image/png", :created_by => user, :updated_by => user)
     @theme_asset_css = Factory(:theme_asset, :site => site, :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css", :created_by => user, :updated_by => user)
     @theme_asset_js = Factory(:theme_asset, :site => site, :asset => AssetFixtureHelper.open("theme_js.js"), :content_type => "text/javascript", :created_by => user, :updated_by => user)
     @theme_assets = ThemeAsset.all
@@ -60,7 +60,6 @@ describe ThemeAsset do
        end  
 
        it "should set the file content_type" do   
-         pending("can only seem to set content_type when uploading")
          @theme_asset_image.content_type.should == "image/png"         
        end
      end
