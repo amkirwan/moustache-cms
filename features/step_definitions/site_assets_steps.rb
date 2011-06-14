@@ -30,6 +30,12 @@ Then /^navigate to the admin asset collection site assets page for "([^\"]*)"$/ 
   Then %{I should be on the admin asset collection site assets page for "#{collection.to_param}"}
 end
 
+Then /^I should view the collection "([^"]*)" admin asset collection site assets page$/ do |c_name|
+  collection = find_asset_collection(c_name)
+  Then %{I should be on the admin asset collection site assets page for "#{collection.to_param}"}
+end
+
+
 Then /^I should see the url for the site asset file "([^\"]*)"$/ do |site_asset_name|
   site_asset = find_site_asset(site_asset_name)
   Then %{I should see "http://#{site_asset.site.full_subdomain}#{site_asset.asset.url}"}
