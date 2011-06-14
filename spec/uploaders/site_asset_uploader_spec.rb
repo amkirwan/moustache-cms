@@ -4,12 +4,14 @@ require "carrierwave/test/matchers"
 describe SiteAssetUploader do
   include CarrierWave::Test::Matchers
   
-  let(:site) { Factory(:site) }
-  let(:site_asset) { Factory(:theme_asset, :name => "foobar", :site_id => site.id) }  
+  let(:user) { Factory(:user) }
+  let(:site) { Factory(:site, :users => [user]) }
+  let(:site_asset) { Factory.build(:site_asset, :name => "foobar") }  
+  let(:asset_collection) { Factory(:asset_collection, :site => site, :site_assets => [site_asset], :created_by => user, :updated_by => user)}
   
   before do
     SiteAssetUploader.enable_processing = true
-    @uploader = SiteAssetUploader.new(site_asset, :asset)
+    @uploader = SiteAssetUploader.new(asset_collection.site_assets.first, :asset)
     @uploader.store!(AssetFixtureHelper.open("rails.png"))
   end
   
@@ -35,7 +37,7 @@ describe SiteAssetUploader do
   end
   
   it "should set the storage directory" do
-    @uploader.store_dir.should == "sites/#{@uploader.model.site_id}/#{@uploader.mounted_as}/#{@uploader.model.id}"
+    @uploader.store_dir.should == "sites/#{@uploader.model._parent.site_id}/#{@uploader.mounted_as}/#{@uploader.model.id}"
   end
   
   it "should change the uploaded filename to the name of the site_asset" do

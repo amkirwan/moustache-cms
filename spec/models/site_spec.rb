@@ -59,8 +59,8 @@ describe Site do
       @site.should have_many(:pages)
     end 
     
-    it "should reference many site_assets" do
-      @site.should have_many(:site_assets).of_type(SiteAsset)
+    it "should reference many asset_collections" do
+      @site.should have_many(:asset_collections).of_type(AssetCollection)
     end 
     
     it "should have many layouts" do
@@ -98,7 +98,7 @@ describe Site do
       @user = Factory(:user, :site => @site)
       @layout = Factory(:layout, :site => @site, :created_by => @user, :updated_by => @user)
       @page = Factory(:page, :site => @site, :layout => @layout, :created_by => @user, :updated_by => @user, :editor_ids => [@user.id])
-      @site_asset = Factory(:site_asset, :site => @site, :created_by => @user, :updated_by => @user) 
+      @asset_collection = Factory(:asset_collection, :site => @site, :created_by => @user, :updated_by => @user) 
     end
     
     describe "#destroy_pages" do
@@ -127,9 +127,9 @@ describe Site do
     
     describe "#destroy_site_assets" do
       it "should destroy all the site_assets associated with the site" do
-        @site.site_assets.count.should == 1
+        @site.asset_collections.count.should == 1
         @site.destroy
-        @site.site_assets.count.should == 0
+        @site.asset_collections.count.should == 0
       end
     end
   end

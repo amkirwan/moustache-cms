@@ -16,6 +16,9 @@ class PagePart
   validates :name,
             :presence => true,
             :uniqueness => true
+  
+  validates :filter,
+            :presence => true
             
   # -- Class Methods ----------          
   def self.find_by_name(name)

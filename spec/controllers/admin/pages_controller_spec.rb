@@ -235,14 +235,14 @@ describe Admin::PagesController do
                     "current_state_attributes"=> { "id"=> status.to_param }, 
                     "editor_ids"=>[ user.puid ], 
                     "layout_id" => layout.to_param,
-                    "page_parts_attributes" => { "0" => { "name" => "content", "content" => "Hello, World", "filter"=> filter }}} }}
+                    "page_parts_attributes" => { "0" => { "name" => "content", "content" => "Hello, World", "filter" => "filter" }}} }}
     
     before(:each) do
       controller.stub(:admin?).and_return(true)
       @parent_mock = mock_model("Page", :id => "4d922d505dfe2f082e00006e")
       Page.stub_chain(:criteria, :for_ids).and_return([@parent_mock])
       CurrentState.stub(:find).and_return(status)
-      Filter.stub(:find).and_return(filter)
+      Filter.stub(:find_by_name).and_return(filter)
       Page.stub(:new).with(params["page"]).and_return(page)
       Page.stub(:find).and_return(page)
     end

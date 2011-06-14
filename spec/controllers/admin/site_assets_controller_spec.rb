@@ -28,18 +28,13 @@ describe Admin::SiteAssetsController do
     end
         
     it "should receive accessible_by" do
-      SiteAsset.should_receive(:accessible_by).and_return(site_assets)
+      AssetCollection.should_receive(:find).and_return(asset_collection)
       do_get
     end 
     
     it "should assign the asset_collection" do
       do_get
       assigns(:asset_collection).should == asset_collection
-    end
-    
-    it "should assign the found site_assets" do
-      do_get
-      assigns(:site_assets).should == site_assets
     end
     
     it "should render the index template" do
