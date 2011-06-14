@@ -20,12 +20,12 @@ describe "admin/site_assets/_form.html.haml" do
   context "when the site_asset is NEW" do
     before(:each) do
       site_asset.as_new_record
-      do_render("Save Media")
+      do_render("Save Asset")
     end
     
     it "should render a button to save the new site_asset" do    
       form_new(:action => admin_asset_collection_site_assets_path(asset_collection, site_asset)) do |f|
-        f.should have_selector("input", :type => "submit", :value => "Save Media")
+        f.should have_selector("input", :type => "submit", :value => "Save Asset")
       end
     end
     
@@ -52,6 +52,11 @@ describe "admin/site_assets/_form.html.haml" do
         f.should have_selector("input", :type => "hidden", :name => "site_asset[asset_cache]")
       end
     end
+    
+    it "should not render a delete link to delete for a new site_asset" do
+      do_render("Save Asset")      
+      rendered.should_not have_selector("div#delete_asset")
+    end
   end
   
   context "when redisplaying new field form because of validation error should cache the image asset from tmp" do
@@ -62,13 +67,13 @@ describe "admin/site_assets/_form.html.haml" do
     it "should show the cached image" do
       site_asset.stub(:asset? => true)
       site_asset.stub_chain(:asset, :thumb, :url => "/spec/fixtures/assets/rails.png")
-      do_render("Save Media")
+      do_render("Save Asset")
       rendered.should have_selector("img", :src => "/spec/fixtures/assets/rails.png")
     end
     
     it "should cache the file tmp path on redisplay" do
       site_asset.stub(:asset_cache => "/tmp/rails.png")
-      do_render("Save Media")
+      do_render("Save Asset")
       form_new(:action => admin_asset_collection_site_assets_path(asset_collection, site_asset)) do |f|
         f.should have_selector("input", :type => "hidden", :name => "site_asset[asset_cache]", :value => "/tmp/rails.png")
       end

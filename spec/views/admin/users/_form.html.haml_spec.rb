@@ -1,5 +1,5 @@
 # user form spec
-require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')  
+require 'spec_helper'
 
 describe "admin/users/_form.html.haml" do
   include FormHelpers
@@ -14,6 +14,7 @@ describe "admin/users/_form.html.haml" do
   before(:each) do
     assign(:user, user)  
     assign(:current_user, current_user)
+    controller.stub(:current_user).and_return(current_user)
   end
   
   it "should render a shared error partial" do
@@ -74,6 +75,11 @@ describe "admin/users/_form.html.haml" do
       form_new(:action => admin_users_path) do |f|
         f.should have_selector("a.cancel", :href => admin_users_path)
       end
+    end
+    
+    it "should not render a delete link for a new user record" do
+      do_render("Create User")      
+      rendered.should_not have_selector("div#delete_asset")
     end
   end 
   
@@ -143,6 +149,14 @@ describe "admin/users/_form.html.haml" do
       do_render("Update User")
       form_update(:action => admin_user_path(user)) do |f|
         f.should have_selector("a.cancel", :href => admin_users_path)
+      end
+    end
+    
+    it "should render a delete link to delete the site_asset" do
+      view.should_receive(:can?).and_return(true)
+      do_render("Update User")      
+      rendered.should have_selector("div#delete_asset") do |div|
+        div.should have_selector("a", :content => "Delete User", :href => admin_user_path(user))
       end
     end
   end

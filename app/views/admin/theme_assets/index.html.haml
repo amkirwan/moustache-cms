@@ -1,26 +1,26 @@
 #theme_assets
   %h3 Theme Asset Files
-  #theme_assets_css
+  #theme_css_assets
     %h5 CSS
     %ul
       - @css_files.each do |css|
         %li{ :id => "#{css.name}"}
           %div= link_to css.name, edit_admin_theme_asset_path(css)
-          %div.delete= button_to "delete", admin_theme_asset_path(css), :method => :delete, :confirm => "Are you sure you want to delete the CSS theme file #{css.name}"
-  #theme_assets_js
+          %div.delete= link_to "Delete", admin_theme_asset_path(css), :method => :delete, :confirm => "Are you sure you want to delete the CSS theme file #{css.name}", :class => "delete"
+  #theme_js_assets
     %h5 JavaScript
     %ul
       - @js_files.each do |js|
         %li{ :id => "#{js.name}"}
           %div= link_to js.name, edit_admin_theme_asset_path(js)
-          %div.delete= button_to "delete", admin_theme_asset_path(js), :method => :delete, :confirm => "Are you sure you want to delete the JavaScript theme file #{js.name}"
-  #theme_assets_js
+          %div.delete= link_to "Delete", admin_theme_asset_path(js), :method => :delete, :confirm => "Are you sure you want to delete the JavaScript theme file #{js.name}", :class => "delete"
+  #theme_image_assets
     %h5 Images
     %ul
       - @images.each do |image|
         %li{ :id => "#{image.name}"}
           %div= link_to image.name, edit_admin_theme_asset_path(image)
-          %div.delete= button_to "delete", admin_theme_asset_path(image), :method => :delete, :confirm => "Are you sure you want to delete the JavaScript theme file #{image.name}"
+          %div.delete= link_to "Delete", admin_theme_asset_path(image), :method => :delete, :confirm => "Are you sure you want to delete the JavaScript theme file #{image.name}", :class => "delete"
         
 
         

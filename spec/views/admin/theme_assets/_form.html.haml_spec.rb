@@ -51,6 +51,11 @@ describe "admin/theme_assets/_form.html.haml" do
       do_render("Save Theme Asset")
       view.should render_template(:partial => "_new_theme_asset", :locals => { :theme_asset => theme_asset })
     end
+    
+    it "should not render a delete link to delete for a new theme_asset" do
+      do_render("Save Asset")      
+      rendered.should_not have_selector("div#delete_asset")
+    end
   end
   
   # -- Existing Record ------
@@ -115,6 +120,13 @@ describe "admin/theme_assets/_form.html.haml" do
         f.should have_selector("textarea", :content => "foobar description")
       end
     end 
+    
+    it "should render a delete link to delete the site_asset" do
+      do_render("Update Theme Asset")      
+      rendered.should have_selector("div#delete_asset") do |div|
+        div.should have_selector("a", :content => "Delete Asset", :href => admin_theme_asset_path(theme_asset))
+      end
+    end
     
     it "should render the image_asset partial" do
       do_render("Update Theme Asset")

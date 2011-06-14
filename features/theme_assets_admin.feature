@@ -19,9 +19,12 @@ Scenario: Navigate to the Layout#index page
    | rails     | rails.png     | 
   When I go to the admin theme assets page
   Then I should be on the admin theme assets page
-  And I should see "theme_css"
-  And I should see "theme_js"
-  And I should see "rails"
+  And I should see "theme_css" within "div#theme_css_assets"
+  And I should see "Delete" within "div#theme_css_assets"
+  And I should see "theme_js" within "div#theme_js_assets"
+  And I should see "Delete" within "div#theme_js_assets"
+  And I should see "rails" within "div#theme_image_assets"
+  And I should see "Delete" within "div#theme_image_assets"
   And I should see "Add Theme Asset"
   
 @admin_should_not_access_other_sites_themes 
@@ -41,7 +44,7 @@ Scenario: Create a new media file
   Then I should be on the admin theme assets page
   And I should see "Successfully created the theme asset foobar"
   And I should see "foobar"
-  And I should see the "delete" button
+  And I should see "Delete"
   
 @edit_theme_asset
 Scenario: Given I am logged in as an admin then I can edit the theme assets I created 
@@ -56,7 +59,7 @@ Scenario: Given I am logged in as an admin then I can edit the theme assets I cr
   Then I should be on the admin theme assets page
   And I should see "Successfully updated the theme asset foobar"
   And I should see "foobar"
-  And I should see the "delete" button  
+  And I should see "Delete"  
   
   
 @edit_theme_asset_created_by_another_user
@@ -80,9 +83,19 @@ Scenario: Admin can delete theme assets
   | rails     | rails.png     |
   When I go to the admin theme assets page
   Then I should be on the admin theme assets page
-  And I press "delete" within "li#theme_css"
+  And I follow "Delete" within "li#theme_css"
   And I should see "Successfully deleted the theme asset theme_css"
-  And I should be on the admin theme assets page                  
+  And I should be on the admin theme assets page  
+  
+@admin_delete_theme_asset_editing
+Scenario: Admin can delete theme assets while editing
+  Given "rg874" has created the theme asset "rails"
+  When I go to the admin theme assets page
+  And I follow "rails" within "li#rails"
+  Then I should now be editing the theme asset "rails"
+  And I follow "Delete Asset"
+  And I should see "Successfully deleted the theme asset rails"
+  And I should be on the admin theme assets page                
   
 @admin_delete_theme_asset_created_by_another_user
 Scenario: Given I am logged in as an admin then I can delete files created by another user
@@ -93,6 +106,6 @@ Scenario: Given I am logged in as an admin then I can delete files created by an
   | rails     | rails.png     |
   When I go to the admin theme assets page
   Then I should be on the admin theme assets page
-  And I press "delete" within "li#theme_css"
+  And I follow "Delete" within "li#theme_css"
   And I should see "Successfully deleted the theme asset theme_css"
   And I should be on the admin theme assets page  

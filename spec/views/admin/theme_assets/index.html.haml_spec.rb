@@ -29,7 +29,7 @@ describe "admin/theme_assets/index.html.haml" do
       render
       css_files.each do |css|
         rendered.should have_selector("li##{css.name}") do |li|
-          li.should have_selector("input", :value => "delete")
+          li.should have_selector("a", :content => "Delete", :href => admin_theme_asset_path(css))
         end
       end      
     end  
@@ -50,7 +50,7 @@ describe "admin/theme_assets/index.html.haml" do
       render
       js_files.each do |js|
         rendered.should have_selector("li##{js.name}") do |li|
-          li.should have_selector("input", :value => "delete")
+          li.should have_selector("a", :content => "Delete", :href => admin_theme_asset_path(js))
         end
       end      
     end  
@@ -71,7 +71,7 @@ describe "admin/theme_assets/index.html.haml" do
       render
       images.each do |image|
         rendered.should have_selector("li##{image.name}") do |li|
-          li.should have_selector("input", :value => "delete")
+          li.should have_selector("a", :content => "Delete", :href => admin_theme_asset_path(image))
         end
       end      
     end  

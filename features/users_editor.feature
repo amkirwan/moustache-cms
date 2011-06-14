@@ -38,7 +38,15 @@ Scenario: Given I am logged in as an editor then I can edit my account
 @editor_can_delete_own_account
 Scenario: Given I am logged in as an editor then I can delete my account
   When I go to the admin users page
-  And I press "delete" within "li#ak730"
+  And I follow "Delete" within "li#ak730"
+  Then I should be on the cms html page
+  
+@editor_can_delete_own_account_from_page
+Scenario: Given I am logged in as an editor then I can delete my account from my user page
+  When I go to the admin users page
+  And I follow "ak730" within "li#ak730"
+  Then I should now be editing the user "ak730"
+  When I follow "Delete User" within "div#delete_asset"
   Then I should be on the cms html page
 
 # Actions_Blocked   

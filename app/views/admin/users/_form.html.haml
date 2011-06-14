@@ -26,3 +26,7 @@
   %fieldset 
     = f.submit button_label
     = link_to "cancel", admin_users_path, :class => "cancel"
+
+- if can?(:destroy, user) && !user.new_record?
+  %div#delete_asset
+    = link_to "Delete User", [:admin, user], :confirm => "Are you sure you want to delete the user #{user.puid}", :method => :delete, :class => "delete"

@@ -84,7 +84,15 @@ Scenario: Given I am logged in as an admin then I can edit any users account
 @admin_can_delete_own_account
 Scenario: Given I am logged in as an admin then I can delete my account
   When I go to the admin users page
-  And I press "delete" within "li#ak730"
+  And I follow "Delete" within "li#ak730"
+  Then I should be on the cms html page
+  
+@admin_can_delete_own_account_from_page
+Scenario: Given I am logged in as an admin then I can delete my account from my user page
+  When I go to the admin users page
+  And I follow "ak730" within "li#ak730"
+  Then I should now be editing the user "ak730"
+  When I follow "Delete User" within "div#delete_asset"
   Then I should be on the cms html page
   
 @admin_delete_other_user_account
@@ -94,7 +102,7 @@ Scenario: Delete user account as an admin
   | foobar | admin  | foobar.example.com |
   | bar    | editor | foobar.example.com |
   When I go to the admin users page
-  And I press "delete" within "li#foobar"
+  And I follow "Delete" within "li#foobar"
   Then I should see "Successfully deleted user account for foobar"
   And I should be on the admin users page
                                                    

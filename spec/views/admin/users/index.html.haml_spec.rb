@@ -29,11 +29,7 @@ describe "admin/users/index.html.haml" do
     it "should render a delete button" do  
       render  
       users.each do |user|
-        render.should have_selector("form", 
-          :method => "post", :action => admin_user_path(user)
-        ) do |form|
-          form.should have_selector("input", :value => "delete") 
-        end 
+        render.should have_selector("a", :content => "Delete", :href => admin_user_path(user))
       end
     end 
   end 
@@ -43,11 +39,7 @@ describe "admin/users/index.html.haml" do
       controller.stub(:current_user).and_return(stub_model(User, :role? => false))
       render
       users.each do |user|
-        render.should_not have_selector("form", 
-          :method => "post", :action => admin_user_path(user)
-        ) do |form|
-          form.should_not have_selector("input", :value => "delete") 
-        end 
+        render.should_not have_selector("a", :content => "Delete", :href => admin_user_path(user))
       end  
     end
   end
