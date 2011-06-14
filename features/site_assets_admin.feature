@@ -77,15 +77,18 @@ Scenario: Given I am logged in as an admin then I can edit the site assets creat
   
 @admin_delete_site_asset
 Scenario: Admin can delete site assets
-  Given these site assets exist in the site "foobar.example.com" created by user "ak730"
+  Given these site assets exist in the collection "foobar" in the site "foobar.example.com" created by user "ak730"
   | name   | 
-  | foobar | 
-  | bar    |
-  When I go to the admin site assets page
-  Then I should be on the admin site assets page
-  And I press "delete" within "li#foobar"
-  And I should see "Successfully deleted the asset foobar"
-  And I should be on the admin site assets page
+  | baz    | 
+  | qux    |
+  When I view the collection "foobar" admin asset collection site assets page
+  Then navigate to the admin asset collection site assets page for "foobar"  
+  When I follow "baz" within "li#baz"
+  Then I should now be editing the site asset "baz" in the collection "foobar"
+  And I follow "Delete Asset"
+  Then I should see "Successfully deleted the asset baz"
+  And I should view the collection "foobar" admin asset collection site assets page
+
   
 @admin_delete_site_asset_created_by_another_user
 Scenario: Given I am logged in as an admin then I can delete files created by another user
@@ -97,4 +100,4 @@ Scenario: Given I am logged in as an admin then I can delete files created by an
   Then I should be on the admin site assets page
   And I press "delete" within "li#foobar"
   And I should see "Successfully deleted the asset foobar"
-  And I should be on the admin site assets page
+  
