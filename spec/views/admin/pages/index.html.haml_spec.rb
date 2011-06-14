@@ -34,4 +34,12 @@ describe "admin/pages/index.html.haml" do
     rendered.should have_selector("a", :href => new_admin_page_path)
     rendered.should contain("Add New Page")
   end
+  
+  it "should not render a delete link to the page if can? returns false" do
+    view.stub(:can?).and_return(false)
+    render
+    pages.each do |page|
+      rendered.should_not have_selector("a", :content => "Delete", :href => admin_page_path(page))
+    end
+  end
 end

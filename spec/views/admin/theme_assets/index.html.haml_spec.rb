@@ -12,6 +12,7 @@ describe "admin/theme_assets/index.html.haml" do
     assign(:css_files, css_files)
     assign(:js_files, js_files)
     assign(:images, images)
+    view.stub(:can?).and_return(true)
   end
   
   describe "css section" do
@@ -25,7 +26,7 @@ describe "admin/theme_assets/index.html.haml" do
       end
     end
     
-    it "should render a delete button to destroy the css file" do
+    it "should render a delete link to destroy the css file" do
       render
       css_files.each do |css|
         rendered.should have_selector("li##{css.name}") do |li|
@@ -33,6 +34,16 @@ describe "admin/theme_assets/index.html.haml" do
         end
       end      
     end  
+    
+    it "should not render a delete link to destroy the css file if can? returns false" do
+      view.stub(:can?).and_return(false)
+      render
+      css_files.each do |css|
+        rendered.should have_selector("li##{css.name}") do |li|
+          li.should_not have_selector("a", :content => "Delete", :href => admin_theme_asset_path(css))
+        end
+      end      
+    end
   end
   
   describe "javascript section" do
@@ -46,7 +57,7 @@ describe "admin/theme_assets/index.html.haml" do
       end
     end
     
-    it "should render a delete button to destroy the javascript file" do
+    it "should render a delete link to destroy the javascript file" do
       render
       js_files.each do |js|
         rendered.should have_selector("li##{js.name}") do |li|
@@ -54,6 +65,16 @@ describe "admin/theme_assets/index.html.haml" do
         end
       end      
     end  
+    
+    it "should not render a delete link to destroy the javascript file if can? returns false" do
+      view.stub(:can?).and_return(false)
+      render
+      js_files.each do |js|
+        rendered.should have_selector("li##{js.name}") do |li|
+          li.should_not have_selector("a", :content => "Delete", :href => admin_theme_asset_path(js))
+        end
+      end      
+    end
   end
   
   describe "image section" do
@@ -67,7 +88,7 @@ describe "admin/theme_assets/index.html.haml" do
       end
     end
     
-    it "should render a delete button to destroy the image file" do
+    it "should render a delete link to destroy the image file" do
       render
       images.each do |image|
         rendered.should have_selector("li##{image.name}") do |li|
@@ -75,6 +96,16 @@ describe "admin/theme_assets/index.html.haml" do
         end
       end      
     end  
+    
+    it "should not render a delete link to destroy the image file if can? returns false" do
+      view.stub(:can?).and_return(false)
+      render
+      images.each do |image|
+        rendered.should have_selector("li##{image.name}") do |li|
+          li.should_not have_selector("a", :content => "Delete", :href => admin_theme_asset_path(image))
+        end
+      end      
+    end
   end
    
   it "should render a link to add a new page" do

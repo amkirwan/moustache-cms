@@ -5,8 +5,9 @@
       %li{ :id => "#{collection.name}"}
         %strong
           = link_to collection.name, [:admin, collection]
-        %div
-          = link_to "delete collection", [:admin, collection], :method => :delete, :confirm => "Are you sure you want to delete this collection?", :class => "delete"
+        - if can? :destroy, collection
+          %div
+            = link_to "delete collection", [:admin, collection], :method => :delete, :confirm => "Are you sure you want to delete this collection?", :class => "delete"
   
 %div
   %ul#new_asset_collection

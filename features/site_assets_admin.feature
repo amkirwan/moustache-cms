@@ -1,4 +1,4 @@
-Feature: Admin Media File Management Features as admin
+Feature: Admin Site Assets Management Features as admin
 
 Background: Login create default site
 Given the site "foobar" exists with the domain "example.com"
@@ -52,7 +52,7 @@ Scenario: Create a new site asset
 
 @edit_site_asset
 Scenario: Given I am logged in as an admin then I can edit the site assets I created
-  Given "ak730" has created the site asset "rails"  in the collection "foobar"
+  Given "ak730" has created the site asset "rails" in the collection "foobar"
   When I view the collection "foobar" admin asset collection site assets page
   And I follow "rails" within "li#rails"
   Then I should now be editing the site asset "rails" in the collection "foobar"

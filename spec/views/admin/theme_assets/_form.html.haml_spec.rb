@@ -11,6 +11,7 @@ describe "admin/theme_assets/_form.html.haml" do
     assign(:current_site, site)
     assign(:theme_asset, theme_asset)
     assign(:current_user, current_user)
+    view.stub(:can?).and_return(true)
   end
   
   def do_render(label)
@@ -126,6 +127,12 @@ describe "admin/theme_assets/_form.html.haml" do
       rendered.should have_selector("div#delete_asset") do |div|
         div.should have_selector("a", :content => "Delete Asset", :href => admin_theme_asset_path(theme_asset))
       end
+    end
+    
+    it "should not render a delete link to delete the site_asset if can? returns false" do
+      view.stub(:can?).and_return(false)
+      do_render("Update Theme Asset")      
+      rendered.should_not have_selector("div#delete_asset")
     end
     
     it "should render the image_asset partial" do

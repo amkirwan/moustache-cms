@@ -16,7 +16,7 @@ Given /^these site assets exist in the collection "([^\"]*)" in the site "([^\"]
   @collection.save
 end
 
-Given /^"([^"]*)" has created the site asset "([^"]*)"  in the collection "([^"]*)"$/ do |puid, asset_name, c_name|
+Given /^"([^"]*)" has created the site asset "([^"]*)" in the collection "([^"]*)"$/ do |puid, asset_name, c_name|
   user = User.find_by_puid(puid)
   @collection = find_asset_collection(c_name)
   When %{I go to the new admin asset collection site asset page for "#{@collection.to_param}"}

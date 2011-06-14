@@ -8,6 +8,10 @@ describe "admin/site_assets/_form.html.haml" do
   let(:asset_collection) { stub_model(AssetCollection) }
   let(:current_user) { stub_model(User, :role? => true) }
   
+  before(:each) do
+    view.stub(:can?).and_return(true)
+  end
+  
   def do_render(label)
     render "admin/site_assets/form", :current_site => site, :asset_collection => asset_collection, :site_asset => site_asset, :button_label => label
   end

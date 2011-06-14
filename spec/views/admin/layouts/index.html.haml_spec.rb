@@ -8,6 +8,7 @@ describe "admin/layouts/index.html.haml" do
   before(:each) do
     assign(:layouts, layouts)
     assign(:current_user, current_user)
+    view.stub(:can?).and_return(true)
   end
   
   it "should display the layout name" do
@@ -24,7 +25,7 @@ describe "admin/layouts/index.html.haml" do
     end 
   end
   
-  it "should render a delete button to destroy the layout" do
+  it "should render a delete link to destroy the layout" do
     render
     layouts.each do |layout|
       rendered.should have_selector("li##{layout.name}") do |li|
@@ -37,5 +38,15 @@ describe "admin/layouts/index.html.haml" do
     render
     rendered.should have_selector("a", :href => new_admin_layout_path)
     rendered.should contain("Add New Layout")
+  end
+  
+  it "should not render a delete link to layout if can? returns false" do
+    view.stub(:can?).and_return(false)
+    render
+    layouts.each do |layout|
+      rendered.should have_selector("li##{layout.name}") do |li|
+        li.should_not have_selector("a", :content => "Delete", :href => admin_layout_path(layout))
+      end
+    end
   end
 end

@@ -6,7 +6,8 @@
     - @layouts.each do |layout|
       %li{ :id => "#{layout.name}"}
         %div= link_to layout.name, edit_admin_layout_path(layout)
-        %div.delete= link_to "Delete", admin_layout_path(layout), :method => :delete, :confirm => "Are you sure you want to delete the layout #{layout.name}", :class => "delete"
+        - if can? :destroy, layout
+          %div.delete= link_to "Delete", admin_layout_path(layout), :method => :delete, :confirm => "Are you sure you want to delete the layout #{layout.name}", :class => "delete"
   
 
 #add_layout

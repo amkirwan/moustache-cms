@@ -42,6 +42,18 @@ describe "admin/site_assets/index.html.haml" do
     end
   end
   
+  it "should not render a delete button to destroy the asset file when can? returns false" do
+    view.stub(:can?).and_return(false)
+    render
+    asset_collection.site_assets.each do |asset|
+      rendered.should have_selector("li##{asset.name}") do |li|
+        li.should have_selector("div") do |div|   
+          div.should_not have_selector("a", :content => "delete", :href => admin_asset_collection_site_asset_path(asset_collection, asset))
+        end
+      end
+    end
+  end
+  
   it "should render a link to add a new asset file" do
     render
     rendered.should have_selector("ul#new_site_asset") do |ul|
