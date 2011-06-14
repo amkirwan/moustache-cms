@@ -6,10 +6,10 @@ class Ability
 
     if user.role? :admin
       can :manage, [User, Layout, Page, AssetCollection, ThemeAsset], :site_id => user.site_id
-      can :manage, SiteAsset
-      #can :manage, SiteAsset, AssetCollection.where(:site_id => user.site_id) do |site_asset|
-      #  site_asset
-      #end
+      #can :manage, SiteAsset
+      can :manage, SiteAsset, AssetCollection.where(:site_id => user.site_id) do |site_asset|
+        site_asset
+      end
       can :manage, Site do |site|
         site.users.include?(user)
       end
