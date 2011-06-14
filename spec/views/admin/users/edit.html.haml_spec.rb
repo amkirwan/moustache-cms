@@ -4,6 +4,7 @@ describe "admin/users/edit.html.haml" do
   before(:each) do
     @user = assign(:user, stub_model(User))
     @current_user = assign(:current_user, stub_model(User, :role? => true))
+    view.stub(:can?).and_return(true)
   end  
    
   it "should render form title" do  

@@ -8,6 +8,7 @@ describe "admin/theme_assets/new.html.haml" do
   before(:each) do 
     assign(:theme_asset, theme_asset)
     assign(:current_user, current_user)
+    view.stub(:can?).and_return(true)
   end
   
   it "should render form name" do
