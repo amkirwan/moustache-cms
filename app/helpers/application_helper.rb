@@ -61,5 +61,9 @@ module ApplicationHelper
   def hash_to_open_struct(hash)
     OpenStruct.new(hash)
   end
+  
+  def filter_select(builder)
+    builder.object.filter ? builder.object.filter.name : nil
+  end
     
 end

@@ -61,7 +61,11 @@ describe Ability do
         admin_ability.should be_able_to(:manage, layout)
         admin_ability.should be_able_to(:manage, theme_asset)
         admin_ability.should be_able_to(:manage, asset_collection)
-        admin_ability.should be_able_to(:manage, first_site_asset)
+        
+        admin_ability.should be_able_to(:read, first_site_asset)
+        admin_ability.should be_able_to(:create, first_site_asset)
+        admin_ability.should be_able_to(:update, first_site_asset)
+        admin_ability.should be_able_to(:destroy, first_site_asset)
       end
     end
     
@@ -75,7 +79,10 @@ describe Ability do
           admin_ability.should_not be_able_to(:manage, layout2)
           admin_ability.should_not be_able_to(:manage, theme_asset2)
           admin_ability.should_not be_able_to(:manage, asset_collection2)
-          admin_ability.should_not be_able_to(:manage, asset_collection2.site_assets.first)
+          
+          admin_ability.should_not be_able_to(:read, asset_collection2.site_assets.first)
+          admin_ability.should_not be_able_to(:update, asset_collection2.site_assets.first)
+          admin_ability.should_not be_able_to(:destroy, asset_collection2.site_assets.first)
         end
       end      
     end
@@ -108,7 +115,11 @@ describe Ability do
           designer_ability.should be_able_to(:manage, layout)
           designer_ability.should be_able_to(:manage, theme_asset)
           designer_ability.should be_able_to(:manage, asset_collection)
-          designer_ability.should be_able_to(:manage, first_site_asset)  
+          
+          admin_ability.should be_able_to(:read, first_site_asset)
+          admin_ability.should be_able_to(:create, first_site_asset)
+          admin_ability.should be_able_to(:update, first_site_asset)
+          admin_ability.should be_able_to(:destroy, first_site_asset)  
         end
       end
     end
@@ -270,7 +281,6 @@ describe Ability do
       describe "SiteAsset Model Not Approved" do        
         it "should not allow the editor to manage site_assets on another site" do
           editor_ability.should_not be_able_to(:read, asset_collection2.site_assets.first)
-          editor_ability.should_not be_able_to(:create, asset_collection2.site_assets.first)
           editor_ability.should_not be_able_to(:update, asset_collection2.site_assets.first)
           editor_ability.should_not be_able_to(:destroy, asset_collection2.site_assets.first)
         end

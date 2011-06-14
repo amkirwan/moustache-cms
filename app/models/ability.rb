@@ -6,7 +6,11 @@ class Ability
 
     if user.role? :admin
       can :manage, [User, Layout, Page, AssetCollection, ThemeAsset], :site_id => user.site_id
-      can :manage, SiteAsset, do |site_asset|
+      # Because SiteAsset is embedded in ThemeAsset you cannot save a created SiteAsset in another site
+      # unless you are approved to save the ThemeAsset. When using new and create the _parent of the SiteAsset
+      # will not have ben 
+      can :create, SiteAsset 
+      can [:read, :update, :destroy], SiteAsset, do |site_asset|
         site_asset._parent.site_id == user.site_id
       end
       can :manage, Site do |site|
@@ -18,7 +22,8 @@ class Ability
       can :index, User, :site_id => user.site_id
       can [:show, :update, :destroy], User, :puid => user.puid, :site_id => user.site_id
       can :manage, [Layout, Page, AssetCollection, ThemeAsset], :site_id => user.site_id
-      can :manage, SiteAsset, do |site_asset|
+      can :create, SiteAsset
+      can [:read, :update, :destroy], SiteAsset, do |site_asset|
         site_asset._parent.site_id == user.site_id
       end
     end
@@ -32,8 +37,9 @@ class Ability
         page.editors.include?(user) && page.site_id == user.site_id
       end   
       
-      can [:read], AssetCollection, :site_id => user.site_id      
-      can [:read, :create, :update, :destroy], SiteAsset, do |site_asset|
+      can [:read], AssetCollection, :site_id => user.site_id   
+      can :create, SiteAsset   
+      can [:read, :update, :destroy], SiteAsset, do |site_asset|
         site_asset._parent.site_id == user.site_id
       end
     end

@@ -159,7 +159,7 @@ describe "admin/pages/_form.html.haml" do
     describe "page part" do
       before(:each) do
         page.stub(:page_parts).and_return([mock_model("PagePart", :name => "foobar", :content => "foobar",
-                                                                  :filter => [mock_model("Filter").as_null_object])])
+                                                                  :filter => mock_model("Filter", :name => "filter").as_null_object)])
       end
       
       it "should render a form text field for the page part name" do    
