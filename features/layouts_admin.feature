@@ -18,7 +18,7 @@ Scenario: Navigate to the Layout#index page
   When I go to the admin layouts page
   Then I should be on the admin layouts page
   And I should see "foobar"
-  And I should see the "delete" button
+  And I should see "Delete"
   And I should see "Add New Layout"
 
 @admin_should_not_access_other_site 
@@ -37,7 +37,7 @@ Scenario: Create a New Layout
   Then I should be on the admin layouts page
   And I should see "Successfully created the layout foobar"
   And I should see "foobar"
-  And I should see the "delete" button
+  And I should see "Delete"
 
 @edit_layout
 Scenario: Given I am logged in as an admin then I can edit a layout
@@ -82,7 +82,7 @@ Scenario: Delete layout as an admin
   | foobar | Hello, World! |
   | bar    | Hello, World! |
   When I go to the admin layouts page
-  And I press "delete" within "li#foobar"
+  And I follow "Delete" within "li#foobar"
   Then I should see "Successfully deleted the layout foobar"
   And I should be on the admin layouts page
   
@@ -93,6 +93,6 @@ Scenario: Given I am logged in as an admin then I can delete a layout created by
   | foobar | Hello, World! |
   | bar    | Hello, World! |
   When I go to the admin layouts page
-  And I press "delete" within "li#foobar"
+  And I follow "Delete" within "li#foobar"
   Then I should see "Successfully deleted the layout foobar"
   And I should be on the admin layouts page

@@ -27,8 +27,8 @@ describe "admin/layouts/index.html.haml" do
   it "should render a delete button to destroy the layout" do
     render
     layouts.each do |layout|
-      rendered.should have_selector("form", :method => "post", :action => admin_layout_path(layout)) do |form|
-          form.should have_selector("input", :value => "delete")
+      rendered.should have_selector("li##{layout.name}") do |li|
+        li.should have_selector("a", :content => "Delete", :href => admin_layout_path(layout))
       end
     end
   end
