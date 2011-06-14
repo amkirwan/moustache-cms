@@ -18,12 +18,13 @@ describe Ability do
   let(:page) { Factory.build(:page, :site => site, :editors => [ admin, designer, editor ]) }
   let(:page2) { Factory.build(:page, :site => site2, :editors => [ admin2, designer2, editor2 ]) } 
   
-  let(:asset_collection) { Factory.build(:asset_collection, :site => site, :created_by => admin) }
-  let(:asset_collection2) { Factory.build(:asset_collection, :site => site2, :created_by => admin) }
+  let(:site_asset) { Factory.build(:site_asset, :creator_id => editor.id, :updator_id => editor.id) }
+  let(:site_asset2) { Factory.build(:site_asset, :creator_id => editor.id, :updator_id => editor.id) }
   
-  let(:site_asset) { Factory.build(:site_asset, :site => site, :created_by => editor) }
-  let(:site_asset2) { Factory.build(:site_asset, :site => site2, :created_by => editor2) }
-  let(:site_asset3) { Factory.build(:site_asset, :site => site, :created_by => admin) }
+  let(:asset_collection) { Factory.build(:asset_collection, :site => site, :created_by => admin, :site_assets => [site_asset]) }
+  let(:asset_collection2) { Factory.build(:asset_collection, :site => site2, :created_by => admin, :site_assets => [site_asset2]) }
+  
+
   
   let(:theme_asset) { Factory.build(:theme_asset, :site => site, :created_by => admin) }
   let(:theme_asset2) { Factory.build(:theme_asset, :site => site2, :created_by => admin2) }
@@ -46,6 +47,10 @@ describe Ability do
     site2.users = []
   end
   
+  def first_site_asset
+    asset_collection.site_assets.first
+  end
+  
   # -- Admin ----
   describe "Admin" do
     context "Admin Approved" do
@@ -54,9 +59,9 @@ describe Ability do
         admin_ability.should be_able_to(:manage, admin)
         admin_ability.should be_able_to(:manage, page)
         admin_ability.should be_able_to(:manage, layout)
-        admin_ability.should be_able_to(:manage, site_asset)
         admin_ability.should be_able_to(:manage, theme_asset)
         admin_ability.should be_able_to(:manage, asset_collection)
+        admin_ability.should be_able_to(:manage, first_site_asset)
       end
     end
     
@@ -68,9 +73,9 @@ describe Ability do
           admin_ability.should_not be_able_to(:manage, editor2)
           admin_ability.should_not be_able_to(:manage, page2)
           admin_ability.should_not be_able_to(:manage, layout2)
-          admin_ability.should_not be_able_to(:manage, site_asset2)
           admin_ability.should_not be_able_to(:manage, theme_asset2)
           admin_ability.should_not be_able_to(:manage, asset_collection2)
+          admin_ability.should_not be_able_to(:manage, asset_collection2.site_assets.first)
         end
       end      
     end
@@ -101,9 +106,9 @@ describe Ability do
         it "should allow the designer to edit all pages, layouts, asset_collection, site_assets and theme_assets" do
           designer_ability.should be_able_to(:manage, page)
           designer_ability.should be_able_to(:manage, layout)
+          designer_ability.should be_able_to(:manage, theme_asset)
           designer_ability.should be_able_to(:manage, asset_collection)
-          designer_ability.should be_able_to(:manage, site_asset)
-          designer_ability.should be_able_to(:manage, theme_asset)  
+          designer_ability.should be_able_to(:manage, first_site_asset)  
         end
       end
     end
@@ -160,19 +165,19 @@ describe Ability do
 
         describe "SiteAsset Approved" do
           it "should allow the user with a role of editor to read(:index, :show) site_assets" do
-            editor_ability.should be_able_to(:read, site_asset)
+            editor_ability.should be_able_to(:read, first_site_asset)
           end
 
           it "should allow the user with a role of editor to create site_assets" do
-            editor_ability.should be_able_to(:create, site_asset)
+            editor_ability.should be_able_to(:create, first_site_asset)
           end
 
           it "should allow the user with a role of editor to update site_assets they created" do
-            editor_ability.should be_able_to(:update, site_asset)
+            editor_ability.should be_able_to(:update, first_site_asset)
           end
 
           it "should allow the user with a role of ediitor to delete a site_asset they created" do
-            editor_ability.should be_able_to(:destroy, site_asset)
+            editor_ability.should be_able_to(:destroy, first_site_asset)
           end
         end
       end
@@ -262,16 +267,12 @@ describe Ability do
         end
       end
 
-      describe "SiteAsset Model Not Approved" do
-        it "should not allow the editor to delete site_assets created by another user" do
-          editor_ability.should_not be_able_to(:destroy, site_asset3)
-        end
-        
+      describe "SiteAsset Model Not Approved" do        
         it "should not allow the editor to manage site_assets on another site" do
-          editor_ability.should_not be_able_to(:read, site_asset2)
-          editor_ability.should_not be_able_to(:create, site_asset2)
-          editor_ability.should_not be_able_to(:update, site_asset2)
-          editor_ability.should_not be_able_to(:destroy, site_asset2)
+          editor_ability.should_not be_able_to(:read, asset_collection2.site_assets.first)
+          editor_ability.should_not be_able_to(:create, asset_collection2.site_assets.first)
+          editor_ability.should_not be_able_to(:update, asset_collection2.site_assets.first)
+          editor_ability.should_not be_able_to(:destroy, asset_collection2.site_assets.first)
         end
       end
       

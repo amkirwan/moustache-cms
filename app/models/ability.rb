@@ -6,9 +6,8 @@ class Ability
 
     if user.role? :admin
       can :manage, [User, Layout, Page, AssetCollection, ThemeAsset], :site_id => user.site_id
-      #can :manage, SiteAsset
-      can :manage, SiteAsset, AssetCollection.where(:site_id => user.site_id) do |site_asset|
-        site_asset
+      can :manage, SiteAsset, do |site_asset|
+        site_asset._parent.site_id == user.site_id
       end
       can :manage, Site do |site|
         site.users.include?(user)
@@ -19,6 +18,9 @@ class Ability
       can :index, User, :site_id => user.site_id
       can [:show, :update, :destroy], User, :puid => user.puid, :site_id => user.site_id
       can :manage, [Layout, Page, AssetCollection, ThemeAsset], :site_id => user.site_id
+      can :manage, SiteAsset, do |site_asset|
+        site_asset._parent.site_id == user.site_id
+      end
     end
 
     if user.role? :editor 
@@ -30,9 +32,10 @@ class Ability
         page.editors.include?(user) && page.site_id == user.site_id
       end   
       
-      #can [:read], AssetCollection, :site_id => user.site_id      
-      #can [:read, :create, :update], SiteAsset, :site_id => user.site_id  
-      #can :destroy, SiteAsset, :created_by_id => user.id, :site_id => user.site_id
+      can [:read], AssetCollection, :site_id => user.site_id      
+      can [:read, :create, :update, :destroy], SiteAsset, do |site_asset|
+        site_asset._parent.site_id == user.site_id
+      end
     end
   end    
 end

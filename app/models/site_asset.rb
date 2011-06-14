@@ -27,6 +27,7 @@ class SiteAsset
   before_save :update_asset_attributes
   before_update :recreate, :if => "self.name_changed?"
     
+  # -- Methods ----
   def recreate
     self.asset.recreate_versions!
     self.asset_filename = "#{self.name}.#{self.asset.file.extension}"
