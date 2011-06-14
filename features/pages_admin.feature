@@ -26,9 +26,9 @@ Scenario: Navigate to the Pages#index page
   When I go to the admin pages page
   Then I should be on the admin pages page 
   And I should see "foobar" within "li#foobar"
-  And I should see the "delete" button
+  And I should see "Delete" within "li#foobar"
   And I should see "bar" within "li#bar"
-  And I should see the "delete" button
+  And I should see "Delete" within "li#bar"
   And I should see "Add New Page"
   
 @create_new_page_root_page
@@ -51,7 +51,7 @@ Scenario: Create a new page
   Then I should be on the admin pages page
   And I should see "Successfully created page Home Page"
   And I should see "Home Page" 
-  And I should see the "delete" button
+  And I should see "Delete"
   
 @create_new_page_page
 Scenario: Create a new page
@@ -77,7 +77,7 @@ Scenario: Create a new page
   Then I should be on the admin pages page
   And I should see "Successfully created page foobar"
   And I should see "foobar" 
-  And I should see the "delete" button
+  And I should see "Delete"
   
 @edit_a_existing_page
 Scenario: Edit a page
@@ -102,7 +102,7 @@ Scenario: Edit a page
   Then I should be on the admin pages page
   And I should see "Successfully updated the page foobar"
   And I should see "foobar" 
-  And I should see the "delete" button
+  And I should see "Delete"
   When I edit the page "foobar"
   Then I should now be editing the page "foobar"
   And the "editor_id_jmb42" checkbox should be checked
@@ -129,7 +129,7 @@ Scenario: Delete page as an admin
   | foobar | published | 
   | bar    | draft     |
   When I go to the admin pages page
-  And I press "delete" within "li#foobar"
+  And I follow "Delete" within "li#foobar"
   Then I should see "Successfully deleted the page foobar"
   And I should be on the admin pages page
   
@@ -140,7 +140,7 @@ Scenario: Delete page as an admin
   | foobar | published | 
   | bar    | draft     |
   When I go to the admin pages page
-  And I press "delete" within "li#foobar"
+  And I follow "Delete" within "li#foobar"
   Then I should see "Successfully deleted the page foobar"
   And I should be on the admin pages page
 

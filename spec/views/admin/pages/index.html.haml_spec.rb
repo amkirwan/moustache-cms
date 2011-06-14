@@ -25,9 +25,7 @@ describe "admin/pages/index.html.haml" do
   it "should display a delete button" do
     render
     pages.each do |page|
-      rendered.should have_selector("form", :method => "post", :action => admin_page_path(page)) do |form|
-        form.should have_selector("input", :value => "delete")
-      end
+      rendered.should have_selector("a", :content => "Delete", :href => admin_page_path(page))
     end
   end
   

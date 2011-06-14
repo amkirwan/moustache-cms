@@ -117,7 +117,7 @@ describe "admin/site_assets/_form.html.haml" do
       end
     end 
     
-    it "should render a delete button to destroy the site_asset" do
+    it "should render a delete link to delete the site_asset" do
       do_render("Update Asset")      
       rendered.should have_selector("div#delete_asset") do |div|
         div.should have_selector("a", :content => "Delete Asset", :href => admin_asset_collection_site_asset_path(asset_collection, site_asset))
