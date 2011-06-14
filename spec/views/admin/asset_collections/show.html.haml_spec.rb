@@ -34,14 +34,11 @@ describe "admin/asset_collections/show.html.haml" do
       end
     end
 
-    it "should render the link to destroy the collection" do
+    it "should render the link to delete the collection" do
       render
       rendered.should have_selector("div#manage_collection > ul") do |ul|
         ul.should have_selector("li") do |li|
-          li.should have_selector("form", :method => "post", :action => admin_asset_collection_path(asset_collection)) do |form|
-            form.should have_selector("input", :value => "delete collection")
-            form.should have_selector("input", :value => "delete")
-          end
+          li.should have_selector("a", :content => "delete collection", :href => admin_asset_collection_path(asset_collection))
         end
       end
     end   

@@ -18,6 +18,7 @@ Scenario: Navigate to the AssetCollection#index page
  When I go to the admin asset collections page
  Then I should be on the admin asset collections page
  And I should see "foobar"
+ And I should see "delete collection"
  And I should see "New Collection"    
  
 @other_site_denied_asset_collection
@@ -35,7 +36,7 @@ Scenario: Navigate to the AssetCollection#show page
   | bar    |   
   When I view the collection "foobar"
   Then I should see "edit collection properties"
-  And I should see the "delete collection" button     
+  And I should see "delete collection"     
   
 @create_asset_collection
 Scenario: New Asset Collection
@@ -71,7 +72,7 @@ Scenario: Delete Asset Collection
   | bar    |   
   When I go to the admin asset collections page 
   And I view the collection "foobar"
-  And I press "delete collection"
+  And I follow "delete collection"
   Then I should see "Successfully deleted the asset collection foobar"
   And I should be on the admin asset collections page    
  

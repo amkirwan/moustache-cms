@@ -27,8 +27,17 @@ describe "admin/asset_collections/index.html.haml" do
     end
   end
   
+  it "should render the link to destroy the collection" do
+    render
+    asset_collections.each do |collection|
+      rendered.should have_selector("li##{collection.name}") do |li|
+        li.should have_selector("a", :content => "delete collection", :href => admin_asset_collection_path(collection))
+      end
+    end
+  end
   
-  it "should render a button to create a new asset collection" do
+  
+  it "should render a link to create a new asset collection" do
     render
     rendered.should have_selector("ul#new_asset_collection") do |ul|
       ul.should have_selector("li") do |li|

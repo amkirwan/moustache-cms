@@ -2,7 +2,7 @@
   %ul
     %li= link_to "add asset", [:new, :admin, @asset_collection, :site_asset]
     %li= link_to "edit collection properties", [:edit, :admin, @asset_collection]
-    %li.delete= button_to "delete collection", [:admin, @asset_collection], :method => :delete, :confirm => "Are you sure you want to delete this collection?"
+    %li.delete= link_to "delete collection", [:admin, @asset_collection], :method => :delete, :confirm => "Are you sure you want to delete this collection?", :class => "delete"
   
 
 %div{ :id => "collection_#{@asset_collection.name}"}
