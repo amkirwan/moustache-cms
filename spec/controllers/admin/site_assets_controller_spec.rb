@@ -200,7 +200,7 @@ describe Admin::SiteAssetsController do
     end
     
     it "should update updator attribute" do
-      site_asset.should_receive(:updator=).with(current_user.id)
+      site_asset.should_receive(:updator_id=).with(current_user.id)
       do_put
     end
     

@@ -36,7 +36,7 @@ class Admin::SiteAssetsController < AdminBaseController
 
   # PUT /admin/site_assets/1
   def update
-    @site_asset.updator = @current_user.id
+    @site_asset.updator_id = @current_user.id
     try_site_asset_cache
     if @site_asset.update_attributes(params[:site_asset])
       redirect_to admin_asset_collection_site_assets_path, :notice => "Successfully updated the asset #{@site_asset.name}"

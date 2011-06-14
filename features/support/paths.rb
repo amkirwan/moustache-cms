@@ -29,6 +29,10 @@ module NavigationHelpers
       edit_admin_asset_collection_path($1)
     when /the admin asset collection site assets page for "([^\"]*)"/
       admin_asset_collection_site_assets_path($1)
+    when /the new admin asset collection site asset page for "([^\"]*)"/
+      new_admin_asset_collection_site_asset_path($1)
+    when /the edit admin asset collection "([^\"]*)" site asset page for "([^\"]*)"/
+      edit_admin_asset_collection_site_asset_path($1, $2)
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
