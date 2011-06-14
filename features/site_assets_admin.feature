@@ -8,24 +8,33 @@ And the user with the role exist
  | user  | role   | site               |
  | rg874 | admin  | foobar.example.com |
  | jmb42 | editor | foobar.example.com |
+And these collections exist in the site "foobar.example.com" created by user "ak730"
+| name   | 
+| foobar | 
+| bar    |
 
 
-@admin_index_site_asset
+@index_site_asset
 Scenario: Navigate to the Layout#index page
-  Given these site assets exist in the site "foobar.example.com" created by user "ak730"
+  Given these site assets exist in the collection "foobar" in the site "foobar.example.com" created by user "ak730"
   | name   | 
-  | foobar | 
-  | bar    |
-  When I go to the admin site assets page
-  Then I should be on the admin site assets page
-  And I should see "foobar"
-  And I should see the "delete" button
+  | baz    | 
+  | qux    |
+  When I view the collection "foobar" admin asset collection site assets page
+  Then navigate to the admin asset collection site assets page for "foobar" 
+  And I should see "baz"
+  And I should see "qux"
+  And I should see "delete"
   And I should see "Add Asset"
   
 @admin_should_not_access_other_site 
 Scenario: Should not be able to access another sites site assets
   Given the site "baz" exists with the domain "example.dev"
-  When I go to the admin site assets page
+  And these site assets exist in the collection "foobar" in the site "foobar.example.com" created by user "ak730"
+  | name   | 
+  | baz    | 
+  | qux    |
+  When I view the collection "foobar" admin asset collection site assets page
   Then I should see "403"
 
 @create_new_site_asset

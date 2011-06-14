@@ -36,9 +36,7 @@ describe "admin/site_assets/index.html.haml" do
     asset_collection.site_assets.each do |asset|
       rendered.should have_selector("li##{asset.name}") do |li|
         li.should have_selector("div") do |div|   
-          div.should have_selector("form", :method => "post", :action => admin_asset_collection_site_asset_path(asset_collection, asset)) do |form|
-            form.should have_selector("input", :value => "delete")
-          end   
+          div.should have_selector("a", :content => "delete", :href => admin_asset_collection_site_asset_path(asset_collection, asset))
         end
       end
     end
