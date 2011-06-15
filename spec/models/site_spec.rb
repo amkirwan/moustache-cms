@@ -16,10 +16,10 @@ describe Site do
     
     
     it "should allow mass assignment of" do
-      page = Site.new(:name => "foobar", :subdomain => "foobar", :meta_data => { "title" => "foobar"})
-      page.name.should == "foobar"
-      page.subdomain.should == "foobar" 
-      page.meta_data.should_not == nil
+      site = Site.new(:name => "foobar", :subdomain => "foobar", :meta_data => { "title" => "foobar"})
+      site.name.should == "foobar"
+      site.subdomain.should == "foobar" 
+      site.meta_data.should_not == nil
     end
   end
   
@@ -78,17 +78,19 @@ describe Site do
   
   
   # -- Scope ------------------------------------------------------
-  describe "#match_domain" do
-    it "should return a site when the domain exists" do
-      sites = Site.match_domain("#{@site.subdomain}.example.com")
-      sites.size.should == 1
-      sites.first.should == @site
-    end
-    
-    it "should return empty Criteria if it cannot find the domain" do
-      sites = Site.match_domain("unknown.com")
-      sites.should be_empty
-      sites.first.should be_nil     
+  describe "Scope" do
+    describe "#match_domain" do
+      it "should return a site when the domain exists" do
+        sites = Site.match_domain("#{@site.subdomain}.example.com")
+        sites.size.should == 1
+        sites.first.should == @site
+      end
+
+      it "should return empty Criteria if it cannot find the domain" do
+        sites = Site.match_domain("unknown.com")
+        sites.should be_empty
+        sites.first.should be_nil     
+      end
     end
   end
   
@@ -158,6 +160,13 @@ describe Site do
         @site.add_full_subdomain("baz.chicago-cubs.com")
         @site.save
         @site.domains.should have(2).items
+      end
+    end
+    
+    describe "#page_by_full_path" do
+      it "should return the page" do
+        @site.pages << @page = Factory(:page, :site => @site)
+        @site.page_by_full_path(@page.full_path)
       end
     end
   end

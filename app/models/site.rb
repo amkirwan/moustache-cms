@@ -60,6 +60,10 @@ class Site
     (domains << domain).uniq!
   end
   
+  def page_by_full_path(path)
+    self.pages.where(:full_path => path).first
+  end
+  
   private  
     def old_domain
       "#{self.subdomain_was}.#{self.default_domain_was}"
