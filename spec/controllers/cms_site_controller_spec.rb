@@ -1,12 +1,13 @@
 require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
 
 describe CmsSiteController do
+  render_views
    
   # -- GET dynamic_page ----------------------------------------------- 
   describe "GET dynamic_page" do
     
-    let(:page) { mock_model("Page").as_null_object }
-    let(:current_site) { mock_model("Site", :pages => [page]) }
+    let(:current_site) { Factory(:site)}
+    let(:page) { Factory(:page, :site => current_site)}
     
     before(:each) do
       Site.stub(:match_domain).with("test.host").and_return(@criteria_sites = [current_site])
@@ -25,13 +26,18 @@ describe CmsSiteController do
           do_get
           assigns(:current_site).should == current_site
         end
+        
+        it "should respond with 200" do
+          do_get
+          response.code.should == "200"
+        end
       end
     
       context "invalid params" do
         it "should not find the site for the page and return 404" do
-          Site.stub(:match_domain).with("unknown_site.com").and_return(nil)
+          @criteria_sites.stub(:first).and_return(nil)
           do_get
-          response.should render_template(404)
+          response.code.should == "404"
         end
       end
     end
@@ -47,10 +53,16 @@ describe CmsSiteController do
       
       context "valid params" do
         it "should not find the page and return 404" do
-          current_site.should_receive(:page_by_full_path).and_return(page)
+          current_site.should_receive(:page_by_full_path).and_return(nil)
           do_get
-          response.should render_template(404)
+          response.code.should == "404"
         end
+      end
+    end
+    
+    context "render css" do
+      describe "when the request is for a css file route to css path" do
+        
       end
     end
   end

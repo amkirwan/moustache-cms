@@ -5,13 +5,13 @@ class CmsSiteController < ActionController::Base
   layout nil
   
   def render_html
-    render :text => Etherweb::CmsPage.new(self).render
+    render :text => Etherweb::CmsPage.new(self).render, :status => 200
   end
   
   private
   
     def load_site
-      @current_site ||= Site.match_domain(request.host.downcase).first
+      @current_site = Site.match_domain(request.host.downcase).first
       if @current_site.nil?
         render :file => "#{Rails.root}/public/404.html", :status => 404
       end
