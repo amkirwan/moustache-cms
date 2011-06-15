@@ -68,7 +68,7 @@ class Admin::PagesController < AdminBaseController
   
     def update_page_parts(page_parts={})
       page_parts.each do |index, hash|
-        hash[:filter] = Filter.find_by_name(hash[:filter])
+        hash[:filter] = Filter.find_by_name(hash[:filter]) #update filter to object
         @page.page_parts[index.to_i].write_attributes(hash)
       end
     end
