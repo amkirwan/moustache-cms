@@ -28,11 +28,11 @@
       = label_tag "page[editor_ids][#{user.puid}]", user.puid.downcase
   %fieldset
     = f.label :layout, "Layout"
-    = f.collection_select :layout_id, Layout.all, :id, :name, :prompt => true
+    = f.collection_select :layout_id, Layout.all, :id, :name
   = f.fields_for :current_state do |builder|
     %fieldset
       = builder.label :current_state, "Status"
-      = builder.collection_select :name, CurrentState.all, :id, :name, :prompt => true
+      = builder.collection_select :name, CurrentState.all, :id, :name
   - if !@page.parent.try(:post_container?)
     %fieldset 
       = f.label :post_container
