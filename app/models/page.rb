@@ -106,70 +106,72 @@ class Page
   
   # -- Private Instance Methods -----------------------------------------------
   private 
-  def format_title
-    self.title.strip! unless self.title.nil?
-  end
+    def format_title
+      self.title.strip! unless self.title.nil?
+    end
     
-  def slug_set
-    if Page.root.nil?
-      self.slug = "/"
-      self.parent = nil
-    elsif self.slug.blank?
-      self.slug = self.title.downcase
-    else
-      self.slug.downcase!
-      self.slug.strip!
+    def slug_set
+      if self.site.nil?
+        self.slug = ""
+      elsif self.site.pages.root.nil?
+        self.slug = "/"
+        self.parent = nil
+      elsif self.slug.blank?
+        self.slug = self.title.downcase
+      else
+        self.slug.downcase!
+        self.slug.strip!
+      end
+      self.slug.gsub!(/[\s_]/, '-')
     end
-    self.slug.gsub!(/[\s_]/, '-')
-  end
   
-  def full_path_set
-    self.full_path = self.parent ? "#{self.parent.full_path}/#{self.slug}".squeeze("/") : "/"
-  end
-  
-  def breadcrumb_set
-    if self.breadcrumb.blank?
-      self.breadcrumb = self.title.downcase
-    else
-      self.breadcrumb.downcase!
-      self.breadcrumb.strip!
+    def full_path_set
+      self.full_path = self.parent ? "#{self.parent.full_path}/#{self.slug}".squeeze("/") : "/"
     end
-  end
   
-  def uniq_editor_ids
-    self.editor_ids.uniq!
-  end
-  
-  def update_current_state_time
-    self.current_state.time = DateTime.now
-  end
-  
-  def permalink_set
-    if self.parent.try(:post_container)
-      time = DateTime.now
-      year = time.year.to_s
-      month = time.month.to_s
-      day = time.day.to_s
-      self.permalink = "http://#{self.site.full_subdomain}/#{year}/#{month}/#{day}/#{self.slug}"
-    else
-      permalink = nil
+    def breadcrumb_set
+      if self.breadcrumb.blank?
+        self.breadcrumb = self.title.downcase
+      else
+        self.breadcrumb.downcase!
+        self.breadcrumb.strip!
+      end
     end
-  end
   
-  #rc7 temp fixes for relations for mongoid
-  def update_user_pages
-    self.editors.each do |editor|
-      editor.page_ids ||= []
-      editor.page_ids << self.id unless editor.page_ids.include?(self)
-      editor.save
+    def uniq_editor_ids
+      self.editor_ids.uniq!
     end
-  end
   
-  def delete_from_editors
-    self.editors.each do |editor| 
-      editor.page_ids.delete(self.id)
-      editor.save
-    end  
-  end
+    def update_current_state_time
+      self.current_state.time = DateTime.now
+    end
+  
+    def permalink_set
+      if self.parent.try(:post_container)
+        time = DateTime.now
+        year = time.year.to_s
+        month = time.month.to_s
+        day = time.day.to_s
+        self.permalink = "http://#{self.site.full_subdomain}/#{year}/#{month}/#{day}/#{self.slug}"
+      else
+        permalink = nil
+      end
+    end
+  
+    #rc7 temp fixes for relations for mongoid
+    def update_user_pages
+      self.editors.each do |editor|
+        editor.page_ids ||= []
+        editor.page_ids << self.id unless editor.page_ids.include?(self)
+        editor.save
+      end
+    end
+  
+    def delete_from_editors
+      self.editors.each do |editor| 
+        editor.page_ids.delete(self.id)
+        editor.save
+      end  
+    end
   
 end

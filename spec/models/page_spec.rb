@@ -172,8 +172,7 @@ describe Page do
       @page.should be_valid
     end
     
-    it "should not be valid without a site_id" do
-      @page.stub(:site_set).and_return(nil)
+    it "should not be valid without a site" do
       @page.site = nil
       @page.should_not be_valid
     end
@@ -263,11 +262,6 @@ describe Page do
   
     it "should not be valid if the page_part name already exists" do
       @page.page_parts.create(:name => @page.page_parts.first.name).should_not be_valid
-    end
-    
-    it "should not be valid without a site" do
-      @page.site = nil
-      @page.should_not be_valid
     end
   end
   
