@@ -110,9 +110,12 @@ class Page
       self.title.strip! unless self.title.nil?
     end
     
+    # slug is "foobar" in http://example.com/10/02/2011/foobar
     def slug_set
       if self.site.nil?
         self.slug = ""
+      elsif self.title == "404"
+        self.slug = "404"
       elsif self.site.pages.root.nil?
         self.slug = "/"
         self.parent = nil
@@ -125,8 +128,14 @@ class Page
       self.slug.gsub!(/[\s_]/, '-')
     end
   
+    # full_path is "/foobar/baz/qux" in http://example.com/foobar/baz/qux
     def full_path_set
-      self.full_path = self.parent ? "#{self.parent.full_path}/#{self.slug}".squeeze("/") : "/"
+      puts "#{self.title}"
+      if self.slug == "404"
+        self.full_path = "404"
+      else
+        self.full_path = self.parent ? "#{self.parent.full_path}/#{self.slug}".squeeze("/") : "/"
+      end
     end
   
     def breadcrumb_set

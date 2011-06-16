@@ -66,6 +66,12 @@ describe Page do
       it "should set the full path to '/' when it is the root page" do
         @page.parent.full_path.should == "/"
       end
+      
+      it "should set the full path to '404' when the page title is '404" do
+        page2 = Factory(:page, :title => "404")
+        puts "#{page2.slug}"
+        page2.full_path.should == "404"
+      end
     end
     
     describe "#slug_set" do
