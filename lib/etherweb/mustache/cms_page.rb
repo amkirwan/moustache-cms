@@ -1,4 +1,4 @@
-class Etherweb::CmsPage < Mustache
+class Etherweb::Mustache::CmsPage < Mustache
   include MetaHead
   
   def initialize(controller)

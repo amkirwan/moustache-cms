@@ -1,7 +1,7 @@
 require "spec_helper"
 require File.expand_path(File.dirname(__FILE__) + '/meta_head_shared_examples') 
 
-describe Etherweb::CmsPage do
+describe Etherweb::Mustache::CmsPage do
   let(:user) { Factory(:user) }
   let(:layout) { Factory(:layout, :created_by => user, :updated_by => user) }
   
@@ -12,11 +12,11 @@ describe Etherweb::CmsPage do
                                       :name => "content", 
                                       :content => "define_editable_text_method **strong**", 
                                       :filter => Filter.find_by_name(:markdown))
-    @page.meta_data["title"] = "foobar"
-    @page.meta_data["keywords"] = "foobar, keywords"
-    @page.meta_data["description"] = "foobar description"                                    
+    @page.meta_data["title"] = %(name="title" content="foobar")
+    @page.meta_data["keywords"] = %(name="keywords" content="foobar, keywords")
+    @page.meta_data["description"] =  %(name = "description" "foobar description")                                    
     @controller.instance_variable_set(:@page, @page)
-    @cmsp = Etherweb::CmsPage.new(@controller)
+    @cmsp = Etherweb::Mustache::CmsPage.new(@controller)
   end
   
   it_behaves_like "MetaHead"
