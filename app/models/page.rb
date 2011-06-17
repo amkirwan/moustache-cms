@@ -130,7 +130,6 @@ class Page
   
     # full_path is "/foobar/baz/qux" in http://example.com/foobar/baz/qux
     def full_path_set
-      puts "#{self.title}"
       if self.slug == "404"
         self.full_path = "404"
       else

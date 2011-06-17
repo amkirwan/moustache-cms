@@ -1,5 +1,6 @@
 class Etherweb::Mustache::CmsPage < Mustache
   include MetaHead
+  include Navigation
   
   def initialize(controller)
     @controller = controller
@@ -18,6 +19,8 @@ class Etherweb::Mustache::CmsPage < Mustache
   def respond_to?(method)
     if method.to_s =~ /^editable_text_(.*)/ && @page.page_parts.find_by_name($1)
       true
+    elsif method.to_s =~ /^nav_child_pages_(.*)/
+      true
     else
       super
     end
@@ -25,7 +28,9 @@ class Etherweb::Mustache::CmsPage < Mustache
   
   def method_missing(name, *args, &block)
     if name.to_s =~ /^editable_text_(.*)/
-      define_editable_text_method(name, $1)
+      editable_text($1)
+    elsif name.to_s =~ /^nav_child_pages_(.*)/
+      nav_child_pages($1)
     else
       super
     end    
@@ -39,12 +44,11 @@ class Etherweb::Mustache::CmsPage < Mustache
       end
     end  
     
-    def define_editable_text_method(name, part_name)
-      self.class.send(:define_method, name) do  
-        part = @page.page_parts.find_by_name(part_name)
-        render page_part_filter(part)
-      end
+    def editable_text(part_name)
+      part = @page.page_parts.find_by_name(part_name)
+      render page_part_filter(part)
     end
+    
     
     def page_part_filter(part)
       case part.filter["name"]

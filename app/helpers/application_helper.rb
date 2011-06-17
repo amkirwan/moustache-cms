@@ -67,5 +67,4 @@ module ApplicationHelper
   def filter_select(builder)
     builder.object.filter ? builder.object.filter.name : nil
   end
-    
 end
