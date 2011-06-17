@@ -10,6 +10,7 @@ class Page
   #include Mongoid::Tree::Ordering
 
   attr_accessible :parent,
+                  :name,
                   :title, 
                   :slug,
                   :full_path,
@@ -22,6 +23,7 @@ class Page
                   :post_container
                   
   # -- Fields -----------------------------------------------
+  field :name
   field :title
   field :slug
   field :full_path
@@ -42,9 +44,12 @@ class Page
   accepts_nested_attributes_for :page_parts
   
   # -- Validations -----------------------------------------------
-  validates :title,
-            :presence => true, 
+  validates :name,
+            :presence => true,
             :uniqueness => { :scope => :site_id }
+            
+  validates :title,
+            :presence => true
             
   validates :full_path,
             :presence => true,
@@ -61,7 +66,7 @@ class Page
                         :updated_by                    
   
   # -- Callbacks -----------------------------------------------
-  before_validation :format_title, :slug_set, :full_path_set, :breadcrumb_set
+  before_validation :format_title, :slug_set, :full_path_set, :breadcrumb_set, :format_name
   before_save :uniq_editor_ids
   before_update :update_current_state_time
   before_create :permalink_set
@@ -106,6 +111,14 @@ class Page
   
   # -- Private Instance Methods -----------------------------------------------
   private 
+    def format_name
+      #self.name.strip! unless self.name.nil?
+      if !self.name.nil?
+        self.name.downcase.strip!
+        self.name.gsub!(/\s/, '-')
+      end
+    end
+    
     def format_title
       self.title.strip! unless self.title.nil?
     end

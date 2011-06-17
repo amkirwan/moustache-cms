@@ -86,6 +86,7 @@ describe Admin::PagesController do
     let(:page_parts) { [ mock_model("PagePart") ] }
     let(:params) {{ "page" => { 
                     "parent_id" => "4d922d505dfe2f082e00006e",
+                    "name" => "foobar",
                     "title" => "foobar", 
                     "filter" => { "name" => filter.name }, 
                     "meta_data" => { "title" => "foobar", "keywords" => "foobar, keywords", "description" => "foobar description"},
@@ -230,6 +231,7 @@ describe Admin::PagesController do
     let(:params) {{ "id" => page.to_param,
                     "page" => { 
                     "parent_id" => "4d922d505dfe2f082e00006e",
+                    "name" => "foobar",
                     "title" => "foobar", 
                     "page_type_attributes"=> { "id" => page_type.to_param },
                     "current_state_attributes"=> { "id"=> status.to_param }, 

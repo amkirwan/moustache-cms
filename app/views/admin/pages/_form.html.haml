@@ -5,6 +5,9 @@
     = f.label :parent_id
     = f.collection_select :parent_id, Page.all.order(:title), :id, :title, { :include_blank => true }
   %fieldset
+    = f.label :name, "Name"
+    = f.text_field :name
+  %fieldset
     = f.label :title, "Title"
     = f.text_field :title
   %fieldset

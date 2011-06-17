@@ -95,7 +95,6 @@ describe Admin::AssetCollectionsController do
     end
     
     def do_get
-      puts "#{asset_collection.to_param}"
       get :edit, "id" => asset_collection.to_param
     end
     

@@ -163,10 +163,31 @@ describe Site do
       end
     end
     
+    describe "#page_by_name" do
+      it "should return the page by the title" do
+        @site.pages << page = Factory(:page, :name => "foobar", :site => @site)
+        @site.page_by_name(page.name).should == page
+      end
+    end
+    
     describe "#page_by_full_path" do
       it "should return the page" do
-        @site.pages << @page = Factory(:page, :site => @site)
-        @site.page_by_full_path(@page.full_path)
+        @site.pages << page = Factory(:page, :site => @site)
+        @site.page_by_full_path(page.full_path).should == page
+      end
+    end
+    
+    describe "#css_files" do
+      it "should return all the css files for the site" do
+        theme_asset_csses = [Factory(:theme_asset, :site => @site, :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css")]
+        @site.css_files.should == theme_asset_csses
+      end
+    end
+    
+    describe "#css_file_by_name(name)" do
+      it "should return the css file by the given name" do
+        theme_asset_css = Factory(:theme_asset, :name => "foobar", :site => @site, :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css")
+        @site.css_file_by_name("foobar").should == theme_asset_css
       end
     end
   end

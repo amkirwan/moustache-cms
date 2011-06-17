@@ -37,7 +37,6 @@ class Site
             
   # -- Scopes ---------------------------------------
   scope :match_domain, lambda { |domain| { :any_in => { :domains => [*domain] }} }
-  
  
   # -- Instance Methods ----------------------------------------
   def full_subdomain
@@ -61,7 +60,19 @@ class Site
   end
   
   def page_by_full_path(path)
-    self.pages.where(:full_path => path).first
+    pages.where(:full_path => path).first
+  end
+  
+  def page_by_name(name)
+    pages.where(:name => name).first
+  end
+  
+  def css_files
+    theme_assets.css_files(self).to_a
+  end
+  
+  def css_file_by_name(name)
+    ThemeAsset.where(:name => name, :site_id => self.id, :content_type => "text/css").first
   end
   
   private  

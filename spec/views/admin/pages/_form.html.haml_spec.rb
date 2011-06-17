@@ -50,6 +50,13 @@ describe "admin/pages/_form.html.haml" do
       end
     end
     
+    it "should render a field to enter the page name" do
+      new_render
+      get_new do |f|
+        f.should have_selector("input", :type => "text", :name => "page[name]")
+      end
+    end
+    
     it "should render a field to enter the page title" do
       new_render
       get_new do |f|

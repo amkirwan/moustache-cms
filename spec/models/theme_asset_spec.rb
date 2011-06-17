@@ -9,9 +9,9 @@ describe ThemeAsset do
   end
 
   before(:each) do
-    @theme_asset_image = Factory(:theme_asset, :site => site, :asset => AssetFixtureHelper.open("rails.png"), :content_type => "image/png", :created_by => user, :updated_by => user)
-    @theme_asset_css = Factory(:theme_asset, :site => site, :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css", :created_by => user, :updated_by => user)
-    @theme_asset_js = Factory(:theme_asset, :site => site, :asset => AssetFixtureHelper.open("theme_js.js"), :content_type => "text/javascript", :created_by => user, :updated_by => user)
+    @theme_asset_image = Factory(:theme_asset, :name => "image", :site => site, :asset => AssetFixtureHelper.open("rails.png"), :content_type => "image/png", :created_by => user, :updated_by => user)
+    @theme_asset_css = Factory(:theme_asset, :name => "css", :site => site, :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css", :created_by => user, :updated_by => user)
+    @theme_asset_js = Factory(:theme_asset, :name => "js", :site => site, :asset => AssetFixtureHelper.open("theme_js.js"), :content_type => "text/javascript", :created_by => user, :updated_by => user)
     @theme_assets = ThemeAsset.all
   end
   

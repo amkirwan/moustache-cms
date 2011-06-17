@@ -25,7 +25,8 @@ describe Page do
     end
     
     it "should allow mass assignment of" do
-      page = Page.new(:title => "foobar",
+      page = Page.new(:name => "foobar",
+             :title => "foobar",
              :parent => parent,
              :slug => "foobar",
              :full_path => "full_path",
@@ -35,6 +36,7 @@ describe Page do
              :page_parts => [stub_model(PagePart)],
              :meta_data => { "title" => "foobar"},
              :post_container => true)
+       page.name.should == "foobar"
        page.parent.should == parent
        page.title.should == "foobar"
        page.slug.should == "foobar"
@@ -69,7 +71,6 @@ describe Page do
       
       it "should set the full path to '404' when the page title is '404" do
         page2 = Factory(:page, :title => "404")
-        puts "#{page2.slug}"
         page2.full_path.should == "404"
       end
     end
@@ -183,30 +184,20 @@ describe Page do
       @page.should_not be_valid
     end
     
+    it "should not be valid without a unique name" do
+      @page.name = nil
+      @page.should_not be_valid
+    end
+    
+    it "should not be valid without a unique name" do
+      Factory.build(:page, :name => @page.name, :parent => @page, :site_id => site.id ).should_not be_valid
+    end
+    
     it "should not be valid without a title" do
       @page.title = nil 
       @page.should_not be_valid
     end
-    
-    it "should not be valid without a unique title" do
-      Factory.build(:page, 
-                    :title => @page.title, 
-                    :site_id => site.id, 
-                    :layout => layout, 
-                    :created_by => user, 
-                    :updated_by => user).should_not be_valid
-    end
-    
-    context "it should be valid when the title is associated with a different site" do
-      it "should be valid" do
-        Factory.build(:page, 
-                      :title => @page.title, 
-                      :site => Factory.build(:site), 
-                      :layout => layout, 
-                      :created_by => user, 
-                      :updated_by => user).should be_valid
-      end
-    end
+
     
     it "should not be valid without a slug" do
       @page.stub(:slug_set).and_return(nil)
@@ -227,17 +218,6 @@ describe Page do
                     :layout => layout, 
                     :created_by => user, 
                     :updated_by => user).should_not be_valid
-    end
-    
-    context "it should be valid when the full_path is associated with a different site" do
-      it "should be valid" do
-        Factory.build(:page, 
-                      :full_path => @page.full_path,
-                      :site_id => Factory.build(:site).id, 
-                      :layout => layout, 
-                      :created_by => user, 
-                      :updated_by => user).should_not be_valid
-      end
     end
     
     it "should not be valid without a breadcrumb" do
@@ -395,6 +375,7 @@ describe Page do
         @page.post_container?.should == false
       end
     end
+
   end
 end
 

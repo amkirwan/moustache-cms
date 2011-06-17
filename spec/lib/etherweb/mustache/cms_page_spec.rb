@@ -7,7 +7,7 @@ describe Etherweb::Mustache::CmsPage do
 
   before(:each) do
     @controller = CmsSiteController.new
-    @page = Factory(:page, :site => site, :layout => layout, :created_by => user, :updated_by => user)
+    @page = Factory(:page, :name => "foobar", :site => site, :created_by => user, :updated_by => user)
     @page.page_parts << Factory.build(:page_part, 
                                       :name => "content", 
                                       :content => "define_editable_text_method **strong**", 
@@ -15,10 +15,14 @@ describe Etherweb::Mustache::CmsPage do
     @page.meta_data["title"] = %(name="title" content="foobar")
     @page.meta_data["keywords"] = %(name="keywords" content="foobar, keywords")
     @page.meta_data["description"] =  %(name = "description" "foobar description") 
-    @page2 = Factory.build(:page, :site => site, :parent => @page)    
-    @controller.instance_variable_set(:@page, @page)
+    
+    @theme_asset_css = Factory(:theme_asset, :site => site, :name => "foobar", :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css")
+    
     @request = mock_model("Request", :host => "test.com")
+    
+    @controller.instance_variable_set(:@page, @page)
     @controller.instance_variable_set(:@request, @request)
+    @controller.instance_variable_set(:@current_site, site)
     @cmsp = Etherweb::Mustache::CmsPage.new(@controller)
   end
   
@@ -72,7 +76,19 @@ describe Etherweb::Mustache::CmsPage do
     end
   end 
   
-  describe "meta tags" do    
+  describe "head" do  
+    it "should return the page title" do
+      @cmsp.title.should == %{<title>#{@page.title}</title>\n}
+    end  
+    
+    it "should return all the css files" do
+      @cmsp.stylesheet_all.should == %(<link rel="stylesheet" href="#{@theme_asset_css.asset.url}">\n)
+    end
+    
+    it "should return a stylesheet by name" do
+      @cmsp.stylesheet_foobar.should == %(<link rel="stylesheet" href="#{@theme_asset_css.asset.url}">\n)
+    end
+    
     it "should return the meta title" do
       @cmsp.meta_title.should == %(<meta #{@page.meta_data["title"]} />)
     end
@@ -90,13 +106,34 @@ describe Etherweb::Mustache::CmsPage do
     end
   end
   
-  describe "navigaton" do
-    it "should return the unordered list of the pages children elements" do
-      @cmsp.nav_child_pages.should == %(<ul class="nav"><li><a href="http://test.com#{@page2.full_path}" id="#{@page2.title}" title="#{@page2.title}">#{@page2.title}</a></li></ul>)
+  describe "navigaton" do 
+    before(:each) do
+      @page2 = Factory(:page, :name => "foobar2", :site => site, :parent => @page, :created_by => user, :updated_by => user)
+      @page3 = Factory(:page, :name => "foobar3", :site => site, :parent => @page, :created_by => user, :updated_by => user)
+    end
+    
+    after(:each) do
+      Site.all.delete
     end
 
-    it "should return the unordered list of the pages children elements with a classname of sidebar" do
-      @cmsp.nav_child_pages_sidebar.should == %(<ul class="sidebar"><li><a href="http://test.com#{@page2.full_path}" id="#{@page2.title}" title="#{@page2.title}">#{@page2.title}</a></li></ul>)
+    it "should return an unordered list of the pages children elements for navigation" do 
+      @cmsp.nav_children_foobar.should == %(<ul class="nav nav_foobar"><li><a href="http://test.com#{@page2.full_path}" id="#{@page2.title}" title="#{@page2.title}">#{@page2.title}</a></li><li><a href="http://test.com#{@page3.full_path}" id="#{@page3.title}" title="#{@page3.title}">#{@page3.title}</a></li></ul>)
+    end
+    
+    it "should return an unordered list of the pages children elements for navigation" do
+      @cmsp.nav_child_pages.should == %(<ul class="nav"><li><a href="http://test.com#{@page2.full_path}" id="#{@page2.title}" title="#{@page2.title}">#{@page2.title}</a></li><li><a href="http://test.com#{@page3.full_path}" id="#{@page3.title}" title="#{@page3.title}">#{@page3.title}</a></li></ul>)
+    end
+
+    it "should return an unordered list of the pages children elements with a classname of sidebar" do
+      @cmsp.nav_child_pages_sidebar.should == %(<ul class="sidebar"><li><a href="http://test.com#{@page2.full_path}" id="#{@page2.title}" title="#{@page2.title}">#{@page2.title}</a></li><li><a href="http://test.com#{@page3.full_path}" id="#{@page3.title}" title="#{@page3.title}">#{@page3.title}</a></li></ul>)
+    end
+    
+    it "should return an unordered list of the pages siblings and self for navigation" do
+      @cmsp.nav_siblings_and_self_foobar2.should == %(<ul class="nav nav_foobar2"><li><a href="http://test.com#{@page2.full_path}" id="#{@page2.title}" title="#{@page2.title}">#{@page2.title}</a></li><li><a href="http://test.com#{@page3.full_path}" id="#{@page3.title}" title="#{@page3.title}">#{@page3.title}</a></li></ul>)
+    end
+    
+    it "should return an unordered list of the pages siblings without self for navigation" do
+      @cmsp.nav_siblings_foobar2.should == %(<ul class="nav nav_foobar2"><li><a href="http://test.com#{@page3.full_path}" id="#{@page3.title}" title="#{@page3.title}">#{@page3.title}</a></li></ul>)
     end
   end
 end 
