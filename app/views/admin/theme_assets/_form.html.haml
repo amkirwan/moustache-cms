@@ -6,13 +6,16 @@
     = f.text_field :name
   %fieldset
     = f.label :description
-    = f.text_area :description, :cols => "25", :rows => "5"
+    = f.text_area :description, :cols => "25", :rows => "5"   
+  %fieldset       
+    = f.label :html_options, "HTML Options"
+    = f.text_field :html_options  
   - if theme_asset.new_record?
     = render :partial => "new_theme_asset", :object => f, :locals => { :theme_asset => theme_asset }
   - elsif !theme_asset.new_record? && theme_asset.image?
     = render :partial => "image_asset", :object => f, :locals => { :theme_asset => theme_asset }
   - elsif !theme_asset.new_record? && (theme_asset.stylesheet? || theme_asset.javascript?)
-    = render :partial => "css_js_asset", :object => f, :locals => { :theme_asset => theme_asset }
+    = render :partial => "css_js_asset", :object => f, :locals => { :theme_asset => theme_asset }     
   %fieldset
     = f.submit button_label
     = link_to "cancel", [:admin, :theme_assets], :class => "cancel"

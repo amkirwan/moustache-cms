@@ -51,6 +51,12 @@ describe "admin/theme_assets/_form.html.haml" do
     it "should render the new_theme_asset partial" do
       do_render("Save Theme Asset")
       view.should render_template(:partial => "_new_theme_asset", :locals => { :theme_asset => theme_asset })
+    end  
+    
+    it "should render an additional options text field" do
+      form_new(:action => admin_theme_assets_path) do |f| 
+        f.should have_selector("input", :type => "text", :name => "theme_asset[html_options]")
+      end
     end
     
     it "should not render a delete link to delete for a new theme_asset" do
@@ -120,7 +126,15 @@ describe "admin/theme_assets/_form.html.haml" do
       form_update(:action => admin_theme_asset_path(theme_asset)) do |f|
         f.should have_selector("textarea", :content => "foobar description")
       end
-    end 
+    end      
+    
+    it "should render an html options text field" do
+      theme_asset.stub(:html_options => "media='all'")
+      do_render("Update Theme Asset")
+      form_update(:action => admin_theme_asset_path(theme_asset)) do |f|
+        f.should have_selector("input", :type => "text", :value => "media='all'")
+      end
+    end
     
     it "should render a delete link to delete the site_asset" do
       do_render("Update Theme Asset")      

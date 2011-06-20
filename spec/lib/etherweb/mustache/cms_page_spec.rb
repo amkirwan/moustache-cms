@@ -82,23 +82,23 @@ describe Etherweb::Mustache::CmsPage do
     end  
     
     it "should return all the css files" do
-      @cmsp.stylesheet_all.should == %(<link rel="stylesheet" href="#{@theme_asset_css.asset.url}">\n)
+      @cmsp.stylesheet_all.should == %(<link rel="stylesheet" href="#{@theme_asset_css.asset.url}" >\n)
     end
     
     it "should return a stylesheet by name" do
-      @cmsp.stylesheet_foobar.should == %(<link rel="stylesheet" href="#{@theme_asset_css.asset.url}">\n)
+      @cmsp.stylesheet_foobar.should == %(<link rel="stylesheet" href="#{@theme_asset_css.asset.url}" >\n)
     end
     
     it "should return the meta title" do
-      @cmsp.meta_title.should == %(<meta #{@page.meta_data["title"]} />)
+      @cmsp.meta_title.should == %(<meta #{@page.meta_data["title"]}>)
     end
 
     it "should return the meta keywords" do
-      @cmsp.meta_keywords.should == %(<meta #{@page.meta_data["keywords"]} />)
+      @cmsp.meta_keywords.should == %(<meta #{@page.meta_data["keywords"]}>)
     end
 
     it "should return the meta description" do
-      @cmsp.meta_description.should == %(<meta #{@page.meta_data["description"]} />)
+      @cmsp.meta_description.should == %(<meta #{@page.meta_data["description"]}>)
     end
 
     it "should set the meta fields for the page" do
