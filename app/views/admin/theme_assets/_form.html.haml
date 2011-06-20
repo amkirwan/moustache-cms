@@ -15,6 +15,7 @@
     = render :partial => "css_js_asset", :object => f, :locals => { :theme_asset => theme_asset }
   %fieldset
     = f.submit button_label
+    = link_to "cancel", [:admin, :theme_assets], :class => "cancel"
     
 - if can?(:destroy, theme_asset) && !theme_asset.new_record?    
   %div#delete_asset

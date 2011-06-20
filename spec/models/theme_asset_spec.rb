@@ -117,6 +117,12 @@ describe ThemeAsset do
          ThemeAsset.images(site).should be_empty
        end  
      end
+     
+     describe "find_by_name" do
+       it "should return the asset by name" do
+         ThemeAsset.find_by_name("css").first.should == @theme_asset_css
+       end
+     end
    end 
    
    # -- Class Methods ------------------------

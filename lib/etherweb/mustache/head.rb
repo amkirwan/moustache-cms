@@ -12,11 +12,11 @@ module Etherweb
         if name == "all"
           css_files = ""
           @current_site.css_files.each do |file|
-            css_files += %(<link rel="stylesheet" href="#{file.asset.url}">\n)
+            css_files += %(<link rel="stylesheet" media="all" href="#{file.asset.url}">\n)
           end
           css_files
         else
-          %(<link rel="stylesheet" href="#{@current_site.css_file_by_name(name).asset.url}">\n)
+          %(<link rel="stylesheet" media="all" href="#{@current_site.css_file_by_name(name).asset.url}">\n)
         end
       end
       

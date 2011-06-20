@@ -19,13 +19,17 @@ class Etherweb::Mustache::CmsPage < Mustache
   def respond_to?(method)
     if method.to_s =~ /^editable_text_(.*)/ && @page.page_parts.find_by_name($1)
       true
-    elsif method.to_s =~ /^stylesheet_(.*)/ && @site.css_files.find_by_name($1)
+    elsif method.to_s =~ /^stylesheet_all$/
       true
-    elsif method.to_s =~ /^nav_children_(.*)/ && @site.page_by_name($1)
+    elsif method.to_s =~ /^stylesheet_(.*)/ && @current_site.css_files.find_by_name($1).first
       true
-    elsif method.to_s =~ /^nav_siblings_and_self_(.*)/ && @site.page_by_name($1)
+    elsif method.to_s =~ /^nav_children_and_self_(.*)/ && @current_site.page_by_name($1)
       true
-    elsif method.to_s =~ /^nav_siblings_(.*)/ && @site.page_by_name($1)
+    elsif method.to_s =~ /^nav_children_(.*)/ && @current_site.page_by_name($1)
+      true
+    elsif method.to_s =~ /^nav_siblings_and_self_(.*)/ && @current_site.page_by_name($1)
+      true
+    elsif method.to_s =~ /^nav_siblings_(.*)/ && @current_site.page_by_name($1)
       true
     elsif method.to_s =~ /^nav_child_pages_(.*)/
       true
@@ -39,6 +43,8 @@ class Etherweb::Mustache::CmsPage < Mustache
       editable_text($1)
     elsif name.to_s =~ /^stylesheet_(.*)/
       stylesheet($1)
+    elsif name.to_s =~ /^nav_children_and_self_(.*)/
+      nav_children_and_self($1)
     elsif name.to_s =~ /^nav_children_(.*)/
       nav_children($1)
     elsif name.to_s =~ /^nav_siblings_and_self_(.*)/

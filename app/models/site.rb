@@ -68,7 +68,7 @@ class Site
   end
   
   def css_files
-    theme_assets.css_files(self).to_a
+    theme_assets.css_files(self)
   end
   
   def css_file_by_name(name)
