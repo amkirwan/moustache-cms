@@ -29,7 +29,6 @@ class Page
   field :full_path
   field :permalink
   field :breadcrumb
-  field :meta_data, :type => Hash
   field :post_container, :type => Boolean, :default => false
   
   # -- Associations-----------------------------------------------

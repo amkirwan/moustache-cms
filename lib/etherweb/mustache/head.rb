@@ -39,7 +39,7 @@ module Etherweb
       end
     
       def meta_data
-        engine = gen_haml(%{\- page.meta_data.each_pair do |k, v|
+        engine = gen_haml(%{- page.meta_data.each_pair do |k, v|
           %meta{:name => k, :content => v}
         })
         engine.render(nil, {:page => @page})
@@ -50,10 +50,6 @@ module Etherweb
           tag = %(<link rel="stylesheet" href="#{file.asset.url}") 
           tag += %(#{file.html_options}) if !file.html_options.blank?
           tag += %( >\n)
-        end
-        
-        def gen_haml(haml)
-          Haml::Engine.new(haml)
         end
     end
   end

@@ -86,4 +86,8 @@ class Etherweb::Mustache::CmsPage < Mustache
         part.content.to_s
       end
     end
+    
+    def gen_haml(haml)
+      Haml::Engine.new(haml)
+    end
 end
