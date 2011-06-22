@@ -11,7 +11,8 @@ class Admin::SnippetsController < AdminBaseController
   end
   
   def create   
-    # set because attr_accessible   
+    # set because attr_accessible  
+    #@snippet.filter = Filter.find_admin_filter(params[:snippet][:filter]) 
     @snippet.site = @current_site
     if @snippet.save
       redirect_to [:admin, :snippets], :notice => "Successfully created the snippet #{@snippet.name}" 
@@ -23,23 +24,17 @@ class Admin::SnippetsController < AdminBaseController
   def edit
   end
   
-  def update                    
-    @user.role = params[:user][:role] if admin?
-    if @user.update_attributes(params[:user]) 
-      redirect_to admin_users_path, :notice => "Successfully updated user account for #{@user.puid}"
+  def update                     
+    if @snippet.update_attributes(params[:snippet]) 
+      redirect_to [:admin, :snippets], :notice => "Successfully updated snippet #{@snippet.name}"
     else
       render :edit
     end
   end
   
   def destroy
-    if @user.delete
-      if current_user? @user
-        reset_session
-        redirect_to "http://#{@current_site.full_subdomain}"
-      else
-        redirect_to admin_users_path, :notice => "Successfully deleted user account for #{@user.puid}"
-      end
+    if @snippet.delete
+      redirect_to [:admin, :snippets], :notice => "Successfully deleted the snippet #{@snippet.name}"
     end
   end
 end

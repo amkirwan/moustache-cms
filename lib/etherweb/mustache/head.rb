@@ -4,7 +4,8 @@ module Etherweb
       
       # -- Title ---- 
       def title
-        %(<title>#{@page.title}</title>\n)
+        engine = gen_haml(%{%title= title})
+        engine.render(nil, {:title => @page.title})
       end   
       
       # -- Css ----
@@ -23,23 +24,25 @@ module Etherweb
       
       # -- Meta Tags ----
       def meta_title
-        %(<meta #{@page.meta_data["title"]}>)
+        engine = gen_haml(%{%meta= title})
+        engine.render(nil, {:title => @page.meta_data["title"]})
       end
     
       def meta_keywords
-        %(<meta #{@page.meta_data["keywords"]}>)
+        engine = gen_haml(%{%meta= keywords})
+        engine.render(nil, {:keywords => @page.meta_data["keywords"]})
       end
     
       def meta_description
-        %(<meta #{@page.meta_data["description"]}>)
+        engine = gen_haml(%{%meta= description})
+        engine.render(nil, {:keywords => @page.meta_data["description"]})
       end
     
       def meta_data
-        meta_data = ""
-        @page.meta_data.each_pair do |k, v|
-          meta_data += %(<meta name="#{k}" content="#{v}">\n)
-        end
-        meta_data
+        engine = gen_haml(%{\- page.meta_data.each_pair do |k, v|
+          %meta{:name => k, :content => v}
+        })
+        engine.render(nil, {:page => @page})
       end    
       
       private 
@@ -47,6 +50,10 @@ module Etherweb
           tag = %(<link rel="stylesheet" href="#{file.asset.url}") 
           tag += %(#{file.html_options}) if !file.html_options.blank?
           tag += %( >\n)
+        end
+        
+        def gen_haml(haml)
+          Haml::Engine.new(haml)
         end
     end
   end

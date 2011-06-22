@@ -1,3 +1,5 @@
+require 'haml'
+
 class Etherweb::Mustache::CmsPage < Mustache
   include Head
   include Navigation

@@ -3,7 +3,7 @@ class Site
   include Mongoid::Timestamps
   include Etherweb::Mongoid::MetaData
   
-  attr_accessible :name, :subdomain, :meta_data
+  attr_accessible :name, :subdomain
   
   field :name
   key :name
