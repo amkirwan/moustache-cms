@@ -2,7 +2,7 @@ class ThemeAsset
   include Mongoid::Document
   include Mongoid::Timestamps
   
-  attr_accessible :name, :description, :content_type, :width, :height, :file_size, :asset
+  attr_accessible :name, :description, :content_type, :html_options, :width, :height, :file_size, :asset
   
   # -- Fields --------------- 
   field :name

@@ -10,7 +10,7 @@ module Etherweb
         nav = %(<ul class="#{css_class}">)
         @page.children.each do |page|
           nav += %(<li>)
-          nav += %(<a href="http://#{@request.host.downcase}#{page.full_path}" id="#{format(page.title)}" title="#{foramt(page.title)}">#{page.title}</a>)
+          nav += %(<a href="http://#{@request.host.downcase}#{page.full_path}" id="#{format(page.title)}" title="#{format(page.title)}">#{page.title}</a>)
           nav += %(</li>)
         end
         nav += %(</ul>)

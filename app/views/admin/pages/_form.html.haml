@@ -1,4 +1,4 @@
-= form_for([:admin, page]) do |f|
+= form_for([:admin, page], :html => { :autocomplete => :off }) do |f|
   = render :partial => "shared/error_messages", 
            :locals => { :target => page }
   %fieldset

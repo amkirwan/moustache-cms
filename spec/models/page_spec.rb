@@ -185,11 +185,6 @@ describe Page do
     end
     
     it "should not be valid without a unique name" do
-      @page.name = nil
-      @page.should_not be_valid
-    end
-    
-    it "should not be valid without a unique name" do
       Factory.build(:page, :name => @page.name, :parent => @page, :site_id => site.id ).should_not be_valid
     end
     
