@@ -5,7 +5,7 @@ class Page
   include Mongoid::Timestamps
   include Mongoid::Document::Taggable
   include Mongoid::Tree
-  include Etherweb::Mongoid::MetaData
+  #include Etherweb::Mongoid::MetaData
   #include Mongoid::Tree::Traversal
   #include Mongoid::Tree::Ordering
 
@@ -29,6 +29,7 @@ class Page
   field :full_path
   field :permalink
   field :breadcrumb
+  field :meta_data, :type => Hash, :default => { "title" => nil, "keywords" => nil, "description" => nil }
   field :post_container, :type => Boolean, :default => false
   
   # -- Associations-----------------------------------------------
