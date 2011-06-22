@@ -2,9 +2,6 @@ module Etherweb
   module Mustache
     module Navigation
       
-      def format(value)
-        value.downcase.gsub(/\s/,'_')
-      end
             
       def nav_child_pages(css_class="nav") 
 template = %{
@@ -17,6 +14,8 @@ template = %{
         engine = gen_haml(template.strip!)
         engine.render(Object.new, {:css_class => css_class, :parent_page => @page})  
       end   
+      
+      
       
       def nav_children_and_self(page_name)       
 template = %{
@@ -33,6 +32,8 @@ template = %{
         engine.render(Object.new, {:page_name => page_name, :parent_page => @current_site.page_by_name(page_name)})
       end
       
+      
+      
       def nav_children(page_name)
 template = %{
 %ul{:class => "nav nav_#{page_name}"}
@@ -44,7 +45,8 @@ template = %{
         engine = gen_haml(template.strip!)
         engine.render(Object.new, {:page_name => page_name, :parent_page => @current_site.page_by_name(page_name)})
       end
-      
+ 
+
       def nav_siblings_and_self(page_name)
 template = %{
 %ul{:class => "nav nav_#{page_name}"}
@@ -58,6 +60,8 @@ template = %{
         engine.render(Object.new, {:page_name => page_name, :sibling => @current_site.page_by_name(page_name)})
       end
       
+      
+      
       def nav_siblings(page_name)
 template = %{
 %ul{:class => "nav nav_#{page_name}"}
@@ -70,6 +74,8 @@ template = %{
         engine = gen_haml(template.strip!)
         engine.render(Object.new, {:page_name => page_name, :sibling => @current_site.page_by_name(page_name)})
       end
+      
+      
                     
     end
   end
