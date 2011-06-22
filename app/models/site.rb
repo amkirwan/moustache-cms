@@ -19,7 +19,8 @@ class Site
   has_many :layouts, :dependent => :delete
   has_many :asset_collections, :dependent => :delete
   has_many :theme_assets, :dependent => :delete
-  has_many :users, :dependent => :delete
+  has_many :users, :dependent => :delete  
+  has_many :snippets, :dependent => :delete
 
     
   # -- Validations ----------------------------------------
