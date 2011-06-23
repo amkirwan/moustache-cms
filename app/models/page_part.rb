@@ -4,11 +4,11 @@ class PagePart
   # -- Fields -------
   field :name
   key :name
-  field :content
+  field :content                               
+  field :filter_name
   
   # -- Associations ---------
   embedded_in :page, :inverse_of => :page_parts
-  embeds_one :filter, :as => :filterable
   
   accepts_nested_attributes_for :filter
   
@@ -17,7 +17,7 @@ class PagePart
             :presence => true,
             :uniqueness => true
   
-  validates :filter,
+  validates :filter_name,
             :presence => true
             
   # -- Class Methods ----------          

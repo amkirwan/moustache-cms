@@ -75,7 +75,7 @@ class Etherweb::Mustache::CmsPage < Mustache
     
     
     def page_part_filter(part)
-      case part.filter["name"]
+      case part.filter
       when "markdown"
         Redcarpet.new(part.content).to_html
       when "textile"

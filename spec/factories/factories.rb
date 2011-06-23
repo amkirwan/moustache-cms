@@ -50,7 +50,7 @@ end
 Factory.define :page_part do |pp|
   pp.sequence(:name) { |n| "page_part_#{n}" }
   pp.content "Page Part Hello, World!"
-  pp.filter { Factory.build(:filter) }
+  pp.filter_name "filter"
 end
 
 Factory.define :page do |page|

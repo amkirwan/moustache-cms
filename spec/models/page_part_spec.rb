@@ -27,8 +27,7 @@ describe PagePart do
     end
     
     it "should not be valid without a filter" do
-      @page_part.stub(:assign_filter).and_return(nil)
-      @page_part.filter = nil
+      @page_part.filter_name = nil
       @page_part.should_not be_valid
     end
   end
