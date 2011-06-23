@@ -43,14 +43,12 @@ Scenario: Given I am logged in as an editor then I can edit the site assets I cr
 
 @edit_site_asset_created_by_another_user
 Scenario: Given I am logged in as an editor then I can edit the site assets created by another user
-  Given "rg874" has created the site asset "rails"
-  When I go to the admin site assets page
+  Given "rg874" has created the site asset "rails" in the collection "foobar" 
+  When I view the collection "foobar" admin asset collection site assets page 
   And I follow "rails" within "li#rails"
-  Then I should now be editing the site asset "rails"
   And I fill in "site_asset_name" with "foobar" within "div#edit_site_asset" 
   And I press "Update Asset" within "div#edit_site_asset"
-  Then I should be on the admin site assets page
-  And I should see "Successfully updated the asset foobar"
+  And I should see "Successfully updated the asset foobar"  
 
 @editor_delete_site_asset
 Scenario: editor can delete site assets
@@ -69,13 +67,10 @@ Scenario: editor can delete site assets
 
 @editor_delete_site_asset_created_by_another_user
 Scenario: Given I am logged in as an editor then I can delete files created by another user
-  Given these site assets exist in the site "foobar.example.com" created by user "rg874"
+  Given these site assets exist in the collection "foobar" in the site "foobar.example.com" created by user "rg874"
   | name   | 
-  | foobar | 
   | bar    |
-  When I go to the admin site assets page
-  Then I should be on the admin site assets page
-  And I press "delete" within "li#foobar"
-  And I should see "Successfully deleted the asset foobar"
+  When I view the collection "foobar" admin asset collection site assets page
+  Then navigate to the admin asset collection site assets page for "foobar"
 
 
