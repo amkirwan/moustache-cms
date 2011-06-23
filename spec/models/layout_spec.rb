@@ -6,7 +6,7 @@ describe Layout do
   let(:site) { Factory(:site) }
   
   before(:each) do
-    @layout = Factory(:layout, :site => site, :created_by => user, :updated_by => user)
+    @layout = Factory(:layout, :site_id => site.id, :created_by_id => user.id, :updated_by_id => user.id)
   end
 
   # -- Assignment -------------------------------------------------------------- 
@@ -44,7 +44,7 @@ describe Layout do
     end
     
     it "should not be valid without a site" do
-      @layout.site = nil
+      @layout.site_id = nil
       @layout.should_not be_valid
     end
     
@@ -68,18 +68,18 @@ describe Layout do
       @layout.should_not be_valid
     end
     
-    it "should not be valid without createb_by" do
-      @layout.created_by = nil
+    it "should not be valid without createb_by_id" do
+      @layout.created_by_id = nil
       @layout.should_not be_valid
     end
     
-    it "should not be valid without updated_by" do
-      @layout.updated_by = nil
+    it "should not be valid without updated_by_id" do
+      @layout.updated_by_id = nil
       @layout.should_not be_valid
     end  
     
     it "should not be valid without an associated site" do
-      @layout.site = nil
+      @layout.site_id = nil
       @layout.should_not be_valid
     end
   end

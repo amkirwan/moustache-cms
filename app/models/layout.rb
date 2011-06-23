@@ -22,7 +22,7 @@ class Layout
             :presence => true,
             :uniqueness => { :scope => :site_id }
             
-  validates_presence_of :content, :created_by, :updated_by, :site
+  validates_presence_of :content, :created_by_id, :updated_by_id, :site_id
 
   #-- Private Instance Methods ----------------------------------
   private 

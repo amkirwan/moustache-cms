@@ -34,8 +34,8 @@ Factory.define :layout do |layout|
   layout.site { Factory.build(:site) }
   layout.sequence(:name) { |n| "layout_#{n}" }
   layout.content "Hello, World!"
-  layout.created_by Factory.build(:user)
-  layout.updated_by Factory.build(:user) 
+  layout.created_by_id Factory.build(:user)
+  layout.updated_by_id Factory.build(:user) 
 end
 
 Factory.define :current_state do |cs|
