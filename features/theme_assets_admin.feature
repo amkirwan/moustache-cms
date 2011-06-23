@@ -39,7 +39,6 @@ Scenario: Create a new media file
   And I follow "Add Theme Asset" within "ul#new_theme_asset"
   And I fill in "theme_asset_name" with "foobar" within "div#add_new_theme_asset"
   And I fill in "theme_asset_description" with "Hello, World!" within "div#add_new_theme_asset"  
-  And I fill in "theme_asset_html_options" with "media='all'"
   And I attach the file "spec/fixtures/assets/rails.png" to "theme_asset_asset" 
   And I press "Save Theme Asset" within "div#add_new_theme_asset"
   Then I should be on the admin theme assets page
@@ -55,7 +54,6 @@ Scenario: Given I am logged in as an admin then I can edit the theme assets I cr
   Then I should now be editing the theme asset "rails"
   And I fill in "theme_asset_name" with "foobar" within "div#edit_theme_asset"
   And I fill in "theme_asset_description" with "New Text" within "div#edit_theme_asset"  
-   And I fill in "theme_asset_html_options" with "media='screen'"
   And I should see the url for the theme asset file "rails"
   And I press "Update Theme Asset" within "div#edit_theme_asset"
   Then I should be on the admin theme assets page

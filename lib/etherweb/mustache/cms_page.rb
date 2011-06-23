@@ -91,7 +91,7 @@ class Etherweb::Mustache::CmsPage < Mustache
       when "html"
         part.content.to_s 
       when "haml"
-        gen_haml(part.content).render
+        gen_haml(part.content).render(Object.new, {:current_site => @current_site, :request => @request, :page => @page })
       else
         part.content.to_s
       end
