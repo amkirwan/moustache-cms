@@ -2,7 +2,7 @@ class Filter
   include Mongoid::Document 
   
   class << self
-    attr_accessor :filters
+    attr_accessor :filters, :filters_admin
   end
   
   # -- Fields -------
@@ -35,6 +35,7 @@ class Filter
   @filters = [
     Filter.new(:name => "markdown"),
     Filter.new(:name => "textile"),
+    Filter.new(:name => "haml"),
     Filter.new(:name => "html")
   ]
 end

@@ -4,7 +4,8 @@ class Page
   include Mongoid::Document 
   include Mongoid::Timestamps
   include Mongoid::Document::Taggable
-  include Mongoid::Tree
+  include Mongoid::Tree  
+  
   include Etherweb::Mongoid::MetaData
   #include Mongoid::Tree::Traversal
   #include Mongoid::Tree::Ordering
@@ -57,12 +58,12 @@ class Page
   validates :breadcrumb,
             :presence => true
   
-  validates_presence_of :site,
+  validates_presence_of :site_id,
                         :slug, 
                         :current_state,
-                        :layout, 
-                        :created_by, 
-                        :updated_by                    
+                        :layout_id, 
+                        :created_by_id, 
+                        :updated_by_id                    
   
   # -- Callbacks -----------------------------------------------
   before_validation :format_title, :slug_set, :full_path_set, :breadcrumb_set, :format_name
@@ -163,7 +164,7 @@ class Page
     end
   
     def update_current_state_time
-      self.current_state.time = DateTime.now
+      self.current_state.time = DateTime.now if self.current_state.changed?
     end
   
     def permalink_set

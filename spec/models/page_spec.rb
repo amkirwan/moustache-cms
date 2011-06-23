@@ -4,10 +4,10 @@ require File.expand_path(File.dirname(__FILE__) + '/../lib/etherweb/mongoid/meta
 describe Page do   
   let(:user) { Factory(:user) }
   let(:site) { Factory(:site) }
-  let(:layout) { Factory(:layout, :site => site, :created_by => user, :updated_by => user) }
-  let(:parent) { Factory(:page, :site => site, :layout => layout, :created_by => user, :updated_by => user, :editor_ids => [user.id], :post_container => true) }
+  let(:layout) { Factory(:layout, :site_id => site.id, :created_by_id => user.id, :updated_by_id => user.id) }
+  let(:parent) { Factory(:page, :site_id => site.id, :layout_id => layout.id, :created_by_id => user.id, :updated_by_id => user.id, :editor_ids => [user.id], :post_container => true) }
   before(:each) do                 
-    @page = Factory(:page, :site => site, :parent => parent , :layout => layout, :created_by => user, :updated_by => user, :editor_ids => [user.id])
+    @page = Factory(:page, :site_id => site.id, :parent => parent , :layout_id => layout.id, :created_by_id => user.id, :updated_by_id => user.id, :editor_ids => [user.id])
   end
   
   it_behaves_like "meta_data"
@@ -70,7 +70,7 @@ describe Page do
       end
       
       it "should set the full path to '404' when the page title is '404" do
-        page2 = Factory(:page, :title => "404")
+        page2 = Factory(:page, :title => "404", :site => site, :layout => layout, :created_by => user, :updated_by => user)
         page2.full_path.should == "404"
       end
     end
@@ -180,12 +180,12 @@ describe Page do
     end
     
     it "should not be valid without a site" do
-      @page.site = nil
+      @page.site_id = nil
       @page.should_not be_valid
     end
     
-    it "should not be valid without a unique name" do
-      Factory.build(:page, :name => @page.name, :parent => @page, :site_id => site.id ).should_not be_valid
+    it "should not be valid without a unique name" do           
+      Factory.build(:page, :name => @page.name, :parent => @page, :site_id => site.id, :layout => layout, :created_by => user, :updated_by => user).should_not be_valid
     end
     
     it "should not be valid without a title" do
@@ -227,17 +227,17 @@ describe Page do
     end
     
     it "should not be valid without a layout" do
-      @page.layout = nil
+      @page.layout_id = nil
       @page.should_not be_valid
     end
     
     it "should not be valid without a created_by" do
-      @page.created_by = nil
+      @page.created_by_id = nil
       @page.should_not be_valid
     end
     
     it "should not be valid without a updated_by" do
-      @page.updated_by = nil
+      @page.updated_by_id = nil
       @page.should_not be_valid
     end
   
@@ -260,7 +260,7 @@ describe Page do
   end
   
   # --  Associations -----------------------------------------------
-  describe "associations" do
+  describe "Associations" do
     it "should embed one current state" do
       @page.should embed_one :current_state
     end
@@ -293,7 +293,7 @@ describe Page do
   # -- Class Methods -----------------------------------------------
   describe "Class Methods" do
     describe "Page#find_by_full_path" do
-      it "should return the page with the full_path" do
+      it "should return the page with the full_path" do 
         Page.find_by_full_path(@page.site, @page.full_path).should == @page
       end
     end

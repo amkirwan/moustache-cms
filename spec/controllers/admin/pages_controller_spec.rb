@@ -125,8 +125,8 @@ describe Admin::PagesController do
       assigns(:page).should == page
     end
     
-    it "should assign the current_state" do
-      page.should_receive(:current_state=)
+    it "should set the current_state" do
+      controller.should_receive(:assign_current_state).with(params["page"]["current_state_attributes"]["name"])
       do_post
     end
     
@@ -224,7 +224,7 @@ describe Admin::PagesController do
   describe "PUTS update" do
     let(:user) { mock_model("User", :puid => "ak730") }
     let(:page_type) { mock_model("PageType") }
-    let(:status) { mock_model("CurrentStatus") }
+    let(:status) { mock_model("CurrentStatus").as_null_object }
     let(:filter) { mock_model("Filter", :name => "foobar") }
     let(:layout) { mock_model("Layout") }
     let(:page_parts) { [ mock_model("PagePart") ] }
@@ -243,11 +243,11 @@ describe Admin::PagesController do
       controller.stub(:admin?).and_return(true)
       @parent_mock = mock_model("Page", :id => "4d922d505dfe2f082e00006e")
       Page.stub_chain(:criteria, :for_ids).and_return([@parent_mock])
-      CurrentState.stub(:find).and_return(status)
+      CurrentState.stub(:find_by_name).and_return(status)
       Filter.stub(:find_by_name).and_return(filter)
       Page.stub(:new).with(params["page"]).and_return(page)
       Page.stub(:find).and_return(page)
-    end
+    end 
     
     def do_post
        post :update, params
@@ -264,7 +264,7 @@ describe Admin::PagesController do
     end
     
     it "should update the page's current state" do
-      page.should_receive(:current_state=).and_return(status)
+      controller.should_receive(:update_current_state).with(params["page"]["current_state_attributes"]["name"])
       do_post
     end
     

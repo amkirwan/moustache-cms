@@ -21,7 +21,7 @@ describe Filter do
    # -- Finder Methods -------------------------------
   describe "finder methods" do
     before(:each) do
-      Filter.filters << Filter.new(:name => "foobar")  
+      #Filter.filters << Filter.new(:name => "foobar")  
     end
     
     describe "Filter#all" do
@@ -35,14 +35,14 @@ describe Filter do
     end
   
     describe "Filter#find" do
-      it "should have the name of foobar for the returned filter" do
-        Filter.find("foobar").name.should == "foobar"
+      it "should have the name of markdown for the returned filter" do
+        Filter.find("markdown").name.should == "markdown"
       end
     end
   
     describe "Filter#find_by_name" do
-      it "should have the name of foobar for the returned filter" do
-        Filter.find_by_name("foobar").name.should == "foobar"
+      it "should have the name of markdown for the returned filter" do
+        Filter.find_by_name("markdown").name.should == "markdown"
       end
     end
   end

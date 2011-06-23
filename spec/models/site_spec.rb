@@ -2,8 +2,11 @@ require 'spec_helper'
 require File.expand_path(File.dirname(__FILE__) + '/../lib/etherweb/mongoid/meta_data_shared_examples') 
 
 describe Site do   
+  
   before(:each) do
-    @site = Factory(:site)
+    @site = Factory(:site)  
+    @user = Factory(:user, :site => @site)    
+    @layout = Factory(:layout, :site => @site, :created_by => @user, :updated_by => @user) 
   end
   
   # -- Assignment -------------------------------------------
@@ -97,8 +100,6 @@ describe Site do
   # -- Check :dependent => :delete ------------------------------------------- 
   describe ":dependent => :delete" do
     before(:each) do
-      @user = Factory(:user, :site => @site)
-      @layout = Factory(:layout, :site => @site, :created_by => @user, :updated_by => @user)
       @page = Factory(:page, :site => @site, :layout => @layout, :created_by => @user, :updated_by => @user, :editor_ids => [@user.id])
       @asset_collection = Factory(:asset_collection, :site => @site, :created_by => @user, :updated_by => @user) 
     end
@@ -164,15 +165,15 @@ describe Site do
     end
     
     describe "#page_by_name" do
-      it "should return the page by the title" do
-        @site.pages << page = Factory(:page, :name => "foobar", :site => @site)
+      it "should return the page by the title" do   
+        @site.pages << page = Factory(:page, :name => "foobar", :site => @site, :layout => @layout, :created_by => @user, :updated_by => @user)
         @site.page_by_name(page.name).should == page
       end
     end
     
     describe "#page_by_full_path" do
-      it "should return the page" do
-        @site.pages << page = Factory(:page, :site => @site)
+      it "should return the page" do    
+        @site.pages << page = Factory(:page, :site => @site, :layout => @layout, :created_by => @user, :updated_by => @user)
         @site.page_by_full_path(page.full_path).should == page
       end
     end
@@ -188,6 +189,13 @@ describe Site do
       it "should return the css file by the given name" do
         theme_asset_css = Factory(:theme_asset, :name => "foobar", :site => @site, :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css")
         @site.css_file_by_name("foobar").should == theme_asset_css
+      end
+    end   
+    
+    describe "#snippets_by_name(name)" do
+      it "should return the snippet by the given name" do
+        snippet = Factory(:snippet, :name => "foobar", :site_id => @site.id)    
+        @site.snippet_by_name("foobar").should == snippet
       end
     end
   end

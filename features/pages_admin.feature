@@ -45,7 +45,7 @@ Scenario: Create a new page
   And I select "app" from "page_layout_id" 
   And I select "published" from "page_current_state_attributes_name" 
   And I fill in "page_page_parts_attributes_0_name" with "content" 
-  And I select "markdown" from "page_page_parts_attributes_0_filter" 
+  And I select "markdown" from "page_page_parts_attributes_0_filter_name" 
   And I fill in "page_page_parts_attributes_0_content" with "Hello, World!" 
   And I press "Create Page" 
   Then I should be on the admin pages page
@@ -71,7 +71,7 @@ Scenario: Create a new page
   And I select "app" from "page_layout_id" 
   And I select "published" from "page_current_state_attributes_name" 
   And I fill in "page_page_parts_attributes_0_name" with "content" 
-  And I select "markdown" from "page_page_parts_attributes_0_filter" 
+  And I select "markdown" from "page_page_parts_attributes_0_filter_name" 
   And I fill in "page_page_parts_attributes_0_content" with "Hello, World!" 
   And I press "Create Page" 
   Then I should be on the admin pages page
@@ -96,7 +96,7 @@ Scenario: Edit a page
   And I select "app" from "page_layout_id" 
   And I select "draft" from "page_current_state_attributes_name" 
   And I fill in "page_page_parts_attributes_0_name" with "content" 
-  And I select "markdown" from "page_page_parts_attributes_0_filter" 
+  And I select "markdown" from "page_page_parts_attributes_0_filter_name" 
   And I fill in "page_page_parts_attributes_0_content" with "This is some new text" 
   And I press "Update Page"
   Then I should be on the admin pages page

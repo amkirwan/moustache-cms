@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
+require 'spec_helper'
 
 describe User do   
   before(:each) do
@@ -52,7 +52,7 @@ describe User do
     end 
     
     it "should not be valid without an associated site" do
-      @user.site = nil
+      @user.site_id = nil
       @user.should_not be_valid
     end
   
@@ -150,15 +150,19 @@ describe User do
     
     it "should reference many theme_assets" do
       @user.should have_many(:theme_assets).of_type(ThemeAsset)
+    end        
+    
+    it "should reference many snippets" do
+      @user.should have_many(:snippets).of_type(Snippet)
     end
     
     it "should have many editors" do
       @user.should have_and_belong_to_many(:pages)
-    end
+    end        
     
-    it "should belong to many sites" do
+    it "should belong to a site" do
       @user.should belong_to(:site)
-    end
+    end        
   end
   
   # -- Class Methods -----------------------------------------------

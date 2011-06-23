@@ -1,9 +1,10 @@
 class Site
   include Mongoid::Document
-  include Mongoid::Timestamps
+  include Mongoid::Timestamps  
+  
   include Etherweb::Mongoid::MetaData
   
-  attr_accessible :name, :subdomain, :meta_data
+  attr_accessible :name, :subdomain
   
   field :name
   key :name
@@ -19,7 +20,8 @@ class Site
   has_many :layouts, :dependent => :delete
   has_many :asset_collections, :dependent => :delete
   has_many :theme_assets, :dependent => :delete
-  has_many :users, :dependent => :delete
+  has_many :users, :dependent => :delete  
+  has_many :snippets, :dependent => :delete
 
     
   # -- Validations ----------------------------------------
@@ -59,20 +61,24 @@ class Site
     (domains << domain).uniq!
   end
   
-  def page_by_full_path(path)
+  def page_by_full_path(path)   
     pages.where(:full_path => path).first
   end
   
-  def page_by_name(name)
+  def page_by_name(name)  
     pages.where(:name => name).first
   end
   
-  def css_files
+  def css_files        
     theme_assets.css_files(self)
   end
   
   def css_file_by_name(name)
     ThemeAsset.where(:name => name, :site_id => self.id, :content_type => "text/css").first
+  end 
+  
+  def snippet_by_name(name)                        
+    Snippet.find_by_site_and_name(self, name).first
   end
   
   private  

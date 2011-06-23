@@ -1,0 +1,14 @@
+= form_for([:admin, snippet]) do |f|
+  = render :partial => "shared/error_messages", :locals => {:target => snippet}
+  %fieldset
+    = f.label :name
+    = f.text_field :name
+  %fieldset
+    = f.label :filter
+    = f.collection_select :filter_name, Filter.all, :id, :name
+  %fielset
+    = f.label :content
+    = f.text_area :content
+  %fieldset
+    = f.submit
+    = link_to "Cancel", [:admin, :snippets]
