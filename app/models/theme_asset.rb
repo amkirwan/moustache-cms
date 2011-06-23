@@ -22,10 +22,9 @@ class ThemeAsset
   belongs_to :updated_by, :class_name => "User"
 
   # -- Validations --------------
-  validates :name, :presence => true
-  
-  validates :site, :presence => true
-            
+  validates :name, :presence => true 
+  validates :site_id,
+            :presence => true            
   validates :asset, :presence => true
   
   # -- Callbacks

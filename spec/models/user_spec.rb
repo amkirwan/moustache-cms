@@ -52,7 +52,7 @@ describe User do
     end 
     
     it "should not be valid without an associated site" do
-      @user.site = nil
+      @user.site_id = nil
       @user.should_not be_valid
     end
   

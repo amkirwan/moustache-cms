@@ -9,9 +9,9 @@ describe ThemeAsset do
   end
 
   before(:each) do
-    @theme_asset_image = Factory(:theme_asset, :name => "image", :site => site, :asset => AssetFixtureHelper.open("rails.png"), :content_type => "image/png", :created_by => user, :updated_by => user)
-    @theme_asset_css = Factory(:theme_asset, :name => "css", :site => site, :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css", :created_by => user, :updated_by => user)
-    @theme_asset_js = Factory(:theme_asset, :name => "js", :site => site, :asset => AssetFixtureHelper.open("theme_js.js"), :content_type => "text/javascript", :created_by => user, :updated_by => user)
+    @theme_asset_image = Factory(:theme_asset, :name => "image", :site_id => site.id, :asset => AssetFixtureHelper.open("rails.png"), :content_type => "image/png", :created_by_id => user.id, :updated_by_id => user.id)
+    @theme_asset_css = Factory(:theme_asset, :name => "css", :site_id => site.id, :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css", :created_by_id => user.id, :updated_by_id => user.id)
+    @theme_asset_js = Factory(:theme_asset, :name => "js", :site_id => site.id, :asset => AssetFixtureHelper.open("theme_js.js"), :content_type => "text/javascript", :created_by_id => user.id, :updated_by_id => user.id)
     @theme_assets = ThemeAsset.all
   end
   
@@ -34,15 +34,15 @@ describe ThemeAsset do
    describe "Validation" do
      it "should be valid" do
        @theme_asset_image.should be_valid
+     end    
+     
+     it "should not be valid without as site_id" do
+       @theme_asset_image.site_id = nil
+       @theme_asset_image.should_not be_valid
      end
 
      it "should not be valid without a name" do
        @theme_asset_image.name = nil
-       @theme_asset_image.should_not be_valid
-     end
-
-     it "should not be valid without an associated site" do
-       @theme_asset_image.site = nil
        @theme_asset_image.should_not be_valid
      end
 

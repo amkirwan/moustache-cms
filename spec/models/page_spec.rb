@@ -4,10 +4,10 @@ require 'spec_helper'
 describe Page do   
   let(:user) { Factory(:user) }
   let(:site) { Factory(:site) }
-  let(:layout) { Factory(:layout, :site => site, :created_by => user, :updated_by => user) }
-  let(:parent) { Factory(:page, :site => site, :layout => layout, :created_by => user, :updated_by => user, :editor_ids => [user.id], :post_container => true) }
+  let(:layout) { Factory(:layout, :site_id => site.id, :created_by_id => user.id, :updated_by_id => user.id) }
+  let(:parent) { Factory(:page, :site_id => site.id, :layout_id => layout.id, :created_by_id => user.id, :updated_by_id => user.id, :editor_ids => [user.id], :post_container => true) }
   before(:each) do                 
-    @page = Factory(:page, :site => site, :parent => parent , :layout => layout, :created_by => user, :updated_by => user, :editor_ids => [user.id])
+    @page = Factory(:page, :site_id => site.id, :parent => parent , :layout_id => layout.id, :created_by_id => user.id, :updated_by_id => user.id, :editor_ids => [user.id])
   end
   
   # -- Assignment -------------------------------------------
@@ -178,7 +178,7 @@ describe Page do
     end
     
     it "should not be valid without a site" do
-      @page.site = nil
+      @page.site_id = nil
       @page.should_not be_valid
     end
     
@@ -225,17 +225,17 @@ describe Page do
     end
     
     it "should not be valid without a layout" do
-      @page.layout = nil
+      @page.layout_id = nil
       @page.should_not be_valid
     end
     
     it "should not be valid without a created_by" do
-      @page.created_by = nil
+      @page.created_by_id = nil
       @page.should_not be_valid
     end
     
     it "should not be valid without a updated_by" do
-      @page.updated_by = nil
+      @page.updated_by_id = nil
       @page.should_not be_valid
     end
   

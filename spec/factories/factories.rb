@@ -34,8 +34,8 @@ Factory.define :layout do |layout|
   layout.site { Factory.build(:site) }
   layout.sequence(:name) { |n| "layout_#{n}" }
   layout.content "Hello, World!"
-  layout.created_by_id Factory.build(:user)
-  layout.updated_by_id Factory.build(:user) 
+  layout.created_by Factory.build(:user)
+  layout.updated_by Factory.build(:user) 
 end
 
 Factory.define :current_state do |cs|
@@ -104,7 +104,7 @@ Factory.define :site_asset do |asset|
   asset.file_size 200
 end
 
-Factory.define :theme_asset do |asset|
+Factory.define :theme_asset do |asset| 
   asset.name "asset_name"
   asset.content_type "content_type"
   asset.asset { File.open("#{Rails.root}/spec/fixtures/assets/rails.png") }
