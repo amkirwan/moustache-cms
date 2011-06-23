@@ -68,7 +68,7 @@ describe Page do
       end
       
       it "should set the full path to '404' when the page title is '404" do
-        page2 = Factory(:page, :title => "404")
+        page2 = Factory(:page, :title => "404", :site => site, :layout => layout, :created_by => user, :updated_by => user)
         page2.full_path.should == "404"
       end
     end
@@ -182,8 +182,8 @@ describe Page do
       @page.should_not be_valid
     end
     
-    it "should not be valid without a unique name" do
-      Factory.build(:page, :name => @page.name, :parent => @page, :site_id => site.id ).should_not be_valid
+    it "should not be valid without a unique name" do           
+      Factory.build(:page, :name => @page.name, :parent => @page, :site_id => site.id, :layout => layout, :created_by => user, :updated_by => user).should_not be_valid
     end
     
     it "should not be valid without a title" do
@@ -291,7 +291,7 @@ describe Page do
   # -- Class Methods -----------------------------------------------
   describe "Class Methods" do
     describe "Page#find_by_full_path" do
-      it "should return the page with the full_path" do
+      it "should return the page with the full_path" do 
         Page.find_by_full_path(@page.site, @page.full_path).should == @page
       end
     end

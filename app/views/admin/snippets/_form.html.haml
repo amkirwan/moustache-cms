@@ -5,7 +5,7 @@
     = f.text_field :name
   %fieldset
     = f.label :filter
-    = f.collection_select :filter_name, Filter.admin_all, :id, :name
+    = f.collection_select :filter_name, Filter.all, :id, :name
   %fielset
     = f.label :content
     = f.text_area :content

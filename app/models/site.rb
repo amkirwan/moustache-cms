@@ -61,15 +61,15 @@ class Site
     (domains << domain).uniq!
   end
   
-  def page_by_full_path(path)
+  def page_by_full_path(path)   
     pages.where(:full_path => path).first
   end
   
-  def page_by_name(name)
+  def page_by_name(name)  
     pages.where(:name => name).first
   end
   
-  def css_files
+  def css_files        
     theme_assets.css_files(self)
   end
   

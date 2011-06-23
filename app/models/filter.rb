@@ -21,15 +21,6 @@ class Filter
     @filters.dup
   end
   
-  def self.admin_all
-    @filters_admin.dup
-  end
-  
-  def self.find_admin_filter(id)
-    filter = @filters_admin.find { |filter| filter.id == id.to_s.downcase }
-    filter.dup unless filter.nil?
-  end
-  
   def self.find(id)
     filter = @filters.find { |filter| filter.id == id.to_s.downcase }
     filter.dup unless filter.nil?
@@ -42,12 +33,6 @@ class Filter
   end
   
   @filters = [
-    Filter.new(:name => "markdown"),
-    Filter.new(:name => "textile"),
-    Filter.new(:name => "html")
-  ]
-  
-  @filters_admin = [
     Filter.new(:name => "markdown"),
     Filter.new(:name => "textile"),
     Filter.new(:name => "haml"),
