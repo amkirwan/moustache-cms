@@ -46,7 +46,6 @@ class Page
   
   # -- Validations -----------------------------------------------
   validates :name,
-            :presence => true,
             :uniqueness => { :scope => :site_id }
             
   validates :title,
