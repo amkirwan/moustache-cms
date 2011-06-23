@@ -19,6 +19,7 @@ class User
   has_many :pages_created, :class_name => "Page", :foreign_key => :created_by_id
   has_many :pages_updated, :class_name => "Page", :foreign_key => :updated_by_id
   has_many :theme_assets
+  has_many :snippets
   has_and_belongs_to_many :pages, :class_name => "Page"
   belongs_to :site
   

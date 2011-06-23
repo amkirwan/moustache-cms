@@ -12,7 +12,7 @@ class Admin::SnippetsController < AdminBaseController
   
   def create   
     # set because attr_accessible  
-    #@snippet.filter = Filter.find_admin_filter(params[:snippet][:filter]) 
+    created_updated_by_for @snippet
     @snippet.site = @current_site
     if @snippet.save
       redirect_to [:admin, :snippets], :notice => "Successfully created the snippet #{@snippet.name}" 
@@ -24,7 +24,8 @@ class Admin::SnippetsController < AdminBaseController
   def edit
   end
   
-  def update                     
+  def update                
+    @snippet.updated_by = @current_user      
     if @snippet.update_attributes(params[:snippet]) 
       redirect_to [:admin, :snippets], :notice => "Successfully updated snippet #{@snippet.name}"
     else

@@ -258,7 +258,7 @@ describe Page do
   end
   
   # --  Associations -----------------------------------------------
-  describe "associations" do
+  describe "Associations" do
     it "should embed one current state" do
       @page.should embed_one :current_state
     end

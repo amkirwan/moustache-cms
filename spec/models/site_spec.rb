@@ -189,6 +189,13 @@ describe Site do
         theme_asset_css = Factory(:theme_asset, :name => "foobar", :site => @site, :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css")
         @site.css_file_by_name("foobar").should == theme_asset_css
       end
+    end   
+    
+    describe "#snippets_by_name(name)" do
+      it "should return the snippet by the given name" do
+        snippet = Factory(:snippet, :name => "foobar", :site_id => @site.id)    
+        @site.snippet_by_name("foobar").should == snippet
+      end
     end
   end
 end

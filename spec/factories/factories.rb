@@ -31,7 +31,7 @@ Factory.define :filter do |filter|
 end
 
 Factory.define :layout do |layout|
-  layout.site { Factory(:site) }
+  layout.site { Factory.build(:site) }
   layout.sequence(:name) { |n| "layout_#{n}" }
   layout.content "Hello, World!"
   layout.created_by Factory.build(:user)
@@ -41,6 +41,15 @@ end
 Factory.define :current_state do |cs|
   cs.name "published"
   cs.time DateTime.new
+end       
+
+Factory.define :snippet do |s|  
+  s.site { Factory.build(:site) }
+  s.sequence(:name) { |n| "name_#{n}" }
+  s.content "snippet content"
+  s.filter_name "snippet filter"
+  s.created_by Factory.build(:user)
+  s.updated_by Factory.build(:user)                            
 end
 
 Factory.define :page_type do |page_type|

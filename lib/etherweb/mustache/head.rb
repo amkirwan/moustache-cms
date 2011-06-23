@@ -24,18 +24,18 @@ module Etherweb
       
       # -- Meta Tags ----
       def meta_title
-        engine = gen_haml(%{%meta= title})
+        engine = gen_haml(%{%meta{:title => title}})
         engine.render(nil, {:title => @page.meta_data["title"]})
       end
     
       def meta_keywords
-        engine = gen_haml(%{%meta= keywords})
+        engine = gen_haml(%{%meta{:keywords => keywords}})
         engine.render(nil, {:keywords => @page.meta_data["keywords"]})
       end
     
       def meta_description
-        engine = gen_haml(%{%meta= description})
-        engine.render(nil, {:keywords => @page.meta_data["description"]})
+        engine = gen_haml(%{%meta{:description => description}})
+        engine.render(nil, {:description => @page.meta_data["description"]})
       end
     
       def meta_data

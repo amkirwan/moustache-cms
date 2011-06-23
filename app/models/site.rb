@@ -1,6 +1,7 @@
 class Site
   include Mongoid::Document
-  include Mongoid::Timestamps
+  include Mongoid::Timestamps  
+  
   include Etherweb::Mongoid::MetaData
   
   attr_accessible :name, :subdomain
@@ -74,6 +75,10 @@ class Site
   
   def css_file_by_name(name)
     ThemeAsset.where(:name => name, :site_id => self.id, :content_type => "text/css").first
+  end 
+  
+  def snippet_by_name(name)                        
+    Snippet.find_by_site_and_name(self, name).first
   end
   
   private  

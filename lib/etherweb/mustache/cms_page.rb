@@ -2,7 +2,7 @@ require 'haml'
 
 class Etherweb::Mustache::CmsPage < Mustache
   include Head
-  include Navigation
+  include Navigation 
   
   def initialize(controller)
     @controller = controller
@@ -15,15 +15,17 @@ class Etherweb::Mustache::CmsPage < Mustache
   
   def yield
     part = @page.page_parts.first
-    render page_part_filter(part)
+    process_with_filter(part)
   end
   
   def respond_to?(method)
     if method.to_s =~ /^editable_text_(.*)/ && @page.page_parts.find_by_name($1)
+      true     
+    elsif method.to_s =~ /^snippet_(.*)/ && @current_site.snippet_by_name($1)
       true
     elsif method.to_s =~ /^stylesheet_all$/
       true
-    elsif method.to_s =~ /^stylesheet_(.*)/ && @current_site.css_files.find_by_name($1).first
+    elsif method.to_s =~ /^stylesheet_(.*)/ && @current_site.css_file_by_name($1)
       true
     elsif method.to_s =~ /^nav_children_and_self_(.*)/ && @current_site.page_by_name($1)
       true
@@ -34,7 +36,7 @@ class Etherweb::Mustache::CmsPage < Mustache
     elsif method.to_s =~ /^nav_siblings_(.*)/ && @current_site.page_by_name($1)
       true
     elsif method.to_s =~ /^nav_child_pages_(.*)/
-      true
+      true    
     else
       super
     end
@@ -42,7 +44,9 @@ class Etherweb::Mustache::CmsPage < Mustache
   
   def method_missing(name, *args, &block)
     if name.to_s =~ /^editable_text_(.*)/
-      editable_text($1)
+      editable_text($1)   
+    elsif name.to_s =~ /^snippet_(.*)/
+      snippet($1)
     elsif name.to_s =~ /^stylesheet_(.*)/
       stylesheet($1)
     elsif name.to_s =~ /^nav_children_and_self_(.*)/
@@ -54,7 +58,7 @@ class Etherweb::Mustache::CmsPage < Mustache
     elsif name.to_s =~ /^nav_siblings_(.*)/
       nav_siblings($1)
     elsif name.to_s =~ /^nav_child_pages_(.*)/
-      nav_child_pages($1)
+      nav_child_pages($1)  
     else
       super
     end    
@@ -71,21 +75,28 @@ class Etherweb::Mustache::CmsPage < Mustache
     def editable_text(part_name)
       part = @page.page_parts.find_by_name(part_name)
       render page_part_filter(part)
+    end  
+    
+    def snippet(name)        
+      process_with_filter(@current_site.snippet_by_name(name)) 
     end
     
     
-    def page_part_filter(part)
-      case part.filter
+    def process_with_filter(part)
+      case part.filter_name
       when "markdown"
         Redcarpet.new(part.content).to_html
       when "textile"
         RedCloth.new(part.content).to_html
       when "html"
-        part.content.to_s
+        part.content.to_s 
+      when "haml"
+        gen_haml(part.content).render
       else
         part.content.to_s
       end
-    end
+    end    
+    
     
     def gen_haml(haml)
       Haml::Engine.new(haml)

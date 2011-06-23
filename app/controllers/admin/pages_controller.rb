@@ -34,7 +34,7 @@ class Admin::PagesController < AdminBaseController
     update_current_state(params[:page][:current_state_attributes][:name])
     update_page_parts(params[:page][:page_parts_attributes])
     update_editors(params[:page][:editor_ids])
-    @page.updated_by(current_user)
+    @page.updated_by = @current_user
     if @page.update_attributes(params[:page]) 
       redirect_to admin_pages_path, :notice => "Successfully updated the page #{@page.title}"
     else
@@ -78,8 +78,7 @@ class Admin::PagesController < AdminBaseController
     end    
     
     def assign_current_state(current_state_name)    
-      cs = CurrentState.find_by_name(current_state_name)
-      @page.current_state.attributes = { :id => cs.id, :name => cs.name }
+      @page.current_state = CurrentState.find_by_name(current_state_name)
     end   
     
     def update_current_state(current_state_name)
