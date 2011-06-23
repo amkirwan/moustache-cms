@@ -125,8 +125,8 @@ describe Admin::PagesController do
       assigns(:page).should == page
     end
     
-    it "should assign the current_state" do
-      page.should_receive(:current_state=)
+    it "should set the current_state" do
+      controller.should_receive(:assign_current_state).with(params["page"]["current_state_attributes"]["name"])
       do_post
     end
     
@@ -264,7 +264,7 @@ describe Admin::PagesController do
     end
     
     it "should update the page's current state" do
-      page.should_receive(:current_state=).and_return(status)
+      controller.should_receive(:update_current_state).with(params["page"]["current_state_attributes"]["name"])
       do_post
     end
     

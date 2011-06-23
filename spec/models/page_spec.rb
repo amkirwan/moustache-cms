@@ -1,5 +1,5 @@
-require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
-require File.expand_path(File.dirname(__FILE__) + '/../lib/etherweb/mongoid/meta_data_shared_examples') 
+require 'spec_helper'
+#require File.expand_path(File.dirname(__FILE__) + '/../lib/etherweb/mongoid/meta_data_shared_examples') 
 
 describe Page do   
   let(:user) { Factory(:user) }
@@ -9,8 +9,6 @@ describe Page do
   before(:each) do                 
     @page = Factory(:page, :site => site, :parent => parent , :layout => layout, :created_by => user, :updated_by => user, :editor_ids => [user.id])
   end
-  
-  it_behaves_like "meta_data"
   
   # -- Assignment -------------------------------------------
   describe "mass assignment" do
@@ -181,11 +179,6 @@ describe Page do
     
     it "should not be valid without a site" do
       @page.site = nil
-      @page.should_not be_valid
-    end
-    
-    it "should not be valid without a unique name" do
-      @page.name = nil
       @page.should_not be_valid
     end
     

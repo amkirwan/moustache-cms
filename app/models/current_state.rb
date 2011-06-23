@@ -29,7 +29,6 @@ class CurrentState
       status
     else
       status_dup = status.dup
-      status_dup.time = DateTime.now
       status_dup
     end
   end
@@ -40,7 +39,6 @@ class CurrentState
       status
     else
       status_dup = status.dup
-      status_dup.time = DateTime.now
       status_dup
     end
   end

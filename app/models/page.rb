@@ -46,7 +46,7 @@ class Page
   
   # -- Validations -----------------------------------------------
   validates :name,
-            :uniqueness => { :scope => :site_id }
+            :uniqueness => { :scope => :site_id, :allow_blank => true }
             
   validates :title,
             :presence => true
@@ -164,7 +164,7 @@ class Page
     end
   
     def update_current_state_time
-      self.current_state.time = DateTime.now
+      self.current_state.time = DateTime.now if self.current_state.changed?
     end
   
     def permalink_set

@@ -165,8 +165,7 @@ describe "admin/pages/_form.html.haml" do
     
     describe "page part" do
       before(:each) do
-        page.stub(:page_parts).and_return([mock_model("PagePart", :name => "foobar", :content => "foobar",
-                                                                  :filter => mock_model("Filter", :name => "filter").as_null_object)])
+        page.stub(:page_parts).and_return([mock_model("PagePart", :name => "foobar", :content => "foobar", :filter_name => "markdown")])
       end
       
       it "should render a form text field for the page part name" do    
@@ -179,7 +178,7 @@ describe "admin/pages/_form.html.haml" do
       it "should render a filter for the page part" do
         new_render
         get_new do |f|
-          f.should have_selector("select", :name => "page[page_parts_attributes][0][filter]")
+          f.should have_selector("select", :name => "page[page_parts_attributes][0][filter_name]")
         end
       end
 
