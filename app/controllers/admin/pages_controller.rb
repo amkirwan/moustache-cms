@@ -51,7 +51,7 @@ class Admin::PagesController < AdminBaseController
   private 
     def assign_editors(editor_ids)
       editor_ids.each do |editor_id|
-        editor = User.find_by_puid(editor_id)
+        editor = User.find(editor_id)
         @page.editors << editor unless @page.editors.include?(editor)
       end
       @page.editors << current_user unless @page.editors.include?(current_user) 
@@ -70,7 +70,12 @@ class Admin::PagesController < AdminBaseController
     end
     
     def update_editors(editor_ids)
-      remove_editor_ids = @page.editor_ids - editor_ids
+      editor_ids = [] if editor_ids.nil?
+      editor_bson_ids = []
+      editor_ids.each do |e_id|
+        editor_bson_ids << User.find(e_id).id
+      end
+      remove_editor_ids = @page.editor_ids - editor_bson_ids
       remove_editor_ids.each do |editor_id|
         @page.delete_association_of_editor_id(editor_id)
       end
