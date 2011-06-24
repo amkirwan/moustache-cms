@@ -67,4 +67,14 @@ class AdminBaseController < ApplicationController
         #session[:cas_user] = 'mas3' if session[:cas_user].nil?
       end
     end
+    
+    def redirector(path_continue, path_redirect, notice)
+      if params[:commit] == "Save and Continue Editing"
+        logger.debug "*"*20 
+        redirect_to path_continue, :notice => notice
+      else
+        logger.debug "?"*20
+        redirect_to path_redirect, :notice => notice
+      end
+    end
 end

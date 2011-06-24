@@ -10,7 +10,7 @@ class Admin::LayoutsController < AdminBaseController
     created_updated_by_for @layout
     @layout.site = @current_site
     if @layout.save
-      redirector("Successfully created the layout #{@layout.name}")
+      redirector [:edit, :admin, @layout], [:admin, :layouts], "Successfully created the layout #{@layout.name}"
     else
       render :new
     end
@@ -22,7 +22,7 @@ class Admin::LayoutsController < AdminBaseController
   def update    
     @layout.updated_by = @current_user
     if @layout.update_attributes(params[:layout]) 
-      redirector("Successfully updated the layout #{@layout.name}")
+      redirector [:edit, :admin, @layout], [:admin, :layouts], "Successfully updated the layout #{@layout.name}"
     else
       render :edit
     end
@@ -33,15 +33,4 @@ class Admin::LayoutsController < AdminBaseController
       redirect_to [:admin, :layouts], :notice => "Successfully deleted the layout #{@layout.name}"
     end
   end
-  
-  private
-    def redirector(notice)
-      if params[:commit] == "Save and Continue Editing"
-        logger.debug "*"*20 
-        redirect_to [:edit, :admin, :layout], :notice => notice
-      else
-        logger.debug "?"*20
-        redirect_to [:admin, :layouts], :notice => notice
-      end
-    end
 end

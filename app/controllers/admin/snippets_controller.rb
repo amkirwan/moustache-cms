@@ -15,7 +15,7 @@ class Admin::SnippetsController < AdminBaseController
     created_updated_by_for @snippet
     @snippet.site = @current_site
     if @snippet.save
-      redirect_to [:admin, :snippets], :notice => "Successfully created the snippet #{@snippet.name}" 
+      redirector [:edit, :admin, @snippet], [:admin, :snippets], "Successfully created the snippet #{@snippet.name}"
     else
       render :new
     end
@@ -27,7 +27,7 @@ class Admin::SnippetsController < AdminBaseController
   def update                
     @snippet.updated_by = @current_user      
     if @snippet.update_attributes(params[:snippet]) 
-      redirect_to [:admin, :snippets], :notice => "Successfully updated snippet #{@snippet.name}"
+      redirector [:edit, :admin, @snippet], [:admin, :snippets], "Successfully created the snippet #{@snippet.name}"
     else
       render :edit
     end
