@@ -2,7 +2,8 @@ require 'haml'
 
 class Etherweb::Mustache::CmsPage < Mustache
   include Head
-  include Navigation 
+  include Navigation
+  include SiteCustomTags
   
   def initialize(controller)
     @controller = controller

@@ -32,9 +32,6 @@ class Page
   field :breadcrumb
   field :post_container, :type => Boolean, :default => false    
   
-  # keep at most 5 versions of a record
-  max_versions 5
-  
   # -- Associations-----------------------------------------------
   embeds_one :current_state
   embeds_many :page_parts 

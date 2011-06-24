@@ -20,8 +20,19 @@ class PagePart
   validates :filter_name,
             :presence => true
             
+  # -- Callbacks ----
+  before_save :fitler_check
+            
   # -- Class Methods ----------          
   def self.find_by_name(name)
     self.where(:name => name.to_s).first
   end
+  
+  private
+    # -- callbacks methods --
+    def filter_check
+      if filter_name = "haml"
+        filter_name = "html"
+      end
+    end
 end

@@ -2,7 +2,7 @@ class CurrentState
   include Mongoid::Document 
   
   class << self
-    attr_accessor :statuses
+    attr_reader :statuses
   end
   
   # -- Fields --------------------------------------------------
@@ -20,7 +20,7 @@ class CurrentState
             
   # -- Class Methods --------------------------------------------------
   def self.all
-    @statuses.dup
+    @statuses
   end
   
   def self.find(id)
@@ -28,8 +28,7 @@ class CurrentState
     if status.nil?
       status
     else
-      status_dup = status.dup
-      status_dup
+      status
     end
   end
     
