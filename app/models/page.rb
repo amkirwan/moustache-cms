@@ -4,11 +4,12 @@ class Page
   include Mongoid::Document 
   include Mongoid::Timestamps
   include Mongoid::Document::Taggable
-  include Mongoid::Tree  
+  include Mongoid::Tree 
+  #include Mongoid::Tree::Traversal
+  #include Mongoid::Tree::Ordering 
   
   include Etherweb::Mongoid::MetaData
-  #include Mongoid::Tree::Traversal
-  #include Mongoid::Tree::Ordering
+
 
   attr_accessible :parent,
                   :name,
@@ -71,7 +72,7 @@ class Page
   before_update :update_current_state_time
   before_create :permalink_set
   after_save :update_user_pages
-  before_destroy :delete_from_editors, :move_children_to_parent
+  before_destroy :delete_from_editors, :destroy_children
   
   # -- Class Mehtods --------------------------------------------------
   def self.find_by_id(page_id)
