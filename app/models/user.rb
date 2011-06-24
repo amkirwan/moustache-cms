@@ -7,8 +7,7 @@ class User
   
   # -- Fields -----------------------------------------------    
   field :puid
-  index :puid, unique: true
-  key :puid         
+  index :puid, unique: true         
   field :firstname
   field :lastname
   field :email

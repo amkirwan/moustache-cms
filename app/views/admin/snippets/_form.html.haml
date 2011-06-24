@@ -8,7 +8,7 @@
     = f.collection_select :filter_name, Filter.all, :id, :name
   %fielset
     = f.label :content
-    = f.text_area :content
+    = f.text_area :content, :cols => "100"
   %fieldset
     = f.submit
     = f.submit "Save and Continue Editing"

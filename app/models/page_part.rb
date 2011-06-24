@@ -21,7 +21,7 @@ class PagePart
             :presence => true
             
   # -- Callbacks ----
-  before_save :fitler_check
+  before_save :filter_check
             
   # -- Class Methods ----------          
   def self.find_by_name(name)

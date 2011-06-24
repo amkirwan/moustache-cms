@@ -123,7 +123,7 @@ class Page
       #self.name.strip! unless self.name.nil?
       if !self.name.nil?
         self.name.downcase.strip!
-        self.name.gsub!(/\s/, '-')
+        self.name.gsub!(/\s/, '_')
       end
     end
     
