@@ -1,6 +1,7 @@
 class Site
   include Mongoid::Document
-  include Mongoid::Timestamps  
+  include Mongoid::Timestamps 
+  include Mongoid::Paranoia 
   
   include Etherweb::Mongoid::MetaData
   

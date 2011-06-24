@@ -1,6 +1,7 @@
 class User
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::Paranoia
    
   attr_accessible :firstname, :lastname, :email 
   

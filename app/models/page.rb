@@ -3,11 +3,10 @@ require 'ostruct'
 class Page
   include Mongoid::Document 
   include Mongoid::Timestamps
+  include Mongoid::Paranoia
+  
   include Mongoid::Document::Taggable
   include Mongoid::Tree 
-  #include Mongoid::Tree::Traversal
-  #include Mongoid::Tree::Ordering 
-  
   include Etherweb::Mongoid::MetaData
 
 
@@ -31,7 +30,10 @@ class Page
   field :full_path
   field :permalink
   field :breadcrumb
-  field :post_container, :type => Boolean, :default => false
+  field :post_container, :type => Boolean, :default => false    
+  
+  # keep at most 5 versions of a record
+  max_versions 5
   
   # -- Associations-----------------------------------------------
   embeds_one :current_state
