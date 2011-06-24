@@ -31,7 +31,7 @@ class PagePart
   private
     # -- callbacks methods --
     def filter_check
-      if filter_name = "haml"
+      if filter_name == "haml"
         filter_name = "html"
       end
     end
