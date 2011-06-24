@@ -78,8 +78,16 @@ class Page
     Page.find(page_id)
   end
   
-  def self.find_by_full_path(site, full_path)
-    self.where(:site_id => site.id, :full_path => full_path).first
+  def self.find_by_full_path(full_path)
+    self.where(:full_path => full_path).first
+  end
+  
+  def self.find_by_title(title)
+    self.where(:title => title).first
+  end
+  
+  def self.find_by_name(name)
+    self.where(:name => name).first
   end
 
   #-- Scopes ----------------------------------------------------------

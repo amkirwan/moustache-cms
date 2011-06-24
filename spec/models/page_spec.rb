@@ -294,7 +294,7 @@ describe Page do
   describe "Class Methods" do
     describe "Page#find_by_full_path" do
       it "should return the page with the full_path" do 
-        Page.find_by_full_path(@page.site, @page.full_path).should == @page
+        Page.find_by_full_path(@page.full_path).should == @page
       end
     end
     
@@ -303,6 +303,18 @@ describe Page do
         Page.find_by_id(@page.id).should == @page
       end            
     end  
+    
+    describe "Page#find_by_title" do
+      it "should return the page by the title" do
+        Page.find_by_title(@page.title).should == @page
+      end
+    end
+    
+    describe "Page#name" do
+      it "should return the page byt the name" do
+        Page.find_by_name(@page.name).should == @page
+      end
+    end
   end
   
   # -- Instance Methods -----------------------------------------------
