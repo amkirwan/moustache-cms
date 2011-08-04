@@ -5,7 +5,6 @@ class Page
   include Mongoid::Timestamps
   include Mongoid::Paranoia
   
-  include Mongoid::Document::Taggable
   include Mongoid::Tree 
   include Etherweb::Mongoid::MetaData
 
@@ -134,7 +133,7 @@ class Page
     
     # slug is "foobar" in http://example.com/10/02/2011/foobar
     def slug_set
-      if self.site.nil?
+      if self.site_id.nil?
         self.slug = ""
       elsif self.title == "404"
         self.slug = "404"
