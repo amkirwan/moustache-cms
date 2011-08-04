@@ -11,7 +11,7 @@ class Site
   key :name
   field :subdomain
   field :default_domain
-  field :domains, type: Array, default: []
+  field :domains, :type => Array, :default => []
   
   # -- Index ---------------------------------------
   index :domains
@@ -48,7 +48,7 @@ class Site
   
   def add_subdomain_to_domains
     self.domains ||= []
-    if self.subdomain_changed? || self.default_domain_changed?
+    if self.domains.empty? || self.subdomain_changed? || self.default_domain_changed?
       if self.subdomain_was.nil?
         self.domains << self.full_subdomain
       else

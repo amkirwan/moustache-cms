@@ -19,9 +19,4 @@
       %ul 
         - if can? :manage, Site
           %li
-            = link_to_unless_current "Site Setup", '#'
-        - if can? :manage, User 
-          = li_current_page(admin_users_path) do |path|
-            = link_to "Users", path
-        %li
-          = link_to_unless_current "Personal", '#'
+
