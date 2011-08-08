@@ -1,29 +1,20 @@
+@import "reset";
+@import "mixin_links";
 
-@import "settings";
-@import "mixins";
 
-/* clear all browser rules */
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, font, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td 
-{
-	margin: 0;
-	padding: 0;
-	border: 0;
-	outline: 0;
-	font-weight: inherit;
-	font-style: inherit;
-	font-size: 100%;
-	line-height:  1;
-	font-family: inherit;
-	vertical-align: baseline;
-}
+$background_color: #2B2C34;
+$light_bg_color: #FFF;
+$med_gray_bg_color: #989898;
+$admin_nav_bg: #40414F;
+$admin_nav_bg_selected: #55566F;
+$nav_selected: #FBB950;
 
+/* text */
+$dark_text: #222;
+$light_text: #FFF;
+$hover_text: #FB5000;
+$base_text: 13px/18px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, sans-serif;
+/* end text */
 
 body {
 	font: $base_text;
