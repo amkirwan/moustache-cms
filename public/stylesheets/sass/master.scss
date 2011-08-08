@@ -1,1 +1,92 @@
 @import "reset";
+@import "mixin_links";
+
+$body_bg: #2B2C34;
+$content_bg: #F9F8F3;
+$sidebar_bg: #BEBEBE;
+$admin_nav_bg: #40414F;
+$admin_nav_bg_selected: #55566F;
+$nav_selected: #FBB950;
+
+/* text */
+$dark_text: #222;
+$light_text: #FFF;
+$hover_text: #FB5000;
+$base_text: normal 100% "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, sans-serif;
+$heading_font: "Liberation Sans", Arial, Helvetica, sans-serif;
+
+
+/* end text */
+
+body {
+  font: $base_text;
+  color: $dark_text;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  background: $body_bg;
+}
+
+#wrapper {
+  margin: 36px auto;
+  width: 85%; /* 960px * 0.85 = 816px */
+}
+
+
+h1 {
+  font: $heading_font;
+  font-size: 1.5em; /* 24px / 16px */
+  font-weight: normal;
+  color: $light_text;
+}
+
+h2 {
+  font: $heading_font;
+  font-size: 1.125em; /* 18px / 16px */
+  font-weight: normal;
+  color: $dark_text;
+}
+
+#header {
+  width: 100%;
+  padding: 20px 0;
+  background: $body_bg;
+  h1 {
+    padding-left: 10px;
+    @include light_text_links(18px, 24px);
+  }
+}
+
+
+#main {
+  width: 100%;
+  background: $content_bg;
+}
+
+div#admin_nav {
+  float: left;
+  width: 25%; /* 204px / 816px */
+  background: $sidebar_bg;
+  ul {
+    list-type: none;
+    li {
+      a:link, a:visited {
+        font-size: 0.875em; /* 14px / 16px */
+        line-height: 1.5em; /* 24px / 16px */
+        text-decoration: none;
+        color: $light_text;
+        transition: color 0.3s ease;
+        -webkit-transition: color 0.3s ease;
+        -moz-transition: color 0.3s ease;
+        -o-transition: color 0.3s ease;
+        background: $sidebar_bg;
+      }
+    }
+  }
+}
+
+div#content {
+  width: 75%; 
+  background: $content_bg;
+}
+

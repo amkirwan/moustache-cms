@@ -1,0 +1,97 @@
+/* clear all browser rules */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  line-height: 1;
+  font-family: inherit;
+  vertical-align: baseline; }
+
+/* text */
+/* end text */
+body {
+  font: normal 100% "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, sans-serif;
+  color: #222222;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  background: #2b2c34; }
+
+#wrapper {
+  margin: 36px auto;
+  width: 85%;
+  /* 960px * 0.85 = 816px */ }
+
+h1 {
+  font: "Liberation Sans", Arial, Helvetica, sans-serif;
+  font-size: 1.5em;
+  /* 24px / 16px */
+  font-weight: normal;
+  color: white; }
+
+h2 {
+  font: "Liberation Sans", Arial, Helvetica, sans-serif;
+  font-size: 1.125em;
+  /* 18px / 16px */
+  font-weight: normal;
+  color: #222222; }
+
+#header {
+  width: 100%;
+  padding: 20px 0;
+  background: #2b2c34; }
+  #header h1 {
+    padding-left: 10px; }
+    #header h1 a {
+      font-size: 18px;
+      line-height: 24px; }
+    #header h1 a:link, #header h1 a:visited {
+      color: white;
+      text-decoration: none;
+      -webkit-transition: color 0.3s ease;
+      -moz-transition: color 0.3s ease;
+      -o-transition: color 0.3s ease;
+      transition: color 0.3s ease; }
+    #header h1 a:hover, #header h1 a:focus {
+      color: #8B999A;
+      text-decoration: none;
+      backgound: #FFF; }
+
+#main {
+  width: 100%;
+  background: #f9f8f3; }
+
+div#admin_nav {
+  float: left;
+  width: 25%;
+  /* 204px / 816px */
+  background: #bebebe; }
+  div#admin_nav ul {
+    list-type: none; }
+    div#admin_nav ul li a:link, div#admin_nav ul li a:visited {
+      font-size: 0.875em;
+      /* 14px / 16px */
+      line-height: 1.5em;
+      /* 24px / 16px */
+      text-decoration: none;
+      color: white;
+      transition: color 0.3s ease;
+      -webkit-transition: color 0.3s ease;
+      -moz-transition: color 0.3s ease;
+      -o-transition: color 0.3s ease;
+      background: #bebebe; }
+
+div#content {
+  width: 75%;
+  background: #f9f8f3; }
