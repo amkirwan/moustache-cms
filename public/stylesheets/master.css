@@ -69,14 +69,14 @@ h2 {
       backgound: #FFF; }
 
 #main {
+  min-height: 1000px;
   width: 100%;
-  background: #f9f8f3; }
+  background: #f9f8f3 url("/images/content_bg.png") repeat-y 25% 0; }
 
 div#admin_nav {
   float: left;
   width: 25%;
-  /* 204px / 816px */
-  background: #bebebe; }
+  /* 204px / 816px */ }
   div#admin_nav ul {
     list-type: none; }
     div#admin_nav ul li a:link, div#admin_nav ul li a:visited {
@@ -89,9 +89,7 @@ div#admin_nav {
       transition: color 0.3s ease;
       -webkit-transition: color 0.3s ease;
       -moz-transition: color 0.3s ease;
-      -o-transition: color 0.3s ease;
-      background: #bebebe; }
+      -o-transition: color 0.3s ease; }
 
 div#content {
-  width: 75%;
-  background: #f9f8f3; }
+  width: 75%; }

@@ -59,14 +59,14 @@ h2 {
 
 
 #main {
+  min-height: 1000px;
   width: 100%;
-  background: $content_bg;
+  background: $content_bg url("/images/content_bg.png") repeat-y 25% 0;
 }
 
 div#admin_nav {
   float: left;
   width: 25%; /* 204px / 816px */
-  background: $sidebar_bg;
   ul {
     list-type: none;
     li {
@@ -79,7 +79,6 @@ div#admin_nav {
         -webkit-transition: color 0.3s ease;
         -moz-transition: color 0.3s ease;
         -o-transition: color 0.3s ease;
-        background: $sidebar_bg;
       }
     }
   }
@@ -87,6 +86,5 @@ div#admin_nav {
 
 div#content {
   width: 75%; 
-  background: $content_bg;
 }
 
