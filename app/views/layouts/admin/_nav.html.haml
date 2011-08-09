@@ -1,22 +1,10 @@
 #admin_nav
   %ul
-    %li#pages
-      = link_to "Pages", admin_pages_path
-      %ul
-        = li_current_page(admin_pages_path) do |path|
-          = link_to "Pages", path
-    %li#layout
-      = link_to "Site Layout", admin_layouts_path
-      %ul
-        = li_current_page(admin_layouts_path) do |path|
-          = link_to "Layouts", path
-        %li
-          = link_to_unless_current "CSS & JS", '#'
-        %li 
-          = link_to_unless_current "Snippets", '#'
-    %li#settings
-      = link_to "Site Settings", admin_users_path
-      %ul 
-        - if can? :manage, Site
-          %li
-
+    %li= link_to "Pages", admin_pages_path
+    %li= link_to "Site Media", admin_asset_collections_path
+    %li= link_to "Snippets", admin_snippets_path
+    %li= link_to "Layouts", admin_layouts_path
+    %li= link_to "Theme Assets", admin_theme_assets_path
+    %li= link_to "Users", admin_users_path
+    - if  admin?
+      %li= link_to "Site Admin", "#"

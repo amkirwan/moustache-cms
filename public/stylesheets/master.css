@@ -92,4 +92,5 @@ div#admin_nav {
       -o-transition: color 0.3s ease; }
 
 div#content {
+  float: left;
   width: 75%; }

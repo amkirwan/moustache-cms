@@ -9,6 +9,7 @@ Etherweb::Application.routes.draw do
     resources :asset_collections do
       resources :site_assets 
     end
+    resources :site, :except => :show
   end
   
   match "/admin" => redirect("/admin/pages")
