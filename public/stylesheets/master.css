@@ -28,6 +28,13 @@ body {
   text-align: left;
   background: #2b2c34; }
 
+/*
+  960px for total page width
+  816px for content area
+  12 column grid with 60px wide columns and 8px padding
+  admin_nav column = 204px
+  content column = 612px
+*/
 #wrapper {
   margin: 36px auto;
   width: 85%;
@@ -49,13 +56,13 @@ h2 {
 
 #header {
   width: 100%;
-  padding: 20px 0;
   background: #2b2c34; }
   #header h1 {
-    padding-left: 10px; }
+    margin-left: 4px;
+    /* 20/16=1.25  24/16=1.5 */ }
     #header h1 a {
-      font-size: 18px;
-      line-height: 24px; }
+      font-size: 1.25em;
+      line-height: 1.5em; }
     #header h1 a:link, #header h1 a:visited {
       color: white;
       text-decoration: none;
@@ -71,26 +78,40 @@ h2 {
 #main {
   min-height: 1000px;
   width: 100%;
-  background: #f9f8f3 url("/images/content_bg.png") repeat-y 25% 0; }
+  border-radius: 5px;
+  background: #f9f8f3 url("/images/content_bg.png") repeat-y 24.51% 0;
+  /* 200 / 816 */ }
 
 div#admin_nav {
   float: left;
-  width: 25%;
-  /* 204px / 816px */ }
+  width: 24.5098039%;
+  /* 200px / 816px */
+  margin-right: 4px; }
   div#admin_nav ul {
-    list-type: none; }
-    div#admin_nav ul li a:link, div#admin_nav ul li a:visited {
-      font-size: 0.875em;
-      /* 14px / 16px */
-      line-height: 1.5em;
-      /* 24px / 16px */
-      text-decoration: none;
-      color: white;
-      transition: color 0.3s ease;
-      -webkit-transition: color 0.3s ease;
-      -moz-transition: color 0.3s ease;
-      -o-transition: color 0.3s ease; }
+    padding: 8px 4px 0 8px;
+    text-align: left;
+    list-style: none; }
+    div#admin_nav ul li {
+      border-top: 1px solid #A8A8A8; }
+      div#admin_nav ul li a:link, div#admin_nav ul li a:visited {
+        font-size: 1em;
+        /* 14px / 16px */
+        line-height: 1.75em;
+        /* 28px / 16px */
+        text-decoration: none;
+        color: white;
+        transition: color 0.3s ease;
+        -webkit-transition: color 0.3s ease;
+        -moz-transition: color 0.3s ease;
+        -o-transition: color 0.3s ease; }
+      div#admin_nav ul li a:hover, div#admin_nav ul li a:focus {
+        color: #fb5000;
+        text-decoration: none; }
+    div#admin_nav ul li:last-child {
+      border-bottom: 1px solid #A8A8A8; }
 
 div#content {
   float: left;
-  width: 75%; }
+  width: 74.5098039%;
+  /* 608px / 816px */
+  margin-left: 4px; }
