@@ -1,10 +1,22 @@
 #admin_nav
   %ul
-    %li= link_to "Pages", admin_pages_path
-    %li= link_to "Site Media", admin_asset_collections_path
-    %li= link_to "Snippets", admin_snippets_path
-    %li= link_to "Layouts", admin_layouts_path
-    %li= link_to "Theme Assets", admin_theme_assets_path
-    %li= link_to "Users", admin_users_path
-    - if  admin?
+    %li 
+      %h5 Site Management
+    - li_current_page admin_snippets_path do |path|
+      = link_to "Pages", path
+    - li_current_page admin_snippets_path  do |path|
+      = link_to "Media", path
+    - li_current_page admin_snippets_path do |path|
+      = link_to "Snippets", path
+    - li_current_page admin_layouts_path do |path|
+      = link_to "Layouts", path
+    - li_current_page admin_theme_assets_path do |path|
+      = link_to "Theme Assets", path
+    - if admin?
+      - li_current_page admin_users_path do |path|
+        = link_to "User Accounts", path
+    - else
+      - li_current_page edit_admin_user_path(@current_user.id) do |path|
+        = link_to "User Account", path
+    - if admin?
       %li= link_to "Site Admin", "#"

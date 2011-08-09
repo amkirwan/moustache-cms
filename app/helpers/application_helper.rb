@@ -43,7 +43,7 @@ module ApplicationHelper
       "settings"
     end
   end    
-  
+
   def li_current_page(path, &block)
     if current_page?(path)
       capture_haml do 

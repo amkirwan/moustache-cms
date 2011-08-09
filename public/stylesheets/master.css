@@ -90,10 +90,11 @@ div#admin_nav {
   /* 200px / 816px */
   margin-right: 4px; }
   div#admin_nav ul {
-    padding: 8px 4px 0 8px;
+    padding: 1.75em 4px 0 8px;
     text-align: left;
     list-style: none; }
     div#admin_nav ul li {
+      padding-left: 8px;
       border-top: 1px solid #a8a8a8; }
       div#admin_nav ul li a:link, div#admin_nav ul li a:visited {
         font-size: 1em;
@@ -109,8 +110,18 @@ div#admin_nav {
       div#admin_nav ul li a:hover, div#admin_nav ul li a:focus {
         color: #fb5000;
         text-decoration: none; }
+    div#admin_nav ul li:first-child {
+      border-top: 0;
+      color: white;
+      padding: 4px;
+      background: #5c5c5c; }
     div#admin_nav ul li:last-child {
       border-bottom: 1px solid #a8a8a8; }
+    div#admin_nav ul li.selected {
+      color: #222222;
+      background-image: -webkit-gradient(linear, 100% 0%, 0% 0%, from(#5c5c5c), to(#bebebe)); }
+      div#admin_nav ul li.selected a:link, div#admin_nav ul li.selected a:visited {
+        color: #222222; }
 
 div#content {
   float: left;

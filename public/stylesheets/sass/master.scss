@@ -6,6 +6,7 @@ $body_bg: #2B2C34;
 $content_bg: #F9F8F3;
 $sidebar_bg: #BEBEBE;
 $sidebar_border: #A8A8A8;
+$sidebar_heading: #5C5C5C;
 
 
 
@@ -78,10 +79,11 @@ div#admin_nav {
   width: 24.5098039%; /* 200px / 816px */
   margin-right: 4px;
   ul {
-    padding: 8px 4px 0 8px;
+    padding: 1.75em 4px 0 8px;
     text-align: left;
     list-style: none;
     li {
+      padding-left: 8px;
       border-top: 1px solid $sidebar_border;
       a:link, a:visited {
         font-size: 1em; /* 14px / 16px */
@@ -97,9 +99,22 @@ div#admin_nav {
 			  color: $hover_text; 
 			  text-decoration: none;
 			}
-    }    
+    }
+    li:first-child {
+      border-top: 0;
+      color: $light_text;
+      padding: 4px;
+      background: $sidebar_heading;
+    }
     li:last-child {
       border-bottom: 1px solid $sidebar_border; 
+    }
+    li.selected {
+      color: $dark_text;
+      background-image: -webkit-gradient(linear, 100% 0%, 0% 0%, from(rgba(92, 92, 92, 1)), to(rgba(190, 190, 190, 1)));
+      a:link, a:visited {
+        color: $dark_text;
+      }
     }
   }
 }
