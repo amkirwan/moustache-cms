@@ -20,7 +20,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 
 /*layout colors */
 /* text */
-/* end text */
+/* link text */
 body {
   font: normal 100% "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, sans-serif;
   color: #222222;
@@ -28,6 +28,18 @@ body {
   margin: 0;
   text-align: left;
   background: #2b2c34; }
+
+a:link, a:visited {
+  color: #d54e0e;
+  text-decoration: none;
+  -webkit-transition: color 0.3s ease;
+  -moz-transition: color 0.3s ease;
+  -o-transition: color 0.3s ease;
+  transition: color 0.3s ease; }
+
+a:hover, a:focus {
+  color: #9b3c0e;
+  text-decoration: underline; }
 
 /*
   960px for total page width
@@ -47,15 +59,14 @@ h1 {
   color: white; }
 
 h2 {
-  font: normal 1.25em/1.5 "proxima-nova-extra-condensed-1", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, Arial, sans-serif;
-  /* 20px / 16px */
+  font: normal 1.125em/1.25 "proxima-nova-extra-condensed-1", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, Arial, sans-serif;
+  /* 18px / 16px */
   color: #222222; }
 
 h3 {
-  font: normal 1.125em/1.5 "proxima-nova-extra-condensed-1", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, Arial, sans-serif; }
-
-h5 {
-  font: "proxima-nova-extra-condensed-1", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, Arial, sans-serif; }
+  font: normal 1.125em/1.25 "proxima-nova-extra-condensed-1", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, Arial, sans-serif;
+  /* 18px / 16px */
+  color: #222222; }
 
 #header {
   width: 100%;
@@ -86,6 +97,19 @@ h5 {
   background: #f9f8f3;
   overflow: hidden; }
 
+div#welcome {
+  float: right;
+  padding-right: 8px; }
+  div#welcome ul {
+    list-style: none;
+    display: inline; }
+    div#welcome ul li {
+      font-size: 0.75em;
+      /* 12px / 16px */
+      line-height: 1;
+      text-decoration: none;
+      display: inline; }
+
 div#admin_nav {
   float: left;
   width: 24.5098039%;
@@ -111,7 +135,7 @@ div#admin_nav {
         -moz-transition: color 0.3s ease;
         -o-transition: color 0.3s ease; }
       div#admin_nav ul li a:hover, div#admin_nav ul li a:focus {
-        color: #fb5000;
+        color: #9b3c0e;
         text-decoration: none; }
     div#admin_nav ul li:first-child {
       border-top: 0;
@@ -131,8 +155,12 @@ div#admin_nav {
 div#content {
   min-height: 1000px;
   float: left;
-  width: 75%;
-  /* 608px / 816px */
+  width: 72.5490196%;
+  /* 592px / 816px */
   margin: 1.75em 0;
+  padding: 0 8px;
   background: #f9f8f3 url("/images/content_bg.png") repeat-y 0 0;
   /* 200 / 816 */ }
+
+table.manage {
+  margin: 0 auto; }

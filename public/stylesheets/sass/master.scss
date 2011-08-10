@@ -13,14 +13,16 @@ $sidebar_heading: #FB5000;
 /* text */
 $dark_text: #222;
 $light_text: #FFF;
-$nav_text: #FB5000;
-$hover_text: #FB5000;
 $base_text: normal 100% "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, sans-serif;
-//$heading_font: "Liberation Sans", Arial, Helvetica, sans-serif;
 $heading_font: "proxima-nova-extra-condensed-1", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, Arial, sans-serif;
+
+/* link text */
+$link_text: #d54e0e;
+$hover_text: #9b3c0e;
+$nav_text: #FB5000;
+
 $body_min_height: 1000px;
 
-/* end text */
 
 body {
   font: $base_text;
@@ -30,6 +32,20 @@ body {
   text-align: left;
   background: $body_bg;
 }
+
+a:link, a:visited {
+  color: $link_text; 
+  text-decoration: none;
+  -webkit-transition: color 0.3s ease;
+  -moz-transition: color 0.3s ease;
+  -o-transition: color 0.3s ease;
+  transition: color 0.3s ease;
+} 
+
+a:hover, a:focus {
+  color: $hover_text; 
+  text-decoration: underline;
+}  
 
   /*
     960px for total page width
@@ -43,23 +59,19 @@ body {
   width: 85%; /* 960px * 0.85 = 816px */
 }
 
-
 h1 {
   font: normal 1.5em / 1 $heading_font; /* 24px / 16px */
   color: $light_text;
 }
 
 h2 {
-  font: normal 1.25em / 1.5 $heading_font; /* 20px / 16px */
+  font: normal 1.125em / 1.25 $heading_font; /* 18px / 16px */
   color: $dark_text;
 }
 
 h3 {
-  font: normal 1.125em / 1.5 $heading_font;
-}
-
-h5 {
-  font: $heading_font;
+  font: normal 1.125em / 1.25 $heading_font; /* 18px / 16px */
+  color: $dark_text;
 }
 
 #header {
@@ -72,13 +84,27 @@ h5 {
   }
 }
 
-
 #main {
   min-height: $body_min_height;
   width: 100%;
   border-radius: 5px;
   background: $content_bg;
   overflow: hidden;
+}
+
+div#welcome {
+  float: right;
+  padding-right: 8px;
+  ul {
+    list-style: none;
+    display: inline;
+    li {
+      font-size: 0.75em; /* 12px / 16px */ 
+      line-height: 1;
+      text-decoration: none;
+      display: inline;
+    }      
+  }
 }
 
 div#admin_nav {
@@ -132,8 +158,15 @@ div#admin_nav {
 div#content {
   min-height: $body_min_height; 
   float: left;
-  width: 75%; /* 608px / 816px */
+  width: 72.5490196%; /* 592px / 816px */
   margin: 1.75em 0; 
+  padding: 0 8px;
   background: $content_bg url("/images/content_bg.png") repeat-y 0 0; /* 200 / 816 */
 }
+
+table.manage {
+  margin: 0 auto;
+} 
+
+
 

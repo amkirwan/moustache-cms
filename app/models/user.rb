@@ -56,6 +56,10 @@ class User
   def role?(base_role)
     role.nil? ? false : Roles.index(base_role.to_s) <= Roles.index(role)
   end
+
+  def full_name
+    "#{firstname}  #{lastname}"
+  end
   
   private
   
