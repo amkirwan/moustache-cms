@@ -207,13 +207,30 @@ div#content_inner_wrapper {
 
 table.users {
   width: 80%;
+  border-collapse:collapse;
+  th {
+    text-align: center;
+    border-right: 1px solid $body_bg;
+    background: #d5d4d4;
+  } 
+  th:first-child {
+    padding-left: 4px;
+  }
+  th:last-child {
+    border-right: 0;
+    background: $body_bg;
+  }
+  td {
+    text-align: center;
+    padding: 4px 0 0 4px;
+  }
   .name {
+    text-align: left;
     width: 35%;
-    background: gray;
   }
   .puid {
+    text-align:left;
     width: 31.667%;
-    background: yellow;
   }
   .role {
     width: 16.667%

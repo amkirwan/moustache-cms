@@ -192,13 +192,25 @@ div#content_inner_wrapper {
     list-style: none; }
 
 table.users {
-  width: 80%; }
+  width: 80%;
+  border-collapse: collapse; }
+  table.users th {
+    text-align: center;
+    border-right: 1px solid #f9f8f3;
+    background: #d5d4d4; }
+  table.users th:first-child {
+    padding-left: 4px; }
+  table.users th:last-child {
+    border-right: 0;
+    background: #f9f8f3; }
+  table.users td {
+    text-align: center;
+    padding: 4px 0 0 4px; }
   table.users .name {
-    width: 35%;
-    background: gray; }
+    text-align: left;
+    width: 35%; }
   table.users .puid {
-    width: 31.667%;
-    background: yellow; }
+    width: 31.667%; }
   table.users .role {
     width: 16.667%; }
   table.users .delete {
