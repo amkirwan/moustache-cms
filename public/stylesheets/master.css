@@ -42,18 +42,20 @@ body {
   /* 960px * 0.85 = 816px */ }
 
 h1 {
-  font: "Liberation Sans", Arial, Helvetica, sans-serif;
-  font-size: 1.5em;
+  font: normal 1.5em/1 "proxima-nova-extra-condensed-1", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, Arial, sans-serif;
   /* 24px / 16px */
-  font-weight: normal;
   color: white; }
 
 h2 {
-  font: "Liberation Sans", Arial, Helvetica, sans-serif;
-  font-size: 1.125em;
-  /* 18px / 16px */
-  font-weight: normal;
+  font: normal 1.25em/1.5 "proxima-nova-extra-condensed-1", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, Arial, sans-serif;
+  /* 20px / 16px */
   color: #222222; }
+
+h3 {
+  font: normal 1.125em/1.5 "proxima-nova-extra-condensed-1", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, Arial, sans-serif; }
+
+h5 {
+  font: "proxima-nova-extra-condensed-1", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, Arial, sans-serif; }
 
 #header {
   width: 100%;
@@ -118,8 +120,6 @@ div#admin_nav {
       margin-bottom: 2px;
       text-transform: uppercase;
       color: #222222; }
-      div#admin_nav ul li:first-child h5 {
-        font-family: "proxima-nova-extra-condensed-1", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, Arial, sans-serif; }
     div#admin_nav ul li:last-child {
       border-bottom: 1px solid #a8a8a8; }
     div#admin_nav ul li.selected {

@@ -16,8 +16,8 @@ $light_text: #FFF;
 $nav_text: #FB5000;
 $hover_text: #FB5000;
 $base_text: normal 100% "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, sans-serif;
-$heading_font: "Liberation Sans", Arial, Helvetica, sans-serif;
-
+//$heading_font: "Liberation Sans", Arial, Helvetica, sans-serif;
+$heading_font: "proxima-nova-extra-condensed-1", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, Arial, sans-serif;
 $body_min_height: 1000px;
 
 /* end text */
@@ -45,17 +45,21 @@ body {
 
 
 h1 {
-  font: $heading_font;
-  font-size: 1.5em; /* 24px / 16px */
-  font-weight: normal;
+  font: normal 1.5em / 1 $heading_font; /* 24px / 16px */
   color: $light_text;
 }
 
 h2 {
-  font: $heading_font;
-  font-size: 1.125em; /* 18px / 16px */
-  font-weight: normal;
+  font: normal 1.25em / 1.5 $heading_font; /* 20px / 16px */
   color: $dark_text;
+}
+
+h3 {
+  font: normal 1.125em / 1.5 $heading_font;
+}
+
+h5 {
+  font: $heading_font;
 }
 
 #header {
@@ -111,9 +115,6 @@ div#admin_nav {
       margin-bottom: 2px;
       text-transform: uppercase;
       color: $dark_text;
-      h5 {
-        font-family: "proxima-nova-extra-condensed-1", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, Arial, sans-serif
-      }
     }
     li:last-child {
       border-bottom: 1px solid $sidebar_border; 
