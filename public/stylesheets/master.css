@@ -210,6 +210,7 @@ table.users {
     text-align: left;
     width: 35%; }
   table.users .puid {
+    text-align: left;
     width: 31.667%; }
   table.users .role {
     width: 16.667%; }
