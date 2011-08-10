@@ -143,10 +143,6 @@ div#admin_nav {
         line-height: 1.75em; /* 28px / 16px */
         text-decoration: none;
         color: $nav_text;
-        transition: color 0.3s ease;
-        -webkit-transition: color 0.3s ease;
-        -moz-transition: color 0.3s ease;
-        -o-transition: color 0.3s ease;
       }
 			a:hover, a:focus {
 			  color: $hover_text; 
@@ -200,11 +196,35 @@ div#content_header_wrapper {
 div#content_inner_wrapper {
   margin-top: 2px;
   border-top: 1px solid $sidebar_border;
-  padding-left: 8px;
+  padding-top: 16px;
+  //padding-left: 8px;
+  ul {
+    list-style: none;
+    li {
+    }
+  }
+}
+
+table.users {
+  width: 80%;
+  .name {
+    width: 35%;
+    background: gray;
+  }
+  .puid {
+    width: 31.667%;
+    background: yellow;
+  }
+  .role {
+    width: 16.667%
+  }
+  .delete {
+    width: 16.667%
+  }
 }
 
 
 div#footer {
   height: 60px;
-  background: $link_text;
+  background: $hover_text;
 }

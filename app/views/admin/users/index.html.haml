@@ -4,20 +4,18 @@
   - if admin?
     %div{:id => "new_user", :class => "add_new"}
       = link_to "New User", new_admin_user_path, :class => "action"
-      
+
 #content_inner_wrapper
-  %ul
-    - @users.each do |user|
-      %li
-        %h4 #{user.full_name}
-        %ul
-          %li 
-            %h5 Partners UID
-            %ul
-              %li= user.puid
-          %li 
-            %h5 Role
-            %ul
-              %li= user.role
-          - if can? :destory, user
-            %li.delete= link_to "Delete", admin_user_path(user), :method => :delete, :confirm => "Are are you sure you want to delete the user #{user.puid}?"
+  %table{:class => "info users"}
+    %tr
+      %th Name
+      %th Partners UID
+      %th Role
+      %th 
+    %tbody
+      - @users.each do |user| 
+        %tr
+          %td.name= link_to user.full_name, edit_admin_user_path(user)
+          %td.puid= user.puid
+          %td.role= user.role
+          %td.delete= link_to "Delete", admin_user_path(user), :method => :delete, :confirm => "Are are you sure you want to delete the user #{user.full_name}?"

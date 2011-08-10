@@ -144,11 +144,7 @@ div#admin_nav {
         line-height: 1.75em;
         /* 28px / 16px */
         text-decoration: none;
-        color: #fb5000;
-        transition: color 0.3s ease;
-        -webkit-transition: color 0.3s ease;
-        -moz-transition: color 0.3s ease;
-        -o-transition: color 0.3s ease; }
+        color: #fb5000; }
       div#admin_nav ul li a:hover, div#admin_nav ul li a:focus {
         color: #9b3c0e;
         text-decoration: none; }
@@ -191,8 +187,23 @@ div#content_header_wrapper {
 div#content_inner_wrapper {
   margin-top: 2px;
   border-top: 1px solid #a8a8a8;
-  padding-left: 8px; }
+  padding-top: 16px; }
+  div#content_inner_wrapper ul {
+    list-style: none; }
+
+table.users {
+  width: 80%; }
+  table.users .name {
+    width: 35%;
+    background: gray; }
+  table.users .puid {
+    width: 31.667%;
+    background: yellow; }
+  table.users .role {
+    width: 16.667%; }
+  table.users .delete {
+    width: 16.667%; }
 
 div#footer {
   height: 60px;
-  background: #d54e0e; }
+  background: #9b3c0e; }
