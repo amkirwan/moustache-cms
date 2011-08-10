@@ -192,3 +192,7 @@ div#content_inner_wrapper {
   margin-top: 2px;
   border-top: 1px solid #a8a8a8;
   padding-left: 8px; }
+
+div#footer {
+  height: 60px;
+  background: #d54e0e; }
