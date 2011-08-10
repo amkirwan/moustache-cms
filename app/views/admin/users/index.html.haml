@@ -1,15 +1,14 @@
 #user
-  %ul
-    %li#user_header
-      %div Username
-      %div Role
-      %div Delete
-  - @users.each do |user|
-    %li{ :id => "#{user.puid}"}
-      %div= link_to user.puid, edit_admin_user_path(user)
-      %div= user.role 
+  %table.manage
+    %tr
+      %td Username
+      %td Role
+      %td 
+    - @users.each do |user|
+      %td= link_to user.puid, edit_admin_user_path(user)
+      %td= user.role
       - if can? :destroy, user
-        %div.delete= link_to "Delete", admin_user_path(user), :method => :delete, :confirm => "Are you sure you"
+        %td.delete= link_to "Delete", admin_user_path(user), :method => :delete, :confirm => "Are are you sure you want to delete the user #{user.puid}?"
 
 #add_user
 - if admin?

@@ -81,16 +81,17 @@ h2 {
   min-height: 1000px;
   width: 100%;
   border-radius: 5px;
-  background: #f9f8f3 url("/images/content_bg.png") repeat-y 24.51% 0;
-  /* 200 / 816 */ }
+  background: #f9f8f3;
+  overflow: hidden; }
 
 div#admin_nav {
   float: left;
   width: 24.5098039%;
   /* 200px / 816px */
+  margin-top: 1.75em;
   margin-right: 4px; }
   div#admin_nav ul {
-    padding: 1.75em 4px 0 8px;
+    padding: 0 4px 0 8px;
     text-align: left;
     list-style: none; }
     div#admin_nav ul li {
@@ -102,7 +103,7 @@ div#admin_nav {
         line-height: 1.75em;
         /* 28px / 16px */
         text-decoration: none;
-        color: white;
+        color: #fb5000;
         transition: color 0.3s ease;
         -webkit-transition: color 0.3s ease;
         -moz-transition: color 0.3s ease;
@@ -112,19 +113,26 @@ div#admin_nav {
         text-decoration: none; }
     div#admin_nav ul li:first-child {
       border-top: 0;
-      color: white;
+      border-bottom: 1px solid #a8a8a8;
       padding: 4px;
-      background: #5c5c5c; }
+      margin-bottom: 2px;
+      text-transform: uppercase;
+      color: #222222; }
+      div#admin_nav ul li:first-child h5 {
+        font-family: "proxima-nova-extra-condensed-1", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, Arial, sans-serif; }
     div#admin_nav ul li:last-child {
       border-bottom: 1px solid #a8a8a8; }
     div#admin_nav ul li.selected {
       color: #222222;
-      background-image: -webkit-gradient(linear, 100% 0%, 0% 0%, from(#5c5c5c), to(#bebebe)); }
+      background-image: -webkit-gradient(linear, 100% 0%, 0% 0%, from(rgba(92, 92, 92, 0.4)), to(rgba(190, 190, 190, 0.1))); }
       div#admin_nav ul li.selected a:link, div#admin_nav ul li.selected a:visited {
         color: #222222; }
 
 div#content {
+  min-height: 1000px;
   float: left;
-  width: 74.5098039%;
+  width: 75%;
   /* 608px / 816px */
-  margin-left: 4px; }
+  margin: 1.75em 0;
+  background: #f9f8f3 url("/images/content_bg.png") repeat-y 0 0;
+  /* 200 / 816 */ }
