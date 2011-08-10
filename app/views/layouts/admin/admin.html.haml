@@ -29,8 +29,8 @@
     #header
       %h1#site_name
         = link_to "#{Site.first.name.humanize} Site", "/" 
-    #main
       = render :partial => "layouts/admin/welcome"
+    #main
       = render :partial => "layouts/admin/nav"
       #content
         - flash.each do |name, msg|

@@ -1,31 +1,23 @@
-#add_user
-- if admin?
-  %ul#new_user
-    %li= link_to "New User", new_admin_user_path
-    
-%h3 Users
-%ul 
-- @users.each do |user|
-  %li
-    %h4 "#{user.firstname} #{user.lastname}"
-    %ul
-      %li 
-        %h5 Partners UID
+#content_header_wrapper
+  %h2 USERS
+
+  - if admin?
+    %div{:id => "new_user", :class => "add_new"}
+      = link_to "New User", new_admin_user_path, :class => "action"
+      
+#content_inner_wrapper
+  %ul
+    - @users.each do |user|
+      %li
+        %h4 #{user.full_name}
         %ul
-          %li= user.puid
-      %li 
-        %h5 Role
-        %ul
-          %li= user.role
-      - if can? :destory, user
-        %li.delete= link_to "Delete", admin_user_path(user), :method => :delete, :confirm => "Are are you sure you want to delete the user #{user.puid}?"
-%table.manage
-  %tr
-    %td Username
-    %td Role
-    %td 
-  - @users.each do |user|
-    %td= link_to user.puid, edit_admin_user_path(user)
-    %td= user.role
-    - if can? :destroy, user
-      %td.delete= link_to "Delete", admin_user_path(user), :method => :delete, :confirm => "Are are you sure you want to delete the user #{user.puid}?"
+          %li 
+            %h5 Partners UID
+            %ul
+              %li= user.puid
+          %li 
+            %h5 Role
+            %ul
+              %li= user.role
+          - if can? :destory, user
+            %li.delete= link_to "Delete", admin_user_path(user), :method => :delete, :confirm => "Are are you sure you want to delete the user #{user.puid}?"
