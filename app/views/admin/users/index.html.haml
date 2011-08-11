@@ -14,7 +14,7 @@
       %th 
     %tbody
       - @users.each do |user| 
-        %tr
+        %tr{:class => "#{cycle('even', 'odd')}"}
           %td.name= link_to user.full_name, edit_admin_user_path(user)
           %td.puid= user.puid
           %td.role= user.role

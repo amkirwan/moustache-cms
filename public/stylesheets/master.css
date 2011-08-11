@@ -65,7 +65,7 @@ h3 {
   /* 18px / 16px */
   color: #222222; }
 
-.action {
+a:link.action, a:visited.action {
   border-radius: 16px;
   -moz-border-radius: 16px;
   -webkit-border-radius: 16px;
@@ -73,6 +73,9 @@ h3 {
   padding: 2px 10px;
   border: 1px solid rgba(92, 92, 92, 0.5);
   background-color: rgba(92, 92, 92, 0.3); }
+
+a:hover.action, a:focus.action {
+  text-decoration: none; }
 
 #wrapper {
   margin: 0 auto;
@@ -191,11 +194,19 @@ div#content_inner_wrapper {
   div#content_inner_wrapper ul {
     list-style: none; }
 
+.odd {
+  background: #eaeaea; }
+
+.even {
+  background: #f9f8f3; }
+
 table.users {
   width: 80%;
-  border-collapse: collapse; }
+  border-collapse: collapse;
+  font-size: 0.875em; }
   table.users th {
     text-align: center;
+    padding: 4px 0;
     border-right: 1px solid #f9f8f3;
     background: #d5d4d4; }
   table.users th:first-child {
@@ -205,17 +216,18 @@ table.users {
     background: #f9f8f3; }
   table.users td {
     text-align: center;
-    padding: 4px 0 0 4px; }
+    padding: 8px 0; }
   table.users .name {
+    padding-left: 8px;
     text-align: left;
     width: 35%; }
   table.users .puid {
-    text-align: left;
-    width: 31.667%; }
+    text-align: center;
+    width: 27%; }
   table.users .role {
-    width: 16.667%; }
+    width: 22%; }
   table.users .delete {
-    width: 16.667%; }
+    width: 16%; }
 
 div#footer {
   height: 60px;

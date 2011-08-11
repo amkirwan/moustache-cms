@@ -8,7 +8,9 @@ $content_bg: #F9F8F3;
 $sidebar_bg: #BEBEBE;
 $sidebar_border: #A8A8A8;
 $sidebar_heading: #FB5000;
-
+$content_table_heading: #d5d4d4;
+$zebra_even: #F9F8F3;
+$zebra_odd: #EAEAEA;
 
 
 /* text */
@@ -72,7 +74,7 @@ h3 {
   color: $dark_text;
 }
 
-.action {
+a:link.action, a:visited.action {
   border-radius: 16px;
   -moz-border-radius: 16px;
   -webkit-border-radius: 16px;
@@ -80,6 +82,10 @@ h3 {
   padding: 2px 10px;
   border: 1px solid rgba(92, 92, 92, 0.5);
   background-color: rgba(92, 92, 92, 0.3); 
+}
+
+a:hover.action, a:focus.action {
+  text-decoration: none;
 }
 
 #wrapper {
@@ -205,13 +211,23 @@ div#content_inner_wrapper {
   }
 }
 
+.odd {
+  background: $zebra_odd;
+}
+
+.even {
+  background: $zebra_even;
+}
+
 table.users {
   width: 80%;
   border-collapse:collapse;
+  font-size: 0.875em;
   th {
     text-align: center;
+    padding: 4px 0; 
     border-right: 1px solid $body_bg;
-    background: #d5d4d4;
+    background: $content_table_heading;
   } 
   th:first-child {
     padding-left: 4px;
@@ -222,21 +238,22 @@ table.users {
   }
   td {
     text-align: center;
-    padding: 4px 0 0 4px;
+    padding: 8px 0; 
   }
   .name {
+    padding-left: 8px;
     text-align: left;
     width: 35%;
   }
   .puid {
-    text-align:left;
-    width: 31.667%;
+    text-align: center;
+    width: 27%;
   }
   .role {
-    width: 16.667%
+    width: 22%
   }
   .delete {
-    width: 16.667%
+    width: 16%
   }
 }
 
