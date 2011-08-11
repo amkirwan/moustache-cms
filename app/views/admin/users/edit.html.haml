@@ -1,4 +1,8 @@
-#edit_user
-  %h3 User Account for #{@user.puid}
-  = render :partial => "form",  
-           :locals => { :user => @user, :button_label => "Update User"}
+#content_header_wrapper
+  %h2 User Account for #{@user.full_name}
+  - if can?(:destroy, @user) && !@user.new_record?
+    %div{:id => "delete_user", :class => "delete"}
+      = link_to "Delete User", [:admin, @user], :confirm => "Are you sure you want to delete the user #{@user.full_name}", :method => :delete, :class => "action delete"
+
+= render :partial => "form",  
+         :locals => { :user => @user, :button_label => "Update User"}

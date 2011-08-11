@@ -58,7 +58,7 @@ class User
   end
 
   def full_name
-    "#{firstname}  #{lastname}"
+    "#{firstname.capitalize} #{lastname.capitalize}"
   end
   
   private
