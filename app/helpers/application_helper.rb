@@ -44,8 +44,8 @@ module ApplicationHelper
     end
   end    
 
-  def li_current_page(path, &block)
-    if current_page?(path)
+  def li_current_page(path, selected_controller_name, &block)
+    if controller.controller_name == selected_controller_name.to_s
       capture_haml do 
         haml_tag 'li.selected' do 
           yield

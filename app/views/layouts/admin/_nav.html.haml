@@ -2,21 +2,21 @@
   %ul
     %li 
       %h3 Site Management
-    - li_current_page admin_snippets_path do |path|
+    - li_current_page admin_snippets_path, :pages do |path|
       = link_to "Pages", path
-    - li_current_page admin_snippets_path  do |path|
+    - li_current_page admin_snippets_path, :asset_collections do |path|
       = link_to "Media", path
-    - li_current_page admin_snippets_path do |path|
+    - li_current_page admin_snippets_path, :snippets do |path|
       = link_to "Snippets", path
-    - li_current_page admin_layouts_path do |path|
+    - li_current_page admin_layouts_path, :layouts do |path|
       = link_to "Layouts", path
-    - li_current_page admin_theme_assets_path do |path|
+    - li_current_page admin_theme_assets_path, :theme_assets do |path|
       = link_to "Theme Assets", path
     - if admin?
-      - li_current_page admin_users_path do |path|
+      - li_current_page admin_users_path, :users do |path|
         = link_to "User Accounts", path
     - else
-      - li_current_page edit_admin_user_path(@current_user.id) do |path|
+      - li_current_page edit_admin_user_path(@current_user.id), :users do |path|
         = link_to "User Account", path
     - if admin?
       %li= link_to "Site Admin", "#"

@@ -12,10 +12,9 @@
       %th Partners UID
       %th Role
       %th 
-    %tbody
-      - @users.each do |user| 
-        %tr{:class => "#{cycle('even', 'odd')}"}
-          %td.name= link_to user.full_name, edit_admin_user_path(user)
-          %td.puid= user.puid
-          %td.role= user.role
-          %td.delete= link_to "Delete", admin_user_path(user), :method => :delete, :confirm => "Are are you sure you want to delete the user #{user.full_name}?"
+    - @users.each do |user| 
+      %tr{:class => "#{cycle('even', 'odd')}"}
+        %td.name= link_to user.full_name, edit_admin_user_path(user)
+        %td.puid= user.puid
+        %td.role= user.role
+        %td.delete= link_to "Delete", admin_user_path(user), :method => :delete, :confirm => "Are are you sure you want to delete the user #{user.full_name}?"

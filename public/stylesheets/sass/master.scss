@@ -1,5 +1,6 @@
 @import "reset";
 @import "mixin_links";
+@import "tables";
 
 /*layout colors */
 $body_bg: #F9F8F3;
@@ -8,9 +9,6 @@ $content_bg: #F9F8F3;
 $sidebar_bg: #BEBEBE;
 $sidebar_border: #A8A8A8;
 $sidebar_heading: #FB5000;
-$content_table_heading: #d5d4d4;
-$zebra_even: #F9F8F3;
-$zebra_odd: #EAEAEA;
 $footer_bg: #9B3C0E;
 
 
@@ -113,6 +111,21 @@ a:hover.action, a:focus.action {
   }
 }
 
+#main {
+  min-height: $body_min_height;
+  width: 100%;
+  //border-radius: 5px;
+  background: $content_bg;
+  overflow: hidden;
+}
+
+
+div#footer {
+  height: 60px;
+  background: $footer_bg;
+}
+
+
 div#welcome {
   float: right;
   padding-right: 8px;
@@ -128,14 +141,6 @@ div#welcome {
       display: inline;
     }      
   }
-}
-
-#main {
-  min-height: $body_min_height;
-  width: 100%;
-  //border-radius: 5px;
-  background: $content_bg;
-  overflow: hidden;
 }
 
 
@@ -217,58 +222,6 @@ div#content_inner_wrapper {
     li {
     }
   }
-}
-
-/* for zebra stripes */
-.odd {
-  background: $zebra_odd;
-}
-
-.even {
-  background: $zebra_even;
-}
-
-/* table for users index page */
-table.users {
-  width: 80%;
-  border-collapse:collapse;
-  th {
-    text-align: center;
-    padding: 4px 0; 
-    border-right: 1px solid $body_bg;
-    background: $content_table_heading;
-  } 
-  th:first-child {
-    padding-left: 4px;
-  }
-  th:last-child {
-    border-right: 0;
-    background: $body_bg;
-  }
-  td {
-    text-align: center;
-    padding: 8px 0; 
-  }
-  .name {
-    padding-left: 8px;
-    text-align: left;
-    width: 35%;
-  }
-  .puid {
-    text-align: center;
-    width: 27%;
-  }
-  .role {
-    width: 22%
-  }
-  .delete {
-    width: 16%
-  }
-}
-
-div#footer {
-  height: 60px;
-  background: $footer_bg;
 }
 
 /* forms */

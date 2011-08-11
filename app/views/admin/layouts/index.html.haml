@@ -1,15 +1,17 @@
-#layouts
-  %ul
-    %li#layout_header
-      %div Layout Name
-      %div Delete
-    - @layouts.each do |layout|
-      %li{ :id => "#{layout.name}"}
-        %div= link_to layout.name, edit_admin_layout_path(layout)
-        - if can? :destroy, layout
-          %div.delete= link_to "Delete", admin_layout_path(layout), :method => :delete, :confirm => "Are you sure you want to delete the layout #{layout.name}", :class => "delete"
-  
+#content_header_wrapper
+  %h2 Layouts
 
-#add_layout
-  %ul#new_layout
-    %li= link_to "Add New Layout", new_admin_layout_path
+  - if admin?
+    %div{:id => "new_layout", :class => "create"}
+      = link_to "New Layout", new_admin_layout_path, :class => "action"
+
+#content_inner_wrapper
+  %table{:class => "info layouts"}
+    %tr
+      %th Layout Name
+      %th
+    - @layouts.each do |layout|
+      %tr{:class => "#{cycle('even', 'odd')}"}
+        %td.name= link_to layout.name, edit_admin_layout_path(layout)
+        - if can? :destroy, layout
+          %td.delete= link_to "Delete", admin_layout_path(layout), :method => :delete, :confirm => "Are you sure you want to delete the layout #{layout.name}", :class => "delete"

@@ -18,6 +18,47 @@ table, caption, tbody, tfoot, thead, tr, th, td {
   font-family: inherit;
   vertical-align: baseline; }
 
+/* for zebra stripes */
+.odd {
+  background: #eaeaea; }
+
+.even {
+  background: #f9f8f3; }
+
+/* table for users index page */
+table.info {
+  width: 100%;
+  border-collapse: collapse; }
+  table.info th {
+    text-align: center;
+    padding: 4px 0;
+    border-right: 1px solid #f9f8f3;
+    background: #d5d4d4; }
+  table.info th:first-child {
+    padding-left: 4px; }
+  table.info th:last-child {
+    border-right: 0;
+    background: #f9f8f3; }
+  table.info td {
+    text-align: center;
+    padding: 8px 0; }
+  table.info td.name {
+    text-align: left;
+    padding-left: 8px; }
+
+table.users .name {
+  width: 35%; }
+table.users .puid {
+  text-align: center;
+  width: 27%; }
+table.users .role {
+  width: 22%; }
+table.users .delete {
+  width: 16%; }
+
+table.layouts {
+  width: 70%; }
+
 /*layout colors */
 /* text */
 /* link text */
@@ -112,6 +153,16 @@ a:hover.action, a:focus.action {
       text-decoration: none;
       backgound: #FFF; }
 
+#main {
+  min-height: 1000px;
+  width: 100%;
+  background: #f9f8f3;
+  overflow: hidden; }
+
+div#footer {
+  height: 60px;
+  background: #9b3c0e; }
+
 div#welcome {
   float: right;
   padding-right: 8px;
@@ -126,12 +177,6 @@ div#welcome {
       line-height: 1;
       text-decoration: none;
       display: inline; }
-
-#main {
-  min-height: 1000px;
-  width: 100%;
-  background: #f9f8f3;
-  overflow: hidden; }
 
 div#admin_nav {
   float: left;
@@ -200,46 +245,6 @@ div#content_inner_wrapper {
   padding-top: 16px; }
   div#content_inner_wrapper ul {
     list-style: none; }
-
-/* for zebra stripes */
-.odd {
-  background: #eaeaea; }
-
-.even {
-  background: #f9f8f3; }
-
-/* table for users index page */
-table.users {
-  width: 80%;
-  border-collapse: collapse; }
-  table.users th {
-    text-align: center;
-    padding: 4px 0;
-    border-right: 1px solid #f9f8f3;
-    background: #d5d4d4; }
-  table.users th:first-child {
-    padding-left: 4px; }
-  table.users th:last-child {
-    border-right: 0;
-    background: #f9f8f3; }
-  table.users td {
-    text-align: center;
-    padding: 8px 0; }
-  table.users .name {
-    padding-left: 8px;
-    text-align: left;
-    width: 35%; }
-  table.users .puid {
-    text-align: center;
-    width: 27%; }
-  table.users .role {
-    width: 22%; }
-  table.users .delete {
-    width: 16%; }
-
-div#footer {
-  height: 60px;
-  background: #9b3c0e; }
 
 /* forms */
 form.site_prop fieldset {
