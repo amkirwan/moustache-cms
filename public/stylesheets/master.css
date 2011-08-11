@@ -66,10 +66,10 @@ h3 {
   color: #222222; }
 
 a:link.action, a:visited.action {
-  border-radius: 16px;
-  -moz-border-radius: 16px;
-  -webkit-border-radius: 16px;
-  -o-border-radius: 16px;
+  border-radius: 14px;
+  -moz-border-radius: 14px;
+  -webkit-border-radius: 14px;
+  -o-border-radius: 14px;
   padding: 2px 10px;
   border: 1px solid rgba(92, 92, 92, 0.5);
   background-color: rgba(92, 92, 92, 0.3); }
