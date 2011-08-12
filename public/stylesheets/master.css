@@ -110,15 +110,15 @@ h3 {
 a:link.action, a:visited.action {
   color: white;
   border-radius: 14px;
-  -moz-border-radius: 14px;
-  -webkit-border-radius: 14px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
   -o-border-radius: 14px;
   text-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8);
   padding: 2px 20px;
   border: 1px solid rgba(92, 92, 92, 0.5);
   background: #535252;
-  background: -moz-linear-gradient(0% 49% 90deg, #2c2c2c, #2c2c2c, #696867 0%);
-  background: -webkit-gradient(linear, 0% 49%, 0% 51%, from(rgba(44, 44, 44, 0.7)), to(#2c2c2c)); }
+  background: -moz-linear-gradient(0% 49% 90deg, #2c2c2c, #2c2c2c, rgba(44, 44, 44, 0.8) 0%);
+  background: -webkit-gradient(linear, 0% 49%, 0% 51%, from(rgba(44, 44, 44, 0.8)), to(#2c2c2c)); }
 
 a:hover.action, a:focus.action {
   text-decoration: none;
@@ -238,7 +238,7 @@ div#content_header_wrapper {
     float: right; }
 
 div#content_inner_wrapper {
-  clear: both;
+  position: relative;
   font-size: 0.875em;
   margin-top: 2px;
   border-top: 1px solid #a8a8a8;
@@ -247,6 +247,12 @@ div#content_inner_wrapper {
     list-style: none; }
 
 /* forms */
+label {
+  font: normal 100% "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, sans-serif;
+  font-size: 1.166666667em;
+  /* 14 / 12 */
+  font-weight: bold; }
+
 form.site_prop fieldset {
   margin-bottom: 1em;
   /* 14px */ }
@@ -269,8 +275,8 @@ form.site_prop .submit {
   text-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8);
   padding: 6px 20px;
   border: 1px solid rgba(92, 92, 92, 0.5);
-  background-image: -moz-linear-gradient(0% 49% 90deg, #9b3d0e, #9b3d0e, #bd440c 0%);
-  background-image: -webkit-gradient(linear, 0% 49%, 0% 51%, from(#ab3e0b), to(#9b3d0e));
+  background-image: -moz-linear-gradient(0% 49% 90deg, #9b3d0e, #9b3d0e, rgba(171, 62, 11, 0.8) 0%);
+  background-image: -webkit-gradient(linear, 0% 49%, 0% 51%, from(rgba(171, 62, 11, 0.8)), to(#9b3d0e));
   background-color: #D65719;
   cursor: pointer; }
 form.site_prop .submit:hover {
@@ -278,7 +284,11 @@ form.site_prop .submit:hover {
 form.site_prop .cancel {
   margin-left: 1em; }
 
-#ace_editor {
+form.ace_editor {
+  position: relative;
+  width: 100%; }
+
+div#ace_editor {
   position: relative;
   height: 400px;
   width: 100%;
