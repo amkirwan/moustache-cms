@@ -266,7 +266,7 @@ form.site_prop fieldset {
 form.site_prop fieldset.radio label {
   display: inline; }
 form.site_prop .submit {
-  font-size: 1em;
+  font-size: 1.166666667em;
   color: white;
   border-radius: 5px;
   -moz-border-radius: 5px;
@@ -280,6 +280,7 @@ form.site_prop .submit {
   background-color: #D65719;
   cursor: pointer; }
 form.site_prop .submit:hover {
+  border-bottom: 1px solid rgba(171, 62, 11, 0.8);
   background: #9B3D0E; }
 form.site_prop .cancel {
   font-size: 1.166666667em;
