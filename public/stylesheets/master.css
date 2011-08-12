@@ -282,7 +282,10 @@ form.site_prop .submit {
 form.site_prop .submit:hover {
   background: #9B3D0E; }
 form.site_prop .cancel {
-  margin-left: 1em; }
+  font-size: 1.166666667em;
+  /* 14px / 12px */
+  text-decoration: underline;
+  margin-left: 0.5em; }
 
 form.ace_editor {
   position: relative;

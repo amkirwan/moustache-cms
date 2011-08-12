@@ -268,7 +268,9 @@ form.site_prop {
     background:#9B3D0E;
   }
   .cancel {
-    margin-left: 1em;
+    font-size: 1.166666667em; /* 14px / 12px */
+    text-decoration: underline;
+    margin-left: 0.5em;
   }
 }
 
