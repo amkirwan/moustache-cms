@@ -48,7 +48,7 @@ module ApplicationHelper
     if controller.controller_name == selected_controller_name.to_s
       capture_haml do 
         haml_tag 'li.selected' do 
-          yield
+          yield path
         end
       end
     else

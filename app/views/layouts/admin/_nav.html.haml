@@ -14,7 +14,7 @@
       = link_to "Theme Assets", path
     - if admin?
       - li_current_page admin_users_path, :users do |path|
-        = link_to "User Accounts", path
+        = link_to "User Profiles", path
     - else
       - li_current_page edit_admin_user_path(@current_user.id), :users do |path|
         = link_to "User Account", path

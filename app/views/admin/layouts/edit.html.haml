@@ -1,4 +1,9 @@
-#edit_layout
-  %h3 Edit Layout #{@layout.name}
-  = render :partial => "form",  
-           :locals => { :layout => @layout, :button_label => "Update Layout" }
+#content_header_wrapper
+  %h2 Editing Layout <b>#{@layout.name.humanize}</b>
+
+  -if can?(:destroy, @layout) && !@layout.new_record?
+    %div{:id => "delete_user", :class => "delete"}
+      = link_to "Delete User", [:admin, @layout], :confirm => "Are you sure you want to delete the layout #{@layout.name}", :method => :delete, :class => "action delete"
+
+= render :partial => "form",  
+         :locals => { :layout => @layout, :button_label => "Update Layout" }
