@@ -278,8 +278,11 @@ form.site_prop .submit:hover {
 form.site_prop .cancel {
   margin-left: 1em; }
 
-#layout_content {
+#ace_editor {
   position: relative;
   height: 400px;
   width: 100%;
   background-color: #FFF; }
+
+textarea#layout_content {
+  visibility: hidden; }

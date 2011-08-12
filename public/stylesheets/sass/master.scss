@@ -265,9 +265,13 @@ form.site_prop {
   }
 }
 
-#layout_content {
+#ace_editor {
   position: relative;
   height: 400px;
   width: 100%;
   background-color: #FFF;
+}
+
+textarea#layout_content {
+  visibility: hidden;
 }

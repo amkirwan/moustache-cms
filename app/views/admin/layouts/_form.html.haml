@@ -1,5 +1,5 @@
 #content_inner_wrapper
-  = form_for([:admin, layout], :html => {:class => "site_prop", :autocomplete => :off}) do |f|
+  = form_for([:admin, layout], :html => {:class => "site_prop ace_editor", :autocomplete => :off}) do |f|
     = render :partial => "shared/error_messages",  
              :locals => { :target => layout }
     %fieldset
@@ -7,8 +7,9 @@
       = f.text_field :name
     %fieldset
       = f.label :content, "Content"
-      #layout_content
+      = f.text_area :content
+      #ace_editor
     %fieldset 
-      = f.submit button_label, :class => "submit"
+      = f.submit button_label, :class => "submit ace_submit"
       = f.submit "Save and Continue Editing", :class => "submit"
       = link_to "Cancel", [:admin, :layouts], :class => "cancel"
