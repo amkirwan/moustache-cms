@@ -282,7 +282,7 @@ form.site_prop fieldset {
   form.site_prop fieldset input:focus, form.site_prop fieldset textarea:focus {
     border-right: 1px solid #F2EFEF;
     border-bottom: 1px solid #F2EFEF;
-    background: #F7BE9A; }
+    background: #FAD3BB; }
 form.site_prop fieldset.radio label {
   display: inline; }
 form.site_prop .submit {
