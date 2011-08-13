@@ -109,10 +109,10 @@ h3 {
 /* rounded button links with gradient */
 a:link.action, a:visited.action {
   color: white;
-  border-radius: 14px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -o-border-radius: 14px;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -o-border-radius: 4px;
   text-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8);
   padding: 2px 20px;
   border: 1px solid rgba(92, 92, 92, 0.5);
@@ -267,15 +267,31 @@ form.site_prop fieldset {
     font-weight: bold; }
   form.site_prop fieldset label.radio {
     display: inline; }
+  form.site_prop fieldset input, form.site_prop fieldset textarea {
+    border: none;
+    border-right: 1px solid #FFF;
+    border-bottom: 1px solid #FFF;
+    padding: 4px 8px;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 12%, from(#969696), to(#e2e1df));
+    background-image: -moz-linear-gradient(0% 12% 90deg, #e2e1df, #969696);
+    background-color: #E2E1DF;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px; }
+  form.site_prop fieldset input:focus, form.site_prop fieldset textarea:focus {
+    border-right: 1px solid #F2EFEF;
+    border-bottom: 1px solid #F2EFEF;
+    background: #F7BE9A; }
 form.site_prop fieldset.radio label {
   display: inline; }
 form.site_prop .submit {
   font-size: 1em;
   color: white;
-  border-radius: 5px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -o-border-radius: 5px;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -o-border-radius: 4px;
   text-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8);
   padding: 4px 20px;
   border: 1px solid rgba(92, 92, 92, 0.5);
