@@ -213,7 +213,7 @@ div#nav {
       border-bottom: 1px solid #a8a8a8; }
     div#nav ul li.selected {
       color: #222222;
-      background-image: -moz-linear-gradient(0% 0% 0deg, rgba(92, 92, 92, 0.4), rgba(190, 190, 190, 0.1));
+      background-image: -moz-linear-gradient(0% 0% 0deg, rgba(190, 190, 190, 0.1), rgba(92, 92, 92, 0.4));
       background-image: -webkit-gradient(linear, 100% 0%, 0% 0%, from(rgba(92, 92, 92, 0.4)), to(rgba(190, 190, 190, 0.1))); }
       div#nav ul li.selected a:link, div#nav ul li.selected a:visited {
         color: #222222; }
