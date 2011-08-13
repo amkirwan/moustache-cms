@@ -15,7 +15,8 @@ $footer_bg: #2c2b2b;
 /* text */
 $dark_text: #222;
 $light_text: #FFF;
-$base_text: normal 100% "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, sans-serif;
+$base_font: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, sans-serif;
+$base_text: normal 100% $base_font;
 $heading_font: "proxima-nova-extra-condensed-1", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, Arial, sans-serif;
 
 /* link text */
@@ -58,7 +59,7 @@ a:hover, a:focus {
     content column = 612px
   */
 h1 {
-  font: normal 1.5em / 1 $heading_font; /* 24px / 16px */
+  font: bold 1.5em / 1 $heading_font; /* 24px / 16px */
   font-variant:small-caps;
   color: $dark_text;
 }
@@ -145,7 +146,7 @@ div#welcome {
 }
 
 
-div#admin_nav {
+div#nav {
   float: left;
   width: 23.0392157%; /* 188 / 816 */
   margin-top: 1em;
@@ -158,6 +159,7 @@ div#admin_nav {
       padding-left: 8px;
       border-top: 1px solid $sidebar_border;
       a:link, a:visited {
+        font: $base_text;
         font-size: 1em; /* 14px / 16px */
         line-height: 1.75em; /* 28px / 16px */
         text-decoration: none;
@@ -171,7 +173,7 @@ div#admin_nav {
     li:first-child {
       border-top: 0;
       border-bottom: 1px solid $sidebar_border; 
-      padding: 4px;
+      padding: 4px 0 4px 8px;
       margin-bottom: 2px;
       color: $dark_text;
     }
@@ -200,7 +202,7 @@ div#content {
 
 div#content_header_wrapper {
   border-bottom: 1px solid $sidebar_border;
-  padding: 4px 0;
+  padding: 4px 0 4px 8px;
   overflow: auto;
   h2 {
     float: left;
@@ -217,7 +219,7 @@ div#content_inner_wrapper {
   margin-top: 2px;
   border-top: 1px solid $sidebar_border;
   padding-top: 16px;
-  //padding-left: 8px;
+  padding-left: 8px;
   ul {
     list-style: none;
     li {
@@ -228,13 +230,16 @@ div#content_inner_wrapper {
 /* forms */
 label {
   font: $base_text;
-  font-size: 1.166666667em; /* 14 / 12 */
   font-weight: bold;
+}
+
+input {
+  font-size: 0.928571429em; /* 13px / 14px */
 }
 
 form.site_prop {
   fieldset {
-    margin-bottom: 1em; /* 14px */
+    margin-bottom: 1.142857143em; /* 16px */
     label {
       display: block;
       margin-bottom: 0.357142857em; /* 5px / 14px */
@@ -250,14 +255,14 @@ form.site_prop {
     }
   }
   .submit {
-    font-size: 1.166666667em; 
+    font-size: 1em;
     color: $light_text;
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     -o-border-radius: 5px;
     text-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8);
-    padding: 6px 20px;
+    padding: 4px 20px;
     border: 1px solid rgba(92, 92, 92, 0.5);
     background-image: -moz-linear-gradient(0% 49% 90deg,rgba(155, 61, 14, 1), rgba(155, 61, 14, 1), rgba(171, 62, 11, 0.8) 0%);
     background-image: -webkit-gradient(linear, 0% 49%, 0% 51%, from(rgba(171, 62, 11, 0.8)), to(rgba(155, 61, 14, 1)));
@@ -268,18 +273,20 @@ form.site_prop {
     background:#9B3D0E;
   }
   .cancel {
-    font-size: 1.166666667em; /* 14px / 12px */
+    font-size: 1em;
     text-decoration: underline;
     margin-left: 0.5em;
   }
 }
 
-form.ace_editor {
+form.code {
+  font: $base_text;
+  font-size: 14px;
   position: relative;
   width: 100%;
 }
 
-div#ace_editor {
+div#code {
   position: relative;
   height: 400px;
   width: 100%;
@@ -287,5 +294,5 @@ div#ace_editor {
 }
 
 textarea#layout_content {
-  visibility: hidden;
+  display:none;
 }
