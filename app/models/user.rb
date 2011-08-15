@@ -36,8 +36,12 @@ class User
             :uniqueness => { :scope => :site_id },
             :length => { :minimum => 3 }
   
-  validates :role, :presence => true
+  validates :firstname, :presence => true
+
+  validates :lastname, :presence => true
   
+  validates :role, :presence => true
+
   validates :email,
             :presence => true,
             :uniqueness => { :scope => :site_id },

@@ -10,6 +10,7 @@ $sidebar_bg: #BEBEBE;
 $sidebar_border: #A8A8A8;
 $sidebar_heading: #FB5000;
 $footer_bg: #2c2b2b;
+$error_ex_color: #EE621E;
 
 
 /* text */
@@ -88,6 +89,8 @@ a:hover.action, a:focus.action {
   background: #2C2C2B;
 }
 
+/* error and flash messages */ 
+
 div#flash_notice_wrapper {
 	text-align: center;
 	margin:  0 auto 16px auto ;
@@ -96,6 +99,39 @@ div#flash_notice_wrapper {
 	border-bottom: 1px solid #FFD324;
   background: #FFF6BF;
 }
+
+div .field_with_errors {
+  padding: 2px;
+  background-color: $error_ex_color;
+  display: table;
+}
+
+div#error_explanation {
+  width: 80%;
+  border: 2px solid $hover_text;
+  padding: 8px;
+  margin-bottom: 16px;
+  background-color: #f0f0f0;
+
+  h3 {
+    text-align: left;
+    font-size: 1em; /* 14px */
+    font-weight: bold;
+    padding: 5px 1em 5px 1em;
+    margin: -7px;
+    margin-bottom: 0px;
+    background-color: $error_ex_color;
+    color: $light_text;
+  }
+
+  ul li {
+    font-size: 1em; /* 14px */
+    list-style: bullet;
+  }
+}
+
+
+/* Layout */
 
 #wrapper {
   margin: 0 auto;
@@ -311,7 +347,7 @@ form.site_prop {
     cursor:pointer;
   }
   .submit:hover {
-    background:#9B3D0E;
+    background: #9B3D0E;
   }
   .cancel {
     font-size: 1em;
