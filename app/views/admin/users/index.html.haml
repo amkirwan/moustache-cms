@@ -6,9 +6,7 @@
       = link_to "New User", new_admin_user_path, :class => "action"
 
 #content_inner_wrapper
-  - flash.each do |name, msg|
-    #flash_notice_wrapper
-      %p{:id => "flash_#{name}"}= msg
+  = render :partial => "shared/flash_notice"
 
   %table{:class => "info users"}
     %tr

@@ -6,6 +6,8 @@
       = link_to "New Layout", new_admin_layout_path, :class => "action"
 
 #content_inner_wrapper
+  = render :partial => "shared/flash_notice"
+
   %table{:class => "info layouts"}
     %tr
       %th Layout Name
