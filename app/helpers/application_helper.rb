@@ -36,11 +36,19 @@ module ApplicationHelper
     name = controller.controller_name
     case name
     when "pages"
-      "pages"
+      name  
+    when "site_assets", "asset_collections"
+      "site_assets"
+    when "snippets"
+      name  
     when "layouts"
-      "layouts"
+      name
+    when "theme_assets"
+      name
     when "users"
-      "settings"
+      name
+    when "sites"
+      name 
     end
   end    
 

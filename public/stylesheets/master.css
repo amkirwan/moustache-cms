@@ -218,6 +218,31 @@ div#nav {
       div#nav ul li.selected a:link, div#nav ul li.selected a:visited {
         color: #222222; }
 
+body.pages li#pages,
+body.site_assets li#site_assets,
+body.snippets li#snippets,
+body.layouts li#layouts,
+body.theme_assets li#theme_assets,
+body.users li#users,
+body.sites li#sites {
+  color: #222222;
+  background-image: -moz-linear-gradient(0% 0% 0deg, rgba(190, 190, 190, 0.1), rgba(92, 92, 92, 0.4));
+  background-image: -webkit-gradient(linear, 100% 0%, 0% 0%, from(rgba(92, 92, 92, 0.4)), to(rgba(190, 190, 190, 0.1))); }
+  body.pages li#pages a:link, body.pages li#pages a:visited,
+  body.site_assets li#site_assets a:link,
+  body.site_assets li#site_assets a:visited,
+  body.snippets li#snippets a:link,
+  body.snippets li#snippets a:visited,
+  body.layouts li#layouts a:link,
+  body.layouts li#layouts a:visited,
+  body.theme_assets li#theme_assets a:link,
+  body.theme_assets li#theme_assets a:visited,
+  body.users li#users a:link,
+  body.users li#users a:visited,
+  body.sites li#sites a:link,
+  body.sites li#sites a:visited {
+    color: #222222; }
+
 div#content {
   min-height: 1000px;
   float: left;

@@ -190,6 +190,22 @@ div#nav {
   }
 }
 
+
+body.pages li#pages, 
+body.site_assets li#site_assets, 
+body.snippets li#snippets, 
+body.layouts li#layouts,
+body.theme_assets li#theme_assets,
+body.users li#users,
+body.sites li#sites {
+  color: $dark_text;
+  background-image: -moz-linear-gradient(0% 0% 0deg, rgba(190, 190, 190, 0.1), rgba(92, 92, 92, 0.4));
+  background-image: -webkit-gradient(linear, 100% 0%, 0% 0%, from(rgba(92, 92, 92, 0.4)), to(rgba(190, 190, 190, 0.1)));
+  a:link, a:visited {
+    color: $dark_text;
+  }
+}
+
 div#content {
   min-height: $body_min_height; 
   float: left;
