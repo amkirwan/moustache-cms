@@ -201,7 +201,8 @@ div#content {
 
 div#content_header_wrapper {
   border-bottom: 1px solid $sidebar_border;
-  padding: 4px 0 4px 8px;
+  padding: 4px 8px;
+  padding-right: 8px;
   overflow: auto;
   h2 {
     float: left;

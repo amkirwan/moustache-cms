@@ -229,7 +229,8 @@ div#content {
 
 div#content_header_wrapper {
   border-bottom: 1px solid #a8a8a8;
-  padding: 4px 0 4px 8px;
+  padding: 4px 8px;
+  padding-right: 8px;
   overflow: auto; }
   div#content_header_wrapper h2 {
     float: left; }
