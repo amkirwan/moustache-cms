@@ -82,13 +82,6 @@ a:hover, a:focus {
   color: #9b3c0e;
   text-decoration: underline; }
 
-/*
-  960px for total page width
-  816px for content area
-  12 column grid with 60px wide columns and 8px padding
-  admin_nav column = 204px
-  content column = 612px
-*/
 h1 {
   font: bold 1.5em/1 "proxima-nova-extra-condensed-1", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, Arial, sans-serif;
   /* 24px / 16px */
@@ -124,11 +117,26 @@ a:hover.action, a:focus.action {
   text-decoration: none;
   background: #2C2C2B; }
 
+div#flash_notice_wrapper {
+  text-align: center;
+  margin: 0 auto 16px auto;
+  padding: 4px 0;
+  border-top: 1px solid #FFD324;
+  border-bottom: 1px solid #FFD324;
+  background: #FFF6BF; }
+
 #wrapper {
   margin: 0 auto;
   width: 85%;
   /* 960px * 0.85 = 816px */ }
 
+/*
+  960px for total page width
+  816px for content area
+  12 column grid with 60px wide columns and 8px padding
+  admin_nav column = 204px
+  content column = 612px
+*/
 #header {
   width: 100%;
   background: #2c2b2b;
