@@ -1,4 +1,5 @@
-= form_for([:admin, page], :html => { :autocomplete => :off }) do |f|
+#content_inner_wrapper
+= form_for([:admin, page], :html => { :class => "site_prop", :autocomplete => :off }) do |f|
   = render :partial => "shared/error_messages", 
            :locals => { :target => page }
   %fieldset
@@ -19,12 +20,12 @@
   - if @page.permalink
     = f.label :permalink
     = f.text_field :permalink
-  %fieldset
   = f.fields_for :meta_data, hash_to_open_struct(@page.meta_data) do |os|
     - os.object.marshal_dump.each_key do |key|
-      = os.label key
-      = os.text_field key
-  %fieldset
+      %fieldset 
+        = os.label key
+        = os.text_field key
+  %fieldset{:class => "radio"}
     = f.label :editors, "Editors"
     - User.all.each do |user|
       = check_box_tag "page[editor_ids][]", user.id, page.editor_ids.include?(user.id), :id => "editor_id_#{user.puid}"
