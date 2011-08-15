@@ -186,6 +186,12 @@ describe User do
   
   # -- Instance Methods -----------------------------------------------
   describe "Instance Methods" do
+
+    describe "full_name" do
+      it "should return the users first and lastname" do
+        @user.full_name.should == "Foobar Baz"
+      end
+    end
     describe "#role?" do
       it "should return true when the user role equals the base role" do
         @user.role = "admin"
