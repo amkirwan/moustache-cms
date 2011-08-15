@@ -304,9 +304,6 @@ form.site_prop {
       margin-bottom: 0.357142857em; /* 5px / 14px */
       font-weight: bold;
     }
-    label.radio {
-      display: inline;
-    }  
     input, textarea {
       border: none;
       border-right: 1px solid #FFF;
@@ -326,7 +323,7 @@ form.site_prop {
       background: #FAD3BB;
     }
   }
-  fieldset.radio {
+  fieldset.radio, fieldset.inline {
     label {
       display: inline;
     }

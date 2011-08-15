@@ -25,34 +25,33 @@
       %fieldset 
         = os.label key
         = os.text_field key
-  %fieldset{:class => "radio"}
+  %fieldset{:class => "inline"}
     = f.label :editors, "Editors"
     - User.all.each do |user|
       = check_box_tag "page[editor_ids][]", user.id, page.editor_ids.include?(user.id), :id => "editor_id_#{user.puid}"
       = label_tag "page[editor_ids][#{user.puid}]", user.puid.downcase
-  %fieldset
+  %fieldset{:class => "inline"}
     = f.label :layout, "Layout"
     = f.collection_select :layout_id, Layout.all, :id, :name
   = f.fields_for :current_state do |builder|
-    %fieldset
+    %fieldset{:class => "inline"}
       = builder.label :current_state, "Status"
       = builder.collection_select :name, CurrentState.all, :id, :name
   - if !@page.parent.try(:post_container?)
-    %fieldset 
+    %fieldset{:class => "inline"} 
       = f.label :post_container
       = f.check_box :post_container
-  - if @page.parent.try(:post_container?)
-    %fieldset
-      = f.label :tag_list
-      = f.text_field :tag_list
   = f.fields_for :page_parts do |builder|
-    %fieldset
-      = builder.label :name, "Page Part Name"
-      = builder.text_field :name
-      = builder.label :filter_name, "Filter"
-      = builder.collection_select :filter_name, Filter.all_page_filters, :id, :name
+    %fieldset.page_contents
+      %fieldset
+        = builder.label :name, "Page Part Name"
+        = builder.text_field :name
+      %fieldset{:class => "inline"}
+        = builder.label :filter_name, "Filter"
+        = builder.collection_select :filter_name, Filter.all_page_filters, :id, :name
+      %fieldset
       = builder.label :content, "Page Part Content"
-      = builder.text_area :content, :cols => "40", :rows => "12"
+      = builder.text_area :content
   %fieldset
     = f.submit button_label
     = link_to "Cancel", [:admin, :pages]
