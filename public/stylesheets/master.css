@@ -135,7 +135,8 @@ a:hover.action, a:focus.action {
   height: 40px; }
   #header h1 {
     float: left;
-    margin-left: 4px;
+    margin-left: 0.4901961%;
+    /* 4px / 816px */
     /* 20/16=1.25  24/16=1.5 */
     letter-spacing: .15em; }
     #header h1 a {
@@ -165,7 +166,8 @@ div#footer {
 
 div#welcome {
   float: right;
-  padding-right: 8px;
+  padding-right: 0.9803922%;
+  /* 8px / 816px */
   padding-top: 1.25em; }
   div#welcome ul {
     list-style: none;
@@ -181,10 +183,9 @@ div#welcome {
 div#nav {
   float: left;
   width: 23.0392157%;
-  /* 188 / 816 */
+  /* 188 / 816 + margin-right = 204px */
   margin-top: 1em;
-  margin-right: 16px;
-  /* width of 204px with margin */ }
+  margin-right: 16px; }
   div#nav ul {
     padding-right: 0px;
     text-align: left;
@@ -195,7 +196,7 @@ div#nav {
       div#nav ul li a:link, div#nav ul li a:visited {
         font: normal 100% "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, sans-serif;
         font-size: 1em;
-        /* 14px / 16px */
+        /* 16px */
         line-height: 1.75em;
         /* 28px / 16px */
         text-decoration: none;
@@ -204,7 +205,7 @@ div#nav {
         color: #9b3c0e;
         text-decoration: none; }
     div#nav ul li:first-child {
-      border-top: 0;
+      border: 0;
       border-bottom: 1px solid #a8a8a8;
       padding: 4px 0 4px 8px;
       margin-bottom: 2px;
@@ -247,7 +248,7 @@ div#content {
   min-height: 1000px;
   float: left;
   width: 73.0392157%;
-  /* 596 / 816 */
+  /* (612 - 16) / 816 */
   margin: 1em 0;
   padding-left: 16px;
   background: #f9f8f3 url("/images/content_bg.png") repeat-y 0 0; }

@@ -107,7 +107,7 @@ a:hover.action, a:focus.action {
   height: 40px;
   h1 {
     float: left;
-    margin-left: 4px;
+    margin-left: 0.4901961%; /* 4px / 816px */
     @include light_text_links(1.25em, 1.5em); /* 20/16=1.25  24/16=1.5 */
     letter-spacing: .15em;
   }
@@ -129,7 +129,7 @@ div#footer {
 
 div#welcome {
   float: right;
-  padding-right: 8px;
+  padding-right: 0.9803922%; /* 8px / 816px */
   padding-top: 1.25em;
   ul {
     list-style: none;
@@ -147,9 +147,9 @@ div#welcome {
 
 div#nav {
   float: left;
-  width: 23.0392157%; /* 188 / 816 */
+  width: 23.0392157%; /* 188 / 816 + margin-right = 204px */
   margin-top: 1em;
-  margin-right: 16px; /* width of 204px with margin */
+  margin-right: 16px;
   ul {
     padding-right: 0px;
     text-align: left;
@@ -159,7 +159,7 @@ div#nav {
       border-top: 1px solid $sidebar_border;
       a:link, a:visited {
         font: $base_text;
-        font-size: 1em; /* 14px / 16px */
+        font-size: 1em; /* 16px */
         line-height: 1.75em; /* 28px / 16px */
         text-decoration: none;
         color: $nav_text;
@@ -170,7 +170,7 @@ div#nav {
 			}
     }
     li:first-child {
-      border-top: 0;
+      border: 0;
       border-bottom: 1px solid $sidebar_border; 
       padding: 4px 0 4px 8px;
       margin-bottom: 2px;
@@ -209,7 +209,7 @@ body.sites li#sites {
 div#content {
   min-height: $body_min_height; 
   float: left;
-  width: 73.0392157%; /* 596 / 816 */
+  width: 73.0392157%; /* (612 - 16) / 816 */
   margin: 1em 0; 
   padding-left: 16px;
   background: $content_bg url("/images/content_bg.png") repeat-y 0 0; 
