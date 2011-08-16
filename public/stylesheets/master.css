@@ -401,7 +401,6 @@ form.site_prop .foldable {
       transform: rotate(-90deg); }
 
 div#pages_list {
-  margin-top: 10px;
   width: 100%; }
   div#pages_list ul#pages {
     display: block;
