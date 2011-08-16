@@ -1,0 +1,8 @@
+#page_editors{:class => "foldable"}
+  %fieldset
+    %legend Page Editors
+    %fieldset{:class => "inline"}
+      = f.label :editors, "Editors"
+      - User.all.each do |user|
+        = check_box_tag "page[editor_ids][]", user.id, page.editor_ids.include?(user.id), :id => "editor_id_#{user.puid}"
+        = label_tag "page[editor_ids][#{user.puid}]", user.puid.downcase
