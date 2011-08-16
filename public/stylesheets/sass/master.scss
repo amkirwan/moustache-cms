@@ -363,7 +363,7 @@ form.site_prop {
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     -o-border-radius: 4px;
-    background-color: foldable_bg;
+    background-color: $foldable_bg;
     legend {
       padding: 4px 8px;
       margin-left: - 8px;
@@ -376,6 +376,18 @@ form.site_prop {
       color: $light_text;
       width: 100%;
       background: rgba(44, 44, 44, 0.8);
+      span {
+        display: inline-block;
+        width: 9px;
+        height: 6px;
+        position: relative;
+        left: 0.714285714em; /* 10px / 14px */
+        bottom: 1px;
+        background: transparent url(/images/fold-arrow.png) no-repeat 0 0
+      }
+      .span_rotate {
+        -webkit-transform: rotate(-90deg);
+      }
     }
   }
 }

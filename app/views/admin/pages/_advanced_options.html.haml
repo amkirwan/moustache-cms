@@ -1,7 +1,8 @@
 #advanced_options{:class => "foldable"}
   %fieldset 
-    %legend Advanced Options
-    %ul.form_fields
+    %legend Advanced Options<span class="span_rotate"></span>
+    %ul.form_fields{:style => "display: none"}
+
       %li
         = f.label :slug, "Path Name"
         = f.text_field :slug

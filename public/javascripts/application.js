@@ -34,6 +34,18 @@ $(document).ready(function(){
         }
       });
     });
+    
+    $('.foldable fieldset legend').mouseup(function() {
+      var legend = $(this);
+      legend.next("ul.form_fields").slideToggle("slow", function() {
+        if ( legend.children().first().hasClass("span_rotate") ) {
+          legend.children().first().removeClass('span_rotate');
+        } else {
+          legend.children().first().addClass('span_rotate');
+        }
+      });
+    });
+
   } else if ($('body.layouts').length) {
     $('textarea.code').markItUp(htmlSettings);
   }
