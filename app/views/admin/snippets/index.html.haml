@@ -14,6 +14,6 @@
       %th
     - @snippets.each do |snippet|
       %tr{:class => "#{cycle('even', 'odd')}"}
-        %td.name= link_to snippet.name edit_admin_snippet_path(snippet)
+        %td.name= link_to snippet.name, edit_admin_snippet_path(snippet)
         - if can? :destroy, snippet
           %td.delete= link_to "Delete", admin_snippet_path(snippet), :method => :delete, :confirm => "Are you sure you want to delete the snippet #{snippet.name}", :class => "delete"

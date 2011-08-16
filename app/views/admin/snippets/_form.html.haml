@@ -1,15 +1,18 @@
-= form_for([:admin, snippet]) do |f|
-  = render :partial => "shared/error_messages", :locals => {:target => snippet}
-  %fieldset
-    = f.label :name
-    = f.text_field :name
-  %fieldset
-    = f.label :filter
-    = f.collection_select :filter_name, Filter.all, :id, :name
-  %fielset
-    = f.label :content
-    = f.text_area :content, :cols => "100"
-  %fieldset
-    = f.submit
-    = f.submit "Save and Continue Editing"
-    = link_to "Cancel", [:admin, :snippets]
+#content_inner_wrapper
+  = form_for([:admin, snippet], :html => {:class => "site_prop", :autocomplete => :off}) do |f|
+    = render :partial => "shared/error_messages", :locals => {:target => snippet}
+    %fieldset
+      %ul.form_fields
+        %li
+          = f.label :name
+          = f.text_field :name
+        %li
+          = f.label :filter
+          = f.collection_select :filter_name, Filter.all, :id, :name
+        %li
+          = f.label :content
+          = f.text_area :content, :cols => "100", :class => "code"
+        %li
+          = f.submit button_label, :class => "submit"
+          = f.submit "Save and Continue Editing", :class => "submit"
+          = link_to "Cancel", [:admin, :snippets], :class => "cancel"
