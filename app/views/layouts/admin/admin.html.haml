@@ -10,9 +10,14 @@
     
     = javascript_include_tag "markitup/jquery.markitup"
     = javascript_include_tag "markitup/sets/html/set"
+    = javascript_include_tag "markitup/sets/textile/set"
+    = javascript_include_tag "markitup/sets/markdown/set"
     
     = stylesheet_link_tag "markitup/skins/markitup/style.css"
+    
     = stylesheet_link_tag "markitup/sets/html/style.css"
+    = stylesheet_link_tag "markitup/sets/textile/style.css"
+    = stylesheet_link_tag "markitup/sets/markdown/style.css"
 
     = csrf_meta_tag
   %body{:class => body_id_set}
