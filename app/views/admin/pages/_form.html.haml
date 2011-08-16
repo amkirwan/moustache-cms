@@ -8,5 +8,7 @@
     = render :partial => "editors", :locals => {:f => f, :page => page}
     = render :partial => "page_parts", :locals => {:f => f}
     %fieldset
-      = f.submit button_label, :class => "submit"
-      = link_to "Cancel", [:admin, :pages], :class => "cancel"
+      %ul.form_fields
+        %li
+          = f.submit button_label, :class => "submit"
+          = link_to "Cancel", [:admin, :pages], :class => "cancel"

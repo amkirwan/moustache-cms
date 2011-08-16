@@ -3,12 +3,14 @@
     = render :partial => "shared/error_messages",  
              :locals => { :target => layout }
     %fieldset
-      = f.label :name, "Name"
-      = f.text_field :name
-    %fieldset
-      = f.label :content, "Content"
-      = f.text_area :content, :class => "code"
-    %fieldset 
-      = f.submit button_label, :class => "submit"
-      = f.submit "Save and Continue Editing", :class => "submit"
-      = link_to "Cancel", [:admin, :layouts], :class => "cancel"
+      %ul.form_fields
+        %li 
+          = f.label :name, "Name"
+          = f.text_field :name
+        %li 
+          = f.label :content, "Content"
+          = f.text_area :content, :class => "code"
+        %li
+          = f.submit button_label, :class => "submit"
+          = f.submit "Save and Continue Editing", :class => "submit"
+          = link_to "Cancel", [:admin, :layouts], :class => "cancel"

@@ -292,23 +292,14 @@ input {
 }
 
 
-ul.form_fields {
-    list-style: none;
-  li {
-    list-style: none;
-  }
-  li.inline {
-    list-style: none;
-    display:inline
-  }
-}
+
 
 form.site_prop {
   fieldset {
-    margin-bottom: 1em;
+    margin-bottom: 8px;
     label {
       display: block;
-      margin-bottom: 0.357142857em; /* 5px / 14px */
+      margin-bottom: 0.214285714em; /* 3px / 14px */
       font-weight: bold;
     }
     input, textarea {
@@ -328,6 +319,27 @@ form.site_prop {
       border-right: 1px solid #F2EFEF;
       border-bottom: 1px solid #F2EFEF;
       background: #FFF6BF;
+    }
+  }
+  ul.form_fields {
+    list-style: none;
+    li {
+      list-style: none;
+      padding-bottom: 8px;
+      input[type="radio"] {
+        display: inline;
+      }
+    }
+    li.inline {
+      label {
+        display: inline;
+      }
+    } 
+    li:first-child {
+      padding-top: 8px;
+    }
+    li:last-child {
+      padding-bottom: 0;
     }
   }
   .submit {
@@ -372,10 +384,7 @@ form.site_prop {
       border-top-right-radius: 4px;
       color: $light_text;
       width: 100%;
-      background: $header_bg;
-    }
-    fieldset:first-child {
-      padding-top: 8px;
+      background: rgba(44, 44, 44, 0.8);
     }
   }
 }

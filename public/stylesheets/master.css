@@ -317,20 +317,12 @@ input {
   font-size: 0.928571429em;
   /* 13px / 14px */ }
 
-ul.form_fields {
-  list-style: none; }
-  ul.form_fields li {
-    list-style: none; }
-  ul.form_fields li.inline {
-    list-style: none;
-    display: inline; }
-
 form.site_prop fieldset {
-  margin-bottom: 1em; }
+  margin-bottom: 8px; }
   form.site_prop fieldset label {
     display: block;
-    margin-bottom: 0.357142857em;
-    /* 5px / 14px */
+    margin-bottom: 0.214285714em;
+    /* 3px / 14px */
     font-weight: bold; }
   form.site_prop fieldset input, form.site_prop fieldset textarea {
     border: none;
@@ -348,6 +340,19 @@ form.site_prop fieldset {
     border-right: 1px solid #F2EFEF;
     border-bottom: 1px solid #F2EFEF;
     background: #FFF6BF; }
+form.site_prop ul.form_fields {
+  list-style: none; }
+  form.site_prop ul.form_fields li {
+    list-style: none;
+    padding-bottom: 8px; }
+    form.site_prop ul.form_fields li input[type="radio"] {
+      display: inline; }
+  form.site_prop ul.form_fields li.inline label {
+    display: inline; }
+  form.site_prop ul.form_fields li:first-child {
+    padding-top: 8px; }
+  form.site_prop ul.form_fields li:last-child {
+    padding-bottom: 0; }
 form.site_prop .submit {
   font-size: 1em;
   color: white;
@@ -387,6 +392,4 @@ form.site_prop .foldable {
     border-top-right-radius: 4px;
     color: white;
     width: 100%;
-    background: #2c2b2b; }
-  form.site_prop .foldable fieldset:first-child {
-    padding-top: 8px; }
+    background: rgba(44, 44, 44, 0.8); }

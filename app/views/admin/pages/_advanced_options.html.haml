@@ -1,9 +1,10 @@
 #advanced_options{:class => "foldable"}
   %fieldset 
     %legend Advanced Options
-    %fieldset
-      = f.label :slug, "Path Name"
-      = f.text_field :slug
-    %fieldset
-      = f.label :breadcrumb, "Breadcrumb"
-      = f.text_field :breadcrumb
+    %ul.form_fields
+      %li
+        = f.label :slug, "Path Name"
+        = f.text_field :slug
+      %li
+        = f.label :breadcrumb, "Breadcrumb"
+        = f.text_field :breadcrumb
