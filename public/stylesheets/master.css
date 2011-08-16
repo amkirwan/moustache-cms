@@ -309,14 +309,6 @@ div#content_inner_wrapper {
   padding-left: 8px; }
 
 /* forms */
-label {
-  font: normal 100% "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, sans-serif;
-  font-weight: bold; }
-
-input {
-  font-size: 0.928571429em;
-  /* 13px / 14px */ }
-
 form.site_prop fieldset {
   margin-bottom: 8px; }
   form.site_prop fieldset label {
@@ -374,13 +366,13 @@ form.site_prop .cancel {
   text-decoration: underline;
   margin-left: 0.5em; }
 form.site_prop .foldable {
-  padding: 0 8px 8px 8px;
+  padding: 0 8px 4px 8px;
   margin-bottom: 8px;
   border-radius: 4px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   -o-border-radius: 4px;
-  background-color: #E9E8E6; }
+  background-color: foldable_bg; }
   form.site_prop .foldable legend {
     padding: 4px 8px;
     margin-left: -8px;
@@ -393,3 +385,51 @@ form.site_prop .foldable {
     color: white;
     width: 100%;
     background: rgba(44, 44, 44, 0.8); }
+
+div#pages_list {
+  margin-top: 10px;
+  width: 100%; }
+  div#pages_list ul#pages {
+    display: block;
+    list-style: none;
+    width: 100%;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -o-border-radius: 4px; }
+    div#pages_list ul#pages li {
+      position: relative;
+      padding: 5px 0 0 10px;
+      margin-bottom: 5px;
+      border-radius: 4px; }
+      div#pages_list ul#pages li strong {
+        display: block;
+        height: 26px;
+        background: #e9e8e6; }
+      div#pages_list ul#pages li div {
+        color: #9c9c9c;
+        position: absolute;
+        right: 0px;
+        top: 5px;
+        font-size: 0.857142857em;
+        /* 12 / 14 */ }
+        div#pages_list ul#pages li div div {
+          position: absolute;
+          right: -60px;
+          top: -3px; }
+      div#pages_list ul#pages li a:link, div#pages_list ul#pages li a:visited {
+        font-size: 14px;
+        line-height: 26px;
+        padding: 4px 10px;
+        margin-right: 8px;
+        text-decoration: none;
+        color: #d54e0e;
+        text-decoration: none;
+        -webkit-transition: color 0.3s ease;
+        -moz-transition: color 0.3s ease;
+        -o-transition: color 0.3s ease;
+        transition: color 0.3s ease; }
+      div#pages_list ul#pages li a:hover, div#pages_list ul#pages li a:focus {
+        color: #9b3c0e;
+        text-decoration: none; }
+    div#pages_list ul#pages li#root_node {
+      padding-left: 0; }

@@ -11,10 +11,12 @@ $sidebar_border: #A8A8A8;
 $sidebar_heading: #FB5000;
 $footer_bg: #2c2b2b;
 $error_ex_color: #EE621E;
+$foldable_bg: #E9E8E6;
 
 
 /* text */
 $dark_text: #222;
+$med_text: #9C9C9C;
 $light_text: #FFF;
 $base_font: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, sans-serif;
 $base_text: normal 100% $base_font;
@@ -282,17 +284,6 @@ div#content_inner_wrapper {
 }
 
 /* forms */
-label {
-  font: $base_text;
-  font-weight: bold;
-}
-
-input {
-  font-size: 0.928571429em; /* 13px / 14px */
-}
-
-
-
 
 form.site_prop {
   fieldset {
@@ -366,13 +357,13 @@ form.site_prop {
     margin-left: 0.5em;
   }
   .foldable {
-    padding: 0 8px 8px 8px;
+    padding: 0 8px 4px 8px;
     margin-bottom: 8px;
     border-radius: 4px;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     -o-border-radius: 4px;
-    background-color: #E9E8E6;
+    background-color: foldable_bg;
     legend {
       padding: 4px 8px;
       margin-left: - 8px;
@@ -389,3 +380,58 @@ form.site_prop {
   }
 }
 
+div#pages_list {
+	margin-top: 10px;
+	width: 100%;
+	ul#pages {
+		display: block;
+		list-style: none;
+    width: 100%;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -o-border-radius: 4px;	
+		li {
+			position: relative;
+			padding: 5px 0 0 10px;
+			margin-bottom: 5px;
+			border-radius: 4px;
+    strong {
+				display: block;
+				height: 26px;
+				background: $foldable_bg;
+			}
+      div {
+				color: $med_text;
+				position: absolute;
+				right: 0px;
+				top: 5px;
+        font-size: 0.857142857em; /* 12 / 14 */
+				div {
+				  position: absolute;
+				  right: -60px;
+				  top: -3px;
+				}
+			}
+			a:link, a:visited {
+			  font-size: 14px;
+			  line-height: 26px;
+			  padding: 4px 10px;
+			  margin-right: 8px;
+			  text-decoration: none;
+			  color: $link_text;
+			  text-decoration: none;
+			  -webkit-transition: color 0.3s ease;
+			  -moz-transition: color 0.3s ease;
+			  -o-transition: color 0.3s ease;
+			  transition: color 0.3s ease;
+			}
+			a:hover, a:focus {
+			  color: $hover_text; 
+			  text-decoration: none;
+			}
+		}
+		li#root_node {
+			padding-left: 0;
+		}
+	}
+}

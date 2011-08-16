@@ -18,7 +18,7 @@ module ApplicationHelper
         ret += '</strong>'
         ret += '<div class="page-info">'
         ret += '<em>'
-        ret += item.updated_at.strftime("Last updated %B %d @ %H:%M by #{item.updated_by.puid}")
+        ret += item.updated_at.strftime("updated at %B %d %H:%M by #{item.updated_by.puid}")
         ret += '</em>'
         if can? :destroy, item
           ret += link_to "Delete", admin_page_path(item), :method => :delete, :confirm => "Are you sure you want to delete the page #{item.title}", :class => "delete" if can? :destroy, item
