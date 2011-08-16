@@ -430,6 +430,9 @@ div#pages_list {
           position: absolute;
           right: -60px;
           top: -3px; }
+        div#pages_list ul#pages li div img {
+          position: relative;
+          top: 3px; }
       div#pages_list ul#pages li a:link, div#pages_list ul#pages li a:visited {
         font-size: 14px;
         line-height: 26px;
