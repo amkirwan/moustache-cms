@@ -395,7 +395,10 @@ form.site_prop .foldable {
       bottom: 1px;
       background: transparent url(/images/fold-arrow.png) no-repeat 0 0; }
     form.site_prop .foldable legend .span_rotate {
-      -webkit-transform: rotate(-90deg); }
+      -webkit-transform: rotate(-90deg);
+      -moz-transform: rotate(-90deg);
+      -o-transform: rotate(-90deg);
+      transform: rotate(-90deg); }
 
 div#pages_list {
   margin-top: 10px;
