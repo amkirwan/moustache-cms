@@ -23,8 +23,14 @@ table.info {
     text-align: center;
     padding: 8px 0; }
   table.info td.name {
+    width: 35%;
     text-align: left;
     padding-left: 8px; }
+  table.info td.delete {
+    width: 20%; }
+
+table.two_col {
+  width: 50%; }
 
 table.users .name {
   width: 35%; }

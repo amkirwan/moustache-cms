@@ -43,8 +43,14 @@ table.info {
     text-align: center;
     padding: 8px 0; }
   table.info td.name {
+    width: 35%;
     text-align: left;
     padding-left: 8px; }
+  table.info td.delete {
+    width: 20%; }
+
+table.two_col {
+  width: 50%; }
 
 table.users .name {
   width: 35%; }
@@ -102,10 +108,10 @@ h3 {
 /* rounded button links with gradient */
 a:link.action, a:visited.action {
   color: white;
-  border-radius: 4px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   -o-border-radius: 4px;
+  border-radius: 4px;
   text-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8);
   padding: 4px 20px;
   border: 1px solid rgba(92, 92, 92, 0.5);
@@ -341,10 +347,10 @@ ul.submenu {
     display: block; }
   ul.submenu li.top_menu {
     color: white;
-    border-radius: 4px;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     -o-border-radius: 4px;
+    border-radius: 4px;
     text-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8);
     padding: 4px 20px;
     border: 1px solid rgba(92, 92, 92, 0.5);
@@ -392,13 +398,13 @@ form.site_prop ul.form_fields {
     padding-top: 8px; }
   form.site_prop ul.form_fields li:last-child {
     padding-bottom: 0; }
-form.site_prop .submit {
+form.site_prop .submit, form.site_prop .file_field {
   font-size: 1em;
   color: white;
-  border-radius: 4px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   -o-border-radius: 4px;
+  border-radius: 4px;
   text-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8);
   padding: 4px 20px;
   border: 1px solid rgba(92, 92, 92, 0.5);
@@ -406,7 +412,7 @@ form.site_prop .submit {
   background-image: -webkit-gradient(linear, 0% 49%, 0% 51%, from(rgba(171, 62, 11, 0.8)), to(#9b3d0e));
   background-color: #D65719;
   cursor: pointer; }
-form.site_prop .submit:hover {
+form.site_prop .submit:hover, form.site_prop .file_field:hover {
   background: #9B3D0E; }
 form.site_prop .cancel {
   font-size: 1em;
@@ -415,10 +421,10 @@ form.site_prop .cancel {
 form.site_prop .foldable {
   padding: 0 8px 4px 8px;
   margin-bottom: 8px;
-  border-radius: 4px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   -o-border-radius: 4px;
+  border-radius: 4px;
   background-color: #e9e8e6; }
   form.site_prop .foldable legend {
     padding: 4px 8px;
@@ -459,12 +465,12 @@ div#pages_list {
     width: 100%;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
-    -o-border-radius: 4px; }
+    -o-border-radius: 4px;
+    border-radius: 4px; }
     div#pages_list ul#pages li {
       position: relative;
       padding: 5px 0 0 10px;
-      margin-bottom: 5px;
-      border-radius: 4px; }
+      margin-bottom: 5px; }
       div#pages_list ul#pages li strong {
         display: block;
         height: 26px;
@@ -500,3 +506,40 @@ div#pages_list {
         text-decoration: none; }
     div#pages_list ul#pages li#root_node {
       padding-left: 0; }
+
+ul#assets {
+  overflow: auto; }
+  ul#assets li {
+    float: left;
+    padding: 1em;
+    /* 5px / 14px */
+    margin: 1em;
+    border: 1px solid #a8a8a8;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+    background: #FDFCFA;
+    -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+    -box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5); }
+    ul#assets li img {
+      border: 1px solid #FDFCFA; }
+    ul#assets li img:hover {
+      border: 1px solid #9b3c0e; }
+  ul#assets div.image_name {
+    padding-top: 2px;
+    text-align: center; }
+
+div.theme_assets {
+  margin: 1em 0;
+  min-height: 5em; }
+
+div.add_some h4 {
+  font-size: 5em;
+  /* 42 / 14 */
+  font-weight: bold;
+  text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.5);
+  text-align: center; }
+  div.add_some h4 a:hover {
+    text-decoration: none; }

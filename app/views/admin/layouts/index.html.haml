@@ -7,13 +7,17 @@
 
 #content_inner_wrapper
   = render :partial => "shared/flash_notice"
-
-  %table{:class => "info layouts"}
-    %tr
-      %th Layout Name
-      %th
-    - @layouts.each do |layout|
-      %tr{:class => "#{cycle('even', 'odd')}"}
-        %td.name= link_to layout.name, [:edit, :admin, layout]
-        - if can? :destroy, layout
-          %td.delete= link_to "Delete", [:admin, layout], :method => :delete, :confirm => "Are you sure you want to delete the layout #{layout.name}", :class => "delete"
+  
+  - if @layouts.empty?
+    %div.add_some
+      %h4= link_to "Add A Layout", [:new, :admin, :layout]
+  - else 
+    %table{:class => "info layouts two_col"}
+      %tr
+        %th Layout Name
+        %th
+      - @layouts.each do |layout|
+        %tr{:class => "#{cycle('even', 'odd')}"}
+          %td.name= link_to layout.name, [:edit, :admin, layout]
+          - if can? :destroy, layout
+            %td.delete= link_to "Delete", [:admin, layout], :method => :delete, :confirm => "Are you sure you want to delete the layout #{layout.name}", :class => "delete"

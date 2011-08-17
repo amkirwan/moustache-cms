@@ -34,9 +34,17 @@ table.info {
     padding: 8px 0; 
   }
   td.name {
+    width: 35%;
     text-align: left;
     padding-left: 8px;
   }
+  td.delete {
+    width: 20%;
+  }
+}
+
+table.two_col {
+  width: 50%;
 }
 
 table.users {

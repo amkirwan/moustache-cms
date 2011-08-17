@@ -74,10 +74,10 @@ h3 {
 /* rounded button links with gradient */
 a:link.action, a:visited.action {
   color: $light_text;
-  border-radius: 4px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   -o-border-radius: 4px;
+  border-radius: 4px;
   text-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8);
   padding: 4px 20px;
   border: 1px solid rgba(92, 92, 92, 0.5);
@@ -322,10 +322,10 @@ ul.submenu {
   }
   li.top_menu {
     color: $light_text;
-    border-radius: 4px;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     -o-border-radius: 4px;
+    border-radius: 4px;
     text-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8);
     padding: 4px 20px;
     border: 1px solid rgba(92, 92, 92, 0.5);
@@ -388,13 +388,13 @@ form.site_prop {
       padding-bottom: 0;
     }
   }
-  .submit {
+  .submit, .file_field {
     font-size: 1em;
     color: $light_text;
-    border-radius: 4px;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     -o-border-radius: 4px;
+    border-radius: 4px;
     text-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8);
     padding: 4px 20px;
     border: 1px solid rgba(92, 92, 92, 0.5);
@@ -403,7 +403,7 @@ form.site_prop {
     background-color: #D65719;
     cursor:pointer;
   }
-  .submit:hover {
+  .submit:hover, .file_field:hover {
     background: #9B3D0E;
   }
   .cancel {
@@ -414,10 +414,10 @@ form.site_prop {
   .foldable {
     padding: 0 8px 4px 8px;
     margin-bottom: 8px;
-    border-radius: 4px;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     -o-border-radius: 4px;
+    border-radius: 4px;
     background-color: $foldable_bg;
     legend {
       padding: 4px 8px;
@@ -463,11 +463,11 @@ div#pages_list {
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     -o-border-radius: 4px;	
+    border-radius: 4px;
 		li {
 			position: relative;
 			padding: 5px 0 0 10px;
 			margin-bottom: 5px;
-			border-radius: 4px;
     strong {
 				display: block;
 				height: 26px;
@@ -511,4 +511,49 @@ div#pages_list {
 			padding-left: 0;
 		}
 	}
+}
+
+ul#assets {
+  overflow: auto;
+  li {
+    float: left;
+    padding: 1em; /* 5px / 14px */
+    margin: 1em;
+    border: 1px solid $sidebar_border;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+    background: #FDFCFA;
+    -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);  
+    -box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+    img {
+      border: 1px solid #FDFCFA;
+    }
+    img:hover {
+      border: 1px solid $hover_text;
+    }
+  }
+  div.image_name {
+    padding-top: 2px; 
+    text-align: center;
+  } 
+}
+
+div.theme_assets {
+  margin: 1em 0;
+  min-height: 5em;
+} 
+
+div.add_some {
+  h4 {
+    font-size: 5em; /* 42 / 14 */    
+    font-weight: bold;
+    text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    a:hover {
+      text-decoration: none;
+    }
+  }
 }

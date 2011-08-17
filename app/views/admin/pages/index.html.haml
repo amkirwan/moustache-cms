@@ -8,5 +8,9 @@
 #content_inner_wrapper
   = render :partial => "shared/flash_notice"
 
-  #pages_list
-    = tree_ul(@pages) { |page| link_to page.title, [:edit, :admin, page] }
+ - if @pages.empty?
+    %div.add_some
+      %h4= link_to "Add A Home Page", [:new, :admin, :page]
+  - else 
+    #pages_list
+      = tree_ul(@pages) { |page| link_to page.title, [:edit, :admin, page] }

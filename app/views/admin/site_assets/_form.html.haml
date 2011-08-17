@@ -16,7 +16,7 @@
             = link_to site_asset.asset_filename, "http://#{request.host}#{site_asset.asset.url}"
         %li
           = f.label :asset, "Asset Source<abbr title='required' class='required'>*</abbr>".html_safe
-          = f.file_field :asset, :class => "submit"
+          = f.file_field :asset, :class => "file_field"
           = f.hidden_field :asset_cache
         %li
           = f.submit button_label, :class => "submit"

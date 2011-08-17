@@ -1,4 +1,4 @@
 = image_tag(theme_asset.asset.thumb.url) if theme_asset.asset? 
-= new_theme_asset.label :asset, "Theme Asset Source"
-= new_theme_asset.file_field :asset
+= new_theme_asset.label :asset, "Theme Asset Source<abbr title='required' class='required'>*</abbr>".html_safe
+= new_theme_asset.file_field :asset, :class => "file_field"
 = new_theme_asset.hidden_field :asset_cache

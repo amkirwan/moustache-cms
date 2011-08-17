@@ -8,15 +8,19 @@
 #content_inner_wrapper
   = render :partial => "shared/flash_notice"
 
-  %table{:class => "info users"}
-    %tr
-      %th Name
-      %th Partners UID
-      %th Role
-      %th 
-    - @users.each do |user| 
-      %tr{:class => "#{cycle('even', 'odd')}"}
-        %td.name= link_to user.full_name, [:edit, :admin, user]
-        %td.puid= user.puid
-        %td.role= user.role.capitalize
-        %td.delete= link_to "Delete", [:admin, user], :method => :delete, :confirm => "Are are you sure you want to delete the user #{user.full_name}?"
+  - if @users.empty?
+    %div.add_some
+      %h4= link_to "Add A User", [:new, :admin, :user]
+  - else 
+    %table{:class => "info users"}
+      %tr
+        %th Name
+        %th Partners UID
+        %th Role
+        %th 
+      - @users.each do |user| 
+        %tr{:class => "#{cycle('even', 'odd')}"}
+          %td.name= link_to user.full_name, [:edit, :admin, user]
+          %td.puid= user.puid
+          %td.role= user.role.capitalize
+          %td.delete= link_to "Delete", [:admin, user], :method => :delete, :confirm => "Are are you sure you want to delete the user #{user.full_name}?"
