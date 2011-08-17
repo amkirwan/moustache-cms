@@ -316,6 +316,9 @@ form.site_prop fieldset {
     margin-bottom: 0.214285714em;
     /* 3px / 14px */
     font-weight: bold; }
+  form.site_prop fieldset input {
+    font-size: 0.857142857em;
+    /* 12px / 14px */ }
   form.site_prop fieldset input, form.site_prop fieldset textarea {
     border: none;
     border-right: 1px solid #FFF;

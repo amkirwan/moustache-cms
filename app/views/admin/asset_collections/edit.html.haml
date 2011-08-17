@@ -1,3 +1,9 @@
-#edit_asset_collection
-  %h3 Edit Asset Collection
-  = render :partial => "form", :locals => { :asset_collection => @asset_collection, :button_label => "Update Collection" }
+#content_header_wrapper
+  %h2 Edit Asset Collection <b>#{@asset_collection.name.humanize}</b>
+
+  - if can?(:destroy, @asset_collection) && !@asset_collection.new_record?
+    %div{:id => "delete_asset_collection", :class => "delete"}
+      = link_to "Delete Asset Collection", [:admin, @asset_collection], :confirm => "Are you sure you want to delete the asset collection #{@asset_collection.name}", :method => :delete, :class => "action delete"
+
+ 
+= render :partial => "form", :locals => { :asset_collection => @asset_collection, :button_label => "Update Collection" }
