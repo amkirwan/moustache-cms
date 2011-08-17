@@ -8,6 +8,7 @@ class Admin::SiteAssetsController < AdminBaseController
     
   # GET /admin/site_assets
   def index
+    redirect_to admin_asset_collection_path
   end
 
   # GET /admin/site_assets/1/edit
@@ -28,7 +29,7 @@ class Admin::SiteAssetsController < AdminBaseController
     creator_updator_set_id @site_asset    
     try_site_asset_cache
     if @asset_collection.site_assets << @site_asset
-      redirect_to admin_asset_collection_site_assets_path, :notice => "Successfully created the asset #{@site_asset.name}"
+      redirect_to admin_asset_collection_path(params[:asset_collection_id]), :notice => "Successfully created the asset #{@site_asset.name}"
     else
       render :new
     end
@@ -39,7 +40,7 @@ class Admin::SiteAssetsController < AdminBaseController
     @site_asset.updator_id = @current_user.id
     try_site_asset_cache
     if @site_asset.update_attributes(params[:site_asset])
-      redirect_to admin_asset_collection_site_assets_path, :notice => "Successfully updated the asset #{@site_asset.name}"
+      redirect_to admin_asset_collection_path(params[:asset_collection_id]), :notice => "Successfully updated the asset #{@site_asset.name}"
     else
       render :edit
     end
@@ -48,7 +49,7 @@ class Admin::SiteAssetsController < AdminBaseController
   # DELETE /admin/site_assets/1
   def destroy
     if @site_asset.destroy
-      redirect_to admin_asset_collection_site_assets_path, :notice => "Successfully deleted the asset #{@site_asset.name}"
+      redirect_to admin_asset_collection_path(params[:asset_collection_id]), :notice => "Successfully deleted the asset #{@site_asset.name}"
     end
   end
   

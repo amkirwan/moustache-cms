@@ -1,15 +1,21 @@
-#manage_collection
-  %ul
-    %li= link_to "add asset", [:new, :admin, @asset_collection, :site_asset]
-    %li= link_to "edit collection properties", [:edit, :admin, @asset_collection]
-    %li.delete= link_to "delete collection", [:admin, @asset_collection], :method => :delete, :confirm => "Are you sure you want to delete this collection?", :class => "delete"
-  
+#content_header_wrapper
+  %h2 #{@asset_collection.name.humanize}
 
+  - if can? :create, SiteAsset
+    %div{:id => "new_site_asset", :class => "create"}
+      = link_to "New Asset", [:new, :admin, @asset_collection, :site_asset], :class => "action create"
+  
+#content_inner_wrapper
+  %ul.submenu
+    - if can? :update, @asset_collection
+      %li= link_to "Edit Asset Collection Properties", [:edit, :admin, @asset_collection]
+    - if can? :destroy, @asset_collection
+      %li= link_to "Delete Asset Collection", [:admin, @asset_collection], :confirm => "Are you sure you want to delete the asset collection #{@asset_collection.name}", :method => :delete
 %div{ :id => "collection_#{@asset_collection.name}"}
   %ul#assets
-  - @asset_collection.site_assets.each do |asset|
-    %li{ :id => "asset_#{asset.id}" }
-      %h5= link_to "#{asset.name}", [:edit, :admin, @asset_collection, asset]
+    - @asset_collection.site_assets.each do |asset|
+      %li{ :id => "asset_#{asset.id}" }
+        = link_to image_tag(asset.asset.list.url), [:edit, :admin, @asset_collection, asset]
       
       
         

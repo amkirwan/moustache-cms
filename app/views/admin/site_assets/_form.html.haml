@@ -16,7 +16,7 @@
   = f.hidden_field :asset_cache
   %fieldset
     = f.submit button_label 
-    = link_to "cancel", [:admin, asset_collection, :site_assets], :class => "cancel"
+    = link_to "cancel", [:admin, asset_collection ], :class => "cancel"
       
 - if !site_asset.new_record? && can?(:destroy, site_asset)
   %div#delete_asset
