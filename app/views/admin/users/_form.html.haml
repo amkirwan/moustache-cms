@@ -25,4 +25,4 @@
             = f.label :admin
           %li
             = f.submit button_label, :class => "submit"
-            = link_to "Cancel", admin_users_path, :class => "cancel"
+            = link_to "Cancel", [:admin, :users], :class => "cancel"

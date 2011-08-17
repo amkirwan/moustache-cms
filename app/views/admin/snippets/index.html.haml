@@ -3,7 +3,7 @@
 
   - if admin?
     %div{:id => "new_snippet", :class => "create"}
-      = link_to "New Snippet", new_admin_snippet_path, :class => "action"
+      = link_to "New Snippet", [:new, :admin, :snippet], :class => "action"
 
 #content_inner_wrapper
   = render :partial => "shared/flash_notice"
@@ -14,6 +14,6 @@
       %th
     - @snippets.each do |snippet|
       %tr{:class => "#{cycle('even', 'odd')}"}
-        %td.name= link_to snippet.name, edit_admin_snippet_path(snippet)
+        %td.name= link_to snippet.name, [:edit, :admin, snippet]
         - if can? :destroy, snippet
-          %td.delete= link_to "Delete", admin_snippet_path(snippet), :method => :delete, :confirm => "Are you sure you want to delete the snippet #{snippet.name}", :class => "delete"
+          %td.delete= link_to "Delete", [:admin, snippet], :method => :delete, :confirm => "Are you sure you want to delete the snippet #{snippet.name}", :class => "delete"

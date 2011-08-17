@@ -3,10 +3,10 @@
 
   - if admin?
     %div{:id => "new_page", :class => "create"}
-      = link_to "New Page", new_admin_page_path, :class => "action"
+      = link_to "New Page", [:new, :admin, :page], :class => "action"
 
 #content_inner_wrapper
   = render :partial => "shared/flash_notice"
 
   #pages_list
-    = tree_ul(@pages) { |page| link_to page.title, edit_admin_page_path(page) }
+    = tree_ul(@pages) { |page| link_to page.title, [:edit, :admin, page] }
