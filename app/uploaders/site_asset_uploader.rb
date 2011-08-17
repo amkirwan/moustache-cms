@@ -9,7 +9,7 @@ class SiteAssetUploader < CarrierWave::Uploader::Base
   storage :file
 
   def store_dir
-    "sites/#{model._parent.name}/#{mounted_as}/#{model.id}"
+    "assets/#{model._parent.site_id}/#{model._parent.name}/#{mounted_as}/#{model.id}"
   end    
   
   before :store, :remember_cache_id
@@ -31,15 +31,18 @@ class SiteAssetUploader < CarrierWave::Uploader::Base
     end
   end          
 
+  version :list, :if => :image? do
+    process :resize_to_fill => [75, 75]
+  end
+
   version :thumb, :if => :image? do     
       process :resize_to_fill => [50, 50] 
   end
                              
-
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
    def extension_white_list
-     %w(jpg jpeg gif png pdf swf flv svg)
+     %w(jpg jpeg gif png pdf)
    end
     
   # Override the filename of the uploaded files:

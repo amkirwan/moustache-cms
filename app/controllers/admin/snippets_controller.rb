@@ -27,7 +27,7 @@ class Admin::SnippetsController < AdminBaseController
   def update                
     @snippet.updated_by = @current_user      
     if @snippet.update_attributes(params[:snippet]) 
-      redirector [:edit, :admin, @snippet], [:admin, :snippets], "Successfully created the snippet #{@snippet.name}"
+      redirector [:edit, :admin, @snippet], [:admin, :snippets], "Successfully updated the snippet #{@snippet.name}"
     else
       render :edit
     end

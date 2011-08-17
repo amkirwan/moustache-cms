@@ -1,0 +1,68 @@
+$body_bg: #F9F8F3;
+$content_table_heading: #d5d4d4;
+$zebra_even: #F9F8F3;
+$zebra_odd: #EAEAEA;
+
+/* for zebra stripes */
+.odd {
+  background: $zebra_odd;
+}
+
+.even {
+  background: $zebra_even;
+}
+
+/* table for users index page */
+table.info {
+  width: 100%;
+  border-collapse:collapse;
+  th {
+    text-align: center;
+    padding: 4px 0; 
+    border-right: 1px solid $body_bg;
+    background: $content_table_heading;
+  } 
+  th:first-child {
+    padding-left: 4px;
+  }
+  th:last-child {
+    border-right: 0;
+    background: $body_bg;
+  }
+  td {
+    text-align: center;
+    padding: 8px 0; 
+  }
+  td.name {
+    width: 35%;
+    text-align: left;
+    padding-left: 8px;
+  }
+  td.delete {
+    width: 20%;
+  }
+}
+
+table.two_col {
+  width: 50%;
+}
+
+table.users {
+  .name {
+    width: 35%;
+  }
+  .puid {
+    text-align: center;
+    width: 27%;
+  }
+  .role {
+    width: 22%
+  }
+  .delete {
+    width: 16%
+  }
+}
+
+table.layouts {
+  width: 70%;
+}

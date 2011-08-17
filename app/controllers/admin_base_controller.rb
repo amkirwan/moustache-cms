@@ -53,6 +53,13 @@ class AdminBaseController < ApplicationController
       end
       @current_site
     end
+
+  protected
+    
+    def logout
+      reset_session
+      redirect_to cms_html_path
+    end
     
   private
     def fake_login

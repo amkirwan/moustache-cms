@@ -1,0 +1,15 @@
+#page_parts{:class => "foldable"}
+  %fieldset
+    %legend Page Parts<span class="fold_arrow"></span>
+    %ul.form_fields
+      = f.fields_for :page_parts do |builder|
+        %li 
+          = builder.label :name, "Page Part Name<abbr title='required' class='required'>*</abbr>".html_safe
+          = builder.text_field :name
+        %li{:class => "inline"}
+          = builder.label :filter_name, "Filter<abbr title='required' class='required'>*</abbr>".html_safe
+          = builder.collection_select :filter_name, Filter.all_page_filters, :id, :name, {}, {:class => "page_part_filter"}
+        %li
+        = builder.label :content, "Page Part Content<abbr title='required' class='required'>*</abbr>".html_safe 
+        = builder.text_area :content, :class => "page_part_contents code"
+ 

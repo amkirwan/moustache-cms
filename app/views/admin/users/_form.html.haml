@@ -1,32 +1,28 @@
-= form_for([:admin, user]) do |f|
-  = render :partial => "shared/error_messages",  
-           :locals => { :target => user }
-  - if user.new_record? 
+#content_inner_wrapper
+  = form_for([:admin, user], :html => {:class => "site_prop", :autocomplete => :off}) do |f|
+    = render :partial => "shared/error_messages",  
+             :locals => { :target => user }
     %fieldset
-      = f.label :puid, "Partners UID"
-      = f.text_field :puid, :placeholder => "Enter Partners UID..."
-  - else
-    %h5 Partners UID: #{user.puid} 
-  %fieldset
-    = f.label :firstname, "Firstname"
-    = f.text_field :firstname
-  %fieldset
-    = f.label :lastname, "Lastname"
-    = f.text_field :lastname
-  %fieldset
-    = f.label :email, "Email Address"
-    = f.email_field :email, :size => 20 
-  - if admin?
-    %fieldset#role
-      = f.label :role
-      = f.radio_button :role, 'editor'
-      = f.label :editor
-      = f.radio_button :role, 'admin'
-      = f.label :admin
-  %fieldset 
-    = f.submit button_label
-    = link_to "cancel", admin_users_path, :class => "cancel"
-
-- if can?(:destroy, user) && !user.new_record?
-  %div#delete_asset
-    = link_to "Delete User", [:admin, user], :confirm => "Are you sure you want to delete the user #{user.puid}", :method => :delete, :class => "delete"
+      %ul.form_fields
+        %li
+          = f.label :puid, "Partners UID<abbr title='required' class='required'>*</abbr>".html_safe
+          = f.text_field :puid 
+        %li
+          = f.label :firstname, "Firstname<abbr title='required' class='required'>*</abbr>".html_safe
+          = f.text_field :firstname
+        %li
+          = f.label :lastname, "Lastname<abbr title='required' class='required'>*</abbr>".html_safe
+          = f.text_field :lastname
+        %li
+          = f.label :email, "Email<abbr title='required' class='required'>*</abbr>".html_safe
+          = f.email_field :email
+        - if admin?
+          %li{:id => "role", :class => "inline"}
+            = f.label :role, "Role <abbr title='required' class='required'>*</abbr>".html_safe 
+            = f.radio_button :role, 'editor'
+            = f.label :editor
+            = f.radio_button :role, 'admin'
+            = f.label :admin
+          %li
+            = f.submit button_label, :class => "submit"
+            = link_to "Cancel", [:admin, :users], :class => "cancel"

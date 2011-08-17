@@ -1,22 +1,23 @@
-#admin_nav
+#nav
   %ul
+    %li 
+      %h3 Site Management 
     %li#pages
       = link_to "Pages", admin_pages_path
-      %ul
-        = li_current_page(admin_pages_path) do |path|
-          = link_to "Pages", path
-    %li#layout
-      = link_to "Site Layout", admin_layouts_path
-      %ul
-        = li_current_page(admin_layouts_path) do |path|
-          = link_to "Layouts", path
-        %li
-          = link_to_unless_current "CSS & JS", '#'
-        %li 
-          = link_to_unless_current "Snippets", '#'
-    %li#settings
-      = link_to "Site Settings", admin_users_path
-      %ul 
-        - if can? :manage, Site
-          %li
-
+    %li#site_assets
+      = link_to "Site Assets", admin_asset_collections_path
+    %li#snippets
+      = link_to "Snippets", admin_snippets_path
+    %li#layouts 
+      = link_to "Layouts", admin_layouts_path
+    %li#theme_assets
+      = link_to "Theme Assets", admin_theme_assets_path
+    - if admin?
+      %li#users
+        = link_to "User Profiles", admin_users_path
+    - else
+      %li#users
+        = link_to "Your Profile", edit_admin_user_path(@current_user.id)
+    - if admin?
+      %li.sites
+        = link_to "Site Admin", "#"

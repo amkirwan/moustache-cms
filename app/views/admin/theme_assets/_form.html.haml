@@ -1,27 +1,26 @@
-= form_for([:admin, theme_asset], :html => {:multipart => true, :autocomplete => "off"}) do |f|
-  = render :partial => "shared/error_messages", 
-           :locals => { :target => theme_asset }
-  %fieldset
-    = f.label :name
-    = f.text_field :name
-  %fieldset
-    = f.label :description
-    = f.text_area :description, :cols => "25", :rows => "5"   
-  %fieldset        
-    = f.fields_for :html_options, hash_to_open_struct(theme_asset.html_options) do |os|
-      - os.object.marshal_dump.each_key do |key|
-        = os.label key
-        = os.text_field key 
-  - if theme_asset.new_record?
-    = render :partial => "new_theme_asset", :object => f, :locals => { :theme_asset => theme_asset }
-  - elsif !theme_asset.new_record? && theme_asset.image?
-    = render :partial => "image_asset", :object => f, :locals => { :theme_asset => theme_asset }
-  - elsif !theme_asset.new_record? && (theme_asset.stylesheet? || theme_asset.javascript?)
-    = render :partial => "css_js_asset", :object => f, :locals => { :theme_asset => theme_asset }     
-  %fieldset
-    = f.submit button_label
-    = link_to "cancel", [:admin, :theme_assets], :class => "cancel"
-    
-- if can?(:destroy, theme_asset) && !theme_asset.new_record?    
-  %div#delete_asset
-    = link_to "Delete Asset", [:admin, theme_asset], :confirm => "Are you sure you want to delete the theme asset #{theme_asset.name}", :method => :delete
+#content_inner_wrapper
+  = form_for([:admin, theme_asset], :html => {:class => "site_prop", :multipart => true, :autocomplete => "off"}) do |f|
+    = render :partial => "shared/error_messages", 
+             :locals => { :target => theme_asset }
+    %fieldset
+      %ul.form_fields
+        %li
+          = f.label :name, "Name<abbr title='required' class='required'>*</abbr>".html_safe
+          = f.text_field :name
+        %li
+          = f.label :description
+          = f.text_area :description, :cols => "50", :rows => "5"   
+        %li
+          = f.fields_for :html_options, hash_to_open_struct(theme_asset.html_options) do |os|
+            - os.object.marshal_dump.each_key do |key|
+              = os.label key
+              = os.text_field key 
+        - if theme_asset.new_record?
+          = render :partial => "new_theme_asset", :object => f, :locals => { :theme_asset => theme_asset }
+        - elsif !theme_asset.new_record? && theme_asset.image?
+          = render :partial => "image_asset", :object => f, :locals => { :theme_asset => theme_asset }
+        - elsif !theme_asset.new_record? && (theme_asset.stylesheet? || theme_asset.javascript?)
+          = render :partial => "css_js_asset", :object => f, :locals => { :theme_asset => theme_asset }     
+        %li
+          = f.submit button_label, :class => "submit"
+          = link_to "cancel", [:admin, :theme_assets], :class => "cancel"

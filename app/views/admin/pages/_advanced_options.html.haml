@@ -1,0 +1,11 @@
+#advanced_options{:class => "foldable"}
+  %fieldset 
+    %legend Advanced Options<span class="fold_arrow rotate"></span>
+    %ul.form_fields{:style => "display: none"}
+
+      %li
+        = f.label :slug, "Path Name"
+        = f.text_field :slug
+      %li
+        = f.label :breadcrumb, "Breadcrumb"
+        = f.text_field :breadcrumb

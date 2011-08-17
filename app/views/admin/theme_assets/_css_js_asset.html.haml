@@ -1,3 +1,4 @@
-%h6 The current file is available at
-= link_to "http://#{@current_site.full_subdomain}#{theme_asset.asset.url}", theme_asset.asset.url
-= text_area_tag :theme_asset_file_content, theme_asset.asset.read, :cols => "80", :rows => "30"
+%li 
+  The current file is available here
+  = link_to theme_asset.asset_filename, "http://#{request.host}#{theme_asset.asset.url}"
+  = text_area_tag :theme_asset_file_content, theme_asset.asset.read, :class => "code", :cols => "80", :rows => "30"

@@ -18,10 +18,10 @@ module ApplicationHelper
         ret += '</strong>'
         ret += '<div class="page-info">'
         ret += '<em>'
-        ret += item.updated_at.strftime("Last updated %B %d @ %H:%M by #{item.updated_by.puid}")
+        ret += item.updated_at.strftime("updated at %B %d %H:%M by #{item.updated_by.puid}")
         ret += '</em>'
         if can? :destroy, item
-          ret += link_to "Delete", admin_page_path(item), :method => :delete, :confirm => "Are you sure you want to delete the page #{item.title}", :class => "delete" if can? :destroy, item
+          ret += link_to( image_tag('delete_button.png'), admin_page_path(item), :method => :delete, :confirm => "Are you sure you want to delete the page #{item.title}", :class => "delete") if can? :destroy, item
         end
         ret += '</div>'
         ret += tree_ul(item.children, false, &block) if item.children.size > 0
@@ -36,19 +36,27 @@ module ApplicationHelper
     name = controller.controller_name
     case name
     when "pages"
-      "pages"
+      name  
+    when "site_assets", "asset_collections"
+      "site_assets"
+    when "snippets"
+      name  
     when "layouts"
-      "layouts"
+      name
+    when "theme_assets"
+      name
     when "users"
-      "settings"
+      name
+    when "sites"
+      name 
     end
   end    
-  
-  def li_current_page(path, &block)
-    if current_page?(path)
+
+  def li_current_page(path, selected_controller_name, &block)
+    if controller.controller_name == selected_controller_name.to_s
       capture_haml do 
         haml_tag 'li.selected' do 
-          yield
+          yield path
         end
       end
     else

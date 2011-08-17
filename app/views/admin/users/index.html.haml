@@ -1,17 +1,26 @@
-#user
-  %ul
-    %li#user_header
-      %div Username
-      %div Role
-      %div Delete
-  - @users.each do |user|
-    %li{ :id => "#{user.puid}"}
-      %div= link_to user.puid, edit_admin_user_path(user)
-      %div= user.role 
-      - if can? :destroy, user
-        %div.delete= link_to "Delete", admin_user_path(user), :method => :delete, :confirm => "Are you sure you"
+#content_header_wrapper
+  %h2 USERS
 
-#add_user
-- if admin?
-  %ul#new_user
-    %li= link_to "New User", new_admin_user_path
+  - if admin?
+    %div{:id => "new_user", :class => "create"}
+      = link_to "New User", [:new, :admin, :user], :class => "action"
+
+#content_inner_wrapper
+  = render :partial => "shared/flash_notice"
+
+  - if @users.empty?
+    %div.add_some
+      %h4= link_to "Add A User", [:new, :admin, :user]
+  - else 
+    %table{:class => "info users"}
+      %tr
+        %th Name
+        %th Partners UID
+        %th Role
+        %th 
+      - @users.each do |user| 
+        %tr{:class => "#{cycle('even', 'odd')}"}
+          %td.name= link_to user.full_name, [:edit, :admin, user]
+          %td.puid= user.puid
+          %td.role= user.role.capitalize
+          %td.delete= link_to "Delete", [:admin, user], :method => :delete, :confirm => "Are are you sure you want to delete the user #{user.full_name}?"

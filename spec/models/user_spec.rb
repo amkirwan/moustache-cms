@@ -40,6 +40,16 @@ describe User do
      @user.puid = nil
      @user.should_not be_valid
     end  
+
+    it "should not be valid without a firstname" do
+      @user.firstname = nil
+      @user.should_not be_valid
+    end
+
+    it "should not be valid without a lastname" do
+      @user.lastname = nil
+      @user.should_not be_valid
+    end
   
     it "should not be valid without a email" do
       @user.email = nil
@@ -57,16 +67,16 @@ describe User do
     end
   
     it "should not be valid with duplicate pid within the same site" do  
-      Factory.build(:user, :puid => "#{@user.puid}", :site => @user.site).should_not be_valid
+      Factory.build(:user, :puid => "#{@user.puid}", :site_id => @user.site.id).should_not be_valid
     end
     
     context "duplicate pid should be valid on a different site" do
       it "should be valid with duplicate pid on a different site" do  
-        Factory.build(:user, :puid => "#{@user.puid}", :site => Factory.build(:site)).should be_valid
+        Factory.build(:user, :puid => "{@user.puid}", :site => Factory.build(:site)).should be_valid
       end     
     end
   
-    it "should not be valid with duplicat email addresses within the same site" do
+    it "should not be valid with duplicate email addresses within the same site" do
       Factory.build(:user, :email => "#{@user.email}", :site => @user.site).should_not be_valid
     end      
     
@@ -176,6 +186,12 @@ describe User do
   
   # -- Instance Methods -----------------------------------------------
   describe "Instance Methods" do
+
+    describe "full_name" do
+      it "should return the users first and lastname" do
+        @user.full_name.should == "Foobar Baz"
+      end
+    end
     describe "#role?" do
       it "should return true when the user role equals the base role" do
         @user.role = "admin"

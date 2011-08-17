@@ -1,14 +1,16 @@
-= form_for([:admin, layout]) do |f|
-  = render :partial => "shared/error_messages",  
-           :locals => { :target => layout }
-  %fieldset
-    = f.label :name, "Name"
-    = f.text_field :name
-  %fieldset
-    = f.label :content, "Content"
-    %code.html
-      = f.text_area :content, :cols => "50", :rows => "30"
-  %fieldset 
-    = f.submit button_label
-    = f.submit "Save and Continue Editing"
-    = link_to "Cancel", [:admin, :layouts]
+#content_inner_wrapper
+  = form_for([:admin, layout], :html => {:class => "site_prop", :autocomplete => :off}) do |f|
+    = render :partial => "shared/error_messages",  
+             :locals => { :target => layout }
+    %fieldset
+      %ul.form_fields
+        %li 
+          = f.label :name, "Name<abbr title='required' class='required'>*</abbr>".html_safe
+          = f.text_field :name
+        %li 
+          = f.label :content, "Content<abbr title='required' class='required'>*</abbr>".html_safe
+          = f.text_area :content, :class => "code"
+        %li
+          = f.submit button_label, :class => "submit"
+          = f.submit "Save and Continue Editing", :class => "submit"
+          = link_to "Cancel", [:admin, :layouts], :class => "cancel"

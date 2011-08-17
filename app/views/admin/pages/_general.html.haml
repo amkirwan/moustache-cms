@@ -1,0 +1,25 @@
+#general_page_info{:class => "foldable"}
+  %fieldset
+    %legend General<span class="fold_arrow"></span>
+    %ul.form_fields
+      %li
+        = f.label :parent_id
+        = f.collection_select :parent_id, Page.all.order(:title), :id, :title, { :include_blank => true }
+      %li
+        = f.label :name, "Name"
+        = f.text_field :name
+      %li
+        = f.label :title, "Title<abbr title='required' class='required'>*</abbr>".html_safe
+        = f.text_field :title
+      %li{:class => "inline"}
+        = f.label :layout, "Layout<abbr title='required' class='required'>*</abbr>".html_safe
+        = f.collection_select :layout_id, Layout.all, :id, :name
+      = f.fields_for :current_state do |builder|
+        %li{:class => "inline"}
+          = builder.label :current_state, "Status<abbr title='required' class='required'>*</abbr>".html_safe
+          = builder.collection_select :name, CurrentState.all, :id, :name
+      - if !@page.parent.try(:post_container?)
+        %li{:class => "inline"} 
+          = f.label :post_container
+          = f.check_box :post_container
+    

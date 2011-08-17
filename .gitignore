@@ -5,6 +5,7 @@ db/*.sqlite3
 log/*.log
 tmp/**/*
 tmp/*
+public/assets/**/*
 public/uploads
 public/sites/**/*
 public/cached

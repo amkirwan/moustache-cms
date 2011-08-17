@@ -12,6 +12,8 @@ class AssetCollection
   embeds_many :site_assets
   
   # -- Validations ---------------
+  validates_associated :site_assets
+
   validates :name,
             :presence => true,
             :uniqueness => { :scope => :site_id }

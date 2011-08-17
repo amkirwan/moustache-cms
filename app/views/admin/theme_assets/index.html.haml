@@ -1,32 +1,50 @@
-#theme_assets
-  %h3 Theme Asset Files
-  #theme_css_assets
-    %h5 CSS
-    %ul
-      - @css_files.each do |css|
-        %li{ :id => "#{css.name}"}
-          %div= link_to css.name, edit_admin_theme_asset_path(css)
-          - if can? :destroy, css
-            %div.delete= link_to "Delete", admin_theme_asset_path(css), :method => :delete, :confirm => "Are you sure you want to delete the CSS theme file #{css.name}", :class => "delete"
-  #theme_js_assets
-    %h5 JavaScript
-    %ul
-      - @js_files.each do |js|
-        %li{ :id => "#{js.name}"}
-          %div= link_to js.name, edit_admin_theme_asset_path(js)
-          - if can? :destroy, js
-            %div.delete= link_to "Delete", admin_theme_asset_path(js), :method => :delete, :confirm => "Are you sure you want to delete the JavaScript theme file #{js.name}", :class => "delete"
-  #theme_image_assets
-    %h5 Images
-    %ul
-      - @images.each do |image|
-        %li{ :id => "#{image.name}"}
-          %div= link_to image.name, edit_admin_theme_asset_path(image)
-          - if can? :destroy, image
-            %div.delete= link_to "Delete", admin_theme_asset_path(image), :method => :delete, :confirm => "Are you sure you want to delete the JavaScript theme file #{image.name}", :class => "delete"
-        
+#content_header_wrapper
+  %h2 Theme Asset Files
 
-        
-#add_theme_asset
-  %ul#new_theme_asset
-    %li= link_to "Add Theme Asset", new_admin_theme_asset_path
+  - if can? :create, ThemeAsset
+    %div{:id => "new_theme_asset", :class => "create"}
+      = link_to "New Theme Asset", [:new, :admin, :theme_asset], :class => "action create"
+      
+#content_inner_wrapper
+  = render :partial => "shared/flash_notice"
+
+  - if @css_files.empty? && @js_files.empty? && @images.empty?
+    %div.add_some
+      %h4= link_to "Add Some Assets", [:new, :admin, :theme_asset]
+  - else
+    - unless @css_files.empty?
+      %div{:id => "css_files", :class => "theme_assets"} 
+        %table{:class => "info theme_asset_css two_col"}
+          %tr
+            %th CSS Name
+            %th
+          - @css_files.each do |css|
+            %tr{:class => "#{cycle('even', 'odd', :name => 'table_list')}"}
+              %td.name= link_to css.name, [:edit, :admin, css]
+              - if can? :destroy, css
+                %td.delete= link_to "Delete", [:admin, css], :method => :delete, :confirm => "Are you sure you want to delete the CSS theme file #{css.name}", :class => "delete"
+    - unless @js_files.empty?
+      - reset_cycle("table_list")
+      %div{:id => "js_files", :class => "theme_assets"} 
+        %table{:class => "info theme_asset_js two_col"}
+          %tr
+            %th JavaScript Name
+            %th
+          - @js_files.each do |js|
+            %tr{:class => "#{cycle('even', 'odd', :name => 'table_list')}"}
+              %td.name= link_to js.name, [:edit, :admin, js]
+              - if can? :destroy, js
+                %td.delete= link_to "Delete", [:admin, js], :method => :delete, :confirm => "Are you sure you want to delete the JS theme file #{js.name}", :class => "delete"
+    - unless @images.empty?
+      - reset_cycle("table_list")
+      %div{:id => "image_files", :class => "theme_assets"} 
+        %table{:class => "info theme_asset_image two_col"}
+          %tr
+            %th Image Name
+            %th
+          - @images.each do |image|
+            %tr{:class => "#{cycle('even', 'odd', :name => 'table_list')}"}
+              %td.name= link_to image.name, [:edit, :admin, image]
+              - if can? :destroy, image 
+                %td.delete= link_to "Delete", [:admin, image], :method => :delete, :confirm => "Are you sure you want to delete the image theme file #{image.name}", :class => "delete"
+

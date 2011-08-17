@@ -36,8 +36,12 @@ class User
             :uniqueness => { :scope => :site_id },
             :length => { :minimum => 3 }
   
-  validates :role, :presence => true
+  validates :firstname, :presence => true
+
+  validates :lastname, :presence => true
   
+  validates :role, :presence => true
+
   validates :email,
             :presence => true,
             :uniqueness => { :scope => :site_id },
@@ -55,6 +59,10 @@ class User
   # -- Instance Methods -----------------------------------------------
   def role?(base_role)
     role.nil? ? false : Roles.index(base_role.to_s) <= Roles.index(role)
+  end
+
+  def full_name
+    "#{firstname.capitalize} #{lastname.capitalize}"
   end
   
   private
