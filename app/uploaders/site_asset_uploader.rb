@@ -32,7 +32,7 @@ class SiteAssetUploader < CarrierWave::Uploader::Base
   end          
 
   version :list, :if => :image? do
-    process :resize_to_fill => [100, 100]
+    process :resize_to_fill => [75, 75]
   end
 
   version :thumb, :if => :image? do     

@@ -1,23 +1,23 @@
-= form_for([:admin, asset_collection, site_asset], :html => {:multipart => true, :autocomplete => "off"}) do |f|
-  = render :partial => "shared/error_messages", 
-           :locals => { :target => site_asset }
-  %fieldset
-    = f.label :name
-    = f.text_field :name
-  %fieldset
-    = f.label :description
-    = f.text_area :description, :cols => "25", :rows => "10"
-  - if !site_asset.new_record?
-    %h6 The current file is available at
-    = link_to site_asset.asset_filename, "http://#{request.host}#{site_asset.asset.url}"
-  = image_tag(site_asset.asset.thumb.url) if site_asset.asset? 
-  = f.label :asset, "Asset Source"
-  = f.file_field :asset
-  = f.hidden_field :asset_cache
-  %fieldset
-    = f.submit button_label 
-    = link_to "cancel", [:admin, asset_collection ], :class => "cancel"
-      
-- if !site_asset.new_record? && can?(:destroy, site_asset)
-  %div#delete_asset
-    = link_to "Delete Asset", [:admin, asset_collection, site_asset], :confirm => "Are you sure you want to delete the asset #{site_asset.name}", :method => :delete
+#content_inner_wrapper
+  = form_for([:admin, asset_collection, site_asset], :html => {:class => "site_prop", :multipart => true, :autocomplete => "off"}) do |f|
+    = render :partial => "shared/error_messages", 
+             :locals => { :target => site_asset }
+    %fieldset
+      %ul.form_fields
+        %li
+          = f.label :name, "Name<abbr title='required' class='required'>*</abbr>".html_safe
+          = f.text_field :name
+        %li
+          = f.label :description
+          = f.text_area :description, :cols => "25", :rows => "10"
+        - if !site_asset.new_record?
+          %li 
+            The current file is available here
+            = link_to site_asset.asset_filename, "http://#{request.host}#{site_asset.asset.url}"
+        %li
+          = f.label :asset, "Asset Source<abbr title='required' class='required'>*</abbr>".html_safe
+          = f.file_field :asset, :class => "submit"
+          = f.hidden_field :asset_cache
+        %li
+          = f.submit button_label, :class => "submit"
+          = link_to "cancel", [:admin, asset_collection ], :class => "cancel"

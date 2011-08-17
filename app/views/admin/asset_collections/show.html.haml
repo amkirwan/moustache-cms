@@ -2,21 +2,26 @@
   %h2 #{@asset_collection.name.humanize}
 
   - if can? :create, SiteAsset
-    %div{:id => "new_site_asset", :class => "create"}
-      = link_to "New Asset", [:new, :admin, @asset_collection, :site_asset], :class => "action create"
-  
+    %div{:id => "new_site_asset", :class => "actions" }
+      %ul.submenu
+        %li.top_menu
+          Actions<span class="fold_arrow"></span>
+          %ul 
+            - if can? :create, @asset_collection
+              %li
+                = link_to "New Asset", [:new, :admin, @asset_collection, :site_asset]
+            - if can? :update, @asset_collection
+              %li
+                = link_to "Edit Collection Props", [:edit, :admin, @asset_collection]
+            - if can? :destroy, @asset_collection
+              %li
+                = link_to "Delete Collection", [:admin, @asset_collection], :confirm => "Are you sure you want to delete the asset collection #{@asset_collection.name}", :method => :delete
+                 
+      
 #content_inner_wrapper
-  %ul.submenu
-    - if can? :update, @asset_collection
-      %li= link_to "Edit Asset Collection Properties", [:edit, :admin, @asset_collection]
-    - if can? :destroy, @asset_collection
-      %li= link_to "Delete Asset Collection", [:admin, @asset_collection], :confirm => "Are you sure you want to delete the asset collection #{@asset_collection.name}", :method => :delete
-%div{ :id => "collection_#{@asset_collection.name}"}
-  %ul#assets
-    - @asset_collection.site_assets.each do |asset|
-      %li{ :id => "asset_#{asset.id}" }
-        = link_to image_tag(asset.asset.list.url), [:edit, :admin, @asset_collection, asset]
+  %div{ :id => "collection_#{@asset_collection.name}"}
+    %ul#assets
+      - @asset_collection.site_assets.each do |asset|
+        %li{ :id => "asset_#{asset.id}" }
+          = link_to image_tag(asset.asset.list.url), [:edit, :admin, @asset_collection, asset]
       
-      
-        
-    

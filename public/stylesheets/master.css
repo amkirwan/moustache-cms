@@ -248,7 +248,8 @@ div#nav {
       border-bottom: 1px solid #a8a8a8;
       padding: 4px 0 4px 8px;
       margin-bottom: 2px;
-      color: #222222; }
+      color: #222222;
+      height: 1.4em; }
     div#nav ul li:last-child {
       border-bottom: 1px solid #a8a8a8; }
     div#nav ul li.selected {
@@ -295,21 +296,61 @@ div#content {
 div#content_header_wrapper {
   border-bottom: 1px solid #a8a8a8;
   padding: 8px 8px 4px 8px;
-  overflow: auto; }
+  position: relative;
+  height: 1.4em; }
   div#content_header_wrapper h2 {
     float: left; }
-  div#content_header_wrapper div.create, div#content_header_wrapper div.delete {
+  div#content_header_wrapper div.create, div#content_header_wrapper div.delete, div#content_header_wrapper div.actions {
+    text-align: center;
     font-size: 0.875em;
     /* 14px / 16px */
     float: right; }
 
 div#content_inner_wrapper {
-  position: relative;
   font-size: 0.875em;
   margin-top: 2px;
   border-top: 1px solid #a8a8a8;
   padding-top: 16px;
   padding-left: 8px; }
+
+ul.submenu {
+  list-style: none;
+  position: absolute;
+  right: 0;
+  z-index: 222;
+  line-height: 1.5em; }
+  ul.submenu li {
+    float: left;
+    position: relative;
+    width: 14em; }
+    ul.submenu li ul {
+      padding: 5px 0;
+      position: absolute;
+      top: 1.4em;
+      display: none; }
+    ul.submenu li a:link, ul.submenu li a:active, ul.submenu li a:visited {
+      display: block;
+      padding: 5px 5px;
+      border: 1px solid #a8a8a8;
+      text-decoration: none;
+      background-color: #2C2C2C; }
+    ul.submenu li a:hover {
+      background-color: #2B2C2C;
+      color: #9b3c0e; }
+  ul.submenu li:hover ul {
+    display: block; }
+  ul.submenu li.top_menu {
+    color: white;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -o-border-radius: 4px;
+    text-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8);
+    padding: 4px 20px;
+    border: 1px solid rgba(92, 92, 92, 0.5);
+    background: #535252;
+    background: -moz-linear-gradient(0% 49% 90deg, #2c2c2c, #2c2c2c, rgba(44, 44, 44, 0.8) 0%);
+    background: -webkit-gradient(linear, 0% 49%, 0% 51%, from(rgba(44, 44, 44, 0.8)), to(#2c2c2c)); }
 
 /* forms */
 form.site_prop fieldset {
@@ -409,10 +450,6 @@ span.rotate {
   -moz-transform: rotate(-90deg);
   -o-transform: rotate(-90deg);
   transform: rotate(-90deg); }
-
-ul.submenu li {
-  list-style: none;
-  padding: 2px 0; }
 
 div#pages_list {
   width: 100%; }
