@@ -1,4 +1,4 @@
 #content_header_wrapper
-  %h2 Add New Asset to the collection #{@asset_collection.name}
+  %h2 Add New Asset to the collection <b>#{@asset_collection.name}</b>
 = render :partial => "form",  
          :locals => { :asset_collection => @asset_collection, :site_asset => @site_asset, :button_label => "Save Asset" }

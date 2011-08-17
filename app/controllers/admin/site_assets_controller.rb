@@ -28,7 +28,7 @@ class Admin::SiteAssetsController < AdminBaseController
   def create
     creator_updator_set_id @site_asset    
     try_site_asset_cache
-    if @asset_collection.site_assets << @site_asset
+    if @asset_collection.site_assets << @site_asset && @site_asset.valid?
       redirect_to admin_asset_collection_path(params[:asset_collection_id]), :notice => "Successfully created the asset #{@site_asset.name}"
     else
       render :new
@@ -38,7 +38,6 @@ class Admin::SiteAssetsController < AdminBaseController
   # PUT /admin/site_assets/1
   def update
     @site_asset.updator_id = @current_user.id
-    try_site_asset_cache
     if @site_asset.update_attributes(params[:site_asset])
       redirect_to admin_asset_collection_path(params[:asset_collection_id]), :notice => "Successfully updated the asset #{@site_asset.name}"
     else

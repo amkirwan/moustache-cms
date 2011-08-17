@@ -2,5 +2,5 @@
   #error_explanation
     %h3 #{pluralize(target.errors.count, "error")} prohibited this record from being saved
     %ul
-    - target.errors.full_messages.each do |msg|
-      %li= msg
+      - target.errors.full_messages.each do |msg|
+        %li= msg

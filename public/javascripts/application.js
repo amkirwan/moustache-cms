@@ -78,6 +78,8 @@ $(document).ready(function(){
           }
         });
       });
+  } else if ($('body.theme_assets').length) {
+    $('textarea.code').markItUp(cssSettings);
   }
   /* end body.page */
 });

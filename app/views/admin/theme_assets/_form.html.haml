@@ -9,7 +9,7 @@
           = f.text_field :name
         %li
           = f.label :description
-          = f.text_area :description, :cols => "25", :rows => "5"   
+          = f.text_area :description, :cols => "50", :rows => "5"   
         %li
           = f.fields_for :html_options, hash_to_open_struct(theme_asset.html_options) do |os|
             - os.object.marshal_dump.each_key do |key|

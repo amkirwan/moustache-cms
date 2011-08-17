@@ -9,15 +9,16 @@
           = f.text_field :name
         %li
           = f.label :description
-          = f.text_area :description, :cols => "25", :rows => "10"
+          = f.text_area :description, :cols => "50", :rows => "10"
         - if !site_asset.new_record?
           %li 
             The current file is available here
             = link_to site_asset.asset_filename, "http://#{request.host}#{site_asset.asset.url}"
-        %li
-          = f.label :asset, "Asset Source<abbr title='required' class='required'>*</abbr>".html_safe
-          = f.file_field :asset, :class => "file_field"
-          = f.hidden_field :asset_cache
+        - if site_asset.new_record?
+          %li
+            = f.label :asset, "Asset Source<abbr title='required' class='required'>*</abbr>".html_safe
+            = f.file_field :asset, :class => "file_field"
+            = f.hidden_field :asset_cache
         %li
           = f.submit button_label, :class => "submit"
           = link_to "cancel", [:admin, asset_collection ], :class => "cancel"

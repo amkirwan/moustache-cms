@@ -9,7 +9,7 @@ $content_bg: #F9F8F3;
 $sidebar_border: #A8A8A8;
 $sidebar_heading: #FB5000;
 $footer_bg: #2c2b2b;
-$error_ex_color: #EE621E;
+$error_ex_color: #787878;
 $foldable_bg: #E9E8E6;
 $submenu_bg: #E4E3E1;
 $action_button_bottom: #2C2C2C;
@@ -101,24 +101,41 @@ div#flash_notice_wrapper {
 	text-align: center;
 	margin:  0 auto 16px auto ;
 	padding: 4px 0;
-	border-top: 1px solid #FFD324;
-	border-bottom: 1px solid #FFD324;
+	border-top: 1px solid $error_ex_color;
+	border-bottom: 1px solid $error_ex_color;
   background: #FFF6BF;
 }
 
-div .field_with_errors {
-  padding: 2px;
+div.field_with_errors {
+  padding: 5px;
   background-color: $error_ex_color;
   display: table;
+  -webkit-border-top-left-radius: 4px;
+  -webkit-border-top-right-radius: 4px;
+  -moz-border-top-left-radius: 4px;
+  -moz-border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  label {
+    color: $light_text;
+  }
+}
+
+div.field_with_errors + div.field_with_errors {
+  -webkit-border-radius: 4px;
+  -webkit-border-top-left-radius: 0;
+  -moz-border-radius: 4px;
+  -moz-border-top-left-radius: 0;
+  border-radius: 4px;
+  border-top-left-radius: 0;
 }
 
 div#error_explanation {
   width: 80%;
-  border: 2px solid $hover_text;
+  border: 2px solid $error_ex_color;
   padding: 8px;
   margin-bottom: 16px;
   background-color: #f0f0f0;
-
   h3 {
     text-align: left;
     font-size: 1em; /* 14px */
@@ -132,7 +149,12 @@ div#error_explanation {
 
   ul li {
     font-size: 1em; /* 14px */
-    list-style: bullet;
+    list-style-type: disc;
+    padding: 2px 0;
+    margin-left: 2em;
+  }
+  ul li:first-child {
+    padding-top: 8px;
   }
 }
 

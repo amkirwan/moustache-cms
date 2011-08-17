@@ -8,7 +8,7 @@
 #content_inner_wrapper
   = render :partial => "shared/flash_notice"
 
- - if @pages.empty?
+  - if @pages.empty?
     %div.add_some
       %h4= link_to "Add A Home Page", [:new, :admin, :page]
   - else 
