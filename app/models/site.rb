@@ -3,7 +3,7 @@ class Site
   include Mongoid::Timestamps 
   include Mongoid::Paranoia 
   
-  include Etherweb::Mongoid::MetaData
+  include HandlebarCms::Mongoid::MetaData
   
   attr_accessible :name, :subdomain
   

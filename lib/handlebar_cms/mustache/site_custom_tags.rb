@@ -1,4 +1,4 @@
-module Etherweb
+module HandlebarCms
   module Mustache
     module SiteCustomTags
     end

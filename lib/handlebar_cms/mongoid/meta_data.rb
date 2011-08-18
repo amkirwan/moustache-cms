@@ -1,4 +1,4 @@
-module Etherweb
+module HandlebarCms
   module Mongoid
     module MetaData
       extend ActiveSupport::Concern

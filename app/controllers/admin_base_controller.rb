@@ -28,7 +28,7 @@ class AdminBaseController < ApplicationController
     end
   
     def assign_site
-      hostname = Etherweb::Application.config.domain.downcase
+      hostname = HandlebarCms::Application.config.domain.downcase
     
       if hostname.nil?
         flash[:error] = "No hostname defined"

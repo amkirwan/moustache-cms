@@ -4,4 +4,4 @@
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
-Etherweb::Application.load_tasks
+HandlebarCms::Application.load_tasks

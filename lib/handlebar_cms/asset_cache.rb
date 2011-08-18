@@ -1,4 +1,4 @@
-module Etherweb
+module HandlebarCms
   module AssetCache
     def set_from_cache(opts={})
       opts[:asset].asset.retrieve_from_cache!(opts[:cache_name])

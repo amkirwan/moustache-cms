@@ -1,6 +1,6 @@
 require 'haml'
 
-class Etherweb::Mustache::CmsPage < Mustache
+class HandlebarCms::Mustache::CmsPage < Mustache
   include Head
   include Navigation
   include SiteCustomTags

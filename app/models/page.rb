@@ -6,7 +6,7 @@ class Page
   include Mongoid::Paranoia
   
   include Mongoid::Tree 
-  include Etherweb::Mongoid::MetaData
+  include HandlebarCms::Mongoid::MetaData
 
 
   attr_accessible :parent,

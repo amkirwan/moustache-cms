@@ -1,5 +1,5 @@
 class Admin::SiteAssetsController < AdminBaseController
-  include Etherweb::AssetCache                    
+  include HandlebarCms::AssetCache                    
         
   prepend_before_filter :find_site_asset, :only => [:edit, :update, :destroy]
   

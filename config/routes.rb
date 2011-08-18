@@ -1,4 +1,4 @@
-Etherweb::Application.routes.draw do   
+HandlebarCms::Application.routes.draw do   
                               
   namespace :admin do
     resources :users

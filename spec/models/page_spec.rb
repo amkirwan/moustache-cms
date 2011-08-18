@@ -1,5 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
-require File.expand_path(File.dirname(__FILE__) + '/../lib/etherweb/mongoid/meta_data_shared_examples') 
+require File.expand_path(File.dirname(__FILE__) + '/../lib/handlebar_cms/mongoid/meta_data_shared_examples') 
 
 describe Page do   
   let(:user) { Factory(:user) }

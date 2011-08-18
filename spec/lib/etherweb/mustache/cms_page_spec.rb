@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Etherweb::Mustache::CmsPage do
+describe HandlebarCms::Mustache::CmsPage do
   let(:site) { Factory(:site)}
   let(:user) { Factory(:user, :site => site) }
   let(:layout) { Factory(:layout, :site => site, :created_by => user, :updated_by => user) }
@@ -23,7 +23,7 @@ describe Etherweb::Mustache::CmsPage do
     @controller.instance_variable_set(:@page, @page)
     @controller.instance_variable_set(:@request, @request)
     @controller.instance_variable_set(:@current_site, site)
-    @cmsp = Etherweb::Mustache::CmsPage.new(@controller)
+    @cmsp = HandlebarCms::Mustache::CmsPage.new(@controller)
   end
   
   describe "initialize" do

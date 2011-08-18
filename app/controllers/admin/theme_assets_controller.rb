@@ -1,5 +1,5 @@
 class Admin::ThemeAssetsController < AdminBaseController
-  include Etherweb::AssetCache  
+  include HandlebarCms::AssetCache  
   
   # GET /admin/theme_assets 
   def index

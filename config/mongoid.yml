@@ -8,11 +8,11 @@ defaults: &defaults
 
 development:
   host: localhost
-  database: etherweb_development
-
+  database: handlebar_cms_development
+  
 test:
   host: localhost
-  database: etherweb_test
+  database: handlebar_cms_test
 
 # set these environment variables on your prod server
 production:
