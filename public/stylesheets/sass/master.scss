@@ -308,7 +308,6 @@ div#content_inner_wrapper {
   margin-top: 2px;
   border-top: 1px solid $sidebar_border;
   padding-top: 16px;
-  padding-left: 8px;
 }
 
 ul.submenu {
@@ -529,6 +528,9 @@ div#pages_list {
 			  text-decoration: none;
 			}
 		}
+    li:first-child {
+      padding-left: 0;
+    }
 		li#root_node {
 			padding-left: 0;
 		}
