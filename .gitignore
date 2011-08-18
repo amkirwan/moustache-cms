@@ -11,4 +11,4 @@ public/sites/**/*
 public/cached
 spec/tmp/**/*
 config/deploy.rb
-
+config/mongoid.yml

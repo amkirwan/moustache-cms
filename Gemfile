@@ -33,5 +33,4 @@ group :development, :test do
   gem "syntax"   
   gem "relish"
   gem 'spork'
-  gem 'thin'
 end
