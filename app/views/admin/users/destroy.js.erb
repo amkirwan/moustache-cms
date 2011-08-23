@@ -1,1 +1,5 @@
+if ($("div#flash_notice_wrapper")) {
+  $("div#flash_notice_wrapper").fadeToggle("slow", "linear", function() { $(this).remove() });
+}
+
 $("#<%= @user.puid %>").fadeToggle("slow", "linear", function() { $(this).remove() });
