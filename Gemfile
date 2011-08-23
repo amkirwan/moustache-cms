@@ -4,7 +4,7 @@ gem "rails", "~> 3.0.9"
 gem "haml", "~> 3.1"
 gem "haml-rails", "~> 0.3.4"
 gem "sass", "~> 3.1.7"
-gem 'jquery-rails', ">= 0.2.6" 
+gem 'jquery-rails', '>= 1.0.12'
 gem "mongoid", "~> 2.0"
 gem "bson_ext", "~> 1.3"    
 gem "cancan", ">= 1.6"
