@@ -26,13 +26,14 @@ class SiteAsset
   # -- Callbacks
   before_save :update_asset_attributes
   before_update :recreate, :if => "self.name_changed?"
+  after_destroy :remove_folder  
     
   # -- Methods ----
   def recreate
     self.asset.recreate_versions!
     self.asset_filename = "#{self.name}.#{self.asset.file.extension}"
   end
-  
+ 
   def update_asset_attributes         
     self.content_type = asset.file.content_type unless asset.file.content_type.nil?
     self.file_size = asset.file.size 
@@ -42,4 +43,9 @@ class SiteAsset
   def image?
     self.asset.image?(self.asset.file)
   end
+
+  def remove_folder
+    FileUtils.rm_rf(File.join(Rails.root, 'public', asset.store_dir))
+  end
+
 end
