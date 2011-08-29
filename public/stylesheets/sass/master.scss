@@ -412,6 +412,10 @@ form.site_prop {
     li:first-child {
       padding-top: 8px;
     }
+
+    div.markItUpHeader li:first-child {
+      padding-top: 0;
+    }
     li:last-child {
       padding-bottom: 0;
     }

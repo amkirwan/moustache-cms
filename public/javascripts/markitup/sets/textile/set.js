@@ -11,6 +11,7 @@
 // Feel free to add more tags
 // -------------------------------------------------------------------
 textileSettings = {
+  nameSpace: 'textile',
 	previewParserPath:	'', // path to your Textile parser
 	onShiftEnter:		{keepDefault:false, replaceWith:'\n\n'},
 	markupSet: [

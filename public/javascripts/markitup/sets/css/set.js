@@ -12,7 +12,8 @@
 // Basic CSS set. Feel free to add more tags
 // ----------------------------------------------------------------------------
 cssSettings = {
-	onEnter:			{},
+	nameSpace: 'css',
+  onEnter:			{},
 	onShiftEnter:		{keepDefault:false, placeHolder:'Your comment here', openWith:'\n\/* ', closeWith:' *\/'},
 	onCtrlEnter:		{keepDefault:false, placeHolder:"classname", openWith:'\n.', closeWith:' { \n'},
 	onTab:				{keepDefault:false, openWith:'  '},

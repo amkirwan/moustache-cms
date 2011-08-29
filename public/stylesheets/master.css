@@ -420,6 +420,8 @@ form.site_prop ul.form_fields {
     display: inline; }
   form.site_prop ul.form_fields li:first-child {
     padding-top: 8px; }
+  form.site_prop ul.form_fields div.markItUpHeader li:first-child {
+    padding-top: 0; }
   form.site_prop ul.form_fields li:last-child {
     padding-bottom: 0; }
 form.site_prop .submit, form.site_prop .file_field {
