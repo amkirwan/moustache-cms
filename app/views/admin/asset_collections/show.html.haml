@@ -22,7 +22,7 @@
   %div{ :id => "collection_#{@asset_collection.name}"}
     %ul#assets
       - @asset_collection.site_assets.each do |asset|
-        %li{ :id => "asset_#{asset.id}" }
-          = link_to image_tag(asset.asset.list.url), [:edit, :admin, @asset_collection, asset]
-          %div.image_name= asset.name
-      
+        %li{ :id => "asset_#{asset.id}", :class => "show_site_assets" }
+          = link_to [:edit, :admin, @asset_collection, asset] do 
+            %div.image= image_tag(asset.asset.url)
+            %div.figcaption= asset.name.humanize

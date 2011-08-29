@@ -31,6 +31,8 @@ $nav_text: #FB5000;
 
 $body_min_height: 1000px;
 
+
+/* general rules */
 body {
   font: $base_text;
   color: $dark_text;
@@ -95,6 +97,10 @@ a:hover.action, a:focus.action {
 ul li {
   list-style: none;
 }
+
+img, embed, object, video { max-width: 100%; }
+
+/* end general rules */
 
 /* error and flash messages */ 
 
@@ -543,7 +549,7 @@ ul#assets {
   li {
     float: left;
     padding: 1em; /* 5px / 14px */
-    margin: 1em;
+    margin: 16px;
     border: 1px solid $sidebar_border;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
@@ -552,17 +558,24 @@ ul#assets {
     background: #FDFCFA;
     -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);  
-    -box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+    a:hover {
+      text-decoration: none;
+    }
     img {
-      border: 1px solid #FDFCFA;
+      border: 1px solid $sidebar_border;
     }
     img:hover {
       border: 1px solid $hover_text;
     }
   }
-  div.image_name {
-    padding-top: 2px; 
+  li.show_site_assets {
+    width: 16.3398693%;  /* 100px / 612px */
+  }
+  div.figcaption {
     text-align: center;
+    font-weight: normal;
+    padding-top: 2px; 
   } 
 }
 

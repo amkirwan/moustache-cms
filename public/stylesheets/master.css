@@ -68,6 +68,7 @@ table.layouts {
 /*layout colors */
 /* text */
 /* link text */
+/* general rules */
 body {
   font: normal 100% "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, sans-serif;
   color: #222222;
@@ -126,6 +127,10 @@ a:hover.action, a:focus.action {
 ul li {
   list-style: none; }
 
+img, embed, object, video {
+  max-width: 100%; }
+
+/* end general rules */
 /* error and flash messages */
 div#flash_notice_wrapper {
   text-align: center;
@@ -534,7 +539,7 @@ ul#assets {
     float: left;
     padding: 1em;
     /* 5px / 14px */
-    margin: 1em;
+    margin: 16px;
     border: 1px solid #a8a8a8;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
@@ -543,14 +548,20 @@ ul#assets {
     background: #FDFCFA;
     -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
-    -box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5); }
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5); }
+    ul#assets li a:hover {
+      text-decoration: none; }
     ul#assets li img {
-      border: 1px solid #FDFCFA; }
+      border: 1px solid #a8a8a8; }
     ul#assets li img:hover {
       border: 1px solid #9b3c0e; }
-  ul#assets div.image_name {
-    padding-top: 2px;
-    text-align: center; }
+  ul#assets li.show_site_assets {
+    width: 16.3398693%;
+    /* 100px / 612px */ }
+  ul#assets div.figcaption {
+    text-align: center;
+    font-weight: normal;
+    padding-top: 2px; }
 
 div.theme_assets {
   margin: 1em 0;
