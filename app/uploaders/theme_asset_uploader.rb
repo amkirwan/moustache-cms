@@ -3,8 +3,6 @@ require 'mime/types'
 
 class ThemeAssetUploader < CarrierWave::Uploader::Base
 
-  include CarrierWave::MiniMagick
-
   # Choose what kind of storage to use for this uploader:
   storage :file
 
@@ -30,11 +28,6 @@ class ThemeAssetUploader < CarrierWave::Uploader::Base
       end
     end
   end             
-
-  version :thumb, :if => :image? do                     
-    process :resize_to_fill => [80, 80] 
-  end
-                             
 
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
