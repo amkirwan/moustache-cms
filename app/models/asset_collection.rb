@@ -26,4 +26,12 @@ class AssetCollection
             
   validates :updated_by_id,
             :presence => true
+
+  # -- Callbacks
+  before_destroy :remove_folder 
+
+  def remove_folder
+    FileUtils.rm_rf(File.join(Rails.root, 'public', 'assets', site.id, name))
+  end
+
 end
