@@ -4,9 +4,10 @@
              :locals => { :target => user }
     %fieldset
       %ul.form_fields
-        %li
-          = f.label :puid, "Partners UID<abbr title='required' class='required'>*</abbr>".html_safe
-          = f.text_field :puid 
+        - if admin?
+          %li
+            = f.label :puid, "Partners UID<abbr title='required' class='required'>*</abbr>".html_safe
+            = f.text_field :puid 
         %li
           = f.label :firstname, "Firstname<abbr title='required' class='required'>*</abbr>".html_safe
           = f.text_field :firstname
