@@ -9,7 +9,9 @@ $content_bg: #F9F8F3;
 $sidebar_border: #A8A8A8;
 $sidebar_heading: #FB5000;
 $footer_bg: #2c2b2b;
-$error_ex_color: #FFD324;
+$flash_color: #FFD324;
+$error_ex_heading_color: #2C2C2C;
+$error_ex_color: #777777;
 $foldable_bg: #E9E8E6;
 $submenu_bg: #E4E3E1;
 $action_button_bottom: #2C2C2C;
@@ -28,7 +30,6 @@ $hover_text: #9b3c0e;
 $nav_text: #FB5000;
 
 $body_min_height: 1000px;
-
 
 body {
   font: $base_text;
@@ -101,8 +102,8 @@ div#flash_notice_wrapper {
 	text-align: center;
 	margin:  0 auto 16px auto ;
 	padding: 4px 0;
-	border-top: 1px solid $error_ex_color;
-	border-bottom: 1px solid $error_ex_color;
+	border-top: 1px solid $flash_color;
+	border-bottom: 1px solid $flash_color;
   background: #FFF6BF;
 }
 
@@ -143,7 +144,7 @@ div#error_explanation {
     padding: 5px 1em 5px 1em;
     margin: -7px;
     margin-bottom: 0px;
-    background-color: $error_ex_color;
+    background-color: $error_ex_heading_color;
     color: $light_text;
   }
 
