@@ -12,8 +12,7 @@ class Admin::UsersController < AdminBaseController
   
   def create   
     # set because attr_accessible   
-    @user.puid = params[:user][:puid] if admin?
-    @user.role = params[:user][:role] if admin?
+    admin_only
     @user.site = @current_site
     if @user.save
       redirect_to admin_users_path, :notice => "Successfully created user profile for #{@user.full_name}" 
@@ -26,7 +25,7 @@ class Admin::UsersController < AdminBaseController
   end
   
   def update                    
-    @user.role = params[:user][:role] if admin?
+    admin_only
     if @user.update_attributes(params[:user]) 
       redirect_to admin_users_path, :notice => "Successfully updated user profile for #{@user.full_name}"
     else
@@ -47,4 +46,12 @@ class Admin::UsersController < AdminBaseController
       end
     end
   end 
+
+  private
+    
+    def admin_only
+      @user.puid = params[:user][:puid] if admin?
+      @user.role = params[:user][:role] if admin?
+    end
+
 end
