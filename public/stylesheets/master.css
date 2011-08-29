@@ -577,3 +577,9 @@ div.add_some h4 {
   text-align: center; }
   div.add_some h4 a:hover {
     text-decoration: none; }
+
+/* markdown editor */
+div.markItUp {
+  width: 90%; }
+  div.markItUp textarea {
+    width: 98%; }
