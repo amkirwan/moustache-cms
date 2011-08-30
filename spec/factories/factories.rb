@@ -74,7 +74,7 @@ Factory.define :page do |page|
   page.current_state { Factory.build(:current_state) }
   page.editors {[ Factory.build(:user) ]}
   page.post_container false
-  page.tags 
+  page.tags "page"
   page.page_parts {[ Factory.build(:page_part) ]}
   page.created_by { Factory.build(:user) }
   page.updated_by { Factory.build(:user) }

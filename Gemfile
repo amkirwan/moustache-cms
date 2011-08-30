@@ -31,5 +31,6 @@ group :development, :test do
   gem "hpricot"
   gem "syntax"   
   gem "relish"
-  gem 'spork'
+  gem "spork"
+  gem "mongoid_taggable"
 end

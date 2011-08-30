@@ -6,8 +6,8 @@ class Page
   include Mongoid::Paranoia
   
   include Mongoid::Tree 
+  include Mongoid::Taggable
   include HandlebarCms::Mongoid::MetaData
-
 
   attr_accessible :parent,
                   :name,
