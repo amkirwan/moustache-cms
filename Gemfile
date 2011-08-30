@@ -28,7 +28,6 @@ group :development, :test do
   gem "database_cleaner"
   gem "factory_girl_rails"
   gem "mongoid-rspec", "~> 1.4.4"
-  gem 'machinist_mongo', :require => 'machinist/mongoid', :git => 'git://github.com/nmerouze/machinist_mongo.git', :branch => 'machinist2'
   gem "hpricot"
   gem "syntax"   
   gem "relish"

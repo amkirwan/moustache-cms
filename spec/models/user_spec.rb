@@ -36,7 +36,7 @@ describe User do
       @user.should be_valid
     end
   
-    it "should not be valid without a Partners ID" do
+    it "should not be valid without a puid" do
      @user.puid = nil
      @user.should_not be_valid
     end  
@@ -67,7 +67,8 @@ describe User do
     end
   
     it "should not be valid with duplicate pid within the same site" do  
-      Factory.build(:user, :puid => "#{@user.puid}", :site_id => @user.site.id).should_not be_valid
+      #Factory(:user, :puid => @user.puid, :site_id => @user.site_id).should_not be_valid
+      should validate_uniqueness_of(:puid).scoped_to(:site_id)
     end
     
     context "duplicate pid should be valid on a different site" do
@@ -77,7 +78,8 @@ describe User do
     end
   
     it "should not be valid with duplicate email addresses within the same site" do
-      Factory.build(:user, :email => "#{@user.email}", :site => @user.site).should_not be_valid
+      #Factory.build(:user, :email => "#{@user.email}", :site_id => @user.site_id).should_not be_valid
+      should validate_uniqueness_of(:email).scoped_to(:site_id)
     end      
     
     context "duplicate email should be valid on a different site" do

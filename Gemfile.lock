@@ -20,14 +20,6 @@ GIT
     carrierwave (0.5.4)
       activesupport (~> 3.0)
 
-GIT
-  remote: git://github.com/nmerouze/machinist_mongo.git
-  revision: fa4819c4e1233a4e3ce527b68af8aeee85dfc6c3
-  branch: machinist2
-  specs:
-    machinist_mongo (2.0.0.beta.1)
-      machinist (~> 2.0.0.beta2)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -113,7 +105,6 @@ GEM
     launchy (0.3.7)
       configuration (>= 0.0.5)
       rake (>= 0.8.1)
-    machinist (2.0.0.beta2)
     mail (2.2.19)
       activesupport (>= 2.3.6)
       i18n (>= 0.4.0)
@@ -215,7 +206,6 @@ DEPENDENCIES
   hpricot
   jquery-rails (>= 1.0.12)
   launchy
-  machinist_mongo!
   mime-types
   mini_magick
   mongoid (~> 2.0)
