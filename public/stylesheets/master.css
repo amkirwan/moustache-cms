@@ -467,6 +467,15 @@ form.site_prop .foldable {
   form.site_prop .foldable legend:hover {
     cursor: pointer; }
 
+img.site_asset_thumb {
+  display: block;
+  width: 15%;
+  margin-bottom: 8px;
+  border: 1px solid #a8a8a8; }
+
+img.site_asset_thumb:hover {
+  border: 1px solid #9b3c0e; }
+
 span.fold_arrow {
   display: inline-block;
   width: 9px;

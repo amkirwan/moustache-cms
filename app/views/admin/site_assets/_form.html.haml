@@ -10,10 +10,12 @@
         %li
           = f.label :description
           = f.text_area :description, :cols => "50", :rows => "10"
+        %li
+          = f.label :tags
+          = f.text_field :tags
         - if !site_asset.new_record?
           %li 
-            The current file is available here
-            = link_to site_asset.asset_filename, "http://#{request.host}#{site_asset.asset.url}"
+            = link_to image_tag(@site_asset.asset.url, :class => "site_asset_thumb"), "http://#{request.host}#{site_asset.asset.url}"
         - if site_asset.new_record?
           %li
             = f.label :asset, "Asset Source<abbr title='required' class='required'>*</abbr>".html_safe

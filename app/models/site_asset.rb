@@ -2,9 +2,18 @@ class SiteAsset
   include Mongoid::Document
   include Mongoid::Timestamps
   
-  attr_accessible :name, :description, :content_type, :width, :height, :file_size, :asset
+  include Mongoid::Taggable
+
+  attr_accessible :name,
+                  :description,
+                  :content_type, 
+                  :width, 
+                  :height, 
+                  :file_size, 
+                  :asset, 
+                  :tags
   
-  # -- Fields --------------- 
+  # -- Fields 
   field :name
   field :description
   field :content_type
@@ -15,10 +24,10 @@ class SiteAsset
   field :updator_id
   mount_uploader :asset, SiteAssetUploader  
   
-  # -- Associations -------------        
+  # -- Associations 
   embedded_in :asset_collection  
   
-  # -- Validations --------------
+  # -- Validations 
   validates :name, :presence => true
             
   validates :asset, :presence => true
@@ -28,7 +37,7 @@ class SiteAsset
   before_update :recreate, :if => "self.name_changed?"
   after_destroy :remove_folder  
     
-  # -- Methods ----
+  # -- Instance Methods     
   def recreate
     self.asset.recreate_versions!
     self.asset_filename = "#{self.name}.#{self.asset.file.extension}"
@@ -39,7 +48,6 @@ class SiteAsset
     self.file_size = asset.file.size 
   end  
             
-  # -- Instance Methods     
   def image?
     self.asset.image?(self.asset.file)
   end

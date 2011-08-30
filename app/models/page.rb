@@ -20,7 +20,8 @@ class Page
                   :layout_id,
                   :page_parts,
                   :meta_data,
-                  :post_container
+                  :post_container,
+                  :tags
                   
   # -- Fields -----------------------------------------------
   field :name

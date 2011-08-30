@@ -470,6 +470,18 @@ form.site_prop {
   }
 }
 
+img.site_asset_thumb {
+  display: block;
+  width: 15%;
+  margin-bottom: 8px;
+  border: 1px solid $sidebar_border;
+  
+}
+
+img.site_asset_thumb:hover {
+  border: 1px solid $hover_text;
+}
+
 span.fold_arrow {
   display: inline-block;
   width: 9px;
