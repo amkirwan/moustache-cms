@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem "rails", "~> 3.0.9"   
+gem "rails", "3.0.10"   
 gem "haml", "~> 3.1"
 gem "haml-rails", "~> 0.3.4"
 gem "sass", "~> 3.1.7"
@@ -15,9 +15,10 @@ gem "mustache", ">= 0.99"
 gem "RedCloth", "~> 4.2"
 gem "redcarpet", "~> 1.11"
 gem "rack-ssl-enforcer", "~> 0.2"
-gem "carrierwave", :git => "git://github.com/jnicklas/carrierwave.git"
-gem "mini_magick"
+gem "carrierwave-mongoid", :git => "git://github.com/jnicklas/carrierwave-mongoid.git", :require => "carrierwave/mongoid"
 gem "mime-types"
+#gem "mongoid_taggable", :git => "git://github.com/wilkerlucio/mongoid_taggable.git"
+gem "mongoid_taggable_with_context", :git => "git://github.com/aq1018/mongoid_taggable_with_context.git"
 
 group :development, :test do
   gem "rspec-rails", "~> 2.6" 
@@ -32,5 +33,4 @@ group :development, :test do
   gem "syntax"   
   gem "relish"
   gem "spork"
-  gem "mongoid_taggable"
 end

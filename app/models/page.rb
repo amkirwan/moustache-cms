@@ -6,8 +6,8 @@ class Page
   include Mongoid::Paranoia
   
   include Mongoid::Tree 
-  include Mongoid::Taggable
   include HandlebarCms::Mongoid::MetaData
+  include Mongoid::TaggableWithContext
 
   attr_accessible :parent,
                   :name,
@@ -31,6 +31,8 @@ class Page
   field :permalink
   field :breadcrumb
   field :post_container, :type => Boolean, :default => false    
+
+  taggable
   
   # -- Associations-----------------------------------------------
   embeds_one :current_state

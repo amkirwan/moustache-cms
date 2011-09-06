@@ -2,7 +2,7 @@ class SiteAsset
   include Mongoid::Document
   include Mongoid::Timestamps
   
-  include Mongoid::Taggable
+  include Mongoid::TaggableWithContext
 
   attr_accessible :name,
                   :description,
@@ -23,6 +23,8 @@ class SiteAsset
   field :creator_id
   field :updator_id
   mount_uploader :asset, SiteAssetUploader  
+
+  taggable
   
   # -- Associations 
   embedded_in :asset_collection  
