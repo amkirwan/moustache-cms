@@ -1,5 +1,4 @@
 require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
-require File.expand_path(File.dirname(__FILE__) + '/../lib/handlebar_cms/mongoid/meta_data_shared_examples') 
 
 describe Page do   
   let(:user) { Factory(:user) }
@@ -10,7 +9,6 @@ describe Page do
     @page = Factory(:page, :site_id => site.id, :parent => parent , :layout_id => layout.id, :created_by_id => user.id, :updated_by_id => user.id, :editor_ids => [user.id])
   end
   
-  it_behaves_like "meta_data"
   
   # -- Assignment -------------------------------------------
   describe "mass assignment" do
@@ -35,7 +33,8 @@ describe Page do
              :current_state => stub_model(CurrentState),
              :page_parts => [stub_model(PagePart)],
              :meta_data => { "title" => "foobar"},
-             :post_container => true)
+             :post_container => true,
+             :tags => "taggable")
        page.name.should == "foobar"
        page.parent.should == parent
        page.title.should == "foobar"
@@ -47,6 +46,7 @@ describe Page do
        page.page_parts.should_not == nil  
        page.meta_data.should_not == nil    
        page.post_container.should == true
+       page.tags.should == "taggable"
     end
   end
   
@@ -125,9 +125,9 @@ describe Page do
   describe "before_save callback" do
     describe "#uniq_editor_ids" do
       it "should make editor_ids array unique" do
-        @page.editor_ids = ["ak730", "cds27", "foobar", "ak730", "cds27"]
+        @page.editor_ids = [user.id, user.id]
         @page.save
-        @page.editor_ids.should == ["ak730", "cds27", "foobar"]
+        @page.editor_ids.should == [user.id]
       end
     end
   end
