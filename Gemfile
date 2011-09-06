@@ -1,10 +1,16 @@
 source 'http://rubygems.org'
 
-gem "rails", "3.0.10"   
-gem "haml", "~> 3.1"
-gem "haml-rails", "~> 0.3.4"
-gem "sass", "~> 3.1.7"
-gem 'jquery-rails', '>= 1.0.12'
+gem "rails", "3.1.0"   
+
+group :assets do
+  gem "sass-rails", "~> 3.1.0"
+  #gem "coffee-rails", "~> 3.1.0"
+  #gem "uglifier"
+end
+
+gem "jquery-rails"
+
+gem "haml-rails", "~> 0.3"
 gem "mongoid", "~> 2.0"
 gem "bson_ext", "~> 1.3"    
 gem "cancan", ">= 1.6"
