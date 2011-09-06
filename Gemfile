@@ -17,7 +17,6 @@ gem "redcarpet", "~> 1.11"
 gem "rack-ssl-enforcer", "~> 0.2"
 gem "carrierwave-mongoid", :git => "git://github.com/jnicklas/carrierwave-mongoid.git", :require => "carrierwave/mongoid"
 gem "mime-types"
-#gem "mongoid_taggable", :git => "git://github.com/wilkerlucio/mongoid_taggable.git"
 gem "mongoid_taggable_with_context", :git => "git://github.com/aq1018/mongoid_taggable_with_context.git"
 
 group :development, :test do
