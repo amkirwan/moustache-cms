@@ -4,4 +4,5 @@
  *= require ./markitup/sets/markdown/markdown
  *= require ./markitup/sets/textile/textile
  *= require ./markitup/sets/css/css_style
+ *= require ./markitup/set/html/markitup_html
  */
