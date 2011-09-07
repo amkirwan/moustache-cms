@@ -1,5 +1,7 @@
 /*
  *= require ./markitup/skins/markitup/markitup_skin
+ *= require ./markitup/sets/default/markitup_default
  *= require ./markitup/sets/markdown/markdown
  *= require ./markitup/sets/textile/textile
+ *= require ./markitup/sets/css/css_style
  */
