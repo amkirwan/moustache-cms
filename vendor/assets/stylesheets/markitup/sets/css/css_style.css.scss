@@ -1,0 +1,72 @@
+/* -------------------------------------------------------------------
+// markItUp!
+// By Jay Salvat - http://markitup.jaysalvat.com/
+//
+// CSS Set by Kevin Papst - http://www.kevinpapst.de/
+// ------------------------------------------------------------------*/
+.css .class a {
+	background-image: image-url("markitup/css/tag.png");
+}
+.css .bold a {
+	background-image: image-url("markitup/css/bold.png");
+}
+.css .italic a {
+	background-image: image-url("markitup/css/italic.png");
+}
+.css .stroke a {
+	background-image: image-url("markitup/css/stroke.png");
+}
+.css .lowercase a {
+	background-image: image-url("markitup/css/text_lowercase.png"); 
+}
+.css .uppercase a {
+	background-image: image-url("markitup/css/text_uppercase.png"); 
+}
+
+.html .alignments a {
+	background-image: image-url("markitup/css/text_align_left.png"); 
+}
+	.html .alignments .left a {
+		background-image: image-url("markitup/css/text_align_left.png"); 
+	}
+	.html .alignments .center a {
+		background-image: image-url("markitup/css/text_align_center.png"); 
+	}
+	.html .alignments .right a {
+		background-image: image-url("markitup/css/text_align_center.png"); 
+	}
+	.html .alignments .justify a {
+		background-image: image-url("markitup/css/text_align_justify.png"); 
+	}
+
+.html .indent a {
+	background-image: image-url("markitup/css/text_indent.png"); 
+}
+.html .letterspacing a {
+	background-image: image-url("markitup/css/text_letterspacing.png"); 
+}
+.html .lineheight a {
+	background-image: image-url("markitup/css/text_linespacing.png"); 
+}
+
+.html .padding a {
+	background-image: image-url("markitup/css/text_padding_left.png"); 
+}
+	.html .padding .left a {
+		background-image: image-url("markitup/css/text_padding_left.png");  
+	}
+	.html .padding .top a {
+		background-image: image-url("markitup/css/text_padding_top.png");  
+	}
+	.html .padding .right a {
+		background-image: image-url("markitup/css/text_padding_right.png");  
+	}
+	.html .padding .bottom a {
+		background-image: image-url("markitup/css/text_padding_bottom.png"); 
+	}
+.html .background a {
+	background-image: image-url("markitup/css/picture.png"); 
+}
+.html .css a {
+	background-image: image-url("markitup/css/css.png"); 
+}
