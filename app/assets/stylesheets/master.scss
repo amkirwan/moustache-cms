@@ -1,3 +1,6 @@
+/*
+*= require_self
+*/
 @import "reset";
 @import "mixin_links";
 @import "tables";
@@ -39,7 +42,7 @@ body {
   padding: 0;
   margin: 0;
   text-align: left;
-  background: $body_bg url("/images/body_bg.png") no-repeat left top;
+  background: $body_bg image-url("body_bg.png") no-repeat left top;
 }
 
 
@@ -292,7 +295,7 @@ div#content {
   width: 73.0392157%; /* (612 - 16) / 816 */
   margin: 1em 0; 
   padding-left: 16px;
-  background: $content_bg url("/images/content_bg.png") repeat-y 0 0; 
+  background: $content_bg image-url("content_bg.png") repeat-y 0 0; 
 }
 
 div#content_header_wrapper {
@@ -489,7 +492,7 @@ span.fold_arrow {
   position: relative;
   left: 0.714285714em; /* 10px / 14px */
   bottom: 1px;
-  background: transparent url(/images/fold-arrow.png) no-repeat 0 0
+  background: transparent image-url("fold-arrow.png") no-repeat 0 0
 }
 span.rotate {
   -webkit-transform: rotate(-90deg);

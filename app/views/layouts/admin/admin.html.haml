@@ -2,10 +2,10 @@
 %html
   %head{:charset => "UTF-8"}
     %title= #{Site.first.name} Admin
-    = stylesheet_link_tag "master.css", :media => "screen, projection"
+    = stylesheet_link_tag :master, :media => "screen, projection"
     
    
-    = javascript_include_tag :defaults
+    = javascript_include_tag :application
     
     = javascript_include_tag "markitup/jquery.markitup"
     = javascript_include_tag "markitup/sets/default/set"
