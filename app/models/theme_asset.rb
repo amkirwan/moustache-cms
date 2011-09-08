@@ -33,7 +33,7 @@ class ThemeAsset
     
   def recreate
     self.asset.recreate_versions!
-    self.asset_filename = "#{self.name}.#{self.asset.file.extension}"
+    #self.asset.filename 
   end
   
   def update_asset_attributes         

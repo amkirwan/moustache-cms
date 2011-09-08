@@ -8,7 +8,7 @@ class Ability
       can :manage, [User, Layout, Page, AssetCollection, ThemeAsset, Snippet], :site_id => user.site_id
       # Because SiteAsset is embedded in ThemeAsset you cannot save a created SiteAsset in another site
       # unless you are approved to save the ThemeAsset. When using new and create the _parent of the SiteAsset
-      # will not have ben 
+      # will not have been set and it cannot be saved without the parent 
       can :create, SiteAsset 
       can [:read, :update, :destroy], SiteAsset, do |site_asset|
         site_asset._parent.site_id == user.site_id

@@ -159,15 +159,23 @@ describe User do
     it "should reference many pages updated" do
       @user.should have_many(:pages_updated).of_type(Page)
     end
-    
-    it "should reference many theme_assets" do
-      @user.should have_many(:theme_assets).of_type(ThemeAsset)
-    end        
-    
-    it "should reference many snippets" do
-      @user.should have_many(:snippets).of_type(Snippet)
+
+    it "should reference many theme_assets created" do
+      @user.should have_many(:theme_assets_created).of_type(ThemeAsset)
     end
     
+    it "should reference many theme_assets updated" do
+      @user.should have_many(:theme_assets_updated).of_type(ThemeAsset)
+    end        
+    
+    it "should reference many snippets crated" do
+      @user.should have_many(:snippets_created).of_type(Snippet)
+    end
+    
+     it "should reference many snippets crated" do
+      @user.should have_many(:snippets_updated).of_type(Snippet)
+    end 
+   
     it "should have many editors" do
       @user.should have_and_belong_to_many(:pages)
     end        

@@ -17,12 +17,12 @@ class Site
   index :domains
   
   # -- Associations ---------------------------------------
-  has_many :users, :dependent => :destroy
-  has_many :pages, :dependent => :destroy
-  has_many :layouts, :dependent => :destroy
+  has_many :users, :dependent => :delete
+  has_many :pages, :dependent => :delete
+  has_many :layouts, :dependent => :delete
   has_many :asset_collections, :dependent => :destroy
   has_many :theme_assets, :dependent => :destroy
-  has_many :snippets, :dependent => :destroy
+  has_many :snippets, :dependent => :delete
 
     
   # -- Validations ----------------------------------------
@@ -37,6 +37,16 @@ class Site
             
   # -- Callbacks -----------------------------------------------
   before_save :add_subdomain_to_domains
+  before_destroy :delete_associated
+
+  def delete_associated
+    self.users = []
+    self.pages = []
+    self.layouts = []
+    self.asset_collections = []
+    self.theme_assets = []
+    self.snippets = []
+  end
             
   # -- Scopes ---------------------------------------
   scope :match_domain, lambda { |domain| { :any_in => { :domains => [*domain] }} }

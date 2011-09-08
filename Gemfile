@@ -11,7 +11,7 @@ end
 gem "jquery-rails"
 
 gem "haml-rails", "~> 0.3"
-gem "mongoid", "~> 2.0"
+gem "mongoid", "~> 2.1"
 gem "bson_ext", "~> 1.3"    
 gem "cancan", ">= 1.6"
 gem "rubycas-client", :git => "git://github.com/amkirwan/rubycas-client.git", :branch => "rails3"

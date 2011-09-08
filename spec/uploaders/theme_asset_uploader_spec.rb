@@ -45,16 +45,6 @@ describe ThemeAssetUploader do
     @uploader.extension_white_list.should == %w(jpg jpeg gif png css js swf flv eot svg ttf woff otf ico)
   end       
   
-  it "should make a thumbnail exactly 80 by 80 pixels" do
-    @uploader.thumb.should have_dimensions(80, 80)
-  end
-  
-  it "should not make a thumbnail when content_type is not an image" do
-    uploader = ThemeAssetUploader.new(theme_asset, :asset)
-    uploader.store!(AssetFixtureHelper.open("theme_css.css"))
-    uploader.thumb.should be_blank
-  end
-  
   it "should return true when the file is an image" do
     @uploader.image?(@uploader.file).should be_true
   end

@@ -42,7 +42,6 @@ class SiteAsset
   # -- Instance Methods     
   def recreate
     self.asset.recreate_versions!
-    self.asset_filename = "#{self.name}.#{self.asset.file.extension}"
   end
  
   def update_asset_attributes         

@@ -10,7 +10,7 @@ class Filter
   key :name
   
   # -- Associations -------
-  embedded_in :filterable, polymorphic: true
+  embedded_in :filterable, :polymorphic => true
   
   # -- Validates -------
   validates :name,

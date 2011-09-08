@@ -58,15 +58,15 @@ describe Site do
   # -- Associations -------------------------------------------
   describe "Associations" do
     it "should have many users" do
-      @site.should have_many(:users).with_dependent(:destroy)
+      @site.should have_many(:users).with_dependent(:delete)
     end
 
     it "should have many pages" do
-      @site.should have_many(:pages).with_dependent(:destroy)
+      @site.should have_many(:pages).with_dependent(:delete)
     end 
 
     it "should have many layouts" do
-      @site.should have_many(:layouts).with_dependent(:destroy)
+      @site.should have_many(:layouts).with_dependent(:delete)
     end
     
     it "should reference many asset_collections" do
@@ -78,7 +78,7 @@ describe Site do
     end
 
     it "should have many snippets" do
-      @site.should have_many(:snippets).with_dependent(:destroy)
+      @site.should have_many(:snippets).with_dependent(:delete)
     end
   end
   

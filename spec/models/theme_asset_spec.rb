@@ -71,7 +71,7 @@ describe ThemeAsset do
          @theme_asset_image.name = "new_name"
          @theme_asset_image.save
          theme_image = ThemeAsset.where(:name => "new_name", :site_id => site.id).first
-         theme_image.asset_filename.should == "new_name.png"
+         theme_image.asset_identifier.should == "new_name.png"
          theme_image.asset.url.should =~ /new_name.png/
        end  
      end
@@ -87,7 +87,7 @@ describe ThemeAsset do
        end
 
        it "should return empty Criteria if it cannot find any css files in the theme" do
-         @theme_asset_css.delete(site)
+         site.theme_assets.find(@theme_asset_css.id).delete
          ThemeAsset.css_files(site).should be_empty
        end
      end
@@ -100,7 +100,7 @@ describe ThemeAsset do
        end
 
        it "should return empty Criteria if it cannot find any js files in the theme" do
-         @theme_asset_js.delete(site)
+         site.theme_assets.find(@theme_asset_js.id).delete
          ThemeAsset.js_files(site).should be_empty
        end  
      end   
@@ -113,7 +113,7 @@ describe ThemeAsset do
        end
 
        it "should return empty Criteria if it cannot find any images in the theme" do
-         @theme_asset_image.delete(site)
+         site.theme_assets.find(@theme_asset_image.id).delete
          ThemeAsset.images(site).should be_empty
        end  
      end
@@ -134,7 +134,7 @@ describe ThemeAsset do
      end
 
      it "should return empty Criteria if it cannot find the domain" do
-       @theme_asset_css.delete(site)
+       site.theme_assets.find(@theme_asset_css.id).delete
        ThemeAsset.find_by_content_type_and_site_id(:content_type => "text/css", :site_id => site.id).should be_empty
      end   
    end
