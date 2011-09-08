@@ -2,22 +2,36 @@ jQuery ->
   $(document).ready -> 
 
     #START:pageFilter
-    pagePartSettings = (filterText, pagePart) ->
+    contentSettings = (filterText, contentArea) ->
       if filterText == "markdown"
-        pagePart.markItUp(markdownSettings)
+        contentArea.markItUp(markdownSettings)
       else if filterText == "textile"
-        pagePart.markItUp(textileSettings)
+        contentArea.markItUp(textileSettings)
       else if filterText == "html"
-        pagePart.markItUp(htmlSettings)
+        contentArea.markItUp(htmlSettings)
+      else if filterText == "haml"
+        contentArea.markItUp(defaultSettings)
     #END:pageFilter
     
-    if $("body.pages").length
-      $(".page_part_filter option:selected").each ->
-        pagePartSettings $(this).text(), $('textarea.page_part_contents')
+    if $('body.pages').length
+      $('.page_part_filter option:selected').each ->
+        contentSettings $(this).text(), $('textarea.page_part_contents')
         
       $('.page_part_filter').change ->
-        $(".page_part_filter option:selected").each ->
-          page_part = $("textarea.page_part_contents")
-          page_part.markItUpRemove()
-          pagePartSettings $(this).text(), page_part
-
+        $('.page_part_filter option:selected').each ->
+          pagePartContent = $("textarea.page_part_contents")
+          pagePartContent.markItUpRemove()
+          contentSettings $(this).text(), pagePartContent
+    else if $('body.layouts').length
+      $('textarea.code').markItUp(htmlSettings)
+    else if $('body.snippets').length
+      $('#snippet_filter_name option:selected').each ->
+        contentSettings $(this).text(), $('textarea#snippet_content')  
+      
+      $('#snippet_filter_name').change ->
+        $('#snippet_filter_name option:selected').each ->
+          snippetContent = $('textarea#snippet_content')
+          snippetContent.markItUpRemove()
+          contentSettings $(this).text(), snippetContent
+    else if $('body.theme_assets').length
+      $('textarea.code').markItUp(cssSettings)
