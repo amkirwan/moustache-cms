@@ -153,10 +153,9 @@ describe Page do
   describe "after_save callback" do
     describe "#update_user_pages" do
       it "should add the page association to the users who are editors" do
-        u = Factory(:user)
-        @page.editors << u
+        @page.editors << user
         @page.save
-        u.pages.should include(@page)
+        user.pages.should include(@page)
       end
     end
   end
@@ -165,10 +164,10 @@ describe Page do
   describe "before destroy callback" do
     describe "#delete_from_editors" do
       it "should remove the page from the users editor_ids" do
-        u = Factory(:user)
-        @page.editors << u
+        @page.editors << user
         @page.destroy
-        u.page_ids.should_not include(@page.id)
+        user.reload
+        user.page_ids.should_not include(@page.id)
       end
     end  
   end

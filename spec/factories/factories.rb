@@ -64,7 +64,7 @@ end
 
 Factory.define :page do |page|
   page.site { Factory.build(:site) }
-  page.parent 
+  page.parent  nil
   page.sequence(:name) { |n| "name_#{n}" }
   page.sequence(:title) { |n| "title_#{n}" }
   page.sequence(:slug) { |n| "slug_#{n}" }
