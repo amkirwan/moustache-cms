@@ -17,12 +17,12 @@ class Site
   index :domains
   
   # -- Associations ---------------------------------------
-  has_many :pages, :dependent => :delete
-  has_many :layouts, :dependent => :delete
-  has_many :asset_collections, :dependent => :delete
-  has_many :theme_assets, :dependent => :delete
-  has_many :users, :dependent => :delete  
-  has_many :snippets, :dependent => :delete
+  has_many :users, :dependent => :destroy
+  has_many :pages, :dependent => :destroy
+  has_many :layouts, :dependent => :destroy
+  has_many :asset_collections, :dependent => :destroy
+  has_many :theme_assets, :dependent => :destroy
+  has_many :snippets, :dependent => :destroy
 
     
   # -- Validations ----------------------------------------

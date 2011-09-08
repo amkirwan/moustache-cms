@@ -7,7 +7,7 @@ class ThemeAssetUploader < CarrierWave::Uploader::Base
   storage :file
 
   def store_dir
-    "sites/#{model.site_id}/#{model.class.to_s.underscore}/#{asset_type(model.asset_filename)}"
+    "sites/#{model.site_id}/#{model.class.to_s.underscore}/#{asset_type}"
   end
   
   before :store, :remember_cache_id
@@ -73,7 +73,7 @@ class ThemeAssetUploader < CarrierWave::Uploader::Base
       MIME::Types.of(file.extension)
     end
     
-    def asset_type(filename)
+    def asset_type
       sanitized_file = CarrierWave::SanitizedFile.new(filename)
       case 
       when stylesheet?(sanitized_file)

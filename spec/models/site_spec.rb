@@ -1,5 +1,4 @@
 require 'spec_helper'
-require File.expand_path(File.dirname(__FILE__) + '/../lib/handlebar_cms/mongoid/meta_data_shared_examples') 
 
 describe Site do   
   
@@ -58,24 +57,28 @@ describe Site do
   
   # -- Associations -------------------------------------------
   describe "Associations" do
+    it "should have many users" do
+      @site.should have_many(:users).with_dependent(:destroy)
+    end
+
     it "should have many pages" do
-      @site.should have_many(:pages)
+      @site.should have_many(:pages).with_dependent(:destroy)
     end 
+
+    it "should have many layouts" do
+      @site.should have_many(:layouts).with_dependent(:destroy)
+    end
     
     it "should reference many asset_collections" do
-      @site.should have_many(:asset_collections).of_type(AssetCollection)
+      @site.should have_many(:asset_collections).with_dependent(:destroy)
     end 
     
-    it "should have many layouts" do
-      @site.should have_many(:layouts)
-    end
-    
-    it "should have many users" do
-      @site.should have_many(:users)
-    end
-    
     it "should have many theme_assets" do
-      @site.should have_many(:theme_assets).of_type(ThemeAsset)
+      @site.should have_many(:theme_assets).with_dependent(:destroy)
+    end
+
+    it "should have many snippets" do
+      @site.should have_many(:snippets).with_dependent(:destroy)
     end
   end
   
@@ -97,46 +100,6 @@ describe Site do
     end
   end
   
-  # -- Check :dependent => :delete ------------------------------------------- 
-  describe ":dependent => :delete" do
-    before(:each) do
-      @page = Factory(:page, :site => @site, :layout => @layout, :created_by => @user, :updated_by => @user, :editor_ids => [@user.id])
-      @asset_collection = Factory(:asset_collection, :site => @site, :created_by => @user, :updated_by => @user) 
-    end
-    
-    describe "#destroy_pages" do
-      it "should destroy all the pages associated with the site" do
-        @site.pages.count.should == 1
-        @site.destroy
-        @site.pages.count.should == 0
-      end
-    end
-    
-    describe "#destroy_users" do
-      it "should destroy all the users associated with the site" do
-        @site.users.count.should == 1
-        @site.destroy
-        @site.users.count.should == 0
-      end
-    end
-    
-    describe "#destroy_layouts" do
-      it "should destroy all the layouts associated with the site" do
-        @site.layouts.count.should == 1
-        @site.destroy
-        @site.layouts.count.should == 0
-      end
-    end
-    
-    describe "#destroy_site_assets" do
-      it "should destroy all the site_assets associated with the site" do
-        @site.asset_collections.count.should == 1
-        @site.destroy
-        @site.asset_collections.count.should == 0
-      end
-    end
-  end
-
 
   # -- Instance Methods ------------------------------------------------------
   describe "instance methods" do
