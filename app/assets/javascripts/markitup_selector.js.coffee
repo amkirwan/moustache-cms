@@ -11,6 +11,8 @@ jQuery ->
         contentArea.markItUp(htmlSettings)
       else if filterText == "haml"
         contentArea.markItUp(defaultSettings)
+      else if filterText == "css"
+        $('textarea.code').markItUp(cssSettings)
     #END:pageFilter
     
     if $('body.pages').length
@@ -23,15 +25,14 @@ jQuery ->
           pagePartContent.markItUpRemove()
           contentSettings $(this).text(), pagePartContent
     else if $('body.layouts').length
-      $('textarea.code').markItUp(htmlSettings)
+      contentSettings "html", $('textarea.code')
     else if $('body.snippets').length
       $('#snippet_filter_name option:selected').each ->
         contentSettings $(this).text(), $('textarea#snippet_content')  
-      
       $('#snippet_filter_name').change ->
         $('#snippet_filter_name option:selected').each ->
           snippetContent = $('textarea#snippet_content')
           snippetContent.markItUpRemove()
           contentSettings $(this).text(), snippetContent
     else if $('body.theme_assets').length
-      $('textarea.code').markItUp(cssSettings)
+      contentSettings "css", $('textarea.code')
