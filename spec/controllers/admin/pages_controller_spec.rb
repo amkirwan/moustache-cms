@@ -92,14 +92,15 @@ describe Admin::PagesController do
                     "meta_data" => { "title" => "foobar", "keywords" => "foobar, keywords", "description" => "foobar description"},
                     "page_type_attributes"=> { "id" => page_type.to_param },
                     "current_state_attributes"=> { "id"=> status.to_param }, 
-                    "editor_ids"=>["ak730", "cds27"], 
+                    "editor_ids"=>["#{current_user.to_param}"],
                     "layout_id" => layout.to_param,
                     "page_parts_attributes" => { "0" => { "name" => "content", "content" => "Hello, World" }}} }}
     
     before(:each) do
       page.as_new_record
       @parent_mock = mock_model("Page", :id => "4d922d505dfe2f082e00006e")
-      Page.stub(:find_by_id).and_return(@parent_mock)
+      Page.stub(:find).and_return(@parent_mock)
+      User.stub(:find).and_return(current_user)
       CurrentState.stub(:find).and_return(status)
       Filter.stub(:find).and_return(filter)
       Page.stub(:new).with(params["page"]).and_return(page)
@@ -235,17 +236,15 @@ describe Admin::PagesController do
                     "title" => "foobar", 
                     "page_type_attributes"=> { "id" => page_type.to_param },
                     "current_state_attributes"=> { "id"=> status.to_param }, 
-                    "editor_ids"=>[ user.puid ], 
+                    "editor_ids"=>[ user.to_param ], 
                     "layout_id" => layout.to_param,
-                    "page_parts_attributes" => { "0" => { "name" => "content", "content" => "Hello, World", "filter" => filter }}} }}
+                    "page_parts_attributes" => { "0" => { "name" => "content", "content" => "Hello, World", "filter_name" => filter.name }}} }}
     
     before(:each) do
       controller.stub(:admin?).and_return(true)
       @parent_mock = mock_model("Page", :id => "4d922d505dfe2f082e00006e")
-      Page.stub_chain(:criteria, :for_ids).and_return([@parent_mock])
+      User.stub(:find).and_return(user)
       CurrentState.stub(:find_by_name).and_return(status)
-      Filter.stub(:find_by_name).and_return(filter)
-      Page.stub(:new).with(params["page"]).and_return(page)
       Page.stub(:find).and_return(page)
     end 
     

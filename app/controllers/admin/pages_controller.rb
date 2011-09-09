@@ -13,7 +13,7 @@ class Admin::PagesController < AdminBaseController
     if params[:page][:parent_id].blank?
       @page.parent_id = nil
     elsif
-      @page.parent_id = Page.find_by_id(params[:page][:parent_id]).id
+      @page.parent_id = Page.find(params[:page][:parent_id]).id
     end
     @page.site = @current_site  
     assign_current_state(params[:page][:current_state_attributes][:name])
