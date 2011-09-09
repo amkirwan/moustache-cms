@@ -140,7 +140,7 @@ describe Admin::UsersController do
       
       it "should should create a flash notice" do 
         do_post
-        flash[:notice].should == "Successfully created user account for #{user.puid}"
+        flash[:notice].should == "Successfully created user profile for #{user.puid}"
       end 
       
       it "should redirect to the admin users path" do
@@ -221,7 +221,7 @@ describe Admin::UsersController do
       
     it "should set a flash[:notice] message" do
       do_put
-      flash[:notice].should == "Successfully updated user account for #{user.puid}"
+      flash[:notice].should == "Successfully updated user profile for #{user.puid}"
     end         
     
     it "should redirect to INDEX" do
@@ -241,7 +241,7 @@ describe Admin::UsersController do
   describe "DELETE destroy" do   
     before(:each) do
       User.stub(:find).and_return(user)
-      Site.stub(:first).and_return(mock_model(Site, :full_subdomain => "foobar.example.com"))
+      Site.stub(:first).and_return(mock_model(Site))
     end
     
     def do_destroy  
@@ -267,6 +267,7 @@ describe Admin::UsersController do
       before(:each) do
         controller.stub(:current_user?).and_return(true)
       end
+
       it "should destroy the current session" do
         controller.should_receive(:reset_session)
         do_destroy
@@ -274,7 +275,7 @@ describe Admin::UsersController do
       
       it "should redirecto to the index page of the cms" do
         do_destroy
-        response.should redirect_to("http://foobar.example.com")
+        response.should redirect_to("http://test.host/foobar.example.com")
       end
     end
     
@@ -285,7 +286,7 @@ describe Admin::UsersController do
       
       it "should set a flash message" do
         do_destroy
-        flash[:notice].should == "Successfully deleted user account for #{user.puid}"
+        flash[:notice].should == "Successfully deleted user profile for #{user.puid}"
       end
 
       it "should redirect to admin_users index action" do

@@ -16,19 +16,19 @@ describe Admin::SiteAssetsController do
   end
 
   # -- GET Index ----------------------------------------------- 
-  describe "GET index" do
+  describe "GET show" do
     def do_get     
-      get :index, "asset_collection_id" => asset_collection.id
+      get :edit, :id => "1", :asset_collection_id => "1"
     end
     
-    let(:site_assets) { [mock_model("SiteAsset"), mock_model("SiteAsset")] }
-    
     before(:each) do
-      SiteAsset.stub(:accessible_by).and_return(site_assets)
+      AssetCollection.stub(:where).and_return(site)
+      site.stub(:find).and_return(asset_collection)
+      asset_collection.stub_chain(:site_assets, :find).and_return(site_asset)
     end
         
     it "should receive accessible_by" do
-      AssetCollection.should_receive(:find).and_return(asset_collection)
+      AssetCollection.should_receive(:where).and_return(asset_collection)
       do_get
     end 
     
@@ -36,16 +36,21 @@ describe Admin::SiteAssetsController do
       do_get
       assigns(:asset_collection).should == asset_collection
     end
+
+    it "shuld assign the site_asset" do 
+      do_get
+      assigns(:site_asset).should == site_asset
+    end
     
     it "should render the index template" do
       do_get
-      response.should render_template("admin/site_assets/index")
+      response.should render_template("admin/site_assets/edit")
     end
   end
   
   describe "GET new" do
     def do_get
-      get :new, "asset_collection_id" => asset_collection.id
+      get :new, :asset_collection_id => asset_collection.id
     end
     
     before(:each) do
@@ -86,7 +91,7 @@ describe Admin::SiteAssetsController do
     end
     
     it "should create a new site_asset from the params" do
-      SiteAsset.should_receive(:new).with(params).and_return(site_asset)
+      SiteAsset.should_receive(:new).and_return(site_asset)
       do_post
     end
     
@@ -114,7 +119,7 @@ describe Admin::SiteAssetsController do
       
       it "should redirect to the admin/site_assets/index" do
         do_post
-        response.should redirect_to(admin_asset_collection_site_assets_path)
+        response.should redirect_to([:admin, asset_collection])
       end
     end    
     
@@ -201,7 +206,7 @@ describe Admin::SiteAssetsController do
     
     describe "with valid params" do
       it "should receive update_attributes and return true" do
-        site_asset.should_receive(:update_attributes).with(params["site_asset"]).and_return(true)
+        site_asset.should_receive(:update_attributes).and_return(true)
         do_put
       end
       
@@ -212,14 +217,7 @@ describe Admin::SiteAssetsController do
       
       it "should redirect to the site_asset index page" do
         do_put
-        response.should redirect_to(admin_asset_collection_site_assets_path)
-      end
-    end
-    
-    context "using asset_cache when asset is nil on redisplay, ie validation fails" do
-      it "should set the asset to the asset_cache when the asset_cache is not empty and the asset is nil" do   
-        controller.should_receive(:try_site_asset_cache)
-        do_put("id" => site_asset.to_param, "asset_collection_id" => asset_collection.id, "site_asset" => { "asset_cache" => "1/rails.png" })
+        response.should redirect_to([:admin, asset_collection])
       end
     end
     
@@ -269,7 +267,7 @@ describe Admin::SiteAssetsController do
     
       it "should redirect to admin/site_asset/index when the file is destroyed" do
         do_destroy
-        response.should redirect_to(admin_asset_collection_site_assets_path)
+        response.should redirect_to([:admin, asset_collection])
       end 
     end
   end

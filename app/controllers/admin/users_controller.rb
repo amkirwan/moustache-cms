@@ -15,7 +15,7 @@ class Admin::UsersController < AdminBaseController
     admin_only
     @user.site = @current_site
     if @user.save
-      redirect_to admin_users_path, :notice => "Successfully created user profile for #{@user.full_name}" 
+      redirect_to [:admin, :users], :notice => "Successfully created user profile for #{@user.full_name}" 
     else
       render :new
     end
@@ -27,7 +27,7 @@ class Admin::UsersController < AdminBaseController
   def update                    
     admin_only
     if @user.update_attributes(params[:user]) 
-      redirect_to admin_users_path, :notice => "Successfully updated user profile for #{@user.full_name}"
+      redirect_to [:admin, :users], :notice => "Successfully updated user profile for #{@user.full_name}"
     else
       render :edit
     end
@@ -37,10 +37,10 @@ class Admin::UsersController < AdminBaseController
     if @user.delete
       if current_user? @user
         reset_session
-        format.html { redirect_to "http://#{@current_site.full_subdomain}" }
+        redirect_to cms_html_url("#{@current_site.full_subdomain}") 
       else
         respond_to do |format|
-          format.html { redirect_to admin_users_path, :notice => "Successfully deleted user profile for #{@user.full_name}" }
+          format.html { redirect_to [:admin, :users], :notice => "Successfully deleted user profile for #{@user.full_name}" }
           format.js
         end
       end
