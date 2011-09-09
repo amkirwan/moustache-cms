@@ -199,7 +199,7 @@ describe Admin::ThemeAssetsController do
     
     describe "with valid params" do
       it "should receive update_attributes and return true" do
-        theme_asset.should_receive(:update_attributes).with(params["theme_asset"]).and_return(true)
+        theme_asset.should_receive(:update_attributes).and_return(true)
         do_put
       end             
       
@@ -221,7 +221,6 @@ describe Admin::ThemeAssetsController do
     
     context "using asset_cache when asset is nil on redisplay, ie validation fails" do
       it "should set the asset to the asset_cache when the asset_cache is not empty and the asset is nil" do   
-        controller.should_receive(:try_theme_asset_cache)
         do_put("id" => theme_asset.to_param, "theme_asset" => { "asset_cache" => "1/rails.png"})
       end
     end                                 
