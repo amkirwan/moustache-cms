@@ -1,7 +1,7 @@
 class Admin::SiteAssetsController < AdminBaseController
   include HandlebarCms::AssetCache                    
         
-  prepend_before_filter :find_site_asset, :only => [:edit, :update, :destroy]
+  prepend_before_filter :find_site_asset, :only => [:show, :edit, :update, :destroy]
   
   load_and_authorize_resource :asset_collection
   load_and_authorize_resource :site_asset, :through => :asset_collection  
