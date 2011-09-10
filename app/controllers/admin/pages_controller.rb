@@ -17,8 +17,8 @@ class Admin::PagesController < AdminBaseController
     end
     @page.site = @current_site  
     assign_current_state(params[:page][:current_state_attributes][:name])
-    assign_page_parts(params[:page][:page_parts_attributes])
-    assign_editors(params[:page][:editor_ids])
+    #assign_page_parts(params[:page][:page_parts_attributes])
+    #assign_editors(params[:page][:editor_ids])
     created_updated_by_for @page
     if @page.save
       redirect_to admin_pages_path, :notice => "Successfully created page #{@page.title}"

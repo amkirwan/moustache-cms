@@ -44,7 +44,8 @@ class Page
   has_and_belongs_to_many :editors, :class_name => "User"
   
   accepts_nested_attributes_for :current_state
-  accepts_nested_attributes_for :page_parts
+  #accepts_nested_attributes_for :page_parts
+  accepts_nested_attributes_for :editors, :class_name => "Users"
   
   # -- Validations -----------------------------------------------
   validates :name,
