@@ -9,8 +9,7 @@ class Page
   include HandlebarCms::Mongoid::MetaData
   include Mongoid::TaggableWithContext
 
-  attr_accessible :site_id, 
-                  :parent,
+  attr_accessible :parent,
                   :name,
                   :title, 
                   :slug,
@@ -20,6 +19,7 @@ class Page
                   :current_state, 
                   :layout_id,
                   :page_parts,
+                  :page_parts_attributes,
                   :meta_data,
                   :post_container,
                   :tags
