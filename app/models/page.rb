@@ -68,11 +68,13 @@ class Page
                         :created_by_id, 
                         :updated_by_id                    
 
-  validate :site_id_match_create, :on => :create
-  validate :site_id_match_update, :on => :update
+  #validate :site_id_match_create, :on => :create
+  #validate :site_id_match_update, :on => :update
 
   # protect against creating a page in a site the user does not have permission to
   def site_id_match_create
+    puts "created_by_id=#{User.find(created_by_id).site_id}"
+    puts "site_id=#{site_id}"
     unless User.find(created_by_id).site_id == site_id && User.find(updated_by_id).site_id == site_id
       errors.add(:site_id, "The pages site_id must match the users site_id")
     end
