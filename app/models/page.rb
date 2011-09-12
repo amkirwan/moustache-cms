@@ -9,7 +9,8 @@ class Page
   include HandlebarCms::Mongoid::MetaData
   include Mongoid::TaggableWithContext
 
-  attr_accessible :parent,
+  attr_accessible :site_id, 
+                  :parent,
                   :name,
                   :title, 
                   :slug,
@@ -44,8 +45,7 @@ class Page
   has_and_belongs_to_many :editors, :class_name => "User"
   
   accepts_nested_attributes_for :current_state
-  #accepts_nested_attributes_for :page_parts
-  accepts_nested_attributes_for :editors, :class_name => "Users"
+  accepts_nested_attributes_for :page_parts
   
   # -- Validations -----------------------------------------------
   validates :name,
@@ -60,13 +60,29 @@ class Page
 
   validates :breadcrumb,
             :presence => true
-  
+
   validates_presence_of :site_id,
                         :slug, 
                         :current_state,
                         :layout_id, 
                         :created_by_id, 
                         :updated_by_id                    
+
+  validate :site_id_match_create, :on => :create
+  validate :site_id_match_update, :on => :update
+
+  # protect against creating a page in a site the user does not have permission to
+  def site_id_match_create
+    unless User.find(created_by_id).site_id == site_id && User.find(updated_by_id).site_id == site_id
+      errors.add(:site_id, "The pages site_id must match the users site_id")
+    end
+  end
+
+  def site_id_match_update
+    unless User.find(updated_by_id).site_id == site_id
+      errors.add(:site_id, "The pages site_id must match the users site_id")
+    end
+  end
   
   # -- Callbacks -----------------------------------------------
   before_validation :format_title, :slug_set, :full_path_set, :breadcrumb_set, :format_name

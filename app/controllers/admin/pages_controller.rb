@@ -15,10 +15,8 @@ class Admin::PagesController < AdminBaseController
     elsif
       @page.parent_id = Page.find(params[:page][:parent_id]).id
     end
-    @page.site = @current_site  
     assign_current_state(params[:page][:current_state_attributes][:name])
     #assign_page_parts(params[:page][:page_parts_attributes])
-    #assign_editors(params[:page][:editor_ids])
     created_updated_by_for @page
     if @page.save
       redirect_to admin_pages_path, :notice => "Successfully created page #{@page.title}"
@@ -33,7 +31,6 @@ class Admin::PagesController < AdminBaseController
   def update
     update_current_state(params[:page][:current_state_attributes][:name])
     update_page_parts(params[:page][:page_parts_attributes])
-    update_editors(params[:page][:editor_ids])
     @page.updated_by = @current_user
     if @page.update_attributes(params[:page]) 
       redirect_to admin_pages_path, :notice => "Successfully updated the page #{@page.title}"
@@ -49,13 +46,6 @@ class Admin::PagesController < AdminBaseController
   end
   
   private 
-    def assign_editors(editor_ids)
-      editor_ids.each do |editor_id|
-        editor = User.find(editor_id)
-        @page.editors << editor unless @page.editors.include?(editor)
-      end
-      @page.editors << current_user unless @page.editors.include?(current_user) 
-    end
   
     def assign_page_parts(page_parts={})
       page_parts.each_value do |hash|
@@ -68,19 +58,6 @@ class Admin::PagesController < AdminBaseController
         @page.page_parts[index.to_i].write_attributes(hash)
       end
     end
-    
-    def update_editors(editor_ids)
-      editor_ids = [] if editor_ids.nil?
-      editor_bson_ids = []
-      editor_ids.each do |e_id|
-        editor_bson_ids << User.find(e_id).id
-      end
-      remove_editor_ids = @page.editor_ids - editor_bson_ids
-      remove_editor_ids.each do |editor_id|
-        @page.delete_association_of_editor_id(editor_id)
-      end
-      assign_editors(editor_ids)
-    end    
     
     def assign_current_state(current_state_name)    
       @page.current_state = CurrentState.find_by_name(current_state_name)

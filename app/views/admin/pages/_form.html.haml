@@ -2,6 +2,8 @@
   = form_for([:admin, page], :html => { :class => "site_prop", :autocomplete => :off }) do |f|
     = render :partial => "shared/error_messages", 
              :locals => { :target => page }
+    = f.hidden_field :site_id
+    = f.hidden_field :created_by_id
     = render :partial => "general", :locals => {:f => f}
     = render :partial => "advanced_options", :locals => {:f => f}
     = render :partial => "meta_data", :locals => {:f => f}

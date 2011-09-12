@@ -28,7 +28,7 @@ class User
   has_many :theme_assets_updated, :class_name => "ThemeAsset", :foreign_key => :updated_by_id
 
   belongs_to :site
-  
+
   # -- Before Validations -----------------------------------------------
   before_validation :uniq_page_ids
   before_save :lower, :set_puid
