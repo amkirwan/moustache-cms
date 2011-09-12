@@ -9,7 +9,7 @@ class Page
   include HandlebarCms::Mongoid::MetaData
   include Mongoid::TaggableWithContext
 
-  attr_accessible :parent,
+  attr_accessible :parent_id,
                   :name,
                   :title, 
                   :slug,
@@ -17,6 +17,7 @@ class Page
                   :permalink,
                   :breadcrumb,
                   :current_state, 
+                  :current_state_attributes,
                   :layout_id,
                   :page_parts,
                   :page_parts_attributes,
@@ -111,8 +112,14 @@ class Page
     self.where(:name => name).first
   end
 
-  #-- Scopes ----------------------------------------------------------
+  # -- Scopes ----------------------------------------------------------
   scope :published, :where => { "current_state.name" => "published" }
+
+
+  # -- accepts_nested -----
+  def current_state_attributes=(attributes)
+      self.current_state = CurrentState.find_by_name(attributes[:name])
+  end
 
   # -- Instance Methods -----------------------------------------------  
   def published?
