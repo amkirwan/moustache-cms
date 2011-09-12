@@ -19,9 +19,9 @@ module ApplicationHelper
         ret += '<div class="page-info">'
         ret += '<em>'
         if item.updated_by.nil?
-          ret += item.updated_at.strftime("updated at %B %d %H:%M")
+          ret += item.updated_at.strftime("updated %B %d at %H:%M")
         else
-          ret += item.updated_at.strftime("updated at %B %d %H:%M by #{item.updated_by.puid}")
+          ret += item.updated_at.strftime("updated %B %d at %H:%M by #{item.updated_by.puid}")
         end
         ret += '</em>'
         if can? :destroy, item
