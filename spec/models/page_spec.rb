@@ -22,32 +22,6 @@ describe Page do
       @page.should_not allow_mass_assignment_of(:created_by_id => mock_model("User").id, :updated_by_id => mock_model("User").id)
     end
     
-    it "should allow mass assignment of" do
-      page = Page.new(:name => "foobar",
-             :title => "foobar",
-             :parent => parent,
-             :slug => "foobar",
-             :full_path => "full_path",
-             :breadcrumb => "foobar",
-             :layout_id => BSON::ObjectId('4d7fe2397353202ab60000e9'), 
-             :current_state => stub_model(CurrentState),
-             :page_parts => [stub_model(PagePart)],
-             :meta_data => { "title" => "foobar"},
-             :post_container => true,
-             :tags => "taggable")
-       page.name.should == "foobar"
-       page.parent.should == parent
-       page.title.should == "foobar"
-       page.slug.should == "foobar"
-       page.full_path.should == "full_path"
-       page.breadcrumb.should == "foobar"
-       page.layout_id.should == BSON::ObjectId('4d7fe2397353202ab60000e9')
-       page.current_state.should_not == nil
-       page.page_parts.should_not == nil  
-       page.meta_data.should_not == nil    
-       page.post_container.should == true
-       page.tags.should == "taggable"
-    end
   end
   
   # -- Before Validation Callback -------------------------------------------  

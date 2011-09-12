@@ -20,7 +20,7 @@ class Admin::ThemeAssetsController < AdminBaseController
   # POST /admin/theme_assets
   def create
     created_updated_by_for @theme_asset
-    @theme_asset.site = @current_site       
+    @theme_asset.site_id = @current_site.id
     try_theme_asset_cache 
     if @theme_asset.save
       redirect_to admin_theme_assets_path, :notice => "Successfully created the theme asset #{@theme_asset.name}" 

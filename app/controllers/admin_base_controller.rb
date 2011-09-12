@@ -23,8 +23,8 @@ class AdminBaseController < ApplicationController
     end
 
     def created_updated_by_for(obj)
-      obj.created_by = current_user
-      obj.updated_by = current_user
+      obj.created_by_id = current_user.id
+      obj.updated_by_id = current_user.id
     end
   
     def assign_site

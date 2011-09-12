@@ -11,9 +11,8 @@ class Admin::SnippetsController < AdminBaseController
   end
   
   def create   
-    # set because attr_accessible  
     created_updated_by_for @snippet
-    @snippet.site = @current_site
+    @snippet.site_id = @current_site.id
     if @snippet.save
       redirector [:edit, :admin, @snippet], [:admin, :snippets], "Successfully created the snippet #{@snippet.name}"
     else
