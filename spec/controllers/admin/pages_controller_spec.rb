@@ -115,48 +115,19 @@ describe Admin::PagesController do
       do_post
     end
     
-    it "should set the parent_id to the parent selected" do
-      page.should_receive(:parent_id=)
-      do_post
-      page.parent_id.should_not == nil
-    end
-    
     it "should assign @page for the view" do
       do_post
       assigns(:page).should == page
     end
     
-    it "should set the current_state" do
-      controller.should_receive(:assign_current_state).with(params["page"]["current_state_attributes"]["name"])
-      do_post
-    end
-    
     it "should assign the current_site to the page" do
-      page.should_receive(:site=)
-      do_post
-    end
-    
-    it "should set the page editors" do
-      controller.should_receive(:assign_editors).with(params["page"]["editor_ids"])
-      do_post
-    end
-    
-    it "should set the page parts" do
-      controller.should_receive(:assign_page_parts).with(params["page"]["page_parts_attributes"])
+      page.should_receive(:site_id)
       do_post
     end
     
     it "should assign created_by and updated by to the current user" do
       controller.should_receive(:created_updated_by_for).with(page)
       do_post
-    end
-    
-    context "when the parent page is blank" do
-      it "should set the parent_id to nil when the parent_id is blank" do
-        params["page"]["parent_id"] = nil
-        page.should_receive(:parent_id=).with(nil)
-        do_post
-      end
     end
     
     context "when the page saves successfully" do
@@ -260,21 +231,6 @@ describe Admin::PagesController do
     it "should assign @page for the view" do
       do_post
       assigns(:page).should == page
-    end
-    
-    it "should update the page's current state" do
-      controller.should_receive(:update_current_state).with(params["page"]["current_state_attributes"]["name"])
-      do_post
-    end
-    
-    it "should update the page editors" do
-      controller.should_receive(:update_editors).with(params["page"]["editor_ids"])
-      do_post
-    end
-    
-    it "should update the page_parts" do
-      controller.should_receive(:update_page_parts).with(params["page"]["page_parts_attributes"])
-      do_post
     end
     
     context "with valid params" do
