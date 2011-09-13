@@ -19,7 +19,7 @@
             %th CSS Name
             %th
           - @css_files.each do |css|
-            %tr{:class => "#{cycle('even', 'odd', :name => 'table_list')}"}
+            %tr{:id => "#{css.name}_css", :class => "#{cycle('even', 'odd', :name => 'table_list')}"}
               %td.name= link_to css.name, [:edit, :admin, css]
               - if can? :destroy, css
                 %td.delete= link_to "Delete", [:admin, css], :method => :delete, :confirm => "Are you sure you want to delete the CSS theme file #{css.name}", :class => "delete"
@@ -31,7 +31,7 @@
             %th JavaScript Name
             %th
           - @js_files.each do |js|
-            %tr{:class => "#{cycle('even', 'odd', :name => 'table_list')}"}
+            %tr{:id => "#{js.name}_js", :class => "#{cycle('even', 'odd', :name => 'table_list')}"}
               %td.name= link_to js.name, [:edit, :admin, js]
               - if can? :destroy, js
                 %td.delete= link_to "Delete", [:admin, js], :method => :delete, :confirm => "Are you sure you want to delete the JS theme file #{js.name}", :class => "delete"
@@ -43,7 +43,7 @@
             %th Image Name
             %th
           - @images.each do |image|
-            %tr{:class => "#{cycle('even', 'odd', :name => 'table_list')}"}
+            %tr{:id => "#{image.name}_image", :class => "#{cycle('even', 'odd', :name => 'table_list')}"}
               %td.name= link_to image.name, [:edit, :admin, image]
               - if can? :destroy, image 
                 %td.delete= link_to "Delete", [:admin, image], :method => :delete, :confirm => "Are you sure you want to delete the image theme file #{image.name}", :class => "delete"

@@ -1,3 +1,3 @@
 %li 
   The current file is available here
-  = link_to theme_asset.asset_filename, "http://#{request.host}#{theme_asset.asset.url}"
+  = link_to image_tag(theme_asset.asset.url, :class => "theme_asset_thumb"), "http://#{request.host}#{theme_asset.asset.url}" 

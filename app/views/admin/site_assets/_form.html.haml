@@ -16,7 +16,7 @@
         - if !site_asset.new_record?
           %li 
             = link_to image_tag(@site_asset.asset.url, :class => "site_asset_thumb"), "http://#{request.host}#{site_asset.asset.url}"
-        - if site_asset.new_record?
+        - else site_asset.new_record?
           %li
             = f.label :asset, "Asset Source<abbr title='required' class='required'>*</abbr>".html_safe
             = f.file_field :asset, :class => "file_field"

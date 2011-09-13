@@ -33,9 +33,9 @@ end
 Given /^"([^\"]*)" has created the theme asset "([^\"]*)"$/ do |puid, asset_name|
   user = User.find_by_puid(puid)
   When %{I go to the new admin theme asset page}
-  Given %{I fill in "theme_asset_name" with "#{asset_name}" within "div#add_new_theme_asset"}
+  Given %{I fill in "theme_asset_name" with "#{asset_name}"} 
   Given %{I attach the file "spec/fixtures/assets/rails.png" to "theme_asset_asset"}
-  Given %{I press "Save Theme Asset" within "div#add_new_theme_asset"}
+  Given %{I press "Save Theme Asset"}
 end    
 
 Then /^I should see the url for the theme asset file "([^\"]*)"$/ do |theme_asset_name|
