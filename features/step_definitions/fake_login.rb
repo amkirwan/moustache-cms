@@ -11,7 +11,7 @@ end
 
 Given /^the site "([^\"]*)" exists with the domain "([^\"]*)"$/ do |site, domain|
   Factory(:site, :name => site, :subdomain => site, :default_domain => domain)
-  Capybara.default_host = "#{site}.#{domain}"
+  Capybara.default_host = "http://#{site}.#{domain}"
 end
 
 Given /^I login to the site "([^\"]*)" as "([^\"]*)" with the role of "([^\"]*)"$/ do |site, puid, role|
