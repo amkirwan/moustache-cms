@@ -275,7 +275,7 @@ describe Admin::UsersController do
       
       it "should redirecto to the index page of the cms" do
         do_destroy
-        response.should redirect_to("http://test.host/foobar.example.com")
+        response.should redirect_to("http://test.host/")
       end
     end
     

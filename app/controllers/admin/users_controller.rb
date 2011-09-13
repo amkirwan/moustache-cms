@@ -37,7 +37,7 @@ class Admin::UsersController < AdminBaseController
     if @user.delete
       if current_user? @user
         reset_session
-        redirect_to cms_html_url("#{@current_site.full_subdomain}") 
+        redirect_to cms_html_url
       else
         respond_to do |format|
           format.html { redirect_to [:admin, :users], :notice => "Successfully deleted user profile for #{@user.full_name}" }

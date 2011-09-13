@@ -11,6 +11,7 @@ end
 
 Given /^the site "([^\"]*)" exists with the domain "([^\"]*)"$/ do |site, domain|
   Factory(:site, :name => site, :subdomain => site, :default_domain => domain)
+  #Capybara.app_host = "http://#{site}.#{domain}"
   Capybara.default_host = "http://#{site}.#{domain}"
 end
 
