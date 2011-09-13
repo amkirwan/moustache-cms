@@ -63,7 +63,7 @@ Factory.define :page_part do |pp|
 end
 
 Factory.define :page do |page|
-  page.site { Factory.build(:site)}
+  page.site { Factory.build(:site) }
   page.parent  nil
   page.sequence(:name) { |n| "name_#{n}" }
   page.sequence(:title) { |n| "title_#{n}" }
@@ -76,8 +76,8 @@ Factory.define :page do |page|
   page.post_container false
   page.tags "page"
   page.page_parts {[ Factory.build(:page_part) ]}
-  page.created_by { Factory.build(:user) }
-  page.updated_by { Factory.build(:user) } 
+  page.created_by_id { Factory.build(:user).id }
+  page.updated_by_id { Factory.build(:user).id }
 end
 
 Factory.define :parent_page, :parent => :page do |pp|
