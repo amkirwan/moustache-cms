@@ -14,23 +14,29 @@ Scenario: Admin login
   | foobar | editor | foobar.example.com |
   When I go to the admin users page 
   Then I should be on the admin users page
-  And I should see "foo"   
-  And I should see "bar"
-  And I should see "foobar"    
-   
+  And I should see "Foobar Baz" within "tr#foo"
+  And I should see "foo" within "tr#foo"
+  And I should see "Admin" within "tr#foo"
+  And I should see "Foobar Baz" within "tr#bar"
+  And I should see "bar" within "tr#bar" 
+  And I should see "Editor" within "tr#bar" 
+  And I should see "Foobar Baz" within "tr#foobar"
+  And I should see "foobar" within "tr#foobar" 
+  And I should see "Editor" within "tr#foobar" 
+
 @create_new_user
 Scenario: Create A New user
   When I go to the admin users page
-  And I follow "New User" within "ul#new_user"
+  And I follow "New User" 
   Then I should be on the new admin user page 
-  When I fill in "user_puid" with "foobar" within "div#add_new_user"
-  And I fill in "user_email" with "foobar@example.com" within "div#add_new_user"
-  And I choose "user_role_admin" within "div#add_new_user"
-  And I press "Create User" within "div#add_new_user"
+  When I fill in "user_puid" with "foobar" 
+  And I fill in "user_firstname" with "foobar"
+  And I fill in "user_lastname" with "baz"
+  And I fill in "user_email" with "foobar@example.com" 
+  And I choose "user_role_admin" 
+  And I press "Create User" 
   Then I should be on the admin users page 
-  And I should see "Successfully created user account for foobar"
-  And I should see "foobar"
-  And I should see "admin" 
+  And I should see "Successfully created user profile for Foobar Baz"
 
 @admin_edit_own_account
 Scenario: Given I am logged in as an admin then I can edit my account
