@@ -5,17 +5,6 @@ Background: Login create default site
   And the user "ak730" exists with the role of "admin" in the site "foobar.example.com"
   And I authenticates as cas user "ak730"
 
-@admin_login
-Scenario: Admin login page should redirect to /admin/users#index
-  When I go to the admin page
-  Then I should be on the admin pages page 
-
-@admin_should_not_access_other_site 
-Scenario: Should not be able to access site the user is not associated with
-  Given the site "baz" exists with the domain "example.dev"
-  When I go to the admin page
-  Then I should see "403"
-  
 @admin_users_index
 Scenario: Admin login
   Given the user with the role exist
