@@ -15,38 +15,43 @@ Scenario: Given I am logged in as an editor then I cannot list all the users
   | bar    | editor | foobar.example.com |
   When I go to the admin users page
   Then I should be on the admin users page
-  And I should see "foo"   
-  And I should see "bar"
+  And I should see "Foobar Baz" within "tr#foo"
+  And I should see "foo" within "tr#foo"
+  And I should see "Admin" within "tr#foo"
+  And I should see "Foobar Baz" within "tr#bar"
+  And I should see "bar" within "tr#bar" 
+  And I should see "Editor" within "tr#bar"
   
 @editor_edit_own_account
 Scenario: Given I am logged in as an editor then I can edit my account
   When I edit the account information for the user "ak730"
   Then I should now be editing the user "ak730"
-  And I fill in "user[firstname]" with "Foobar" 
-  And I fill in "user[lastname]" with "Baz" 
+  And I should not see "user[puid]"
+  And I fill in "user[firstname]" with "Qux" 
+  And I fill in "user[lastname]" with "Foobar" 
   And I fill in "user[email]" with "akirwan@example.com" 
   And I should not see "user[role]"
-  And I press "Update User" within "div#edit_user" 
+  And I press "Update User" 
   Then I should be on the admin users page
-  And I should see "Successfully updated user account for ak730"
+  And I should see "Successfully updated user profile for Qux Foobar"
   When I edit the account information for the user "ak730"
-  And the "user[firstname]" field should contain "Foobar"
-  And the "user[lastname]" field should contain "Baz"
+  And the "user[firstname]" field should contain "Qux"
+  And the "user[lastname]" field should contain "Foobar"
   And the "user[email]" field should contain "akirwan@example.com"
 
 
 @editor_can_delete_own_account
 Scenario: Given I am logged in as an editor then I can delete my account
   When I go to the admin users page
-  And I follow "Delete" within "li#ak730"
+  And I follow "Delete" within "tr#ak730"
   Then I should be on the cms html page
   
 @editor_can_delete_own_account_from_page
 Scenario: Given I am logged in as an editor then I can delete my account from my user page
   When I go to the admin users page
-  And I follow "ak730" within "li#ak730"
+  And I follow "Foobar Baz" within "tr#ak730"
   Then I should now be editing the user "ak730"
-  When I follow "Delete User" within "div#delete_asset"
+  When I follow "Delete User" 
   Then I should be on the cms html page
 
 # Actions_Blocked   
@@ -78,5 +83,5 @@ Scenario: Given I am logged in as an editor then I cannot edit another users acc
   | foo    | admin  | foobar.example.com |
   | bar    | editor | foobar.example.com |
   When I go to the admin users page
-  Then I should not see the "delete" button in "li#foo"
-  And I should not see the "delete" button in "li#bar"
+  Then I should not see the "delete" button in "tr#foo"
+  And I should not see the "delete" button in "tr#bar"
