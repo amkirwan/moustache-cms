@@ -20,9 +20,9 @@ Given /^"([^"]*)" has created the site asset "([^"]*)" in the collection "([^"]*
   user = User.find_by_puid(puid)
   @collection = find_asset_collection(c_name)
   When %{I go to the new admin asset collection site asset page for "#{@collection.to_param}"}
-  Given %{I fill in "site_asset_name" with "#{asset_name}" within "div#add_new_site_asset"}
+  Given %{I fill in "site_asset_name" with "#{asset_name}"} 
   Given %{I attach the file "spec/fixtures/assets/rails.png" to "site_asset_asset"}
-  Given %{I press "Save Asset" within "div#add_new_site_asset"}
+  Given %{I press "Save Asset"} 
   @collection = find_asset_collection(c_name)
 end
 
@@ -49,5 +49,6 @@ end
 
 Then /^I should see the filename of the site asset$/ do
   site_asset = find_site_asset(@collection, @site_asset.name)
-  Then %{I should see "#{site_asset.asset_filename}"}
+  page.should have_selector("img[src$='#{@site_asset.asset.url}']")
+  #Then %{I should see "#{site_asset.asset_descriptor}"}
 end

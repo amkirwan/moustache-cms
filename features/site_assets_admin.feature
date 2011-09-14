@@ -24,8 +24,6 @@ Scenario: Navigate to the SiteAsset#index
   Then navigate to the admin asset collection site assets page for "foobar" 
   And I should see "baz"
   And I should see "qux"
-  And I should see "delete"
-  And I should see "Add Asset"
   
 @admin_should_not_access_other_site 
 Scenario: Should not be able to access another sites site assets
@@ -40,37 +38,35 @@ Scenario: Should not be able to access another sites site assets
 @create_site_asset
 Scenario: Create a new site asset
   When I view the collection "foobar" admin asset collection site assets page
-  And I follow "Add Asset" within "ul#new_site_asset"
-  And I fill in "site_asset_name" with "foobar" within "div#add_new_site_asset"
-  And I fill in "site_asset_description" with "Hello, World!" within "div#add_new_site_asset"
+  And I follow "New Asset" 
+  And I fill in "site_asset_name" with "foobar"
+  And I fill in "site_asset_description" with "Hello, World!"
   And I attach the file "spec/fixtures/assets/rails.png" to "site_asset_asset" 
-  And I press "Save Asset" within "div#add_new_site_asset"
+  And I press "Save Asset" 
   Then I should view the collection "foobar" admin asset collection site assets page
   And I should see "Successfully created the asset foobar"
   And I should see "foobar"
-  And I should see "delete"
 
 @edit_site_asset
 Scenario: Given I am logged in as an admin then I can edit the site assets I created
   Given "ak730" has created the site asset "rails" in the collection "foobar"
   When I view the collection "foobar" admin asset collection site assets page
-  And I follow "rails" within "li#rails"
+  And I follow "rails" 
   Then I should now be editing the site asset "rails" in the collection "foobar"
-  And I fill in "site_asset_name" with "foobar" within "div#edit_site_asset"
-  And I fill in "site_asset_description" with "New Text" within "div#edit_site_asset"
+  And I fill in "site_asset_name" with "foobar" 
+  And I fill in "site_asset_description" with "New Text" 
   And I should see the filename of the site asset
-  And I press "Update Asset" within "div#edit_site_asset"
+  And I press "Update Asset"
   And I should see "Successfully updated the asset foobar"
   And I should see "foobar"
-  And I should see "delete"
   
 @edit_site_asset_created_by_another_user
 Scenario: Given I am logged in as an admin then I can edit the site assets created by another user
   Given "rg874" has created the site asset "rails" in the collection "foobar" 
   When I view the collection "foobar" admin asset collection site assets page 
-  And I follow "rails" within "li#rails"
-  And I fill in "site_asset_name" with "foobar" within "div#edit_site_asset" 
-  And I press "Update Asset" within "div#edit_site_asset"
+  And I follow "rails" 
+  And I fill in "site_asset_name" with "foobar" 
+  And I press "Update Asset" 
   And I should see "Successfully updated the asset foobar"
   
 @admin_delete_site_asset
@@ -81,7 +77,7 @@ Scenario: Admin can delete site assets
   | qux    |
   When I view the collection "foobar" admin asset collection site assets page
   Then navigate to the admin asset collection site assets page for "foobar"  
-  When I follow "baz" within "li#baz"
+  When I follow "baz" 
   Then I should now be editing the site asset "baz" in the collection "foobar"
   And I follow "Delete Asset"
   Then I should see "Successfully deleted the asset baz"
@@ -95,6 +91,9 @@ Scenario: Given I am logged in as an admin then I can delete files created by an
   | bar    |
   When I view the collection "foobar" admin asset collection site assets page
   Then navigate to the admin asset collection site assets page for "foobar"
-  And I follow "delete" within "li#bar"
-  And I should see "Successfully deleted the asset bar"
+  When I follow "bar"
+  Then I should now be editing the site asset "bar" in the collection "foobar"
+  And I follow "Delete Asset" 
+  Then I should see "Successfully deleted the asset bar"
+  And I should view the collection "foobar" admin asset collection site assets page
   

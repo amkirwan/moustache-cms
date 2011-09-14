@@ -24,30 +24,27 @@ Scenario: Navigate to the SiteAsset#index page
   Then navigate to the admin asset collection site assets page for "foobar" 
   And I should see "baz"
   And I should see "qux"
-  And I should see "delete"
-  And I should see "Add Asset"
   
 @edit_site_asset
 Scenario: Given I am logged in as an editor then I can edit the site assets I created
   Given "ak730" has created the site asset "rails" in the collection "foobar"
   When I view the collection "foobar" admin asset collection site assets page
-  And I follow "rails" within "li#rails"
+  And I follow "rails" 
   Then I should now be editing the site asset "rails" in the collection "foobar"
-  And I fill in "site_asset_name" with "foobar" within "div#edit_site_asset"
-  And I fill in "site_asset_description" with "New Text" within "div#edit_site_asset"
+  And I fill in "site_asset_name" with "foobar" 
+  And I fill in "site_asset_description" with "New Text" 
   And I should see the filename of the site asset
-  And I press "Update Asset" within "div#edit_site_asset"
+  And I press "Update Asset" 
   And I should see "Successfully updated the asset foobar"
   And I should see "foobar"
-  And I should see "delete"
 
 @edit_site_asset_created_by_another_user
 Scenario: Given I am logged in as an editor then I can edit the site assets created by another user
   Given "rg874" has created the site asset "rails" in the collection "foobar" 
   When I view the collection "foobar" admin asset collection site assets page 
-  And I follow "rails" within "li#rails"
-  And I fill in "site_asset_name" with "foobar" within "div#edit_site_asset" 
-  And I press "Update Asset" within "div#edit_site_asset"
+  And I follow "rails"
+  And I fill in "site_asset_name" with "foobar"
+  And I press "Update Asset" 
   And I should see "Successfully updated the asset foobar"  
 
 @editor_delete_site_asset
@@ -58,7 +55,7 @@ Scenario: editor can delete site assets
   | qux    |
   When I view the collection "foobar" admin asset collection site assets page
   Then navigate to the admin asset collection site assets page for "foobar"  
-  When I follow "baz" within "li#baz"
+  When I follow "baz" 
   Then I should now be editing the site asset "baz" in the collection "foobar"
   And I follow "Delete Asset"
   Then I should see "Successfully deleted the asset baz"
