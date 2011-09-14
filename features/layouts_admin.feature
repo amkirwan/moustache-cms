@@ -19,7 +19,7 @@ Scenario: Navigate to the Layout#index page
   Then I should be on the admin layouts page
   And I should see "foobar"
   And I should see "Delete"
-  And I should see "Add New Layout"
+  And I should see "New Layout"
 
 @admin_should_not_access_other_site 
 Scenario: Should not be able to access another sites layout the admin is not associated with
@@ -30,10 +30,10 @@ Scenario: Should not be able to access another sites layout the admin is not ass
 @create_new_layout
 Scenario: Create a New Layout
   When I go to the admin layouts page
-  And I follow "Add New Layout" within "ul#new_layout"
-  And I fill in "layout_name" with "foobar" within "div#add_new_layout"
-  And I fill in "layout_content" with "Hello, World!" within "div#add_new_layout"
-  And I press "Create Layout" within "div#add_new_layout"
+  And I follow "New Layout" 
+  And I fill in "layout_name" with "foobar" 
+  And I fill in "layout_content" with "Hello, World!" 
+  And I press "Create Layout"
   Then I should be on the admin layouts page
   And I should see "Successfully created the layout foobar"
   And I should see "foobar"
@@ -46,13 +46,13 @@ Scenario: Given I am logged in as an admin then I can edit a layout
   | foobar | Hello, World! |
   | bar    | Hello, World! |
   When I go to the admin layouts page
-  And I follow "foobar" within "li#foobar"
+  And I follow "foobar" 
   Then I should now be editing the layout "foobar"
   And the "layout[name]" field should contain "foobar"
   And the "layout[content]" field should contain "Hello, World!"
-  When I fill in "layout[name]" with "baz" within "div#edit_layout"
-  And I fill in "layout[content]" with "Hello, <b>World!</b>" within "div#edit_layout"
-  And I press "Update Layout" within "div#edit_layout"
+  When I fill in "layout[name]" with "baz" 
+  And I fill in "layout[content]" with "Hello, <b>World!</b>" 
+  And I press "Update Layout" 
   Then I should be on the admin layouts page
   And I should see "Successfully updated the layout baz"
   When I edit the layout "baz"
@@ -67,10 +67,10 @@ Scenario: Given I am logged in as an admin then I can edit a layout created by a
   | foobar | Hello, World! |
   | bar    | Hello, World! |
   When I go to the admin layouts page
-  And I follow "foobar" within "li#foobar"
-  When I fill in "layout[name]" with "baz" within "div#edit_layout"
-  And I fill in "layout[content]" with "Hello, <b>World!</b>" within "div#edit_layout"
-  And I press "Update Layout" within "div#edit_layout"
+  And I follow "foobar" 
+  When I fill in "layout[name]" with "baz" 
+  And I fill in "layout[content]" with "Hello, <b>World!</b>" 
+  And I press "Update Layout" 
   Then I should be on the admin layouts page
   And I should see "Successfully updated the layout baz"
 
@@ -82,7 +82,7 @@ Scenario: Delete layout as an admin
   | foobar | Hello, World! |
   | bar    | Hello, World! |
   When I go to the admin layouts page
-  And I follow "Delete" within "li#foobar"
+  And I follow "Delete" 
   Then I should see "Successfully deleted the layout foobar"
   And I should be on the admin layouts page
   
@@ -93,6 +93,6 @@ Scenario: Given I am logged in as an admin then I can delete a layout created by
   | foobar | Hello, World! |
   | bar    | Hello, World! |
   When I go to the admin layouts page
-  And I follow "Delete" within "li#foobar"
+  And I follow "Delete" 
   Then I should see "Successfully deleted the layout foobar"
   And I should be on the admin layouts page

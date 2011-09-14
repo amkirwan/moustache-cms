@@ -18,8 +18,8 @@ Scenario: Navigate to the AssetCollection#index page
  When I go to the admin asset collections page
  Then I should be on the admin asset collections page
  And I should see "foobar"
- And I should see "delete collection"
- And I should see "New Collection"    
+ And I should see "Delete"
+ And I should see "New Asset Collection"    
  
 @other_site_denied_asset_collection
 Scenario: Should not be able to access another sites asset_collections the admin is not associated with
@@ -35,13 +35,15 @@ Scenario: Navigate to the AssetCollection#show page
   | foobar | 
   | bar    |   
   When I view the collection "foobar"
-  Then I should see "edit collection properties"
-  And I should see "delete collection"     
+  Then I should see "Actions"
+  And I should see "New Asset"
+  And I should see "Edit Collection Prop"
+  And I should see "Delete Collection"     
   
 @create_asset_collection
 Scenario: New Asset Collection
   When I go to the admin asset collections page
-  And I follow "New Collection"
+  And I follow "New Asset Collection"
   And I fill in "asset_collection_name" with "foobar"
   And I press "Save Collection"
   Then I should be on the admin asset collections page
@@ -56,7 +58,7 @@ Scenario: Update Asset Collection Properties
   | bar    | 
   When I go to the admin asset collections page 
   And I view the collection "foobar"
-  And I follow "edit collection properties"
+  And I follow "Edit Collection Prop"
   Then I should now be editing the asset collection "foobar"
   When I fill in "asset_collection_name" with "baz"
   And I press "Update Collection"
@@ -72,7 +74,7 @@ Scenario: Delete Asset Collection
   | bar    |   
   When I go to the admin asset collections page 
   And I view the collection "foobar"
-  And I follow "delete collection"
+  And I follow "Delete Collection"
   Then I should see "Successfully deleted the asset collection foobar"
   And I should be on the admin asset collections page    
  
