@@ -41,3 +41,11 @@ Then /^(?:|I )should see the delete image "([^\"]*)" in "([^\"]*)"$/ do |image, 
     page.should have_selector("img.delete_image", :alt => "Delete_image", :src => "#{Rails.root}/assets/#{image}")
   end
 end
+
+
+Then /^(?:|I )should not see the delete image "([^\"]*)" in "([^\"]*)"$/ do |image, parent|
+  within(parent) do
+    page.should_not have_xpath("//a[@data-method=\"delete\"]")
+    page.should_not have_selector("img.delete_image", :alt => "Delete_image", :src => "#{Rails.root}/assets/#{image}")
+  end
+end

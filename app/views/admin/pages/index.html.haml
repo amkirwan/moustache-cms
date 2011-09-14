@@ -1,9 +1,8 @@
 #content_header_wrapper
   %h2 Pages 
 
-  - if admin?
-    %div{:id => "new_page", :class => "create"}
-      = link_to "New Page", [:new, :admin, :page], :class => "action"
+  %div{:id => "new_page", :class => "create"}
+    = link_to "New Page", [:new, :admin, :page], :class => "action"
 
 #content_inner_wrapper
   = render :partial => "shared/flash_notice"

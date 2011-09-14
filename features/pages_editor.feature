@@ -27,9 +27,10 @@ Scenario: Given I am logged in as an editor then I can see the pages
   When I go to the admin pages page
   Then I should be on the admin pages page 
   And I should see "foobar" within "li#foobar"
-  And I should see "Delete"
+  And I should see the delete image "delete_button.png" in "li#foobar"
   And I should see "bar" within "li#bar"
-  And I should see "Add New Page"
+  And I should see the delete image "delete_button.png" in "li#bar"
+  And I should see "New Page"
   
 @create_new_page_page
 Scenario: Create a new page
@@ -37,7 +38,7 @@ Scenario: Create a new page
   | title     | status    | 
   | Home Page | published | 
   When I go to the admin pages page
-  And I follow "Add New Page"
+  And I follow "New Page"
   Then I should be on the new admin page page
   And I select "Home Page" from "page_parent_id"
   And I fill in "page_title" with "foobar" 
@@ -55,7 +56,6 @@ Scenario: Create a new page
   Then I should be on the admin pages page
   And I should see "Successfully created page foobar"
   And I should see "foobar" 
-  And I should see "Delete"
   
 @edit_a_existing_page
 Scenario: Edit an existing page the user is an editor of
@@ -80,7 +80,6 @@ Scenario: Edit an existing page the user is an editor of
   Then I should be on the admin pages page
   And I should see "Successfully updated the page foobar"
   And I should see "foobar" 
-  And I should see "Delete"
   When I edit the page "foobar"
   Then I should now be editing the page "foobar"
   And the "editor_id_cds27" checkbox should be checked
@@ -123,6 +122,6 @@ Scenario: Cannot delete page the user is an editor of
   | foobar | published | 
   | bar    | draft     |
   When I go to the admin pages page
-  Then I should not see "delete" within "li#foobar"
-  And I should not see "delete" within "li#bar"
+  Then I should not see the delete image "delete_button.png" in "li#foobar"
+  Then I should not see the delete image "delete_button.png" in "li#foobar"
 

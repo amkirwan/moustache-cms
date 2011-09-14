@@ -34,7 +34,7 @@ Scenario: Navigate to the Pages#index page
 @create_new_page_root_page
 Scenario: Create a new page
   When I go to the admin pages page
-  And I follow "Add New Page"
+  And I follow "New Page"
   Then I should be on the new admin page page
   And I fill in "page_title" with "Home Page" 
   And I fill in "page_meta_data_title" with "meta_title_foobar"
@@ -51,7 +51,6 @@ Scenario: Create a new page
   Then I should be on the admin pages page
   And I should see "Successfully created page Home Page"
   And I should see "Home Page" 
-  And I should see "Delete"
   
 @create_new_page_page
 Scenario: Create a new page
@@ -59,7 +58,7 @@ Scenario: Create a new page
   | title     | status    | 
   | Home Page | published | 
   When I go to the admin pages page
-  And I follow "Add New Page"
+  And I follow "New Page"
   Then I should be on the new admin page page
   And I select "Home Page" from "page_parent_id"
   And I fill in "page_title" with "foobar" 
@@ -77,7 +76,6 @@ Scenario: Create a new page
   Then I should be on the admin pages page
   And I should see "Successfully created page foobar"
   And I should see "foobar" 
-  And I should see "Delete"
   
 @edit_a_existing_page
 Scenario: Edit a page
@@ -92,7 +90,7 @@ Scenario: Edit a page
   And I fill in "page_meta_data_keywords" with "meta_keywords_foobar"
   And I fill in "page_meta_data_description" with "meta_description_foobar" 
   And I check "editor_id_ak730" 
-  And I check "editor_id_jmb42"
+  And I check "editor_id_rg874"
   And I select "app" from "page_layout_id" 
   And I select "draft" from "page_current_state_attributes_name" 
   And I fill in "page_page_parts_attributes_0_name" with "content" 
@@ -101,11 +99,9 @@ Scenario: Edit a page
   And I press "Update Page"
   Then I should be on the admin pages page
   And I should see "Successfully updated the page foobar"
-  And I should see "foobar" 
-  And I should see "Delete"
   When I edit the page "foobar"
   Then I should now be editing the page "foobar"
-  And the "editor_id_jmb42" checkbox should be checked
+  And the "editor_id_rg874" checkbox should be checked
   And the "page_page_parts_attributes_0_content" field should contain "This is some new text"
   
 @edit_a_page_created_by_another_user
