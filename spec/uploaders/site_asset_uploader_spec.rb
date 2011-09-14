@@ -37,7 +37,7 @@ describe SiteAssetUploader do
   end
   
   it "should set the storage directory" do
-    @uploader.store_dir.should == "sites/#{@uploader.model._parent.site_id}/#{@uploader.mounted_as}/#{@uploader.model.id}"
+    @uploader.store_dir.should == "assets/#{@uploader.model._parent.site_id}/#{asset_collection.name}/#{@uploader.mounted_as}/#{@uploader.model.id}"
   end
   
   it "should change the uploaded filename to the name of the site_asset" do
@@ -45,18 +45,9 @@ describe SiteAssetUploader do
   end
   
   it "should white list these extenstiosn" do
-    @uploader.extension_white_list.should == %w(jpg jpeg gif png pdf swf flv svg)
+    @uploader.extension_white_list.should == %w(jpg jpeg gif png pdf mp4 m4v ogv webm flv)
   end       
   
-  it "should make a thumbnail exactly 50 by 50 pixels when content_type is an image" do
-    @uploader.thumb.should have_dimensions(50, 50)
-  end
-  
-  it "should not make a thumbnail when content_type is not an image" do
-    uploader = SiteAssetUploader.new(site_asset, :asset)
-    uploader.store!(AssetFixtureHelper.open("hello.pdf"))
-    uploader.thumb.should be_blank
-  end
   
   it "should return true when the file is an image" do
     @uploader.image?(@uploader.file).should be_true

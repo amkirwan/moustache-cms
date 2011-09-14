@@ -119,7 +119,7 @@ describe Admin::SiteAssetsController do
       
       it "should redirect to the admin/site_assets/index" do
         do_post
-        response.should redirect_to([:admin, asset_collection])
+        response.should redirect_to([:admin, asset_collection, :site_assets])
       end
     end    
     
@@ -217,7 +217,7 @@ describe Admin::SiteAssetsController do
       
       it "should redirect to the site_asset index page" do
         do_put
-        response.should redirect_to([:admin, asset_collection])
+        response.should redirect_to([:admin, asset_collection, :site_assets])
       end
     end
     
@@ -267,7 +267,7 @@ describe Admin::SiteAssetsController do
     
       it "should redirect to admin/site_asset/index when the file is destroyed" do
         do_destroy
-        response.should redirect_to([:admin, asset_collection])
+        response.should redirect_to([:admin, asset_collection, :site_assets])
       end 
     end
   end

@@ -42,7 +42,7 @@ describe ThemeAssetUploader do
   end
   
   it "should white list these extenstiosn" do
-    @uploader.extension_white_list.should == %w(jpg jpeg gif png css js swf flv eot svg ttf woff otf ico)
+    @uploader.extension_white_list.should == %w(jpg jpeg gif png css js swf flv eot svg ttf woff otf ico pdf mp4 m4v ogv webm flv)
   end       
   
   it "should return true when the file is an image" do
