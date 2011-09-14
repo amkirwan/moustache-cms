@@ -16,6 +16,7 @@ class Page
                   :full_path,
                   :permalink,
                   :breadcrumb,
+                  :editor_ids,
                   :current_state, 
                   :current_state_attributes,
                   :layout_id,
