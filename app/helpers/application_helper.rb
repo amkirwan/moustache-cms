@@ -25,7 +25,7 @@ module ApplicationHelper
         end
         ret += '</em>'
         if can? :destroy, item
-          ret += link_to( image_tag('delete_button.png'), admin_page_path(item), :method => :delete, :confirm => "Are you sure you want to delete the page #{item.title}", :class => "delete") if can? :destroy, item
+          ret += link_to( image_tag('delete_button.png', :class => "delete_image"), admin_page_path(item), :method => :delete, :confirm => "Are you sure you want to delete the page #{item.title}", :class => "delete") if can? :destroy, item
         end
         ret += '</div>'
         ret += tree_ul(item.children, false, &block) if item.children.size > 0

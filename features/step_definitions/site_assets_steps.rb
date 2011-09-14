@@ -50,5 +50,4 @@ end
 Then /^I should see the filename of the site asset$/ do
   site_asset = find_site_asset(@collection, @site_asset.name)
   page.should have_selector("img[src$='#{@site_asset.asset.url}']")
-  #Then %{I should see "#{site_asset.asset_descriptor}"}
 end

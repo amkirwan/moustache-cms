@@ -34,3 +34,10 @@ Then /^(?:|I )should now be editing the page "([^\"]*)"$/ do |page_title|
   page = find_page(page_title)
   Then %{I should be on the edit admin page page for "#{page.to_param}"} 
 end
+
+Then /^(?:|I )should see the delete image "([^\"]*)" in "([^\"]*)"$/ do |image, parent|
+  within(parent) do
+    page.should have_xpath("//a[@data-method=\"delete\"]")
+    page.should have_selector("img.delete_image", :alt => "Delete_image", :src => "#{Rails.root}/assets/#{image}")
+  end
+end
