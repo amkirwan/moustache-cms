@@ -63,6 +63,9 @@ class Page
   validates :breadcrumb,
             :presence => true
 
+  validates :editor_ids,
+            :presence => true
+
   validates_presence_of :site_id,
                         :slug, 
                         :current_state,

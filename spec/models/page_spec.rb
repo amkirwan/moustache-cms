@@ -193,6 +193,11 @@ describe Page do
       @page.breadcrumb = nil
       @page.should_not be_valid
     end
+
+    it "should not be valid without editors" do
+      @page.stub(:editor_ids).and_return([])
+      @page.should_not be_valid
+    end
     
     it "should not be valid without a current state" do
       @page.current_state = nil
