@@ -3,7 +3,9 @@ HandlebarCms::Application.routes.draw do
   namespace :admin do
     resources :users
     resources :layouts, :except => :show
-    resources :pages, :except => :show
+    resources :pages, :except => :show do 
+      resources :meta_tags, :except => [:index, :show]
+    end
     resources :theme_assets   
     resources :snippets        
     resources :asset_collections do
