@@ -4,7 +4,8 @@ module HandlebarCms
       extend ActiveSupport::Concern
   
       included do
-        field :meta_data, :type => Hash, :default => self.default_meta_tags
+        field :default_meta_data, :type => Hash, :default => self.default_meta_tags
+        field :additional_meta_data, :type => Array, :default => []
       end
     
       module ClassMethods

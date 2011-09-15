@@ -72,10 +72,10 @@ class HandlebarCms::Mustache::CmsPage < Mustache
         self.instance_variable_set(var_name, @controller.instance_variable_get(var_name))
       end
     end  
-    
+
     def editable_text(part_name)
       part = @page.page_parts.find_by_name(part_name)
-      render page_part_filter(part)
+      render process_with_filter(part)
     end  
     
     def snippet(name)        

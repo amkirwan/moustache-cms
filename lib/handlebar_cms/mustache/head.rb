@@ -24,17 +24,17 @@ module HandlebarCms
       
       # -- Meta Tags ----
       def meta_title
-        engine = gen_haml(%{%meta{:title => title}})
+        engine = gen_haml(%{%meta{:name => "title", :content => title }})
         engine.render(nil, {:title => @page.meta_data["title"]})
       end
     
       def meta_keywords
-        engine = gen_haml(%{%meta{:keywords => keywords}})
+        engine = gen_haml(%{%meta{:name => "keywords", :content => keywords}})
         engine.render(nil, {:keywords => @page.meta_data["keywords"]})
       end
     
       def meta_description
-        engine = gen_haml(%{%meta{:description => description}})
+        engine = gen_haml(%{%meta{:name => "description", :content => description}})
         engine.render(nil, {:description => @page.meta_data["description"]})
       end
     
@@ -44,6 +44,7 @@ module HandlebarCms
         })
         engine.render(nil, {:page => @page})
       end    
+      alias_method :meta_all, :meta_data
       
       private 
         def css_tag(file)

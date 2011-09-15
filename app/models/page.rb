@@ -3,7 +3,6 @@ require 'ostruct'
 class Page
   include Mongoid::Document 
   include Mongoid::Timestamps
-  include Mongoid::Paranoia
   
   include Mongoid::Tree 
   include HandlebarCms::Mongoid::MetaData
