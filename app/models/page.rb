@@ -3,7 +3,7 @@ require 'ostruct'
 class Page
   include Mongoid::Document 
   include Mongoid::Timestamps
-  
+ 
   include Mongoid::Tree 
   include HandlebarCms::Mongoid::MetaData
   include Mongoid::TaggableWithContext
@@ -21,8 +21,8 @@ class Page
                   :layout_id,
                   :page_parts,
                   :page_parts_attributes,
-                  :meta_data,
                   :post_container,
+                  :meta_data,
                   :tags
                   
   # -- Fields -----------------------------------------------

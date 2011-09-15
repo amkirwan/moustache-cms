@@ -12,28 +12,35 @@ describe HandlebarCms::Mongoid::MetaData do
   end
 
 
-  it "should have the method default_meta_data" do
-    @dummy_class.should respond_to(:default_meta_data)
+  it "should have the method meta_data" do
+    @dummy_class.should respond_to(:meta_data)
   end
 
-  it "should have the key title in default_meta_data" do
-    @dummy_class.default_meta_data.should have_key("title")
+  it "should have the key title in meta_data" do
+    @dummy_class.meta_data.should have_key("title")
   end
 
-  it "should have the key keywords in default_meta_data" do
-    @dummy_class.default_meta_data.should have_key("keywords")
+  it "should have the key keywords in meta_data" do
+    @dummy_class.meta_data.should have_key("keywords")
   end 
+  
+  # -- Callbacks ----
+  describe "Callbacks" do
+    before(:each) do
+      @dummy_class.meta_data["DC.title"] = "foobar"
+      @dummy_class.save
+    end
 
-  it "should have the key description in default_meta_data" do
-    @dummy_class.default_meta_data.should have_key("description")
-  end
+    describe "#convert_period" do
+      it "should convert '.' to '\\U+002E'" do
+        @dummy_class.meta_data.should have_key("DC\\U+002Etitle")
+      end
 
-  it "should have the method additional_meta_data" do
-    @dummy_class.should respond_to(:additional_meta_data) 
-  end
-
-  it "should initialze additional_meta_data to an empty array" do
-    @dummy_class.additional_meta_data.should == []
+      it "should covert '\\U+002E' to '.'" do
+        other_class = DummyClass.new(:meta_data => { "DC\\U+002Etitle" => "foobar" })
+        other_class.meta_data.should have_key("DC.title")
+      end
+    end
   end
 end
  
