@@ -4,7 +4,7 @@
     %ul.form_fields{:style => "display: none"}
       %li
         %h5 Default Meta Data
-      = f.fields_for :default_meta_data, hash_to_open_struct(@page.default_meta_data) do |os|
+      = f.fields_for :meta_data, hash_to_open_struct(@page.meta_data) do |os|
         - os.object.marshal_dump.each_key do |key|
           %li  
             = os.label key
