@@ -1,0 +1,14 @@
+#content_inner_wrapper
+  = form_for([:admin, @page, @meta_tag], :html => { :class => "site_prop", :autocomplete => :off }) do |f|
+    = render :partial => "shared/error_messages", :locals => {:target => @meta_tag}
+    %fieldset
+      %ul.form_fields
+        %li
+          = f.label :name
+          = f.text_field :name
+        %li
+          = f.label :content
+          = f.text_field :content
+        %li
+          = f.submit button_label, :class => "submit"
+          = link_to "cancel", [:admin, @page], :class => "cancel"
