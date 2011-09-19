@@ -79,4 +79,12 @@ module ApplicationHelper
   def filter_select(builder)
     builder.object.filter ? builder.object.filter.name : nil
   end
+
+  def manage_meta_tag page, meta_tag 
+    case meta_tag.name
+    when "title", "keywords", "description"
+    else
+      render :partial => "admin/pages/editable_meta_tag", :locals => { :page => page, :meta_tag => meta_tag }
+    end
+  end
 end

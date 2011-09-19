@@ -6,5 +6,6 @@
         %li  
           = builder.label :content, "#{builder.object.name}"
           = builder.text_field :content
+          = manage_meta_tag @page, builder.object
       %li
         = link_to "Add Meta Tag", [:new, :admin, @page, :meta_tag]
