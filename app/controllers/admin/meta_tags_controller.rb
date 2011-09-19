@@ -7,7 +7,7 @@ class Admin::MetaTagsController <AdminBaseController
   end
 
   def create
-    if @page.meta_tags.create(@meta_tag)
+    if @page.meta_tags.push(@meta_tag)
       redirect_to [:edit, :admin, @page], :notice => "Successfully created meta tag #{@meta_tag.name}"
     end
   end

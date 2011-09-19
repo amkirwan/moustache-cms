@@ -1,4 +1,6 @@
 #content_inner_wrapper
+  = render :partial => "shared/flash_notice"
+
   = form_for([:admin, page], :html => { :class => "site_prop", :autocomplete => :off }) do |f|
     = render :partial => "shared/error_messages", 
              :locals => { :target => page }

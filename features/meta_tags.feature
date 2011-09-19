@@ -15,3 +15,8 @@ Scenario:  Add new meta tags to a page
 When I go to the admin pages page
 And I follow "foobar"
 When I follow "Add Meta Tag"
+And I fill in "meta_tag_name" with "DC.author"
+And I fill in "meta_tag_content" with "Foobar Baz"
+And I press "Create Meta Tag"
+Then I should now be editing the page "foobar"
+And I should see "Successfully created meta tag DC.author"

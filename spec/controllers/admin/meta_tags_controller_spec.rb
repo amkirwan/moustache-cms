@@ -64,7 +64,7 @@ describe Admin::MetaTagsController do
 
     context "with valid params" do
       before(:each) do
-        page.stub_chain(:meta_tags, :create).and_return(meta_tag)
+        page.stub_chain(:meta_tags, :push).and_return(meta_tag)
       end
 
       it "should assign a flash message that the meta_tag was created" do
