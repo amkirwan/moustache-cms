@@ -1,11 +1,8 @@
-require 'ostruct'
-
 class Page
   include Mongoid::Document 
   include Mongoid::Timestamps
  
   include Mongoid::Tree 
-  include HandlebarCms::Mongoid::MetaData
   include Mongoid::TaggableWithContext
 
   attr_accessible :parent_id,
@@ -22,7 +19,7 @@ class Page
                   :page_parts,
                   :page_parts_attributes,
                   :post_container,
-                  :meta_data,
+                  :meta_tags_attributes,
                   :tags
                   
   # -- Fields -----------------------------------------------
@@ -38,6 +35,7 @@ class Page
   
   # -- Associations-----------------------------------------------
   embeds_one :current_state
+  embeds_many :meta_tags, :as => :meta_taggable
   embeds_many :page_parts 
   belongs_to :site
   belongs_to :layout
@@ -46,6 +44,7 @@ class Page
   has_and_belongs_to_many :editors, :class_name => "User"
   
   accepts_nested_attributes_for :current_state
+  accepts_nested_attributes_for :meta_tags
   accepts_nested_attributes_for :page_parts
   
   # -- Validations -----------------------------------------------
@@ -95,6 +94,7 @@ class Page
   before_create :permalink_set
   after_save :update_user_pages
   before_destroy :delete_from_editors, :destroy_children
+  after_initialize :default_meta_tags
   
   # -- Class Mehtods --------------------------------------------------
   def self.find_by_id(page_id)
@@ -117,7 +117,7 @@ class Page
   scope :published, :where => { "current_state.name" => "published" }
 
 
-  # -- accepts_nested -----
+  # -- Accepts_nested -----
   def current_state_attributes=(attributes)
       self.current_state = CurrentState.find_by_name(attributes[:name])
   end
@@ -148,6 +148,15 @@ class Page
   
   # -- Private Instance Methods -----------------------------------------------
   private 
+
+    def default_meta_tags
+      if self.new_record?
+        self.meta_tags.build(:name => "title", :content => "")
+        self.meta_tags.build(:name => "keywords", :content => "")
+        self.meta_tags.build(:name => "description", :content => "")
+      end
+    end
+
     def format_name
       #self.name.strip! unless self.name.nil?
       if !self.name.nil?

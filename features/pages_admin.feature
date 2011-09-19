@@ -36,10 +36,10 @@ Scenario: Create a new page
   When I go to the admin pages page
   And I follow "New Page"
   Then I should be on the new admin page page
-  And I fill in "page_title" with "Home Page" 
-  And I fill in "page_meta_data_title" with "meta_title_foobar"
-  And I fill in "page_meta_data_keywords" with "meta_keywords_foobar"
-  And I fill in "page_meta_data_description" with "meta_description_foobar" 
+  When I fill in "page_title" with "Home Page" 
+  And I fill in "page_meta_tags_attributes_0_content" with "meta_title_foobar"
+  And I fill in "page_meta_tags_attributes_1_content" with "meta_keywords_foobar"
+  And I fill in "page_meta_tags_attributes_2_content" with "meta_description_foobar" 
   And I check "editor_id_ak730" 
   And I check "editor_id_rg874"
   And I select "app" from "page_layout_id" 
@@ -60,11 +60,11 @@ Scenario: Create a new page
   When I go to the admin pages page
   And I follow "New Page"
   Then I should be on the new admin page page
-  And I select "Home Page" from "page_parent_id"
+  When I select "Home Page" from "page_parent_id"
   And I fill in "page_title" with "foobar" 
-  And I fill in "page_meta_data_title" with "meta_title_foobar"
-  And I fill in "page_meta_data_keywords" with "meta_keywords_foobar"
-  And I fill in "page_meta_data_description" with "meta_description_foobar" 
+  And I fill in "page_meta_tags_attributes_0_content" with "meta_title_foobar"
+  And I fill in "page_meta_tags_attributes_1_content" with "meta_keywords_foobar"
+  And I fill in "page_meta_tags_attributes_2_content" with "meta_description_foobar" 
   And I check "editor_id_ak730" 
   And I check "editor_id_rg874"
   And I select "app" from "page_layout_id" 
@@ -86,9 +86,9 @@ Scenario: Edit a page
   When I go to the admin pages page
   And I follow "foobar"
   Then I should now be editing the page "foobar"
-  And I fill in "page_meta_data_title" with "meta_title_foobar"
-  And I fill in "page_meta_data_keywords" with "meta_keywords_foobar"
-  And I fill in "page_meta_data_description" with "meta_description_foobar" 
+  When I fill in "page_meta_tags_attributes_0_content" with "meta_title_foobar"
+  And I fill in "page_meta_tags_attributes_1_content" with "meta_keywords_foobar"
+  And I fill in "page_meta_tags_attributes_2_content" with "meta_description_foobar" 
   And I check "editor_id_ak730" 
   And I check "editor_id_rg874"
   And I select "app" from "page_layout_id" 
@@ -113,7 +113,9 @@ Scenario: Edit a page
   When I go to the admin pages page
   And I follow "foobar"
   Then I should now be editing the page "foobar"
-  And I fill in "page_meta_data_title" with "meta_title_foobar"
+  When I fill in "page_meta_tags_attributes_0_content" with "meta_title_foobar"
+  And I fill in "page_meta_tags_attributes_1_content" with "meta_keywords_foobar"
+  And I fill in "page_meta_tags_attributes_2_content" with "meta_description_foobar" 
   And I press "Update Page"
   Then I should be on the admin pages page
   And I should see "Successfully updated the page foobar"

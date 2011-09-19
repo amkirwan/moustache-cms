@@ -5,6 +5,7 @@ class Admin::PagesController < AdminBaseController
   
   def new
     @page.build_current_state
+    @page.meta_tags.build
     @page.page_parts.build
   end
   

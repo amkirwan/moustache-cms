@@ -1,0 +1,2 @@
+module Admin::MetaTagsHelper
+end

@@ -23,7 +23,7 @@ describe Page do
     end
     
   end
-  
+
   # -- Before Validation Callback -------------------------------------------  
   describe "before_validation callback" do
     describe "#format_title" do
@@ -239,10 +239,15 @@ describe Page do
   
   # --  Associations -----------------------------------------------
   describe "Associations" do
+    
     it "should embed one current state" do
       @page.should embed_one :current_state
     end
-    
+
+    it "should embed_many meta_tags" do 
+      @page.should embed_many :meta_tags
+    end 
+
     it "should embed many page_parts" do
       @page.should embed_many :page_parts
     end
