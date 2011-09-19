@@ -14,9 +14,12 @@ describe Ability do
   
   let(:layout) { Factory.build(:layout, :site => site) }
   let(:layout2) { Factory.build(:layout, :site => site2) }
+
+  let(:meta_tag) { Factory.build(:meta_tag) }
+  let(:meta_tag2) { Factory.build(:meta_tag) }
   
-  let(:page) { Factory.build(:page, :site => site, :editors => [ admin, designer, editor ]) }
-  let(:page2) { Factory.build(:page, :site => site2, :editors => [ admin2, designer2, editor2 ]) } 
+  let(:page) { Factory.build(:page, :site => site, :editors => [ admin, designer, editor ], :meta_tags => [meta_tag]) }
+  let(:page2) { Factory.build(:page, :site => site2, :editors => [ admin2, designer2, editor2 ], :meta_tags => [meta_tag2]) } 
   
   let(:site_asset) { Factory.build(:site_asset, :creator_id => editor.id, :updator_id => editor.id) }
   let(:site_asset2) { Factory.build(:site_asset, :creator_id => editor.id, :updator_id => editor.id) }
@@ -24,10 +27,9 @@ describe Ability do
   let(:asset_collection) { Factory.build(:asset_collection, :site => site, :created_by => admin, :site_assets => [site_asset]) }
   let(:asset_collection2) { Factory.build(:asset_collection, :site => site2, :created_by => admin, :site_assets => [site_asset2]) }
   
-
-  
   let(:theme_asset) { Factory.build(:theme_asset, :site => site, :created_by => admin) }
   let(:theme_asset2) { Factory.build(:theme_asset, :site => site2, :created_by => admin2) }
+
   
   let(:admin_ability) { Ability.new(admin) }
   let(:admin_ability2) { Ability.new(admin2) }
@@ -47,8 +49,12 @@ describe Ability do
     site2.users = []
   end
   
-  def first_site_asset
+  def site_asset_first
     asset_collection.site_assets.first
+  end
+
+  def meta_tag_first
+    page.meta_tags.first
   end
   
   # -- Admin ----
@@ -62,10 +68,16 @@ describe Ability do
         admin_ability.should be_able_to(:manage, theme_asset)
         admin_ability.should be_able_to(:manage, asset_collection)
         
-        admin_ability.should be_able_to(:read, first_site_asset)
-        admin_ability.should be_able_to(:create, first_site_asset)
-        admin_ability.should be_able_to(:update, first_site_asset)
-        admin_ability.should be_able_to(:destroy, first_site_asset)
+        admin_ability.should be_able_to(:read, site_asset_first)
+        admin_ability.should be_able_to(:create, site_asset_first)
+        admin_ability.should be_able_to(:update, site_asset_first)
+        admin_ability.should be_able_to(:destroy, site_asset_first)
+
+        admin_ability.should be_able_to(:read, meta_tag_first)
+        admin_ability.should be_able_to(:create, meta_tag_first)
+        admin_ability.should be_able_to(:update, meta_tag_first)
+        admin_ability.should be_able_to(:destroy, meta_tag_first)
+
       end
     end
     
@@ -116,10 +128,15 @@ describe Ability do
           designer_ability.should be_able_to(:manage, theme_asset)
           designer_ability.should be_able_to(:manage, asset_collection)
           
-          admin_ability.should be_able_to(:read, first_site_asset)
-          admin_ability.should be_able_to(:create, first_site_asset)
-          admin_ability.should be_able_to(:update, first_site_asset)
-          admin_ability.should be_able_to(:destroy, first_site_asset)  
+          designer_ability.should be_able_to(:read, site_asset_first)
+          designer_ability.should be_able_to(:create, site_asset_first)
+          designer_ability.should be_able_to(:update, site_asset_first)
+          designer_ability.should be_able_to(:destroy, site_asset_first)  
+
+          designer_ability.should be_able_to(:read, meta_tag_first)
+          designer_ability.should be_able_to(:create, meta_tag_first)
+          designer_ability.should be_able_to(:update, meta_tag_first)
+          designer_ability.should be_able_to(:destroy, meta_tag_first)
         end
       end
     end
@@ -175,20 +192,21 @@ describe Ability do
         end
 
         describe "SiteAsset Approved" do
-          it "should allow the user with a role of editor to read(:index, :show) site_assets" do
-            editor_ability.should be_able_to(:read, first_site_asset)
-          end
 
-          it "should allow the user with a role of editor to create site_assets" do
-            editor_ability.should be_able_to(:create, first_site_asset)
+          it "should allow the user with a role of editor to manage the site_assets" do
+            editor_ability.should be_able_to(:read, site_asset_first)
+            editor_ability.should be_able_to(:create, site_asset_first)
+            editor_ability.should be_able_to(:update, site_asset_first)
+            editor_ability.should be_able_to(:destroy, site_asset_first)
           end
+        end
 
-          it "should allow the user with a role of editor to update site_assets they created" do
-            editor_ability.should be_able_to(:update, first_site_asset)
-          end
-
-          it "should allow the user with a role of ediitor to delete a site_asset they created" do
-            editor_ability.should be_able_to(:destroy, first_site_asset)
+        describe "MetaTags Approved" do
+          it "should allow the user with a role of editor to manage the pages meta_tags" do 
+            editor_ability.should be_able_to(:read, meta_tag_first)
+            editor_ability.should be_able_to(:create, meta_tag_first)
+            editor_ability.should be_able_to(:update, meta_tag_first)
+            editor_ability.should be_able_to(:destroy, meta_tag_first)
           end
         end
       end

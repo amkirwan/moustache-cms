@@ -2,9 +2,9 @@
   %fieldset
     %legend Page Meta Data<span class="fold_arrow rotate"></span>
     %ul.form_fields
-      %li
       = f.fields_for :meta_tags do |builder|
         %li  
           = builder.label :content, "#{builder.object.name}"
           = builder.text_field :content
-          
+      %li
+        = link_to "Add Meta Tag", [:new, :admin, @page, :meta_tag]
