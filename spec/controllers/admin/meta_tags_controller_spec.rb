@@ -73,7 +73,6 @@ describe Admin::MetaTagsController do
     let(:params) { {"name" => "DC.author", "content" => "Foobar Baz"} }
 
     before(:each) do
-      Page.stub(:where).and_return(page)
       page.stub_chain(:meta_tags, :new).and_return(meta_tag)
     end
 
@@ -114,5 +113,48 @@ describe Admin::MetaTagsController do
     end
   end
 
+
+  # -- Put Update ---
+  describe "PUT /update" do
+
+    let(:params) { {:page_id => page.id, :id => meta_tag.id, :meta_tag => {"name" => "DC.author", "content" => "Foo Bar"}} }
+
+    before(:each) do
+      page.stub_chain(:meta_tags, :find).and_return(meta_tag)
+      meta_tag.stub(:update_attributes).and_return(true)
+    end
+
+    def do_put(put_params=params)
+      post :update, put_params
+    end
+
+    it "should assign @meta_tag for the view" do
+      do_put
+      assigns(:meta_tag).should == meta_tag
+    end
+
+    it "should find the meta_tag to update" do
+      meta_tags.should_receive(:find).and_return(meta_tag)
+      do_put
+    end
+    
+    context "with valid params" do
+      
+      it "should receive update_attributes successfully" do
+        meta_tag.should_receive(:update_attributes).with(params[:meta_tag]).and_return(true)
+        do_put
+      end
+
+      it "should redirect back to the page" do
+        do_put
+        response.should redirect_to([:edit, :admin, page])
+      end
+
+      it "should set the the flash notice message" do
+        do_put
+        flash[:notice].should == "Successfully updated the meta tag #{meta_tag.name}"
+      end
+    end
+  end
 
 end

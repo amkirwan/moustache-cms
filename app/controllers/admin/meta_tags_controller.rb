@@ -16,4 +16,10 @@ class Admin::MetaTagsController <AdminBaseController
       render :new
     end
   end
+
+  def update
+    if @meta_tag.update_attributes(params[:meta_tag])
+      redirect_to [:edit, :admin, @page], :notice => "Successfully updated the meta tag #{@meta_tag.name}" 
+    end
+  end
 end
