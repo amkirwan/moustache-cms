@@ -6,7 +6,7 @@ describe Admin::MetaTagsController do
   let(:current_user) { logged_in(:role? => "admin", :site_id => site.id) }
   let(:meta_tag) { mock_model("MetaTag", :name => "DC.author") }
   let(:meta_tags) { [meta_tag] }
-  let(:page) { mock_model("Page", :site_id => site.id).as_null_object }
+  let(:page) { mock_model("Page", :site_id => site.id, :meta_tags => meta_tags).as_null_object }
 
   before(:each) do
     cas_faker(current_user.puid)
@@ -40,9 +40,31 @@ describe Admin::MetaTagsController do
       do_get
       response.should render_template("admin/meta_tags/new")
     end
-
   end
 
+  # -- Get Edit
+  describe "GET /EDIT" do
+
+    before(:each) do
+      Page.stub(:where).and_return(page)
+      page.stub_chain(:meta_tags, :find).and_return(meta_tag)
+    end 
+
+    def do_get
+      get :edit, :page_id => page.id, :id => meta_tag.id
+    end
+
+    it "should assign the meta_tag" do
+      do_get
+      assigns(:meta_tag).should == meta_tag
+    end
+
+    it "should render the template admin/meta_tags/edit" do
+      do_get
+      response.should render_template("admin/meta_tags/edit")
+    end
+
+  end
 
   # -- Post Create ----
   describe "POST /create" do
@@ -78,5 +100,17 @@ describe Admin::MetaTagsController do
       end
     end
 
+    context "with invalid params" do
+      before(:each) do
+        page.stub_chain(:meta_tags, :push).and_return(false)
+      end
+
+      it "should render the new template when creating the meta_tag fails" do
+        do_post
+        page.should render_template("admin/meta_tags/new")
+      end
+    end
   end
+
+
 end
