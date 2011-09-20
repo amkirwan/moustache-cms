@@ -1,4 +1,6 @@
 class Admin::AssetCollectionsController < AdminBaseController   
+
+  load_and_authorize_resource 
   
   # GET /admin/asset_collections
   def index

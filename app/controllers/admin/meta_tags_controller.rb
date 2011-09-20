@@ -7,8 +7,6 @@ class Admin::MetaTagsController <AdminBaseController
   end
 
   def edit
-    #@page = Page.find(params[:page_id])
-    #@meta_tag = @page.meta_tags.find(params[:id])
   end
 
   def create

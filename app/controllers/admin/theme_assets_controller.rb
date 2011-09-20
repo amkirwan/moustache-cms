@@ -1,6 +1,8 @@
 class Admin::ThemeAssetsController < AdminBaseController
   include HandlebarCms::AssetCache  
   
+  load_and_authorize_resource 
+
   # GET /admin/theme_assets 
   def index
     @css_files = ThemeAsset.css_files(@current_site)

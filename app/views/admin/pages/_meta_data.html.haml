@@ -3,7 +3,7 @@
     %legend Page Meta Data<span class="fold_arrow rotate"></span>
     %ul.form_fields
       = f.fields_for :meta_tags do |builder|
-        %li  
+        %li{:id => "meta_tags_#{builder.object.name}"}  
           = builder.label :content, "#{builder.object.name}"
           = builder.text_field :content
           = manage_meta_tag @page, builder.object

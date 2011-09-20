@@ -19,7 +19,7 @@ describe Admin::MetaTagsController do
   describe "GET /new" do
 
     before(:each) do
-      MetaTag.stub(:new).and_return(meta_tag.as_new_record)
+      #MetaTag.stub(:new).and_return(meta_tag.as_new_record)
     end
 
     def do_get
@@ -72,15 +72,16 @@ describe Admin::MetaTagsController do
     let(:params) { {"name" => "DC.author", "content" => "Foobar Baz"} }
 
     before(:each) do
-      MetaTag.stub(:new).and_return(meta_tag)
+      Page.stub(:where).and_return(page)
+      page.stub_chain(:meta_tags, :new).and_return(meta_tag)
     end
 
     def do_post(post_params=params)
       post :create, :page_id => page.id, :meta_tag => post_params 
     end
 
-    it "should create a new meta tag from the params" do
-      MetaTag.should_receive(:new).with(params).and_return(meta_tag)
+    it "should receive build a new meta_tag from the params" do
+      meta_tags.should_receive(:new).with(params).and_return(meta_tag)
       do_post
     end
 
