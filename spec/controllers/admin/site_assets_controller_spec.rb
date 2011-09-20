@@ -209,11 +209,6 @@ describe Admin::SiteAssetsController do
         site_asset.stub(:update_attributes).and_return(false)
       end
       
-      it "should receive update_attributes and return false" do
-        site_asset.should_receive(:update_attributes).and_return(false)
-        do_put
-      end
-      
       it "should render the site_asset edit template on failed update" do
         do_put
         response.should render_template("admin/site_assets/edit")

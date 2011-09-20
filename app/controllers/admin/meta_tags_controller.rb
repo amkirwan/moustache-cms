@@ -20,6 +20,14 @@ class Admin::MetaTagsController <AdminBaseController
   def update
     if @meta_tag.update_attributes(params[:meta_tag])
       redirect_to [:edit, :admin, @page], :notice => "Successfully updated the meta tag #{@meta_tag.name}" 
+    else
+      render :edit
+    end
+  end
+  
+  def destroy
+    if @meta_tag.destroy
+      redirect_to [:edit, :admin, @page], :notice => "Successfully deleted the meta tag #{@meta_tag.name}"
     end
   end
 end

@@ -155,6 +155,54 @@ describe Admin::MetaTagsController do
         flash[:notice].should == "Successfully updated the meta tag #{meta_tag.name}"
       end
     end
+
+    context "with invalid params" do
+      before(:each) do
+        meta_tag.should_receive(:update_attributes).and_return(false)
+      end
+
+      it "should render the meta_tag edit view" do
+        do_put
+        response.should render_template("admin/meta_tags/edit")
+      end
+    end
   end
 
+  # -- Delete Destroy --- 
+  describe "DELETE /destroy" do
+
+    let(:params) { {:page_id => page.id, :id => meta_tag.id} }
+
+    before(:each) do
+      page.stub_chain(:meta_tags, :find).and_return(meta_tag)
+      meta_tag.stub(:destroy).and_return(true)
+    end
+
+    def do_delete(destroy_params=params)
+      delete :destroy, destroy_params
+    end
+
+    it "should find the meta_tag to destroy" do
+      meta_tags.should_receive(:find).and_return(meta_tag)
+      do_delete
+    end
+
+    context "with valid params" do
+      it "should destroy the meta_tag" do
+        meta_tag.should_receive(:destroy).and_return(true)
+        do_delete
+      end
+
+      it "should redirect to the page" do
+        do_delete
+        response.should redirect_to([:edit, :admin, page])
+      end
+
+      it "should set the the flash notice message" do
+        do_delete
+        flash[:notice].should == "Successfully deleted the meta tag #{meta_tag.name}"
+      end
+    end
+
+  end
 end
