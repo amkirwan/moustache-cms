@@ -11,6 +11,7 @@ describe Admin::MetaTagsController do
   before(:each) do
     cas_faker(current_user.puid)
     stub_c_site_c_user(site, current_user)
+
     Page.stub(:find).and_return(page)
   end
 
@@ -19,7 +20,8 @@ describe Admin::MetaTagsController do
   describe "GET /new" do
 
     before(:each) do
-      #MetaTag.stub(:new).and_return(meta_tag.as_new_record)
+      meta_tag.as_new_record
+      page.stub_chain(:meta_tags, :new).and_return(meta_tag)
     end
 
     def do_get
@@ -27,7 +29,7 @@ describe Admin::MetaTagsController do
     end
 
     it "should receive create a new hash" do
-      MetaTag.should_receive(:new).and_return(meta_tag)
+      meta_tags.should_receive(:new).and_return(meta_tag)
       do_get
     end
 
@@ -46,7 +48,6 @@ describe Admin::MetaTagsController do
   describe "GET /EDIT" do
 
     before(:each) do
-      Page.stub(:where).and_return(page)
       page.stub_chain(:meta_tags, :find).and_return(meta_tag)
     end 
 
