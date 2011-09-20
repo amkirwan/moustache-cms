@@ -12,32 +12,27 @@ describe Admin::SiteAssetsController do
   before(:each) do
     cas_faker(current_user.puid)
     stub_c_site_c_user(site, current_user)  
+
     AssetCollection.stub(:find).and_return(asset_collection)
   end
 
   # -- GET Index ----------------------------------------------- 
   describe "GET show" do
-    def do_get     
-      get :edit, :id => "1", :asset_collection_id => "1"
-    end
-    
+
     before(:each) do
-      AssetCollection.stub(:where).and_return(site)
-      site.stub(:find).and_return(asset_collection)
       asset_collection.stub_chain(:site_assets, :find).and_return(site_asset)
     end
-        
-    it "should receive accessible_by" do
-      AssetCollection.should_receive(:where).and_return(asset_collection)
-      do_get
-    end 
+
+    def do_get     
+      get :edit, :asset_collection_id => asset_collection.id, :id => site_asset.id 
+    end
     
-    it "should assign the asset_collection" do
+    it "should find the site_asset in the asset_collection" do
+      site_assets.should_receive(:find).and_return(site_asset)
       do_get
-      assigns(:asset_collection).should == asset_collection
     end
 
-    it "shuld assign the site_asset" do 
+    it "should assign the site_asset" do 
       do_get
       assigns(:site_asset).should == site_asset
     end
@@ -49,16 +44,18 @@ describe Admin::SiteAssetsController do
   end
   
   describe "GET new" do
+        
+    before(:each) do
+      site_asset.as_new_record
+      asset_collection.stub_chain(:site_assets, :new).and_return(site_asset)
+    end
+
     def do_get
       get :new, :asset_collection_id => asset_collection.id
     end
     
-    before(:each) do
-      SiteAsset.stub(:new).and_return(site_asset.as_new_record)
-    end
-    
     it "should receive new and return a new site_asset" do
-      SiteAsset.should_receive(:new).and_return(site_asset)
+      site_assets.should_receive(:new).and_return(site_asset)
       do_get
     end         
     
@@ -83,7 +80,7 @@ describe Admin::SiteAssetsController do
     let(:params) { { "name" => "foobar", "asset_cache" => "1/rails.png", "asset" => AssetFixtureHelper.open("rails.png") } }
     
     before(:each) do
-      SiteAsset.stub(:new).and_return(site_asset.as_new_record)
+      asset_collection.stub_chain(:site_assets, :new).and_return(site_asset)
     end
     
     def do_post(post_params=params)
@@ -91,7 +88,7 @@ describe Admin::SiteAssetsController do
     end
     
     it "should create a new site_asset from the params" do
-      SiteAsset.should_receive(:new).and_return(site_asset)
+      site_assets.should_receive(:new).and_return(site_asset)
       do_post
     end
     
@@ -151,20 +148,13 @@ describe Admin::SiteAssetsController do
   
   describe "GET edit" do
     before(:each) do
-      AssetCollection.stub(:where).and_return(asset_collection)
-      asset_collection.stub(:site_assets).and_return(site_asset)
-      SiteAsset.stub(:find).and_return(site_asset)
+      asset_collection.stub_chain(:site_assets, :find).and_return(site_asset)
     end
     
     def do_get
       get :edit, { "asset_collection_id" => asset_collection.id, "id" => site_asset.to_param }
     end
     
-    it "receive prepend_before_filter to assign site_asset instead of cancan load filter " do
-      controller.should_receive(:find_site_asset)
-      do_get
-    end
-
     it "should assign @site_asset for the view" do
       do_get
       assigns(:site_asset).should == site_asset
@@ -178,20 +168,13 @@ describe Admin::SiteAssetsController do
 
   describe "PUT update" do
     before(:each) do
-      AssetCollection.stub(:where).and_return(asset_collection)
-      asset_collection.stub(:site_assets).and_return(site_asset)
-      SiteAsset.stub(:find).and_return(site_asset)
+      asset_collection.stub_chain(:site_assets, :find).and_return(site_asset)
     end
     
     let(:params) { { "asset_collection_id" => asset_collection.id, "id" => site_asset.to_param, "site_asset" => { "name" => "foobar", "asset_cache" => "1/rails.png", "asset" => AssetFixtureHelper.open("rails.png")}} }
     
     def do_put(put_params=params)
       post :update, put_params
-    end
-    
-    it "receive prepend_before_filter to assign site_asset instead of cancan load filter " do
-      controller.should_receive(:find_site_asset)
-      do_put
     end
     
     it "should assign @site_asset for the view" do
@@ -240,18 +223,11 @@ describe Admin::SiteAssetsController do
 
   describe "DELETE destroy" do
     before(:each) do
-      AssetCollection.stub(:where).and_return(asset_collection)
-      asset_collection.stub(:site_assets).and_return(site_asset)
-      SiteAsset.stub(:find).and_return(site_asset)
+      asset_collection.stub_chain(:site_assets, :find).and_return(site_asset)
     end
     
     def do_destroy
       delete :destroy, { "asset_collection_id" => asset_collection.id, "id" => site_asset.to_param }
-    end
-    
-    it "receive prepend_before_filter to assign site_asset instead of cancan load filter " do
-      controller.should_receive(:find_site_asset)
-      do_destroy
     end
     
     it "should assign the site_asset" do

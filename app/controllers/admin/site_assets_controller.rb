@@ -1,7 +1,6 @@
 class Admin::SiteAssetsController < AdminBaseController
   include HandlebarCms::AssetCache                    
         
-  prepend_before_filter :find_site_asset, :only => [:show, :edit, :update, :destroy]
   
   load_and_authorize_resource :asset_collection
   load_and_authorize_resource :site_asset, :through => :asset_collection  
@@ -61,10 +60,5 @@ class Admin::SiteAssetsController < AdminBaseController
     def creator_updator_set_id(site_asset)
       site_asset.creator_id = @current_user.id
       site_asset.updator_id = @current_user.id
-    end
-    
-    def find_site_asset
-      @asset_collection = AssetCollection.where(:site_id => current_site.id).find(params["asset_collection_id"])
-      @site_asset = @asset_collection.site_assets.find(params["id"])
     end
 end
