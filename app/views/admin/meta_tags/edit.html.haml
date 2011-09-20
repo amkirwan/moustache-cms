@@ -1,9 +1,9 @@
 #content_header_wrapper
-  %h2 Editing Meta Tag<b>#{@meta_tag.name}</b>
+  %h2 Editing Meta Tag <b>#{@meta_tag.name}</b>
 
   - if can?(:destroy, @meta_tag) && !@meta_tag.new_record?
-    %div{:id => "delete_layout", :class => "delete"}
-      = link_to "Delete Layout", [:admin, @meta_tag], :confirm => "Are you sure you want to delete the meta tag #{@meta_tag.name}", :method => :delete, :class => "action delete"
+    %div{:id => "delete_meta_tag", :class => "delete"}
+      = link_to "Delete Meta TAg", [:admin, @page, @meta_tag], :confirm => "Are you sure you want to delete the meta tag #{@meta_tag.name}", :method => :delete, :class => "action delete"
 
 = render :partial => "form",  
          :locals => { :button_label => "Update Meta Tag" }
