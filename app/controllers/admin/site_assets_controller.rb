@@ -22,7 +22,7 @@ class Admin::SiteAssetsController < AdminBaseController
   def edit
   end
 
-  # POST /admin/site_assets
+  # POST /admin/asset_collections/id/site_assets
   def create
     creator_updator_set_id @site_asset    
     try_site_asset_cache
@@ -33,7 +33,7 @@ class Admin::SiteAssetsController < AdminBaseController
     end
   end
 
-  # PUT /admin/site_assets/1
+  # PUT /admin/asset_collections/id/site_assets/1
   def update
     @site_asset.updator_id = @current_user.id
     if @site_asset.update_attributes(params[:site_asset])
@@ -43,7 +43,7 @@ class Admin::SiteAssetsController < AdminBaseController
     end
   end
 
-  # DELETE /admin/site_assets/1
+  # DELETE /admin/asset_collections/id/site_assets/1
   def destroy
     if @site_asset.destroy
       redirect_to [:admin, @asset_collection, :site_assets], :notice => "Successfully deleted the asset #{@site_asset.name}"
