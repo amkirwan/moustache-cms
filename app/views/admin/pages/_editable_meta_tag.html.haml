@@ -1,3 +1,2 @@
 = link_to "Edit", [:edit, :admin, page, meta_tag]
-= link_to "Delete", [:admin, page, meta_tag], :method => :delete
-
+= link_to "Delete", [:admin, page, meta_tag], :confirm => "Are you sure you want to delete the user #{meta_tag.name}", :method => :delete, :class => "delete"

@@ -33,6 +33,8 @@ module NavigationHelpers
       new_admin_asset_collection_site_asset_path($1)
     when /the edit admin asset collection "([^\"]*)" site asset page for "([^\"]*)"/
       edit_admin_asset_collection_site_asset_path($1, $2)
+    when /the edit admin page "([^\"]*)" meta tag page for "([^\"]*)"/
+      edit_admin_page_meta_tag_path($1, $2)
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
