@@ -4,6 +4,10 @@ class Admin::MetaTagsController <AdminBaseController
   load_resource :meta_tag, :through => :page
 
   def new
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def edit

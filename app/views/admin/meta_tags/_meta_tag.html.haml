@@ -1,0 +1,6 @@
+= fields_for('page[meta_tags_attributes]', @meta_tag, :index => 4) do |builder|
+  %li
+    = builder.label :name
+    = builder.text_field :name
+    = builder.label :content
+    = builder.text_field :content
