@@ -31,7 +31,10 @@ class Admin::MetaTagsController <AdminBaseController
   
   def destroy
     if @meta_tag.destroy
-      redirect_to [:edit, :admin, @page], :notice => "Successfully deleted the meta tag #{@meta_tag.name}"
+      respond_to do |format|
+        format.html { redirect_to [:edit, :admin, @page], :notice => "Successfully deleted the meta tag #{@meta_tag.name}" }
+        format.js
+      end
     end
   end
 end
