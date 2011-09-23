@@ -5,4 +5,4 @@
       = builder.text_field :name
       = builder.label :content
       = builder.text_field :content
-      = link_to "Delete", "#", :confirm => "Are you sure you want to delete the meta tag #{meta_tag.name}", :method => :delete, :class => "delete_new_meta_tag"
+      %span{ :class => "fake_link delete_new_meta_tag"} Delete

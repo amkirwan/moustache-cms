@@ -3,4 +3,5 @@ if $('div#flash_notice_wrapper')
     $(this).remove()
 
 $('#meta_tag_<%= @meta_tag.id %>').fadeToggle 'slow', 'linear', ->
+  $(this).next().remove()
   $(this).remove()

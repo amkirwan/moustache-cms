@@ -16,8 +16,4 @@ if $('li#add_meta_tag').length
     else if  $(this).prop('tagName').toLowerCase() ==  "input"
       $(this).attr('id', replaceCharWith($(this).attr('id'), "0", metaTagCount))
       $(this).attr('name', replaceCharWith($(this).attr('name'), "0", metaTagCount))
-  
-  lastList.find('a.delete_new_meta_tag').bind 'click', ->
-    $(this).parent().fadeToggle 'slow', 'linear', -> 
-      $(this).remove()
-    return false
+

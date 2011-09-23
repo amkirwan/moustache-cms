@@ -46,7 +46,7 @@ body {
 }
 
 
-a:link, a:visited {
+a:link, a:visited, span.fake_link {
   color: $link_text; 
   text-decoration: none;
   -webkit-transition: color 0.3s ease;
@@ -55,10 +55,11 @@ a:link, a:visited {
   transition: color 0.3s ease;
 } 
 
-a:hover, a:focus {
+a:hover, a:focus, span.fake_link:hover {
   color: $hover_text; 
   text-decoration: underline;
 }  
+
 
 h1 {
   font: bold 1.5em / 1 $heading_font; /* 24px / 16px */
