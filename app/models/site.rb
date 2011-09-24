@@ -15,13 +15,13 @@ class Site
   index :domains
   
   # -- Associations ---------------------------------------
+  embeds_many :meta_tags, :as => :meta_taggable
   has_many :users, :dependent => :delete
   has_many :pages, :dependent => :delete
   has_many :layouts, :dependent => :delete
   has_many :asset_collections, :dependent => :destroy
   has_many :theme_assets, :dependent => :destroy
   has_many :snippets, :dependent => :delete
-
     
   # -- Validations ----------------------------------------
   validates :name,

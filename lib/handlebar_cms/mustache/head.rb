@@ -25,26 +25,31 @@ module HandlebarCms
       # -- Meta Tags ----
       def meta_title
         engine = gen_haml(%{%meta{:name => "title", :content => title }})
-        engine.render(nil, {:title => @page.meta_data["title"]})
+        engine.render(nil, {:title => meta_tag_name('title')})
       end
     
       def meta_keywords
         engine = gen_haml(%{%meta{:name => "keywords", :content => keywords}})
-        engine.render(nil, {:keywords => @page.meta_data["keywords"]})
+        engine.render(nil, {:keywords => meta_tag_name('keywords')})
       end
     
       def meta_description
         engine = gen_haml(%{%meta{:name => "description", :content => description}})
-        engine.render(nil, {:description => @page.meta_data["description"]})
+        engine.render(nil, {:description => meta_tag_name('description')})
+      end
+
+      def meta_tag(name)
+        engine = gen_haml(%{%meta{:name => "description", :content => description}})
+        engine.render(nil, {:description => meta_tag_name(name)})
       end
     
-      def meta_data
+      def meta_tags
         engine = gen_haml(%{- page.meta_data.each_pair do |k, v|
           %meta{:name => k, :content => v}
         })
         engine.render(nil, {:page => @page})
       end    
-      alias_method :meta_all, :meta_data
+      alias_method :meta_tags_all, :meta_tags
       
       private 
         def css_tag(file)
@@ -52,6 +57,12 @@ module HandlebarCms
           tag += %(#{file.html_options}) if !file.html_options.blank?
           tag += %( >\n)
         end
+
+        def meta_tag_name(name)
+          @page.meta_tags.where(:name => name).first.blank? ? @page.meta_tags.where(:name => name).first.send(:content) :
+          !@current_site.meta_tags.where(:name => name).first.blank? ? @current_site.meta_tags.where(:name => name).first.send(:content) : ''
+        end
+
     end
   end
 end

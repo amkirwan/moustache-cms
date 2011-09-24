@@ -16,13 +16,6 @@ describe Site do
       site.domains.should be_empty
     end
     
-    
-    it "should allow mass assignment of" do
-      site = Site.new(:name => "foobar", :subdomain => "foobar", :meta_data => { "title" => "foobar"})
-      site.name.should == "foobar"
-      site.subdomain.should == "foobar" 
-      site.meta_data.should_not == nil
-    end
   end
   
   # -- Validations -------------------------------------------
@@ -79,6 +72,10 @@ describe Site do
 
     it "should have many snippets" do
       @site.should have_many(:snippets).with_dependent(:delete)
+    end
+
+    it "should embed many meta_tags" do
+      @site.should embed_many :meta_tags
     end
   end
   

@@ -1,6 +1,17 @@
+Factory.define :meta_tag do |meta|
+  meta.name "title"
+  meta.content "foobar"
+end
+
 Factory.define :site do |site|
+  def meta_tags
+    [ Factory.build(:meta_tag, name: 'title', content: 'foobar title'),
+      Factory.build(:meta_tag, name: 'keywords', content: 'keywords content'),
+      Factory.build(:meta_tag, name: 'description', content: 'description content')]
+  end
   site.sequence(:name) { |n| "name_#{n}" }
   site.sequence(:subdomain)  { |n| "foobar_#{n}" }
+  site.meta_tags { meta_tags }
   site.default_domain  "example.com" 
   site.domains  { [] }
 end
@@ -63,16 +74,12 @@ Factory.define :page_part do |pp|
 end
 
 
-Factory.define :meta_tag do |meta|
-  meta.name "title"
-  meta.content "foobar"
-end
 
 Factory.define :page do |page|
   def meta_tags
-    [ Factory.build(:meta_tag, name: 'title', content: 'foobar content'),
-      Factory.build(:meta_tag, name: 'keywords', content: 'keywords content'),
-      Factory.build(:meta_tag, name: 'description', content: 'description content')]
+    [ Factory.build(:meta_tag, name: 'title', content: 'title foobar'),
+      Factory.build(:meta_tag, name: 'keywords', content: 'keywords foobar'),
+      Factory.build(:meta_tag, name: 'description', content: 'description foobar')]
   end
   page.site { Factory.build(:site) }
   page.parent  nil
@@ -87,7 +94,6 @@ Factory.define :page do |page|
   page.post_container false
   page.tags "page"
   page.meta_tags { meta_tags }
-  #page.meta_tags { [Factory.build(:meta_tag)] }
   page.page_parts {[ Factory.build(:page_part) ]}
   page.created_by_id { Factory.build(:user).id }
   page.updated_by_id { Factory.build(:user).id }
