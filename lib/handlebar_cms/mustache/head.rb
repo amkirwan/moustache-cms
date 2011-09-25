@@ -23,6 +23,7 @@ module HandlebarCms
       end
       
       # -- Meta Tags ----
+=begin
       def meta_title
         engine = gen_haml(%{%meta{:name => "title", :content => title }})
         engine.render(nil, {:title => meta_tag_name('title')})
@@ -37,10 +38,10 @@ module HandlebarCms
         engine = gen_haml(%{%meta{:name => "description", :content => description}})
         engine.render(nil, {:description => meta_tag_name('description')})
       end
-
+=end
       def meta_tag(name)
-        engine = gen_haml(%{%meta{:name => "description", :content => description}})
-        engine.render(nil, {:description => meta_tag_name(name)})
+        engine = gen_haml(%{%meta{:name => name, :content => content}})
+        engine.render(nil, {:name => name, :content => meta_tag_name(name)})
       end
     
       def meta_tags
@@ -59,7 +60,7 @@ module HandlebarCms
         end
 
         def meta_tag_name(name)
-          @page.meta_tags.where(:name => name).first.blank? ? @page.meta_tags.where(:name => name).first.send(:content) :
+          !@page.meta_tags.where(:name => name).first.send(:content).blank? ? @page.meta_tags.where(:name => name).first.send(:content) :
           !@current_site.meta_tags.where(:name => name).first.blank? ? @current_site.meta_tags.where(:name => name).first.send(:content) : ''
         end
 

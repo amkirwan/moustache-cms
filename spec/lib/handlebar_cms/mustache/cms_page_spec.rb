@@ -85,22 +85,36 @@ describe HandlebarCms::Mustache::CmsPage do
     it "should return a stylesheet by name" do
       @cmsp.stylesheet_foobar.should == %(<link rel="stylesheet" href="#{@theme_asset_css.asset.url}" >\n)
     end
+
+    describe "meta tags" do
     
-    it "should return the meta title" do
-      @cmsp.meta_title.should == %(<meta content='title foobar' name='title' />\n)
-    end
+      it "should return the meta title from the page" do
+        @cmsp.meta_tag_title.should == %(<meta content='title page' name='title' />\n)
+      end
 
-    it "should return the meta keywords" do
-      @cmsp.meta_keywords.should == %(<meta content='keywords foobar' name='keywords' />\n)
-    end
+      it "should return the meta keywords from the page" do
+        @cmsp.meta_tag_keywords.should == %(<meta content='keywords page' name='keywords' />\n)
+      end
 
-    it "should return the meta description" do
-      @cmsp.meta_description.should == %(<meta content='description foobar' name='description' />\n)
-    end
+      it "should return the meta description from the page" do
+        @cmsp.meta_tag_description.should == %(<meta content='description page' name='description' />\n)
+      end
 
-    it "should set the meta fields for the page" do
-      pending
-      @cmsp.meta_data.should == %(<meta name="title" content="#{@page.meta_data["title"]}">\n<meta name="keywords" content="#{@page.meta_data["keywords"]}">\n<meta name="description" content="#{@page.meta_data["description"]}">\n)
+      it "should return the meta title from the site" do
+        @page.meta_tags.where(:name => 'title').first.content = ""
+        @cmsp.meta_tag_title.should == %(<meta content='title site' name='title' />\n)
+      end
+
+      it "should return the meta keywords from the site" do
+        @page.meta_tags.where(:name => 'keywords').first.content = ""
+        @cmsp.meta_tag_keywords.should == %(<meta content='keywords site' name='keywords' />\n)
+      end
+
+      it "should return the meta description from the site" do
+        @page.meta_tags.where(:name => 'description').first.content = ""
+        @cmsp.meta_tag_description.should == %(<meta content='description site' name='description' />\n)
+      end
+
     end
   end
   
