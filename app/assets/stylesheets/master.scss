@@ -475,15 +475,18 @@ form.site_prop {
   }
 }
 
+.img_thumb {
+  width: 15%;
+}
+
 img.site_asset_thumb, img.theme_asset_thumb {
   display: block;
-  width: 15%;
   margin-bottom: 8px;
   border: 1px solid $sidebar_border;
   
 }
 
-img.site_asset_thumb:hover {
+img.site_asset_thumb:hover, img.theme_asset_thumb {
   border: 1px solid $hover_text;
 }
 

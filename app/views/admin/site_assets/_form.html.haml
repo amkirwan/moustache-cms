@@ -14,7 +14,7 @@
           = f.label :tags
           = f.text_field :tags
         - if !site_asset.new_record?
-          %li 
+          %li.img_thumb 
             = link_to image_tag(@site_asset.asset.url, :class => "site_asset_thumb"), "http://#{request.host}#{site_asset.asset.url}"
         - else site_asset.new_record?
           %li
