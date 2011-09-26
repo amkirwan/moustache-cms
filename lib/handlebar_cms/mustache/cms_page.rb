@@ -24,8 +24,6 @@ class HandlebarCms::Mustache::CmsPage < Mustache
       true     
     elsif method.to_s =~ /^snippet_(.*)/ && @current_site.snippet_by_name($1)
       true
-    elsif method.to_s =~ /^stylesheet_all$/
-      true
     elsif method.to_s =~ /^stylesheet_(.*)/ && @current_site.css_file_by_name($1)
       true
     elsif method.to_s =~ /^meta_tag_(.*)/ 
@@ -103,7 +101,8 @@ class HandlebarCms::Mustache::CmsPage < Mustache
     end    
     
     
-    def gen_haml(haml)
-      Haml::Engine.new(haml)
+    def gen_haml(template_name)
+      template = File.read("#{File.dirname(__FILE__)}/templates/#{template_name}.haml")
+      Haml::Engine.new(template)
     end
 end

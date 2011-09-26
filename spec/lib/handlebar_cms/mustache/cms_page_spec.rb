@@ -115,6 +115,13 @@ describe HandlebarCms::Mustache::CmsPage do
         @cmsp.meta_tag_description.should == %(<meta content='description site' name='description' />\n)
       end
 
+      it "should render all the meta_tags" do
+        @cmsp.meta_tags.should == %(<meta content='title page' name='title' />
+<meta content='keywords page' name='keywords' />
+<meta content='description page' name='description' />
+)
+      end
+
     end
   end
   
@@ -149,8 +156,7 @@ describe HandlebarCms::Mustache::CmsPage do
     end
     
     it "should return an unordered list of the pages siblings without self for navigation" do
-      pending
-      @cmsp.nav_siblings_foobar2.should == %(<ul class="nav nav_foobar2"><li><a href="http://test.com#{@page3.full_path}" id="#{@page3.title}" title="#{@page3.title}">#{@page3.title}</a></li></ul>)
+      @cmsp.nav_siblings_foobar2.should == "hello"#%(<ul class='nav nav_foobar2'><li><a href='http://test.com#{@page3.full_path}' id='#{@page3.title}' title='#{@page3.title}'>#{@page3.title}</a></li>\n</ul>\n)
     end
   end
 end 

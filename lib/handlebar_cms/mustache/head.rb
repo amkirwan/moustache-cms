@@ -4,11 +4,12 @@ module HandlebarCms
       
       # -- Title ---- 
       def title
-        engine = gen_haml(%{%title= title})
+        engine = Haml::Engine.new(%{%title= title})
         engine.render(nil, {:title => @page.title})
       end   
       
       # -- Css ----
+=begin
       def stylesheet(name)
         if name == "all"
           css_files = ""
@@ -21,33 +22,22 @@ module HandlebarCms
           css_tag(file)
         end
       end
+=end
+
+      def stylesheet(name)
+        file = @current_site.css_file_by_name(name)
+        engine = gen_haml('stylesheet')
+        engine.render({:file_url => file.asset.url, :media => file.html_options})
+      end
       
       # -- Meta Tags ----
-=begin
-      def meta_title
-        engine = gen_haml(%{%meta{:name => "title", :content => title }})
-        engine.render(nil, {:title => meta_tag_name('title')})
-      end
-    
-      def meta_keywords
-        engine = gen_haml(%{%meta{:name => "keywords", :content => keywords}})
-        engine.render(nil, {:keywords => meta_tag_name('keywords')})
-      end
-    
-      def meta_description
-        engine = gen_haml(%{%meta{:name => "description", :content => description}})
-        engine.render(nil, {:description => meta_tag_name('description')})
-      end
-=end
       def meta_tag(name)
-        engine = gen_haml(%{%meta{:name => name, :content => content}})
+        engine = gen_haml('meta_tag')
         engine.render(nil, {:name => name, :content => meta_tag_name(name)})
       end
     
       def meta_tags
-        engine = gen_haml(%{- page.meta_data.each_pair do |k, v|
-          %meta{:name => k, :content => v}
-        })
+        engine = gen_haml('meta_tags')
         engine.render(nil, {:page => @page})
       end    
       alias_method :meta_tags_all, :meta_tags
