@@ -35,7 +35,7 @@ class Page
   
   # -- Associations-----------------------------------------------
   embeds_one :current_state
-  embeds_many :meta_tags, :as => :meta_taggable
+  embeds_one :meta_tag, :as => :meta_taggable
   embeds_many :page_parts 
   belongs_to :site
   belongs_to :layout
@@ -151,9 +151,7 @@ class Page
 
     def default_meta_tags
       if self.new_record?
-        self.meta_tags.build(:name => "title", :content => "")
-        self.meta_tags.build(:name => "keywords", :content => "")
-        self.meta_tags.build(:name => "description", :content => "")
+        self.build_meta_tag(:title => "", :keywords => "", :description => "")
       end
     end
 

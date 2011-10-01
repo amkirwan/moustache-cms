@@ -2,13 +2,9 @@
   %fieldset
     %legend Page Meta Tags<span class="fold_arrow rotate"></span>
     %ul.form_fields
-      = f.fields_for :meta_tags do |builder|
-        %li{:id => "meta_tag_#{builder.object.id}", :class => 'inline meta_tag'}  
-          = builder.label :name
-          = builder.text_field :name
-          = builder.label :content
-          = builder.text_field :content
-          = manage_meta_tag @page, builder.object
+      = f.fields_for :meta_tag do |builder|
+        %li{:class => 'inline meta_tag'}  
+          = builder.text_field :title, :value => @page.meta_tag["title"]
       %li#add_meta_tag
         - if @page.new_record?
           %p

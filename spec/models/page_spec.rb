@@ -244,8 +244,8 @@ describe Page do
       @page.should embed_one :current_state
     end
 
-    it "should embed_many meta_tags" do 
-      @page.should embed_many :meta_tags
+    it "should embed_one meta_tag" do 
+      @page.should embed_one :meta_tag
     end 
 
     it "should embed many page_parts" do
