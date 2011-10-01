@@ -1,10 +1,8 @@
-require 'ostruct'
-
 class ThemeAsset 
   include Mongoid::Document
   include Mongoid::Timestamps
   
-  attr_accessible :name, :description, :content_type, :width, :height, :file_size, :asset, :html_options
+  attr_accessible :name, :description, :content_type, :width, :height, :file_size, :asset, :theme_asset_attributes
   
   # -- Fields --------------- 
   field :name
@@ -13,10 +11,10 @@ class ThemeAsset
   field :width, :type => Integer
   field :height, :type => Integer
   field :file_size, :type => Integer 
-  field :html_options, :type => Hash
   mount_uploader :asset, ThemeAssetUploader
    
   # -- Associations ----------
+  embeds_one :element_attr
   belongs_to :site
   belongs_to :created_by, :class_name => "User"
   belongs_to :updated_by, :class_name => "User"
@@ -65,13 +63,6 @@ class ThemeAsset
   end
   
 end
-
-
-
-
-
-
-
 
 
 
