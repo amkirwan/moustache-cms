@@ -4,5 +4,6 @@
     %div{:id => "delete_user", :class => "delete"}
       = link_to "Delete User", [:admin, @user], :confirm => "Are you sure you want to delete the user #{@user.full_name}", :method => :delete, :class => "action delete"
 
-= render :partial => "form",  
-         :locals => { :user => @user, :button_label => "Update User"}
+- inner_content "shared/inner_wrapper" do
+  = render :partial => "form",  
+           :locals => { :user => @user, :button_label => "Update User"}

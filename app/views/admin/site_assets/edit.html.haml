@@ -5,5 +5,6 @@
     %div{:id => "delete_asset", :class => "delete"}
       = link_to "Delete Asset", [:admin, @asset_collection, @site_asset], :confirm => "Are you sure you want to delete the asset #{@site_asset.name}", :method => :delete, :class => "action delete"
 
-= render :partial => "form",
-         :locals => { :current_site => @current_site, :asset_collection => @asset_collection, :site_asset => @site_asset, :button_label => "Update Asset" }
+- inner_content "shared/inner_wrapper" do
+  = render :partial => "form",
+           :locals => { :current_site => @current_site, :asset_collection => @asset_collection, :site_asset => @site_asset, :button_label => "Update Asset" }

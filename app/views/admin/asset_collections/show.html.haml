@@ -18,8 +18,7 @@
                 = link_to "Delete Collection", [:admin, @asset_collection], :confirm => "Are you sure you want to delete the asset collection #{@asset_collection.name}", :method => :delete
                  
       
-#content_inner_wrapper
-  = render :partial => "shared/flash_notice"
+- inner_content "shared/inner_wrapper" do
   
   %div{ :id => "collection_#{@asset_collection.name}"}
     %ul#assets

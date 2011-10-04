@@ -1,29 +1,28 @@
-#content_inner_wrapper
-  = form_for([:admin, user], :html => {:class => "site_prop", :autocomplete => :off}) do |f|
-    = render :partial => "shared/error_messages",  
-             :locals => { :target => user }
-    %fieldset
-      %ul.form_fields
-        - if admin?
-          %li
-            = f.label :puid, "Partners UID<abbr title='required' class='required'>*</abbr>".html_safe
-            = f.text_field :puid 
+= form_for([:admin, user], :html => {:class => "site_prop", :autocomplete => :off}) do |f|
+  = render :partial => "shared/error_messages",  
+           :locals => { :target => user }
+  %fieldset
+    %ul.form_fields
+      - if admin?
         %li
-          = f.label :firstname, "Firstname<abbr title='required' class='required'>*</abbr>".html_safe
-          = f.text_field :firstname
-        %li
-          = f.label :lastname, "Lastname<abbr title='required' class='required'>*</abbr>".html_safe
-          = f.text_field :lastname
-        %li
-          = f.label :email, "Email<abbr title='required' class='required'>*</abbr>".html_safe
-          = f.email_field :email
-        - if admin?
-          %li{:id => "role", :class => "inline"}
-            = f.label :role, "Role <abbr title='required' class='required'>*</abbr>".html_safe 
-            = f.radio_button :role, 'editor'
-            = f.label :editor
-            = f.radio_button :role, 'admin'
-            = f.label :admin
-        %li
-          = f.submit button_label, :class => "submit"
-          = link_to "Cancel", [:admin, :users], :class => "cancel"
+          = f.label :puid, "Partners UID<abbr title='required' class='required'>*</abbr>".html_safe
+          = f.text_field :puid 
+      %li
+        = f.label :firstname, "Firstname<abbr title='required' class='required'>*</abbr>".html_safe
+        = f.text_field :firstname
+      %li
+        = f.label :lastname, "Lastname<abbr title='required' class='required'>*</abbr>".html_safe
+        = f.text_field :lastname
+      %li
+        = f.label :email, "Email<abbr title='required' class='required'>*</abbr>".html_safe
+        = f.email_field :email
+      - if admin?
+        %li{:id => "role", :class => "inline"}
+          = f.label :role, "Role <abbr title='required' class='required'>*</abbr>".html_safe 
+          = f.radio_button :role, 'editor'
+          = f.label :editor
+          = f.radio_button :role, 'admin'
+          = f.label :admin
+      %li
+        = f.submit button_label, :class => "submit"
+        = link_to "Cancel", [:admin, :users], :class => "cancel"

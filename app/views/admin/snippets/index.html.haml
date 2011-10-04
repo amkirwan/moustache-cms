@@ -5,8 +5,7 @@
     %div{:id => "new_snippet", :class => "create"}
       = link_to "New Snippet", [:new, :admin, :snippet], :class => "action"
 
-#content_inner_wrapper
-  = render :partial => "shared/flash_notice"
+- inner_content "shared/inner_wrapper" do
 
   - if @snippets.empty?
     %div.add_some

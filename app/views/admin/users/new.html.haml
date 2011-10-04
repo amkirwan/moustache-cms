@@ -1,4 +1,6 @@
 #content_header_wrapper
   %h2 Add New User    
-= render :partial => "form",  
-         :locals => { :user => @user, :button_label => "Create User" } 
+
+- inner_content "shared/inner_wrapper" do
+  = render :partial => "form",  
+           :locals => { :user => @user, :button_label => "Create User" } 

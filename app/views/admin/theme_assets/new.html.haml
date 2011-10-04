@@ -1,4 +1,6 @@
 #content_header_wrapper
   %h2 Add Theme Asset
-= render :partial => "form",  
-         :locals => { :theme_asset => @theme_asset, :button_label => "Save Theme Asset" }
+
+- inner_content "shared/inner_wrapper" do
+  = render :partial => "form",  
+           :locals => { :theme_asset => @theme_asset, :button_label => "Save Theme Asset" }

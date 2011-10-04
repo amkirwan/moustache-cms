@@ -5,9 +5,8 @@
     %div{:id => "new_layout", :class => "create"}
       = link_to "New Layout", [:new, :admin, :layout], :class => "action create"
 
-#content_inner_wrapper
-  = render :partial => "shared/flash_notice"
-  
+- inner_content "shared/inner_wrapper" do
+
   - if @layouts.empty?
     %div.add_some
       %h4= link_to "Add A Layout", [:new, :admin, :layout]

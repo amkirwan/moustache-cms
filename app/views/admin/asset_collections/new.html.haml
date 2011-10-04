@@ -1,3 +1,6 @@
 #content_header_wrapper
   %h2 Add New Asset Collection
-= render :partial => "form", :locals => { :asset_collection => @asset_collection, :button_label => "Save Collection" }
+
+
+- inner_content "shared/inner_wrapper" do
+  = render :partial => "form", :locals => { :asset_collection => @asset_collection, :button_label => "Save Collection" }

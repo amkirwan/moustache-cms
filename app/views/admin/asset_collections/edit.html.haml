@@ -6,4 +6,5 @@
       = link_to "Delete Asset Collection", [:admin, @asset_collection], :confirm => "Are you sure you want to delete the asset collection #{@asset_collection.name}", :method => :delete, :class => "action delete"
 
  
-= render :partial => "form", :locals => { :asset_collection => @asset_collection, :button_label => "Update Collection" }
+- inner_content "shared/inner_wrapper" do
+  = render :partial => "form", :locals => { :asset_collection => @asset_collection, :button_label => "Update Collection" }

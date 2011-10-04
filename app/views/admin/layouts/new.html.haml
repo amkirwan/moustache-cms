@@ -1,8 +1,7 @@
 #content_header_wrapper
   %h2 Add New Layout
 
-#content_header_wrapper
-  = render :partial => "shared/flash_notice"
+- inner_content "shared/inner_wrapper" do
 
   = render :partial => "form",  
            :locals => { :layout => @layout, :button_label => "Create Layout" }

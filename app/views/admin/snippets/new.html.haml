@@ -1,3 +1,5 @@
 #content_header_wrapper
   %h2 Create Snippet
-= render :partial => "form", :locals => { :snippet => @snippet, :button_label => "Create Snippet"}
+
+- inner_content "shared/inner_wrapper" do
+  = render :partial => "form", :locals => { :snippet => @snippet, :button_label => "Create Snippet"}
