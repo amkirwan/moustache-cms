@@ -7,43 +7,12 @@
       
 - inner_content "shared/inner_wrapper" do
 
-  - if @css_files.empty? && @js_files.empty? && @images.empty?
-    %div.add_some
-      %h4= link_to "Add Some Assets", [:new, :admin, :theme_asset]
+  - if add_assets?
+    = render :partial => 'add_asset'
   - else
     - unless @css_files.empty?
-      %div{:id => "css_files", :class => "theme_assets"} 
-        %table{:class => "info theme_asset_css two_col"}
-          %tr
-            %th CSS Name
-            %th
-          - @css_files.each do |css|
-            %tr{:id => "#{css.name}_css", :class => "#{cycle('even', 'odd', :name => 'table_list')}"}
-              %td.name= link_to css.name, [:edit, :admin, css]
-              - if can? :destroy, css
-                %td.delete= link_to "Delete", [:admin, css], :method => :delete, :confirm => "Are you sure you want to delete the CSS theme file #{css.name}", :class => "delete"
+      = render :partial => 'css_files'  
     - unless @js_files.empty?
-      - reset_cycle("table_list")
-      %div{:id => "js_files", :class => "theme_assets"} 
-        %table{:class => "info theme_asset_js two_col"}
-          %tr
-            %th JavaScript Name
-            %th
-          - @js_files.each do |js|
-            %tr{:id => "#{js.name}_js", :class => "#{cycle('even', 'odd', :name => 'table_list')}"}
-              %td.name= link_to js.name, [:edit, :admin, js]
-              - if can? :destroy, js
-                %td.delete= link_to "Delete", [:admin, js], :method => :delete, :confirm => "Are you sure you want to delete the JS theme file #{js.name}", :class => "delete"
+      = render :partial => 'js_files'  
     - unless @images.empty?
-      - reset_cycle("table_list")
-      %div{:id => "image_files", :class => "theme_assets"} 
-        %table{:class => "info theme_asset_image two_col"}
-          %tr
-            %th Image Name
-            %th
-          - @images.each do |image|
-            %tr{:id => "#{image.name}_image", :class => "#{cycle('even', 'odd', :name => 'table_list')}"}
-              %td.name= link_to image.name, [:edit, :admin, image]
-              - if can? :destroy, image 
-                %td.delete= link_to "Delete", [:admin, image], :method => :delete, :confirm => "Are you sure you want to delete the image theme file #{image.name}", :class => "delete"
-
+      = render :partial => 'images' 

@@ -1,41 +1,10 @@
 module ApplicationHelper  
+  
   def admin?     
     @current_user.role?("admin") ? true : false
   end
   
-  def tree_ul(mongoid_tree_set, init=true, &block)
-    if mongoid_tree_set.size > 0
-      ret = '<ul id="pages">'
-      mongoid_tree_set.each do |item|
-        next if item.parent_id && init
-        if item.root?
-          ret += '<li id="home_page">'
-        else
-          ret += "<li id=\"#{item.title}\">"
-        end
-        ret += '<strong>'
-        ret += yield item
-        ret += '</strong>'
-        ret += '<div class="page-info">'
-        ret += '<em>'
-        if item.updated_by.nil?
-          ret += item.updated_at.strftime("updated %B %d at %H:%M")
-        else
-          ret += item.updated_at.strftime("updated %B %d at %H:%M by #{item.updated_by.puid}")
-        end
-        ret += '</em>'
-        if can? :destroy, item
-          ret += link_to( image_tag('delete_button.png', :class => "delete_image"), admin_page_path(item), :method => :delete, :confirm => "Are you sure you want to delete the page #{item.title}", :class => "delete") if can? :destroy, item
-        end
-        ret += '</div>'
-        ret += tree_ul(item.children, false, &block) if item.children.size > 0
-        ret += '</li>'
-      end
-      ret += '</ul>'
-      ret.html_safe
-    end
-  end
-  
+ 
   def body_id_set
     name = controller.controller_name
     case name
@@ -56,22 +25,6 @@ module ApplicationHelper
     end
   end    
 
-  def li_current_page(path, selected_controller_name, &block)
-    if controller.controller_name == selected_controller_name.to_s
-      capture_haml do 
-        haml_tag 'li.selected' do 
-          yield path
-        end
-      end
-    else
-      capture_haml do 
-        haml_tag 'li' do
-          yield path
-        end
-      end
-    end
-  end
-  
   def hash_to_open_struct(hash)
     OpenStruct.new(hash)
   end
@@ -80,16 +33,18 @@ module ApplicationHelper
     builder.object.filter ? builder.object.filter.name : nil
   end
 
-  def manage_meta_tag page, meta_tag 
-    case meta_tag.name
-    when "title", "keywords", "description"
-    else
-      render :partial => "admin/pages/editable_meta_tag", :locals => { :page => page, :meta_tag => meta_tag }
-    end
-  end
-
   def inner_content(partial_name, &block)
     options = { :body => capture(&block) }
     concat(render(:partial => partial_name, :locals => options))
   end
+
+  def name_or_title(object)
+    object.respond_to?(:title) ? object.title : object.name
+  end
+
+  def can_destroy?(object)
+    class_name = object.class.name
+    render :partial => "shared/header_button", :locals => { :object => object, :class_name => class_name.underscore, :title => class_name.underscore.titleize }
+  end
+  
 end

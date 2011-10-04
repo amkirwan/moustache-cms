@@ -1,0 +1,6 @@
+%div{:id => "css_files", :class => "theme_assets"} 
+  %table{:class => "info theme_asset_css two_col"}
+    %tr
+      %th CSS Name
+      %th
+    = render :partial => 'css_file', :collection => @css_files

@@ -1,0 +1,7 @@
+- reset_cycle("table_list")
+%div{:id => "js_files", :class => "theme_assets"} 
+  %table{:class => "info theme_asset_js two_col"}
+    %tr
+      %th JavaScript Name
+      %th
+    = render :partial => 'js_file', :collection => @js_files
