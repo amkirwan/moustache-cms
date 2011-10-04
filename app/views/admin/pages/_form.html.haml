@@ -6,11 +6,12 @@
              :locals => { :target => page }
     = render :partial => "general", :locals => {:f => f}
     = render :partial => "advanced_options", :locals => {:f => f}
-    = render :partial => "meta_data", :locals => {:f => f}
+    = render :partial => "meta_tag", :locals => {:f => f}
     = render :partial => "editors", :locals => {:f => f, :page => page}
     = render :partial => "page_parts", :locals => {:f => f}
     %fieldset
       %ul.form_fields
         %li
           = f.submit button_label, :class => "submit"
+          = f.submit "Save and Continue Editing", :class => "submit"
           = link_to "Cancel", [:admin, :pages], :class => "cancel"

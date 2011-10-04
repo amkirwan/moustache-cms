@@ -1,6 +1,6 @@
 = fields_for @page do |page|
   = page.fields_for(:meta_tags, @meta_tag) do |builder|
-    %li{:id => "meta_tag_#{@meta_tag.id}", :class => "inline meta_tag"}
+    %li{:class => "inline meta_tag"}
       = builder.label :name
       = builder.text_field :name
       = builder.label :content

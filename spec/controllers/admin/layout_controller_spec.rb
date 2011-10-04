@@ -67,7 +67,6 @@ describe Admin::LayoutsController do
     let(:params) {{ "layout" => { "name" => "foobar", "content" => "Hello, World" }}}
     
     before(:each) do
-      layout.as_new_record
       controller.stub(:admin?).and_return(true)
       Layout.stub(:new).and_return(layout)
     end
@@ -111,9 +110,15 @@ describe Admin::LayoutsController do
         do_post
         response.should redirect_to(admin_layouts_path)
       end
+
+      it "should redirect to edit layout when commit == 'save and continue editing'" do
+        params["commit"] = "Save and Continue Editing"
+        do_post
+        response.should redirect_to(edit_admin_layout_path(layout))
+      end
     end
     
-    context "when the layout fales to save" do
+    context "when the layout fails to save" do
       before(:each) do
         layout.stub(:save).and_return(false)
       end
@@ -199,6 +204,12 @@ describe Admin::LayoutsController do
         do_put
         response.should redirect_to(admin_layouts_path)
       end
+
+      it "should redirect to edit layout when commit == 'save and continue editing'" do
+        params["commit"] = "Save and Continue Editing"
+        do_put
+        response.should redirect_to(edit_admin_layout_path(layout))
+      end
     end
     
     context "when the layout fales to save" do
@@ -253,10 +264,6 @@ describe Admin::LayoutsController do
     end
   end
 end
-
-
-
-
 
 
 

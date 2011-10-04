@@ -9,7 +9,8 @@ class MetaTag
   embedded_in :meta_taggable, :polymorphic => true
 
   validates :name,
-            :presence => true
+            :presence => true,
+            :uniqueness => true
 
   validates :content,
             :presence => true
