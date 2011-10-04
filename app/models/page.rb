@@ -90,7 +90,7 @@ class Page
   before_update :update_current_state_time
   before_create :permalink_set
   after_save :update_user_pages
-  before_destroy :delete_from_editors, :destroy_children
+  before_destroy :destroy_children
   after_initialize :default_meta_tags
   
   # -- Class Mehtods --------------------------------------------------

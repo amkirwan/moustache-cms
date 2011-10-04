@@ -32,7 +32,6 @@ class User
   # -- Before Validations -----------------------------------------------
   before_validation :uniq_page_ids
   before_save :lower, :set_puid
-  before_destroy :delete_from_pages
                        
   Roles = %w[editor designer admin] unless defined?(Roles)
   
@@ -88,13 +87,5 @@ class User
   
     def set_puid
       self.puid = self.puid
-    end
-    
-    def delete_from_pages
-      pages = Page.find(self.page_ids)
-      pages.each do |page|
-        page.editor_ids.delete(self.id)
-        page.save
-      end 
     end
 end

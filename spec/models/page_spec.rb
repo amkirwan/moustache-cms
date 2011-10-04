@@ -134,18 +134,6 @@ describe Page do
     end
   end
 
-  # -- Before Destroy  ----------------------------------------------- 
-  describe "before destroy callback" do
-    describe "#delete_from_editors" do
-      it "should remove the page from the users editor_ids" do
-        @page.editors << user
-        @page.destroy
-        user.reload
-        user.page_ids.should_not include(@page.id)
-      end
-    end  
-  end
-
   # -- Validations  -----------------------------------------------
   describe "validations" do
     it "should be valid" do
