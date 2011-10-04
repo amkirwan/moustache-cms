@@ -4,9 +4,9 @@ Factory.define :meta_tag do |meta|
 end
 
 def meta_tags(type)
-  [ Factory.build(:meta_tag, :name => 'title', :content => "title #{type}"),
-    Factory.build(:meta_tag, :name => 'keywords', :content => "keywords #{type}"),
-    Factory.build(:meta_tag, :name => 'description', :content => "description #{type}") ]
+    [ Factory.build(:meta_tag, name: 'title', content: "title #{type}"),
+      Factory.build(:meta_tag, name: 'keywords', content: "keywords #{type}"),
+      Factory.build(:meta_tag, name: 'description', content: "description #{type}")]
 end
 
 Factory.define :site do |site|
@@ -74,6 +74,8 @@ Factory.define :page_part do |pp|
   pp.filter_name "filter"
 end
 
+
+
 Factory.define :page do |page|
   page.site { Factory.build(:site) }
   page.parent  nil
@@ -117,15 +119,10 @@ Factory.define :site_asset do |asset|
   asset.file_size 200
 end
 
-Factory.define :element_attr do |attr|
-  attr.html_attr { {:media => 'screen', :charset => 'utf-8'} }
-end
-
 Factory.define :theme_asset do |asset| 
   asset.name "asset_name"
   asset.content_type "content_type"
   asset.asset { File.open("#{Rails.root}/spec/fixtures/assets/rails.png") }
-  asset.element_attr { Factory.build(:element_attr) }
   asset.width 200
   asset.height 200
   asset.file_size 200

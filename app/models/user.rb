@@ -91,7 +91,7 @@ class User
     end
     
     def delete_from_pages
-      pages = Page.criteria.for_ids(self.page_ids)
+      pages = Page.find(self.page_ids)
       pages.each do |page|
         page.editor_ids.delete(self.id)
         page.save

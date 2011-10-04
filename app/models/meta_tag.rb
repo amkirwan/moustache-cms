@@ -2,9 +2,16 @@ class MetaTag
   include Mongoid::Document 
    
   # -- Fields ---
-  field :tag, :type => Hash, :default => {}
+  field :name
+  field :content
 
   # -- Association --
   embedded_in :meta_taggable, :polymorphic => true
+
+  validates :name,
+            :presence => true
+
+  validates :content,
+            :presence => true
 
 end

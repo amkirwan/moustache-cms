@@ -35,7 +35,7 @@ class Page
   
   # -- Associations-----------------------------------------------
   embeds_one :current_state
-  embeds_one :meta_tag, :as => :meta_taggable
+  embeds_many :meta_tags, :as => :meta_taggable
   embeds_many :page_parts 
   belongs_to :site
   belongs_to :layout
@@ -59,9 +59,6 @@ class Page
             :uniqueness => { :scope => :site_id }
 
   validates :breadcrumb,
-            :presence => true
-
-  validates :editor_ids,
             :presence => true
 
   validates_presence_of :site_id,
@@ -150,8 +147,10 @@ class Page
   private 
 
     def default_meta_tags
-      if self.new_record?
-        self.build_meta_tag(:title => "", :keywords => "", :description => "")
+      if self.new_record? && self.meta_tags.size == 0
+        self.meta_tags.build(:name => "title", :content => "")
+        self.meta_tags.build(:name => "keywords", :content => "")
+        self.meta_tags.build(:name => "description", :content => "")
       end
     end
 

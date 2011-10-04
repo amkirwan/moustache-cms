@@ -15,7 +15,7 @@ class Site
   index :domains
   
   # -- Associations ---------------------------------------
-  embeds_one :meta_tag, :as => :meta_taggable
+  embeds_many :meta_tags, :as => :meta_taggable
   has_many :users, :dependent => :delete
   has_many :pages, :dependent => :delete
   has_many :layouts, :dependent => :delete
