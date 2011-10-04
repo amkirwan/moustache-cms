@@ -1,6 +1,5 @@
 #add_new_page
   %h3 Create New Page
 
-#content_inner_wrapper
-  = render :partial => "shared/flash_notice"
-  = render :partial => "form", :locals => { :page => @page, :button_label => "Create Page"}
+- inner_content "shared/inner_wrapper" do
+  = render :partial => "form", :locals => { :button_label => "Create Page"}

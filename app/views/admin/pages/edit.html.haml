@@ -5,6 +5,5 @@
     %div{:id => "delete_page", :class => "delete"}
       = link_to "Delete Page", [:admin, @page], :confirm => "Are you sure you want to delete the page #{@page.title}", :method => :delete, :class => "action  delete"
 
-#content_inner_wrapper
-  = render :partial => "shared/flash_notice"
-  = render :partial => "form", :locals => { :page => @page, :button_label => "Update Page"}
+- inner_content "shared/inner_wrapper" do
+  = render :partial => "form", :locals => { :button_label => "Update Page"}

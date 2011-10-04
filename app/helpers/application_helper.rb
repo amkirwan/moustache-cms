@@ -87,4 +87,9 @@ module ApplicationHelper
       render :partial => "admin/pages/editable_meta_tag", :locals => { :page => page, :meta_tag => meta_tag }
     end
   end
+
+  def inner_content(partial_name, &block)
+    options = { :body => capture(&block) }
+    concat(render(:partial => partial_name, :locals => options))
+  end
 end
