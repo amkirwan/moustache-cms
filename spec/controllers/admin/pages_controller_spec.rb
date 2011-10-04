@@ -97,7 +97,7 @@ describe Admin::PagesController do
                     "page_parts_attributes" => { "0" => { "name" => "content", "content" => "Hello, World" }}} }}
     
     before(:each) do
-      page.as_new_record
+      page
       @parent_mock = mock_model("Page", :id => "4d922d505dfe2f082e00006e")
       Page.stub(:find).and_return(@parent_mock)
       User.stub(:find).and_return(current_user)
@@ -138,12 +138,18 @@ describe Admin::PagesController do
       
       it "should create a flash message that the page was saved" do
         do_post
-        flash[:notice].should == "Successfully created page #{page.title}"
+        flash[:notice].should == "Successfully created the page #{page.title}"
       end
       
       it "should redirect to the pages#index page" do
         do_post
         response.should redirect_to(admin_pages_path)
+      end     
+
+      it "should redirect to edit page when commit == 'save and continue editing'" do
+        params["commit"] = "Save and Continue Editing"
+        do_post
+        response.should redirect_to(edit_admin_page_path(page))
       end     
     end
     
@@ -219,35 +225,42 @@ describe Admin::PagesController do
       Page.stub(:find).and_return(page)
     end 
     
-    def do_post
+    def do_puts
        post :update, params
     end
     
     it "should find the record to update with Page#find" do
       Page.should_receive(:find).with(params["id"]).and_return(page)
-      do_post
+      do_puts
     end
     
     it "should assign @page for the view" do
-      do_post
+      do_puts
       assigns(:page).should == page
     end
     
     context "with valid params" do
       it "should update the attributes of the page" do
         page.should_receive(:update_attributes).with(params["page"]) 
-        do_post
+        do_puts
       end
     
       it "should assign the flash message" do
-        do_post
+        do_puts
         flash[:notice].should == "Successfully updated the page #{page.title}"
       end
       
       it "should redirect to the admin/layout#index action" do
-        do_post
+        do_puts
         response.should redirect_to(admin_pages_path)
       end
+
+      it "should redirect to edit page when commit == 'save and continue editing'" do
+        params["commit"] = "Save and Continue Editing"
+        do_puts
+        response.should redirect_to(edit_admin_page_path(page))
+      end     
+
     end
     
     context "with invalid params" do
@@ -257,11 +270,11 @@ describe Admin::PagesController do
       
       it "should not save the page" do
         page.should_receive(:update_attributes).and_return(false)
-        do_post
+        do_puts
       end
       
       it "should render the page edit" do
-        do_post
+        do_puts
         response.should render_template("admin/pages/edit")
       end
     end

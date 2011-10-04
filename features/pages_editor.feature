@@ -54,7 +54,7 @@ Scenario: Create a new page
   And I fill in "page_page_parts_attributes_0_content" with "Hello, World!" 
   And I press "Create Page" 
   Then I should be on the admin pages page
-  And I should see "Successfully created page foobar"
+  And I should see "Successfully created the the page foobar"
   And I should see "foobar" 
   
 @edit_a_existing_page
