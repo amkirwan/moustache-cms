@@ -1,5 +1,5 @@
-#content_header_wrapper
-  %h2 Layouts
+- header_content 'shared/header_wrapper', :object => @layouts do
+  = can_create? Layout
 
   - if can? :create, Layout
     %div{:id => "new_layout", :class => "create"}

@@ -1,5 +1,5 @@
-#content_header_wrapper
-  %h2 Editing Layout <b>#{@layout.name.humanize}</b>
+- header_content 'shared/header_wrapper', :object => @layout do
+  = can_destroy? @layout
 
   - if can?(:destroy, @layout) && !@layout.new_record?
     %div{:id => "delete_layout", :class => "delete"}
