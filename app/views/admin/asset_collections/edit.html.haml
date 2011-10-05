@@ -1,5 +1,5 @@
-#content_header_wrapper
-  %h2 Edit Asset Collection <b>#{@asset_collection.name.humanize}</b>
+- header_content 'shared/header_wrapper', :object => @asset_collection do
+  = can_destroy? @asset_collection
 
   - if can?(:destroy, @asset_collection) && !@asset_collection.new_record?
     %div{:id => "delete_asset_collection", :class => "delete"}

@@ -1,5 +1,4 @@
-#content_header_wrapper
-  %h2 #{@asset_collection.name.humanize}
+- header_content 'shared/header_wrapper', :object => @asset_collection do
 
   - if can? :create, SiteAsset
     %div{:id => "new_site_asset", :class => "actions" }
