@@ -1,6 +1,8 @@
 module Admin::PageHelper  
 
-  def tree_ul(mongoid_tree_set, init=true, &block)
+  def mongoid_tree_ul(mongoid_tree_set, init=true)
+    render :partial => 'admin/pages/mongoid_tree', :locals => { :mongoid_tree_set => mongoid_tree_set, :init => init }
+=begin
     if mongoid_tree_set.size > 0
       ret = '<ul id="pages">'
       mongoid_tree_set.each do |item|
@@ -16,9 +18,9 @@ module Admin::PageHelper
         ret += '<div class="page-info">'
         ret += '<em>'
         if item.updated_by.nil?
-          ret += item.updated_at.strftime("updated %B %d at %H:%M")
+          ret += "updated " + time_ago_in_words(item.updated_at) + " ago"
         else
-          ret += item.updated_at.strftime("updated %B %d at %H:%M by #{item.updated_by.puid}")
+          ret += "updated " + time_ago_in_words(item.updated_at) + " ago by #{item.updated_by.puid}"
         end
         ret += '</em>'
         if can? :destroy, item
@@ -31,6 +33,29 @@ module Admin::PageHelper
       ret += '</ul>'
       ret.html_safe
     end
+=end
+  end
+
+  def skip_children_on_initialize?(mongoid_tree_item, init)
+    mongoid_tree_item.parent_id && init
+  end
+
+  def index_page_id(mongoid_tree_item)
+    mongoid_tree_item.root? ? "home_page" : mongoid_tree_item.title    
+  end
+
+  def index_page_time(mongoid_tree_item)
+    if mongoid_tree_item.updated_by.nil?
+      "updated " + time_ago_in_words(mongoid_tree_item.updated_at) + " ago"
+    else
+      "updated " + time_ago_in_words(mongoid_tree_item.updated_at) + " ago by #{mongoid_tree_item.updated_by.puid}"
+    end
+  end
+
+  def child_pages?(mongoid_tree_item)
+    if mongoid_tree_item.children.size > 0
+      mongoid_tree_ul(mongoid_tree_item.children, false)
+    end 
   end
  
   def manage_meta_tag page, meta_tag 

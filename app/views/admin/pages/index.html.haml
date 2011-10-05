@@ -8,4 +8,4 @@
       %h4= link_to "Add A Home Page", [:new, :admin, :page]
   - else 
     #pages_list
-      = tree_ul(@pages) { |page| link_to page.title, [:edit, :admin, page] }
+      = mongoid_tree_ul(@pages)

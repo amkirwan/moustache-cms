@@ -508,21 +508,20 @@ span.rotate {
 
 div#pages_list {
 	width: 100%;
-	ul#pages {
+	ul.pages {
 		display: block;
 		list-style: none;
     width: 100%;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    -o-border-radius: 4px;	
-    border-radius: 4px;
 		li {
 			position: relative;
-			padding: 5px 0 0 10px;
+			padding: 5px 0 0 5px;
 			margin-bottom: 5px;
+      margin-left: 1em;
     strong {
 				display: block;
-				height: 26px;
+				height: 2em;
+        line-height: 2em;
+        padding-left: 5px;
 				background: $foldable_bg;
 			}
       div {
@@ -562,8 +561,8 @@ div#pages_list {
     li:first-child {
       padding-left: 0;
     }
-		li#root_node {
-			padding-left: 0;
+		li#home_page {
+      margin-left: 0;
 		}
 	}
 }
