@@ -32,6 +32,15 @@ module ApplicationHelper
   def filter_select(builder)
     builder.object.filter ? builder.object.filter.name : nil
   end
+  
+  def header_content(partial_name, options={}, &block)
+    if options[:object].class == Mongoid::Criteria
+      options.merge!(:body => capture(&block), :title => options[:object].first.class.name.underscore.titleize)
+    else
+      options.merge!(:body => capture(&block), :name => name_or_title(options[:object]), :title => options[:object].class.name.underscore.titleize)
+    end
+    concat(render(:partial => partial_name, :locals => options))
+  end
 
   def inner_content(partial_name, &block)
     options = { :body => capture(&block) }

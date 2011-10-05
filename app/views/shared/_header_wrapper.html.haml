@@ -1,0 +1,8 @@
+#content_header_wrapper
+  - if object.class == Mongoid::Criteria
+    %h2 #{title}
+  - elsif object.new_record?
+    %h2 Add New #{title}
+  - else
+    %h2 Editing #{title} <b>#{name}</b>
+  = body
