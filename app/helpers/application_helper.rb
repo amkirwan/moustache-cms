@@ -36,8 +36,10 @@ module ApplicationHelper
   def header_content(partial_name, options={}, &block)
     if options[:object].class == Mongoid::Criteria
       options.merge!(:body => capture(&block), :title => options[:object].first.class.name.underscore.titleize)
+    elsif options[:object].new_record?
+      options.merge!(:body => capture(&block), :title => "Create New #{options[:object].class.name.underscore.titleize}")
     else
-      options.merge!(:body => capture(&block), :name => name_or_title(options[:object]), :title => options[:object].class.name.underscore.titleize)
+      options.merge!(:body => capture(&block), :title => "Editing #{options[:object].class.name.underscore.titleize} <b>#{name_or_title(options[:object])}</b>")
     end
     concat(render(:partial => partial_name, :locals => options))
   end
