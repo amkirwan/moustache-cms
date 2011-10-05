@@ -1,5 +1,4 @@
-- header_content 'shared/header_wrapper', :object => @page do
-  = can_destroy? @page
+- header_content 'shared/header_wrapper', :object => @page 
 
 - inner_content "shared/inner_wrapper" do
   = render :partial => "form", :locals => { :button_label => "Create Page"}

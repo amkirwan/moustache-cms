@@ -1,7 +1,5 @@
 - header_content 'shared/header_wrapper', :object => @pages do
-
-  %div{:id => "new_page", :class => "create"}
-    = link_to "New Page", [:new, :admin, :page], :class => "action"
+  = can_create? Page
 
 - inner_content "shared/inner_wrapper" do
 

@@ -37,7 +37,7 @@ module ApplicationHelper
     if options[:object].class == Mongoid::Criteria
       options.merge!(:body => capture(&block), :title => options[:object].first.class.name.underscore.titleize)
     elsif options[:object].new_record?
-      options.merge!(:body => capture(&block), :title => "Create New #{options[:object].class.name.underscore.titleize}")
+      options.merge!(:body => "", :title => "Create New #{options[:object].class.name.underscore.titleize}")
     else
       options.merge!(:body => capture(&block), :title => "Editing #{options[:object].class.name.underscore.titleize} <b>#{name_or_title(options[:object])}</b>")
     end
@@ -53,9 +53,14 @@ module ApplicationHelper
     object.respond_to?(:title) ? object.title : object.name
   end
 
+  def can_create?(object)
+    class_name = object.name
+    render :partial => "shared/header_button_new", :locals => { :object => object, :class_name => class_name.underscore, :title => class_name.underscore.titleize }
+  end
+
   def can_destroy?(object)
     class_name = object.class.name
-    render :partial => "shared/header_button", :locals => { :object => object, :class_name => class_name.underscore, :title => class_name.underscore.titleize }
+    render :partial => "shared/header_button_delete", :locals => { :object => object, :class_name => class_name.underscore, :title => class_name.underscore.titleize }
   end
   
 end
