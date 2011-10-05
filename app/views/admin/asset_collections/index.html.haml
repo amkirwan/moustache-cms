@@ -1,9 +1,5 @@
-#content_header_wrapper
-  %h2 Asset Collections
-
-  - if can? :create, AssetCollection
-    %div{:id => "new_asset_collection", :class => "create"}
-      = link_to "New Asset Collection", [:new, :admin, :asset_collection], :class => "action"
+- header_content 'shared/header_wrapper', :object => :AssetCollection do
+  = can_create? AssetCollection
 
 - inner_content "shared/inner_wrapper" do
 

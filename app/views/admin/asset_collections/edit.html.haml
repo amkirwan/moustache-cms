@@ -1,10 +1,5 @@
 - header_content 'shared/header_wrapper', :object => @asset_collection do
   = can_destroy? @asset_collection
 
-  - if can?(:destroy, @asset_collection) && !@asset_collection.new_record?
-    %div{:id => "delete_asset_collection", :class => "delete"}
-      = link_to "Delete Asset Collection", [:admin, @asset_collection], :confirm => "Are you sure you want to delete the asset collection #{@asset_collection.name}", :method => :delete, :class => "action delete"
-
- 
 - inner_content "shared/inner_wrapper" do
   = render :partial => "form", :locals => { :asset_collection => @asset_collection, :button_label => "Update Collection" }

@@ -1,9 +1,5 @@
-- header_content 'shared/header_wrapper', :object => @layouts do
+- header_content 'shared/header_wrapper', :object => :Layout do
   = can_create? Layout
-
-  - if can? :create, Layout
-    %div{:id => "new_layout", :class => "create"}
-      = link_to "New Layout", [:new, :admin, :layout], :class => "action create"
 
 - inner_content "shared/inner_wrapper" do
 

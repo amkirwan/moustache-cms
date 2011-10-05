@@ -1,21 +1,7 @@
-- header_content 'shared/header_wrapper', :object => @asset_collection do
+- header_content 'shared/header_wrapper', :object => @asset_collection, :show => true do
 
-  - if can? :create, SiteAsset
-    %div{:id => "new_site_asset", :class => "actions" }
-      %ul.submenu
-        %li.top_menu
-          Actions<span class="fold_arrow"></span>
-          %ul 
-            - if can? :create, @asset_collection
-              %li
-                = link_to "New Asset", [:new, :admin, @asset_collection, :site_asset]
-            - if can? :update, @asset_collection
-              %li
-                = link_to "Edit Collection Props", [:edit, :admin, @asset_collection]
-            - if can? :destroy, @asset_collection
-              %li
-                = link_to "Delete Collection", [:admin, @asset_collection], :confirm => "Are you sure you want to delete the asset collection #{@asset_collection.name}", :method => :delete
-                 
+  = render :partial => 'submenu'
+                
       
 - inner_content "shared/inner_wrapper" do
   

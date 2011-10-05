@@ -1,9 +1,5 @@
-#content_header_wrapper
-  %h2 Snippets
-
-  - if admin?
-    %div{:id => "new_snippet", :class => "create"}
-      = link_to "New Snippet", [:new, :admin, :snippet], :class => "action"
+- header_content 'shared/header_wrapper', :object => :Snippet do
+  = can_create? Snippet
 
 - inner_content "shared/inner_wrapper" do
 

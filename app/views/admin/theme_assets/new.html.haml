@@ -1,5 +1,5 @@
-#content_header_wrapper
-  %h2 Add Theme Asset
+- header_content 'shared/header_wrapper', :object => @users do
+  = can_create? User
 
 - inner_content "shared/inner_wrapper" do
   = render :partial => "form",  

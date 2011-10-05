@@ -1,5 +1,5 @@
-#content_header_wrapper
-  %h2 Edit Theme Asset <b>#{@theme_asset.name}</b>
+- header_content 'shared/header_wrapper', :object => @theme_asset do
+  = can_destroy? @theme_asset
 
   = can_destroy? @theme_asset
 

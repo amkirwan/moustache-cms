@@ -1,5 +1,5 @@
-#content_header_wrapper
-  %h2 Editing Snippet <b>#{@snippet.name.humanize}</b>
+- header_content 'shared/header_wrapper', :object => @snippet do
+  = can_destroy? @snippet
 
   -if can?(:destroy, @snippet) && !@snippet.new_record?
     %div{:id => "delete_snippet", :class => "delete"}

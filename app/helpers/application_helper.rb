@@ -34,12 +34,13 @@ module ApplicationHelper
   end
   
   def header_content(partial_name, options={}, &block)
-    if options[:object].class == Mongoid::Criteria
-      options.merge!(:body => capture(&block), :title => options[:object].first.class.name.underscore.titleize)
+    if options[:object].class == Symbol
+      options.merge!(:body => capture(&block), :title => options[:object].to_s.underscore.titleize.pluralize)
     elsif options[:object].new_record?
       options.merge!(:body => "", :title => "Create New #{options[:object].class.name.underscore.titleize}")
     else
-      options.merge!(:body => capture(&block), :title => "Editing #{options[:object].class.name.underscore.titleize} <b>#{name_or_title(options[:object])}</b>")
+      title = options[:show] == true ? "#{options[:object].class.name.underscore.titleize}" : "Editing #{options[:object].class.name.underscore.titleize}"
+      options.merge!(:body => capture(&block), :title => "#{title} <b>#{view_identifier(options[:object]).titleize}</b>")
     end
     concat(render(:partial => partial_name, :locals => options))
   end
@@ -49,8 +50,14 @@ module ApplicationHelper
     concat(render(:partial => partial_name, :locals => options))
   end
 
-  def name_or_title(object)
-    object.respond_to?(:title) ? object.title : object.name
+  def view_identifier(object)
+    if object.respond_to?(:title)
+      object.title
+    elsif object.respond_to?(:full_name)
+      object.full_name 
+    else
+      object.name
+    end
   end
 
   def can_create?(object)
@@ -60,7 +67,8 @@ module ApplicationHelper
 
   def can_destroy?(object)
     class_name = object.class.name
-    render :partial => "shared/header_button_delete", :locals => { :object => object, :class_name => class_name.underscore, :title => class_name.underscore.titleize }
+    parent = object._parent
+    render :partial => "shared/header_button_delete", :locals => { :object => object, :parent => parent, :class_name => class_name.underscore, :title => class_name.underscore.titleize }
   end
   
 end

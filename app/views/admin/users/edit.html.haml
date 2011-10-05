@@ -1,9 +1,6 @@
-#content_header_wrapper
-  %h2 Editing <b>#{@user.full_name}</b>'s User Profile
-  - if can?(:destroy, @user) && !@user.new_record?
-    %div{:id => "delete_user", :class => "delete"}
-      = link_to "Delete User", [:admin, @user], :confirm => "Are you sure you want to delete the user #{@user.full_name}", :method => :delete, :class => "action delete"
-
+- header_content 'shared/header_wrapper', :object => @user do
+  = can_destroy? @user
+  
 - inner_content "shared/inner_wrapper" do
   = render :partial => "form",  
            :locals => { :user => @user, :button_label => "Update User"}
