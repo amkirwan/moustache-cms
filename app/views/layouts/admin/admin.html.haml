@@ -14,7 +14,7 @@
   #wrapper
     #header
       %h1#site_name
-        = link_to "#{Site.first.name.humanize} Site", "/" 
+        = link_to "#{Site.first.name.titleize} Site", "/" 
       = render :partial => "layouts/admin/welcome"
     #main
       = render :partial => "layouts/admin/nav"
