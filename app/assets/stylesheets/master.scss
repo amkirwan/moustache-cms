@@ -110,12 +110,18 @@ img, embed, object, video { max-width: 100%; }
 /* error and flash messages */ 
 
 div#flash_notice_wrapper {
-	text-align: center;
-	margin:  0 auto 16px auto ;
+  position: absolute;
+  width: 65%;
+  top: -10px;
+  left: 14%;
+  text-align: center;
 	padding: 4px 0;
 	border-top: 1px solid $flash_color;
 	border-bottom: 1px solid $flash_color;
   background: #FFF6BF;
+  p {
+    font-size: 0.8125em; /* 14 / 16 */
+  }
 }
 
 div.field_with_errors {
@@ -292,6 +298,7 @@ body.sites li#sites {
 }
 
 div#content {
+  position: relative;
   min-height: $body_min_height; 
   float: left;
   width: 73.0392157%; /* (612 - 16) / 816 */

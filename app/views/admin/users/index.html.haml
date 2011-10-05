@@ -1,8 +1,7 @@
 - header_content 'shared/header_wrapper', :object => :User do
   = can_create? User
 
-#content_inner_wrapper
-  = render :partial => "shared/flash_notice"
+- inner_content "shared/inner_wrapper" do
 
   - if @users.empty?
     %div.add_some
