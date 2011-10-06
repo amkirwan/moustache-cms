@@ -4,8 +4,7 @@
 - inner_content "shared/inner_wrapper" do
 
   - if @pages.empty?
-    %div.add_some
-      %h4= link_to "Add A Home Page", [:new, :admin, :page]
+    = render :partial => 'add_a_page'
   - else 
     #pages_list
       = mongoid_tree_ul(@pages)

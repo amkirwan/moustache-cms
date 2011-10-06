@@ -1,10 +1,6 @@
 - header_content 'shared/header_wrapper', :object => @snippet do
   = can_destroy? @snippet
 
-  -if can?(:destroy, @snippet) && !@snippet.new_record?
-    %div{:id => "delete_snippet", :class => "delete"}
-      = link_to "Delete Layout", [:admin, @snippet], :confirm => "Are you sure you want to delete the snippet #{@snippet.name}", :method => :delete, :class => "action delete"
-
 - inner_content "shared/inner_wrapper" do
   = render :partial => "form",  
            :locals => { :snippet => @snippet, :button_label => "Update Snippet" }

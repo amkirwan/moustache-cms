@@ -1,0 +1,4 @@
+%li{ :id => "site_asset_#{site_asset.id}", :class => "show_site_assets" }
+  = link_to [:edit, :admin, @asset_collection, site_asset] do 
+    %div.image= image_tag(site_asset.asset.url)
+    %div.figcaption= site_asset.name

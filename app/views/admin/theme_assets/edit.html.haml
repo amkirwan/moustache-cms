@@ -1,8 +1,6 @@
 - header_content 'shared/header_wrapper', :object => @theme_asset do
   = can_destroy? @theme_asset
 
-  = can_destroy? @theme_asset
-
 - inner_content "shared/inner_wrapper" do
   = render :partial => "form",  
            :locals => { :button_label => "Update Theme Asset" }
