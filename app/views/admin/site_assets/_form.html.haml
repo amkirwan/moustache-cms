@@ -1,6 +1,6 @@
-= form_for([:admin, asset_collection, site_asset], :html => {:class => "site_prop", :multipart => true, :autocomplete => "off"}) do |f|
+= form_for([:admin, @asset_collection, @site_asset], :html => {:class => "site_prop", :multipart => true, :autocomplete => "off"}) do |f|
   = render :partial => "shared/error_messages", 
-           :locals => { :target => site_asset }
+           :locals => { :target => @site_asset }
   %fieldset
     %ul.form_fields
       %li
@@ -12,14 +12,14 @@
       %li
         = f.label :tags
         = f.text_field :tags
-      - if !site_asset.new_record?
+      - unless @site_asset.new_record?
         %li.img_thumb 
-          = link_to image_tag(@site_asset.asset.url, :class => "site_asset_thumb"), "http://#{request.host}#{site_asset.asset.url}"
-      - else site_asset.new_record?
+          = link_to image_tag(@site_asset.asset.url, :class => "site_asset_thumb"), "http://#{request.host}#{@site_asset.asset.url}"
+      - else @site_asset.new_record?
         %li
           = f.label :asset, "Asset Source<abbr title='required' class='required'>*</abbr>".html_safe
           = f.file_field :asset, :class => "file_field"
           = f.hidden_field :asset_cache
       %li
         = f.submit button_label, :class => "submit"
-        = link_to "cancel", [:admin, asset_collection ], :class => "cancel"
+        = link_to "cancel", [:admin, @asset_collection ], :class => "cancel"

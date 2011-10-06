@@ -1,6 +1,6 @@
-= form_for([:admin, user], :html => {:class => "site_prop", :autocomplete => :off}) do |f|
+= form_for([:admin, @user], :html => {:class => "site_prop", :autocomplete => :off}) do |f|
   = render :partial => "shared/error_messages",  
-           :locals => { :target => user }
+           :locals => { :target => @user }
   %fieldset
     %ul.form_fields
       - if admin?

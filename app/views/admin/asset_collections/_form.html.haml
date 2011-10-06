@@ -1,6 +1,6 @@
-= form_for([:admin, asset_collection], :html => {:class => "site_prop", :autocomplete => "off" }) do |f|
+= form_for([:admin, @asset_collection], :html => {:class => "site_prop", :autocomplete => "off" }) do |f|
   = render :partial => "shared/error_messages", 
-           :locals => { :target => asset_collection }    
+           :locals => { :target => @asset_collection }    
   %fieldset         
     %ul.form_fields
       %li
