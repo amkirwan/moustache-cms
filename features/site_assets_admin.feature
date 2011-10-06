@@ -79,7 +79,7 @@ Scenario: Admin can delete site assets
   Then navigate to the admin asset collection site assets page for "foobar"  
   When I follow "baz" 
   Then I should now be editing the site asset "baz" in the collection "foobar"
-  And I follow "Delete Asset"
+  And I follow "Delete Site Asset"
   Then I should see "Successfully deleted the asset baz"
   And I should view the collection "foobar" admin asset collection site assets page
 
@@ -93,7 +93,7 @@ Scenario: Given I am logged in as an admin then I can delete files created by an
   Then navigate to the admin asset collection site assets page for "foobar"
   When I follow "bar"
   Then I should now be editing the site asset "bar" in the collection "foobar"
-  And I follow "Delete Asset" 
+  And I follow "Delete Site Asset" 
   Then I should see "Successfully deleted the asset bar"
   And I should view the collection "foobar" admin asset collection site assets page
   

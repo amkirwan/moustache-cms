@@ -1,10 +1,9 @@
 - header_content 'shared/header_wrapper', :object => @asset_collection, :show => true do
 
-  = render :partial => 'submenu'
+  = render :partial => 'admin/asset_collections/submenu'
                 
-      
 - inner_content "shared/inner_wrapper" do
   
   %div{ :id => "collection_#{@asset_collection.name}"}
     %ul#assets
-      = render :partial => 'site_asset', :collection => @asset_collection.site_assets
+      = render :partial => 'admin/asset_collections/site_asset', :collection => @asset_collection.site_assets

@@ -1,7 +1,6 @@
 class Admin::SiteAssetsController < AdminBaseController
   include HandlebarCms::AssetCache                    
         
-  
   load_and_authorize_resource :asset_collection
   load_and_authorize_resource :site_asset, :through => :asset_collection  
     
