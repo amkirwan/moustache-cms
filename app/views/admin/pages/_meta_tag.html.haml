@@ -1,7 +1,7 @@
 #page_meta_tags{:class => "foldable"}
   %fieldset
     %legend Page Meta Tags<span class="fold_arrow rotate"></span>
-    %ul.form_fields
+    %ul.form_fields{:style => "display: none"}
       = f.fields_for :meta_tags do |builder|
         %li{:id => "meta_tag_#{builder.object.name}", :class => 'inline meta_tag'}  
           = builder.label :name
