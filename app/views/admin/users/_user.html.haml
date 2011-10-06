@@ -1,0 +1,6 @@
+%tr{:id => "#{user.puid}", :class => "#{cycle('even', 'odd')}"}
+  %td.name= link_to user.full_name, [:edit, :admin, user]
+  %td.puid= user.puid
+  %td.role= user.role.capitalize
+  %td.delete= link_to "Delete", [:admin, user], :method => :delete, :remote => :true, :confirm => "Are are you sure you want to delete the user #{user.full_name}?"
+

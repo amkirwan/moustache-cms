@@ -3,17 +3,4 @@
 
 - inner_content "shared/inner_wrapper" do
 
-  - if @asset_collections.empty?
-    %div.add_some
-      %h4= link_to "Add A Collection", [:new, :admin, :asset_collection]
-  - else
-    %table{:class => "info asset_collections two_col"}
-      %tr
-        %th Asset Collection Name
-        %th
-      - @asset_collections.each do |collection|
-        %tr{:class => "#{cycle('even', 'odd')}"}
-          %td.name= link_to collection.name, [:admin, collection]
-          - if can? :destroy, collection
-            %td.delete= link_to "Delete", [:admin, collection], :method => :delete, :confirm => "Are you sure you want to delete this collection?", :class => "delete"
-    
+  = list_objects @asset_collections, :message => 'Add A Collection', :link => :asset_collection 

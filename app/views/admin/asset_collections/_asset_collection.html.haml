@@ -1,0 +1,5 @@
+%tr{:class => "#{cycle('even', 'odd')}"}
+  %td.name= link_to asset_collection.name, [:admin, asset_collection]
+  - if can? :destroy, asset_collection
+    %td.delete= link_to "Delete", [:admin, asset_collection], :method => :delete, :confirm => "Are you sure you want to delete this asset_collection?", :class => "delete"
+    

@@ -71,4 +71,15 @@ module ApplicationHelper
     render :partial => "shared/header_button_delete", :locals => { :object => object, :parent => parent, :class_name => class_name.underscore, :title => class_name.underscore.titleize }
   end
   
+  def list_objects(collection, options={})
+    if collection.empty?
+      content_tag :div, :class => 'add_some' do 
+        content_tag :h4 do
+          link_to "{options[:message]}", [:new, :admin, options[:link]]
+        end
+      end
+    else
+      render :partial => 'index_table'
+    end
+  end
 end

@@ -3,16 +3,5 @@
 
 - inner_content "shared/inner_wrapper" do
 
-  - if @snippets.empty?
-    %div.add_some
-      %h4= link_to "Add Some Snippets", [:new, :admin, :snippet]
-  - else 
-    %table{:class => "info snippets two_col"}
-      %tr
-        %th Snippet Name
-        %th
-      - @snippets.each do |snippet|
-        %tr{:class => "#{cycle('even', 'odd')}"}
-          %td.name= link_to snippet.name, [:edit, :admin, snippet]
-          - if can? :destroy, snippet
-            %td.delete= link_to "Delete", [:admin, snippet], :method => :delete, :confirm => "Are you sure you want to delete the snippet #{snippet.name}", :class => "delete"
+  = list_objects @snippets, :message => 'Add Some Snippets', :link => :snippet
+    
