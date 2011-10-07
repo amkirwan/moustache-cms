@@ -10,8 +10,4 @@
           = builder.text_field :content
           = manage_meta_tag @page, builder.object
       %li#add_meta_tag
-        - if @page.new_record?
-          %p
-            %i Save page first to add custom meta tags
-        - else
-          = link_to "Add Meta Tag", [:new, :admin, @page, :meta_tag], :remote => :true
+        = add_meta_tag 'Save page first to add custom meta tags'
