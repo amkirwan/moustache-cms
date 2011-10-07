@@ -1,26 +1,26 @@
 require 'spec_helper'
 
-describe ElementAttr do
+describe TagAttr do
 
   let(:site) { Factory(:site) }
   let(:user) { Factory(:user, :site => site) }
 
   before(:each) do
-    @theme_asset_attr = Factory.build(:element_attr)
+    @tag_attr = Factory.build(:tag_attr)
   end
 
   # -- Validations --
   describe "Validation" do
     it "should be valid" do
-      @theme_asset_attr.should be_valid
+      @tag_attr.should be_valid
     end
   end
 
 
   # -- Associations ---
   describe "Association" do 
-    it "should be embedded in a theme_asset" do
-      @theme_asset_attr.should be_embedded_in(:theme_asset)
+    it "should be embedded in a tag_attr" do
+      @tag_attr.should be_embedded_in(:tag_attrable)
     end
   end
 end

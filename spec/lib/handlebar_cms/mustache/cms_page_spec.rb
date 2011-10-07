@@ -74,6 +74,7 @@ describe HandlebarCms::Mustache::CmsPage do
   end 
   
   describe "head" do  
+    
     it "should return the page title" do
       @cmsp.title.should == %{<title>#{@page.title}</title>\n}
     end  

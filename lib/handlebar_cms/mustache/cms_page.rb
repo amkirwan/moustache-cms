@@ -84,7 +84,6 @@ class HandlebarCms::Mustache::CmsPage < Mustache
       process_with_filter(@current_site.snippet_by_name(name)) 
     end
     
-    
     def process_with_filter(part)
       case part.filter_name
       when "markdown"
@@ -99,7 +98,6 @@ class HandlebarCms::Mustache::CmsPage < Mustache
         part.content.to_s
       end
     end    
-    
     
     def gen_haml(template_name)
       template = File.read("#{File.dirname(__FILE__)}/templates/#{template_name}.haml")

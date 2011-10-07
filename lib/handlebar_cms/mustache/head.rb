@@ -25,15 +25,25 @@ module HandlebarCms
 =end
 
       def stylesheet(name)
-        file = @current_site.css_file_by_name(name)
+        theme_asset_css = @current_site.css_file_by_name(name)
         engine = gen_haml('stylesheet')
-        engine.render({:file_url => file.asset.url, :media => file.html_options})
+        attributes = {:href => '', :type => '', :media => '', :rel => '', :title => '', :charset => ''}
+        attributes.each_key do |k|
+         attr = theme_asset_css.tag_attr.first(:conditions => { :name => k})
+         attributes[k] = attr.content
+        end
+        engine.render(attributes)
       end
+
+      def stylesheets
+      end
+      alias_method :stylesheets_all, :stylesheets
       
       # -- Meta Tags ----
       def meta_tag(name)
         engine = gen_haml('meta_tag')
-        engine.render(nil, {:name => name, :content => meta_tag_name(name)})
+        ren = engine.render(nil, {:name => name, :content => meta_tag_name(name)})
+        ren + "Hello, Word"
       end
     
       def meta_tags

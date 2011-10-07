@@ -1,0 +1,13 @@
+= form_for([:admin, @theme_asset, @tag_attr], :html => { :class => "site_prop", :autocomplete => :off }) do |f|
+  = render :partial => "shared/error_messages", :locals => {:target => @tag_attr}
+  %fieldset
+    %ul.form_fields
+      %li
+        = f.label :name
+        = f.text_field :name
+      %li
+        = f.label :content
+        = f.text_field :content
+      %li
+        = f.submit button_label, :class => "submit"
+        = link_to "cancel", [:edit, :admin, @tag_attr], :class => "cancel"

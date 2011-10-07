@@ -4,7 +4,7 @@ Feature: Adding MetaTags to a document
 Background: Login create default site
   Given the site "foobar" exists with the domain "example.com"
   And the user "ak730" exists with the role of "admin" in the site "foobar.example.com"
-  Given these pages exist in the site "foobar.example.com" created by user "ak730"
+  And these pages exist in the site "foobar.example.com" created by user "ak730"
     | title  | status    | 
     | foobar | published | 
     | bar    | draft     | 

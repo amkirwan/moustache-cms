@@ -27,8 +27,11 @@ describe Ability do
   let(:asset_collection) { Factory.build(:asset_collection, :site => site, :created_by => admin, :site_assets => [site_asset]) }
   let(:asset_collection2) { Factory.build(:asset_collection, :site => site2, :created_by => admin, :site_assets => [site_asset2]) }
   
-  let(:theme_asset) { Factory.build(:theme_asset, :site => site, :created_by => admin) }
-  let(:theme_asset2) { Factory.build(:theme_asset, :site => site2, :created_by => admin2) }
+  let(:tag_attr) { Factory.build(:tag_attr) }
+  let(:tag_attr2) { Factory.build(:tag_attr) }
+
+  let(:theme_asset) { Factory.build(:theme_asset, :site => site, :created_by => admin, :tag_attrs => [tag_attr]) }
+  let(:theme_asset2) { Factory.build(:theme_asset, :site => site2, :created_by => admin2, :tag_attrs => [tag_attr2]) }
 
   
   let(:admin_ability) { Ability.new(admin) }

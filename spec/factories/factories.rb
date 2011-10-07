@@ -119,6 +119,11 @@ Factory.define :site_asset do |asset|
   asset.file_size 200
 end
 
+Factory.define :tag_attr do |tag|
+  tag.sequence(:name) { |n| "name_#{n}" }
+  tag.content "tag attribute content"
+end
+
 Factory.define :theme_asset do |asset| 
   asset.name "asset_name"
   asset.content_type "content_type"
@@ -126,6 +131,7 @@ Factory.define :theme_asset do |asset|
   asset.width 200
   asset.height 200
   asset.file_size 200
+  asset.tag_attrs { [ Factory.build(:tag_attr) ] }
   asset.created_by { Factory.build(:user) }
   asset.updated_by { Factory.build(:user) }
 end
