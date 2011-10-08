@@ -6,8 +6,8 @@
         = f.label :name
         = f.text_field :name
       %li
-        = f.label :content
-        = f.text_field :content
+        = f.label :value
+        = f.text_field :value
       %li
         = f.submit button_label, :class => "submit"
-        = link_to "cancel", [:edit, :admin, @tag_attr], :class => "cancel"
+        = link_to "cancel", [:edit, :admin, @theme_asset], :class => "cancel"

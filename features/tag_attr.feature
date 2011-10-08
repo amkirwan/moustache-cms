@@ -17,10 +17,10 @@ Background: Login create default site
     When I go to the admin theme assets page
     And I follow "theme_css" 
     And I follow "Add Tag Attribute"
-    And I fill in "tag_attribute_name" with "media"
-    And I fill in "tag_attribute_content" with "screen"
+    And I fill in "tag_attr_name" with "media"
+    And I fill in "tag_attr_value" with "screen"
     And I press "Create Tag Attribute"
     Then I should now be editing the theme asset "theme_css"
-    And I should see "Successfully created tag attribute media"
+    And I should see "Successfully created the tag attribute media"
 
 

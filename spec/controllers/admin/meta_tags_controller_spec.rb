@@ -28,7 +28,7 @@ describe Admin::MetaTagsController do
       get :new, :page_id => page.id
     end
 
-    it "should a new meta_tag" do
+    it "should receive create a new hash" do
       meta_tags.should_receive(:new).and_return(meta_tag)
       do_get
     end

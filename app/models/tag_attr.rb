@@ -3,7 +3,7 @@ class TagAttr
 
   # -- Fields ---
   field :name
-  field :content
+  field :value
 
   # -- Association ---
   embedded_in :tag_attrable, :polymorphic => true
