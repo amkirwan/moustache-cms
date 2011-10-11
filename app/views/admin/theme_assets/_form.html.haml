@@ -2,8 +2,7 @@
   = render :partial => "shared/error_messages", 
            :locals => { :target => @theme_asset }
   %fieldset
-    %fieldset.grouping
-      %legend General
+    = foldable_fieldset 'General' do
       %ul.form_fields
         %li
           = f.label :name, "Name<abbr title='required' class='required'>*</abbr>".html_safe

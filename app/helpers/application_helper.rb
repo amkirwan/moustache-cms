@@ -82,4 +82,11 @@ module ApplicationHelper
       render :partial => 'index_table'
     end
   end
+
+  def foldable_fieldset(label, &block)
+    content_tag :fieldset, :class => 'foldable' do 
+      concat(content_tag :legend, "#{label}<span class='fold_arrow rotate'></span>".html_safe)
+      yield
+    end
+  end
 end

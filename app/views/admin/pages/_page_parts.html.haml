@@ -1,5 +1,4 @@
-%fieldset.foldable
-  %legend Page Parts<span class="fold_arrow"></span>
+= foldable_fieldset 'Page Parts' do
   %ul.form_fields
     = f.fields_for :page_parts do |builder|
       %li 
