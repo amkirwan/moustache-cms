@@ -1,10 +1,11 @@
 = form_for([:admin, @page], :html => { :class => "site_prop", :autocomplete => :off }) do |f|
-  = render :partial => "shared/error_messages", 
-           :locals => { :target => @page }
-  = render :partial => "general", :locals => {:f => f}
-  = render :partial => "advanced_options", :locals => {:f => f}
-  = render :partial => "meta_tag", :locals => {:f => f}
-  = render :partial => "editors", :locals => {:f => f, :page => @page}
-  = render :partial => "page_parts", :locals => {:f => f}
-  = render :partial => "submit_form", :locals => { :f => f, :button_label => button_label }
+  %fieldset 
+    = render :partial => "shared/error_messages", 
+             :locals => { :target => @page }
+    = render :partial => "general", :locals => {:f => f}
+    = render :partial => "advanced_options", :locals => {:f => f}
+    = render :partial => "meta_tag", :locals => {:f => f}
+    = render :partial => "editors", :locals => {:f => f, :page => @page}
+    = render :partial => "page_parts", :locals => {:f => f}
+    = render :partial => "submit_form", :locals => { :f => f, :button_label => button_label }
   

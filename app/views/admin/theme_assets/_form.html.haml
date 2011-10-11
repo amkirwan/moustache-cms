@@ -2,14 +2,18 @@
   = render :partial => "shared/error_messages", 
            :locals => { :target => @theme_asset }
   %fieldset
-    %ul.form_fields
-      %li
-        = f.label :name, "Name<abbr title='required' class='required'>*</abbr>".html_safe
-        = f.text_field :name
-      %li
-        = f.label :description
-        = f.text_area :description, :cols => "50", :rows => "3"   
-      = render :partial => 'theme_asset_type', :locals => { :f => f }
-      %li
-        = f.submit button_label, :class => "submit"
-        = link_to "cancel", [:admin, :theme_assets], :class => "cancel"
+    %fieldset.grouping
+      %legend General
+      %ul.form_fields
+        %li
+          = f.label :name, "Name<abbr title='required' class='required'>*</abbr>".html_safe
+          = f.text_field :name
+        %li
+          = f.label :description
+          = f.text_area :description, :cols => "50", :rows => "3"   
+    = render :partial => 'theme_asset_type', :locals => { :f => f }
+    %fieldset
+      %ul.form_fields
+        %li
+          = f.submit button_label, :class => "submit"
+          = link_to "cancel", [:admin, :theme_assets], :class => "cancel"

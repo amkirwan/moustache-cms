@@ -455,7 +455,7 @@ form.site_prop {
     text-decoration: underline;
     margin-left: 0.5em;
   }
-  .foldable {
+  .foldable, .grouping {
     padding: 0 8px 4px 8px;
     margin-bottom: 8px;
     -moz-border-radius: 4px;
@@ -476,9 +476,9 @@ form.site_prop {
       width: 100%;
       background: rgba(44, 44, 44, 0.8);
     }
-    legend:hover {
+  }
+  .foldable legend:hover {
       cursor: pointer;
-    }
   }
 }
 
