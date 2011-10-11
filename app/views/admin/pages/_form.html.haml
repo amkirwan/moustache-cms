@@ -1,4 +1,4 @@
-= form_for([:admin, @page], :html => { :class => "site_prop", :autocomplete => :off }) do |f|
+= form_for([:admin, @page], :html => { :id => "edit_page_#{@page.title.downcase}", :class => "site_prop", :autocomplete => :off }) do |f|
   %fieldset 
     = render :partial => "shared/error_messages", 
              :locals => { :target => @page }

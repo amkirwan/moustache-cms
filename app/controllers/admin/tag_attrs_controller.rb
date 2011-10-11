@@ -4,6 +4,10 @@ class Admin::TagAttrsController < AdminBaseController
   load_resource :tag_attr, :through => :theme_asset
 
   def new
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def edit

@@ -33,4 +33,5 @@ module Admin::PageHelper
       render :partial => "admin/pages/editable_meta_tag", :locals => { :page => page, :meta_tag => meta_tag }
     end
   end
+
 end

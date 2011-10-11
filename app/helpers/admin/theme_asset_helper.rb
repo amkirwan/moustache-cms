@@ -12,13 +12,13 @@ module Admin::ThemeAssetHelper
     !@theme_asset.new_record? && (@theme_asset.stylesheet? || @theme_asset.javascript?)
   end
 
-  def add_tag_attr(message, f_builder)
+  def add_tag_attrs(message, f_builder)
     if @theme_asset.new_record?
       content_tag :p do
         content_tag :i, message
       end
     else
-      render :partial => 'tag', :locals => {:f => f_builder}
+      render :partial => 'tags', :locals => {:f => f_builder}
     end
   end
 

@@ -89,4 +89,14 @@ module ApplicationHelper
       yield
     end
   end
+
+  def record_object
+    if @page
+      @page
+    elsif @site
+      @site
+    elsif @theme_asset
+      @theme_asset
+    end
+  end
 end

@@ -7,8 +7,9 @@ replaceCharWith = (str, oldChar, newChar) ->
 if $('li#add_meta_tag').length
   $('li#add_meta_tag').prev().after('<%= escape_javascript(render(:partial => @meta_tag)) %>').fadeIn()
 
-  metaTagCount = $('div#page_meta_tags').find('li.meta_tag').length - 1
-  lastList = $('div#page_meta_tags').find('li.meta_tag').last() 
+  meta_tags = $('ul#page_meta_tags').find('li.meta_tag')
+  metaTagCount = meta_tags.length - 1
+  lastList = meta_tags.last() 
 
   lastList.children().each ->
     if $(this).prop('tagName').toLowerCase() == "label"
