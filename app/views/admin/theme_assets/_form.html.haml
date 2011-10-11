@@ -8,7 +8,7 @@
         = f.text_field :name
       %li
         = f.label :description
-        = f.text_area :description, :cols => "50", :rows => "5"   
+        = f.text_area :description, :cols => "50", :rows => "3"   
       = render :partial => 'theme_asset_type', :locals => { :f => f }
       %li
         = f.submit button_label, :class => "submit"

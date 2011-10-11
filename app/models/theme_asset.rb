@@ -19,6 +19,8 @@ class ThemeAsset
   belongs_to :created_by, :class_name => "User"
   belongs_to :updated_by, :class_name => "User"
 
+  accepts_nested_attributes_for :tag_attrs
+
   # -- Validations --------------
   validates :name, :presence => true 
   validates :site_id,

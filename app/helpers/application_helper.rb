@@ -75,7 +75,7 @@ module ApplicationHelper
     if collection.empty?
       content_tag :div, :class => 'add_some' do 
         content_tag :h4 do
-          link_to "{options[:message]}", [:new, :admin, options[:link]]
+          link_to options[:message], [:new, :admin, options[:link]]
         end
       end
     else

@@ -1,7 +1,8 @@
 = f.fields_for :tag_attrs do |builder|
-  %li{:id => "theme_asset", :class => 'inline tag_attributes'}
+  %li{:id => "theme_asset.name", :class => 'inline tag_attributes'}
     = builder.label :name
     = builder.text_field :name
     = builder.label :value
     = builder.text_field :value
-  %li= link_to "Add Tag Attribute", [:new, :admin, @theme_asset, :tag_attr]
+    = link_to "Delete", [:admin, @theme_asset, builder.object], :confirm => "Are you sure you want to delete the meta tag #{builder.object.name}", :method => :delete, :class => "delete", :remote => true
+%li= link_to "Add Tag Attribute", [:new, :admin, @theme_asset, :tag_attr]
