@@ -5,16 +5,21 @@ replaceCharWith = (str, oldChar, newChar) ->
  
 
 if $('li#add_meta_tag').length
-  $('li#add_meta_tag').prev().after('<%= escape_javascript(render(:partial => @meta_tag)) %>').fadeIn()
+  if $('li#add_meta_tag').length == 1
+    $('li#add_meta_tag').before('<%= escape_javascript(render(:partial => @meta_tag)) %>').fadeIn()
+  else
+    $('li#add_meta_tag').prev().after('<%= escape_javascript(render(:partial => @meta_tag)) %>').fadeIn()
 
   meta_tags = $('ul#page_meta_tags').find('li.meta_tag')
-  metaTagCount = meta_tags.length - 1
-  lastList = meta_tags.last() 
 
-  lastList.children().each ->
-    if $(this).prop('tagName').toLowerCase() == "label"
-      $(this).attr('for', replaceCharWith($(this).attr('for'), "0", metaTagCount))
-    else if  $(this).prop('tagName').toLowerCase() ==  "input"
-      $(this).attr('id', replaceCharWith($(this).attr('id'), "0", metaTagCount))
-      $(this).attr('name', replaceCharWith($(this).attr('name'), "0", metaTagCount))
+  if meta_tags.length > 0
+    metaTagCount = meta_tags.length - 1
+    lastList = meta_tags.last() 
+
+    lastList.children().each ->
+      if $(this).prop('tagName').toLowerCase() == "label"
+        $(this).attr('for', replaceCharWith($(this).attr('for'), "0", metaTagCount))
+      else if  $(this).prop('tagName').toLowerCase() ==  "input"
+        $(this).attr('id', replaceCharWith($(this).attr('id'), "0", metaTagCount))
+        $(this).attr('name', replaceCharWith($(this).attr('name'), "0", metaTagCount))
 
