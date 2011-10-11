@@ -6,7 +6,7 @@ jQuery ->
           $(this).remove()
         false
 
-      $(".foldable fieldset legend").mouseup ->
+      $(".foldable legend").mouseup ->
           legend = $(this)
           legend.next("ul.form_fields").slideToggle "slow", ->
             arrow = legend.children().first()
