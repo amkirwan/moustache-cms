@@ -3,6 +3,7 @@
 //= require markitup_selector
 //= require admin/pages
 //= require admin/theme_assets
+//= require admin/site_assets
 //= require_self
 
 jQuery(function() {

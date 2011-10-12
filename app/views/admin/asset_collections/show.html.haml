@@ -4,6 +4,6 @@
                 
 - inner_content "shared/inner_wrapper" do
   
-  %div{ :id => "collection_#{@asset_collection.name}"}
-    %ul#assets
+  %div{ :id => "collection_#{@asset_collection.name}" }
+    %ul{ :id => 'assets', :class => 'show_asset_collection' }
       = render :partial => 'admin/asset_collections/site_asset', :collection => @asset_collection.site_assets
