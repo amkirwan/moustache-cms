@@ -34,4 +34,8 @@ module Admin::PageHelper
     end
   end
 
+  def meta_tag_id(meta_tag) 
+    id = "meta_tag_" + meta_tag.name.gsub('.', '_').downcase
+  end
+
 end
