@@ -2,14 +2,7 @@
   = render :partial => "shared/error_messages",  
            :locals => { :target => @layout }
   %fieldset
-    %ul.form_fields
-      %li 
-        = f.label :name, "Name<abbr title='required' class='required'>*</abbr>".html_safe
-        = f.text_field :name
-      %li 
-        = f.label :content, "Content<abbr title='required' class='required'>*</abbr>".html_safe
-        = f.text_area :content, :class => "code"
-      %li
-        = f.submit button_label, :class => "submit"
-        = f.submit "Save and Continue Editing", :class => "submit"
-        = link_to "Cancel", [:admin, :layouts], :class => "cancel"
+    = foldable_fieldset 'General' do
+      = render :partial => 'form_general_fields', :locals => { :f => f }
+    = render :partial => 'form_submit', :locals => { :f => f, :button_label => button_label }
+
