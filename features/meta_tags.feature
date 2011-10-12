@@ -27,4 +27,3 @@ Background: Login create default site
     When I follow "Delete"
     Then I should now be editing the page "foobar"
     And I should see "Successfully deleted the meta tag DC.author"
-
