@@ -18,12 +18,8 @@ describe ThemeAsset do
   # --  Associations -----------------------------------------------
    describe "associations" do
 
-     it "should embed many tag_attrable" do
+     it "should embed many tag_attrs as tag_attrable" do
       @theme_asset_css.should embed_many(:tag_attrs)
-     end
-
-     it "should embed many theme_asset_attributes" do
-       @theme_asset_image.should embed_one(:element_attr)
      end
 
      it "should belong_to a site" do
