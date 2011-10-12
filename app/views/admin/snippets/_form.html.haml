@@ -2,19 +2,6 @@
   = render :partial => "shared/error_messages", :locals => {:target => @snippet}
   %fieldset
     = foldable_fieldset 'General' do
-      %ul.form_fields
-        %li
-          = f.label :name
-          = f.text_field :name
-        %li
-          = f.label :filter
-          = f.collection_select :filter_name, Filter.all, :id, :name
-        %li
-          = f.label :content
-          = f.text_area :content, :cols => "100", :class => "code"
-    %fieldset.form_submit
-      %ul
-        %li
-          = f.submit button_label, :class => "submit"
-          = f.submit "Save and Continue Editing", :class => "submit"
-          = link_to "Cancel", [:admin, :snippets], :class => "cancel"
+      = render :partial => 'form_general_fields', :locals => { :f => f }
+    = render :partial => 'form_submit', :locals => { :f => f, :button_label => button_label }
+    

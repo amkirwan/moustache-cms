@@ -1,0 +1,10 @@
+%ul.form_fields
+  %li
+    = f.label :name
+    = f.text_field :name
+  %li
+    = f.label :filter
+    = f.collection_select :filter_name, Filter.all, :id, :name
+  %li
+    = f.label :content
+    = f.text_area :content, :cols => "100", :class => "code"
