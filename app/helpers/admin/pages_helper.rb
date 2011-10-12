@@ -1,4 +1,4 @@
-module Admin::PageHelper  
+module Admin::PagesHelper  
 
   def mongoid_tree_ul(mongoid_tree_set, init=true)
     render :partial => 'admin/pages/mongoid_tree', :locals => { :mongoid_tree_set => mongoid_tree_set, :init => init }
@@ -36,6 +36,14 @@ module Admin::PageHelper
 
   def meta_tag_id(meta_tag) 
     id = "meta_tag_" + meta_tag.name.gsub('.', '_').downcase
+  end
+
+  def page_form_id
+    if @page.new_record?
+      'new_page'
+    else
+      'edit_page_' + @page.name.downcase
+    end
   end
 
 end

@@ -121,7 +121,7 @@ end
 
 Factory.define :tag_attr do |tag|
   tag.sequence(:name) { |n| "name_#{n}" }
-  tag.content "tag attribute content"
+  tag.value "tag attribute value"
 end
 
 Factory.define :theme_asset do |asset| 

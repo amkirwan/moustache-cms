@@ -17,7 +17,7 @@ class Admin::ThemeAssetsController < AdminBaseController
   
    # GET /admin/theme_assets/new 
   def new
-    @theme_asset.tag_attr.build
+    @theme_asset.tag_attrs.build
   end
    
   # POST /admin/theme_assets

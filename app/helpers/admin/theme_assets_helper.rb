@@ -1,4 +1,4 @@
-module Admin::ThemeAssetHelper
+module Admin::ThemeAssetsHelper
 
   def add_assets?
     @css_files.empty? && @js_files.empty? && @images.empty?
