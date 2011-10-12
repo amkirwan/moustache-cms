@@ -33,6 +33,7 @@ class Admin::TagAttrsController < AdminBaseController
   def destroy
     if @tag_attr.destroy
       respond_to do |format|
+        format.html { redirect_to [:edit, :admin, @theme_asset], :notice => "Successfully deleted the tag attribute #{@tag_attr.name}" }
         format.js 
       end
     end
