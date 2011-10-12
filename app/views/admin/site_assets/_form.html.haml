@@ -2,24 +2,27 @@
   = render :partial => "shared/error_messages", 
            :locals => { :target => @site_asset }
   %fieldset
-    %ul.form_fields
-      %li
-        = f.label :name, "Name<abbr title='required' class='required'>*</abbr>".html_safe
-        = f.text_field :name
-      %li
-        = f.label :description
-        = f.text_area :description, :cols => "50", :rows => "10"
-      %li
-        = f.label :tags
-        = f.text_field :tags
-      - unless @site_asset.new_record?
-        %li.img_thumb 
-          = link_to image_tag(@site_asset.asset.url, :class => "site_asset_thumb"), "http://#{request.host}#{@site_asset.asset.url}"
-      - else @site_asset.new_record?
+    = foldable_fieldset 'General' do
+      %ul.form_fields
         %li
-          = f.label :asset, "Asset Source<abbr title='required' class='required'>*</abbr>".html_safe
-          = f.file_field :asset, :class => "file_field"
-          = f.hidden_field :asset_cache
-      %li
-        = f.submit button_label, :class => "submit"
-        = link_to "cancel", [:admin, @asset_collection ], :class => "cancel"
+          = f.label :name, "Name<abbr title='required' class='required'>*</abbr>".html_safe
+          = f.text_field :name
+        %li
+          = f.label :description
+          = f.text_area :description, :cols => "50", :rows => "10"
+        %li
+          = f.label :tags
+          = f.text_field :tags
+        - unless @site_asset.new_record?
+          %li.img_thumb 
+            = link_to image_tag(@site_asset.asset.url, :class => "site_asset_thumb"), "http://#{request.host}#{@site_asset.asset.url}"
+        - else 
+          %li
+            = f.label :asset, "Asset Source<abbr title='required' class='required'>*</abbr>".html_safe
+            = f.file_field :asset, :class => "file_field"
+            = f.hidden_field :asset_cache
+    %fieldset.form_submit
+      %ul 
+        %li
+          = f.submit button_label, :class => "submit"
+          = link_to "cancel", [:admin, @asset_collection ], :class => "cancel"

@@ -1,6 +1,7 @@
 = foldable_fieldset 'File' do
   %ul.form_fields
+    %li
+      %span= "#{theme_asset.asset.file.filename} is available"
+      = link_to 'here', "http://#{request.host}#{theme_asset.asset.url}"
     %li 
-      The current file is available here
-      = link_to theme_asset.identifier, "http://#{request.host}#{theme_asset.asset.url}"
       = text_area_tag :theme_asset_file_content, theme_asset.asset.read, :class => "code", :cols => "80", :rows => "30"
