@@ -3,30 +3,6 @@
            :locals => { :target => @site_asset }
   %fieldset
     = foldable_fieldset 'General' do
-      %ul.form_fields
-        %li
-          = f.label :name, "Name<abbr title='required' class='required'>*</abbr>".html_safe
-          = f.text_field :name
-        %li
-          = f.label :description
-          = f.text_area :description, :cols => "50", :rows => "10"
-        %li
-          = f.label :tags
-          = f.text_field :tags
-        site_asset?
-        - unless @site_asset.new_record?
-          %li
-            %span= "#{@site_asset.asset.file.filename} is available"
-            = link_to 'here', "http://#{request.host}#{@site_asset.asset.url}"
-          %li.img_thumb 
-            = link_to image_tag(@site_asset.asset.url, :class => "site_asset_thumb"), "http://#{request.host}#{@site_asset.asset.url}"
-        - else 
-          %li
-            = f.label :asset, "Asset Source<abbr title='required' class='required'>*</abbr>".html_safe
-            = f.file_field :asset, :class => "file_field"
-            = f.hidden_field :asset_cache
-    %fieldset.form_submit
-      %ul 
-        %li
-          = f.submit button_label, :class => "submit"
-          = link_to "cancel", [:admin, @asset_collection ], :class => "cancel"
+      = render :partial => 'form_general_fields', :locals => { :f => f }
+    = render :partial => 'form_submit', :locals => { :f => f, :button_label => button_label }
+    
