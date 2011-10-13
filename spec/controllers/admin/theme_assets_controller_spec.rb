@@ -25,12 +25,14 @@ describe Admin::ThemeAssetsController do
     let(:css_files) { [ theme_asset.stub("content_type" => "text/css") ] }
     let(:js_files) { [ theme_asset.stub("content_type" => "text/javascript") ] }
     let(:images) { [ theme_asset.stub("content_type" => "image/png") ] }
-    
+    let(:other_files) { [ theme_asset.stub("content_type" => "application/octet-stream") ] } 
+
     before(:each) do
       ThemeAsset.stub(:accessible_by).and_return(theme_assets)
       ThemeAsset.stub(:css_files).and_return(css_files)
       ThemeAsset.stub(:js_files).and_return(js_files)
       ThemeAsset.stub(:images).and_return(images)
+      ThemeAsset.stub(:other_files).and_return(other_files)
     end
     
     it "should receive accessible_by" do
@@ -56,6 +58,11 @@ describe Admin::ThemeAssetsController do
     it "should assign the images for the view" do
       do_get
       assigns(:images).should == images
+    end
+
+    it "should assign the other asset files for the view" do
+      do_get
+      assigns(:other_files).should == other_files
     end
     
     it "should render in the index template" do

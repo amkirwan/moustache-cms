@@ -8,6 +8,7 @@ class Admin::ThemeAssetsController < AdminBaseController
     @css_files = ThemeAsset.css_files(@current_site)
     @js_files = ThemeAsset.js_files(@current_site)
     @images = ThemeAsset.images(@current_site)
+    @other_files = ThemeAsset.other_files(@current_site)
   end  
   
   # GET /admin/theme_assets/1/edit
