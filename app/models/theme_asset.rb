@@ -59,6 +59,11 @@ class ThemeAsset
       combined_scope.where(attr => opts[attr])
     end
   end
+
+
+  def self.other_files(site)
+    not_in(:content_type => ['text/css', 'text/javascript', /^image/i]).where(:site_id => site.id)
+  end
   
   # -- Instance Methods ----------
   %w{image stylesheet javascript}.each do |type|

@@ -12,6 +12,7 @@ describe ThemeAsset do
     @theme_asset_image = Factory(:theme_asset, :name => "image", :site_id => site.id, :asset => AssetFixtureHelper.open("rails.png"), :content_type => "image/png", :created_by_id => user.id, :updated_by_id => user.id)
     @theme_asset_css = Factory(:theme_asset, :name => "css", :site_id => site.id, :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css", :created_by_id => user.id, :updated_by_id => user.id)
     @theme_asset_js = Factory(:theme_asset, :name => "js", :site_id => site.id, :asset => AssetFixtureHelper.open("theme_js.js"), :content_type => "text/javascript", :created_by_id => user.id, :updated_by_id => user.id)
+    @theme_asset_other = Factory(:theme_asset, :name => "other", :site_id => site.id, :asset => AssetFixtureHelper.open("Inconsolata.otf"), :content_type => "application/octet-stream", :created_by_id => user.id, :updated_by_id => user.id)
     @theme_assets = ThemeAsset.all
   end
   
@@ -142,6 +143,14 @@ describe ThemeAsset do
        site.theme_assets.find(@theme_asset_css.id).delete
        ThemeAsset.find_by_content_type_and_site_id(:content_type => "text/css", :site_id => site.id).should be_empty
      end   
+
+     describe "should return the theme assets that are not css, javascript or images" do
+       it "should return all the other theme asset files" do
+         other = ThemeAsset.other_files(site)
+         other.size.should == 1
+         other.first.should == @theme_asset_other
+       end
+     end
    end
    
    # -- Instance Methods ----------
