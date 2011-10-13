@@ -5,3 +5,5 @@
 - elsif theme_asset_is_js_or_css
   = render :partial => 'css_js_asset', :object => f, :locals => { :theme_asset => @theme_asset }     
   = render :partial => 'tag_attrs', :object => f
+- else
+  = render :partial => 'other_asset', :object => f, :locals => { :theme_asset => @theme_asset }     

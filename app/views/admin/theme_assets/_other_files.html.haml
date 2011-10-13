@@ -1,0 +1,7 @@
+- reset_cycle("table_list")
+%div{:id => "other_files", :class => "theme_assets"} 
+  %table{:class => "info theme_asset_other_files two_col"}
+    %tr
+      %th Other Theme Assets 
+      %th
+    = render :partial => 'other_file', :collection => @other_files

@@ -1,0 +1,7 @@
+= foldable_fieldset 'File' do
+  %ul.form_fields
+    %li
+      %span= "#{theme_asset.asset.file.filename} is available"
+      = link_to 'here', "http://#{request.host}#{theme_asset.asset.url}"
+    %li.img_thumb 
+      = link_to image_tag(theme_asset.asset.url, :class => "theme_asset_thumb"), "http://#{request.host}#{theme_asset.asset.url}" 

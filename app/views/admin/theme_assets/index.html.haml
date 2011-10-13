@@ -6,9 +6,11 @@
   - if add_assets?
     = render :partial => 'add_asset'
   - else
-    - unless @css_files.empty?
+    - if @css_files
       = render :partial => 'css_files'  
-    - unless @js_files.empty?
+    - if @js_files
       = render :partial => 'js_files'  
-    - unless @images.empty?
+    - if @images
       = render :partial => 'images' 
+    - if @other_files
+      = render :partial => 'other_files'
