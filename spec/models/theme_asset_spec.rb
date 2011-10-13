@@ -129,6 +129,7 @@ describe ThemeAsset do
          ThemeAsset.find_by_name("css").first.should == @theme_asset_css
        end
      end
+
    end 
    
    # -- Class Methods ------------------------

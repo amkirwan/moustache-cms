@@ -13,7 +13,11 @@ describe HandlebarCms::Mustache::CmsPage do
                                       :content => "define editable text method **strong**", 
                                       :filter_name => "markdown") 
     
-    @theme_asset_css = Factory(:theme_asset, :site => site, :name => "foobar", :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css")
+    @tag_attr_type = Factory.build(:tag_attr, 'name' => 'type', 'value' => 'text/css')
+    @tag_attr_media = Factory.build(:tag_attr, 'name' => 'media', 'value' => 'screen')
+  
+    @theme_asset_css = Factory(:theme_asset, :site => site, :name => "foobar", :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css", :tag_attrs => [@tag_attr_type])
+    @theme_asset_css_2 = Factory(:theme_asset, :site => site, :name => "baz", :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css", :tag_attrs => [@tag_attr_type, @tag_attr_media])
     
     @request = mock_model("Request", :host => "test.com")
     
@@ -80,11 +84,11 @@ describe HandlebarCms::Mustache::CmsPage do
     end  
     
     it "should return all the css files" do
-      @cmsp.stylesheet_all.should == %(<link rel="stylesheet" href="#{@theme_asset_css.asset.url}" >\n)
+      @cmsp.stylesheets_all.should == %(<link href='#{@theme_asset_css.asset.url}' rel='stylesheet' type='text/css' />\n<link href='#{@theme_asset_css_2.asset.url}' rel='stylesheet' type='text/css' media='screen' />\n)
     end
     
     it "should return a stylesheet by name" do
-      @cmsp.stylesheet_foobar.should == %(<link rel="stylesheet" href="#{@theme_asset_css.asset.url}" >\n)
+      @cmsp.stylesheet_foobar.should == %(<link href='#{@theme_asset_css.asset.url}' rel='stylesheet' type='text/css' />\n)
     end
 
     describe "meta tags" do

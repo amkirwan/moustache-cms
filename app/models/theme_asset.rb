@@ -54,6 +54,7 @@ class ThemeAsset
   scope :images, lambda { |site| { :where => { :content_type => /^image/i, :site_id => site.id }} }
   scope :find_by_name, lambda { |name| { :where => { :name => name }} }
 
+
   def self.find_by_content_type_and_site_id(opts={})
     [:content_type, :site].inject(scoped) do |combined_scope, attr| 
       combined_scope.where(attr => opts[attr])

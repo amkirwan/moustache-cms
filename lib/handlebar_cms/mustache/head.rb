@@ -9,41 +9,41 @@ module HandlebarCms
       end   
       
       # -- Css ----
-=begin
       def stylesheet(name)
-        if name == "all"
-          css_files = ""
-          @current_site.css_files.each do |file|    
-            css_files += css_tag(file)
-          end
-          css_files
-        else                                    
-          file = @current_site.css_file_by_name(name)
-          css_tag(file)
-        end
-      end
-=end
-
-      def stylesheet(name)
+        attributes = {'href' => nil, 'type' => nil, 'media' => nil, 'rel' => nil, 'title' => nil, 'charset' => nil} 
         theme_asset_css = @current_site.css_file_by_name(name)
-        engine = gen_haml('stylesheet')
-        attributes = {:href => '', :type => '', :media => '', :rel => '', :title => '', :charset => ''}
+        attributes['href'] = theme_asset_css.asset.url
+        attributes['rel'] = 'stylesheet'
         attributes.each_key do |k|
-         attr = theme_asset_css.tag_attr.first(:conditions => { :name => k})
-         attributes[k] = attr.content
+         attr = theme_asset_css.tag_attrs.where('name' => k).first
+         attributes[k] = attr.value unless attr.nil?
         end
-        engine.render(attributes)
+        engine = gen_haml('stylesheet')
+        engine.render(nil, attributes)
       end
 
       def stylesheets
+        attributes = {'href' => nil, 'type' => nil, 'media' => nil, 'rel' => nil, 'title' => nil, 'charset' => nil} 
+        engine = gen_haml('stylesheet')
+        @css_files = @current_site.css_files
+        haml_render = ""
+        @css_files.each do |file|
+          attributes['href'] = file.asset.url
+          attributes['rel'] = 'stylesheet'
+          attributes.each_key do |k|
+           attr = file.tag_attrs.where('name' => k).first
+           attributes[k] = attr.value unless attr.nil?
+          end
+          haml_render += engine.render(nil, attributes)
+        end
+        haml_render
       end
       alias_method :stylesheets_all, :stylesheets
       
       # -- Meta Tags ----
       def meta_tag(name)
         engine = gen_haml('meta_tag')
-        ren = engine.render(nil, {:name => name, :content => meta_tag_name(name)})
-        ren + "Hello, Word"
+        engine.render(nil, {:name => name, :content => meta_tag_name(name)})
       end
     
       def meta_tags
@@ -53,10 +53,8 @@ module HandlebarCms
       alias_method :meta_tags_all, :meta_tags
       
       private 
-        def css_tag(file)
-          tag = %(<link rel="stylesheet" href="#{file.asset.url}") 
-          tag += %(#{file.html_options}) if !file.html_options.blank?
-          tag += %( >\n)
+        def css_tag(file, attr)
+          content_tag :link, :rel => attr['rel'], :href => attr['href'], :type => attr['type'], :media => attr['media'], :title => attr['title'], :charset => attr['charset']
         end
 
         def meta_tag_name(name)
