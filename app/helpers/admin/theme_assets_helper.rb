@@ -1,7 +1,14 @@
 module Admin::ThemeAssetsHelper
 
   def add_assets?
-    @css_files.empty? && @js_files.empty? && @images.empty?
+    if @css_files.empty? && @js_files.empty? && @images.empty?
+      render :partial => 'add_asset'
+    else
+      concat(render :partial => 'css_files') unless @css_files.empty?
+      concat(render :partial => 'js_files') unless @js_files.empty?
+      concat(render :partial => 'images') unless @images.empty?
+      render :partial => 'other_files' unless @other_files.empty?
+    end
   end
 
   def theme_asset_is_image?
