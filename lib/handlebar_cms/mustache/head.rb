@@ -10,30 +10,22 @@ module HandlebarCms
       
       # -- Css ----
       def stylesheet(name)
-        attributes = {'href' => nil, 'type' => nil, 'media' => nil, 'rel' => nil, 'title' => nil, 'charset' => nil} 
-        theme_asset_css = @current_site.css_file_by_name(name)
-        attributes['href'] = theme_asset_css.asset.url
-        attributes['rel'] = 'stylesheet'
-        attributes.each_key do |k|
-         attr = theme_asset_css.tag_attrs.where('name' => k).first
-         attributes[k] = attr.value unless attr.nil?
-        end
+        attributes = style_attributes
+        file = @current_site.css_file_by_name(name)
+        set_default_attribute_values(attributes, file)
+        set_link_attributes(attributes, file)
         engine = gen_haml('stylesheet')
         engine.render(nil, attributes)
       end
 
       def stylesheets
-        attributes = {'href' => nil, 'type' => nil, 'media' => nil, 'rel' => nil, 'title' => nil, 'charset' => nil} 
-        engine = gen_haml('stylesheet')
+        attributes = style_attributes
         @css_files = @current_site.css_files
         haml_render = ""
         @css_files.each do |file|
-          attributes['href'] = file.asset.url
-          attributes['rel'] = 'stylesheet'
-          attributes.each_key do |k|
-           attr = file.tag_attrs.where('name' => k).first
-           attributes[k] = attr.value unless attr.nil?
-          end
+          set_default_attribute_values(attributes, file)
+          set_link_attributes(attributes, file)
+          engine = gen_haml('stylesheet')
           haml_render += engine.render(nil, attributes)
         end
         haml_render
@@ -53,10 +45,22 @@ module HandlebarCms
       alias_method :meta_tags_all, :meta_tags
       
       private 
-        def css_tag(file, attr)
-          content_tag :link, :rel => attr['rel'], :href => attr['href'], :type => attr['type'], :media => attr['media'], :title => attr['title'], :charset => attr['charset']
+        def set_default_attribute_values(attributes, file)
+          attributes['href'] = file.asset.url
+          attributes['rel'] = 'stylesheet'
         end
 
+        def set_link_attributes(attributes, file)
+          attributes.each_key do |k|
+            attr = file.tag_attrs.where('name' => k).first
+            attributes[k] = attr.value unless attr.nil?
+          end
+        end
+
+        def style_attributes
+          {'href' => nil, 'type' => nil, 'media' => nil, 'rel' => nil, 'title' => nil, 'charset' => nil} 
+        end
+        
         def meta_tag_name(name)
           !@page.meta_tags.where(:name => name).first.send(:content).blank? ? @page.meta_tags.where(:name => name).first.send(:content) :
           !@current_site.meta_tags.where(:name => name).first.blank? ? @current_site.meta_tags.where(:name => name).first.send(:content) : ''
