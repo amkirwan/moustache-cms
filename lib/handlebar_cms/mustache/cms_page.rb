@@ -1,5 +1,14 @@
 require 'haml'
 
+class TagHelper
+  include Singleton
+  include ActionView::Helpers
+
+  def page_full_path_with_request(request, page)
+    "#{request.protocol}://#{request.host.downcase}" + page.full_path
+  end
+end
+
 class HandlebarCms::Mustache::CmsPage < Mustache
   include Head
   include Navigation
@@ -109,6 +118,6 @@ class HandlebarCms::Mustache::CmsPage < Mustache
     
     def gen_haml(template_name)
       template = File.read("#{File.dirname(__FILE__)}/templates/#{template_name}.haml")
-      Haml::Engine.new(template)
+      Haml::Engine.new(template, :attr_wrapper => "\"")
     end
 end

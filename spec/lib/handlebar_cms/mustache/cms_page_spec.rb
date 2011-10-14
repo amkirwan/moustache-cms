@@ -19,7 +19,7 @@ describe HandlebarCms::Mustache::CmsPage do
     @theme_asset_css = Factory(:theme_asset, :site => site, :name => "foobar", :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css", :tag_attrs => [@tag_attr_type])
     @theme_asset_css_2 = Factory(:theme_asset, :site => site, :name => "baz", :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css", :tag_attrs => [@tag_attr_type, @tag_attr_media])
     
-    @request = mock_model("Request", :host => "test.com")
+    @request = mock_model("Request", :host => "test.com", :protocol => 'http')
     
     @controller.instance_variable_set(:@page, @page)
     @controller.instance_variable_set(:@request, @request)
@@ -84,46 +84,46 @@ describe HandlebarCms::Mustache::CmsPage do
     end  
     
     it "should return all the css files" do
-      @cmsp.stylesheets_all.should == %(<link href='#{@theme_asset_css.asset.url}' rel='stylesheet' type='text/css' />\n<link href='#{@theme_asset_css_2.asset.url}' media='screen' rel='stylesheet' type='text/css' />\n)
+      @cmsp.stylesheets_all.should == %(<link href="#{@theme_asset_css.asset.url}" rel="stylesheet" type="text/css" />\n<link href="#{@theme_asset_css_2.asset.url}" media="screen" rel="stylesheet" type="text/css" />\n)
     end
     
     it "should return a stylesheet by name" do
-      @cmsp.stylesheet_foobar.should == %(<link href='#{@theme_asset_css.asset.url}' rel='stylesheet' type='text/css' />\n)
+      @cmsp.stylesheet_foobar.should == %(<link href="#{@theme_asset_css.asset.url}" rel="stylesheet" type="text/css" />\n)
     end
 
     describe "meta tags" do
     
       it "should return the meta title from the page" do
-        @cmsp.meta_tag_title.should == %(<meta content='title page' name='title' />\n)
+        @cmsp.meta_tag_title.should == %(<meta content="title page" name="title" />\n)
       end
 
       it "should return the meta keywords from the page" do
-        @cmsp.meta_tag_keywords.should == %(<meta content='keywords page' name='keywords' />\n)
+        @cmsp.meta_tag_keywords.should == %(<meta content="keywords page" name="keywords" />\n)
       end
 
       it "should return the meta description from the page" do
-        @cmsp.meta_tag_description.should == %(<meta content='description page' name='description' />\n)
+        @cmsp.meta_tag_description.should == %(<meta content="description page" name="description" />\n)
       end
 
       it "should return the meta title from the site" do
         @page.meta_tags.where(:name => 'title').first.content = ""
-        @cmsp.meta_tag_title.should == %(<meta content='title site' name='title' />\n)
+        @cmsp.meta_tag_title.should == %(<meta content="title site" name="title" />\n)
       end
 
       it "should return the meta keywords from the site" do
         @page.meta_tags.where(:name => 'keywords').first.content = ""
-        @cmsp.meta_tag_keywords.should == %(<meta content='keywords site' name='keywords' />\n)
+        @cmsp.meta_tag_keywords.should == %(<meta content="keywords site" name="keywords" />\n)
       end
 
       it "should return the meta description from the site" do
         @page.meta_tags.where(:name => 'description').first.content = ""
-        @cmsp.meta_tag_description.should == %(<meta content='description site' name='description' />\n)
+        @cmsp.meta_tag_description.should == %(<meta content="description site" name="description" />\n)
       end
 
       it "should render all the meta_tags" do
-        @cmsp.meta_tags.should == %(<meta content='title page' name='title' />
-<meta content='keywords page' name='keywords' />
-<meta content='description page' name='description' />
+        @cmsp.meta_tags.should == %(<meta content="title page" name="title" />
+<meta content="keywords page" name="keywords" />
+<meta content="description page" name="description" />
 )
       end
 
@@ -142,12 +142,19 @@ describe HandlebarCms::Mustache::CmsPage do
 
     it "should return an unordered list of the pages children elements for navigation" do 
       pending
-      @cmsp.nav_children_foobar.should == %(<ul class="nav nav_foobar"><li><a href="http://test.com#{@page2.full_path}" id="#{@page2.title}" title="#{@page2.title}">#{@page2.title}</a></li><li><a href="http://test.com#{@page3.full_path}" id="#{@page3.title}" title="#{@page3.title}">#{@page3.title}</a></li></ul>)
+      @cmsp.nav_children_foobar.should == %(<ul class="nav nav_foobar">  <li><a href="http://test.com#{@page2.full_path}" id="#{@page2.title}" title="#{@page2.title}">#{@page2.title}</a></li>  <li><a href="http://test.com#{@page3.full_path}" id="#{@page3.title}" title="#{@page3.title}">#{@page3.title}</a></li></ul>)
     end
     
     it "should return an unordered list of the pages children elements for navigation" do
-      pending
-      @cmsp.nav_child_pages.should == %(<ul class="nav"><li><a href="http://test.com#{@page2.full_path}" id="#{@page2.title}" title="#{@page2.title}">#{@page2.title}</a></li><li><a href="http://test.com#{@page3.full_path}" id="#{@page3.title}" title="#{@page3.title}">#{@page3.title}</a></li></ul>)
+template = %{
+%ul{:class => "nav"}
+  %li 
+    %a{:href => "http://test.com#{@page2.full_path}", :id => "#{@page2.title.downcase.gsub(/\s/, '_')}", :title => "#{@page2.title.downcase}"}  #{@page2.title}
+  %li
+    %a{:href => "http://test.com#{@page3.full_path}", :id => "#{@page3.title.downcase.gsub(/\s/, '_')}", :title => "#{@page3.title.downcase}"}  #{@page3.title}
+}
+      render = Haml::Engine.new(template, :attr_wrapper => "\"").render()
+      @cmsp.nav_child_pages.should == render
     end
 
     it "should return an unordered list of the pages children elements with a classname of sidebar" do
@@ -161,7 +168,8 @@ describe HandlebarCms::Mustache::CmsPage do
     end
     
     it "should return an unordered list of the pages siblings without self for navigation" do
-      @cmsp.nav_siblings_foobar2.should == "hello"#%(<ul class='nav nav_foobar2'><li><a href='http://test.com#{@page3.full_path}' id='#{@page3.title}' title='#{@page3.title}'>#{@page3.title}</a></li>\n</ul>\n)
+      pending
+      @cmsp.nav_siblings_foobar2.should == %(<ul class='nav nav_foobar2'><li><a href='http://test.com#{@page3.full_path}' id='#{@page3.title}' title='#{@page3.title}'>#{@page3.title}</a></li>\n</ul>\n)
     end
   end
 end 
