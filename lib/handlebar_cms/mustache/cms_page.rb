@@ -35,13 +35,7 @@ class HandlebarCms::Mustache::CmsPage < Mustache
       true
     elsif method.to_s =~ /^stylesheet_(.*)/ && @current_site.css_file_by_name($1)
       true
-    elsif method.to_s =~ /^stylesheets$/ && @current_site.css_file_by_name($1)
-      true
     elsif method.to_s =~ /^meta_tag_(.*)/ 
-      true
-    elsif method.to_s =~ /^meta_tags$/ 
-      true
-    elsif method.to_s =~ /^nav_children_and_self_(.*)/ && @current_site.page_by_name($1)
       true
     elsif method.to_s =~ /^nav_children_(.*)/ && @current_site.page_by_name($1)
       true
@@ -49,8 +43,6 @@ class HandlebarCms::Mustache::CmsPage < Mustache
       true
     elsif method.to_s =~ /^nav_siblings_(.*)/ && @current_site.page_by_name($1)
       true
-    elsif method.to_s =~ /^nav_child_pages_(.*)/
-      true    
     else
       super
     end
@@ -63,22 +55,14 @@ class HandlebarCms::Mustache::CmsPage < Mustache
       snippet($1)
     elsif name.to_s =~ /^stylesheet_(.*)/
       stylesheet($1)
-    elsif name.to_s =~ /^stylesheets$/
-      stylesheets
     elsif name.to_s =~ /^meta_tag_(.*)/
       meta_tag($1)
-    elsif name.to_s =~ /^meta_tags$/
-      meta_tags
-    elsif name.to_s =~ /^nav_children_and_self_(.*)/
-      nav_children_and_self($1)
     elsif name.to_s =~ /^nav_children_(.*)/
       nav_children($1)
     elsif name.to_s =~ /^nav_siblings_and_self_(.*)/
       nav_siblings_and_self($1)
     elsif name.to_s =~ /^nav_siblings_(.*)/
       nav_siblings($1)
-    elsif name.to_s =~ /^nav_child_pages_(.*)/
-      nav_child_pages($1)  
     else
       super
     end    

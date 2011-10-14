@@ -146,16 +146,12 @@ describe HandlebarCms::Mustache::CmsPage do
       @cmsp.nav_child_pages.should == rendered
     end
 
-    it "should return an unordered list of the pages children elements with a classname of sidebar" do
-      pending
-      @cmsp.nav_child_pages_sidebar.should == %(<ul class="sidebar"><li><a href="http://test.com#{@page2.full_path}" id="#{@page2.title}" title="#{@page2.title}">#{@page2.title}</a></li><li><a href="http://test.com#{@page3.full_path}" id="#{@page3.title}" title="#{@page3.title}">#{@page3.title}</a></li></ul>)
+    it "should return an unordered list of the pages for the given page name" do
+      template = File.read(File.dirname(__FILE__) + '/templates/nav_children.haml')
+      rendered = Haml::Engine.new(template, :attr_wrapper => "\"").render(nil, {:page2 => @page2, :page3 => @page3, :parent_page => @page})
+      @cmsp.nav_children_foobar.should == rendered
     end
-    
-    it "should return an unordered list of the pages siblings and self for navigation" do
-      pending
-      @cmsp.nav_siblings_and_self_foobar2.should == %(<ul class="nav nav_foobar2"><li><a href="http://test.com#{@page2.full_path}" id="#{@page2.title}" title="#{@page2.title}">#{@page2.title}</a></li><li><a href="http://test.com#{@page3.full_path}" id="#{@page3.title}" title="#{@page3.title}">#{@page3.title}</a></li></ul>)
-    end
-    
+
     it "should return an unordered list of the pages siblings without self for navigation" do
       pending
       @cmsp.nav_siblings_foobar2.should == %(<ul class='nav nav_foobar2'><li><a href='http://test.com#{@page3.full_path}' id='#{@page3.title}' title='#{@page3.title}'>#{@page3.title}</a></li>\n</ul>\n)
