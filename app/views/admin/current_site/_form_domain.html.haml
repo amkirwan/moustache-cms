@@ -1,0 +1,8 @@
+= foldable_fieldset 'Domain' do
+  %ul.form_fields
+    %li
+      = f.label :subdomain
+      = f.text_field :subdomain
+      %span &#46; #{@current_site.default_domain}
+  %ul.form_fiels
+    = manage_domains

@@ -18,7 +18,10 @@ HandlebarCms::Application.routes.draw do
       resources :site_assets 
     end
 
-    resources :sites, :path => 'current_site', :controller => 'current_site'
+    resources :sites, :path => 'current_site', :controller => 'current_site', :except => [:index, :show] do
+      resources :meta_tags, :except => [:index, :show] 
+    end
+
   end
   
   match "/admin" => redirect("/admin/pages")

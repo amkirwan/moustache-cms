@@ -1,11 +1,11 @@
-= foldable_fieldset 'Page Meta Tags' do
-  %ul{ :id => 'page_meta_tags', :class => 'form_fields'} 
+= foldable_fieldset 'Meta Tags' do
+  %ul{ :id => 'site_meta_tags', :class => 'form_fields'} 
     = f.fields_for :meta_tags do |builder|
       %li{:id => meta_tag_id(builder.object), :class => 'inline meta_tag'}  
         = builder.label :name
         = builder.text_field :name
         = builder.label :content
         = builder.text_field :content
-        = manage_meta_tag @page, builder.object
+        = manage_meta_tag @current_site, builder.object
     %li#add_meta_tag
-      = add_meta_tag 'Save page first to add custom meta tags', @page
+      = add_meta_tag 'Save current site first to add custom site wide meta tags', @current_site

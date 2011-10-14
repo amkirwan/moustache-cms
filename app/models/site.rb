@@ -23,6 +23,8 @@ class Site
   has_many :theme_assets, :dependent => :destroy
   has_many :snippets, :dependent => :delete
     
+  accepts_nested_attributes_for :meta_tags
+
   # -- Validations ----------------------------------------
   validates :name,
             :presence => true,
@@ -36,6 +38,7 @@ class Site
   # -- Callbacks -----------------------------------------------
   before_save :add_subdomain_to_domains
   before_destroy :delete_associated
+  after_initialize :default_meta_tags
 
   def delete_associated
     self.users = []
@@ -94,4 +97,13 @@ class Site
     def old_domain
       "#{self.subdomain_was}.#{self.default_domain_was}"
     end
+
+    def default_meta_tags
+      if self.new_record? && self.meta_tags.size == 0
+        self.meta_tags.build(:name => "title", :content => "")
+        self.meta_tags.build(:name => "keywords", :content => "")
+        self.meta_tags.build(:name => "description", :content => "")
+      end
+    end
+
 end

@@ -10,4 +10,4 @@ Background: Login create default site
   Scenario: Givin I am logged in as admin then I can edit the site settings
     When I edit the current site "foobar"
     Then I should now be editing the current site "foobar"
-
+    And I fill in "site[subdomain]" with "foobar" 
