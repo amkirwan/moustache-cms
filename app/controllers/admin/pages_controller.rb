@@ -1,7 +1,7 @@
 class Admin::PagesController < AdminBaseController
   
   load_and_authorize_resource 
-  
+
   def index
   end
   
@@ -34,7 +34,7 @@ class Admin::PagesController < AdminBaseController
 
   def destroy
     if @page.destroy
-      redirect_to admin_pages_path, :notice => "Successfully deleted the page #{@page.title}"
+      redirect_to [:admin, :pages], :notice => "Successfully deleted the page #{@page.title}"
     end
   end
   

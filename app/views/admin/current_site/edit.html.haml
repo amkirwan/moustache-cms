@@ -1,0 +1,5 @@
+- header_content 'shared/header_wrapper', :object => @current_site do
+  = can_destroy? @current_site
+
+- inner_content 'shared/inner_wrapper' do
+  = render :partial => 'form', :locals => { :button_label => 'Update Site' }

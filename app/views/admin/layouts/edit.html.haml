@@ -1,6 +1,6 @@
 - header_content 'shared/header_wrapper', :object => @layout do
   = can_destroy? @layout
 
-- inner_content "shared/inner_wrapper" do
-  = render :partial => "form",  
-           :locals => { :button_label => "Update Layout" }
+- inner_content 'shared/inner_wrapper' do
+  = render :partial => 'form',  
+           :locals => { :button_label => 'Update Layout' }

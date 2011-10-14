@@ -4,6 +4,8 @@ module ApplicationHelper
     @current_user.role?("admin") ? true : false
   end
   
+  def current_site
+  end
  
   def body_id_set
     name = controller.controller_name
