@@ -1,5 +1,5 @@
 %ul{:class => "nav_#{parent_page.title.downcase.gsub(/\s/, '_')}"}
   %li 
-    %a{:href => "http://test.com#{page2.full_path}", :id => "#{page2.title.downcase.gsub(/\s/, '_')}", :title => "#{page2.title.downcase}"}  #{page2.title}
+    %a{:href => "http://test.com#{page2.full_path}", :id => "#{page2.title.downcase.gsub(/\s/, '_')}" } #{page2.title} 
   %li
-    %a{:href => "http://test.com#{page3.full_path}", :id => "#{page3.title.downcase.gsub(/\s/, '_')}", :title => "#{page3.title.downcase}"}  #{page3.title}
+    %a{:href => "http://test.com#{page3.full_path}", :id => "#{page3.title.downcase.gsub(/\s/, '_')}" }  #{page3.title}
