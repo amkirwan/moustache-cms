@@ -153,9 +153,9 @@ describe HandlebarCms::Mustache::CmsPage do
     end
 
     it "should return an unordered list of the pages siblings for navigation" do
-      template = File.read(File.dirname(__FILE__) + '/templates/nav_siblings.haml')
+      template = File.read(File.dirname(__FILE__) + '/templates/nav_siblings_and_self.haml')
       rendered = Haml::Engine.new(template, :attr_wrapper => "\"").render(nil, {:page2 => @page2, :page3 => @page3 })
-      @cmsp.nav_siblings_foobar2.should == rendered
+      @cmsp.nav_siblings_and_self_foobar2.should == rendered
     end
   end
 end 

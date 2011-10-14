@@ -41,8 +41,6 @@ class HandlebarCms::Mustache::CmsPage < Mustache
       true
     elsif method.to_s =~ /^nav_siblings_and_self_(.*)/ && @current_site.page_by_name($1)
       true
-    elsif method.to_s =~ /^nav_siblings_(.*)/ && @current_site.page_by_name($1)
-      true
     else
       super
     end
@@ -61,8 +59,6 @@ class HandlebarCms::Mustache::CmsPage < Mustache
       nav_children($1)
     elsif name.to_s =~ /^nav_siblings_and_self_(.*)/
       nav_siblings_and_self($1)
-    elsif name.to_s =~ /^nav_siblings_(.*)/
-      nav_siblings($1)
     else
       super
     end    

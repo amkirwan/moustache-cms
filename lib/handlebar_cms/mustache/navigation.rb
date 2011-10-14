@@ -14,8 +14,8 @@ module HandlebarCms
       end
  
 
-      def nav_siblings(page_name)
-        engine = gen_haml('nav_siblings')
+      def nav_siblings_and_self(page_name)
+        engine = gen_haml('nav_siblings_and_self')
         engine.render(TagHelper.instance, {:request => @request, :page => @current_site.page_by_name(page_name)})
       end
       
