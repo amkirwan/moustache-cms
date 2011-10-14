@@ -3,21 +3,21 @@
     %li 
       %h3 Site Management 
     %li#pages
-      = link_to "Pages", admin_pages_path
+      = link_to "Pages", [:admin, :pages]
     %li#site_assets
-      = link_to "Site Assets", admin_asset_collections_path
+      = link_to "Site Assets", [:admin, :asset_collections]
     %li#snippets
-      = link_to "Snippets", admin_snippets_path
+      = link_to "Snippets", [:admin, :snippets]
     %li#layouts 
-      = link_to "Layouts", admin_layouts_path
+      = link_to "Layouts", [:admin, :layouts]
     %li#theme_assets
-      = link_to "Theme Assets", admin_theme_assets_path
+      = link_to "Theme Assets", [:admin, :theme_assets]
     - if admin?
       %li#users
-        = link_to "User Profiles", admin_users_path
+        = link_to "User Profiles", [:admin, :users]
     - else
       %li#users
-        = link_to "Your Profile", edit_admin_user_path(@current_user.id)
+        = link_to "Your Profile", [:edit, :admin, @current_user]
     - if admin?
       %li.sites
-        = link_to "Site Admin", "#"
+        = link_to "Site Settings", [:edit, :admin, @current_site]
