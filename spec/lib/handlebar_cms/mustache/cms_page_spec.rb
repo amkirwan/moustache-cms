@@ -152,9 +152,10 @@ describe HandlebarCms::Mustache::CmsPage do
       @cmsp.nav_children_foobar.should == rendered
     end
 
-    it "should return an unordered list of the pages siblings without self for navigation" do
-      pending
-      @cmsp.nav_siblings_foobar2.should == %(<ul class='nav nav_foobar2'><li><a href='http://test.com#{@page3.full_path}' id='#{@page3.title}' title='#{@page3.title}'>#{@page3.title}</a></li>\n</ul>\n)
+    it "should return an unordered list of the pages siblings for navigation" do
+      template = File.read(File.dirname(__FILE__) + '/templates/nav_siblings.haml')
+      rendered = Haml::Engine.new(template, :attr_wrapper => "\"").render(nil, {:page2 => @page2, :page3 => @page3 })
+      @cmsp.nav_siblings_foobar2.should == rendered
     end
   end
 end 
