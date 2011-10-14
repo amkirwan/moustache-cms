@@ -146,15 +146,9 @@ describe HandlebarCms::Mustache::CmsPage do
     end
     
     it "should return an unordered list of the pages children elements for navigation" do
-template = %{
-%ul{:class => "nav"}
-  %li 
-    %a{:href => "http://test.com#{@page2.full_path}", :id => "#{@page2.title.downcase.gsub(/\s/, '_')}", :title => "#{@page2.title.downcase}"}  #{@page2.title}
-  %li
-    %a{:href => "http://test.com#{@page3.full_path}", :id => "#{@page3.title.downcase.gsub(/\s/, '_')}", :title => "#{@page3.title.downcase}"}  #{@page3.title}
-}
-      render = Haml::Engine.new(template, :attr_wrapper => "\"").render()
-      @cmsp.nav_child_pages.should == render
+      template = File.read(File.dirname(__FILE__) + '/templates/nav_child_pages_template.haml')
+      rendered = Haml::Engine.new(template, :attr_wrapper => "\"").render(nil, {:page2 => @page2, :page3 => @page3})
+      @cmsp.nav_child_pages.should == rendered
     end
 
     it "should return an unordered list of the pages children elements with a classname of sidebar" do
