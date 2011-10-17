@@ -7,11 +7,23 @@ class Admin::CurrentSiteController < AdminBaseController
 
   def update
     if @current_site.update_attributes(params[:site])
+      flash[:notice] = "Successfully updated the site #{@current_site.name}"
+      redirect_to [:edit, :admin, @current_site]
+    else
       render :edit
+    end 
+  end
+
+
+  def destroy
+    if @current_site.destroy
+      reset_session
+      redirect_to cms_html_url
     end
   end
 
-  def delete_domain
+
+  def delete_domain_name
     @current_site.domains.delete_if { |domain| domain == params[:domain_name] }
     respond_to do |format|
       format.html { redirect_to [:edit, :admin, @current_site] }

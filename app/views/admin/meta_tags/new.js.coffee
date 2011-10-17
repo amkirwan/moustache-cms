@@ -10,7 +10,7 @@ if $('li#add_meta_tag').length
   else
     $('li#add_meta_tag').prev().after('<%= escape_javascript(render(:partial => @meta_tag)) %>').fadeIn()
 
-  meta_tags = $('ul#page_meta_tags').find('li.meta_tag')
+  meta_tags = $('ul.meta_tags').find('li.meta_tag')
 
   if meta_tags.length > 0
     metaTagCount = meta_tags.length - 1

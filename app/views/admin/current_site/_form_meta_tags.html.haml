@@ -1,5 +1,5 @@
 = foldable_fieldset 'Meta Tags' do
-  %ul{ :id => 'site_meta_tags', :class => 'form_fields'} 
+  %ul{ :id => 'site_meta_tags', :class => 'form_fields meta_tags'} 
     = f.fields_for :meta_tags do |builder|
       %li{:id => meta_tag_id(builder.object), :class => 'inline meta_tag'}  
         = builder.label :name
