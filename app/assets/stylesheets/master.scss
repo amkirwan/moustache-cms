@@ -74,10 +74,18 @@ h2 {
   color: $dark_text;
 }
 
-h3 {
+h3, h4, h5 {
   font: normal 1.125em / 1.25 $heading_font; /* 18px / 16px */
   color: $dark_text;
 }
+
+body.current_site h5 {
+  margin-top: 1em;
+  font-size: 1em;
+  font-weight: bold;
+  margin-left: 0.285714286em;
+}
+
 
 /* rounded button links with gradient */
 a:link.action, a:visited.action {
@@ -481,6 +489,10 @@ form.site_prop {
   .foldable legend:hover {
       cursor: pointer;
   }
+}
+
+ul.domains_list {
+  margin-left: 0.285714286em;
 }
 
 .img_thumb {

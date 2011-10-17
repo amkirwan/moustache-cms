@@ -2,4 +2,4 @@
   %ul.form_fields
     %li
       = f.submit button_label, :class => "submit"
-      = link_to "Cancel", [:admin, :sites], :class => "cancel"
+      = link_to "Cancel", [:edit, :admin, @current_site], :class => "cancel"

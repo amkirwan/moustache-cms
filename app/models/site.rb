@@ -3,25 +3,24 @@ class Site
   include Mongoid::Timestamps 
   include Mongoid::Paranoia 
   
-  attr_accessible :name, :subdomain
+  attr_accessible :name, :subdomain, :domain_names
   
   field :name
-  key :name
   field :subdomain
   field :default_domain
-  field :domains, :type => Array, :default => []
+  field :domain_names, :type => Array, :default => []
   
   # -- Index ---------------------------------------
-  index :domains
+  index :domain_names
   
   # -- Associations ---------------------------------------
   embeds_many :meta_tags, :as => :meta_taggable
-  has_many :users, :dependent => :delete
-  has_many :pages, :dependent => :delete
-  has_many :layouts, :dependent => :delete
+  has_many :users, :dependent => :destroy
+  has_many :pages, :dependent => :destroy
+  has_many :layouts, :dependent => :destroy
   has_many :asset_collections, :dependent => :destroy
   has_many :theme_assets, :dependent => :destroy
-  has_many :snippets, :dependent => :delete
+  has_many :snippets, :dependent => :destroy
     
   accepts_nested_attributes_for :meta_tags
 
@@ -36,41 +35,33 @@ class Site
             :uniqueness => true
             
   # -- Callbacks -----------------------------------------------
-  before_save :add_subdomain_to_domains
-  before_destroy :delete_associated
+  before_save :add_subdomain_to_domain_names
   after_initialize :default_meta_tags
-
-  def delete_associated
-    self.users = []
-    self.pages = []
-    self.layouts = []
-    self.asset_collections = []
-    self.theme_assets = []
-    self.snippets = []
-  end
             
   # -- Scopes ---------------------------------------
-  scope :match_domain, lambda { |domain| { :any_in => { :domains => [*domain] }} }
+  scope :match_domain, lambda { |domain| { :any_in => { :domain_names => [*domain] }} }
  
   # -- Instance Methods ----------------------------------------
   def full_subdomain
     "#{self.subdomain}.#{self.default_domain}"
   end
   
-  def add_subdomain_to_domains
-    self.domains ||= []
-    if self.domains.empty? || self.subdomain_changed? || self.default_domain_changed?
+  def add_subdomain_to_domain_names
+    self.domain_names ||= []
+    if self.subdomain_changed? || self.default_domain_changed?
       if self.subdomain_was.nil?
-        self.domains << self.full_subdomain
+        self.domain_names << self.full_subdomain
       else
-        domains.delete(old_domain) if domains.include?(old_domain)
-        (self.domains << self.full_subdomain).uniq!
+        domain_names.delete(old_domain) if domain_names.include?(old_domain)
+        (self.domain_names << self.full_subdomain).uniq!
       end
+    else
+      (self.domain_names << self.full_subdomain).uniq!
     end
   end
   
   def add_full_subdomain(domain)
-    (domains << domain).uniq!
+    (domain_names << domain).uniq!
   end
   
   def page_by_full_path(path)   

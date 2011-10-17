@@ -20,6 +20,9 @@ HandlebarCms::Application.routes.draw do
 
     resources :sites, :path => 'current_site', :controller => 'current_site', :except => [:index, :show] do
       resources :meta_tags, :except => [:index, :show] 
+      member do
+        delete 'delete_domain'
+      end
     end
 
   end

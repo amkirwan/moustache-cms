@@ -8,16 +8,6 @@ describe Site do
     @layout = Factory(:layout, :site => @site, :created_by => @user, :updated_by => @user) 
   end
   
-  # -- Assignment -------------------------------------------
-  describe "mass assignment" do
-    it "should protect against mass assignment of default_domain and domains field" do
-      site = Site.new(:default_domain => "example.com", :domains => ["foobar.example.com"] )
-      site.default_domain.should be_nil
-      site.domains.should be_empty
-    end
-    
-  end
-  
   # -- Validations -------------------------------------------
   describe "Validations" do
     it "should be valid" do
@@ -51,15 +41,15 @@ describe Site do
   # -- Associations -------------------------------------------
   describe "Associations" do
     it "should have many users" do
-      @site.should have_many(:users).with_dependent(:delete)
+      @site.should have_many(:users).with_dependent(:destroy)
     end
 
     it "should have many pages" do
-      @site.should have_many(:pages).with_dependent(:delete)
+      @site.should have_many(:pages).with_dependent(:destroy)
     end 
 
     it "should have many layouts" do
-      @site.should have_many(:layouts).with_dependent(:delete)
+      @site.should have_many(:layouts).with_dependent(:destroy)
     end
     
     it "should reference many asset_collections" do
@@ -71,7 +61,7 @@ describe Site do
     end
 
     it "should have many snippets" do
-      @site.should have_many(:snippets).with_dependent(:delete)
+      @site.should have_many(:snippets).with_dependent(:destroy)
     end
 
     it "should embed many meta_tags" do
@@ -84,7 +74,7 @@ describe Site do
   describe "Scope" do
     describe "#match_domain" do
       it "should return a site when the domain exists" do
-        sites = Site.match_domain("#{@site.subdomain}.example.com")
+        sites = Site.match_domain("#{@site.subdomain}.com")
         sites.size.should == 1
         sites.first.should == @site
       end
@@ -102,25 +92,25 @@ describe Site do
   describe "instance methods" do
     describe "#full_subdomain" do
       it "should return the full domain" do
-        @site.full_subdomain.should == "#{@site.subdomain}.example.com"
+        @site.full_subdomain.should == "#{@site.subdomain}.com"
       end
     end
     
-    describe "#add_subdomain_to_domains" do
-      it "should add the new subdomain and domain and delete the old one" do
+    describe "#add_subdomain_to_domain_names" do
+      it "should add the new subdomain and delete the old one" do
         @site.subdomain = "baz"
         @site.default_domain = "chicago-cubs.com"
         @site.save
         @site.full_subdomain.should == "baz.chicago-cubs.com"
-        @site.domains.should have(1).item
+        @site.domain_names.should have(1).item
       end
     end
     
     describe "#add_domain" do
-      it "should add an additional domains" do
+      it "should add an additional domain_names" do
         @site.add_full_subdomain("baz.chicago-cubs.com")
         @site.save
-        @site.domains.should have(2).items
+        @site.domain_names.should have(2).items
       end
     end
     

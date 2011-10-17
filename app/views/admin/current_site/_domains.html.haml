@@ -1,2 +1,6 @@
-%ul.form_fields
-  = render :partial => 'domain', :collection => domains
+- unless @current_site.domain_names.empty?
+  %h5 The current site is also accessible from the following domains:
+  %ul{:class => 'form_fields domains_list'} 
+    - domains.each.with_index do |domain, index|
+      %li
+        = text_field_tag "site[domain_names][]", domain

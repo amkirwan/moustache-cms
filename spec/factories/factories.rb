@@ -13,8 +13,8 @@ Factory.define :site do |site|
   site.sequence(:name) { |n| "name_#{n}" }
   site.sequence(:subdomain)  { |n| "foobar_#{n}" }
   site.meta_tags { meta_tags('site') }
-  site.default_domain  "example.com" 
-  site.domains  { [] }
+  site.default_domain  "com" 
+  site.domain_names { [] }
 end
 
 Factory.define :user do |user|

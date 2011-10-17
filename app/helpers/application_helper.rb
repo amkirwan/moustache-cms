@@ -22,7 +22,7 @@ module ApplicationHelper
       name
     when "users"
       name
-    when "sites"
+    when "current_site"
       name 
     end
   end    
