@@ -21,7 +21,11 @@ class Ability
 
       can :create, MetaTag
       can [:read, :update, :destroy], MetaTag, do |meta_tag|
-        meta_tag._parent.site_id == user.site_id
+        if meta_tag._parent.class.name == "Site"
+          meta_tag._parent.id == user.site_id
+        else
+          meta_tag._parent.site_id == user.site_id
+        end
       end 
     end
     
@@ -35,7 +39,11 @@ class Ability
       end
       can :create, MetaTag
       can [:read, :update, :destroy], MetaTag, do |meta_tag|
-        meta_tag._parent.site_id == user.site_id
+        if meta_tag._parent.class.name == "Site"
+          meta_tag._parent.id == user.site_id
+        else
+          meta_tag._parent.site_id == user.site_id
+        end
       end
     end
 
@@ -55,9 +63,12 @@ class Ability
       end
       can :create, MetaTag
       can [:read, :update, :destroy], MetaTag, do |meta_tag|
-        meta_tag._parent.site_id == user.site_id
+        if meta_tag._parent.class.name == "Site"
+          meta_tag._parent.id == user.site_id
+        else
+          meta_tag._parent.site_id == user.site_id
+        end
       end
-
     end
   end    
 end
