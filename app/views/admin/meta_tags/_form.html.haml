@@ -1,5 +1,5 @@
-= form_for([:admin, @page, @meta_tag], :html => { :class => "site_prop", :autocomplete => :off }) do |f|
-  = render :partial => "shared/error_messages", :locals => {:target => @meta_tag}
+= form_for([:admin, @object, @meta_tag], :html => { :class => "site_prop", :autocomplete => :off }) do |f|
+  = render :partial => "shared/error_messages", :locals => {:target => @object}
   %fieldset
     %ul.form_fields
       %li
@@ -10,4 +10,4 @@
         = f.text_field :content
       %li
         = f.submit button_label, :class => "submit"
-        = link_to "cancel", [:edit, :admin, @page], :class => "cancel"
+        = link_to "cancel", [:edit, :admin, @object], :class => "cancel"

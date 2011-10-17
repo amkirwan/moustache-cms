@@ -30,7 +30,7 @@ module Admin::PagesHelper
     case meta_tag.name
     when "title", "keywords", "description"
     else
-      render :partial => "admin/pages/editable_meta_tag", :locals => { :page => page, :meta_tag => meta_tag }
+      link_to "Delete", [:admin, page, meta_tag], :confirm => "Are you sure you want to delete the meta tag #{meta_tag.name}", :method => :delete, :class => "delete", :remote => true
     end
   end
 
@@ -42,7 +42,7 @@ module Admin::PagesHelper
     if @page.new_record?
       'new_page'
     else
-      'edit_page_' + @page.name.downcase
+      'edit_page_' + @page.title.downcase
     end
   end
 

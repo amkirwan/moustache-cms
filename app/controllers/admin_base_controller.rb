@@ -11,6 +11,7 @@ class AdminBaseController < ApplicationController
   layout "admin/admin"
   
   rescue_from CanCan::AccessDenied do |exception|
+    Rails.logger.debug "Access denied on #{exception.action} #{exception.subject.inspect}" 
     render :file => "#{Rails.root}/public/403.html", :status => 403, :layout => false
   end
   

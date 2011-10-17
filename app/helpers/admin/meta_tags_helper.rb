@@ -6,7 +6,7 @@ module Admin::MetaTagsHelper
         content_tag :i, message
       end
     else
-        link_to "Add Meta Tag", [:new, :admin, object, :meta_tag], :remote => :true
+      link_to "Add Meta Tag", [:new, :admin, object, :meta_tag], :remote => :true
     end
   end
 

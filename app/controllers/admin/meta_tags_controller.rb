@@ -1,7 +1,8 @@
 class Admin::MetaTagsController <AdminBaseController 
 
-  load_and_authorize_resource :page
-  load_resource :meta_tag, :through => :page
+  load_resource :page
+  load_resource :site
+  load_and_authorize_resource :meta_tag, :through => [:page, :site]
 
   def new
     respond_to do |format|

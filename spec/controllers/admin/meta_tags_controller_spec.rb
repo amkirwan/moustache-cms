@@ -4,14 +4,16 @@ describe Admin::MetaTagsController do
 
   let(:site) { mock_model(Site) }
   let(:current_user) { logged_in(:role? => "admin", :site_id => site.id) }
-  let(:meta_tag) { mock_model("MetaTag", :name => "DC.author") }
+  let(:page) { mock_model("Page", :site_id => site.id).as_null_object }
+  let(:meta_tag) { mock_model("MetaTag", :name => "DC.author", :_parent => page) }
   let(:meta_tags) { [meta_tag] }
-  let(:page) { mock_model("Page", :site_id => site.id, :meta_tags => meta_tags).as_null_object }
+
 
   before(:each) do
     cas_faker(current_user.puid)
     stub_c_site_c_user(site, current_user)
 
+    page.stub(:meta_tags).and_return(meta_tags)
     Page.stub(:find).and_return(page)
   end
 

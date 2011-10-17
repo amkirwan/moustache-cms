@@ -3,7 +3,7 @@ class Site
   include Mongoid::Timestamps 
   include Mongoid::Paranoia 
   
-  attr_accessible :name, :subdomain, :domain_names
+  attr_accessible :name, :subdomain, :domain_names, :meta_tags_attributes
   
   field :name
   field :subdomain
@@ -57,7 +57,7 @@ class Site
       end
     else
       (self.domain_names << self.full_subdomain).uniq!
-    end
+   end
   end
   
   def add_full_subdomain(domain)
