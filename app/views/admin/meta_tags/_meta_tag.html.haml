@@ -1,4 +1,4 @@
-= fields_for record_object do |record|
+= fields_for @base_class do |record|
   = record.fields_for(:meta_tags, @meta_tag) do |builder|
     %li{:class => "inline meta_tag"}
       = builder.label :name
