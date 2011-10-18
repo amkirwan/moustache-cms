@@ -2,7 +2,6 @@ class Admin::CurrentSiteController < AdminBaseController
 
   load_and_authorize_resource :class => 'Site'
 
-
   def new_domain
     respond_to do |format|
       format.js 

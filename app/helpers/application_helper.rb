@@ -41,8 +41,10 @@ module ApplicationHelper
     elsif options[:object].new_record?
       options.merge!(:body => "", :title => "Create New #{options[:object].class.name.underscore.titleize}")
     else
-      title = options[:show] == true ? "#{options[:object].class.name.underscore.titleize}" : "Editing #{options[:object].class.name.underscore.titleize}"
-      options.merge!(:body => capture(&block), :title => "#{title} <b>#{view_identifier(options[:object]).titleize}</b>")
+      if block_given?
+        title = options[:show] == true ? "#{options[:object].class.name.underscore.titleize}" : "Editing #{options[:object].class.name.underscore.titleize}"
+        options.merge!(:body => capture(&block), :title => "#{title} <b>#{view_identifier(options[:object]).titleize}</b>")
+      end
     end
     concat(render(:partial => partial_name, :locals => options))
   end
@@ -64,13 +66,13 @@ module ApplicationHelper
 
   def can_create?(object)
     class_name = object.name
-    render :partial => "shared/header_button_new", :locals => { :object => object, :class_name => class_name.underscore, :title => class_name.underscore.titleize }
+    render :partial => "shared/header_button_new", :locals => { :object => object, :class_name => class_name.underscore, :title => class_name.underscore.titleize } if can? :create, object
   end
 
   def can_destroy?(object)
     class_name = object.class.name
     parent = object._parent
-    render :partial => "shared/header_button_delete", :locals => { :object => object, :parent => parent, :class_name => class_name.underscore, :title => class_name.underscore.titleize }
+    render :partial => "shared/header_button_delete", :locals => { :object => object, :parent => parent, :class_name => class_name.underscore, :title => class_name.underscore.titleize } if can? :destroy, object
   end
   
   def list_objects(collection, options={})
