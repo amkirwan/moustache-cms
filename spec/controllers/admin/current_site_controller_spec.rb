@@ -129,29 +129,4 @@ describe Admin::CurrentSiteController do
     end
   end
 
-
-  describe "GET new_domain" do
-    let(:params) {{ "id" => current_site.to_param }}
-
-    before(:each) do
-      Site.stub(:find).and_return(current_site)
-    end    
-
-    def do_get
-      get :new_domain, params
-    end
-
-    it "should receive Site#find and return the current_site" do
-      Site.should_receive(:find).with("1").and_return(current_site)
-      do_get
-    end
-
-
-    it "should assign the current site" do
-      do_get
-      assigns(:current_site).should == current_site
-    end
-
-  end
-
 end
