@@ -4,3 +4,5 @@
     - domains.each.with_index do |domain, index|
       %li
         = text_field_tag "site[domain_names][]", domain
+      %li#add_domain
+        = link_to "Add Domain Names", [:new_domain, :admin, @current_site], :remote => true

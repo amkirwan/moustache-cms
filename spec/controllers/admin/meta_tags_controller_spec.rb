@@ -35,7 +35,7 @@ describe Admin::MetaTagsController do
       do_get
     end
 
-    it "should assing the meta tag for the view" do
+    it "should assign the meta tag" do
       do_get
       assigns(:meta_tag).should == meta_tag
     end
