@@ -1,4 +1,4 @@
-class Admin::MetaTagsController <AdminBaseController 
+class Admin::MetaTagsController < AdminBaseController 
 
   load_resource :site
   load_resource :page
@@ -16,26 +16,28 @@ class Admin::MetaTagsController <AdminBaseController
   end
 
   def create
-    if @base_class.meta_tags.push(@meta_tag)
-      redirect_to [:edit, :admin, @base_class], :notice => "Successfully created meta tag #{@base_class.name}"
+    if @meta_tag.save
+      redirect_to [:edit, :admin, @base_class], :notice => "Successfully created the meta tag #{@meta_tag.name}"
     else 
       render :new
     end
   end
 
   def update
-    if @base_class.update_attributes(params[:meta_tag])
-      redirect_to [:edit, :admin, @base_class], :notice => "Successfully updated the meta tag #{@base_class.name}" 
+    if @meta_tag.update_attributes(params[:meta_tag])
+      redirect_to [:edit, :admin, @base_class], :notice => "Successfully updated the meta tag #{@meta_tag.name}" 
     else
       render :edit
     end
   end
   
   def destroy
+    if @meta_tag.destroy
       respond_to do |format|
-        format.html { redirect_to [:edit, :admin, @base_class], :notice => "Successfully deleted the meta tag #{@base_class.name}" }
+        format.html { redirect_to [:edit, :admin, @base_class], :notice => "Successfully deleted the meta tag #{@meta_tag.name}" }
         format.js
       end
+    end
   end
 
   private

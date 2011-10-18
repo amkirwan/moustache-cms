@@ -23,7 +23,8 @@ describe Admin::MetaTagsController do
 
     before(:each) do
       meta_tag.as_new_record
-      page.stub_chain(:meta_tags, :new).and_return(meta_tag)
+      page.stub(:meta_tags).and_return(meta_tags)
+      meta_tags.stub(:new).and_return(meta_tag)
     end
 
     def do_get
@@ -75,7 +76,9 @@ describe Admin::MetaTagsController do
     let(:params) { {"name" => "DC.author", "content" => "Foobar Baz"} }
 
     before(:each) do
-      page.stub_chain(:meta_tags, :new).and_return(meta_tag)
+      page.stub(:meta_tags).and_return(meta_tags)
+      meta_tags.stub(:new).and_return(meta_tag)
+      meta_tag.stub(:save).and_return(true)
     end
 
     def do_post(post_params=params)
@@ -94,7 +97,7 @@ describe Admin::MetaTagsController do
 
       it "should assign a flash message that the meta_tag was created" do
         do_post
-        flash[:notice].should == "Successfully created meta tag #{meta_tag.name}"
+        flash[:notice].should == "Successfully created the meta tag #{meta_tag.name}"
       end
 
       it "should redirect to the page the meta tags were created for" do
@@ -105,12 +108,12 @@ describe Admin::MetaTagsController do
 
     context "with invalid params" do
       before(:each) do
-        page.stub_chain(:meta_tags, :push).and_return(false)
+        meta_tag.stub(:save).and_return(false)
       end
 
       it "should render the new template when creating the meta_tag fails" do
         do_post
-        page.should render_template("admin/meta_tags/new")
+        response.should render_template("admin/meta_tags/new")
       end
     end
   end
