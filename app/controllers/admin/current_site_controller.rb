@@ -2,12 +2,6 @@ class Admin::CurrentSiteController < AdminBaseController
 
   load_and_authorize_resource :class => 'Site'
 
-  def new_domain
-    respond_to do |format|
-      format.js 
-    end
-  end
-
   def edit
   end
 
@@ -28,12 +22,4 @@ class Admin::CurrentSiteController < AdminBaseController
     end
   end
 
-
-  def delete_domain_name
-    @current_site.domains.delete_if { |domain| domain == params[:domain_name] }
-    respond_to do |format|
-      format.html { redirect_to [:edit, :admin, @current_site] }
-      format.js
-    end 
-  end
 end

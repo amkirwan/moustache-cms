@@ -71,7 +71,7 @@ describe Admin::DomainsController do
 
       it "should set the flash message" do
         do_post
-        flash[:notice].should == "Successfully created the domain #{params["site"]["domain_name"]}"
+        flash[:notice].should == "Successfully created the domain name #{params["site"]["domain_name"]}"
       end
     end
 
@@ -107,15 +107,15 @@ describe Admin::DomainsController do
       assigns(:current_site).should == current_site
     end
       
-    it "should assign the domain" do
-      do_delete
-      assigns(:domain).should == domain
-    end
-
     context "with valid params" do
       it "should destroy the meta_tag" do
         current_site.should_receive(:domain_names).and_return(domain_names)
         domain_names.should_receive(:delete_at)
+        do_delete
+      end
+
+      it "should receive save" do
+        current_site.should_receive(:save)
         do_delete
       end
 

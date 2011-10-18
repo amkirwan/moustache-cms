@@ -9,7 +9,7 @@ class Admin::DomainsController < AdminBaseController
     @current_site.domain_names << params[:site][:domain_name]
     if @current_site.save
       respond_to do |format|
-        format.html { redirect_to [:edit, :admin, @current_site], :notice => "Successfully created the domain #{params[:site][:domain_name]}" }
+        format.html { redirect_to [:edit, :admin, @current_site], :notice => "Successfully created the domain name #{params[:site][:domain_name]}" }
         format.js
       end
     else
@@ -19,8 +19,9 @@ class Admin::DomainsController < AdminBaseController
 
   def destroy
     @domain = @current_site.domain_names[params[:id].to_i]
+    @current_site.domain_names.delete_at(params[:id].to_i)
 
-    if @current_site.domain_names.delete_at(params[:id].to_i)
+    if  @current_site.save
       respond_to do |format|
         format.html { redirect_to [:edit, :admin, @current_site], :notice => "Successfully deleted the domain name #{@domain}" }
         format.js

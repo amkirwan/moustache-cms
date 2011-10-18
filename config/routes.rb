@@ -21,10 +21,6 @@ HandlebarCms::Application.routes.draw do
     resources :sites, :path => 'current_site', :controller => 'current_site', :except => [:index, :show] do
       resources :meta_tags, :except => [:index, :show] 
       resources :domains, :except => [:index, :show]
-      member do
-        get 'new_domain'
-        delete 'delete_domain'
-      end
     end
 
   end
