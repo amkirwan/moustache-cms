@@ -1,4 +1,4 @@
-class Admin::DomainsController < AdminBaseController
+class Admin::DomainNamesController < AdminBaseController
 
   before_filter :authorize_current_site
 

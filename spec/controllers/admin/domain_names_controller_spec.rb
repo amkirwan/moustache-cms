@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Admin::DomainsController do
+describe Admin::DomainNamesController do
   let(:current_site) { mock_model(Site, :id => "1", :name => "foobar").as_null_object }
   let(:current_user) { logged_in(:role? => "admin", :site_id => current_site.id) }
 
@@ -29,7 +29,7 @@ describe Admin::DomainsController do
     
     it "should render the new template" do
       do_get
-      response.should render_template("admin/domains/new")
+      response.should render_template("admin/domain_names/new")
     end
   end
 

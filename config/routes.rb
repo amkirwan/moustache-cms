@@ -20,7 +20,7 @@ HandlebarCms::Application.routes.draw do
 
     resources :sites, :path => 'current_site', :controller => 'current_site', :except => [:index, :show] do
       resources :meta_tags, :except => [:index, :show] 
-      resources :domains, :except => [:index, :show]
+      resources :domain_names, :except => [:index, :show]
     end
 
   end
