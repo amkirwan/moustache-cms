@@ -1,5 +1,9 @@
 module Admin::CurrentSiteHelper
 
+  def site_domain_name_id(domain)
+    'site_domain_name_' + domain.gsub(/\./, '_')
+  end
+
   def can_manage_domain?(domain, index)
     if domain != @current_site.full_subdomain
       render :partial => 'admin/current_site/domain', :locals => { :domain => domain, :index => index }

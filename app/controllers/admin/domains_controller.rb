@@ -18,12 +18,12 @@ class Admin::DomainsController < AdminBaseController
   end
 
   def destroy
-    @domain = @current_site.domain_names[params[:id].to_i]
+    @domain_name = @current_site.domain_names[params[:id].to_i]
     @current_site.domain_names.delete_at(params[:id].to_i)
 
     if  @current_site.save
       respond_to do |format|
-        format.html { redirect_to [:edit, :admin, @current_site], :notice => "Successfully deleted the domain name #{@domain}" }
+        format.html { redirect_to [:edit, :admin, @current_site], :notice => "Successfully deleted the domain name #{@domain_name}" }
         format.js
       end
     end

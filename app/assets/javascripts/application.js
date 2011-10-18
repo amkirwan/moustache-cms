@@ -4,6 +4,7 @@
 //= require admin/pages
 //= require admin/theme_assets
 //= require admin/site_assets
+//= require admin/current_site
 //= require_self
 
 jQuery(function() {

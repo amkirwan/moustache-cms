@@ -90,8 +90,8 @@ describe Admin::DomainsController do
 
   describe "DELETE destroy" do
     let(:params) {{ "site_id" => current_site.to_param, "id" => "0" }}
-    let(:domain) { "test.com" }
-    let(:domain_names) { [domain] }
+    let(:domain_name) { "test.com" }
+    let(:domain_names) { [domain_name] }
 
     before(:each) do
       current_site.stub(:domain_names).and_return(domain_names)
@@ -105,6 +105,11 @@ describe Admin::DomainsController do
     it "should assign the current_site" do
       do_delete
       assigns(:current_site).should == current_site
+    end
+
+    it "should assign the domain_name" do
+      do_delete
+      assigns(:domain_name).should == domain_name
     end
       
     context "with valid params" do
@@ -126,7 +131,7 @@ describe Admin::DomainsController do
 
       it "should set the the flash notice message" do
         do_delete
-        flash[:notice].should == "Successfully deleted the domain name #{domain}"
+        flash[:notice].should == "Successfully deleted the domain name #{domain_name}"
       end
     end
   end
