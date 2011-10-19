@@ -4,4 +4,4 @@
     - @current_site.domain_names.each.with_index do |domain, index|
       = can_manage_domain?(domain, index)  
     %li#add_domain
-      = link_to "Add Domain Names", [:new, :admin, @current_site, :domain], :remote => true
+      = link_to "Add Domain Names", [:new, :admin, @current_site, :domain_name], :remote => true
