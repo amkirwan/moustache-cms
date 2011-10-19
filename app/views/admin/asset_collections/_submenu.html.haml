@@ -6,7 +6,7 @@
         %ul 
           - if can? :create, @asset_collection
             %li
-              = link_to "New Asset", [:new, :admin, @asset_collection, :site_asset]
+              = link_to "New Assets", [:new, :admin, @asset_collection, :site_asset]
           - if can? :update, @asset_collection
             %li
               = link_to "Edit Collection Props", [:edit, :admin, @asset_collection]

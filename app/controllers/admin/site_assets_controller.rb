@@ -23,9 +23,11 @@ class Admin::SiteAssetsController < AdminBaseController
 
   # POST /admin/asset_collections/id/site_assets
   def create
+    @site_asset.name = params[:name]
+    @site_asset.asset = params[:file]
     creator_updator_set_id @site_asset    
-    try_site_asset_cache
-    if @asset_collection.site_assets << @site_asset && @site_asset.valid?
+    #try_site_asset_cache
+    if @site_asset.save
       redirect_to [:admin, @asset_collection, :site_assets], :notice => "Successfully created the asset #{@site_asset.name}"
     else
       render :new

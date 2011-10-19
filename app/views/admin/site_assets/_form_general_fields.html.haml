@@ -1,12 +1,11 @@
 %ul.form_fields
-  %li
-    = f.label :name, "Name<abbr title='required' class='required'>*</abbr>".html_safe
-    = f.text_field :name
-  %li
-    = f.label :description
-    = f.text_area :description, :cols => "50", :rows => "10"
-  %li
-    = f.label :tags
-    = f.text_field :tags
-  = site_asset_record_type? f
-
+  - if @site_asset.new_record?
+    = render :partial => 'new_site_asset', :object => f
+  - else 
+    %li
+      = f.label :name, "Name<abbr title='required' class='required'>*</abbr>".html_safe
+      = f.text_field :name
+    %li
+      = f.label :tags
+      = f.text_field :tags
+    = render :partial => 'site_asset'
