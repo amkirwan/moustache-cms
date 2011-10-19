@@ -14,3 +14,15 @@ Then /^I should now be editing the meta tag "([^"]*)" for the page "([^\"]*)"$/ 
   meta_tag = page.meta_tags.where(:name => meta_name).first
   Then %{I should be on the edit admin page "#{page.to_param}" meta tag page for "#{meta_tag.to_param}"}
 end
+
+
+Given /^the site "([^"]*)" with a custom meta tag "([^"]*)" with the content "([^"]*)"$/ do |site, meta_name, meta_content|  
+    When %{I edit the current site "foobar"}
+    And %{I follow "Add Meta Tag"}
+    And %{I fill in "meta_tag_name" with "#{meta_name}"}
+    And %{I fill in "meta_tag_content" with "#{meta_content}"}
+    And %{I press "Create Meta Tag"}
+    Then %{I should now be editing the current site "foobar"}
+    And %{I should see "Successfully created the meta tag DC.author"}
+end
+

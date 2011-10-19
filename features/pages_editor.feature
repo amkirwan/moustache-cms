@@ -85,6 +85,31 @@ Scenario: Edit an existing page the user is an editor of
   And the "editor_id_cds27" checkbox should be checked
   And the "page_page_parts_attributes_0_content" field should contain "This is some new text"
 
+@create_new_meta_tag_for_page
+  Scenario:  Add new meta tags to a page
+    Given these pages exist in the site "foobar.example.com" created by user "cds27"
+    | title  | status    | 
+    | foobar | published | 
+    When I go to the admin pages page
+    And I follow "foobar"
+    And I follow "Add Meta Tag"
+    And I fill in "meta_tag_name" with "DC.author"
+    And I fill in "meta_tag_content" with "Foobar Baz"
+    And I press "Create Meta Tag"
+    Then I should now be editing the page "foobar"
+    And I should see "Successfully created the meta tag DC.author"
+
+
+@delete_meta_tag_for_page
+  Scenario: Deleting a meta tag for a page
+    Given these pages exist in the site "foobar.example.com" created by user "cds27"
+    | title  | status    | 
+    | foobar | published | 
+    And the page "foobar" with a custom meta tag "DC.author" with the content "Foobar Baz"
+    When I follow "Delete"
+    Then I should now be editing the page "foobar"
+    And I should see "Successfully deleted the meta tag DC.author"
+
 @delete_page
 Scenario: Delete page the user is an editor of
   Given these pages exist in the site "foobar.example.com" created by user "cds27"

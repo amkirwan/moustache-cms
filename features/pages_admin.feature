@@ -119,6 +119,31 @@ Scenario: Edit a page
   And I press "Update Page"
   Then I should be on the admin pages page
   And I should see "Successfully updated the page foobar"
+
+@create_new_meta_tag_for_page
+  Scenario:  Add new meta tags to a page
+    Given these pages exist in the site "foobar.example.com" created by user "rg874"
+    | title  | status    | 
+    | foobar | published | 
+    When I go to the admin pages page
+    And I follow "foobar"
+    And I follow "Add Meta Tag"
+    And I fill in "meta_tag_name" with "DC.author"
+    And I fill in "meta_tag_content" with "Foobar Baz"
+    And I press "Create Meta Tag"
+    Then I should now be editing the page "foobar"
+    And I should see "Successfully created the meta tag DC.author"
+
+
+@delete_meta_tag_for_page
+  Scenario: Deleting a meta tag for a page
+    Given these pages exist in the site "foobar.example.com" created by user "rg874"
+    | title  | status    | 
+    | foobar | published | 
+    And the page "foobar" with a custom meta tag "DC.author" with the content "Foobar Baz"
+    When I follow "Delete"
+    Then I should now be editing the page "foobar"
+    And I should see "Successfully deleted the meta tag DC.author"
   
 @delete_page
 Scenario: Delete page as an admin
