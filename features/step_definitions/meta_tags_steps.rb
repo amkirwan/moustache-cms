@@ -5,7 +5,8 @@ Given /^the page "([^"]*)" with a custom meta tag "([^"]*)" with the content "([
     And %{I fill in "meta_tag_name" with "#{meta_name}"}
     And %{I fill in "meta_tag_content" with "#{meta_content}"}
     And %{I press "Create Meta Tag"}
-    And %{I should see "Successfully created meta tag DC.author"}
+    Then %{I should now be editing the page "foobar"}
+    And %{I should see "Successfully created the meta tag DC.author"}
 end
 
 Then /^I should now be editing the meta tag "([^"]*)" for the page "([^\"]*)"$/ do |meta_name, page_name|

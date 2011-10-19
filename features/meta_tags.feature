@@ -19,7 +19,7 @@ Background: Login create default site
     And I fill in "meta_tag_content" with "Foobar Baz"
     And I press "Create Meta Tag"
     Then I should now be editing the page "foobar"
-    And I should see "Successfully created meta tag DC.author"
+    And I should see "Successfully created the meta tag DC.author"
 
 @delete_meta_tag_for_page
   Scenario: Deleting a meta tag for a page
