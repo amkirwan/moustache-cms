@@ -31,7 +31,7 @@ class AssetCollection
   before_destroy :remove_folder 
 
   def remove_folder
-    FileUtils.rm_rf(File.join(Rails.root, 'public', 'assets', site.id, name))
+    FileUtils.rm_rf(File.join(Rails.root, 'public', 'assets', site.id.to_s, name))
   end
 
 end
