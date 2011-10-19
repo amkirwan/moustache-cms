@@ -5,6 +5,9 @@
 //= require admin/theme_assets
 //= require admin/site_assets
 //= require admin/current_site
+//= require plupload/plupload.full.js
+//= require plupload/jquery.plupload.queue/jquery.plupload.queue.js
+//= require site_asset_plupload
 //= require_self
 
 jQuery(function() {
