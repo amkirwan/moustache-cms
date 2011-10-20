@@ -1,5 +1,10 @@
 %fieldset.form_submit
   %ul 
-    %li
-      = link_to "return to asset collection", [:admin, @asset_collection ], :class => "cancel"
-      = link_to "reset form", [:new, :admin, @asset_collection, :site_asset ], :class => "cancel"
+    - if @site_asset.new_record?
+      %li
+        = link_to "return to asset collection", [:admin, @asset_collection ], :class => "cancel"
+        = link_to "reset form", [:new, :admin, @asset_collection, :site_asset ], :class => "cancel"
+    - else 
+      %li 
+        = f.submit button_label, :class => "submit"
+        = link_to "Cancel", [:admin, @asset_collection], :class => "cancel"

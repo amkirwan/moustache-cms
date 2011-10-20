@@ -49,6 +49,7 @@ describe SiteAsset do
     
   describe "before_update" do
     describe "#recreate" do
+
       it "should update the filename and recreate version when a new name is given" do
         @ac.site_assets.first.update_attributes(:name => "new_name")
         site_asset = @ac.site_assets.first

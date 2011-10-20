@@ -23,10 +23,9 @@ class Admin::SiteAssetsController < AdminBaseController
 
   # POST /admin/asset_collections/id/site_assets
   def create
-    @site_asset.name = params[:name]
-    @site_asset.asset = params[:file]
+    process_name(params[:name])
     creator_updator_set_id @site_asset    
-    #try_site_asset_cache
+    @site_asset.asset = params[:file]
     if @site_asset.save
       redirect_to [:admin, @asset_collection, :site_assets], :notice => "Successfully created the asset #{@site_asset.name}"
     else
@@ -61,5 +60,9 @@ class Admin::SiteAssetsController < AdminBaseController
     def creator_updator_set_id(site_asset)
       site_asset.creator_id = @current_user.id
       site_asset.updator_id = @current_user.id
+    end
+
+    def process_name(original_filename)
+      @site_asset.name = original_filename.chomp(File.extname(original_filename))
     end
 end

@@ -77,35 +77,44 @@ describe Admin::SiteAssetsController do
   
   describe "POST create" do
     
-    let(:params) { { "name" => "foobar", "asset_cache" => "1/rails.png", "asset" => AssetFixtureHelper.open("rails.png") } }
+    let(:params) { { "asset_collection_id" => asset_collection.id, "name" => "foobar.com", "file" => AssetFixtureHelper.open("rails.png") } }
     
     before(:each) do
       asset_collection.stub_chain(:site_assets, :new).and_return(site_asset)
     end
     
     def do_post(post_params=params)
-      post :create, { "asset_collection_id" => asset_collection.id, "site_asset" => post_params }
+      post :create,    post_params 
     end
     
     it "should create a new site_asset from the params" do
       site_assets.should_receive(:new).and_return(site_asset)
       do_post
     end
-    
+
     it "should assign the @site_asset for the view" do
       do_post
       assigns(:site_asset).should == site_asset
     end
     
+    it "should assign the filename and remove the extname from the file" do
+      controller.should_receive(:process_name).and_return('foobar')
+      do_post
+    end
+     
     it "should assign creator and updator to the current user" do
       controller.should_receive(:creator_updator_set_id).with(site_asset)
+      do_post
+    end
+
+    it "should assign the uploaded file to the asset" do
+      site_asset.should_receive(:asset=)
       do_post
     end
       
     context "with valid params" do
       it "should save the site_asset to the collection" do
-        asset_collection.should_receive(:site_assets).and_return(site_assets)
-        site_assets.should_receive(:<<).and_return(site_asset)
+        site_asset.should_receive(:save).and_return(true)
         do_post
       end
       
@@ -120,25 +129,11 @@ describe Admin::SiteAssetsController do
       end
     end    
     
-    context "using asset_cache when asset is nil on redisplay, ie validation fails" do
-      it "should set the asset to the asset_cache when the asset_cache is not empty and the asset is nil" do   
-        controller.should_receive(:try_site_asset_cache)
-        do_post({ "asset_cache" => "1/rails.png"})
-      end
-    end
-    
     context "with invalid params" do
       before(:each) do
-        asset_collection.stub(:site_assets).and_return(site_assets)
-        site_assets.stub(:<<).and_return(false)
+        site_asset.should_receive(:save).and_return(false)
       end
-      
-      it "should receive save and return false" do
-        asset_collection.should_receive(:site_assets).and_return(site_assets)
-        site_assets.should_receive(:<<).and_return(false)
-        do_post
-      end
-      
+
       it "should render the new template" do
         do_post
         response.should render_template("admin/site_assets/new")
