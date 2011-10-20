@@ -51,7 +51,7 @@ class SiteAssetUploader < CarrierWave::Uploader::Base
    
    
    private
-   
+
     def mime_types(file)
       MIME::Types.of(file.extension)
     end

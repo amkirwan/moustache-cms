@@ -40,7 +40,6 @@ Scenario: Create a new site asset
   When I view the collection "foobar" admin asset collection site assets page
   And I follow "New Asset" 
   And I fill in "site_asset_name" with "foobar"
-  And I fill in "site_asset_description" with "Hello, World!"
   And I attach the file "spec/fixtures/assets/rails.png" to "site_asset_asset" 
   And I press "Save Asset" 
   Then I should view the collection "foobar" admin asset collection site assets page
@@ -54,7 +53,6 @@ Scenario: Given I am logged in as an admin then I can edit the site assets I cre
   And I follow "rails" 
   Then I should now be editing the site asset "rails" in the collection "foobar"
   And I fill in "site_asset_name" with "foobar" 
-  And I fill in "site_asset_description" with "New Text" 
   And I should see the filename of the site asset
   And I press "Update Asset"
   And I should see "Successfully updated the asset foobar"

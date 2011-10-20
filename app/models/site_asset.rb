@@ -15,7 +15,6 @@ class SiteAsset
   
   # -- Fields 
   field :name
-  field :description
   field :content_type
   field :width, :type => Integer
   field :height, :type => Integer

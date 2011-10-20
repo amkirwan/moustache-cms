@@ -617,6 +617,8 @@ ul#assets {
     width: 12.3398693%;  /* 100px / 612px */
   }
   div.figcaption {
+    overflow: hidden;
+    font-size: 0.785714286em;
     text-align: center;
     font-weight: normal;
     padding-top: 2px; 

@@ -15,7 +15,7 @@ HandlebarCms::Application.routes.draw do
     resources :snippets        
 
     resources :asset_collections do
-      resources :site_assets 
+      resources :site_assets
     end
 
     resources :sites, :path => 'current_site', :controller => 'current_site', :except => [:index, :show] do

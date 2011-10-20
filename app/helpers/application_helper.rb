@@ -103,4 +103,5 @@ module ApplicationHelper
       @theme_asset
     end
   end
+
 end

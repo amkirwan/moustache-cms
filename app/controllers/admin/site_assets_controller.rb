@@ -13,8 +13,12 @@ class Admin::SiteAssetsController < AdminBaseController
     render :edit
   end
 
-  # GET /admin/asset_collections/id/site_assets/new
+  # GET /admin/asset_collections/asset_collection_id/site_assets/new
   def new
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   # GET /admin/asset_collections/id/site_assets/1/edit
@@ -23,7 +27,7 @@ class Admin::SiteAssetsController < AdminBaseController
 
   # POST /admin/asset_collections/id/site_assets
   def create
-    process_name(params[:name])
+    process_create_params
     creator_updator_set_id @site_asset    
     @site_asset.asset = params[:file]
     if @site_asset.save
@@ -49,7 +53,7 @@ class Admin::SiteAssetsController < AdminBaseController
       redirect_to [:admin, @asset_collection, :site_assets], :notice => "Successfully deleted the asset #{@site_asset.name}"
     end
   end
-  
+
   private
     def try_site_asset_cache                                                                  
       if !params[:site_asset][:asset_cache].empty? && params[:site_asset][:asset].nil?
@@ -63,6 +67,16 @@ class Admin::SiteAssetsController < AdminBaseController
     end
 
     def process_name(original_filename)
-      @site_asset.name = original_filename.chomp(File.extname(original_filename))
+      #@site_asset.name = original_filename.chomp(File.extname(original_filename))
+      @site_asset.name = original_filename
+    end
+
+    def process_create_params
+      if params[:site_asset].nil?
+        process_name(params[:name])
+      else
+        try_site_asset_cache
+        process_name(params[:site_asset][:name])
+      end
     end
 end
