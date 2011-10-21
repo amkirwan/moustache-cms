@@ -1,8 +1,8 @@
 - unless skip_children_on_initialize?(mongoid_tree_item, init)
   %li{:id => index_page_id(mongoid_tree_item)}
+    = page_is_sortable? mongoid_tree_item
     %strong= link_to mongoid_tree_item.title, [:edit, :admin, mongoid_tree_item] 
     %div.page_info
-      %em= index_page_time(mongoid_tree_item)
-      - if can? :destroy, mongoid_tree_item
-        = link_to( image_tag('delete_button.png', :class => "delete_image"), admin_page_path(mongoid_tree_item), :method => :delete, :confirm => "Are you sure you want to delete the page #{mongoid_tree_item.title}", :class => "delete") 
+      %span= index_page_time(mongoid_tree_item)
+      = can_destroy_mongoid_tree_item? mongoid_tree_item
     = child_pages?(mongoid_tree_item)

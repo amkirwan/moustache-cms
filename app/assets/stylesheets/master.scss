@@ -534,53 +534,63 @@ div#pages_list {
     width: 100%;
 		li {
 			position: relative;
-			padding: 5px 0 0 5px;
-			margin-bottom: 5px;
+			padding-top: 0.5em;
       margin-left: 1em;
-    strong {
-				display: block;
-				height: 2em;
+      em.sortable_list {
+        height: 28px;
+        width: 20px;
+        float: left;
+        cursor: move;
+        background: transparent image-url("page_list_move.png") no-repeat 0 0
+      }
+      strong {
+        display: block;
+        height: 2em;
         line-height: 2em;
         padding-left: 5px;
-				background: $foldable_bg;
-			}
-      div {
-				color: $med_text;
-				position: absolute;
-				right: 0px;
-				top: 5px;
-        font-size: 0.857142857em; /* 12 / 14 */
-				div {
-				  position: absolute;
-				  right: -60px;
-				  top: -3px;
-				}
-        img {
-          position: relative;
-          top: 3px;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+        -o-border-radius: 4px;
+        border-radius: 4px;
+        -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+        -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);  
+        box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+        background: $foldable_bg;
+        
+        a:link, a:visited {
+          font-size: 14px;
+          line-height: 26px;
+          padding: 4px 10px;
+          margin-right: 8px;
+          text-decoration: none;
+          color: $link_text;
+          text-decoration: none;
+          -webkit-transition: color 0.3s ease;
+          -moz-transition: color 0.3s ease;
+          -o-transition: color 0.3s ease;
+          transition: color 0.3s ease;
         }
-			}
-			a:link, a:visited {
-			  font-size: 14px;
-			  line-height: 26px;
-			  padding: 4px 10px;
-			  margin-right: 8px;
-			  text-decoration: none;
-			  color: $link_text;
-			  text-decoration: none;
-			  -webkit-transition: color 0.3s ease;
-			  -moz-transition: color 0.3s ease;
-			  -o-transition: color 0.3s ease;
-			  transition: color 0.3s ease;
-			}
-			a:hover, a:focus {
-			  color: $hover_text; 
-			  text-decoration: none;
-			}
+        a:hover, a:focus {
+          color: $hover_text; 
+          text-decoration: none;
+        }
+      }
+      div {
+        color: $med_text;
+        position: absolute;
+        right: 20px;
+        top: 1.25em;
+        font-size: 0.857142857em; /* 12 / 14 */
+        span {
+          line-height: 1;
+          vertical-align: top;
+        }
+        a {
+          position: relative;
+          top: -2px;
+        }
+      }
 		}
-    li:first-child {
-      padding-left: 0;
-    }
 		li#home_page {
       margin-left: 0;
 		}

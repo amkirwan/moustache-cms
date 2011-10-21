@@ -4,9 +4,6 @@
       = f.label :parent_id
       = f.collection_select :parent_id, Page.all.order(:title), :id, :title, { :include_blank => true }
     %li
-      = f.label :name, "Name"
-      = f.text_field :name
-    %li
       = f.label :title, "Title<abbr title='required' class='required'>*</abbr>".html_safe
       = f.text_field :title
     %li{:class => "inline"}

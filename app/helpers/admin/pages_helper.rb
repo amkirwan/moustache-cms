@@ -1,5 +1,19 @@
 module Admin::PagesHelper  
 
+  def page_is_sortable?(mongoid_tree_item)
+    unless mongoid_tree_item.root?
+      content_tag :em, "", :class => 'sortable_list'
+    end
+  end
+
+
+  def can_destroy_mongoid_tree_item?(mongoid_tree_item)
+    if (can? :destroy, mongoid_tree_item) && !mongoid_tree_item.root?
+      link_to( image_tag('delete_button.png', :class => "delete_image"), admin_page_path(mongoid_tree_item), :method => :delete, :confirm => "Are you sure you want to delete the page #{mongoid_tree_item.title}", :class => "delete") 
+    end
+  end
+
+
   def mongoid_tree_ul(mongoid_tree_set, init=true)
     render :partial => 'admin/pages/mongoid_tree', :locals => { :mongoid_tree_set => mongoid_tree_set, :init => init }
   end
