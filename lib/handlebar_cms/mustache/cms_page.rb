@@ -37,9 +37,9 @@ class HandlebarCms::Mustache::CmsPage < Mustache
       true
     elsif method.to_s =~ /^meta_tag_(.*)/ 
       true
-    elsif method.to_s =~ /^nav_children_(.*)/ && @current_site.page_by_name($1)
+    elsif method.to_s =~ /^nav_children_(.*)/ && @current_site.page_by_render_tag($1)
       true
-    elsif method.to_s =~ /^nav_siblings_and_self_(.*)/ && @current_site.page_by_name($1)
+    elsif method.to_s =~ /^nav_siblings_and_self_(.*)/ && @current_site.page_by_render_tag($1)
       true
     else
       super

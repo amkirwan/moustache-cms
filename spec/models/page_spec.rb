@@ -6,7 +6,7 @@ describe Page do
   let(:layout) { Factory(:layout, :site_id => site.id, :created_by_id => user.id, :updated_by_id => user.id) }
   let(:parent) { Factory(:page, :site_id => site.id, :layout_id => layout.id, :created_by_id => user.id, :updated_by_id => user.id, :editor_ids => [user.id], :post_container => true) }
   before(:each) do                 
-    @page = Factory(:page, :site_id => site.id, :parent => parent , :layout_id => layout.id, :created_by_id => user.id, :updated_by_id => user.id, :editor_ids => [user.id])
+    @page = Factory(:page, :render_tag => 'foobar_tag', :site_id => site.id, :parent => parent , :layout_id => layout.id, :created_by_id => user.id, :updated_by_id => user.id, :editor_ids => [user.id])
   end
   
   
@@ -145,8 +145,8 @@ describe Page do
       @page.should_not be_valid
     end
     
-    it "should not be valid without a unique name" do           
-      Factory.build(:page, :name => @page.name, :parent => @page, :site_id => site.id, :layout => layout, :created_by => user, :updated_by => user).should_not be_valid
+    it "should not be valid without a unique render_tag" do           
+      Factory.build(:page, :render_tag => @page.render_tag, :parent => @page, :site_id => site.id, :layout => layout, :created_by => user, :updated_by => user).should_not be_valid
     end
     
     it "should not be valid without a title" do
@@ -276,9 +276,9 @@ describe Page do
       end
     end
     
-    describe "Page#name" do
-      it "should return the page byt the name" do
-        Page.find_by_name(@page.name).should == @page
+    describe "Page#find_by_render_tag" do
+      it "should return the page byt the rener_tag" do
+        Page.find_by_render_tag(@page.render_tag).should == @page
       end
     end
   end
@@ -294,7 +294,7 @@ describe Page do
         @page.permalink.should == "http://#{@page.site.full_subdomain}/#{year}/#{month}/#{day}/#{@page.slug}"
       end
     end
-    
+
     describe "#published?" do
       it "should return true when the page's current state is published" do
         @page.published?.should be_true

@@ -7,7 +7,7 @@ describe HandlebarCms::Mustache::CmsPage do
 
   before(:each) do
     @controller = CmsSiteController.new
-    @page = Factory(:page, :name => "foobar", :site => site, :created_by => user, :updated_by => user)
+    @page = Factory(:page, :render_tag => "foobar", :site => site, :created_by => user, :updated_by => user)
     @page.page_parts << Factory.build(:page_part, 
                                       :name => "content", 
                                       :content => "define editable text method **strong**", 
@@ -132,8 +132,8 @@ describe HandlebarCms::Mustache::CmsPage do
   
   describe "navigaton" do 
     before(:each) do
-      @page2 = Factory(:page, :name => "foobar2", :site => site, :parent => @page, :created_by => user, :updated_by => user)
-      @page3 = Factory(:page, :name => "foobar3", :site => site, :parent => @page, :created_by => user, :updated_by => user)
+      @page2 = Factory(:page, :render_tag => "foobar2", :site => site, :parent => @page, :created_by => user, :updated_by => user)
+      @page3 = Factory(:page, :render_tag => "foobar3", :site => site, :parent => @page, :created_by => user, :updated_by => user)
     end
     
     after(:each) do

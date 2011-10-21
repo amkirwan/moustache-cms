@@ -116,8 +116,8 @@ describe Site do
     
     describe "#page_by_name" do
       it "should return the page by the title" do   
-        @site.pages << page = Factory(:page, :name => "foobar", :site => @site, :layout => @layout, :created_by => @user, :updated_by => @user)
-        @site.page_by_name(page.name).should == page
+        @site.pages << page = Factory(:page, :render_tag => "foobar", :site => @site, :layout => @layout, :created_by => @user, :updated_by => @user)
+        @site.page_by_render_tag(page.render_tag).should == page
       end
     end
     

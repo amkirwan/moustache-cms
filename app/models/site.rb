@@ -68,8 +68,8 @@ class Site
     pages.where(:full_path => path).first
   end
   
-  def page_by_name(name)  
-    pages.where(:name => name).first
+  def page_by_render_tag(tag)  
+    pages.where(:render_tag => tag).first
   end
   
   def css_files        

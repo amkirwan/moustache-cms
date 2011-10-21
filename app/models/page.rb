@@ -6,7 +6,7 @@ class Page
   include Mongoid::TaggableWithContext
 
   attr_accessible :parent_id,
-                  :name,
+                  :render_tag,
                   :title, 
                   :slug,
                   :full_path,
@@ -23,7 +23,7 @@ class Page
                   :tags
                   
   # -- Fields -----------------------------------------------
-  field :name
+  field :render_tag
   field :title
   field :slug
   field :full_path
@@ -48,7 +48,7 @@ class Page
   accepts_nested_attributes_for :page_parts
   
   # -- Validations -----------------------------------------------
-  validates :name,
+  validates :render_tag,
             :uniqueness => { :scope => :site_id, :allow_blank => true }
             
   validates :title,
@@ -85,7 +85,7 @@ class Page
   end
   
   # -- Callbacks -----------------------------------------------
-  before_validation :format_title, :slug_set, :full_path_set, :breadcrumb_set, :format_name
+  before_validation :format_title, :slug_set, :full_path_set, :breadcrumb_set, :format_render_tag
   before_save :uniq_editor_ids
   before_update :update_current_state_time
   before_create :permalink_set
@@ -106,8 +106,8 @@ class Page
     self.where(:title => title).first
   end
   
-  def self.find_by_name(name)
-    self.where(:name => name).first
+  def self.find_by_render_tag(name)
+    self.where(:render_tag => name).first
   end
 
   # -- Scopes ----------------------------------------------------------
@@ -154,12 +154,12 @@ class Page
       end
     end
 
-    def format_name
+    def format_render_tag
       #self.name.strip! unless self.name.nil?
-      if !self.name.nil?
-        self.name.strip!
-        self.name.downcase!
-        self.name.gsub!(/\s/, '_')
+      if !self.render_tag.nil?
+        self.render_tag.strip!
+        self.render_tag.downcase!
+        self.render_tag.gsub!(/\s/, '_')
       end
     end
     
