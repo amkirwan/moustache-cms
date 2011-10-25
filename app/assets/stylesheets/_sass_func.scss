@@ -1,0 +1,3 @@
+@function calc_em($target_px, $context) {
+  @return ($target_px / $context) * 1em;
+}

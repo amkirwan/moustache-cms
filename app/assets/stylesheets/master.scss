@@ -1,20 +1,14 @@
 /*
 *= require_self
 */
-@import "reset";
-@import "mixin_links";
-@import "tables";
-
 /*layout colors */
+
 $body_bg: #F9F8F3;
 $header_bg: #2c2b2b;
 $content_bg: #F9F8F3;
 $sidebar_border: #A8A8A8;
 $sidebar_heading: #FB5000;
 $footer_bg: #2c2b2b;
-$flash_color: #FFD324;
-$error_ex_heading_color: #2C2C2C;
-$error_ex_color: #777777;
 $foldable_bg: #E9E8E6;
 $submenu_bg: #E4E3E1;
 $action_button_bottom: #2C2C2C;
@@ -25,7 +19,9 @@ $med_text: #9C9C9C;
 $light_text: #FFF;
 $base_font: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, sans-serif;
 $base_text: normal 100% $base_font;
+$base_font_size: 16px;
 $heading_font: "proxima-nova-extra-condensed-1", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, Arial, sans-serif;
+
 
 /* link text */
 $link_text: #d54e0e;
@@ -33,6 +29,24 @@ $hover_text: #9b3c0e;
 $nav_text: #FB5000;
 
 $body_min_height: 1000px;
+
+/* grid */
+$page_width: 960px;
+$container_width: 816px;
+$columns: 12;
+$nav_section_width: 204px;
+$content_section_width: 612px;
+
+/* dimensions */
+$header_height: 40px;
+$footer_height: 60px;
+
+@import "reset";
+@import "mixin_links";
+@import "tables";
+@import "css_three";
+@import "flash_and_error_messages";
+@import "sass_func";
 
 
 /* general rules */
@@ -49,10 +63,7 @@ body {
 a:link, a:visited, span.fake_link {
   color: $link_text; 
   text-decoration: none;
-  -webkit-transition: color 0.3s ease;
-  -moz-transition: color 0.3s ease;
-  -o-transition: color 0.3s ease;
-  transition: color 0.3s ease;
+  @include horizontal_gradiant;
 } 
 
 a:hover, a:focus, span.fake_link:hover {
@@ -63,37 +74,26 @@ a:hover, a:focus, span.fake_link:hover {
 
 
 h1 {
-  font: bold 1.5em / 1 $heading_font; /* 24px / 16px */
+  font: bold 1.5em/1 $heading_font; /* 24px / 16px */
   font-variant:small-caps;
   color: $dark_text;
 }
 
 h2 {
   font-variant:small-caps;
-  font: normal 1.125em / 1.25 $heading_font; /* 18px / 16px */
+  font: normal 1.125em/1.25 $heading_font; /* 18px / 16px */
   color: $dark_text;
 }
 
 h3, h4, h5 {
-  font: normal 1.125em / 1.25 $heading_font; /* 18px / 16px */
+  font: normal 1.125em/1.25 $heading_font; /* 18px / 16px */
   color: $dark_text;
 }
-
-body.current_site h5 {
-  margin-top: 1em;
-  font-size: 1em;
-  font-weight: bold;
-  margin-left: 0.285714286em;
-}
-
 
 /* rounded button links with gradient */
 a:link.action, a:visited.action {
   color: $light_text;
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
-  -o-border-radius: 4px;
-  border-radius: 4px;
+  @include rounded_corners;
   text-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8);
   padding: 4px 20px;
   border: 1px solid rgba(92, 92, 92, 0.5);
@@ -104,7 +104,7 @@ a:link.action, a:visited.action {
 
 a:hover.action, a:focus.action {
   text-decoration: none;
-  background: #2C2C2B;
+  background: lighten(#000, 10%)
 }
 
 ul li {
@@ -115,98 +115,27 @@ img, embed, object, video { max-width: 100%; }
 
 /* end general rules */
 
-/* error and flash messages */ 
-
-div#flash_notice_wrapper {
-  position: absolute;
-  width: 65%;
-  top: -10px;
-  left: 14%;
-  text-align: center;
-	padding: 4px 0;
-	border-top: 1px solid $flash_color;
-	border-bottom: 1px solid $flash_color;
-  background: #FFF6BF;
-  p {
-    font-size: 0.8125em; /* 14 / 16 */
-  }
-}
-
-div.field_with_errors {
-  padding: 5px;
-  background-color: $error_ex_color;
-  display: table;
-  -webkit-border-top-left-radius: 4px;
-  -webkit-border-top-right-radius: 4px;
-  -moz-border-top-left-radius: 4px;
-  -moz-border-top-right-radius: 4px;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-  label {
-    color: $light_text;
-  }
-}
-
-div.field_with_errors + div.field_with_errors {
-  -webkit-border-radius: 4px;
-  -webkit-border-top-left-radius: 0;
-  -moz-border-radius: 4px;
-  -moz-border-top-left-radius: 0;
-  border-radius: 4px;
-  border-top-left-radius: 0;
-}
-
-div#error_explanation {
-  width: 80%;
-  border: 2px solid $error_ex_color;
-  padding: 8px;
-  margin-bottom: 16px;
-  background-color: #f0f0f0;
-  h3 {
-    text-align: left;
-    font-size: 1em; /* 14px */
-    font-weight: bold;
-    padding: 5px 1em 5px 1em;
-    margin: -7px;
-    margin-bottom: 0px;
-    background-color: $error_ex_heading_color;
-    color: $light_text;
-  }
-
-  ul li {
-    font-size: 1em; /* 14px */
-    list-style-type: disc;
-    padding: 2px 0;
-    margin-left: 2em;
-  }
-  ul li:first-child {
-    padding-top: 8px;
-  }
-}
-
 
 /* Layout */
 
+//  960px for total page width
+//  816px for content area
+//  12 column grid with 60px wide columns and 8px padding
+//  admin_nav column = 204px
+//  content column = 612px
+
 #wrapper {
   margin: 0 auto;
-  width: 85%; /* 960px * 0.85 = 816px */
+  width: percentage($container_width / $page_width);
 }
 
-/*
-  960px for total page width
-  816px for content area
-  12 column grid with 60px wide columns and 8px padding
-  admin_nav column = 204px
-  content column = 612px
-*/
 #header {
   width: 100%;
   background: $header_bg;
-  height: 40px;
+  height: $header_height;
   h1 {
     float: left;
-    margin-left: 0.4901961%; /* 4px / 816px */
-    @include light_text_links(1.25em, 1.5em); /* 20/16=1.25  24/16=1.5 */
+    @include light_text_links(calc_em(20px, $base_font_size), 1.5); 
     letter-spacing: .15em;
   }
 }
@@ -220,21 +149,21 @@ div#error_explanation {
 
 
 div#footer {
-  height: 60px;
+  height: $footer_height;
   background: $footer_bg;
 }
 
 
 div#welcome {
   float: right;
-  padding-right: 0.9803922%; /* 8px / 816px */
   padding-top: 1.25em;
+  padding-right: 8px;
   ul {
     list-style: none;
     display: inline;
     li {
       color: $light_text;
-      font-size: 0.75em; /* 12px / 16px */ 
+      font-size: calc_em(12px, $base_font_size); 
       line-height: 1;
       text-decoration: none;
       display: inline;
@@ -245,20 +174,20 @@ div#welcome {
 
 div#nav {
   float: left;
-  width: 23.0392157%; /* 188 / 816 + margin-right = 204px */
-  margin-top: 20px;
+  width: percentage(($nav_section_width - 16px)/$container_width); // 188 / 816 + margin-right = 204px */
   margin-right: 16px;
+  margin-top: 20px;
   ul {
     padding-right: 0px;
     text-align: left;
     list-style: none;
     li {
-      padding-left: 8px;
+      padding-left: percentage(8px / $nav_section_width);
       border-top: 1px solid $sidebar_border;
       a:link, a:visited {
         font: $base_text;
         font-size: 1em; /* 16px */
-        line-height: 1.75em; /* 28px / 16px */
+        line-height: 1.75;
         text-decoration: none;
         color: $nav_text;
       }
@@ -273,7 +202,6 @@ div#nav {
       padding: 4px 0 4px 8px;
       margin-bottom: 2px;
       color: $dark_text;
-      height: 1.4em;
     }
     li:last-child {
       border-bottom: 1px solid $sidebar_border; 
@@ -309,7 +237,7 @@ div#content {
   position: relative;
   min-height: $body_min_height; 
   float: left;
-  width: 73.0392157%; /* (612 - 16) / 816 */
+  width: percentage(($content_section_width - 16px) / $container_width);
   margin: 1em 0; 
   padding-left: 16px;
   background: $content_bg image-url("content_bg.png") repeat-y 0 0; 
@@ -317,7 +245,7 @@ div#content {
 
 div#content_header_wrapper {
   border-bottom: 1px solid $sidebar_border;
-  padding: 8px 8px 4px 8px;
+  padding: 8px 0px 4px 8px;
   position: relative;
   height: 1.4em;
   h2 {
@@ -325,13 +253,13 @@ div#content_header_wrapper {
   }
   div.create, div.delete, div.actions {
     text-align: center;
-    font-size: 0.875em; /* 14px / 16px */
+    font-size: calc_em(14px, $base_font_size);
     float: right;
   }
 }
 
 div#content_inner_wrapper {
-  font-size: 0.875em;
+  font-size: calc_em(14px, $base_font_size);
   margin-top: 2px;
   border-top: 1px solid $sidebar_border;
   padding-top: 16px;
@@ -342,7 +270,7 @@ ul.submenu {
   position: absolute;
   right: 0;
   z-index: 222;
-  line-height: 1.5em;
+  line-height: 1.5;
   li {
     float: left;
     position: relative;
@@ -370,10 +298,7 @@ ul.submenu {
   }
   li.top_menu {
     color: $light_text;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    -o-border-radius: 4px;
-    border-radius: 4px;
+    @include rounded_corners;
     text-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8);
     padding: 4px 20px;
     border: 1px solid rgba(92, 92, 92, 0.5);
@@ -390,25 +315,22 @@ form.site_prop {
     margin-bottom: 8px;
     label {
       display: block;
-      margin-left: 0.285714286em; /* 4px / 14px */
-      margin-bottom: 0.214285714em; /* 3px / 14px */
+      margin-left: calc_em(4px, 14px);
+      margin-bottom: calc_em(3px, 14px);
       font-weight: bold;
     }
     input {
-      font-size: 0.857142857em; /* 12px / 14px */
+      font-size: calc_em(12px, 14px);
     }
     input, textarea {
       border: none;
       border-right: 1px solid #FFF;
       border-bottom: 1px solid #FFF;
       padding: 4px 8px;
+      @include rounded_corners;
       background-image: -webkit-gradient(linear, 0% 0%, 0% 12%, from(#969696), to(#E2E1DF));
       background-image: -moz-linear-gradient(0% 12% 90deg, #E2E1DF, #969696);
       background-color: #E2E1DF;
-      -webkit-border-radius: 4px;
-      -moz-border-radius: 4px;
-      -o-border-radius: 4px;
-      border-radius: 4px;
     }
     input:focus, textarea:focus {
       border-right: 1px solid #F2EFEF;
@@ -444,10 +366,7 @@ form.site_prop {
   .submit, .file_field {
     font-size: 1em;
     color: $light_text;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    -o-border-radius: 4px;
-    border-radius: 4px;
+    @include rounded_corners;
     text-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8);
     padding: 4px 20px;
     border: 1px solid rgba(92, 92, 92, 0.5);
@@ -467,20 +386,12 @@ form.site_prop {
   .foldable, .grouping {
     padding: 0 8px 4px 8px;
     margin-bottom: 8px;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    -o-border-radius: 4px;
-    border-radius: 4px;
+    @include rounded_corners;
     background-color: $foldable_bg;
     legend {
       padding: 4px 8px;
       margin-left: - 8px;
-      -webkit-border-top-left-radius: 4px;
-      -webkit-border-top-right-radius: 4px;
-      -moz-border-radius-topleft: 4px;
-      -moz-border-radius-topright: 4px;
-      border-top-left-radius: 4px;
-      border-top-right-radius: 4px;
+      @include rounded_corners_top_left_and_right;
       color: $light_text;
       width: 100%;
       background: rgba(44, 44, 44, 0.8);
@@ -489,10 +400,6 @@ form.site_prop {
   .foldable legend:hover {
       cursor: pointer;
   }
-}
-
-ul.domains_list {
-  margin-left: 0.285714286em;
 }
 
 .img_thumb {
@@ -515,7 +422,7 @@ span.fold_arrow {
   width: 9px;
   height: 6px;
   position: relative;
-  left: 0.714285714em; /* 10px / 14px */
+  left: calc_em(10px, 14px);
   bottom: 1px;
   background: transparent image-url("fold-arrow.png") no-repeat 0 0
 }
@@ -548,10 +455,7 @@ div#pages_list {
         height: 2em;
         line-height: 2em;
         padding-left: 5px;
-        -moz-border-radius: 4px;
-        -webkit-border-radius: 4px;
-        -o-border-radius: 4px;
-        border-radius: 4px;
+        @include rounded_corners;
         -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
         -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);  
         box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
@@ -580,7 +484,7 @@ div#pages_list {
         position: absolute;
         right: 20px;
         top: 1.25em;
-        font-size: 0.857142857em; /* 12 / 14 */
+        font-size: calc_em(12px, 14px);
         span {
           line-height: 1;
           vertical-align: top;
@@ -601,13 +505,10 @@ ul#assets {
   overflow: auto;
   li {
     float: left;
-    padding: 1em; /* 5px / 14px */
+    padding: 1em; 
     margin: 16px;
     border: 1px solid $sidebar_border;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    -o-border-radius: 4px;
-    border-radius: 4px;
+    @include rounded_corners;
     background: #FDFCFA;
     -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);  
@@ -622,9 +523,10 @@ ul#assets {
       border: 1px solid $hover_text;
     }
   }
-  li.show_site_assets {
+  li.show_site_asset {
+    text-align: center;
     padding-bottom: 1.5em;
-    width: 12.3398693%;  /* 100px / 612px */
+    width: percentage(75px / $content_section_width);
   }
   div.figcaption {
     overflow: hidden;
