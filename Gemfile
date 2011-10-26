@@ -1,5 +1,6 @@
 source 'http://rubygems.org'
 
+
 gem "rails", "3.1.0"   
 
 group :assets do
@@ -23,6 +24,8 @@ gem "rack-ssl-enforcer", "~> 0.2"
 gem "carrierwave-mongoid", :git => "git://github.com/jnicklas/carrierwave-mongoid.git", :require => "carrierwave/mongoid"
 gem "mime-types"
 gem "mongoid_taggable_with_context", :git => "git://github.com/amkirwan/mongoid_taggable_with_context.git", :branch => "master"
+
+gem "unicorn"
 
 group :development, :test do
   gem "rspec-rails", "~> 2.6" 
