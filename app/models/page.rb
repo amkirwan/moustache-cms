@@ -3,6 +3,7 @@ class Page
   include Mongoid::Timestamps
  
   include Mongoid::Tree 
+  include Mongoid::Tree::Ordering
   include Mongoid::TaggableWithContext
 
   attr_accessible :parent_id,
