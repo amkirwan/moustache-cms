@@ -20,9 +20,9 @@ class Admin::PagesController < AdminBaseController
     created_updated_by_for @page
     respond_with(@page) do |format|
       if @page.save
-        format.html { redirector [:edit, :admin, @page], [:admin, :pages], "Successfully created the page #{@page.title}" }
+        format.any { redirector [:edit, :admin, @page], [:admin, :pages], "Successfully created the page #{@page.title}" }
       else
-        format.html { render :new }
+        format.any { render :new }
       end 
     end
   end
@@ -35,9 +35,9 @@ class Admin::PagesController < AdminBaseController
     @page.updated_by = @current_user
     respond_with(@page) do |format|
       if @page.update_attributes(params[:page]) 
-        format.html { redirector [:edit, :admin, @page], [:admin, :pages], "Successfully updated the page #{@page.title}" }
+        format.any { redirector [:edit, :admin, @page], [:admin, :pages], "Successfully updated the page #{@page.title}" }
       else
-        format.html { render :edit }
+        format.any { render :edit }
       end
     end
   end
