@@ -53,7 +53,8 @@ class Page
             :uniqueness => { :scope => :site_id, :allow_blank => true }
             
   validates :title,
-            :presence => true
+            :presence => true,
+            :uniqueness => { :case_sensitive => false, :scope => :site_id }
             
   validates :full_path,
             :presence => true,
@@ -143,6 +144,14 @@ class Page
     editor.page_ids.delete(self.id)
     editor.save
   end
+
+  def sort_children(page_ids)
+    page_ids.each_with_index do |id, index|
+      child = self.children.find(id)
+      child.position = index
+      child.save
+    end
+  end
   
   # -- Private Instance Methods -----------------------------------------------
   private 
@@ -174,7 +183,7 @@ class Page
         self.slug = ""
       elsif self.title == "404"
         self.slug = "404"
-      elsif self.site.pages.root.nil?
+      elsif self.root?
         self.slug = "/"
         self.parent = nil
       elsif self.slug.blank?

@@ -154,6 +154,15 @@ describe Page do
       @page.should_not be_valid
     end
 
+    it "should not be valid without a unique title" do
+      Factory.build(:page, 
+                    :full_path => @page.title,
+                    :site_id => site.id, 
+                    :layout => layout, 
+                    :created_by => user, 
+                    :updated_by => user).should_not be_valid
+    end
+
     
     it "should not be valid without a slug" do
       @page.stub(:slug_set).and_return(nil)
@@ -285,6 +294,18 @@ describe Page do
   
   # -- Instance Methods -----------------------------------------------
   describe "Instance Methods" do
+    describe "sort_children" do
+      it "should update the pages in the array postion property to match their postion in the given array" do
+        page0 = Factory(:page, :site => site, :parent => @page)
+        page1 = Factory(:page, :site => site, :parent => @page)
+        page0.reload.position.should == 0 
+        page1.reload.position.should == 1 
+        @page.sort_children([page1.id.to_s, page0.id.to_s])
+        page0.reload.position.should == 1 
+        page1.reload.position.should == 0 
+      end
+    end
+
     describe "#permalink" do  
       it "should return the permalink in the format http://example.com/year/month/day/post-title" do
         time = DateTime.now

@@ -8,6 +8,7 @@ class Admin::PagesController < AdminBaseController
   def new
     @page.build_current_state
     @page.page_parts.build
+    @page.page_parts.first.name = "content"
   end
   
   def create
@@ -36,6 +37,16 @@ class Admin::PagesController < AdminBaseController
     if @page.destroy
       redirect_to [:admin, :pages], :notice => "Successfully deleted the page #{@page.title}"
     end
+  end
+
+  def sort
+    @page = current_site.pages.find(params[:id])
+    @page.sort_children(params[:children])
+    
+    flash.now[:notice] = "Updated Page Positions"
+    respond_to do |format|
+      format.js 
+    end 
   end
   
 end

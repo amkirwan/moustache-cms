@@ -6,7 +6,14 @@ jQuery ->
           $(this).remove()
         false
       
-      $('ul#sortable').sortable
+      $('ul.sortable').sortable
         handle: 'em.sortable_list'
         axis: 'y'
         opacity: 0.6
+        update: (event, ui) ->
+          params = $(this).sortable 'serialize'
+            'key': 'children[]' 
+          params += '&_method=put'
+          params += '&' + $('meta[name=csrf-param]').attr('content') + '=' + $('meta[name=csrf-token]').attr('content')
+
+          $.post $(this).attr('data_url'), params

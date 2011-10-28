@@ -15,15 +15,23 @@ module Admin::PagesHelper
 
 
   def mongoid_tree_ul(mongoid_tree_set, init=true)
-    render :partial => 'admin/pages/mongoid_tree', :locals => { :mongoid_tree_set => mongoid_tree_set, :init => init }
+    if mongoid_tree_set.first.parent.nil?
+      content_tag :ul, :class => 'pages' do
+        render :partial => 'admin/pages/mongoid_tree_item', :collection => mongoid_tree_set, :locals => { :init => init}
+      end
+    else
+      content_tag :ul, :class => 'sortable pages', :data_url => sort_admin_page_path(mongoid_tree_set.first.parent) do
+        render :partial => 'admin/pages/mongoid_tree_item', :collection => mongoid_tree_set, :locals => { :init => init}
+      end
+    end
+  end
+
+  def mongoid_tree_item_id(mongoid_tree_item)
+    mongoid_tree_item.title + '_' + mongoid_tree_item.id.to_s
   end
 
   def skip_children_on_initialize?(mongoid_tree_item, init)
     mongoid_tree_item.parent_id && init
-  end
-
-  def index_page_id(mongoid_tree_item)
-    mongoid_tree_item.root? ? "home_page" : mongoid_tree_item.title    
   end
 
   def index_page_time(mongoid_tree_item)

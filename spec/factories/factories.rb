@@ -78,11 +78,8 @@ end
 
 Factory.define :page do |page|
   page.site { Factory.build(:site) }
-  page.parent  nil
-  page.sequence(:render_tag) { |n| "name_#{n}" }
   page.sequence(:title) { |n| "title_#{n}" }
   page.sequence(:slug) { |n| "slug_#{n}" }
-  page.sequence(:full_path) { |n| "/full_path_#{n}" }
   page.sequence(:breadcrumb) { |n| "breadcrumb_#{n}" }
   page.layout { Factory.build(:layout) }
   page.current_state { Factory.build(:current_state) }

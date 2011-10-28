@@ -5,6 +5,7 @@ HandlebarCms::Application.routes.draw do
     resources :layouts, :except => :show
 
     resources :pages, :except => :show do 
+      put :sort, :on => :member
       resources :meta_tags, :except => [:index, :show]
     end
 
