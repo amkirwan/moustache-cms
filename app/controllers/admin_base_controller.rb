@@ -78,6 +78,10 @@ class AdminBaseController < ApplicationController
         #session[:cas_user] = 'mas3' if session[:cas_user].nil?
       end
     end
+
+    def update_path(object)
+     params[:commit] == "Save and Continue Editing" ? [:edit, :admin, object] : [:admin, object.class.name.pluralize.downcase.to_sym]
+    end
     
     def redirector(path_continue, path_redirect, notice=nil)
       if params[:commit] == "Save and Continue Editing"
