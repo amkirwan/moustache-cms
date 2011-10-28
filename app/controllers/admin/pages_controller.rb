@@ -2,40 +2,52 @@ class Admin::PagesController < AdminBaseController
   
   load_and_authorize_resource 
 
+  respond_to :html, :xml, :json
+
   def index
+    respond_with @pages
   end
   
   def new
     @page.build_current_state
     @page.page_parts.build
     @page.page_parts.first.name = "content"
+    respond_with @page
   end
   
   def create
     @page.site_id = @current_site.id
     created_updated_by_for @page
-    if @page.save
-      redirector [:edit, :admin, @page], [:admin, :pages], "Successfully created the page #{@page.title}"
-    else
-      render :new
+    respond_with(@page) do |format|
+      if @page.save
+        format.html { redirector [:edit, :admin, @page], [:admin, :pages], "Successfully created the page #{@page.title}" }
+      else
+        format.html { render :new }
+      end 
     end
   end
   
   def edit
+    respond_with @page
   end
   
   def update
     @page.updated_by = @current_user
-    if @page.update_attributes(params[:page]) 
-      redirector [:edit, :admin, @page], [:admin, :pages], "Successfully updated the page #{@page.title}"
-    else
-      render :edit
+    respond_with(@page) do |format|
+      if @page.update_attributes(params[:page]) 
+        format.html { redirector [:edit, :admin, @page], [:admin, :pages], "Successfully updated the page #{@page.title}" }
+      else
+        format.html { render :edit }
+      end
     end
   end
 
   def destroy
     if @page.destroy
-      redirect_to [:admin, :pages], :notice => "Successfully deleted the page #{@page.title}"
+      flash[:notice] = "Successfully deleted the page #{@page.title}"
+    end
+    respond_with(@page, :location => [:admin, :pages]) do |format|
+      format.js { @page } 
     end
   end
 
@@ -44,9 +56,6 @@ class Admin::PagesController < AdminBaseController
     @page.sort_children(params[:children])
     
     flash.now[:notice] = "Updated Page Positions"
-    respond_to do |format|
-      format.js 
-    end 
   end
   
 end

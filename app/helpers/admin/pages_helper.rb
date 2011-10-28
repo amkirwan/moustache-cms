@@ -9,7 +9,7 @@ module Admin::PagesHelper
 
   def can_destroy_mongoid_tree_item?(mongoid_tree_item)
     if (can? :destroy, mongoid_tree_item) && !mongoid_tree_item.root?
-      link_to( image_tag('delete_button.png', :class => "delete_image"), admin_page_path(mongoid_tree_item), :method => :delete, :confirm => "Are you sure you want to delete the page #{mongoid_tree_item.title}", :class => "delete") 
+      link_to( image_tag('delete_button.png', :class => "delete_image"), admin_page_path(mongoid_tree_item), :method => :delete, :confirm => "Are you sure you want to delete the page #{mongoid_tree_item.title}", :class => "delete", :remote => true) 
     end
   end
 

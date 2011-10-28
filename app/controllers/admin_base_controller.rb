@@ -4,6 +4,7 @@ class AdminBaseController < ApplicationController
   before_filter :fake_login unless Rails.env == "production"
   before_filter CASClient::Frameworks::Rails::Filter
   before_filter :current_site
+  after_filter :discard_flash_message
   #before_filter :assign_site
 
   check_authorization 
@@ -52,12 +53,16 @@ class AdminBaseController < ApplicationController
       end
       @current_site
     end
-
-  protected
     
     def logout
       reset_session
       redirect_to cms_html_path
+    end
+
+    def discard_flash_message
+      if request.xhr? && response != :found
+        flash.discard(:notice)
+      end
     end
     
   private
@@ -74,7 +79,7 @@ class AdminBaseController < ApplicationController
       end
     end
     
-    def redirector(path_continue, path_redirect, notice)
+    def redirector(path_continue, path_redirect, notice=nil)
       if params[:commit] == "Save and Continue Editing"
         redirect_to path_continue, :notice => notice
       else
