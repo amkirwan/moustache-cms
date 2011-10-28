@@ -6,7 +6,7 @@ describe Page do
   let(:layout) { Factory(:layout, :site_id => site.id, :created_by_id => user.id, :updated_by_id => user.id) }
   let(:parent) { Factory(:page, :site_id => site.id, :layout_id => layout.id, :created_by_id => user.id, :updated_by_id => user.id, :editor_ids => [user.id], :post_container => true) }
   before(:each) do                 
-    @page = Factory(:page, :render_tag => 'foobar_tag', :site_id => site.id, :parent => parent , :layout_id => layout.id, :created_by_id => user.id, :updated_by_id => user.id, :editor_ids => [user.id])
+    @page = Factory(:page, :site_id => site.id, :parent => parent , :layout_id => layout.id, :created_by_id => user.id, :updated_by_id => user.id, :editor_ids => [user.id])
   end
   
   
@@ -145,10 +145,6 @@ describe Page do
       @page.should_not be_valid
     end
     
-    it "should not be valid without a unique render_tag" do           
-      Factory.build(:page, :render_tag => @page.render_tag, :parent => @page, :site_id => site.id, :layout => layout, :created_by => user, :updated_by => user).should_not be_valid
-    end
-    
     it "should not be valid without a title" do
       @page.title = nil 
       @page.should_not be_valid
@@ -282,12 +278,6 @@ describe Page do
     describe "Page#find_by_title" do
       it "should return the page by the title" do
         Page.find_by_title(@page.title).should == @page
-      end
-    end
-    
-    describe "Page#find_by_render_tag" do
-      it "should return the page byt the rener_tag" do
-        Page.find_by_render_tag(@page.render_tag).should == @page
       end
     end
   end

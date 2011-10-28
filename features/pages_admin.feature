@@ -25,10 +25,10 @@ Scenario: Navigate to the Pages#index page
   | bar    | draft     | 
   When I go to the admin pages page
   Then I should be on the admin pages page 
-  And I should see "foobar" within "li#foobar"
-  And I should see the delete image "delete_button.png" in "li#foobar"
-  And I should see "bar" within "li#bar"
-  And I should see the delete image "delete_button.png" in "li#bar"
+  And I should see the page "foobar" 
+  And I should see the delete image "delete_button.png" associated with "foobar"
+  And I should see the page "bar"
+  And I should see the delete image "delete_button.png" associated with "bar"
   And I should see "New Page"
   
 @create_new_page_root_page
@@ -152,7 +152,7 @@ Scenario: Delete page as an admin
   | foobar | published | 
   | bar    | draft     |
   When I go to the admin pages page
-  And I follow "Delete" within "li#foobar"
+  And I follow "Delete" associated with "foobar"
   Then I should see "Successfully deleted the page foobar"
   And I should be on the admin pages page
   
@@ -163,7 +163,7 @@ Scenario: Delete page as an admin
   | foobar | published | 
   | bar    | draft     |
   When I go to the admin pages page
-  And I follow "Delete" within "li#foobar"
+  And I follow "Delete" associated with "foobar"
   Then I should see "Successfully deleted the page foobar"
   And I should be on the admin pages page
 

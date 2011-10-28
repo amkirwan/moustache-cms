@@ -43,7 +43,9 @@ describe Admin::PagesController do
     
     before(:each) do
       page.as_new_record
-      page.stub_chain(:page_parts, :build).and_return([mock_model("PagePart")])
+      page_part = mock_model("PagePart", :name => "content")
+      page.stub_chain(:page_parts, :build)
+      page.stub_chain(:page_parts, :first).and_return(page_part.as_null_object)
       Page.stub(:new).and_return(page)
     end
     
@@ -314,4 +316,5 @@ describe Admin::PagesController do
       response.should redirect_to(admin_pages_path)
     end
   end
+
 end
