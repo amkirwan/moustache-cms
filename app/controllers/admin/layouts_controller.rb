@@ -2,37 +2,54 @@ class Admin::LayoutsController < AdminBaseController
 
   load_and_authorize_resource 
 
+  respond_to :html, :except => :show
+  respond_to :xml, :json
+
   def index 
+    respond_with @layout
+  end
+
+  def show
+    respond_with @layout
   end
   
   def new
+    respond_with @layout
   end
   
   def create
     created_updated_by_for @layout
     @layout.site = @current_site
-    if @layout.save
-      redirector [:edit, :admin, @layout], [:admin, :layouts], "Successfully created the layout #{@layout.name}"
-    else
-      render :new
+    respond_with @layout do |format|
+      if @layout.save
+        format.html { redirect_to [:admin, :layouts], :notice => "Successfully created the layout #{@layout.name}" }
+      else
+        format.html { render :new }
+      end
+
     end
   end
   
   def edit
+    respond_with @layout
   end
   
   def update    
     @layout.updated_by = @current_user
-    if @layout.update_attributes(params[:layout]) 
-      redirector [:edit, :admin, @layout], [:admin, :layouts], "Successfully updated the layout #{@layout.name}"
-    else
-      render :edit
+    respond_with @layout do |format|
+      if @layout.update_attributes(params[:layout]) 
+        format.html { redirect_to update_path(@layout), :notice => "Successfully updated the layout #{@layout.name}" }
+      else
+        format.html { render :edit }
+      end
     end
   end
   
   def destroy
-    if @layout.destroy
-      redirect_to [:admin, :layouts], :notice => "Successfully deleted the layout #{@layout.name}"
+    respond_with(@layout, :location => [:admin, :layouts]) do |format|
+      if @layout.destroy
+        flash[:notice] = "Successfully deleted the layout #{@layout.name}"
+      end
     end
   end
 end

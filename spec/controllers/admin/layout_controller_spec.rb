@@ -112,6 +112,7 @@ describe Admin::LayoutsController do
       end
 
       it "should redirect to edit layout when commit == 'save and continue editing'" do
+        pending
         params["commit"] = "Save and Continue Editing"
         do_post
         response.should redirect_to(edit_admin_layout_path(layout))
