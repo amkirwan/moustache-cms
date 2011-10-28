@@ -6,8 +6,10 @@ class Layout
 
   #-- Fields -----------------------------------------------  
   field :name
-  index :name, unique: true
   field :content
+
+  # -- Index -------------------------------
+  index :name
   
   #-- Associations-----------------------------------------------
   has_many :pages, :dependent => :nullify

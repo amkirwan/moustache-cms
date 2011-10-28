@@ -7,11 +7,13 @@ class User
   
   # -- Fields -----------------------------------------------    
   field :puid
-  index :puid         
   field :firstname
   field :lastname
   field :email
   field :role 
+
+  # -- Index -------------------------------
+  index :puid
   
   #-- Associations-----------------------------------------------
   has_many :layouts_created, :class_name => "Layout", :foreign_key => :created_by_id

@@ -22,7 +22,7 @@ class Page
                   :meta_tags_attributes,
                   :tags
                   
-  # -- Fields -----------------------------------------------
+  # -- Fields -----------------------------
   field :title
   field :slug
   field :full_path
@@ -31,8 +31,12 @@ class Page
   field :post_container, :type => Boolean, :default => false    
 
   taggable
+
+  # -- Index -------------------------------
+  index :title
+  index :full_path
   
-  # -- Associations-----------------------------------------------
+  # -- Associations-------------------------
   embeds_one :current_state
   embeds_many :meta_tags, :as => :meta_taggable
   embeds_many :page_parts 
