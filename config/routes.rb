@@ -2,7 +2,7 @@ HandlebarCms::Application.routes.draw do
                               
   namespace :admin do
     resources :users
-    resources :layouts, :except => :show
+    resources :layouts
 
     resources :pages, :except => :show do 
       put :sort, :on => :member
