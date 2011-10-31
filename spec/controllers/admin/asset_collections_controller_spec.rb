@@ -166,6 +166,7 @@ describe Admin::AssetCollectionsController do
     context "with invalid params" do
       before(:each) do
         asset_collection.stub(:save).and_return(false)
+        asset_collection.stub(:errors => { :asset_collection => "asset_collection errors" })
       end
       
       it "should receive save and return false" do
@@ -188,7 +189,7 @@ describe Admin::AssetCollectionsController do
     end
     
     def do_put(put_params=params)
-      post :update, put_params
+      put :update, put_params
     end
     
     it "should receive AssetCollection.find" do
@@ -226,6 +227,7 @@ describe Admin::AssetCollectionsController do
     context "with invalid params" do
       before(:each) do
         asset_collection.should_receive(:update_attributes).and_return(false)
+        asset_collection.stub(:errors => { :asset_collection => "asset_collection errors" })
       end
       
       it "should render the edit template" do
@@ -238,14 +240,15 @@ describe Admin::AssetCollectionsController do
   describe "DELETE destroy" do
     before(:each) do
       AssetCollection.stub(:find).and_return(asset_collection)
+      asset_collection.stub(:persisted?).and_return(false)
     end
     
     def do_delete
-      delete :destroy, "id" => asset_collection.to_param
+      delete :destroy, "id" => asset_collection.id
     end
     
     it "should receive AssetCollection.find" do
-      AssetCollection.should_receive(:find).with(asset_collection.to_param).and_return(asset_collection)
+      AssetCollection.should_receive(:find).with(asset_collection.id.to_s).and_return(asset_collection)
       do_delete
     end
     

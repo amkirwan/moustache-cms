@@ -2,36 +2,44 @@ class Admin::UsersController < AdminBaseController
  
   load_and_authorize_resource 
 
+  respond_to :html, :xml, :json
+  respond_to :js, :only => :destroy
+
   def index               
+    respond_with(:admin, :users)
   end  
   
   def show
-    render :edit
+    respond_with(:admin, :user) do |format|
+      format.html { render :edit }
+    end
   end
   
   def new
+    respond_with(:admin, :user)
   end                        
   
   def create   
     # set because attr_accessible   
     admin_only
     @user.site = @current_site
-    if @user.save
-      redirect_to [:admin, :users], :notice => "Successfully created user profile for #{@user.full_name}" 
-    else
-      render :new
+    respond_with(:admin, @user) do |format|
+      if @user.save
+        format.html { redirect_to [:admin, :users], :notice => "Successfully created user profile for #{@user.full_name}" }
+      end
     end
   end
   
   def edit
+    respond_with(:admin, :user)
   end
   
   def update                    
     admin_only
-    if @user.update_attributes(params[:user]) 
-      redirect_to [:admin, :users], :notice => "Successfully updated user profile for #{@user.full_name}"
-    else
-      render :edit
+    respond_with(:admin, @user) do |format|
+      if @user.update_attributes(params[:user]) 
+        format.html { redirect_to [:admin, :users], :notice => "Successfully updated user profile for #{@user.full_name}" }
+      end
     end
   end
   
@@ -39,11 +47,10 @@ class Admin::UsersController < AdminBaseController
     if @user.delete
       if current_user? @user
         reset_session
-        redirect_to cms_html_url
+        respond_with(:admin, @user, :location => cms_html_url)
       else
-        respond_to do |format|
+        respond_with do |format|
           format.html { redirect_to [:admin, :users], :notice => "Successfully deleted user profile for #{@user.full_name}" }
-          format.js
         end
       end
     end

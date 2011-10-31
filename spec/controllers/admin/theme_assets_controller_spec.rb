@@ -139,6 +139,7 @@ describe Admin::ThemeAssetsController do
     context "with invalid params" do
       before(:each) do
         theme_asset.stub(:save).and_return(false)
+        theme_asset.stub(:errors => { :theme_asest => "theme_asset errors" })
       end
       
       it "should receive save and return false" do
@@ -186,7 +187,7 @@ describe Admin::ThemeAssetsController do
     
     let(:params) { { "id" => theme_asset.to_param, "theme_asset_file_content" => "foobar", "theme_asset" => { "name" => "foobar", "asset_cache" => "1/rails.png", "asset" => AssetFixtureHelper.open("theme_css.css")}} }
     def do_put(put_params=params)
-      post :update, put_params
+      put :update, put_params
     end
     
     it "should receive ThemeAsset#find" do
@@ -235,6 +236,7 @@ describe Admin::ThemeAssetsController do
     describe "with invalid params" do                      
       before(:each) do
         theme_asset.stub(:update_attributes).and_return(false)
+        theme_asset.stub(:errors => { :theme_asest => "theme_asset errors" })
       end
       
       it "should receive update_attributes and return false" do
@@ -252,14 +254,15 @@ describe Admin::ThemeAssetsController do
   describe "DELETE destroy" do
     before(:each) do
       ThemeAsset.stub(:find).and_return(theme_asset)
+      theme_asset.stub(:persisted?).and_return(false)
     end         
     
     def do_destroy
-      delete :destroy, "id" => theme_asset.to_param
+      delete :destroy, "id" => theme_asset.id
     end                                   
     
     it "should receive ThemeAsset#find and return theme_asset" do
-      ThemeAsset.should_receive(:find).with(theme_asset.to_param).and_return(theme_asset)
+      ThemeAsset.should_receive(:find).with(theme_asset.id.to_s).and_return(theme_asset)
       do_destroy
     end                              
     

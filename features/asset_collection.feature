@@ -46,7 +46,7 @@ Scenario: New Asset Collection
   And I follow "New Asset Collection"
   And I fill in "asset_collection_name" with "foobar"
   And I press "Save Collection"
-  Then I should be on the admin asset collections page
+  Then I should be viewing the collection "foobar"
   And I should see "Successfully created the asset collection foobar"
   And I should see "foobar"   
   

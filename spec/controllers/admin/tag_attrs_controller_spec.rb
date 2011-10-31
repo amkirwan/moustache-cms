@@ -70,6 +70,7 @@ describe Admin::TagAttrsController do
 
     before(:each) do
       theme_asset.stub_chain(:tag_attrs, :new).and_return(tag_attr)
+      tag_attr.stub(:errors => { :tag_attr => "tag_attr errors" })
     end
 
     def do_post(post_params=params)
@@ -118,10 +119,11 @@ describe Admin::TagAttrsController do
     before(:each) do
       theme_asset.stub_chain(:tag_attrs, :find).and_return(tag_attr)
       tag_attr.stub(:update_attributes).and_return(true)
+      tag_attr.stub(:errors => { :tag_attr => "tag_attr errors" })
     end
 
     def do_put(put_params=params)
-      post :update, put_params
+      put :update, put_params
     end
 
     it "should assign tag_attr for the view" do
@@ -161,6 +163,7 @@ describe Admin::TagAttrsController do
     before(:each) do
       theme_asset.stub_chain(:tag_attrs, :find).and_return(tag_attr)
       tag_attr.stub(:destroy).and_return(true)
+      tag_attr.stub(:persisted?).and_return(false)
     end
 
     def do_delete(delete_params=params)
@@ -168,7 +171,7 @@ describe Admin::TagAttrsController do
     end
 
     it "should find the tag_attr to destroy" do
-      tag_attrs.should_receive(:find).and_return(tag_attr)
+      tag_attrs.should_receive(:find).with(tag_attr.id.to_s).and_return(tag_attr)
       do_delete
     end
 

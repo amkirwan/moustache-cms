@@ -4,7 +4,7 @@ HandlebarCms::Application.routes.draw do
     resources :users
     resources :layouts
 
-    resources :pages, :except => :show do 
+    resources :pages do 
       put :sort, :on => :member
       resources :meta_tags, :except => [:index, :show]
     end
@@ -19,8 +19,8 @@ HandlebarCms::Application.routes.draw do
       resources :site_assets
     end
 
-    resources :sites, :path => 'current_site', :controller => 'current_site', :except => [:index, :show] do
-      resources :meta_tags, :except => [:index, :show] 
+    resources :sites, :path => 'current_site', :controller => 'current_site', :except => [:index] do
+      resources :meta_tags, :except => :index 
       resources :domain_names, :except => [:index, :show]
     end
 

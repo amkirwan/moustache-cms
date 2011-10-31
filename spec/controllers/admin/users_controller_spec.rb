@@ -152,6 +152,7 @@ describe Admin::UsersController do
     context "when the save fails" do                    
       it "should redirect to new template" do 
         user.stub(:save).and_return(false)            
+        user.stub(:errors => { :user => "user errors" })
         do_post
         response.should render_template("admin/users/new")
       end
@@ -232,6 +233,7 @@ describe Admin::UsersController do
     context "when update_attributes fails" do
       it "should render the edit template" do
         user.stub(:update_attributes).and_return(false)
+        user.stub(:errors => { :user => "user errors" })
         do_put  
         response.should render_template("admin/users/edit")
       end

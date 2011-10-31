@@ -79,7 +79,7 @@ class AdminBaseController < ApplicationController
       end
     end
 
-    def update_path(object)
+    def redirector_path(object)
      params[:commit] == "Save and Continue Editing" ? [:edit, :admin, object] : [:admin, object.class.name.pluralize.downcase.to_sym]
     end
     

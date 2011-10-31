@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Admin::PagesController do
-  let(:site) { mock_model(Site, :id => "1") }
+  let(:site) { mock_model(Site, :id => "1").as_null_object }
   let(:current_user) { logged_in(:role? => "admin", :site_id => site.id) }
   let(:page) { mock_model("Page", :site_id => site.id).as_null_object }
   
@@ -158,6 +158,7 @@ describe Admin::PagesController do
     context "when the page failes to save" do
       before(:each) do
         page.stub(:save).and_return(false)
+        page.stub(:errors => { :page => "page errors" })
       end
       
       it "should not save the page" do
@@ -228,7 +229,7 @@ describe Admin::PagesController do
     end 
     
     def do_puts
-       post :update, params
+       put :update, params
     end
     
     it "should find the record to update with Page#find" do
@@ -268,6 +269,7 @@ describe Admin::PagesController do
     context "with invalid params" do
       before(:each) do
         page.stub(:update_attributes).and_return(false)
+        page.stub(:errors => { :page => "page errors" })
       end
       
       it "should not save the page" do
@@ -285,14 +287,15 @@ describe Admin::PagesController do
   describe "DELETE destroy" do
     before(:each) do
       Page.stub(:find).and_return(page)
+      page.stub(:persisted?).and_return(false)
     end
     
     def do_destroy  
-      delete :destroy, :id => "1"
+      delete :destroy, :id => page.id
     end
     
     it "should receive Page#find and return the page" do
-      Page.should_receive(:find).with("1").and_return(page)
+      Page.should_receive(:find).with(page.id.to_s).and_return(page)
       do_destroy
     end
     

@@ -15,6 +15,11 @@ When /^(?:|I )edit the layout "([^\"]*)"$/ do |layout_name|
   When %{I go to the edit admin layout page for "#{layout.to_param}"}
 end
 
+When /^I follow "([^"]*)" associated with the layout "([^"]*)"$/ do |delete, layout_name|
+  layout = find_layout(layout_name)
+  When %{I follow "#{delete}" within "tr#layout_#{layout_name}"}
+end
+
 Then /^(?:|I )should view the page for layout "([^\"]*)"$/ do |layout_name|
   layout = find_layout(layout_name)
   Then %{I should be on the edit admin layout page for "#{layout.to_param}"}

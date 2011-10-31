@@ -45,7 +45,7 @@ describe SiteAssetUploader do
   end
   
   it "should white list these extenstiosn" do
-    @uploader.extension_white_list.should == %w(jpg jpeg gif png pdf mp4 m4v ogv webm flv)
+    @uploader.extension_white_list.should == %w(jpg jpeg gif png pdf mp4 m4v ogv webm flv otf)
   end       
   
   

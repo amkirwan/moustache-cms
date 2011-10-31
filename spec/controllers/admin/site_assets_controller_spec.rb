@@ -132,6 +132,7 @@ describe Admin::SiteAssetsController do
     context "with invalid params" do
       before(:each) do
         site_asset.should_receive(:save).and_return(false)
+        site_asset.stub(:errors => { :site_asset => "site_asset errors" })
       end
 
       it "should render the new template" do
@@ -169,7 +170,7 @@ describe Admin::SiteAssetsController do
     let(:params) { { "asset_collection_id" => asset_collection.id, "id" => site_asset.to_param, "site_asset" => { "name" => "foobar", "asset_cache" => "1/rails.png", "asset" => AssetFixtureHelper.open("rails.png")}} }
     
     def do_put(put_params=params)
-      post :update, put_params
+      put :update, put_params
     end
     
     it "should assign @site_asset for the view" do
@@ -202,6 +203,7 @@ describe Admin::SiteAssetsController do
     describe "without valid params" do
       before(:each) do
         site_asset.stub(:update_attributes).and_return(false)
+        site_asset.stub(:errors => { :site_asset => "site_asset errors" })
       end
       
       it "should render the site_asset edit template on failed update" do
@@ -214,10 +216,11 @@ describe Admin::SiteAssetsController do
   describe "DELETE destroy" do
     before(:each) do
       asset_collection.stub_chain(:site_assets, :find).and_return(site_asset)
+      site_asset.stub(:persisted?).and_return(false)
     end
     
     def do_destroy
-      delete :destroy, { "asset_collection_id" => asset_collection.id, "id" => site_asset.to_param }
+      delete :destroy, { "asset_collection_id" => asset_collection.id, "id" => site_asset.id}
     end
     
     it "should assign the site_asset" do

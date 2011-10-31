@@ -82,7 +82,7 @@ Scenario: Delete layout as an admin
   | foobar | Hello, World! |
   | bar    | Hello, World! |
   When I go to the admin layouts page
-  And I follow "Delete" 
+  And I follow "Delete" associated with the layout "foobar"
   Then I should see "Successfully deleted the layout foobar"
   And I should be on the admin layouts page
   
@@ -93,6 +93,6 @@ Scenario: Given I am logged in as an admin then I can delete a layout created by
   | foobar | Hello, World! |
   | bar    | Hello, World! |
   When I go to the admin layouts page
-  And I follow "Delete" 
+  And I follow "Delete" associated with the layout "foobar"
   Then I should see "Successfully deleted the layout foobar"
   And I should be on the admin layouts page

@@ -109,6 +109,7 @@ describe Admin::MetaTagsController do
     context "with invalid params" do
       before(:each) do
         meta_tag.stub(:save).and_return(false)
+        meta_tag.stub(:errors => { :meta_tag => "meta_tag errors" })
       end
 
       it "should render the new template when creating the meta_tag fails" do
@@ -130,7 +131,7 @@ describe Admin::MetaTagsController do
     end
 
     def do_put(put_params=params)
-      post :update, put_params
+      put :update, put_params
     end
 
     it "should assign @meta_tag for the view" do
@@ -164,6 +165,7 @@ describe Admin::MetaTagsController do
     context "with invalid params" do
       before(:each) do
         meta_tag.should_receive(:update_attributes).and_return(false)
+        meta_tag.stub(:errors => { :meta_tag => "meta_tag errors" })
       end
 
       it "should render the meta_tag edit view" do

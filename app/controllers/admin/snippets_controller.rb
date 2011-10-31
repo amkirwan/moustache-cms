@@ -1,42 +1,49 @@
 class Admin::SnippetsController < AdminBaseController   
   
   load_and_authorize_resource 
+
+  respond_to :html, :xml, :json
   
   def index               
+    respond_with(:admin, @snippets)
   end  
   
   def show
-    render :edit
+    respond_with(:admin, @snippet) do |format|
+      format.html { render :edit }
+    end
   end
   
   def new
+    respond_with(:admin, @snippet)
   end
   
   def create   
     created_updated_by_for @snippet
     @snippet.site_id = @current_site.id
-    if @snippet.save
-      redirector [:edit, :admin, @snippet], [:admin, :snippets], "Successfully created the snippet #{@snippet.name}"
-    else
-      render :new
+    respond_with(:admin, @snippet) do |format|
+      if @snippet.save
+        format.html { redirector [:edit, :admin, @snippet], [:admin, :snippets], "Successfully created the snippet #{@snippet.name}" }
+      end
     end
   end
   
   def edit
+    respond_with(:admin, @snippet)
   end
   
   def update                
     @snippet.updated_by = @current_user      
-    if @snippet.update_attributes(params[:snippet]) 
-      redirector [:edit, :admin, @snippet], [:admin, :snippets], "Successfully updated the snippet #{@snippet.name}"
-    else
-      render :edit
+    respond_with(:admin, @snippet) do |format|
+      if @snippet.update_attributes(params[:snippet]) 
+        format.html { redirector [:edit, :admin, @snippet], [:admin, :snippets], "Successfully updated the snippet #{@snippet.name}" }
+      end
     end
   end
   
   def destroy
-    if @snippet.delete
-      redirect_to [:admin, :snippets], :notice => "Successfully deleted the snippet #{@snippet.name}"
-    end
+    @snippet.delete
+    flash[:notice] = "Successfully deleted the snippet #{@snippet.name}"
+    respond_with(:admin, @snippet)
   end
 end

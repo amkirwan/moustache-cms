@@ -78,6 +78,7 @@ describe Admin::DomainNamesController do
     context "with invalid params" do
       before(:each) do
         current_site.stub(:save).and_return(false)
+        current_site.stub(:errors => { :current_site => "current_site errors" })
       end
 
       it "should render the new template" do

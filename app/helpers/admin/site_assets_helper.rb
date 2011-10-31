@@ -8,7 +8,7 @@ module Admin::SiteAssetsHelper
         end
       end
     else
-      render :partial => 'admin/asset_collections/site_asset', :collection => @asset_collection.site_assets
+      render :partial => 'admin/asset_collections/site_asset', :collection => @asset_collection.site_assets.asc(:created_at)
     end
   end
   

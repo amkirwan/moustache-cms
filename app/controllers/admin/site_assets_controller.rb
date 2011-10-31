@@ -3,26 +3,31 @@ class Admin::SiteAssetsController < AdminBaseController
         
   load_and_authorize_resource :asset_collection
   load_and_authorize_resource :site_asset, :through => :asset_collection  
+
+  respond_to :html, :xml, :json
+  respond_to :js, :only => :new
     
   # GET /admin/site_assets
   def index
-    render 'admin/asset_collections/show'
+    respond_with(:admin, @asset_collection, @site_assets) do |format|
+      format.html { render 'admin/asset_collections/show' }
+    end
   end
 
   def show
-    render :edit
+    respond_with(:admin, @asset_collection, @site_asset) do |format|
+     format.html { render :edit }
+    end
   end
 
   # GET /admin/asset_collections/asset_collection_id/site_assets/new
   def new
-    respond_to do |format|
-      format.html
-      format.js
-    end
+    respond_with(:admin, @asset_collection, @site_asset)
   end
 
   # GET /admin/asset_collections/id/site_assets/1/edit
   def edit
+    respond_with(:admin, @asset_collection, @site_asset)
   end
 
   # POST /admin/asset_collections/id/site_assets
@@ -30,28 +35,28 @@ class Admin::SiteAssetsController < AdminBaseController
     process_create_params
     creator_updator_set_id @site_asset    
     @site_asset.asset = params[:file]
-    if @site_asset.save
-      redirect_to [:admin, @asset_collection, :site_assets], :notice => "Successfully created the asset #{@site_asset.name}"
-    else
-      render :new
+    respond_with(:admin, @asset_collection, @site_asset) do |format|
+      if @site_asset.save
+        format.html { redirect_to [:admin, @asset_collection, :site_assets], :notice => "Successfully created the asset #{@site_asset.name}" }
+      end
     end
   end
 
   # PUT /admin/asset_collections/id/site_assets/1
   def update
     @site_asset.updator_id = @current_user.id
-    if @site_asset.update_attributes(params[:site_asset])
-      redirect_to [:admin, @asset_collection, :site_assets], :notice => "Successfully updated the asset #{@site_asset.name}"
-    else
-      render :edit
+    respond_with(:admin, @asset_collection, @site_asset) do |format|
+      if @site_asset.update_attributes(params[:site_asset])
+        format.html { redirect_to [:admin, @asset_collection, :site_assets], :notice => "Successfully updated the asset #{@site_asset.name}" }
+      end
     end
   end
 
   # DELETE /admin/asset_collections/id/site_assets/1
   def destroy
-    if @site_asset.destroy
-      redirect_to [:admin, @asset_collection, :site_assets], :notice => "Successfully deleted the asset #{@site_asset.name}"
-    end
+    @site_asset.destroy
+    flash[:notice] = "Successfully deleted the asset #{@site_asset.name}"
+    respond_with(:admin, @asset_collection, @site_asset)
   end
 
   private

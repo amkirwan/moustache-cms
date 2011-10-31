@@ -122,6 +122,7 @@ describe Admin::LayoutsController do
     context "when the layout fails to save" do
       before(:each) do
         layout.stub(:save).and_return(false)
+        layout.stub(:errors => { :anything => "layout errors" })
       end
       
       it "should receive save and return false" do
@@ -172,7 +173,7 @@ describe Admin::LayoutsController do
     end
     
     def do_put
-      post :update, params
+      put :update, params
     end
     
     it "should find the record to update with Layout#find" do
@@ -216,6 +217,7 @@ describe Admin::LayoutsController do
     context "when the layout fales to save" do
       before(:each) do
         layout.stub(:update_attributes).and_return(false)
+        layout.stub(:errors => { :layout => "layout errors" })
       end
       
       it "should not save the layout" do
@@ -233,14 +235,15 @@ describe Admin::LayoutsController do
   describe "DELETE destroy" do
     before(:each) do
       Layout.stub(:find).and_return(layout)
+      layout.stub(:persisted?).and_return(false)
     end
     
     def do_destroy  
-      delete :destroy, :id => "1"
+      delete :destroy, :id => layout.id
     end
     
     it "should receive Layout#find and return the layout" do
-      Layout.should_receive(:find).with("1").and_return(layout)
+      Layout.should_receive(:find).with(layout.id.to_s).and_return(layout)
       do_destroy
     end
     
