@@ -5,7 +5,13 @@ jQuery ->
         $(this).parent().fadeToggle 'slow', 'linear', ->
           $(this).remove()
         false
-      
+
+      $('.site_prop #advanced_options').css 'display', 'none'
+      $('.site_prop #advanced_options').prev().find('span').removeClass('rotate')
+
+      $('.site_prop #page_meta_tags').css 'display', 'none'
+      $('.site_prop #page_meta_tags').prev().find('span').removeClass('rotate')
+
       $('ul.sortable').sortable
         handle: 'em.sortable_list'
         axis: 'y'

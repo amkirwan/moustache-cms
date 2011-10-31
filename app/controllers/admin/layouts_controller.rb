@@ -6,7 +6,7 @@ class Admin::LayoutsController < AdminBaseController
   respond_to :xml, :json
 
   def index 
-    respond_with(:admin, @layout)
+    respond_with(:admin, @layouts)
   end
 
   def show

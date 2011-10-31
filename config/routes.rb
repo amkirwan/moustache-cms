@@ -7,7 +7,9 @@ HandlebarCms::Application.routes.draw do
     resources :pages do 
       put :sort, :on => :member
       resources :meta_tags, :except => [:index, :show]
+      resources :page_parts
     end
+
 
     resources :theme_assets do
       resources :tag_attrs

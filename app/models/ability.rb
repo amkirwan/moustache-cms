@@ -9,6 +9,11 @@ class Ability
         site.users.include?(user)
       end
 
+      can :create, PagePart
+      can [:read, :update, :destroy], PagePart, do |page_part|
+        page_part._parent.site_id == user.site_id
+      end
+      
       can :manage, [User, Layout, Page, AssetCollection, ThemeAsset, Snippet], :site_id => user.site_id
 
       # Because SiteAsset is embedded in ThemeAsset you cannot save a created SiteAsset in another site

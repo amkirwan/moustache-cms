@@ -85,7 +85,7 @@ describe Admin::MetaTagsController do
       post :create, :page_id => page.id, :meta_tag => post_params 
     end
 
-    it "should receive build a new meta_tag from the params" do
+    it "should create a new meta_tag from the params" do
       meta_tags.should_receive(:new).with(params).and_return(meta_tag)
       do_post
     end
@@ -183,6 +183,7 @@ describe Admin::MetaTagsController do
     before(:each) do
       page.stub_chain(:meta_tags, :find).and_return(meta_tag)
       meta_tag.stub(:destroy).and_return(true)
+      meta_tag.stub(:persisted?).and_return(false)
     end
 
     def do_delete(destroy_params=params)
@@ -200,16 +201,15 @@ describe Admin::MetaTagsController do
         do_delete
       end
 
-      it "should redirect to the page" do
-        do_delete
-        response.should redirect_to([:edit, :admin, page])
-      end
-
       it "should set the the flash notice message" do
         do_delete
         flash[:notice].should == "Successfully deleted the meta tag #{meta_tag.name}"
       end
-    end
 
+      it "should redirect to the page" do
+        do_delete
+        response.should redirect_to([:edit, :admin, page])
+      end
+    end
   end
 end
