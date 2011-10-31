@@ -17,9 +17,12 @@ describe Ability do
 
   let(:meta_tag) { Factory.build(:meta_tag) }
   let(:meta_tag2) { Factory.build(:meta_tag) }
+
+  let(:page_part) { Factory.build(:page_part) }
+  let(:page_part2) { Factory.build(:page_part) }
   
-  let(:page) { Factory.build(:page, :site => site, :editors => [ admin, designer, editor ], :meta_tags => [meta_tag]) }
-  let(:page2) { Factory.build(:page, :site => site2, :editors => [ admin2, designer2, editor2 ], :meta_tags => [meta_tag2]) } 
+  let(:page) { Factory.build(:page, :site => site, :page_parts => [page_part], :editors => [ admin, designer, editor ], :meta_tags => [meta_tag]) }
+  let(:page2) { Factory.build(:page, :site => site2, :page_parts => [page_part2], :editors => [ admin2, designer2, editor2 ], :meta_tags => [meta_tag2]) } 
   
   let(:site_asset) { Factory.build(:site_asset, :creator_id => editor.id, :updator_id => editor.id) }
   let(:site_asset2) { Factory.build(:site_asset, :creator_id => editor.id, :updator_id => editor.id) }
@@ -59,6 +62,10 @@ describe Ability do
   def meta_tag_first
     page.meta_tags.first
   end
+
+  def page_part_first
+    page.page_parts.first
+  end
   
   # -- Admin ----
   describe "Admin" do
@@ -81,6 +88,11 @@ describe Ability do
         admin_ability.should be_able_to(:update, meta_tag_first)
         admin_ability.should be_able_to(:destroy, meta_tag_first)
 
+        
+        admin_ability.should be_able_to(:read, page_part_first)
+        admin_ability.should be_able_to(:create, page_part_first)
+        admin_ability.should be_able_to(:update, page_part_first)
+        admin_ability.should be_able_to(:destroy, page_part_first)
       end
     end
     
@@ -98,6 +110,14 @@ describe Ability do
           admin_ability.should_not be_able_to(:read, asset_collection2.site_assets.first)
           admin_ability.should_not be_able_to(:update, asset_collection2.site_assets.first)
           admin_ability.should_not be_able_to(:destroy, asset_collection2.site_assets.first)
+
+          admin_ability.should_not be_able_to(:read, page2.meta_tags.first)
+          admin_ability.should_not be_able_to(:update, page2.meta_tags.first)
+          admin_ability.should_not be_able_to(:destroy, page2.meta_tags.first)
+
+          admin_ability.should_not be_able_to(:read, page2.page_parts.first)
+          admin_ability.should_not be_able_to(:update, page2.page_parts.first)
+          admin_ability.should_not be_able_to(:destroy, page2.page_parts.first)
         end
       end      
     end
@@ -140,6 +160,11 @@ describe Ability do
           designer_ability.should be_able_to(:create, meta_tag_first)
           designer_ability.should be_able_to(:update, meta_tag_first)
           designer_ability.should be_able_to(:destroy, meta_tag_first)
+
+
+          designer_ability.should_not be_able_to(:read, page2.page_parts.first)
+          designer_ability.should_not be_able_to(:update, page2.page_parts.first)
+          designer_ability.should_not be_able_to(:destroy, page2.page_parts.first)
         end
       end
     end
@@ -212,6 +237,16 @@ describe Ability do
             editor_ability.should be_able_to(:destroy, meta_tag_first)
           end
         end
+
+        describe "PageParts Approved" do
+          it "should allow the user with a role of editor to manage the pages meta_tags" do 
+            editor_ability.should be_able_to(:read, page_part_first)
+            editor_ability.should be_able_to(:create, page_part_first)
+            editor_ability.should be_able_to(:update, page_part_first)
+            editor_ability.should be_able_to(:destroy, page_part_first)
+          end
+        end
+
       end
     end
     
