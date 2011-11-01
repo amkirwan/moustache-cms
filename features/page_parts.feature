@@ -23,4 +23,24 @@ And I authenticates as cas user "ak730"
     When I go to the admin pages page
     And I follow "foobar"
     Then I should now be editing the page "foobar"
+    When I follow "Add Page Part"
+    Then I should now be on the new admin page part page for the page "foobar"
+    When I fill in "page_part_name" with "sidebar"
+    And I press "Create Page Part"
+    Then I should now be editing the page "foobar"
+    And I should see "Successfully created the page part sidebar"
+
+@delete_page_part
+  Scenario: Delete a page part when more than one exists
+    When the page part "sidebar" exists in the page "foobar" 
+    And I follow "Delete"
+    Then I should now be editing the page "foobar"
+    And I should see "Successfully deleted the page part sidebar"
+
+@cannot_delete_last_page_part
+  Scenario: Cannot delete page part if it is the only one on the page
+    When I go to the admin pages page
+    And I follow "foobar"
+    Then I should now be editing the page "foobar"
+    And I should not see "Delete" within "ul#page_parts_nav"
 

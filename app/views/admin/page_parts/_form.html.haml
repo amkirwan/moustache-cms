@@ -1,0 +1,10 @@
+= form_for([:admin, @page, @page_part], :html => { :class => 'site_prop', :autocomplete => :off }) do |f|
+  = render :partial => "shared/error_messages", :locals => {:target => @page_part}
+  %fieldset
+    %ul.form_fields
+      %li
+        = f.label :name
+        = f.text_field :name
+      %li
+        = f.submit button_label, :class => "submit"
+        = link_to "cancel", [:edit, :admin, @page], :class => "cancel"

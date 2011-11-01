@@ -1,10 +1,10 @@
-= foldable_fieldset 'Page Parts' do
-  %ul.page_parts_list 
+= foldable_fieldset 'Page Parts', :class => 'page_part' do
+  %ul#page_parts_nav
     - @page.page_parts.each do |page_part|
-      %li 
-        = page_part_selected(page_part)
+      = page_part_selected(page_part)
     %li.add_page_part
       = add_page_part
+      = delete_page_part
   
   %ul.form_fields
     = f.fields_for(:page_parts, @selected_page_part) do |builder|

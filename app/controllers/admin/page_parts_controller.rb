@@ -18,9 +18,10 @@ class Admin::PagePartsController < AdminBaseController
   end
 
   def create
+    @page_part.filter_name = "markdown"
     respond_with(:admin, @page, @page_part) do |format|
       if @page_part.save
-        format.html { redirect_to [:edit, :admin, @page], :notice => "Successfully created the page part #{@page_part.name}" }
+        format.html { redirect_to edit_admin_page_path(@page, :view => @page_part.name), :notice => "Successfully created the page part #{@page_part.name}" }
       end
     end
   end

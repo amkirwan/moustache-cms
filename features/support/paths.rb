@@ -37,6 +37,8 @@ module NavigationHelpers
       edit_admin_page_meta_tag_path($1, $2)
     when /the edit admin current site page for "([^\"]*)"/
       edit_admin_site_path($1)
+    when /the new admin page part page for page "([^\"]*)"/
+      new_admin_page_page_part_path($1) 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

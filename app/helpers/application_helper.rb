@@ -87,8 +87,8 @@ module ApplicationHelper
     end
   end
 
-  def foldable_fieldset(label)
-    content_tag :fieldset, :class => 'foldable' do 
+  def foldable_fieldset(label, options={})
+    content_tag :fieldset, :class => "foldable #{options[:class]}" do 
       concat(content_tag :legend, "#{label}<span class='fold_arrow rotate'></span>".html_safe)
       yield
     end

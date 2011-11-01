@@ -9,6 +9,8 @@ $content_bg: #F9F8F3;
 $sidebar_border: #A8A8A8;
 $sidebar_heading: #FB5000;
 $footer_bg: #2c2b2b;
+$foldable_header: #434343; 
+$foldable_header_selected: #656464;
 $foldable_bg: #E9E8E6;
 $submenu_bg: #E4E3E1;
 $action_button_bottom: #2C2C2C;
@@ -21,7 +23,6 @@ $base_font: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Ar
 $base_text: normal 100% $base_font;
 $base_font_size: 16px;
 $heading_font: "proxima-nova-extra-condensed-1", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, Arial, sans-serif;
-
 
 /* link text */
 $link_text: #d54e0e;
@@ -339,6 +340,7 @@ form.site_prop {
     }
   }
   ul.form_fields {
+    clear: both;
     list-style: none;
     li {
       list-style: none;
@@ -394,11 +396,14 @@ form.site_prop {
       @include rounded_corners_top_left_and_right;
       color: $light_text;
       width: 100%;
-      background: rgba(44, 44, 44, 0.8);
+      background: $foldable_header;
     }
   }
   .foldable legend:hover {
-      cursor: pointer;
+    cursor: pointer;
+  }
+  .page_part {
+  background: $foldable_bg image-url("form_legend_bg.png") repeat-x left top;
   }
 }
 
@@ -499,6 +504,41 @@ div#pages_list {
       margin-left: 0;
 		}
 	}
+}
+
+ul#page_parts_nav {
+  height: 25px;
+  list-style: none;
+  li {
+    float: left;
+    margin-top: 3px;
+    margin-bottom: 5px;
+    padding: calc_em(5px, 14px) calc_em(5px, 14px); 
+  }
+  li.add_page_part {
+    float: right;
+  }
+  a:link, a:visited {
+    text-decoration: none;
+    color: lighten($link_text, 40%);
+  }
+  a:hover, a:focus {
+    color: $hover_text;
+    text-decoration: none;
+  }
+  .selected {
+    background: $foldable_bg;
+    @include rounded_corners_top_left_and_right;
+    border-top: 1px solid $foldable_header_selected;
+    border-left: 1px solid $foldable_header_selected;
+    border-right: 1px solid $foldable_header_selected;
+    a:link, a:visited {
+      color: $link_text;
+    }
+  }
+  .menu_separator {
+    color: $foldable_header;
+  }
 }
 
 ul#assets {
