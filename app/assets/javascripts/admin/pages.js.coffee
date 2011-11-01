@@ -6,11 +6,21 @@ jQuery ->
           $(this).remove()
         false
 
+      /* hide initial form elements */
       $('.site_prop #advanced_options').css 'display', 'none'
       $('.site_prop #advanced_options').prev().find('span').removeClass('rotate')
 
       $('.site_prop #page_meta_tags').css 'display', 'none'
       $('.site_prop #page_meta_tags').prev().find('span').removeClass('rotate')
+
+      /* new page ajax add meta_tag */
+      if $('p#meta_tag_message').length
+        $('#meta_tag_message').remove()
+        $('#add_meta_tag').append('<span class="fake_link">Add Meta Tag</span>')
+        $('#add_meta_tag .fake_link').click ->
+          $.get '/admin/pages/new_meta_tag', ->
+            console.log 'success'
+            
 
       $('ul.sortable').sortable
         handle: 'em.sortable_list'

@@ -68,4 +68,18 @@ module Admin::PagesHelper
     end
   end
 
+  def page_part_selected(page_part)
+    unless @page.new_record?
+      if @selected_page_part.name == page_part.name
+        content_tag :li, :class => 'tab selected' do
+          link_to page_part.name, edit_admin_page_path(@page, :view => page_part.name)
+        end
+      else
+        content_tag :li, :class => 'tab' do
+          link_to page_part.name, edit_admin_page_path(@page, :view => page_part.name)
+        end
+      end
+    end
+  end
+
 end

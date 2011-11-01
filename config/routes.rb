@@ -6,7 +6,8 @@ HandlebarCms::Application.routes.draw do
 
     resources :pages do 
       put :sort, :on => :member
-      resources :meta_tags, :except => [:index, :show]
+      get :new_meta_tag, :on => :collection
+      resources :meta_tags, :except => [:index, :show] 
       resources :page_parts
     end
 
@@ -15,7 +16,7 @@ HandlebarCms::Application.routes.draw do
       resources :tag_attrs
     end  
 
-    resources :snippets        
+    resources :snippets 
 
     resources :asset_collections do
       resources :site_assets

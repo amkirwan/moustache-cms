@@ -2,9 +2,9 @@ class Admin::PagesController < AdminBaseController
   
   load_and_authorize_resource 
 
-  respond_to :html, :except => :show
+  respond_to :html, :except => [:show, :sort, :new_meta_tag]
   respond_to :xml, :json
-  respond_to :js, :only => :destroy
+  respond_to :js, :only => [:destroy, :sort, :new_meta_tag]
 
   def index
     respond_with(:admin, @pages)
@@ -15,7 +15,7 @@ class Admin::PagesController < AdminBaseController
   end
   
   def new
-    @parent_page = @current_site.pages.where(:title => "Home Page").first
+    parent_page
     @page.build_current_state
     @page.page_parts.build
     @page.page_parts.first.name = "content"
@@ -33,7 +33,8 @@ class Admin::PagesController < AdminBaseController
   end
   
   def edit
-    @parent_page = @page.parent
+    parent_page
+    @selected_page_part = selected_page_part
     respond_with(:admin, @page)
   end
   
@@ -58,5 +59,19 @@ class Admin::PagesController < AdminBaseController
     
     flash.now[:notice] = "Updated Page Positions"
   end
-  
+
+  def new_meta_tag
+    @base_class = Page.new
+    @meta_tag = MetaTag.new
+  end
+
+  private 
+
+    def selected_page_part
+      params[:view].nil? ? @page.page_parts.first : @page.page_parts.where(:name => params[:view]).first
+    end
+
+    def parent_page
+      @parent_page = @page.parent.nil? ? @current_site.pages.where(:title => "Home Page").first : @page.parent
+    end
 end
