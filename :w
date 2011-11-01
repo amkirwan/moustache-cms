@@ -46,6 +46,7 @@ describe Admin::PagePartsController do
     end
   end
 
+  # -- GET show ---
   describe "GET /show" do
 
     before(:each) do
@@ -61,6 +62,10 @@ describe Admin::PagePartsController do
       assigns(:page_part).should == page_part
     end
 
+    it "should render the show template" do
+      do_get
+      response.should render_template("admin/page_parts/show.json")
+    end
   end
 
   describe "POST /create" do

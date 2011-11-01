@@ -72,7 +72,7 @@ module Admin::PagesHelper
     if @page.new_record?
       content_tag :p, content_tag(:i, "Save page first to add additonal page parts")
     else
-      link_to 'Add Page Part', [:new, :admin, @page, :page_part]
+      link_to 'Add Page Part', [:new, :admin, @page, :page_part], :remote => true
     end
   end
 
@@ -80,7 +80,7 @@ module Admin::PagesHelper
     if @page.page_parts.size > 1  
       content = content_tag :span, '&#124;'.html_safe, :class => 'menu_separator'
       content += ' '
-      content += link_to "Delete", [:admin, @page, @selected_page_part], :method => :delete, :confirm => "Are you sure you want to delete the page part #{@selected_page_part.name}", :class => "delete"
+      content += link_to "Delete", [:admin, @page, @selected_page_part], :method => :delete, :confirm => "Are you sure you want to delete the page part #{@selected_page_part.name}", :class => "delete", :remote => true
  end
   end
 
@@ -88,11 +88,11 @@ module Admin::PagesHelper
     unless @page.new_record?
       if @selected_page_part.name == page_part.name
         content_tag :li, :class => 'tab selected' do
-          link_to page_part.name, edit_admin_page_path(@page, :view => page_part.name)
+          link_to page_part.name, edit_admin_page_path(@page, :view => page_part.name), :remote => true
         end
       else
         content_tag :li, :class => 'tab' do
-          link_to page_part.name, edit_admin_page_path(@page, :view => page_part.name)
+          link_to page_part.name, edit_admin_page_path(@page, :view => page_part.name), :remote => true
         end
       end
     end

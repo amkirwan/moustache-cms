@@ -8,7 +8,7 @@ HandlebarCms::Application.routes.draw do
       put :sort, :on => :member
       get :new_meta_tag, :on => :collection
       resources :meta_tags, :except => [:index, :show] 
-      resources :page_parts
+      resources :page_parts, :except => [:index, :edit, :update]
     end
 
 

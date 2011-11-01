@@ -6,7 +6,7 @@
       = add_page_part
       = delete_page_part
   
-  %ul.form_fields
+  %ul.form_fields.page_parts
     = f.fields_for(:page_parts, @selected_page_part) do |builder|
       %li 
         = builder.label :name, "Page Part Name<abbr title='required' class='required'>*</abbr>".html_safe

@@ -4,7 +4,7 @@ class Admin::PagesController < AdminBaseController
 
   respond_to :html, :except => [:show, :sort, :new_meta_tag]
   respond_to :xml, :json
-  respond_to :js, :only => [:destroy, :sort, :new_meta_tag]
+  respond_to :js, :only => [:edit, :destroy, :sort, :new_meta_tag]
 
   def index
     respond_with(:admin, @pages)
@@ -72,6 +72,13 @@ class Admin::PagesController < AdminBaseController
     end
 
     def parent_page
-      @parent_page = @page.parent.nil? ? @current_site.pages.where(:title => "Home Page").first : @page.parent
+      home_page = @current_site.pages.where(:title => "Home Page").first
+      if @page.parent.nil? && home_page.nil?
+        @parent_page = nil
+      elsif @page.parent.nil? && !home_page.nil?
+        @parent_page = home_page
+      else
+        @parent_page = @page.parent
+      end
     end
 end

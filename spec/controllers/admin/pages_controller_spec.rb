@@ -62,6 +62,11 @@ describe Admin::PagesController do
       do_get
       assigns(:page).should == page
     end
+
+    it "should receive parent page" do
+      controller.should_receive(:parent_page)
+      do_get
+    end
     
     it "should build a nested current_state" do
       page.should_receive(:build_current_state)
@@ -175,7 +180,7 @@ describe Admin::PagesController do
   
   # -- GETE edit ----------------------------------------------- 
   describe "GET edit" do
-    let(:params) {{ "id" => page.to_param }}
+    let(:params) {{ "id" => page.to_param, :view => "#{page.page_parts.first.name}" }}
     
     before(:each) do
       Page.stub(:find).and_return(page)
@@ -193,6 +198,21 @@ describe Admin::PagesController do
     it "should assing @layout for the veiw" do
       do_get
       assigns(:page).should == page
+    end
+
+    it "should receive parent page" do
+      controller.should_receive(:parent_page)
+      do_get
+    end
+
+    it "should receive selected_part" do
+      controller.should_receive(:selected_page_part)
+      do_get
+    end
+
+    it "should assign the selected_page_part" do
+      do_get
+      assigns(:selected_page_part).should ==  page.page_parts.first
     end
     
     it "should render the edit template" do
