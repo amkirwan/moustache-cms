@@ -85,11 +85,11 @@ module Admin::PagesHelper
   def page_part_selected(page_part)
     unless @page.new_record?
       if @selected_page_part.name == page_part.name
-        content_tag :li, :id => "#{page_part.name}_nav", :class => 'tab selected' do
+        content_tag :li, :id => "#{page_part.id}_nav", :class => 'tab selected' do
           link_to page_part.name, edit_admin_page_path(@page, :view => page_part.name), :remote => true
         end
       else
-        content_tag :li, :id => "#{page_part.name}_nav", :class => 'tab' do
+        content_tag :li, :id => "#{page_part.id}_nav", :class => 'tab' do
           link_to page_part.name, edit_admin_page_path(@page, :view => page_part.name), :remote => true
         end
       end
@@ -97,9 +97,15 @@ module Admin::PagesHelper
   end
 
   def show_page_part(page_part)
-    if @selected_page_part != page_part
-      "hidden"  
+    if page_part.new_record? || @selected_page_part == page_part
+      'page_part_selected'
+    else
+      'hidden'
     end
+  end
+
+  def page_part_id(prefix, object)
+    prefix + object.name.gsub(/\s+/, '_')
   end
 
 end

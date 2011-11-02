@@ -5,9 +5,10 @@ class Admin::PagePartsController < AdminBaseController
 
   respond_to :html, :except => :show
   respond_to :xml, :json
+  respond_to :js, :only => [:new, :destroy]
 
   def new
-    respond_with(:admin, @page, @page_parts)
+    respond_with(:admin, @page, @page_part)
   end
 
   def show
