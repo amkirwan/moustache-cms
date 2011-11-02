@@ -16,14 +16,18 @@ jQuery ->
     #END:pageFilter
     
     if $('body.pages').length
-      $('.page_part_filter option:selected').each ->
-        contentSettings $(this).text(), $('textarea.page_part_contents')
-        
+
+      filters = []
+      $('.page_parts select').each -> 
+        filters.push $(this)
+      
+      $('.page_parts textarea').each (index) ->
+        contentSettings filters[index].val(), $(this) 
+
       $('.page_part_filter').change ->
-        $('.page_part_filter option:selected').each ->
-          pagePartContent = $("textarea.page_part_contents")
-          pagePartContent.markItUpRemove()
-          contentSettings $(this).text(), pagePartContent
+        pagePartContent = $(this).parent().next().find('textarea')
+        pagePartContent.markItUpRemove()
+        contentSettings $(this).val(), pagePartContent
     else if $('body.layouts').length
       contentSettings "html", $('textarea.code')
     else if $('body.snippets').length

@@ -1,0 +1,11 @@
+= f.fields_for(:page_parts, @page.page_parts) do |builder|
+  %ul.form_fields.page_parts{:id => "page_part_" + "#{builder.object.name}"}
+    %li
+      = builder.label :name, "Page Part Name<abbr title='required' class='required'>*</abbr>".html_safe
+      = builder.text_field :name
+    %li.inline
+      = builder.label :filter_name, "Filter<abbr title='required' class='required'>*</abbr>".html_safe
+      = builder.collection_select :filter_name, Filter.all_page_filters, :id, :name, {}, {:class => "page_part_filter"}
+    %li.page_parts_content
+      = builder.label :content, "Page Part Content<abbr title='required' class='required'>*</abbr>".html_safe 
+      = builder.text_area :content, :class => "page_part_contents code"
