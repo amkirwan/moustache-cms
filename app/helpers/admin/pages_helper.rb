@@ -6,13 +6,11 @@ module Admin::PagesHelper
     end
   end
 
-
   def can_destroy_mongoid_tree_item?(mongoid_tree_item)
     if (can? :destroy, mongoid_tree_item) && !mongoid_tree_item.root?
       link_to( image_tag('delete_button.png', :class => "delete_image"), admin_page_path(mongoid_tree_item), :method => :delete, :confirm => "Are you sure you want to delete the page #{mongoid_tree_item.title}", :class => "delete", :remote => true) 
     end
   end
-
 
   def mongoid_tree_ul(mongoid_tree_set, init=true)
     if mongoid_tree_set.first.parent.nil?
@@ -87,14 +85,20 @@ module Admin::PagesHelper
   def page_part_selected(page_part)
     unless @page.new_record?
       if @selected_page_part.name == page_part.name
-        content_tag :li, :class => 'tab selected' do
+        content_tag :li, :id => "#{page_part.name}_nav", :class => 'tab selected' do
           link_to page_part.name, edit_admin_page_path(@page, :view => page_part.name), :remote => true
         end
       else
-        content_tag :li, :class => 'tab' do
+        content_tag :li, :id => "#{page_part.name}_nav", :class => 'tab' do
           link_to page_part.name, edit_admin_page_path(@page, :view => page_part.name), :remote => true
         end
       end
+    end
+  end
+
+  def show_page_part(page_part)
+    if @selected_page_part != page_part
+      "hidden"  
     end
   end
 

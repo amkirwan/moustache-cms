@@ -3,7 +3,6 @@ class PagePart
   
   # -- Fields -------
   field :name
-  key :name
   field :content                               
   field :filter_name
   

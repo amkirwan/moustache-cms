@@ -20,7 +20,6 @@ jQuery ->
         $('#add_meta_tag .fake_link').click ->
           $.get '/admin/pages/new_meta_tag', ->
             console.log 'success'
-            
 
       $('ul.sortable').sortable
         handle: 'em.sortable_list'

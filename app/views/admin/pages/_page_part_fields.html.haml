@@ -1,5 +1,5 @@
 = f.fields_for(:page_parts, @page.page_parts) do |builder|
-  %ul.form_fields.page_parts{:id => "page_part_" + "#{builder.object.name}"}
+  %ul{:id => "page_part_" + "#{builder.object.name}", :class => "form_fields page_part #{show_page_part(builder.object)}" }
     %li
       = builder.label :name, "Page Part Name<abbr title='required' class='required'>*</abbr>".html_safe
       = builder.text_field :name

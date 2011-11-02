@@ -114,6 +114,8 @@ ul li {
 
 img, embed, object, video { max-width: 100%; }
 
+.hidden { display: none; }
+
 /* end general rules */
 
 
@@ -402,8 +404,8 @@ form.site_prop {
   .foldable legend:hover {
     cursor: pointer;
   }
-  .page_part {
-  background: $foldable_bg image-url("form_legend_bg.png") repeat-x left top;
+  .page_parts {
+    background: $foldable_bg image-url("form_legend_bg.png") repeat-x left top;
   }
 }
 
