@@ -16,6 +16,7 @@ class Admin::PagePartsController < AdminBaseController
     @page_part.filter_name = "markdown"
     respond_with(:admin, @page, @page_part) do |format|
       if @page_part.save
+        @selected_page_part = @page_part
         format.html { redirect_to edit_admin_page_path(@page, :view => @page_part.name), :notice => "Successfully created the page part #{@page_part.name}" }
       end
     end
@@ -23,6 +24,7 @@ class Admin::PagePartsController < AdminBaseController
 
   def destroy
     @page_part.destroy
+    @selected_page_part = @page.page_parts.last
     flash[:notice] = "Successfully deleted the page part #{@page_part.name}"
     respond_with(:admin, @page, @page_part) do |format|
       format.html { redirect_to [:edit, :admin, @page] }

@@ -15,3 +15,4 @@ $('#page_parts_nav .tab').last().after('<%= escape_javascript(render :partial =>
 /* add markitup form */
 $('ul#page_part_<%= @page_part.id %> textarea').markItUp(markdownSettings)
 
+$('.delete_page_part a').replaceWith('<%= delete_page_part %>')
