@@ -1,5 +1,5 @@
 = fields_for("page[page_parts_attributes][#{index}]", @page_part) do |builder|
-  %ul{:id => "page_part_blank_#{@page_part.id}", :class => "form_fields page_part #{show_page_part(builder.object)}" }
+  %ul{:id => "page_part_#{@page_part.id}", :class => "form_fields page_part page_part_selected" }
     %li
       = builder.label :name, "Page Part Name<abbr title='required' class='required'>*</abbr>".html_safe
       = builder.text_field :name
@@ -8,4 +8,4 @@
       = builder.collection_select :filter_name, Filter.all_page_filters, :id, :name, {}, {:class => "page_part_filter"}
     %li.page_parts_content
       = builder.label :content, "Page Part Content<abbr title='required' class='required'>*</abbr>".html_safe 
-      = builder.text_area :content, :class => "page_part_contents code"
+      = builder.text_area :content, :class => "page_part_contents code" 

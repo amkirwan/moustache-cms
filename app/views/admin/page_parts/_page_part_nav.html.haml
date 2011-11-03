@@ -1,0 +1,2 @@
+%li{:id => "#{@page_part.id}_nav", :class => 'tab selected'}
+  = link_to @page_part.name, edit_admin_page_path(@page, :view => @page_part.name), :remote => true

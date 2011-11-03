@@ -8,6 +8,11 @@ class Admin::PagePartsController < AdminBaseController
   respond_to :js, :only => [:new, :destroy]
 
   def new
+    if request.xhr?
+      @page_part.name = 'page part name'
+      @page_part.filter_name = 'markdown'
+      @page.page_parts << @page_part
+    end
     respond_with(:admin, @page, @page_part)
   end
 
