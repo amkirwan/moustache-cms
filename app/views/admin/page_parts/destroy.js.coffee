@@ -10,5 +10,5 @@ if $(pagePartId).length
     $(this).remove()
     $('#page_parts_nav .tab').last().addClass('page_part_selected').addClass('selected')
     $('ul.page_part').last().removeClass('hidden')
-    $('.delete_page_part a').replaceWith('<%= delete_page_part %>')
+    $('.delete_page_part').html('<%= delete_page_part %>')
 

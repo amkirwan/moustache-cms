@@ -5,5 +5,5 @@ if $('ul#page_parts_nav').length > 0
   $('fieldset .page_parts .page_part').removeClass('page_part_selected')
   $('fieldset .page_parts #page_part_<%= @selected_page_part.id %>').removeClass('hidden').addClass('page_part_selected')
 
-  $('.delete_page_part a').replaceWith('<%= delete_page_part %>')
+  $('.delete_page_part').html('<%= delete_page_part %>')
 

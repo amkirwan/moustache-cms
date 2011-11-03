@@ -40,10 +40,11 @@ jQuery ->
           $.get '/admin/pages/new_meta_tag', ->
 
       /* page parts ajax spinner */
-      $('ul#page_parts_nav a').bind 'ajax:before', ->
+      $('ul#page_parts_nav a').bind 'ajax:beforeSend', ->
         $('.page_parts div.spinner_wrapper .spinner').removeClass('hidden')
-      $('ul#page_parts_nav a').bind 'ajax:complete', ->
+      $('ul#page_parts_nav a').bind 'ajax:success', ->
         $('.page_parts div.spinner_wrapper .spinner').addClass('hidden')
+
 
       /* change page part nav name */
       $('li.page_part_name input').live 'change', ->

@@ -76,7 +76,9 @@ module Admin::PagesHelper
 
   def delete_page_part
     if @page.page_parts.size > 1  
-      link_to "Delete", [:admin, @page, @selected_page_part], :method => :delete, :confirm => "Are you sure you want to delete the page part #{@selected_page_part.name}", :class => "delete", :remote => true
+      content = content_tag :span, '&#124; '.html_safe, :class => 'menu_separator'
+      content += link_to "Delete", [:admin, @page, @selected_page_part], :method => :delete, :confirm => "Are you sure you want to delete the page part #{@selected_page_part.name}", :class => "delete", :remote => true
+      content
  end
   end
 
