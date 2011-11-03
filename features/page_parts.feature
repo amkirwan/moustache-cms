@@ -24,18 +24,16 @@ And I authenticates as cas user "ak730"
     And I follow "foobar"
     Then I should now be editing the page "foobar"
     When I follow "Add Page Part"
-    Then I should now be on the new admin page part page for the page "foobar"
-    When I fill in "page_part_name" with "sidebar"
-    And I press "Create Page Part"
     Then I should now be editing the page "foobar"
-    And I should see "Successfully created the page part sidebar"
+    And I should see "page part name"
+    And I should see "Successfully created the page part page part name"
 
 @delete_page_part
   Scenario: Delete a page part when more than one exists
-    When the page part "sidebar" exists in the page "foobar" 
+    When the default additional page part exists in the page "foobar" 
     And I follow "Delete"
     Then I should now be editing the page "foobar"
-    And I should see "Successfully deleted the page part sidebar"
+    And I should see "uccessfully deleted the page part page part name"
 
 @cannot_delete_last_page_part
   Scenario: Cannot delete page part if it is the only one on the page

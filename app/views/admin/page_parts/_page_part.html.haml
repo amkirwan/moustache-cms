@@ -9,3 +9,4 @@
     %li.page_parts_content
       = builder.label :content, "Page Part Content<abbr title='required' class='required'>*</abbr>".html_safe 
       = builder.text_area :content, :class => "page_part_contents code" 
+%input{:id => "page_page_parts_attributes_#{index}_id", :name => "page[page_parts_attributes[#{index}][id]", :type => 'hidden', :value => "#{@page_part.id}"}

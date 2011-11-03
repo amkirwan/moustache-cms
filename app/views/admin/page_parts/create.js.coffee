@@ -11,3 +11,6 @@ $('#page_parts_nav .selected').removeClass('selected')
 
 /* add to page part nav and make it the selected tab*/
 $('#page_parts_nav .tab').last().after('<%= escape_javascript(render :partial => "page_part_nav") %>')
+
+/* add markitup form */
+$('ul#page_part_<%= @page_part.id %> textarea').markItUp(markdownSettings)

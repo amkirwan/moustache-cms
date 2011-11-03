@@ -24,7 +24,7 @@ jQuery ->
       $('.page_parts textarea').each (index) ->
         contentSettings filters[index].val(), $(this) 
 
-      $('.page_part_filter').change ->
+      $('.page_part_filter').live 'change', ->
         pagePartContent = $(this).parent().next().find('textarea')
         pagePartContent.markItUpRemove()
         contentSettings $(this).val(), pagePartContent
