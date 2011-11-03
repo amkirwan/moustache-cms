@@ -17,6 +17,35 @@ describe Admin::PagePartsController do
     Page.stub(:find).and_return(page)
   end
 
+  # -- GET new ---
+  describe "GET /new" do
+
+    before(:each) do
+      page_part.as_new_record
+      page.stub(:page_parts).and_return(page_parts)
+      page_parts.stub(:new).and_return(page_part)
+    end
+
+    def do_get
+      get :new, :page_id => page.id
+    end
+
+    it "should receive create a new hash" do
+      page_parts.should_receive(:new).and_return(page_part)
+      do_get
+    end
+
+    it "should assing the page part" do
+      do_get
+      assigns(:page_part).should == page_part
+    end
+
+    it "should render the new template" do
+      do_get
+      response.should render_template("admin/page_parts/new")
+    end
+  end
+
   describe "GET /show" do
 
     before(:each) do

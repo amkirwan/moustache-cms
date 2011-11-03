@@ -49,7 +49,6 @@ $footer_height: 60px;
 @import "flash_and_error_messages";
 @import "sass_func";
 
-
 /* general rules */
 body {
   font: $base_text;
@@ -595,6 +594,19 @@ div.add_some {
   }
 }
 
+.spinner_wrapper {
+  position: relative;
+}
+
+.spinner {
+  position: absolute;
+  left: 50%;
+  padding: 20px;
+  margin-top: 10px;
+  background: rgba(0,0,0,0.8);
+  @include rounded_corners;
+}
+
 /* markdown editor */
 div.markItUp {
   width: 90%;
@@ -602,3 +614,6 @@ div.markItUp {
     width: 98%;
   }
 }
+
+
+

@@ -1,3 +1,5 @@
 = foldable_fieldset 'Page Parts', :class => 'page_parts' do
   = render :partial => 'page_parts_nav'
-  = render :partial => 'page_part_fields', :locals => { :f => f }
+  %div#page_parts_wrapper
+    = image_tag 'ajax-loader.gif', :class => 'spinner hidden'
+    = render :partial => 'page_part_fields', :locals => { :f => f }

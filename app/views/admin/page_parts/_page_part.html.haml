@@ -1,6 +1,6 @@
 = fields_for("page[page_parts_attributes][#{index}]", @page_part) do |builder|
   %ul{:id => "page_part_#{@page_part.id}", :class => "form_fields page_part page_part_selected" }
-    %li
+    %li.page_part_name
       = builder.label :name, "Page Part Name<abbr title='required' class='required'>*</abbr>".html_safe
       = builder.text_field :name
     %li.inline
