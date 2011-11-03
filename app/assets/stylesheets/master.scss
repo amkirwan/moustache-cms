@@ -516,7 +516,8 @@ ul#page_parts_nav {
     margin-bottom: 5px;
     padding: calc_em(5px, 14px) calc_em(5px, 14px); 
   }
-  li.add_page_part {
+  li.add_page_part, li.delete_page_part {
+    padding-right: 0;
     float: right;
   }
   a:link, a:visited {

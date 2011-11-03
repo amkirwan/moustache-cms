@@ -71,15 +71,12 @@ module Admin::PagesHelper
       content_tag :p, content_tag(:i, "Save page first to add additonal page parts")
     else
       link_to 'Add Page Part', [:admin, @page, :page_parts], :method => :post, :remote => true
-      
     end
   end
 
   def delete_page_part
     if @page.page_parts.size > 1  
-      content = content_tag :span, '&#124;'.html_safe, :class => 'menu_separator'
-      content += ' '
-      content += link_to "Delete", [:admin, @page, @selected_page_part], :method => :delete, :confirm => "Are you sure you want to delete the page part #{@selected_page_part.name}", :class => "delete", :remote => true
+      link_to "Delete", [:admin, @page, @selected_page_part], :method => :delete, :confirm => "Are you sure you want to delete the page part #{@selected_page_part.name}", :class => "delete", :remote => true
  end
   end
 
