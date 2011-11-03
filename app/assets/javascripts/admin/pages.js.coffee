@@ -26,6 +26,12 @@ jQuery ->
       $('.site_prop #page_meta_tags').css 'display', 'none'
       $('.site_prop #page_meta_tags').prev().find('span').removeClass('rotate')
 
+      /* meta_tag ajax spinner */
+      $('#add_meta_tag a').bind 'ajax:before', ->
+        $('#meta_tags_fieldset .spinner').removeClass('hidden')
+      $('#add_meta_tag a').bind 'ajax:complete', ->
+        $('#meta_tags_fieldset .spinner').addClass('hidden')
+
       /* new page ajax add meta_tag */
       if $('p#meta_tag_message').length
         $('#meta_tag_message').remove()
@@ -34,10 +40,10 @@ jQuery ->
           $.get '/admin/pages/new_meta_tag', ->
 
       /* page parts ajax spinner */
-      $('ul#page_parts_nav .tab a').bind 'ajax:before', ->
-        $('div#page_parts_wrapper .spinner').show()
-      $('ul#page_parts_nav .tab a').bind 'ajax:complete', ->
-        $('div#page_parts_wrapper .spinner').hide()
+      $('ul#page_parts_nav a').bind 'ajax:before', ->
+        $('.page_parts div.spinner_wrapper .spinner').removeClass('hidden')
+      $('ul#page_parts_nav a').bind 'ajax:complete', ->
+        $('.page_parts div.spinner_wrapper .spinner').addClass('hidden')
 
       /* change page part nav name */
       $('li.page_part_name input').live 'change', ->

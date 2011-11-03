@@ -4,6 +4,7 @@ class Admin::DomainNamesController < AdminBaseController
 
   respond_to :html
   respond_to :xml, :json, :except => :new
+  respond_to :js
 
   def new
     respond_with(:admin, @current_site)
@@ -15,7 +16,6 @@ class Admin::DomainNamesController < AdminBaseController
       if @current_site.save
         flash[:notice] = "Successfully created the domain name #{params[:site][:domain_name]}"
         format.html { redirect_to [:edit, :admin, @current_site] }
-        format.js
       end
     end
   end
@@ -29,7 +29,6 @@ class Admin::DomainNamesController < AdminBaseController
         flash[:notice] = "Successfully deleted the domain name #{@domain_name}" 
       end
       format.html { redirect_to [:edit, :admin, @current_site] }
-      format.js
     end
   end
 

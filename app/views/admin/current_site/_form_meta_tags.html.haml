@@ -1,4 +1,6 @@
-= foldable_fieldset 'Meta Tags' do
+= foldable_fieldset 'Meta Tags', :id => 'meta_tags_fieldset' do
+  %div.spinner_wrapper
+    = image_tag 'ajax-loader.gif', :class => 'spinner hidden'
   %ul{ :id => 'site_meta_tags', :class => 'form_fields meta_tags'} 
     = f.fields_for :meta_tags do |builder|
       %li{:id => meta_tag_id(builder.object), :class => 'inline meta_tag'}  

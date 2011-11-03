@@ -1,4 +1,6 @@
-= foldable_fieldset 'Domain' do
+= foldable_fieldset 'Domain', :id => 'domains_fieldset' do
+  %div.spinner_wrapper
+    = image_tag 'ajax-loader.gif', :class => 'spinner hidden'
   %ul.form_fields
     %li
       = f.label :subdomain
