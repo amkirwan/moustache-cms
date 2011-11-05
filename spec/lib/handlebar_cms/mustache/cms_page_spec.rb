@@ -84,7 +84,7 @@ describe HandlebarCms::Mustache::CmsPage do
     end  
     
     it "should return all the css files" do
-      @cmsp.stylesheets_all.should == %(<link href="#{@theme_asset_css.asset.url}" rel="stylesheet" type="text/css" />\n<link href="#{@theme_asset_css_2.asset.url}" media="screen" rel="stylesheet" type="text/css" />\n)
+      @cmsp.stylesheets_all.should == %(<link href="#{@theme_asset_css_2.asset.url}" media="screen" rel="stylesheet" type="text/css" />\n<link href="#{@theme_asset_css.asset.url}" rel="stylesheet" type="text/css" />\n)
     end
     
     it "should return a stylesheet by name" do

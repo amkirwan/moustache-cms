@@ -43,6 +43,8 @@ describe Admin::PagePartsController do
       page_parts.stub(:new).and_return(page_part)
       page_part.stub(:filter_name=)
       page_part.stub(:save).and_return(true)      
+      page_part.stub(:name=)
+      page_part.stub(:filter_name=)
     end
 
     def do_post(post_params=params)
@@ -69,18 +71,6 @@ describe Admin::PagePartsController do
         response.should redirect_to(edit_admin_page_path(page, :view => page_part.name))
       end
     end
-
-    context "with invalid params" do
-      before(:each) do
-        page_part.stub(:save).and_return(false)
-        page_part.stub(:errors => { :page_part => "page_part errors" })
-      end
-
-      it "should render the new template when creating the page_part fails" do
-        do_post
-        response.should render_template("admin/page_parts/new")
-      end
-    end
   end
 
 # -- Delete Destroy --- 
@@ -90,6 +80,7 @@ describe Admin::PagePartsController do
 
     before(:each) do
       page.stub_chain(:page_parts, :find).and_return(page_part)
+      page.stub_chain(:page_parts, :last).and_return(page_part)
       page_part.stub(:destroy).and_return(true)
       page_part.stub(:persisted?).and_return(false)
     end
