@@ -19,10 +19,10 @@ module HandlebarCms
       end
 
       def stylesheets
-        attributes = style_attributes
         @css_files = @current_site.css_files
         haml_render = ""
         @css_files.each do |file|
+          attributes = style_attributes
           set_default_attribute_values(attributes, file)
           set_link_attributes(attributes, file)
           engine = gen_haml('stylesheet')
