@@ -16,13 +16,13 @@ Given /^the site "([^\"]*)" exists with the domain "([^\"]*)"$/ do |site, domain
 end
 
 Given /^I login to the site "([^\"]*)" as "([^\"]*)" with the role of "([^\"]*)"$/ do |site, puid, role|
-  Given %{the user "#{puid}" exists with the role of "#{role}" in the site "#{site}"}
-  Given %{cas authenticates with cas user "#{puid}"}
+  step %{the user "#{puid}" exists with the role of "#{role}" in the site "#{site}"}
+  step %{cas authenticates with cas user "#{puid}"}
 end   
 
 Given /^the user with the role exist$/ do |table|
   table.hashes.each do |hash|
-    Given %{the user "#{hash[:user]}" exists with the role of "#{hash[:role]}" in the site "#{hash[:site]}"}
+    step %{the user "#{hash[:user]}" exists with the role of "#{hash[:role]}" in the site "#{hash[:site]}"}
   end
 end 
 

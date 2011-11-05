@@ -244,7 +244,7 @@ DEPENDENCIES
   capybara (>= 1.0.0)
   carrierwave-mongoid!
   coffee-rails (~> 3.1.0)
-  cucumber-rails (~> 1.0)
+  cucumber-rails
   database_cleaner
   factory_girl_rails
   haml-rails (~> 0.3)
