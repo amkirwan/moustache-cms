@@ -46,7 +46,7 @@ module HandlebarCms
     # config.i18n.default_locale = :de
 
     # JavaScript files you want as :defaults (application.js is always included).
-    config.action_view.javascript_expansions[:defaults] = %w(jquery jquery_ujs)
+    #config.action_view.javascript_expansions[:defaults] = %w(jquery jquery_ujs)
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
@@ -54,8 +54,8 @@ module HandlebarCms
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
     
-    config.hostname = "localhost"
-    config.auto_manage_sites = true
+    #config.hostname = "localhost"
+    #config.auto_manage_sites = true
     
     config.middleware.use Rack::SslEnforcer, :only => ["/admin"], :strict => true if Rails.env == "production"
     
