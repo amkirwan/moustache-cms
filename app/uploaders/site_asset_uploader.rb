@@ -7,7 +7,7 @@ class SiteAssetUploader < CarrierWave::Uploader::Base
   storage :file
 
   def store_dir
-    "assets/#{model._parent.site_id}/#{model._parent.name}/#{mounted_as}/#{model.id}"
+    "site_assets/#{model._parent.site_id}/#{model._parent.name}/#{mounted_as}/#{model.id}"
   end    
   
   before :store, :remember_cache_id
