@@ -11,6 +11,7 @@
 //= require site_asset_plupload
 //= require nested/jquery.ui.nestedSortable
 //= require_self
+//= require externals
 
 jQuery(function() {
   return $(document).ready(function() {
