@@ -12,6 +12,6 @@ public/uploads
 public/sites/**/*
 public/cached
 spec/tmp/**/*
+config/mongoid_production.yml
 config/deploy.rb
-config/production_mongoid.yml
 config/unicorn.conf
