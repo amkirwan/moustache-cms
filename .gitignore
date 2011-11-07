@@ -1,7 +1,7 @@
 .DS_Store
 .bundle
 capistrano/*
-.sass-cache
+.sass-cache/*
 *.swp
 db/*.sqlite3
 log/*.log
