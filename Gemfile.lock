@@ -86,6 +86,9 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.1.2)
+    coffeebeans (1.0.1)
+      actionpack (>= 3.0.0)
+      coffee-script
     cucumber (1.1.1)
       builder (>= 2.1.2)
       diff-lcs (>= 1.1.2)
@@ -244,6 +247,7 @@ DEPENDENCIES
   capybara (>= 1.0.0)
   carrierwave-mongoid!
   coffee-rails (~> 3.1.0)
+  coffeebeans
   cucumber-rails
   database_cleaner
   factory_girl_rails
