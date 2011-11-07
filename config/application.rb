@@ -50,7 +50,7 @@ module HandlebarCms
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
     
-    #config.middleware.use Rack::SslEnforcer, :only => ["/admin"], :strict => true if Rails.env == "production"
+    config.middleware.use Rack::SslEnforcer, :only => ["/admin"], :strict => true if Rails.env == "production"
     
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
