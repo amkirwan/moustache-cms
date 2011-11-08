@@ -49,8 +49,9 @@ class Admin::UsersController < AdminBaseController
         reset_session
         respond_with(:admin, @user, :location => cms_html_url)
       else
+        flash[:notice] = "Successfully deleted user profile for #{@user.full_name}" 
         respond_with do |format|
-          format.html { redirect_to [:admin, :users], :notice => "Successfully deleted user profile for #{@user.full_name}" }
+          format.html { redirect_to [:admin, :users] }
         end
       end
     end
