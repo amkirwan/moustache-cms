@@ -30,6 +30,19 @@ jQuery(function() {
         }
       });
     });
+
+    $('.foldable legend').mouseup(function() {
+      var legend = $(this);
+      legend.siblings('div#page_parts_wrapper').slideToggle('slow', 'linear', function() {
+        var arrow = legend.children().first();
+        if (arrow.hasClass('rotate')) {
+          arrow.removeClass('rotate');
+        } else { 
+          arrow.addClass('rotate');
+        }
+      });
+    });
+
   });
 });
 

@@ -1,10 +1,6 @@
 jQuery ->
   $(document).ready ->
     if $('body.pages').length
-      $('span.delete_new_meta_tag').live 'click', ->      
-        $(this).parent().fadeToggle 'slow', 'linear', ->
-          $(this).remove()
-        false
 
       /* sort index page pages */
       $('ul.sortable').sortable
@@ -25,6 +21,13 @@ jQuery ->
 
       $('.site_prop #page_meta_tags').css 'display', 'none'
       $('.site_prop #page_meta_tags').prev().find('span').removeClass('rotate')
+
+
+      /* meta_tag remove new meta tag*/
+      $('span.delete_new_meta_tag').live 'click', ->      
+        $(this).parent().fadeToggle 'slow', 'linear', ->
+          $(this).remove()
+        false
 
       /* meta_tag ajax spinner */
       $('#add_meta_tag a').bind 'ajax:before', ->

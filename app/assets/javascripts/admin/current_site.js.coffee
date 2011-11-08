@@ -6,6 +6,11 @@ jQuery ->
           $(this).remove()
         false 
 
+      $('span.delete_new_meta_tag').live 'click', ->      
+        $(this).parent().fadeToggle 'slow', 'linear', ->
+          $(this).remove()
+        false 
+
       /* meta_tag ajax spinner */
       $('#add_meta_tag a').bind 'ajax:before', ->
         $('#meta_tags_fieldset .spinner').removeClass('hidden')
