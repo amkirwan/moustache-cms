@@ -11,5 +11,16 @@ class ApplicationController < ActionController::Base
     def current_user?(user)
       user == @current_user
     end
+
+    def request_set
+      @request = request
+    end
+  
+    def load_site
+      @current_site = Site.match_domain(request.host.downcase).first
+      if @current_site.nil?
+        render :file => "#{Rails.root}/public/404.html", :status => 404
+      end
+    end
  
 end
