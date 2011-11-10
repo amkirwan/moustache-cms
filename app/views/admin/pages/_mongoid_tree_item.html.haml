@@ -1,7 +1,7 @@
 - unless skip_children_on_initialize?(mongoid_tree_item, init)
   %li{:id => mongoid_tree_item_id(mongoid_tree_item)}
     = page_is_sortable? mongoid_tree_item
-    %strong= link_to mongoid_tree_item.title, [:edit, :admin, mongoid_tree_item] 
+    %strong{:class => mongoid_tree_item_class(mongoid_tree_item)}= link_to mongoid_tree_item.title, [:edit, :admin, mongoid_tree_item] 
     %div.page_info
       %span= index_page_time(mongoid_tree_item)
       = can_destroy_mongoid_tree_item? mongoid_tree_item

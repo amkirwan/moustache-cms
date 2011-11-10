@@ -12,6 +12,8 @@ $footer_bg: #2c2b2b;
 $foldable_header: #434343; 
 $foldable_header_selected: #656464;
 $foldable_bg: #E9E8E6;
+$page_index_published: #E9E8E6;
+$page_index_draft: #e4d4c6;
 $submenu_bg: #E4E3E1;
 $action_button_bottom: #2C2C2C;
 
@@ -458,6 +460,9 @@ div#pages_list {
         cursor: move;
         background: transparent image-url("page_list_move.png") no-repeat 0 0
       }
+      em.draft {
+        background: transparent image-url("page_list_move_draft.png") no-repeat 0 0
+      }
       strong {
         display: block;
         height: 2em;
@@ -467,7 +472,6 @@ div#pages_list {
         -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
         -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);  
         box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
-        background: $foldable_bg;
         
         a:link, a:visited {
           font-size: 14px;
@@ -486,6 +490,13 @@ div#pages_list {
           color: $hover_text; 
           text-decoration: none;
         }
+        
+      }
+      strong.published {
+        background: $page_index_published;
+      }
+      strong.draft {
+        background: $page_index_draft;
       }
       div {
         color: $med_text;

@@ -2,7 +2,11 @@ module Admin::PagesHelper
 
   def page_is_sortable?(mongoid_tree_item)
     unless mongoid_tree_item.root?
-      content_tag :em, "", :class => 'sortable_list'
+      if mongoid_tree_item.published?
+        content_tag :em, "", :class => 'sortable_list published'
+      else
+        content_tag :em, "", :class => 'sortable_list draft'
+      end
     end
   end
 
@@ -26,6 +30,14 @@ module Admin::PagesHelper
 
   def mongoid_tree_item_id(mongoid_tree_item)
     mongoid_tree_item.title + '_' + mongoid_tree_item.id.to_s
+  end
+
+  def mongoid_tree_item_class(mongoid_tree_item)
+    if mongoid_tree_item.published?
+      "published"
+    elsif mongoid_tree_item.draft?
+      "draft"
+    end
   end
 
   def skip_children_on_initialize?(mongoid_tree_item, init)
