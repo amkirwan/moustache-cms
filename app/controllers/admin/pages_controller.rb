@@ -2,7 +2,7 @@ class Admin::PagesController < AdminBaseController
   
   load_and_authorize_resource 
 
-  respond_to :html, :except => [:show, :sort, :new_meta_tag]
+  respond_to :html, :except => [:show, :sort, :new_meta_tag, :update]
   respond_to :xml, :json
   respond_to :js, :only => [:edit, :destroy, :sort, :new_meta_tag]
 
@@ -72,10 +72,8 @@ class Admin::PagesController < AdminBaseController
     end
 
     def parent_page
-      home_page = @current_site.pages.where(:title => "Home Page").first
-      if @page.parent.nil? && home_page.nil?
-        @parent_page = nil
-      elsif @page.parent.nil? && !home_page.nil?
+      home_page = @current_site.pages.where(:full_path => '/').first
+      if @page.new_record?
         @parent_page = home_page
       else
         @parent_page = @page.parent

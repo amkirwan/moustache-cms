@@ -120,4 +120,8 @@ module Admin::PagesHelper
     prefix + object.name.gsub(/\s+/, '_')
   end
 
+  def parent_selected(page_parent)
+    page_parent.nil? ? '' : page_parent.id.to_s
+  end
+
 end
