@@ -1,5 +1,8 @@
 class ApplicationController < ActionController::Base 
   protect_from_forgery 
+
+  before_filter :request_set
+  before_filter :load_site
   
   protected 
 
