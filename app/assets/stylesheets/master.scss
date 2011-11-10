@@ -472,7 +472,6 @@ div#pages_list {
         -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
         -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);  
         box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
-        
         a:link, a:visited {
           font-size: 14px;
           line-height: 26px;
@@ -493,10 +492,15 @@ div#pages_list {
         
       }
       strong.published {
+        border-top: 1px solid #D2D1D0;
         background: $page_index_published;
       }
       strong.draft {
+        border-top: 1px solid #CBBCAF;
         background: $page_index_draft;
+      }
+      strong.home_page {
+        border-left: 1px solid #D2D1D0;
       }
       div {
         color: $med_text;

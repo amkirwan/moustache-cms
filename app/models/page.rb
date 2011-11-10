@@ -117,6 +117,10 @@ class Page
   end
 
   # -- Instance Methods -----------------------------------------------  
+  def home_page?
+    self.full_path == '/' ? true : false
+  end
+
   def published?
     self.current_state.published?
   end

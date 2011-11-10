@@ -34,9 +34,9 @@ module Admin::PagesHelper
 
   def mongoid_tree_item_class(mongoid_tree_item)
     if mongoid_tree_item.published?
-      "published"
+      mongoid_tree_item.home_page? ? 'home_page published' : 'published'
     elsif mongoid_tree_item.draft?
-      "draft"
+      mongoid_tree_item.home_page? ? 'home_page draft' : 'draft'
     end
   end
 

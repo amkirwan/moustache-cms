@@ -327,6 +327,16 @@ describe Page do
         @page.draft?.should be_false
       end
     end
+
+    describe "#home_page?" do
+      it "should return true when the page is the home page for the site" do
+        parent.home_page?.should be_true
+      end
+
+      it "should return false when the page is not the home page" do
+        @page.home_page?.should be_false
+      end
+    end
     
     describe "#published_at" do
       it "shortcut to the current_state published_at property" do
