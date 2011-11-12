@@ -11,12 +11,15 @@ end
 gem "jquery-rails"
 gem "coffeebeans"
 
+group :authentication do
+  gem "devise"
+end
+
 gem "haml-rails", "~> 0.3"
 gem "mongoid", "~> 2.3.3"
 gem "bson", "~> 1.3.1"
 gem "bson_ext", "~> 1.3.1"    
 gem "cancan", ">= 1.6"
-gem "rubycas-client", :git => "git://github.com/amkirwan/rubycas-client.git", :branch => "rails3"
 gem "mongoid-tree", :git => "git://github.com/benedikt/mongoid-tree", :require => "mongoid/tree"
 gem "mustache", ">= 0.99"
 gem "RedCloth", "~> 4.2"
