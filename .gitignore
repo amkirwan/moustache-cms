@@ -2,6 +2,7 @@
 .bundle
 capistrano/*
 .sass-cache/*
+.rbenv-version
 *.swp
 db/*.sqlite3
 log/*.log
