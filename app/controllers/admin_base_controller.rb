@@ -3,8 +3,8 @@ class AdminBaseController < ApplicationController
 
   force_ssl
     
-  before_filter :fake_login unless Rails.env == "production"
-  before_filter CASClient::Frameworks::Rails::Filter
+  #before_filter :fake_login unless Rails.env == "production"
+  #before_filter CASClient::Frameworks::Rails::Filter
   before_filter :current_site
   after_filter :discard_flash_message
   #before_filter :assign_site

@@ -4,5 +4,5 @@
     %th Partners UID
     %th Role
     %th 
-  = render @users
+  = render @users.asc(:firstname, :lastname)
 
