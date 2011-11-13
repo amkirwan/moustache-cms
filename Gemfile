@@ -22,7 +22,6 @@ gem "mongoid-tree", :git => "git://github.com/benedikt/mongoid-tree", :require =
 gem "mustache", ">= 0.99"
 gem "RedCloth", "~> 4.2"
 gem "redcarpet", "~> 1.11"
-gem "rack-ssl-enforcer", "~> 0.2"
 gem "carrierwave-mongoid", :git => "git://github.com/jnicklas/carrierwave-mongoid.git", :require => "carrierwave/mongoid"
 gem "mime-types"
 gem "mongoid_taggable_with_context", :git => "git://github.com/amkirwan/mongoid_taggable_with_context.git", :branch => "master"

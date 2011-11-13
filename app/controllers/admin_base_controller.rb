@@ -1,5 +1,7 @@
 class AdminBaseController < ApplicationController
   protect_from_forgery   
+
+  force_ssl
     
   before_filter :fake_login unless Rails.env == "production"
   before_filter CASClient::Frameworks::Rails::Filter
