@@ -1,9 +1,11 @@
 class User
   include Mongoid::Document
   include Mongoid::Timestamps
-  include Mongoid::Paranoia
+
+  
+  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable 
    
-  attr_accessible :firstname, :lastname, :email 
+  attr_accessible :firstname, :lastname, :email, :password, :password_confirmation, :remember_me
   
   # -- Fields -----------------------------------------------    
   field :puid

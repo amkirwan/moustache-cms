@@ -11,9 +11,7 @@ end
 gem "jquery-rails"
 gem "coffeebeans"
 
-group :authentication do
-  gem "devise"
-end
+gem "devise"
 
 gem "haml-rails", "~> 0.3"
 gem "mongoid", "~> 2.3.3"

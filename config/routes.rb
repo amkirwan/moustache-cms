@@ -1,5 +1,8 @@
 HandlebarCms::Application.routes.draw do   
                               
+  devise_for :users
+  root :to => "admin/pages#index"
+
   namespace :admin do
     resources :users
     resources :layouts
