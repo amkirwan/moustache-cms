@@ -5,7 +5,7 @@ class Admin::SessionsController < Devise::SessionsController
   end
 
   def after_sign_out_path_for(resource)
-    request.protocol + request.hosto_with_port
+    request.protocol + request.host_with_port
   end
 
 end

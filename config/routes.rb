@@ -35,8 +35,6 @@ HandlebarCms::Application.routes.draw do
 
   match "/admin" => redirect("/admin/pages")
 
-  match "/logout", :to => "admin_base#logout"
-  
   scope :controller => "cms_site" do
     get "/" => :render_html, :as => "cms_html", :path => '(*page_path)'
   end
