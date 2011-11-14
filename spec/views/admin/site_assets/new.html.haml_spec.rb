@@ -4,12 +4,12 @@ require 'spec_helper'
 describe "admin/site_assets/new.html.haml" do
   let(:asset_collection) { stub_model(AssetCollection) }
   let(:site_asset) { stub_model(SiteAsset) }
-  let(:current_user) { stub_model(User, :role? => true) }
+  let(:current_admin_user) { stub_model(User, :role? => true) }
   
   before(:each) do
     assign(:asset_collection, asset_collection)
     assign(:site_asset, site_asset.as_new_record)
-    assign(:current_user, current_user)
+    assign(:current_admin_user, current_admin_user)
   end
 
   it "renders new site_asset form" do

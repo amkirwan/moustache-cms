@@ -12,12 +12,12 @@
       = link_to "Layouts", [:admin, :layouts]
     %li#theme_assets
       = link_to "Theme Assets", [:admin, :theme_assets]
-    - if admin?
+    - if current_admin_user.role?('admin')
       %li#users
         = link_to "User Profiles", [:admin, :users]
     - else
       %li#users
-        = link_to "Your Profile", [:edit, :admin, @current_user]
-    - if admin?
+        = link_to "Your Profile", [:edit, :admin, @current_admin_user]
+    - if current_admin_user.role?('admin')
       %li.sites
         = link_to "Site Settings", [:edit, :admin, @current_site]

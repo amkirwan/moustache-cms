@@ -46,7 +46,7 @@ class Admin::ThemeAssetsController < AdminBaseController
    
   # PUT /admin/theme_assets/1 
   def update   
-    @theme_asset.updated_by = current_user       
+    @theme_asset.updated_by = current_admin_user       
     respond_with(:admin, @theme_asset) do |format|
       if @theme_asset.update_attributes(params[:theme_asset]) && @theme_asset.update_file_content(params[:theme_asset_file_content])
         format.html { redirect_to admin_theme_assets_path, :notice => "Successfully updated the theme asset #{@theme_asset.name}" }

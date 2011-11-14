@@ -2,7 +2,7 @@
   %ul
     %li
       %i Howdy, 
-      = link_to @current_user.full_name, edit_admin_user_path(@current_user)
+      = link_to current_admin_user.full_name, edit_admin_user_path(current_admin_user)
     %li
       %span.menu_separator &#124;
       = link_to "View Site", cms_html_path, :target => "_blank"

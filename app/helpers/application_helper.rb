@@ -1,7 +1,7 @@
 module ApplicationHelper  
   
   def admin?     
-    @current_user.role?("admin") ? true : false
+    @current_admin_user.role?("admin") ? true : false
   end
   
   def current_site

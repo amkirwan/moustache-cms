@@ -5,11 +5,11 @@ describe "admin/layouts/_form.html.haml" do
   include FormHelpers
   
   let(:layout) { stub_model(Layout) }
-  let(:current_user) { stub_model(User, :role? => true) }
+  let(:current_admin_user) { stub_model(User, :role? => true) }
    
   before(:each) do 
     assign(:layout, layout)
-    assign(:current_user, current_user)
+    assign(:current_admin_user, current_admin_user)
   end
   
   def do_render(label)

@@ -3,14 +3,14 @@ require 'spec_helper'
 describe Admin::TagAttrsController do
 
   let(:site) { mock_model(Site) }
-  let(:current_user) { logged_in(:role? => "admin", :site_id => site.id) }
+  let(:current_admin_user) { logged_in(:role? => "admin", :site_id => site.id) }
   let(:tag_attr) { mock_model("TagAttr", :name => "media" )}
   let(:tag_attrs) { [tag_attr] }
   let(:theme_asset) { mock_model("ThemeAsset", :site_id => site.id, :tag_attrs => tag_attrs)}
 
   before(:each) do
-    cas_faker(current_user.puid)
-    stub_c_site_c_user(site, current_user)
+    cas_faker(current_admin_user.puid)
+    stub_c_site_c_user(site, current_admin_user)
 
     ThemeAsset.stub(:find).and_return(theme_asset)
   end

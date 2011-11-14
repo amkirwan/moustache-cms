@@ -1,9 +1,10 @@
 HandlebarCms::Application.routes.draw do   
                               
-  devise_for :users
-  root :to => "admin/pages#index"
+  #devise_for :admin, :class_name => 'User', :controllers => { :sessions => 'admin/sessions', :passwords => 'admin/passwords', :registration => 'admin/registrations' }, :path => 'admin'
 
   namespace :admin do
+
+    devise_for :users
     resources :users
     resources :layouts
 
@@ -31,7 +32,7 @@ HandlebarCms::Application.routes.draw do
     end
 
   end
-  
+
   match "/admin" => redirect("/admin/pages")
 
   match "/logout", :to => "admin_base#logout"

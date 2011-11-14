@@ -45,7 +45,7 @@ class Admin::UsersController < AdminBaseController
   
   def destroy
     if @user.delete
-      if current_user? @user
+      if current_admin_user? @user
         reset_session
         respond_with(:admin, @user, :location => cms_html_url)
       else

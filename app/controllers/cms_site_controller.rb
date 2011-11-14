@@ -4,7 +4,7 @@ class CmsSiteController < ApplicationController
   layout nil
   
   def render_html
-    if !@page.nil? && (@page.published? || current_user)
+    if !@page.nil? && (@page.published? || current_admin_user)
       render :text => HandlebarCms::Mustache::CmsPage.new(self).render, :status => 200
     else
       render_404

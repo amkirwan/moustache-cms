@@ -33,7 +33,7 @@ class Admin::SnippetsController < AdminBaseController
   end
   
   def update                
-    @snippet.updated_by = @current_user      
+    @snippet.updated_by = @current_admin_user      
     respond_with(:admin, @snippet) do |format|
       if @snippet.update_attributes(params[:snippet]) 
         format.html { redirector [:edit, :admin, @snippet], [:admin, :snippets], "Successfully updated the snippet #{@snippet.name}" }

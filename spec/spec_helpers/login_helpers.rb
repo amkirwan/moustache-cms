@@ -3,7 +3,7 @@ module LoginHelpers
     CASClient::Frameworks::Rails::Filter.fake(partners_uid)
   end
   
-  def stub_current_user(user)
+  def stub_current_admin_user(user)
     User.stub(:where).and_return(users = [user])
     users.stub(:first).and_return(user)
   end 
@@ -13,12 +13,12 @@ module LoginHelpers
     sites.stub(:first).and_return(site)
   end
   
-  def stub_c_site_c_user(site, current_user)
+  def stub_c_site_c_user(site, current_admin_user)
     stub_current_site(site)
-    stub_current_user(current_user)
+    stub_current_admin_user(current_admin_user)
   end
   
   def logged_in(opts)
-    current_user = mock_model(User, :puid => "foobar", :role? => opts[:role?], :site_id => opts[:site_id])
+    current_admin_user = mock_model(User, :puid => "foobar", :role? => opts[:role?], :site_id => opts[:site_id])
   end             
 end

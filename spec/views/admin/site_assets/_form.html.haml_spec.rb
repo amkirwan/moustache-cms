@@ -6,7 +6,7 @@ describe "admin/site_assets/_form.html.haml" do
   let(:site) { stub_model(Site, :full_subdomain => "foobar.example.com") }
   let(:site_asset) { stub_model(SiteAsset, :site => site) }
   let(:asset_collection) { stub_model(AssetCollection) }
-  let(:current_user) { stub_model(User, :role? => true) }
+  let(:current_admin_user) { stub_model(User, :role? => true) }
   
   before(:each) do
     view.stub(:can?).and_return(true)

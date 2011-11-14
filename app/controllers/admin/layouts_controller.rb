@@ -32,7 +32,7 @@ class Admin::LayoutsController < AdminBaseController
   end
   
   def update    
-    @layout.updated_by = @current_user
+    @layout.updated_by = @current_admin_user
     respond_with(:admin, @layout) do |format|
       if @layout.update_attributes(params[:layout]) 
         format.html { redirect_to redirector_path(@layout), :notice => "Successfully updated the layout #{@layout.name}" }

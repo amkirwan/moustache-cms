@@ -39,7 +39,7 @@ class Admin::PagesController < AdminBaseController
   end
   
   def update
-    @page.updated_by = @current_user
+    @page.updated_by = @current_admin_user
     respond_with(:admin, @page) do |format|
       if @page.update_attributes(params[:page]) 
         format.html { redirect_to redirector_path(@page), :notice => "Successfully updated the page #{@page.title}" }

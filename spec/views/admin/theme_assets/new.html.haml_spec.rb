@@ -3,11 +3,11 @@ require "spec_helper"
 describe "admin/theme_assets/new.html.haml" do
   
   let(:theme_asset) { stub_model(ThemeAsset) }
-  let(:current_user) { stub_model(User, :role? => true) }
+  let(:current_admin_user) { stub_model(User, :role? => true) }
    
   before(:each) do 
     assign(:theme_asset, theme_asset)
-    assign(:current_user, current_user)
+    assign(:current_admin_user, current_admin_user)
     view.stub(:can?).and_return(true)
   end
   

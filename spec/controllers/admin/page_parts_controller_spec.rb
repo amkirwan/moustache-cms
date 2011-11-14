@@ -3,15 +3,15 @@ require 'spec_helper'
 describe Admin::PagePartsController do
 
   let(:site) { mock_model(Site) }
-  let(:current_user) { logged_in(:role? => "admin", :site_id => site.id) }
+  let(:current_admin_user) { logged_in(:role? => "admin", :site_id => site.id) }
   let(:page) { mock_model("Page", :site_id => site.id).as_null_object }
   let(:page_part) { mock_model("PagePart", :name => "page part name", :content => "page part content", :_parent => page) }
   let(:page_parts) { [page_part] }
 
 
   before(:each) do
-    cas_faker(current_user.puid)
-    stub_c_site_c_user(site, current_user)
+    cas_faker(current_admin_user.puid)
+    stub_c_site_c_user(site, current_admin_user)
 
     page.stub(:find).and_return(page_parts)
     Page.stub(:find).and_return(page)

@@ -4,11 +4,11 @@ require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')
 describe "admin/layouts/new.html.haml" do
   
   let(:layout) { stub_model(Layout).as_new_record }
-  let(:current_user) { stub_model(User, :role? => true) }
+  let(:current_admin_user) { stub_model(User, :role? => true) }
    
   before(:each) do 
     assign(:layout, layout)
-    assign(:current_user, current_user)
+    assign(:current_admin_user, current_admin_user)
   end
   
   it "should render form title" do

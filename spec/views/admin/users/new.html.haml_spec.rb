@@ -4,11 +4,11 @@ require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')
 describe "admin/users/new.html.haml" do
   
   let(:user) { stub_model(User) }
-  let(:current_user) { stub_model(User, :role? => true) }
+  let(:current_admin_user) { stub_model(User, :role? => true) }
   
   before(:each) do
     assign(:user, user)
-    assign(:current_user, current_user)
+    assign(:current_admin_user, current_admin_user)
     view.stub(:can?).and_return(true)
   end
   

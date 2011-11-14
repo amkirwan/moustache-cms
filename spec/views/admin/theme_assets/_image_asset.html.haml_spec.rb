@@ -4,12 +4,12 @@ describe "admin/theme_assets/_image_asset.html.haml" do
     
   let(:site) { stub_model(Site, :full_subdomain => "foobar.example.com") }
   let(:theme_asset) { stub_model(ThemeAsset, :site => site) }
-  let(:current_user) { stub_model(User, :role? => true) }
+  let(:current_admin_user) { stub_model(User, :role? => true) }
   
   before(:each) do
     assign(:current_site, site)
     assign(:theme_asset, theme_asset)
-    assign(:current_user, current_user)
+    assign(:current_admin_user, current_admin_user)
     form_for([:admin, theme_asset]) do |f|
       @f = f
     end

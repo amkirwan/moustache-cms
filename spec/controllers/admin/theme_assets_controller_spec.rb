@@ -8,12 +8,12 @@ describe Admin::ThemeAssetsController do
   
   #for actions
   let(:site) { mock_model(Site, :id => "1") }
-  let(:current_user) { logged_in(:role? => "admin", :site_id => site.id) }
+  let(:current_admin_user) { logged_in(:role? => "admin", :site_id => site.id) }
   let(:theme_asset) { mock_model("ThemeAsset", :site_id => site.id).as_null_object }
   
   before(:each) do
-    cas_faker(current_user.puid)
-    stub_c_site_c_user(site, current_user)
+    cas_faker(current_admin_user.puid)
+    stub_c_site_c_user(site, current_admin_user)
   end
   
   describe "GET index" do
@@ -196,7 +196,7 @@ describe Admin::ThemeAssetsController do
     end                                                        
     
     it "should assign the updated_by attribute" do
-      theme_asset.should_receive(:updated_by=).with(current_user)
+      theme_asset.should_receive(:updated_by=).with(current_admin_user)
       do_put
     end
     

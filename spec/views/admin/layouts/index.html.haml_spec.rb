@@ -3,11 +3,11 @@ require File.expand_path(File.dirname(__FILE__) + '/../../../spec_helper')
 
 describe "admin/layouts/index.html.haml" do
   let(:layouts) { [stub_model(Layout, :name => "foobar"), stub_model(Layout, :name => "bar")] }
-  let(:current_user) { stub_model(User, :role? => true) }
+  let(:current_admin_user) { stub_model(User, :role? => true) }
   
   before(:each) do
     assign(:layouts, layouts)
-    assign(:current_user, current_user)
+    assign(:current_admin_user, current_admin_user)
     view.stub(:can?).and_return(true)
   end
   

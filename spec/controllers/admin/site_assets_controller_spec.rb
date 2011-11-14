@@ -4,14 +4,14 @@ describe Admin::SiteAssetsController do
 
   #for actions
   let(:site) { mock_model(Site, :id => "1") }            
-  let(:current_user) { logged_in(:role? => "admin", :site_id => site.id) }
+  let(:current_admin_user) { logged_in(:role? => "admin", :site_id => site.id) }
   let(:site_asset) { mock_model("SiteAsset", :site_id => site.id).as_null_object }
   let(:site_assets) { [site_asset]}
   let(:asset_collection) { mock_model(AssetCollection, :site_assets => site_assets, :site_id => site.id).as_null_object }
   
   before(:each) do
-    cas_faker(current_user.puid)
-    stub_c_site_c_user(site, current_user)  
+    cas_faker(current_admin_user.puid)
+    stub_c_site_c_user(site, current_admin_user)  
 
     AssetCollection.stub(:find).and_return(asset_collection)
   end
@@ -179,7 +179,7 @@ describe Admin::SiteAssetsController do
     end
     
     it "should update updator attribute" do
-      site_asset.should_receive(:updator_id=).with(current_user.id)
+      site_asset.should_receive(:updator_id=).with(current_admin_user.id)
       do_put
     end
     

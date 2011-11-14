@@ -4,13 +4,13 @@ describe Admin::UsersController do
   
   #for actions
   let(:site) { mock_model(Site, :id => "1") }
-  let(:current_user) { logged_in(:role? => "admin", :site_id => site.id) }
+  let(:current_admin_user) { logged_in(:role? => "admin", :site_id => site.id) }
   let(:user) { mock_model("User", :site_id => site.id).as_null_object }
   
   before(:each) do
     @current_site = site.stub(:full_subdomain => "foobar.example.com")
-    cas_faker(current_user.puid)
-    stub_c_site_c_user(site, current_user)
+    cas_faker(current_admin_user.puid)
+    stub_c_site_c_user(site, current_admin_user)
   end
   
   describe "GET index" do
@@ -209,7 +209,7 @@ describe Admin::UsersController do
     end
     
     
-    it "should set the users role when the current_user is an admin" do
+    it "should set the users role when the current_admin_user is an admin" do
       user.should_receive(:role=).with(params["user"]["role"])
       do_put
     end
@@ -267,7 +267,7 @@ describe Admin::UsersController do
     
     context "when destroying the current logged in user account" do
       before(:each) do
-        controller.stub(:current_user?).and_return(true)
+        controller.stub(:current_admin_user?).and_return(true)
       end
 
       it "should destroy the current session" do
@@ -283,7 +283,7 @@ describe Admin::UsersController do
     
     context "when destroying another users record" do
       before(:each) do
-        controller.stub(:current_user?).and_return(false)
+        controller.stub(:current_admin_user?).and_return(false)
       end
       
       it "should set a flash message" do

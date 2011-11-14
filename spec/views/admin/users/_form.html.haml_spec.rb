@@ -9,12 +9,12 @@ describe "admin/users/_form.html.haml" do
   end
   
   let(:user) { stub_model(User)}
-  let(:current_user) { stub_model(User, :role? => true) }
+  let(:current_admin_user) { stub_model(User, :role? => true) }
   
   before(:each) do
     assign(:user, user)  
-    assign(:current_user, current_user)
-    controller.stub(:current_user).and_return(current_user)
+    assign(:current_admin_user, current_admin_user)
+    controller.stub(:current_admin_user).and_return(current_admin_user)
   end
   
   it "should render a shared error partial" do
@@ -137,7 +137,7 @@ describe "admin/users/_form.html.haml" do
     end
     
     it "should not show the radio buttons if the user is not an admin" do 
-      current_user.stub(:role? => false)
+      current_admin_user.stub(:role? => false)
       do_render("Update User")
       form_update(:action => admin_user_path(user)) do |f|
         f.should_not have_selector("input", :type => "radio", :name => "user[role]", :value => "editor")

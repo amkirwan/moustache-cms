@@ -9,7 +9,7 @@ class AdminBaseController < ApplicationController
   after_filter :discard_flash_message
   #before_filter :assign_site
 
-  check_authorization 
+  check_authorization :unless => :devise_controller? 
   
   layout "admin/admin"
   
@@ -21,12 +21,12 @@ class AdminBaseController < ApplicationController
   protected 
       
     def admin?     
-      current_user.role?("admin")
+      current_admin_user.role?("admin")
     end
 
     def created_updated_by_for(obj)
-      obj.created_by_id = current_user.id
-      obj.updated_by_id = current_user.id
+      obj.created_by_id = current_admin_user.id
+      obj.updated_by_id = current_admin_user.id
     end
   
     def assign_site

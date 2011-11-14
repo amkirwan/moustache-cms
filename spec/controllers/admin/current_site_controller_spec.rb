@@ -2,12 +2,12 @@ require 'spec_helper'
 
 describe Admin::CurrentSiteController do
   let(:current_site) { mock_model(Site, :id => "1", :name => "foobar").as_null_object }
-  let(:current_user) { logged_in(:role? => "admin", :site_id => current_site.id) }
+  let(:current_admin_user) { logged_in(:role? => "admin", :site_id => current_site.id) }
 
   before(:each) do
-    current_site.stub(:users).and_return([current_user])
-    cas_faker(current_user.puid)
-    stub_c_site_c_user(current_site, current_user)
+    current_site.stub(:users).and_return([current_admin_user])
+    cas_faker(current_admin_user.puid)
+    stub_c_site_c_user(current_site, current_admin_user)
   end
 
 

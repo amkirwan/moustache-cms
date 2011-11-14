@@ -36,7 +36,7 @@ class Admin::AssetCollectionsController < AdminBaseController
   
   #PUT /admin/asset_collections/1
   def update
-    @asset_collection.updated_by = @current_user
+    @asset_collection.updated_by = @current_admin_user
     if @asset_collection.update_attributes(params[:asset_collection])
       flash[:notice] = "Successfully updated the asset collection #{@asset_collection.name}"
     end

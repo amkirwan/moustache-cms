@@ -2,12 +2,12 @@ require 'spec_helper'
 
 describe Admin::PagesController do
   let(:site) { mock_model(Site, :id => "1").as_null_object }
-  let(:current_user) { logged_in(:role? => "admin", :site_id => site.id) }
+  let(:current_admin_user) { logged_in(:role? => "admin", :site_id => site.id) }
   let(:page) { mock_model("Page", :site_id => site.id).as_null_object }
   
   before(:each) do
-    cas_faker(current_user.puid)
-    stub_c_site_c_user(site, current_user)
+    cas_faker(current_admin_user.puid)
+    stub_c_site_c_user(site, current_admin_user)
   end
   
   # -- GET Index ----------------------------------------------- 
@@ -99,7 +99,7 @@ describe Admin::PagesController do
                     "meta_data" => { "title" => "foobar", "keywords" => "foobar, keywords", "description" => "foobar description"},
                     "page_type_attributes"=> { "id" => page_type.to_param },
                     "current_state_attributes"=> { "id"=> status.to_param }, 
-                    "editor_ids"=>["#{current_user.to_param}"],
+                    "editor_ids"=>["#{current_admin_user.to_param}"],
                     "layout_id" => layout.to_param,
                     "page_parts_attributes" => { "0" => { "name" => "content", "content" => "Hello, World" }}} }}
     
@@ -107,7 +107,7 @@ describe Admin::PagesController do
       page
       @parent_mock = mock_model("Page", :id => "4d922d505dfe2f082e00006e")
       Page.stub(:find).and_return(@parent_mock)
-      User.stub(:find).and_return(current_user)
+      User.stub(:find).and_return(current_admin_user)
       CurrentState.stub(:find).and_return(status)
       Filter.stub(:find).and_return(filter)
       Page.stub(:new).with(params["page"]).and_return(page)

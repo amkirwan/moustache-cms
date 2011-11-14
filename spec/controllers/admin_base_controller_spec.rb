@@ -2,7 +2,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')  
 
 describe "AdminBaseController" do
-  let(:current_user) { logged_in(:role? => true) }
+  let(:current_admin_user) { logged_in(:role? => true) }
   
   controller(AdminBaseController) do
     def index 
@@ -11,19 +11,19 @@ describe "AdminBaseController" do
   end
   
   before(:each) do
-    cas_faker(current_user.puid)
+    cas_faker(current_admin_user.puid)
   end
   
-  describe "cancan should call current_user" do 
-    it "assigns current_user" do
+  describe "cancan should call current_admin_user" do 
+    it "assigns current_admin_user" do
       get :index
-      assigns[:current_user].should == current_user
+      assigns[:current_admin_user].should == current_admin_user
     end
   end  
 end
 
 describe AdminBaseController do
-  let(:current_user) { logged_in(:role? => true) }
+  let(:current_admin_user) { logged_in(:role? => true) }
   
   controller do
     def index
@@ -33,7 +33,7 @@ describe AdminBaseController do
   end
   
   before(:each) do
-    cas_faker(current_user.puid)
+    cas_faker(current_admin_user.puid)
   end
   
   describe "admin? method" do
@@ -43,7 +43,7 @@ describe AdminBaseController do
     end
     
     it "should receive the admin? method and return false" do
-      current_user.stub(:role? => false)
+      current_admin_user.stub(:role? => false)
       controller.should_receive(:admin?).and_return(false)
       get :index
     end
@@ -51,7 +51,7 @@ describe AdminBaseController do
 end
 
 describe AdminBaseController do
-  let(:current_user) { logged_in(:role? => true) }
+  let(:current_admin_user) { logged_in(:role? => true) }
 
   controller do 
     def index   
@@ -62,8 +62,8 @@ describe AdminBaseController do
   
   before(:each) do
     @page = Page.new
-    cas_faker(current_user.puid)
-    controller.stub(:current_user).and_return(current_user)
+    cas_faker(current_admin_user.puid)
+    controller.stub(:current_admin_user).and_return(current_admin_user)
   end
   
   describe "created_updated_by method" do
@@ -79,7 +79,7 @@ describe AdminBaseController do
 end
 
 describe AdminBaseController do
-  let(:current_user) { logged_in(:role? => true) }
+  let(:current_admin_user) { logged_in(:role? => true) }
   
   controller do
     def index 
@@ -88,7 +88,7 @@ describe AdminBaseController do
   end
   
   before(:each) do
-    cas_faker(current_user.puid)
+    cas_faker(current_admin_user.puid)
   end
   
   describe "should create a Site if one does not exist" do
