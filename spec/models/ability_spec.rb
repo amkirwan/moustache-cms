@@ -93,6 +93,8 @@ describe Ability do
         admin_ability.should be_able_to(:create, page_part_first)
         admin_ability.should be_able_to(:update, page_part_first)
         admin_ability.should be_able_to(:destroy, page_part_first)
+
+        admin_ability.should be_able_to(:change_password, admin)
       end
     end
     
@@ -118,6 +120,9 @@ describe Ability do
           admin_ability.should_not be_able_to(:read, page2.page_parts.first)
           admin_ability.should_not be_able_to(:update, page2.page_parts.first)
           admin_ability.should_not be_able_to(:destroy, page2.page_parts.first)
+
+
+          admin_ability.should_not be_able_to(:change_password, admin2)
         end
       end      
     end
@@ -142,6 +147,10 @@ describe Ability do
         it "should allow the user with a role of designer to delete their record" do
           designer_ability.should be_able_to(:destroy, designer)
         end
+
+        it "should allow the user to change their own password" do
+          designer_ability.should be_able_to(:change_password, designer)
+        end
       end
       
       describe "Models user with role of designer can manage" do
@@ -160,13 +169,20 @@ describe Ability do
           designer_ability.should be_able_to(:create, meta_tag_first)
           designer_ability.should be_able_to(:update, meta_tag_first)
           designer_ability.should be_able_to(:destroy, meta_tag_first)
+        end
+      end
 
-
+      describe "should not be able to manage any item that does not have an associated site as the designer" do
+        it "should not allow the designer to  change other users passwords" do
+          designer_ability.should_not be_able_to(:change_password, designer2)
+        end
+        it "should not allow the designer to manage sites they are not associatied with" do
           designer_ability.should_not be_able_to(:read, page2.page_parts.first)
           designer_ability.should_not be_able_to(:update, page2.page_parts.first)
           designer_ability.should_not be_able_to(:destroy, page2.page_parts.first)
         end
       end
+
     end
   end
   
@@ -188,6 +204,10 @@ describe Ability do
           
           it "should allow the user with a role of editor to delete their record" do
             editor_ability.should be_able_to(:destroy, editor)
+          end
+
+          it "should allow the user to change their own password" do
+          designer_ability.should be_able_to(:change_password, designer)
           end
         end
 
@@ -280,6 +300,7 @@ describe Ability do
           editor_ability.should_not be_able_to(:create, editor2)
           editor_ability.should_not be_able_to(:update, editor2)
           editor_ability.should_not be_able_to(:destroy, editor2)
+          editor_ability.should_not be_able_to(:change_password, editor2)
         end
       end
 

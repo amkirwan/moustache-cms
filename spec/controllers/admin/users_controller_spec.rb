@@ -216,7 +216,7 @@ describe Admin::UsersController do
     
     
     it "should should set attr_accessable attributes" do
-      user.should_receive(:update_attributes).with(params["user"])
+      user.should_receive(:update_with_password).with(params["user"])
       do_put
     end
       
@@ -232,7 +232,7 @@ describe Admin::UsersController do
   
     context "when update_attributes fails" do
       it "should render the edit template" do
-        user.stub(:update_attributes).and_return(false)
+        user.stub(:update_with_password).and_return(false)
         user.stub(:errors => { :user => "user errors" })
         do_put  
         response.should render_template("admin/users/edit")

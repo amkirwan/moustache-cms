@@ -3,10 +3,11 @@ module ApplicationHelper
   def admin?     
     @current_admin_user.role?("admin") ? true : false
   end
-  
-  def current_site
+
+  def superuser?
+    @current_admin_user.role?('superuser') ? true : false
   end
- 
+  
   def body_id_set
     name = controller.controller_name
     case name

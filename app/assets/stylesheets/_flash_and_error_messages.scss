@@ -1,6 +1,6 @@
 /* error and flash messages */ 
 $flash_color: #FFD324;
-$error_ex_heading_color: #2C2C2C;
+$error_ex_heading_color: darken(#d54e0e, 10%);
 $error_ex_color: #777777;
 
 div#flash_notice_wrapper {

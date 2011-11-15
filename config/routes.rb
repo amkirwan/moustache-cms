@@ -1,11 +1,13 @@
 HandlebarCms::Application.routes.draw do   
-                              
-  #devise_for :admin, :class_name => 'User', :controllers => { :sessions => 'admin/sessions', :passwords => 'admin/passwords', :registration => 'admin/registrations' }, :path => 'admin'
 
   namespace :admin do
+    devise_for :users, :controllers => { :sessions => 'admin/sessions', :passwords => 'admin/passwords' }
 
-    devise_for :users
-    resources :users
+    resources :users, do
+      member do
+        get :change_password
+      end
+    end
     resources :layouts
 
     resources :pages do 
@@ -30,7 +32,7 @@ HandlebarCms::Application.routes.draw do
       resources :meta_tags, :except => :index 
       resources :domain_names, :except => [:index, :show]
     end
-
+    
   end
 
   match "/admin" => redirect("/admin/pages")
@@ -38,4 +40,7 @@ HandlebarCms::Application.routes.draw do
   scope :controller => "cms_site" do
     get "/" => :render_html, :as => "cms_html", :path => '(*page_path)'
   end
+
+  root :to => 'admin/pages#index'
+
 end

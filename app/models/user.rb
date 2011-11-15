@@ -3,7 +3,7 @@ class User
   include Mongoid::Timestamps
 
   
-  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable 
+  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :timeoutable 
    
   attr_accessible :firstname, :lastname, :email, :password, :password_confirmation, :remember_me
   
@@ -37,7 +37,7 @@ class User
   before_validation :uniq_page_ids
   before_save :lower, :set_puid
                        
-  Roles = %w[editor designer admin] unless defined?(Roles)
+  Roles = %w[editor designer admin superadmin] unless defined?(Roles)
   
   # -- Validations -----------------------------------------------
   validates :puid,
@@ -72,6 +72,27 @@ class User
 
   def full_name
     "#{firstname.capitalize} #{lastname.capitalize}"
+  end
+
+  def update_with_password(params={})
+    current_password = params.delete(:current_password)
+
+    if params[:password].blank?
+      params.delete(:password)
+      params.delete(:password_confirmation) if params[:password_confirmation].blank?
+    end
+
+    if ((params[:password].blank? && params[:password_confirmation].blank?) || valid_password?(current_password))
+      result = update_attributes(params)
+    else
+      self.attributes = params
+      self.valid?
+      self.errors.add(:current_password, current_password.blank? ? :blank : :invalid)
+      false
+    end
+
+    clean_up_passwords
+    result
   end
   
   private

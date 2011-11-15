@@ -1,7 +1,7 @@
 %ul.form_fields
   - if admin?
     %li
-      = f.label :puid, "Partners UID<abbr title='required' class='required'>*</abbr>".html_safe
+      = f.label :puid, "PUID<abbr title='required' class='required'>*</abbr>".html_safe
       = f.text_field :puid 
   %li
     = f.label :firstname, "Firstname<abbr title='required' class='required'>*</abbr>".html_safe
@@ -12,6 +12,16 @@
   %li
     = f.label :email, "Email<abbr title='required' class='required'>*</abbr>".html_safe
     = f.email_field :email
+  - if new_password_fields?
+    %li
+      = f.label :password, "Password<abbr title='required' class='required'>*</abbr>".html_safe
+      = f.password_field :password
+    %li
+      = f.label :password_confirmation, "Password<abbr title='required' class='required'>*</abbr>".html_safe
+      = f.password_field :password
+  - elsif can_change_password?
+    %li 
+      = link_to 'Change Password', change_password_admin_user_path(@user)
   - if admin?
     %li{:id => "role", :class => "inline"}
       = f.label :role, "Role <abbr title='required' class='required'>*</abbr>".html_safe 
