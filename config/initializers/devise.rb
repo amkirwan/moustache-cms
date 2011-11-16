@@ -2,20 +2,6 @@
 # four configuration values can also be set straight in your models.
 Devise.setup do |config|
 
-  config.cas_base_url = "https://cas.bwhanesthesia.org/"
-  config.cas_create_user = false
-  config.cas_username_column = :puid
-
-  # you can override these if you need to, but cas_base_url is usually enough
-  # config.cas_login_url = "https://cas.myorganization.com/login"
-  # config.cas_logout_url = "https://cas.myorganization.com/logout"
-  # config.cas_validate_url = "https://cas.myorganization.com/serviceValidate"
-
-  # By default, devise_cas_authenticatable will create users.  If you would rather
-  # require user records to already exist locally before they can authenticate via
-  # CAS, uncomment the following line.
-  # config.cas_create_user = false  
-
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class with default "from" parameter.
@@ -182,7 +168,7 @@ Devise.setup do |config|
   # Turn scoped views on. Before rendering "sessions/new", it will first check for
   # "users/sessions/new". It's turned off by default because it's slower if you
   # are using only default views.
-  #config.scoped_views = true
+  config.scoped_views = true
 
   # Configure the default scope given to Warden. By default it's the first
   # devise role declared in your routes (usually :user).
@@ -206,7 +192,7 @@ Devise.setup do |config|
   # config.navigational_formats = [:"*/*", "*/*", :html]
 
   # The default HTTP method used to sign out a resource. Default is :delete.
-  #config.sign_out_via = :delete
+  config.sign_out_via = :delete
 
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting

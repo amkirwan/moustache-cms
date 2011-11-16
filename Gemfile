@@ -12,7 +12,6 @@ gem "jquery-rails"
 gem "coffeebeans"
 
 gem "devise"
-gem 'devise_cas_authenticatable', :git => 'git://github.com/nbudin/devise_cas_authenticatable.git'
 
 gem "haml-rails", "~> 0.3"
 gem "mongoid", "~> 2.3.3"

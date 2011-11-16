@@ -21,14 +21,6 @@ GIT
       carrierwave (>= 0.5.6)
       mongoid (~> 2.1)
 
-GIT
-  remote: git://github.com/nbudin/devise_cas_authenticatable.git
-  revision: 7abc665261915dce6313341ff73b179c2bf4bfd4
-  specs:
-    devise_cas_authenticatable (1.0.0.alpha12)
-      devise (>= 1.0.6)
-      rubycas-client (>= 2.2.1)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -201,8 +193,6 @@ GEM
       activesupport (~> 3.0)
       railties (~> 3.0)
       rspec (~> 2.7.0)
-    rubycas-client (2.3.3)
-      activesupport
     rubyzip (0.9.4)
     sass (3.1.10)
     sass-rails (3.1.4)
@@ -260,7 +250,6 @@ DEPENDENCIES
   cucumber-rails
   database_cleaner
   devise
-  devise_cas_authenticatable!
   factory_girl_rails
   haml-rails (~> 0.3)
   hpricot

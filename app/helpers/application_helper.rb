@@ -106,4 +106,8 @@ module ApplicationHelper
     end
   end
 
+  def title_for_page(controller)
+    @current_site.name.titleize + ' - ' + controller.controller_name.titleize 
+  end
+
 end
