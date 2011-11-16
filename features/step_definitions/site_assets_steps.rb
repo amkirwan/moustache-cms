@@ -6,8 +6,8 @@ def find_site_asset(collection, site_asset_name)
   collection.site_assets.where(:name => site_asset_name).first
 end
 
-Given /^these site assets exist in the collection "([^\"]*)" in the site "([^\"]*)" created by user "([^\"]*)"$/ do |c_name, site, puid, table|
-  user = User.find_by_puid(puid)
+Given /^these site assets exist in the collection "([^\"]*)" in the site "([^\"]*)" created by user "([^\"]*)"$/ do |c_name, site, username, table|
+  user = User.find_by_username(username)
   site = Site.match_domain(site).first
   @collection = find_asset_collection(c_name)
   table.hashes.each do |hash|
@@ -16,8 +16,8 @@ Given /^these site assets exist in the collection "([^\"]*)" in the site "([^\"]
   @collection.save
 end
 
-Given /^"([^"]*)" has created the site asset "([^"]*)" in the collection "([^"]*)"$/ do |puid, asset_name, c_name|
-  user = User.find_by_puid(puid)
+Given /^"([^"]*)" has created the site asset "([^"]*)" in the collection "([^"]*)"$/ do |username, asset_name, c_name|
+  user = User.find_by_username(username)
   @collection = find_asset_collection(c_name)
   When %{I go to the new admin asset collection site asset page for "#{@collection.to_param}"}
   Given %{I fill in "site_asset_name" with "#{asset_name}"} 

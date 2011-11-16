@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe "admin/site_assets/index.html.haml" do
-  let(:user) { stub_model(User, :puid => "ak730") }
+  let(:user) { stub_model(User, :username => "ak730") }
   let(:site_assets) { [stub_model(SiteAsset, :name => "foobar")] }
   let(:asset_collection) { stub_model(AssetCollection, :site_assets => site_assets) }
   

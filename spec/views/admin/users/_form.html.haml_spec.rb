@@ -34,10 +34,10 @@ describe "admin/users/_form.html.haml" do
       end
     end 
     
-    it "should show a field to enter the partners puid" do
+    it "should show a field to enter the partners username" do
       do_render("Create User")
       form_new(:action => admin_users_path) do |f|
-        f.should have_selector("input", :type => "text", :name => "user[puid]")
+        f.should have_selector("input", :type => "text", :name => "user[username]")
       end
     end                                                                               
     
@@ -99,7 +99,7 @@ describe "admin/users/_form.html.haml" do
     it "should not have field to update Partners UID" do
       do_render("Update User")
       form_update(:action => admin_user_path(user)) do |f|
-        f.should_not have_selector("input", :type => "text", :name => "user[puid]")
+        f.should_not have_selector("input", :type => "text", :name => "user[username]")
       end
     end  
     

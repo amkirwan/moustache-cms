@@ -18,7 +18,7 @@ Factory.define :site do |site|
 end
 
 Factory.define :user do |user|
-  user.sequence(:puid) { |n| "foobar_#{n}"}
+  user.sequence(:username) { |n| "foobar_#{n}"}
   user.firstname "foobar" 
   user.lastname  "baz" 
   user.sequence(:email) { |n| "foobar_#{n}@example.com" }

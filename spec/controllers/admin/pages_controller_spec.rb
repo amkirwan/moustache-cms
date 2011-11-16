@@ -6,7 +6,7 @@ describe Admin::PagesController do
   let(:page) { mock_model("Page", :site_id => site.id).as_null_object }
   
   before(:each) do
-    cas_faker(current_admin_user.puid)
+    cas_faker(current_admin_user.username)
     stub_c_site_c_user(site, current_admin_user)
   end
   
@@ -223,7 +223,7 @@ describe Admin::PagesController do
   
   # -- Puts Update ----------------------------------------------- 
   describe "PUTS update" do
-    let(:user) { mock_model("User", :puid => "ak730") }
+    let(:user) { mock_model("User", :username => "ak730") }
     let(:page_type) { mock_model("PageType") }
     let(:status) { mock_model("CurrentStatus").as_null_object }
     let(:filter) { mock_model("Filter", :name => "foobar") }

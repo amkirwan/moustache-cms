@@ -6,7 +6,7 @@ class Ability
 
     if user.role? :editor
       can :read, User, :site_id => user.site_id
-      can [:update, :destroy], User, :puid => user.puid, :site_id => user.site_id
+      can [:update, :destroy], User, :username => user.username, :site_id => user.site_id
       can :change_password, User, :id => user.id, :site_id => user.site_id
 
       can [:create, :read], Page, :site_id => user.site_id

@@ -17,8 +17,8 @@ def content_type(file)
   type
 end
 
-Given /^these theme assets exist in the site "([^\"]*)" created by user "([^\"]*)"$/ do |site, puid, table|
-  user = User.find_by_puid(puid)
+Given /^these theme assets exist in the site "([^\"]*)" created by user "([^\"]*)"$/ do |site, username, table|
+  user = User.find_by_username(username)
   site = Site.match_domain(site).first
   table.hashes.each do |hash|
     Factory(:theme_asset, :site => site, 
@@ -30,8 +30,8 @@ Given /^these theme assets exist in the site "([^\"]*)" created by user "([^\"]*
   end
 end  
 
-Given /^"([^\"]*)" has created the theme asset "([^\"]*)"$/ do |puid, asset_name|
-  user = User.find_by_puid(puid)
+Given /^"([^\"]*)" has created the theme asset "([^\"]*)"$/ do |username, asset_name|
+  user = User.find_by_username(username)
   When %{I go to the new admin theme asset page}
   Given %{I fill in "theme_asset_name" with "#{asset_name}"} 
   Given %{I attach the file "spec/fixtures/assets/rails.png" to "theme_asset_asset"}

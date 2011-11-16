@@ -19,6 +19,6 @@ module LoginHelpers
   end
   
   def logged_in(opts)
-    current_admin_user = mock_model(User, :puid => "foobar", :role? => opts[:role?], :site_id => opts[:site_id])
+    current_admin_user = mock_model(User, :username => "foobar", :role? => opts[:role?], :site_id => opts[:site_id])
   end             
 end

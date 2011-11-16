@@ -26,7 +26,7 @@ Scenario: Given I am logged in as an editor then I cannot list all the users
 Scenario: Given I am logged in as an editor then I can edit my account
   When I edit the account information for the user "ak730"
   Then I should now be editing the user "ak730"
-  And I should not see "user[puid]"
+  And I should not see "user[username]"
   And I fill in "user[firstname]" with "Qux" 
   And I fill in "user[lastname]" with "Foobar" 
   And I fill in "user[email]" with "akirwan@example.com" 

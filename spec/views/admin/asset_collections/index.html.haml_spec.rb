@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe "admin/asset_collections/index.html.haml" do 
   let(:site) { stub_model(Site) }
-  let(:user) { stub_model(User, :puid => "ak730", :site => site) }                                  
+  let(:user) { stub_model(User, :username => "ak730", :site => site) }                                  
   let(:asset_collections) { [stub_model(AssetCollection, :name => "foobar", :created_by => user, :site => site)] }
   
   before(:each) do

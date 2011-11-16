@@ -2,8 +2,8 @@ def find_collection(collection_name)
   AssetCollection.where(:name => collection_name).first
 end
 
-Given /^these collections exist in the site "([^\"]*)" created by user "([^\"]*)"$/ do |site, puid, table|
-  user = User.find_by_puid(puid)
+Given /^these collections exist in the site "([^\"]*)" created by user "([^\"]*)"$/ do |site, username, table|
+  user = User.find_by_username(username)
   site = Site.match_domain(site).first
   table.hashes.each do |hash|
     Factory(:asset_collection, :site_id => site.id, :name => hash[:name], :created_by => user, :updated_by => user)

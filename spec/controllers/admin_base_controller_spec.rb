@@ -11,7 +11,7 @@ describe "AdminBaseController" do
   end
   
   before(:each) do
-    cas_faker(current_admin_user.puid)
+    cas_faker(current_admin_user.username)
   end
   
   describe "cancan should call current_admin_user" do 
@@ -33,7 +33,7 @@ describe AdminBaseController do
   end
   
   before(:each) do
-    cas_faker(current_admin_user.puid)
+    cas_faker(current_admin_user.username)
   end
   
   describe "admin? method" do
@@ -62,7 +62,7 @@ describe AdminBaseController do
   
   before(:each) do
     @page = Page.new
-    cas_faker(current_admin_user.puid)
+    cas_faker(current_admin_user.username)
     controller.stub(:current_admin_user).and_return(current_admin_user)
   end
   
@@ -88,7 +88,7 @@ describe AdminBaseController do
   end
   
   before(:each) do
-    cas_faker(current_admin_user.puid)
+    cas_faker(current_admin_user.username)
   end
   
   describe "should create a Site if one does not exist" do

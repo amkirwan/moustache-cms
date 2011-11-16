@@ -10,7 +10,7 @@ describe Admin::MetaTagsController do
 
 
   before(:each) do
-    cas_faker(current_admin_user.puid)
+    cas_faker(current_admin_user.username)
     stub_c_site_c_user(site, current_admin_user)
 
     page.stub(:meta_tags).and_return(meta_tags)

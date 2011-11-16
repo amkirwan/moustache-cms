@@ -8,14 +8,14 @@ class User
   attr_accessible :firstname, :lastname, :email, :password, :password_confirmation, :remember_me
   
   # -- Fields -----------------------------------------------    
-  field :puid
+  field :username
   field :firstname
   field :lastname
   field :email
   field :role 
 
   # -- Index -------------------------------
-  index :puid
+  index :username
   
   #-- Associations-----------------------------------------------
   has_many :layouts_created, :class_name => "Layout", :foreign_key => :created_by_id
@@ -35,12 +35,12 @@ class User
 
   # -- Before Validations -----------------------------------------------
   before_validation :uniq_page_ids
-  before_save :lower, :set_puid
+  before_save :lower, :set_username
                        
   Roles = %w[editor designer admin superadmin] unless defined?(Roles)
   
   # -- Validations -----------------------------------------------
-  validates :puid,
+  validates :username,
             :presence => true,
             :uniqueness => { :scope => :site_id },
             :length => { :minimum => 3 }
@@ -63,8 +63,8 @@ class User
   scope :all_from_current_site, lambda { |current_site| { :where => { :site_id => current_site.id }} }
 
   # -- Class Methods -----------------------------------------------
-  def self.find_by_puid(name)
-    User.where(:puid => name.to_s).first
+  def self.find_by_username(name)
+    User.where(:username => name.to_s).first
   end
 
   # -- Instance Methods -----------------------------------------------
@@ -108,11 +108,11 @@ class User
     end
   
     def lower
-      #self.puid.downcase!
+      #self.username.downcase!
       #self.email.downcase!
     end
   
-    def set_puid
-      self.puid = self.puid
+    def set_username
+      self.username = self.username
     end
 end

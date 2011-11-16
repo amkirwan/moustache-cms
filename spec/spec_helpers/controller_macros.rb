@@ -5,7 +5,7 @@ module ControllerMacros
   
   def setup(klass, role)
     current_admin_user = logged_in(:role? => role)
-    cas_faker(current_admin_user.puid)
+    cas_faker(current_admin_user.username)
     klass.stub(:find).and_return(true)
     klass.stub(:accessible_by).and_return(true)
   end

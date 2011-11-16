@@ -12,7 +12,7 @@ describe Admin::ThemeAssetsController do
   let(:theme_asset) { mock_model("ThemeAsset", :site_id => site.id).as_null_object }
   
   before(:each) do
-    cas_faker(current_admin_user.puid)
+    cas_faker(current_admin_user.username)
     stub_c_site_c_user(site, current_admin_user)
   end
   

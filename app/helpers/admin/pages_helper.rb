@@ -48,7 +48,7 @@ module Admin::PagesHelper
     if mongoid_tree_item.updated_by.nil?
       "updated " + time_ago_in_words(mongoid_tree_item.updated_at) + " ago"
     else
-      "updated " + time_ago_in_words(mongoid_tree_item.updated_at) + " ago by #{mongoid_tree_item.updated_by.puid}"
+      "updated " + time_ago_in_words(mongoid_tree_item.updated_at) + " ago by #{mongoid_tree_item.updated_by.username}"
     end
   end
 

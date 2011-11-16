@@ -9,7 +9,7 @@ describe Snippet do
   
   # -- Mass Assignment ---
   context "mass assignment" do
-    it "should protect against mass assignment of puid and role" do
+    it "should protect against mass assignment of username and role" do
       snippet = Snippet.new(:created_by_id => "ak730", :updated_by_id => "ak730")
       snippet.created_by_id.should be_nil
       snippet.updated_by_id.should be_nil

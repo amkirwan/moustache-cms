@@ -74,7 +74,7 @@ class Admin::UsersController < AdminBaseController
   private
     
     def admin_only
-      @user.puid = params[:user][:puid] if admin? && (params[:user][:passowrd].blank? && params[:user][:password_confirmation].blank?)
+      @user.username = params[:user][:username] if admin? && (params[:user][:passowrd].blank? && params[:user][:password_confirmation].blank?)
       @user.role = params[:user][:role] if admin? && (params[:user][:passowrd].blank? && params[:user][:password_confirmation].blank?)
     end
 

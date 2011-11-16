@@ -8,9 +8,9 @@ describe "admin/users/edit.html.haml" do
   end  
    
   it "should render form title" do  
-    @user.stub(:puid => "foobar")
+    @user.stub(:username => "foobar")
     render
-    rendered.should have_selector("h3", :content => "User Account for #{@user.puid}")
+    rendered.should have_selector("h3", :content => "User Account for #{@user.username}")
   end   
   
   it "should render partial _form" do

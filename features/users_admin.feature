@@ -29,7 +29,7 @@ Scenario: Create A New user
   When I go to the admin users page
   And I follow "New User" 
   Then I should be on the new admin user page 
-  When I fill in "user_puid" with "foobar" 
+  When I fill in "user_username" with "foobar" 
   And I fill in "user_firstname" with "foobar"
   And I fill in "user_lastname" with "baz"
   And I fill in "user_email" with "foobar@example.com" 

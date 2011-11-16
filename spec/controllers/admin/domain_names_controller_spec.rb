@@ -6,7 +6,7 @@ describe Admin::DomainNamesController do
 
   before(:each) do
     current_site.stub(:users).and_return([current_admin_user])
-    cas_faker(current_admin_user.puid)
+    cas_faker(current_admin_user.username)
     stub_c_site_c_user(current_site, current_admin_user)
   end
 

@@ -2,19 +2,19 @@ require 'spec_helper'
 
 describe User do   
   before(:each) do
-    @user = Factory(:user, :puid => "foobar")
+    @user = Factory(:user, :username => "foobar")
   end 
   
   # -- Mass Assignment -------------------------------------------
   context "mass assignment" do
-    it "should protect against mass assignment of puid and role" do
-      user = User.new(:puid => "ak730", :role => "admin")
+    it "should protect against mass assignment of username and role" do
+      user = User.new(:username => "ak730", :role => "admin")
       user.role.should be_nil
-      user.puid.should be_nil
+      user.username.should be_nil
     end
     
     it "should not allow mass assignment of" do
-      @user.should_not allow_mass_assignment_of(:puid => "baz", :puid => "baz", :role => "bar")
+      @user.should_not allow_mass_assignment_of(:username => "baz", :username => "baz", :role => "bar")
     end
     
     it "should allow mass assignment of" do
@@ -36,8 +36,8 @@ describe User do
       @user.should be_valid
     end
   
-    it "should not be valid without a puid" do
-     @user.puid = nil
+    it "should not be valid without a username" do
+     @user.username = nil
      @user.should_not be_valid
     end  
 
@@ -67,13 +67,13 @@ describe User do
     end
   
     it "should not be valid with duplicate pid within the same site" do  
-      #Factory(:user, :puid => @user.puid, :site_id => @user.site_id).should_not be_valid
-      should validate_uniqueness_of(:puid).scoped_to(:site_id)
+      #Factory(:user, :username => @user.username, :site_id => @user.site_id).should_not be_valid
+      should validate_uniqueness_of(:username).scoped_to(:site_id)
     end
     
     context "duplicate pid should be valid on a different site" do
       it "should be valid with duplicate pid on a different site" do  
-        Factory.build(:user, :puid => "{@user.puid}", :site => Factory.build(:site)).should be_valid
+        Factory.build(:user, :username => "{@user.username}", :site => Factory.build(:site)).should be_valid
       end     
     end
   
@@ -92,8 +92,8 @@ describe User do
       Factory.build(:user, :email => "abcdefg").should_not be_valid
     end
     
-    it "should not be valid with a puid < 3" do
-      Factory.build(:user, :puid => "ab").should_not be_valid
+    it "should not be valid with a username < 3" do
+      Factory.build(:user, :username => "ab").should_not be_valid
     end 
   end
   
@@ -108,10 +108,10 @@ describe User do
     end
     
     context "it should lower the fields before saving" do
-      it "should make the puid downcase" do
-        @user.puid = "FOOBAR"
+      it "should make the username downcase" do
+        @user.username = "FOOBAR"
         @user.save
-        @user.puid.should == "foobar"
+        @user.username.should == "foobar"
       end
     
       it "should make the email downcase" do
@@ -121,9 +121,9 @@ describe User do
       end
     end
   
-    context "after save set_puid" do
-      it "should set the puid to the puid value" do
-        @user.puid.should == @user.puid
+    context "after save set_username" do
+      it "should set the username to the username value" do
+        @user.username.should == @user.username
       end
     end
   end
@@ -175,7 +175,7 @@ describe User do
   describe "Class Methods" do
     describe "User#find_by_name" do
       it "should return the user when they exist" do
-        User.find_by_puid("foobar").should == @user
+        User.find_by_username("foobar").should == @user
       end
     end
   end

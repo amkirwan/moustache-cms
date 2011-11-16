@@ -6,8 +6,8 @@ def li_id(page)
   "li#" + page.title + "_" + page.id.to_s
 end
 
-Given /^these pages exist in the site "([^\"]*)" created by user "([^\"]*)"$/ do |site, puid, table|
-  user = User.find_by_puid(puid)
+Given /^these pages exist in the site "([^\"]*)" created by user "([^\"]*)"$/ do |site, username, table|
+  user = User.find_by_username(username)
   site = Site.match_domain(site).first
   layout = Factory(:layout, :site => site, :created_by => user, :updated_by => user)
   parent = Factory(:page, :site => site, :layout => layout, :created_by => user, :updated_by => user)

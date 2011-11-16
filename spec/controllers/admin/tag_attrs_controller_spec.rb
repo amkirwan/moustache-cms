@@ -9,7 +9,7 @@ describe Admin::TagAttrsController do
   let(:theme_asset) { mock_model("ThemeAsset", :site_id => site.id, :tag_attrs => tag_attrs)}
 
   before(:each) do
-    cas_faker(current_admin_user.puid)
+    cas_faker(current_admin_user.username)
     stub_c_site_c_user(site, current_admin_user)
 
     ThemeAsset.stub(:find).and_return(theme_asset)

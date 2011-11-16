@@ -1,8 +1,8 @@
 %ul.form_fields
   - if admin?
     %li
-      = f.label :puid, "PUID<abbr title='required' class='required'>*</abbr>".html_safe
-      = f.text_field :puid 
+      = f.label :username, "Username<abbr title='required' class='required'>*</abbr>".html_safe
+      = f.text_field :username 
   %li
     = f.label :firstname, "Firstname<abbr title='required' class='required'>*</abbr>".html_safe
     = f.text_field :firstname

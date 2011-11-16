@@ -1,10 +1,10 @@
-Given /^I authenticates as cas user "([^\"]*)"$/ do |puid|
-  CASClient::Frameworks::Rails::Filter.fake(puid)  
+Given /^I authenticates as cas user "([^\"]*)"$/ do |username|
+  CASClient::Frameworks::Rails::Filter.fake(username)  
 end 
 
-Given /^the user "([^\"]*)" exists with the role of "([^\"]*)" in the site "([^\"]*)"$/ do |puid, role, site| 
-  user = Factory(:user, :puid => puid,
-                 :email => "#{puid}@example.com",
+Given /^the user "([^\"]*)" exists with the role of "([^\"]*)" in the site "([^\"]*)"$/ do |username, role, site| 
+  user = Factory(:user, :username => username,
+                 :email => "#{username}@example.com",
                  :role => role,
                  :site => Site.match_domain(site).first)
 end
@@ -15,9 +15,9 @@ Given /^the site "([^\"]*)" exists with the domain "([^\"]*)"$/ do |site, domain
   Capybara.default_host = "http://#{site}.#{domain}"
 end
 
-Given /^I login to the site "([^\"]*)" as "([^\"]*)" with the role of "([^\"]*)"$/ do |site, puid, role|
-  step %{the user "#{puid}" exists with the role of "#{role}" in the site "#{site}"}
-  step %{cas authenticates with cas user "#{puid}"}
+Given /^I login to the site "([^\"]*)" as "([^\"]*)" with the role of "([^\"]*)"$/ do |site, username, role|
+  step %{the user "#{username}" exists with the role of "#{role}" in the site "#{site}"}
+  step %{cas authenticates with cas user "#{username}"}
 end   
 
 Given /^the user with the role exist$/ do |table|

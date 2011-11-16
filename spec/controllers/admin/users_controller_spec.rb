@@ -9,7 +9,7 @@ describe Admin::UsersController do
   
   before(:each) do
     @current_site = site.stub(:full_subdomain => "foobar.example.com")
-    cas_faker(current_admin_user.puid)
+    cas_faker(current_admin_user.username)
     stub_c_site_c_user(site, current_admin_user)
   end
   
@@ -19,8 +19,8 @@ describe Admin::UsersController do
     end
            
     context "when the user is an admin they can view user records" do
-      let(:users) { [mock_model("User", :puid => "foo", :role => "admin"),
-                    mock_model("User", :puid => "bar", :role => "editor")] } 
+      let(:users) { [mock_model("User", :username => "foo", :role => "admin"),
+                    mock_model("User", :username => "bar", :role => "editor")] } 
       
       before(:each) do
         User.stub(:accessible_by).and_return(users)
@@ -99,7 +99,7 @@ describe Admin::UsersController do
   
   
   describe "POST create" do 
-    let(:params) {{ "user" => { "puid" => "foobar", "firstname" => "foo", "lastname" => "bar", "email" => "foobar@example.com", "role" => "admin" }}}
+    let(:params) {{ "user" => { "username" => "foobar", "firstname" => "foo", "lastname" => "bar", "email" => "foobar@example.com", "role" => "admin" }}}
     
     before(:each) do 
       user.as_new_record   
@@ -117,8 +117,8 @@ describe Admin::UsersController do
       assigns(:user).should eq(user)                                                              
     end 
     
-    it "should assign the puid value" do
-      user.should_receive(:puid=).with(params["user"]["puid"])
+    it "should assign the username value" do
+      user.should_receive(:username=).with(params["user"]["username"])
       do_post
     end
     
@@ -140,7 +140,7 @@ describe Admin::UsersController do
       
       it "should should create a flash notice" do 
         do_post
-        flash[:notice].should == "Successfully created user profile for #{user.puid}"
+        flash[:notice].should == "Successfully created user profile for #{user.username}"
       end 
       
       it "should redirect to the admin users path" do
@@ -188,7 +188,7 @@ describe Admin::UsersController do
   end
 
   describe "PUT update" do    
-    let(:params) {{ "id" => user.to_param, "user" => { "puid" => "baz", "email" => "baz@example.com", "role" => "editor" }}}    
+    let(:params) {{ "id" => user.to_param, "user" => { "username" => "baz", "email" => "baz@example.com", "role" => "editor" }}}    
     before(:each) do   
       controller.stub(:admin?).and_return(true) 
       User.stub(:find).and_return(user)
@@ -222,7 +222,7 @@ describe Admin::UsersController do
       
     it "should set a flash[:notice] message" do
       do_put
-      flash[:notice].should == "Successfully updated user profile for #{user.puid}"
+      flash[:notice].should == "Successfully updated user profile for #{user.username}"
     end         
     
     it "should redirect to INDEX" do
@@ -288,7 +288,7 @@ describe Admin::UsersController do
       
       it "should set a flash message" do
         do_destroy
-        flash[:notice].should == "Successfully deleted user profile for #{user.puid}"
+        flash[:notice].should == "Successfully deleted user profile for #{user.username}"
       end
 
       it "should redirect to admin_users index action" do

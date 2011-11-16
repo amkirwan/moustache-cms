@@ -10,7 +10,7 @@ describe Admin::PagePartsController do
 
 
   before(:each) do
-    cas_faker(current_admin_user.puid)
+    cas_faker(current_admin_user.username)
     stub_c_site_c_user(site, current_admin_user)
 
     page.stub(:find).and_return(page_parts)
