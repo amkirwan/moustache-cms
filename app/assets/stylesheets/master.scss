@@ -605,9 +605,9 @@ div.theme_assets {
 
 div.add_some {
   h4 {
-    font-size: 5em; /* 42 / 14 */    
+    font-size: calc_em(42px, 14px);
     font-weight: bold;
-    text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.5);
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
     text-align: center;
     a:hover {
       text-decoration: none;
