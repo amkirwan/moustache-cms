@@ -2,7 +2,7 @@
   %ul.form_fields
     %li
       = f.label :parent_id
-      = f.collection_select :parent_id, Page.all.order(:title), :id, :title, { :include_blank => true, :selected => parent_selected(@parent_page) }
+      = f.collection_select :parent_id, Page.all_from_current_site(@current_site).order(:title), :id, :title, { :include_blank => true, :selected => parent_selected(@parent_page) }
     %li
       = f.label :title, "Title<abbr title='required' class='required'>*</abbr>".html_safe
       = f.text_field :title

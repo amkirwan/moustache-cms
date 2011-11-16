@@ -109,6 +109,7 @@ class Page
   
   # -- Scopes ----------------------------------------------------------
   scope :published, :where => { "current_state.name" => "published" }
+  scope :all_from_current_site, lambda { |current_site| { :where => { :site_id => current_site.id }} }
 
 
   # -- Accepts_nested -----

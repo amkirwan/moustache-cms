@@ -1,7 +1,6 @@
 class Site
   include Mongoid::Document
   include Mongoid::Timestamps 
-  include Mongoid::Paranoia 
   
   attr_accessible :name, :subdomain, :domain_names, :meta_tags_attributes
   

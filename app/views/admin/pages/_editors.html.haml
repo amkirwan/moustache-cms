@@ -2,6 +2,6 @@
   %ul.form_fields
     %li{:class => "inline"}
       = f.label :editors, "Editors"
-      - User.all.each do |user|
+      - User.all_from_current_site(@current_site).each do |user|
         = check_box_tag "page[editor_ids][]", user.id, page.editor_ids.include?(user.id), :id => "editor_id_#{user.puid}"
         = label_tag "page[editor_ids][#{user.puid}]", user.puid.downcase

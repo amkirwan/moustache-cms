@@ -1,7 +1,8 @@
 !!!5
 %html
   %head{:charset => "UTF-8"}
-    %title= #{Site.first.name} Admin
+    %title= title_for_page(controller)
+
     = stylesheet_link_tag "application"
    
     = javascript_include_tag "application"

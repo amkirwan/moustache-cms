@@ -3,7 +3,7 @@ class User
   include Mongoid::Timestamps
 
   
-  devise :cas_authenticatable, :trackable, :timeoutable 
+  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :timeoutable
    
   attr_accessible :firstname, :lastname, :email, :password, :password_confirmation, :remember_me
   
@@ -59,6 +59,8 @@ class User
   validates :site_id,
             :presence => true
 
+  # -- Scopes ---------
+  scope :all_from_current_site, lambda { |current_site| { :where => { :site_id => current_site.id }} }
 
   # -- Class Methods -----------------------------------------------
   def self.find_by_puid(name)
