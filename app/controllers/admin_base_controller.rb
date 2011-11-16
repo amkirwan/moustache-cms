@@ -3,11 +3,9 @@ class AdminBaseController < ApplicationController
 
   force_ssl
     
-  before_filter :authenticate_admin_user!
   #before_filter :fake_login unless Rails.env == "production"
-  #before_filter CASClient::Frameworks::Rails::Filter
+  before_filter :authenticate_admin_user!
   after_filter :discard_flash_message
-  #before_filter :assign_site
 
   check_authorization :unless => :devise_controller? 
   
