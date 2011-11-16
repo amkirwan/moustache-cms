@@ -11,16 +11,6 @@ class ApplicationController < ActionController::Base
       find_first_by_auth_conditions(conditions)
     end
 
-    def current_admin_user
-      #@current_admin_user ||= warden.authenticate(:scope => :#{mapping})
-      super 
-      current_site if @current_site.nil?
-      if @current_admin_user.site.id != @current_site.id
-        @current_admin_user = nil
-      end
-      @current_admin_user
-    end
-
     def current_admin_user?(user)
       user == @current_admin_user
     end

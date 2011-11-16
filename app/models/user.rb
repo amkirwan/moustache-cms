@@ -91,7 +91,7 @@ class User
       false
     end
 
-    clean_up_passwords
+    clean_up_passwords if self.respond_to?(:password)
     result
   end
   

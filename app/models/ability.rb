@@ -49,8 +49,5 @@ class Ability
       end
     end
 
-    if user.role? :superadmin
-    end
-
   end
 end
