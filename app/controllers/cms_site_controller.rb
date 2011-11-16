@@ -1,5 +1,6 @@
 class CmsSiteController < ApplicationController
   
+  before_filter :request_set
   before_filter :load_page, :only => :render_html
   layout nil
   
@@ -12,6 +13,10 @@ class CmsSiteController < ApplicationController
   end
   
   private
+
+    def request_set
+      @request = request
+    end
   
     def load_page
       @page = @current_site.page_by_full_path("/#{params[:page_path]}")

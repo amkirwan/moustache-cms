@@ -3,7 +3,7 @@ class User
   include Mongoid::Timestamps
 
   
-  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :timeoutable 
+  devise :cas_authenticatable, :trackable, :timeoutable 
    
   attr_accessible :firstname, :lastname, :email, :password, :password_confirmation, :remember_me
   
@@ -13,6 +13,7 @@ class User
   field :lastname
   field :email
   field :role 
+  field :cas_authenticatable
 
   # -- Index -------------------------------
   index :puid
@@ -106,8 +107,8 @@ class User
     end
   
     def lower
-      self.puid.downcase!
-      self.email.downcase!
+      #self.puid.downcase!
+      #self.email.downcase!
     end
   
     def set_puid

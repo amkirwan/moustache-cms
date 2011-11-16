@@ -6,7 +6,6 @@ class AdminBaseController < ApplicationController
   before_filter :authenticate_admin_user!
   #before_filter :fake_login unless Rails.env == "production"
   #before_filter CASClient::Frameworks::Rails::Filter
-  before_filter :current_site
   after_filter :discard_flash_message
   #before_filter :assign_site
 
