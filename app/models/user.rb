@@ -13,7 +13,6 @@ class User
   field :lastname
   field :email
   field :role 
-  field :cas_authenticatable
 
   # -- Index -------------------------------
   index :puid
