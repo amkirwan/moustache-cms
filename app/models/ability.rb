@@ -5,8 +5,8 @@ class Ability
     user ||= User.new
 
     if user.role? :editor
-      can :index, User, :site_id => user.site_id
-      can [:show, :update, :destroy], User, :puid => user.puid, :site_id => user.site_id
+      can :read, User, :site_id => user.site_id
+      can [:update, :destroy], User, :puid => user.puid, :site_id => user.site_id
       can :change_password, User, :id => user.id, :site_id => user.site_id
 
       can [:create, :read], Page, :site_id => user.site_id
@@ -33,7 +33,7 @@ class Ability
           meta_tag._parent.site_id == user.site_id
         end
       end
-      cannot :manage, [Site, ThemeAsset, Snippet]
+      cannot :manage, [Site, Layout, ThemeAsset, Snippet]
     end
 
     if user.role? :designer
@@ -41,9 +41,7 @@ class Ability
     end
 
     if user.role? :admin
-      can :manage, Site do |site|
-        site.users.include?(user)
-      end
+      can :manage, Site, :id => user.site_id
 
       can :manage, User, :site_id => user.site_id
       cannot :change_password, User do |u|
