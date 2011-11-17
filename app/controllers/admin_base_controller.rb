@@ -1,7 +1,7 @@
 class AdminBaseController < ApplicationController
   protect_from_forgery   
 
-  force_ssl
+  force_ssl if Rails.env == 'production'
     
   before_filter :authenticate_admin_user!
   after_filter :discard_flash_message

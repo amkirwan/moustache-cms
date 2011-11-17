@@ -108,8 +108,8 @@ class User
     end
   
     def lower
-      #self.username.downcase!
-      #self.email.downcase!
+      self.username.downcase!
+      self.email.downcase!
     end
   
     def set_username

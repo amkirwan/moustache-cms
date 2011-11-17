@@ -8,12 +8,13 @@ describe Admin::SiteAssetsController do
   let(:site_asset) { mock_model("SiteAsset", :site_id => site.id).as_null_object }
   let(:site_assets) { [site_asset]}
   let(:asset_collection) { mock_model(AssetCollection, :site_assets => site_assets, :site_id => site.id).as_null_object }
+  let(:admin_user) { mock_model(User, :role => 'admin', :site_id => site.id).as_null_object }
   
   before(:each) do
-    cas_faker(current_admin_user.username)
-    stub_c_site_c_user(site, current_admin_user)  
-
-    AssetCollection.stub(:find).and_return(asset_collection)
+    #cas_faker(current_admin_user.username)
+    #stub_c_site_c_user(site, current_admin_user)  
+    sign_in mock_model(User, :role => 'admin')
+    controller.stub(:current_admin_user).and_return(admin_user)
   end
 
   # -- GET Index ----------------------------------------------- 

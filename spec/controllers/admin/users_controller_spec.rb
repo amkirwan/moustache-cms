@@ -2,53 +2,44 @@ require 'spec_helper'
 
 describe Admin::UsersController do
   
-  #for actions
-  let(:site) { mock_model(Site, :id => "1") }
-  let(:current_admin_user) { logged_in(:role? => "admin", :site_id => site.id) }
-  let(:user) { mock_model("User", :site_id => site.id).as_null_object }
-  
   before(:each) do
-    @current_site = site.stub(:full_subdomain => "foobar.example.com")
-    cas_faker(current_admin_user.username)
-    stub_c_site_c_user(site, current_admin_user)
+    login_admin
   end
-  
+
   describe "GET index" do
     def do_get     
       get :index
     end
-           
-    context "when the user is an admin they can view user records" do
-      let(:users) { [mock_model("User", :username => "foo", :role => "admin"),
-                    mock_model("User", :username => "bar", :role => "editor")] } 
-      
-      before(:each) do
-        User.stub(:accessible_by).and_return(users)
-      end
-      
-      it "should receive accessible_by" do
-        User.should_receive(:accessible_by).and_return(users)
-        do_get
-      end
-      
-      
-      it "should assign the found users" do
-        do_get
-        assigns(:users).should eq(users)
-      end
+
+    let(:users) { [mock_model("User", :username => "foo", :role => "admin"),
+                  mock_model("User", :username => "bar", :role => "editor")] } 
     
-      it "should render index template" do
-        do_get
-        response.should render_template("admin/users/index")
-      end  
-    end   
-  end
+    before(:each) do
+      User.stub(:accessible_by).and_return(users)
+    end
+    
+    it "should receive accessible_by" do
+      User.should_receive(:accessible_by).and_return(users)
+      do_get
+    end
+    
+    
+    it "should assign the found users" do
+      do_get
+      assigns(:users).should eq(users)
+    end
+  
+    it "should render index template" do
+      do_get
+      response.should render_template("admin/users/index")
+    end  
+  end   
   
   describe "GET show" do
     let(:params) {{ :id => "1" }}
     
     before(:each) do
-      User.stub(:find).and_return(user)
+      User.stub(:find).and_return(@admin_user)
     end
     
     def do_get
@@ -56,13 +47,13 @@ describe Admin::UsersController do
     end
         
     it "should should receive find" do
-      User.should_receive(:find).with(params[:id]).and_return(user)
+      User.should_receive(:find).with(params[:id]).and_return(@admin_user)
       do_get
     end
     
     it "should assign @user for the view" do
       do_get
-      assigns(:user).should eq(user)
+      assigns(:user).should eq(@admin_user)
     end
     
     it "should render the EDIT template" do
@@ -73,8 +64,8 @@ describe Admin::UsersController do
   
   describe "GET new" do        
     before(:each) do 
-      user.as_new_record
-      User.stub(:new).and_return(user)   
+      @user = Factory.build(:user)
+      User.stub(:new).and_return(@user)   
     end
     
     def do_get     
@@ -82,13 +73,13 @@ describe Admin::UsersController do
     end  
     
     it "should receive new the new and return a new user" do   
-      User.should_receive(:new).and_return(user)
+      User.should_receive(:new).and_return(@user)
       do_get
     end
   
     it "should assign the found user" do
       do_get
-      assigns(:user).should eq(user)
+      assigns(:user).should eq(@user)
     end
   
     it "should render new template" do
@@ -102,9 +93,10 @@ describe Admin::UsersController do
     let(:params) {{ "user" => { "username" => "foobar", "firstname" => "foo", "lastname" => "bar", "email" => "foobar@example.com", "role" => "admin" }}}
     
     before(:each) do 
-      user.as_new_record   
+      @user = Factory.build(:user)
+      @user.stub(:save).and_return(true)
       controller.stub(:admin?).and_return(true)
-      User.stub(:new).and_return(user)
+      User.stub(:new).and_return(@user)
     end  
     
     def do_post       
@@ -112,35 +104,45 @@ describe Admin::UsersController do
     end  
               
     it "should create a new user" do
-      User.should_receive(:new).with(params["user"]).and_return(user)
+      User.should_receive(:new).with(params["user"]).and_return(@user)
       do_post 
-      assigns(:user).should eq(user)                                                              
     end 
+
+    it "should assign @user" do
+      do_post
+      assigns(:user).should eq(@user)                                                              
+    end
     
     it "should assign the username value" do
-      user.should_receive(:username=).with(params["user"]["username"])
+      @user.should_receive(:username=).with(params["user"]["username"])
+      do_post
+    end
+
+    it "should assign the role value" do
+      @user.should_receive(:role=).with(params["user"]["role"])
       do_post
     end
     
     it "should assign the current_site" do
-      user.should_receiv(:site=)
+      @user.should_receive(:site=)
+      do_post
     end
     
     it "should assign the role value" do
-      user.should_receive(:role=).with(params["user"]["role"])
+      @user.should_receive(:role=).with(params["user"]["role"])
       do_post
     end
     
     context "when it save the new user successfully" do  
       
       it "should receive save" do
-        user.should_receive(:save).and_return(true)
+        @user.should_receive(:save).and_return(true)
         do_post
       end
       
       it "should should create a flash notice" do 
         do_post
-        flash[:notice].should == "Successfully created user profile for #{user.username}"
+        flash[:notice].should == "Successfully created user profile for #{@admin_user.full_name}"
       end 
       
       it "should redirect to the admin users path" do
@@ -151,8 +153,8 @@ describe Admin::UsersController do
     
     context "when the save fails" do                    
       it "should redirect to new template" do 
-        user.stub(:save).and_return(false)            
-        user.stub(:errors => { :user => "user errors" })
+        @user.stub(:save).and_return(false)            
+        @user.stub(:errors => { :user => "user errors" })
         do_post
         response.should render_template("admin/users/new")
       end
@@ -161,37 +163,34 @@ describe Admin::UsersController do
   
   describe "GET edit" do 
     def do_get    
-      get :edit, { :id => user.to_param }
+      get :edit, { :id => @admin_user.to_param }
     end     
           
-    context "when the user is an admin they can edit user records" do
-      before do                                    
-        logged_in(:role? => true)
-        User.stub(:find).and_return(user)     
-      end             
-    
-      it "should receive find all" do   
-        User.should_receive(:find).and_return(user)
-        do_get
-      end
-    
-      it "should assign the found users" do
-        do_get
-        assigns(:user).should eq(user)
-      end
-    
-      it "should render the user to edit" do
-        do_get
-        response.should render_template("admin/users/edit")
-      end  
-    end 
+    before do                                    
+      User.stub(:find).and_return(@admin_user)     
+    end             
+  
+    it "should receive find all" do   
+      User.should_receive(:find).and_return(@admin_user)
+      do_get
+    end
+  
+    it "should assign the found users" do
+      do_get
+      assigns(:user).should eq(@admin_user)
+    end
+  
+    it "should render the user to edit" do
+      do_get
+      response.should render_template("admin/users/edit")
+    end  
   end
 
   describe "PUT update" do    
-    let(:params) {{ "id" => user.to_param, "user" => { "username" => "baz", "email" => "baz@example.com", "role" => "editor" }}}    
+    let(:params) {{ "id" => @admin_user.to_param, "user" => { "username" => "baz", "email" => "baz@example.com", "role" => "editor" }}}    
     before(:each) do   
       controller.stub(:admin?).and_return(true) 
-      User.stub(:find).and_return(user)
+      User.stub(:find).and_return(@admin_user)
     end  
     
     def do_put 
@@ -199,30 +198,29 @@ describe Admin::UsersController do
     end
 
     it "should find the record to update" do
-      User.should_receive(:find).with(params["id"]).and_return(user)
+      User.should_receive(:find).with(params["id"]).and_return(@admin_user)
       do_put
     end 
     
     it "should assign @user for the view" do  
       do_put
-      assigns(:user).should eq(user)
+      assigns(:user).should eq(@admin_user)
     end
     
-    
     it "should set the users role when the current_admin_user is an admin" do
-      user.should_receive(:role=).with(params["user"]["role"])
+      @admin_user.should_receive(:role=).with(params["user"]["role"])
       do_put
     end
     
     
     it "should should set attr_accessable attributes" do
-      user.should_receive(:update_with_password).with(params["user"])
+      @admin_user.should_receive(:update_with_password).with(params["user"])
       do_put
     end
       
     it "should set a flash[:notice] message" do
       do_put
-      flash[:notice].should == "Successfully updated user profile for #{user.username}"
+      flash[:notice].should == "Successfully updated user profile for #{@admin_user.full_name}"
     end         
     
     it "should redirect to INDEX" do
@@ -232,8 +230,8 @@ describe Admin::UsersController do
   
     context "when update_attributes fails" do
       it "should render the edit template" do
-        user.stub(:update_with_password).and_return(false)
-        user.stub(:errors => { :user => "user errors" })
+        @admin_user.stub(:update_with_password).and_return(false)
+        @admin_user.stub(:errors => { :user => "user errors" })
         do_put  
         response.should render_template("admin/users/edit")
       end
@@ -242,7 +240,7 @@ describe Admin::UsersController do
   
   describe "DELETE destroy" do   
     before(:each) do
-      User.stub(:find).and_return(user)
+      User.stub(:find).and_return(@admin_user)
       Site.stub(:first).and_return(mock_model(Site))
     end
     
@@ -251,17 +249,17 @@ describe Admin::UsersController do
     end
     
     it "should receive the find method and return the user to destroy" do
-      User.should_receive(:find).with("1").and_return(user)
+      User.should_receive(:find).with("1").and_return(@admin_user)
       do_destroy
     end 
     
     it "should assign the user for the view" do
       do_destroy
-      assigns(:user).should == user
+      assigns(:user).should == @admin_user
     end    
     
     it "should delete the user account" do
-      user.should_receive(:delete).and_return(true)
+      @admin_user.should_receive(:delete).and_return(true)
       do_destroy 
     end
     
@@ -277,7 +275,7 @@ describe Admin::UsersController do
       
       it "should redirecto to the index page of the cms" do
         do_destroy
-        response.should redirect_to("http://test.host/")
+        response.should redirect_to("http://test.host/admin/sign_in")
       end
     end
     
@@ -288,7 +286,7 @@ describe Admin::UsersController do
       
       it "should set a flash message" do
         do_destroy
-        flash[:notice].should == "Successfully deleted user profile for #{user.username}"
+        flash[:notice].should == "Successfully deleted user profile for #{@admin_user.full_name}"
       end
 
       it "should redirect to admin_users index action" do
