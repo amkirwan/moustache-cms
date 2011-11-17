@@ -106,44 +106,7 @@ module ApplicationHelper
     end
   end
 
-  def title_for_page(controller)
-    default = @current_site.name.titleize + ' - ' 
-    if controller.action_name == 'index'
-      default + ' ' + controller.controller_name.titleize
-    elsif controller.action_name == 'new'
-      default + ' ' + controller.controller_name.singularize.titleize + ' New'
-    else
-      action = " #{controller.action_name.titleize} "
-      model = " #{controller.controller_name.singularize.titleize} "
-      default = case controller.controller_name
-      when 'asset_collections'
-        default + model + @asset_collection.name.titleize + action
-      when 'current_site'
-        default + action
-      when 'domain_names'
-        default + model + action
-      when 'layouts'
-        default + model + @layout.name.titleize + action
-      when 'meta_tags'
-        default + model + @meta_tag.name.titleize + action
-      when 'page_parts'
-        default + model + @page_part.name.titleize + action
-      when 'pages'
-        default + model + @page.title.titleize + action
-      when 'site_assets'
-        default + model + @site_asset.name.titleize + action
-      when 'snippets'
-        default + model + @snippet.name.titleize + action
-      when 'tag_attrs'
-        default + model + @tag_attr.name.titleize + action
-      when 'theme_assets'
-        default + model + @theme_asset.name.titleize + action
-      when 'users'
-        default + model + @user.full_name.titleize + action
-      else
-        default
-      end
-    end
+  def header_title(page_title)
+    content_for(:title) { page_title }
   end
-
 end
