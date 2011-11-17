@@ -1,8 +1,10 @@
 require 'spec_helper'
 
 describe User do   
+  let(:site) { Factory(:site) }
+
   before(:each) do
-    @user = Factory(:user, :username => "foobar")
+    @user = Factory(:user, :username => "foobar", :site => site)
   end 
   
   # -- Mass Assignment -------------------------------------------
@@ -96,6 +98,15 @@ describe User do
       Factory.build(:user, :username => "ab").should_not be_valid
     end 
   end
+
+  # -- Scopes ----
+  context "Scopes" do
+    describe "User#all_from_current_site" do
+      it "should return all the users from the current_site" do
+        User.all_from_current_site(site).count.should == 1
+      end
+    end
+  end
   
   # -- Before Validation Callback -------------------------------------------
   context "callbacks" do
@@ -109,13 +120,13 @@ describe User do
     
     context "it should lower the fields before saving" do
       it "should make the username downcase" do
-        @user.username = "FOOBAR"
+        @user.username = "foobar"
         @user.save
         @user.username.should == "foobar"
       end
     
       it "should make the email downcase" do
-        @user.email = "FOOBAR@EXAMPLE.Com"
+        @user.email = "foobar@example.com"
         @user.save
         @user.email.should == "foobar@example.com"
       end

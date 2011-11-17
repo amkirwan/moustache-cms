@@ -24,6 +24,7 @@ Factory.define :user do |user|
   user.sequence(:email) { |n| "foobar_#{n}@example.com" }
   user.role "admin" 
   user.site { Factory.build(:site) }
+  user.password "foobar7"
 end
 
 Factory.define :admin, :parent => :user do |admin|

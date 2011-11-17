@@ -1,8 +1,8 @@
-require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
+require 'spec_helper'
 
 describe Page do   
-  let(:user) { Factory(:user) }
   let(:site) { Factory(:site) }
+  let(:user) { Factory(:user, :site => site) }
   let(:layout) { Factory(:layout, :site_id => site.id, :created_by_id => user.id, :updated_by_id => user.id) }
   let(:parent) { Factory(:page, :site_id => site.id, :layout_id => layout.id, :created_by_id => user.id, :updated_by_id => user.id, :editor_ids => [user.id], :post_container => true) }
   before(:each) do                 
@@ -221,6 +221,12 @@ describe Page do
       
       it "should return all the items that have a current_state set to published" do
         Page.published.count.should be >= 1
+      end
+    end
+
+    describe "Page#all_from_current_site" do
+      it "should return all the pages from the current_site" do
+        Page.all_from_current_site(site).count.should == 2
       end
     end
   end
