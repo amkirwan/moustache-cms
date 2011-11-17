@@ -39,7 +39,7 @@ class Admin::UsersController < AdminBaseController
     respond_with(:admin, @user) do |format|
       if @user.update_with_password(params[:user])
         if params[:user][:password] && params[:user][:password_confirmation]
-          flash[:notice] = "Successfully update the password for #{@user.full_name}"
+          flash[:notice] = "Successfully updated the password for #{@user.full_name}"
           sign_in(@user, :bypass => true)
           format.html { redirect_to [:admin, @user] }
         else

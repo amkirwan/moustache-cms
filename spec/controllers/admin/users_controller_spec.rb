@@ -55,7 +55,7 @@ describe Admin::UsersController do
       do_get
       assigns(:user).should eq(@admin_user)
     end
-    
+ 
     it "should render the EDIT template" do
       do_get
       response.should render_template("admin/users/edit")
@@ -133,7 +133,7 @@ describe Admin::UsersController do
       do_post
     end
     
-    context "when it save the new user successfully" do  
+    context "when it saves the new user successfully" do  
       
       it "should receive save" do
         @user.should_receive(:save).and_return(true)
@@ -187,14 +187,14 @@ describe Admin::UsersController do
   end
 
   describe "PUT update" do    
-    let(:params) {{ "id" => @admin_user.to_param, "user" => { "username" => "baz", "email" => "baz@example.com", "role" => "editor" }}}    
+    let(:params) { { "id" => @admin_user.to_param, "user" => { "username" => "baz", "email" => "baz@example.com", "role" => "editor" }} }
     before(:each) do   
       controller.stub(:admin?).and_return(true) 
       User.stub(:find).and_return(@admin_user)
     end  
     
-    def do_put 
-      put :update, params
+    def do_put(put_params=params)
+      put :update, put_params
     end
 
     it "should find the record to update" do
@@ -212,21 +212,40 @@ describe Admin::UsersController do
       do_put
     end
     
-    
     it "should should set attr_accessable attributes" do
       @admin_user.should_receive(:update_with_password).with(params["user"])
       do_put
     end
       
-    it "should set a flash[:notice] message" do
-      do_put
-      flash[:notice].should == "Successfully updated user profile for #{@admin_user.full_name}"
-    end         
-    
-    it "should redirect to INDEX" do
-      do_put
-      response.should redirect_to(admin_users_path)
-    end                                                                       
+    context "when it updates the password" do
+      before(:each) do
+        @params_with_password = params
+        @params_with_password['user']["password"] = 'password'
+        @params_with_password['user']["password_confirmation"] = 'password'
+        @admin_user.stub(:update_with_password).and_return(true)
+      end
+      it "should set the flash[:notice] message" do
+        do_put
+        flash[:notice].should == "Successfully updated the password for #{@admin_user.full_name}"
+      end
+
+      it "should redirecto the users page" do
+        do_put
+        response.should redirect_to(admin_user_path(@admin_user)) 
+      end
+    end
+
+    context "when the update updates just the profile" do
+      it "should set a flash[:notice] message" do
+        do_put
+        flash[:notice].should == "Successfully updated user profile for #{@admin_user.full_name}"
+      end         
+      
+      it "should redirect to INDEX" do
+        do_put
+        response.should redirect_to(admin_users_path)
+      end                                                                       
+    end
   
     context "when update_attributes fails" do
       it "should render the edit template" do
