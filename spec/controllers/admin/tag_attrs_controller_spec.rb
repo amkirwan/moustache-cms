@@ -6,7 +6,7 @@ describe Admin::TagAttrsController do
     login_admin
     @tag_attr = mock_model(TagAttr, :name => "media")
     @tag_attrs = [@tag_attr]
-    @theme_asset = mock_model(ThemeAsset, :site_id => @site.id, :tag_attrs => @tag_attrs)
+    @theme_asset = mock_model(ThemeAsset, :site_id => @site.id, :tag_attrs => @tag_attrs).as_null_object
 
     ThemeAsset.stub(:find).and_return(@theme_asset)
   end

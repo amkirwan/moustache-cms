@@ -7,10 +7,10 @@ class Admin::ThemeAssetsController < AdminBaseController
 
   # GET /admin/theme_assets 
   def index
-    @css_files = ThemeAsset.css_files(@current_site)
-    @js_files = ThemeAsset.js_files(@current_site)
-    @images = ThemeAsset.images(@current_site)
-    @other_files = ThemeAsset.other_files(@current_site)
+    @css_files = ThemeAsset.css_files(current_site)
+    @js_files = ThemeAsset.js_files(current_site)
+    @images = ThemeAsset.images(current_site)
+    @other_files = ThemeAsset.other_files(current_site)
     respond_with(:admin, @theme_assets)
   end  
 
@@ -30,7 +30,7 @@ class Admin::ThemeAssetsController < AdminBaseController
   # POST /admin/theme_assets
   def create
     created_updated_by_for @theme_asset
-    @theme_asset.site_id = @current_site.id
+    @theme_asset.site_id = current_site.id
     try_theme_asset_cache 
     respond_with(:admin, @theme_asset) do |format| 
       if @theme_asset.save

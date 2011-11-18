@@ -6,14 +6,9 @@ require 'spec_helper'
 
 describe Admin::ThemeAssetsController do
   
-  #for actions
-  let(:site) { mock_model(Site, :id => "1") }
-  let(:current_admin_user) { logged_in(:role? => "admin", :site_id => site.id) }
-  let(:theme_asset) { mock_model("ThemeAsset", :site_id => site.id).as_null_object }
-  
   before(:each) do
-    cas_faker(current_admin_user.username)
-    stub_c_site_c_user(site, current_admin_user)
+    login_admin
+    @theme_asset = mock_model(ThemeAsset, :site_id => @site.id).as_null_object
   end
   
   describe "GET index" do
@@ -21,11 +16,11 @@ describe Admin::ThemeAssetsController do
       get :index
     end
     
-    let(:theme_assets) { [theme_asset] }
-    let(:css_files) { [ theme_asset.stub("content_type" => "text/css") ] }
-    let(:js_files) { [ theme_asset.stub("content_type" => "text/javascript") ] }
-    let(:images) { [ theme_asset.stub("content_type" => "image/png") ] }
-    let(:other_files) { [ theme_asset.stub("content_type" => "application/octet-stream") ] } 
+    let(:theme_assets) { [@theme_asset] }
+    let(:css_files) { [ @theme_asset.stub("content_type" => "text/css") ] }
+    let(:js_files) { [ @theme_asset.stub("content_type" => "text/javascript") ] }
+    let(:images) { [ @theme_asset.stub("content_type" => "image/png") ] }
+    let(:other_files) { [ @theme_asset.stub("content_type" => "application/octet-stream") ] } 
 
     before(:each) do
       ThemeAsset.stub(:accessible_by).and_return(theme_assets)
@@ -73,7 +68,7 @@ describe Admin::ThemeAssetsController do
   
   describe "GET new" do
     before(:each) do
-      ThemeAsset.stub(:new).and_return(theme_asset.as_new_record)
+      ThemeAsset.stub(:new).and_return(@theme_asset.as_new_record)
     end
     
     def do_get
@@ -81,13 +76,13 @@ describe Admin::ThemeAssetsController do
     end
     
     it "should receive ThemeAsset#new and return the new theme_asset" do
-      ThemeAsset.should_receive(:new).and_return(theme_asset)
+      ThemeAsset.should_receive(:new).and_return(@theme_asset)
       do_get
     end
     
     it "should assign the new theme_asset to an ivar" do
       do_get
-      assigns(:theme_asset).should == theme_asset
+      assigns(:theme_asset).should == @theme_asset
     end
     
     it "should render the view template admin/theme_assets/new" do
@@ -100,7 +95,7 @@ describe Admin::ThemeAssetsController do
     let(:params) { { "name" => "foobar", "asset_cache" => "1/rails.png", "asset" => AssetFixtureHelper.open("rails.png") } }
     
     before(:each) do
-      ThemeAsset.stub(:new).and_return(theme_asset.as_new_record)
+      ThemeAsset.stub(:new).and_return(@theme_asset.as_new_record)
     end
     
     def do_post(post_params=params)
@@ -108,24 +103,24 @@ describe Admin::ThemeAssetsController do
     end
     
     it "should receive ThemeAsset#new and return the new theme_asset from the params" do
-      ThemeAsset.should_receive(:new).and_return(theme_asset)
+      ThemeAsset.should_receive(:new).and_return(@theme_asset)
       do_post
     end
     
     it "should assign @theme_asset" do
       do_post
-      assigns(:theme_asset).should == theme_asset
+      assigns(:theme_asset).should == @theme_asset
     end
     
     context "with valid params" do
       it "should receive and save the theme_asset" do
-        theme_asset.should_receive(:save).and_return(true)
+        @theme_asset.should_receive(:save).and_return(true)
         do_post
       end
       
       it "should assign to the flash message" do
         do_post
-        flash[:notice].should == "Successfully created the theme asset #{theme_asset.name}"
+        flash[:notice].should == "Successfully created the theme asset #{@theme_asset.name}"
       end
     end
     
@@ -138,12 +133,12 @@ describe Admin::ThemeAssetsController do
     
     context "with invalid params" do
       before(:each) do
-        theme_asset.stub(:save).and_return(false)
-        theme_asset.stub(:errors => { :theme_asest => "theme_asset errors" })
+        @theme_asset.stub(:save).and_return(false)
+        @theme_asset.stub(:errors => { :theme_asest => "theme_asset errors" })
       end
       
       it "should receive save and return false" do
-        theme_asset.should_receive(:save).and_return(false)
+        @theme_asset.should_receive(:save).and_return(false)
         do_post
       end
       
@@ -156,21 +151,21 @@ describe Admin::ThemeAssetsController do
 
   describe "GET edit" do
     before(:each) do
-      ThemeAsset.stub(:find).and_return(theme_asset)
+      ThemeAsset.stub(:find).and_return(@theme_asset)
     end                                                      
     
     def do_get
-      get :edit, "id" => theme_asset.to_param
+      get :edit, "id" => @theme_asset.to_param
     end
     
     it "should receive ThemeAsset#find and return the theme_asset" do
-      ThemeAsset.should_receive(:find).and_return(theme_asset)
+      ThemeAsset.should_receive(:find).and_return(@theme_asset)
       do_get
     end
     
     it "should assign the theme_asset for the view" do
       do_get
-      assigns(:theme_asset).should == theme_asset
+      assigns(:theme_asset).should == @theme_asset
     end                                          
     
     it "should render the view" do
@@ -182,43 +177,43 @@ describe Admin::ThemeAssetsController do
   
   describe "POST update" do    
     before(:each) do
-      ThemeAsset.stub(:find).and_return(theme_asset)
+      ThemeAsset.stub(:find).and_return(@theme_asset)
     end                                            
     
-    let(:params) { { "id" => theme_asset.to_param, "theme_asset_file_content" => "foobar", "theme_asset" => { "name" => "foobar", "asset_cache" => "1/rails.png", "asset" => AssetFixtureHelper.open("theme_css.css")}} }
+    let(:params) { { "id" => @theme_asset.to_param, "theme_asset_file_content" => "foobar", "theme_asset" => { "name" => "foobar", "asset_cache" => "1/rails.png", "asset" => AssetFixtureHelper.open("theme_css.css")}} }
     def do_put(put_params=params)
       put :update, put_params
     end
     
     it "should receive ThemeAsset#find" do
-      ThemeAsset.should_receive(:find).and_return(theme_asset)
+      ThemeAsset.should_receive(:find).and_return(@theme_asset)
       do_put
     end                                                        
     
     it "should assign the updated_by attribute" do
-      theme_asset.should_receive(:updated_by=).with(current_admin_user)
+      @theme_asset.should_receive(:updated_by=).with(@admin_user)
       do_put
     end
     
     it "should assign the theme_asset for the view" do
       do_put
-      assigns(:theme_asset).should == theme_asset
+      assigns(:theme_asset).should == @theme_asset
     end     
     
     describe "with valid params" do
       it "should receive update_attributes and return true" do
-        theme_asset.should_receive(:update_attributes).and_return(true)
+        @theme_asset.should_receive(:update_attributes).and_return(true)
         do_put
       end             
       
       it "should receive @theme_asset.update_file_content" do
-        theme_asset.should_receive(:update_file_content).with(params["theme_asset_file_content"]).and_return(true)
+        @theme_asset.should_receive(:update_file_content).with(params["theme_asset_file_content"]).and_return(true)
         do_put
       end
       
       it "should assign the flash message" do
         do_put                               
-        flash[:notice].should == "Successfully updated the theme asset #{theme_asset.name}"
+        flash[:notice].should == "Successfully updated the theme asset #{@theme_asset.name}"
       end           
       
       it "should redirect to the index action" do
@@ -229,18 +224,18 @@ describe Admin::ThemeAssetsController do
     
     context "using asset_cache when asset is nil on redisplay, ie validation fails" do
       it "should set the asset to the asset_cache when the asset_cache is not empty and the asset is nil" do   
-        do_put("id" => theme_asset.to_param, "theme_asset" => { "asset_cache" => "1/rails.png"})
+        do_put("id" => @theme_asset.to_param, "theme_asset" => { "asset_cache" => "1/rails.png"})
       end
     end                                 
     
     describe "with invalid params" do                      
       before(:each) do
-        theme_asset.stub(:update_attributes).and_return(false)
-        theme_asset.stub(:errors => { :theme_asest => "theme_asset errors" })
+        @theme_asset.stub(:update_attributes).and_return(false)
+        @theme_asset.stub(:errors => { :theme_asest => "theme_asset errors" })
       end
       
       it "should receive update_attributes and return false" do
-        theme_asset.should_receive(:update_attributes).and_return(false)
+        @theme_asset.should_receive(:update_attributes).and_return(false)
         do_put
       end             
       
@@ -253,33 +248,33 @@ describe Admin::ThemeAssetsController do
   
   describe "DELETE destroy" do
     before(:each) do
-      ThemeAsset.stub(:find).and_return(theme_asset)
-      theme_asset.stub(:persisted?).and_return(false)
+      ThemeAsset.stub(:find).and_return(@theme_asset)
+      @theme_asset.stub(:persisted?).and_return(false)
     end         
     
     def do_destroy
-      delete :destroy, "id" => theme_asset.id
+      delete :destroy, "id" => @theme_asset.id
     end                                   
     
     it "should receive ThemeAsset#find and return theme_asset" do
-      ThemeAsset.should_receive(:find).with(theme_asset.id.to_s).and_return(theme_asset)
+      ThemeAsset.should_receive(:find).with(@theme_asset.id.to_s).and_return(@theme_asset)
       do_destroy
     end                              
     
     it "should assign the theme_asset" do        
       do_destroy
-      assigns(:theme_asset).should == theme_asset
+      assigns(:theme_asset).should == @theme_asset
     end         
 
     context "when destroying theme_asset is successful" do
       it "should receive destroy and return true" do
-        theme_asset.should_receive(:destroy).and_return(true)
+        @theme_asset.should_receive(:destroy).and_return(true)
         do_destroy
       end                                                  
       
       it "should set the flash message" do
         do_destroy
-        flash[:notice].should == "Successfully deleted the theme asset #{theme_asset.name}"
+        flash[:notice].should == "Successfully deleted the theme asset #{@theme_asset.name}"
       end
       
       it "should redirect to the theme_asset index page" do
