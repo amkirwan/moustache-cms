@@ -44,7 +44,7 @@ class Admin::SiteAssetsController < AdminBaseController
 
   # PUT /admin/asset_collections/id/site_assets/1
   def update
-    @site_asset.updator_id = @current_admin_user.id
+    @site_asset.updator_id = current_admin_user.id
     respond_with(:admin, @asset_collection, @site_asset) do |format|
       if @site_asset.update_attributes(params[:site_asset])
         format.html { redirect_to [:admin, @asset_collection, :site_assets], :notice => "Successfully updated the asset #{@site_asset.name}" }
@@ -67,8 +67,8 @@ class Admin::SiteAssetsController < AdminBaseController
     end 
     
     def creator_updator_set_id(site_asset)
-      site_asset.creator_id = @current_admin_user.id
-      site_asset.updator_id = @current_admin_user.id
+      site_asset.creator_id = current_admin_user.id
+      site_asset.updator_id = current_admin_user.id
     end
 
     def process_name(original_filename)
