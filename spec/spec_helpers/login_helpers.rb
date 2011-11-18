@@ -23,22 +23,22 @@ module LoginHelpers
   end             
 
   def login_editor
-    @admin_user = Factory(:editor)
-    @site = mock_model(Site, :id => "1", :users => [@admin_user]).as_null_object
+    @editor_user = Factory(:editor)
+    @site = Factory(:site, :users => [@editor_user])
     controller.stub(:current_site).and_return(@site)
     sign_in @admin_user
   end
 
   def login_designer
-    @admin_user = Factory(:designer)
-    @site = mock_model(Site, :id => "1", :users => [@admin_user]).as_null_object
+    @designer_user = Factory(:designer)
+    @site = Factory(:site, :users => [@designer_user])
     controller.stub(:current_site).and_return(@site)
     sign_in @admin_user
   end
 
   def login_admin
-    @admin_user = Factory(:admin)
-    @site = mock_model(Site, :id => "1", :users => [@admin_user]).as_null_object
+    @site = Factory(:site)
+    @admin_user = Factory(:admin, :site_id => @site.id)
     controller.stub(:current_site).and_return(@site)
     sign_in @admin_user
   end

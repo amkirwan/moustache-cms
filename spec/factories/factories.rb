@@ -106,6 +106,9 @@ end
 
 Factory.define :asset_collection do |collection|
   collection.sequence(:name) { |n| "name_#{n}" }
+  collection.site_assets { [ Factory.build(:site_asset) ] }
+  collection.created_by_id { Factory.build(:user).id }
+  collection.updated_by_id { Factory.build(:user).id }
 end
 
 Factory.define :site_asset do |asset|

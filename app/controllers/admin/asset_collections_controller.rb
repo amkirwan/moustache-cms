@@ -27,7 +27,7 @@ class Admin::AssetCollectionsController < AdminBaseController
   #POST /admin/asset_collections
   def create
     created_updated_by_for @asset_collection
-    @asset_collection.site = @current_site
+    @asset_collection.site = current_site
     if @asset_collection.save
       flash[:notice] = "Successfully created the asset collection #{@asset_collection.name}"
     end

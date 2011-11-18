@@ -14,7 +14,7 @@ class Ability
         page.editors.include?(user) && page.site_id == user.site_id
       end
 
-      can [:read], AssetCollection, :site_id => user.site_id   
+      can :read, AssetCollection, :site_id => user.site_id   
       can :create, SiteAsset   
       can [:read, :update, :destroy], SiteAsset, do |site_asset|
         site_asset._parent.site_id == user.site_id
