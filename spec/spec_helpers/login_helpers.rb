@@ -37,7 +37,6 @@ module LoginHelpers
   end
 
   def login_admin
-    #@site = Factory(:site)
     @site = mock_model(Site, :id => "1").as_null_object
     @admin_user = Factory(:admin, :site_id => @site.id)
     controller.stub(:current_site).and_return(@site)

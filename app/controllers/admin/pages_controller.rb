@@ -23,7 +23,7 @@ class Admin::PagesController < AdminBaseController
   end
   
   def create
-    @page.site_id = @current_site.id
+    @page.site_id = current_site
     created_updated_by_for @page
     respond_with(:admin, @page) do |format|
       if @page.save
@@ -40,10 +40,13 @@ class Admin::PagesController < AdminBaseController
   
   def update
     @page.updated_by = @current_admin_user
+    @selected_page_part = selected_page_part
     respond_with(:admin, @page) do |format|
       if @page.update_attributes(params[:page]) 
         format.html { redirect_to redirector_path(@page), :notice => "Successfully updated the page #{@page.title}" }
-      end
+      else
+        format.html { render :edit }
+      end 
     end
   end
 
@@ -72,7 +75,7 @@ class Admin::PagesController < AdminBaseController
     end
 
     def parent_page
-      home_page = @current_site.pages.where(:full_path => '/').first
+      home_page = current_site.pages.where(:full_path => '/').first
       if @page.new_record?
         @parent_page = home_page
       else
