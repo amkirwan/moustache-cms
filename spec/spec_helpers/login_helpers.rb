@@ -1,7 +1,5 @@
 module LoginHelpers  
-  def cas_faker(partners_uid)
-    CASClient::Frameworks::Rails::Filter.fake(partners_uid)
-  end
+
   
   def stub_current_admin_user(user)
     User.stub(:where).and_return(users = [user])
