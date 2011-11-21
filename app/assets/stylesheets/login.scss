@@ -19,7 +19,7 @@ body {
 
 div#flash_notice, div#flash_alert {
   position: static;
-  width: 50%;
+  width: 45%;
   margin: 1em auto;
   margin-bottom: 0;
 }
@@ -122,4 +122,9 @@ fieldset#login, fieldset#password_reset {
   }
 }
 
+@media screen and (min-width: 1200px) {
+  div#login_wrapper {
+    max-width: 600px;
+  }
+}
 
