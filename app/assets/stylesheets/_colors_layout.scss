@@ -1,0 +1,41 @@
+$body_bg: #F9F8F3;
+$header_bg: #2c2b2b;
+$content_bg: #F9F8F3;
+$sidebar_border: #A8A8A8;
+$sidebar_heading: #FB5000;
+$footer_bg: #2c2b2b;
+$foldable_header: #434343; 
+$foldable_header_selected: #656464;
+$foldable_bg: #E9E8E6;
+$page_index_published: #E9E8E6;
+$page_index_draft: #e4d4c6;
+$submenu_bg: #E4E3E1;
+$action_button_bottom: #2C2C2C;
+
+/* text */
+$dark_text: #222;
+$med_text: #9C9C9C;
+$light_text: #FFF;
+$base_font: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, sans-serif;
+$base_text: normal 100% $base_font;
+$base_font_size: 16px;
+$heading_font: "proxima-nova-extra-condensed-1", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, Arial, sans-serif;
+$site_font: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, Arial, sans-serif;
+
+/* link text */
+$link_text: #d54e0e;
+$hover_text: #9b3c0e;
+$nav_text: #FB5000;
+
+$body_min_height: 1000px;
+
+/* grid */
+$page_width: 960px;
+$container_width: 816px;
+$columns: 12;
+$nav_section_width: 204px;
+$content_section_width: 612px;
+
+/* dimensions */
+$header_height: 40px;
+$footer_height: 60px;

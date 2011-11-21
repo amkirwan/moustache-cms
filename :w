@@ -1,0 +1,63 @@
+/*
+*= require_self
+*/
+@import "colors_layout";
+@import "css_three";
+@import "sass_func";
+
+body {
+  font: $base_text;
+  color: $dark_text;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  background: $body_bg; 
+}
+
+h2 {
+  font-variant:small-caps;
+  font: normal 1.125em/1.25 $heading_font; /* 18px / 16px */
+  color: $light_text;
+}
+
+div#login_wrapper {
+  margin: 5em auto;
+  width: 50%;
+}
+
+fieldset#login {
+  border: none;
+  @include rounded_corners($radius: 8px);
+  padding: 2em;
+  margin: 0 auto;
+  background: lighten($header_bg, 40%);
+  -webkit-box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);  
+  box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
+  label {
+    display: block;
+    font: bold 0.75em/1.5 $base_font;
+    color: lighten($dark_text, 10%);
+  }
+  input {
+    @include rounded_corners;
+    width: 90%;
+    font-size: calc_em(28px, 14px);
+  }
+  input[type='checkbox'] {
+    float: left;
+  }
+  ul.login_fields {
+    list-style: none;
+    margin: 0 auto;
+    li {
+      margin: calc_em(5px, 14px);
+      div {
+        float: left;
+        width: 2em;
+      };
+    }
+  }
+}
+
+

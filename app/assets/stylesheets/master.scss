@@ -1,50 +1,9 @@
 /*
 *= require_self
 */
-/*layout colors */
-
-$body_bg: #F9F8F3;
-$header_bg: #2c2b2b;
-$content_bg: #F9F8F3;
-$sidebar_border: #A8A8A8;
-$sidebar_heading: #FB5000;
-$footer_bg: #2c2b2b;
-$foldable_header: #434343; 
-$foldable_header_selected: #656464;
-$foldable_bg: #E9E8E6;
-$page_index_published: #E9E8E6;
-$page_index_draft: #e4d4c6;
-$submenu_bg: #E4E3E1;
-$action_button_bottom: #2C2C2C;
-
-/* text */
-$dark_text: #222;
-$med_text: #9C9C9C;
-$light_text: #FFF;
-$base_font: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, sans-serif;
-$base_text: normal 100% $base_font;
-$base_font_size: 16px;
-$heading_font: "proxima-nova-extra-condensed-1", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, Arial, sans-serif;
-
-/* link text */
-$link_text: #d54e0e;
-$hover_text: #9b3c0e;
-$nav_text: #FB5000;
-
-$body_min_height: 1000px;
-
-/* grid */
-$page_width: 960px;
-$container_width: 816px;
-$columns: 12;
-$nav_section_width: 204px;
-$content_section_width: 612px;
-
-/* dimensions */
-$header_height: 40px;
-$footer_height: 60px;
 
 @import "reset";
+@import "colors_layout";
 @import "mixin_links";
 @import "tables";
 @import "css_three";
@@ -186,18 +145,24 @@ div#nav {
     text-align: left;
     list-style: none;
     li {
-      padding-left: percentage(8px / $nav_section_width);
       border-top: 1px solid $sidebar_border;
+      -webkit-transition: background .2s linear;
+      -moz-transition: background .2s linear;
+      -o-transition: background .2s linear;
+      transition: background .2s linear;
       a:link, a:visited {
+        display: block;
+        color: $nav_text;
         font: $base_text;
         font-size: 1em; /* 16px */
         line-height: 1.75;
         text-decoration: none;
-        color: $nav_text;
+        padding-left: percentage(8px / $nav_section_width);
       }
 			a:hover, a:focus {
 			  color: $hover_text; 
 			  text-decoration: none;
+        background: $page_index_published;
 			}
     }
     li:first-child {
@@ -375,8 +340,8 @@ form.site_prop {
     text-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8);
     padding: 4px 20px;
     border: 1px solid rgba(92, 92, 92, 0.5);
-    background-image: -moz-linear-gradient(0% 49% 90deg,rgba(155, 61, 14, 1), rgba(155, 61, 14, 1), rgba(171, 62, 11, 0.8) 0%);
-    background-image: -webkit-gradient(linear, 0% 49%, 0% 51%, from(rgba(171, 62, 11, 0.8)), to(rgba(155, 61, 14, 1)));
+    background-image: -moz-linear-gradient(0% 49% 90deg,rgba(155, 61, 14, 1), rgba(155, 61, 14, 1), rgba(155, 61, 14, 0.7) 0%);
+    background-image: -webkit-gradient(linear, 0% 49%, 0% 51%, from(rgba(155, 61, 14, 0.7)), to(rgba(155, 61, 14, 1)));
     background-color: #D65719;
     cursor:pointer;
   }
@@ -472,6 +437,7 @@ div#pages_list {
         -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
         -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);  
         box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+        text-shadow: 0 1px 0 lighten($link_text, 80%);
         a:link, a:visited {
           font-size: 14px;
           line-height: 26px;
@@ -493,12 +459,10 @@ div#pages_list {
       }
       strong.published {
         border-top: 1px solid #D2D1D0;
-        text-shadow: 0px 1px 0 rgba(255,255,255,0.8), 0px -1px 0 rgba(0,0,0,0.4);
         background: $page_index_published;
       }
       strong.draft {
         border-top: 1px solid #CBBCAF;
-        text-shadow: 0px 1px 0 rgba(255,255,255,0.8), 0px -1px 0 rgba(0,0,0,0.4);
         background: $page_index_draft;
       }
       strong.home_page {
@@ -513,7 +477,7 @@ div#pages_list {
         span {
           line-height: 1;
           vertical-align: top;
-          text-shadow: 0px 1px 0 rgba(255,255,255,0.8), 0px -1px 0 rgba(0,0,0,0.4);
+          text-shadow: 0 1px 0 lighten($med_text, 60%);
         }
         a {
           position: relative;

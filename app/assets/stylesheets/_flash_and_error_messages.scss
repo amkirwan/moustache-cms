@@ -3,7 +3,7 @@ $flash_color: #FFD324;
 $error_ex_heading_color: darken(#d54e0e, 10%);
 $error_ex_color: #777777;
 
-div#flash_notice_wrapper {
+div#flash_notice_wrapper, div#flash_notice, div#flash_alert {
   position: absolute;
   width: 65%;
   top: -10px;

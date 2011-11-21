@@ -2,11 +2,8 @@
 %html
   %head{:charset => "UTF-8"}
     %title= "#{@current_site.name.titleize} - #{yield :title}"
-
     = stylesheet_link_tag "application"
-   
     = javascript_include_tag "application"
-
     = csrf_meta_tag
   %body{:class => body_id_set}
   #wrapper

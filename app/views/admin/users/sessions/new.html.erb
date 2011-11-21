@@ -1,17 +1,30 @@
-<h2>Sign in</h2>
-
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
-
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
-
-  <% if devise_mapping.rememberable? -%>
-    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-  <% end -%>
-
-  <div><%= f.submit "Sign in" %></div>
-<% end %>
-
-<%= render :partial => "devise/shared/links" %>
+<%= content_for(:title) { "Login" } %>
+<div id="login_wrapper">
+  <h2 id="current_site">Log in to <span class="current_site_name"><%= @current_site.name.titleize %></span></h2>
+  <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+    <fieldset id="login">
+      <ul class="login_fields">
+        <li>
+          <%= f.label :email %>
+          <%= f.email_field :email, :tabindex => '1' %>        
+        </li>
+        <li>
+          <%= f.label :password %>
+          <%= f.password_field :password, :tabindex => '2' %>
+        </li>
+        <li>
+          <div>
+          <%= f.check_box :remember_me %>
+          </div>
+          <%= f.label :remember_me %>
+        </li>
+        <li>
+          <%= f.submit "Log In" %>
+        </li>
+        <li id="forgot">
+          <%= render :partial => "devise/shared/links" %>
+        </li>
+      </ul>
+    </fieldset>
+  <% end %>
+</div>
