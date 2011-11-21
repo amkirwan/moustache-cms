@@ -1,6 +1,6 @@
 <%= content_for(:title) { "Login" } %>
 <div id="login_wrapper">
-  <h2 id="current_site">Log in to <span class="current_site_name"><%= @current_site.name.titleize %></span></h2>
+  <h2 id="current_site"><%= @current_site.name.titleize %></h2>
   <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
     <fieldset id="login">
       <ul class="login_fields">
@@ -19,7 +19,7 @@
           <%= f.label :remember_me %>
         </li>
         <li>
-          <%= f.submit "Log In" %>
+          <%= f.submit "Sign In" %>
         </li>
         <li id="forgot">
           <%= render :partial => "devise/shared/links" %>
