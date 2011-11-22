@@ -1,7 +1,7 @@
 !!! 5
 %html
   %head{:charset => "UTF-8"}
-    %title= yield :title || "HandlebarCMS"
+    %title= "#{@current_site.name.titleize} - #{yield :title}"|| "HandlebarCMS"
     = stylesheet_link_tag "login"
     %link{:href => 'http://fonts.googleapis.com/css?family=Droid+Serif:700,400,700italic', :rel => 'stylesheet', :type => 'text/css'}
     = javascript_include_tag :defaults
