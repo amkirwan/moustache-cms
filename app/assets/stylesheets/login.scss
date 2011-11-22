@@ -94,6 +94,7 @@ fieldset#login, fieldset#password_reset {
   input[type='submit'] {
     cursor: pointer;
     width: auto;
+    padding: calc_em(5px, 16px) 2em;
     color: $light_text;
     text-shadow: 0 -1px 0 rgba(0,0,0,0.8);
     text-transform: capitalize;
@@ -128,7 +129,7 @@ fieldset#login, fieldset#password_reset {
       a:link, a:visited {
         color: lighten(#9B3D0E, 40%);
         text-decoration: none;
-        text-shadow: 0 -1px 0 rgba(0,0,0,0.3);
+        text-shadow: 0 -1px 0 rgba(116,46,10,0.3);
         -webkit-transition: color 0.3s ease;
         -moz-transition: color 0.3s ease;
         -o-transition: color 0.3s ease;
@@ -136,7 +137,7 @@ fieldset#login, fieldset#password_reset {
       }
       a:hover, a:focus {
         color: lighten(#9B3D0E, 25%); 
-        text-shadow: 0 -1px 0 rgba(0,0,0,0.3);
+        text-shadow: 0 -1px 0 rgba(116,46,10,0.5);
         text-decoration: none;
       }
     }
