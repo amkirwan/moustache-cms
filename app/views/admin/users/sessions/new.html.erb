@@ -3,7 +3,7 @@
   <h2 id="current_site"><%= @current_site.name.titleize %></h2>
   <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
     <fieldset id="login">
-      <ul class="login_fields">
+      <ol class="login_fields">
         <li>
           <%= f.label :email %>
           <%= f.email_field :email, :tabindex => '1' %>        
@@ -24,7 +24,7 @@
         <li id="forgot">
           <%= render :partial => "devise/shared/links" %>
         </li>
-      </ul>
+      </ol>
     </fieldset>
   <% end %>
 </div>

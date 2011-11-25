@@ -1,3 +1,7 @@
 @function calc_em($target_px, $context) {
   @return ($target_px / $context) * 1em;
 }
+
+@function calc_percent($target_px, $context_px) {
+  @return ($target_px / $context_px) * 100%;
+}

@@ -9,6 +9,8 @@
 @import "sass_func";
 @import "flash_and_error_messages";
 
+$login_wrapper_width: 432px;
+
 body {
   font: $base_text;
   color: $dark_text;
@@ -20,14 +22,14 @@ body {
 
 div#flash_notice, div#flash_alert {
   position: static;
-  width: 45%;
+  width: 45%; /* 960px * 45% = 432px */
   margin: 1em auto;
   margin-bottom: 0;
 }
 
 h2 {
   margin-top: 1em;
-  margin-left: 0.2em;
+  margin-left: calc_percent(3px, $login_wrapper_width);
   margin-bottom: 0.2em;
   color: darken(#D65719, 10%);
   font: bold 2em/1.125 $site_font; 
@@ -38,10 +40,8 @@ h2 {
 
 div#login_wrapper {
   margin: 2em auto;
-  width: 50%;
+  width: 45%; /* 960px * 45% = 432px */
 }
-
-
 
 
 p {
@@ -54,7 +54,7 @@ p {
 fieldset#login, fieldset#password_reset {
   @include rounded_corners($radius: 8px);
   position: relative;
-  padding: 2em;
+  padding: 2em calc_percent(32px, $login_wrapper_width);
   margin: 0 auto;
   border: 1px solid lighten($header_bg, 30%);
   border-top: 1px solid #FFF;
@@ -80,10 +80,10 @@ fieldset#login, fieldset#password_reset {
   }
   input {
     @include rounded_corners;
-    width: 90%;
+    width: calc_percent(($login_wrapper_width - 16px), $login_wrapper_width);
     font-size: calc_em(16px, 14px);
     border: 2px solid lighten($header_bg, 30%);
-    padding: 0.5em;
+    padding: 0.5em calc_percent(8px, $login_wrapper_width);
     background-image: -webkit-gradient(linear, 0% 0%, 0% 12%, from(#969696), to($body_bg));
     background-image: -moz-linear-gradient(0% 12% 90deg, $body_bg, #969696);
     background-color: #E2E1DF;
@@ -94,7 +94,7 @@ fieldset#login, fieldset#password_reset {
   input[type='submit'] {
     cursor: pointer;
     width: auto;
-    padding: calc_em(5px, 16px) 2em;
+    padding: calc_em(5px, 16px) calc_percent(32px, $login_wrapper_width);
     color: $light_text;
     text-shadow: 0 -1px 0 rgba(0,0,0,0.8);
     text-transform: capitalize;
@@ -108,14 +108,14 @@ fieldset#login, fieldset#password_reset {
     background-image: -webkit-gradient(linear, 0% 49%, 0% 51%, from(rgba(155, 61, 14, 0.7)), to(rgba(155, 61, 14, 1)));
     background-color: #D65719;
   }
-  ul.login_fields, ul.reset_fields {
+  ol.login_fields, ol.reset_fields {
     list-style: none;
     margin: 0 auto;
     li {
-      margin: calc_em(5px, 14px);
+      margin: 0.5em calc_percent(16px, $login_wrapper_width);
       div {
         float: left;
-        width: 2em;
+        width: calc_percent(24px, $login_wrapper_width);
       };
     }
     li#forgot, li#sign_in {
