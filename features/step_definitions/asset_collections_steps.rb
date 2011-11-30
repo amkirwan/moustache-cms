@@ -3,8 +3,8 @@ def find_collection(collection_name)
 end
 
 Given /^these collections exist in the site "([^\"]*)" created by user "([^\"]*)"$/ do |site, username, table|
-  user = User.find_by_username(username)
   site = Site.match_domain(site).first
+  user = User.where(:username => username, :site_id => site.id).first
   table.hashes.each do |hash|
     Factory(:asset_collection, :site_id => site.id, :name => hash[:name], :created_by => user, :updated_by => user)
   end
