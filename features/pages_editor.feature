@@ -16,7 +16,7 @@ And the user with the role exist
  | foo   | admin  | foobar.example.com |
  | bar   | editor | foobar.example.com |
  | cds27 | editor | foobar.example.com |
-And I authenticates as cas user "cds27"
+And I login as the user "cds27" to the site "foobar.example.com"
 
 @editor_can_see_page_index_page
 Scenario: Given I am logged in as an editor then I can see the pages
@@ -128,7 +128,7 @@ Scenario: Delete page the user is an editor of
 Scenario: Should not be able to access site the user is not associated with
   Given the site "baz" exists with the domain "example.dev"
   When I go to the admin pages page
-  Then I should see "403"
+  Then I should be on the new admin user session page
   
 @editor_cannot_edit_a_page_not_editor_of
 Scenario: Cannot edit a page the user is not an editor of
@@ -148,5 +148,5 @@ Scenario: Cannot delete page the user is an editor of
   | bar    | draft     |
   When I go to the admin pages page
   Then I should not see the delete image "delete_button.png" associated with "foobar"
-  Then I should not see the delete image "delete_button.png" associated with "bar"
+  And I should not see the delete image "delete_button.png" associated with "bar"
 

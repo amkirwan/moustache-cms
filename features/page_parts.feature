@@ -10,16 +10,14 @@ And these current states exist
 And these layouts exist in the site "foobar.example.com" created by user "ak730"
 | name | content              |
 | app  | Hello, World         |
-And the user with the role exist
- | user  | role   | site               |
- | rg874 | admin  | foobar.example.com |
 And these pages exist in the site "foobar.example.com" created by user "ak730"
 | title  | status    | 
 | foobar | published | 
-And I authenticates as cas user "ak730"
+And I login as the user "ak730" to the site "foobar.example.com"
 
 @new_page_part
   Scenario: Edit page part
+    pending
     When I go to the admin pages page
     And I follow "foobar"
     Then I should now be editing the page "foobar"
@@ -33,7 +31,7 @@ And I authenticates as cas user "ak730"
     When the default additional page part exists in the page "foobar" 
     And I follow "Delete"
     Then I should now be editing the page "foobar"
-    And I should see "uccessfully deleted the page part page part name"
+    And I should see "Successfully deleted the page part page part name"
 
 @cannot_delete_last_page_part
   Scenario: Cannot delete page part if it is the only one on the page

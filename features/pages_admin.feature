@@ -15,7 +15,7 @@ And the user with the role exist
  | user  | role   | site               |
  | rg874 | admin  | foobar.example.com |
  | jmb42 | editor | foobar.example.com |
-And I authenticates as cas user "ak730"
+And I login as the user "ak730" to the site "foobar.example.com"
 
 @index_page_view
 Scenario: Navigate to the Pages#index page

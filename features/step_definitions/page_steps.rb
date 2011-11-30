@@ -55,8 +55,7 @@ end
 Then /^(?:|I )should not see the delete image "([^\"]*)" associated with "([^\"]*)"$/ do |image, item|
   item = find_page(item)
   within("#{li_id(item)}") do
-    page.should_not have_xpath("//a[@data-method=\"delete\"]")
-    page.should_not have_selector("img.delete_image", :alt => "Delete_image", :src => "#{Rails.root}/assets/#{image}")
+    page.should_not have_selector("img.delete_image", :alt => "Delete_button", :src => "#{Rails.root}/assets/#{image}")
   end
 end
 

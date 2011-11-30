@@ -23,7 +23,7 @@ class Admin::PagesController < AdminBaseController
   end
   
   def create
-    @page.site_id = current_site
+    @page.site_id = current_site.id
     created_updated_by_for @page
     respond_with(:admin, @page) do |format|
       if @page.save
