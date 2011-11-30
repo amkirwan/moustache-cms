@@ -3,7 +3,7 @@ Feature: Admin Theme Asset Management Features as admin
 Background: Login create default theme
 Given the site "foobar" exists with the domain "example.com"
 And the user "ak730" exists with the role of "admin" in the site "foobar.example.com"
-And I authenticates as cas user "ak730"
+And I login as the user "ak730" to the site "foobar.example.com"
 And the user with the role exist
  | user  | role   | site               |
  | rg874 | admin  | foobar.example.com |
@@ -31,7 +31,7 @@ Scenario: Navigate to the Layout#index page
 Scenario: Should not be able to access another sites theme assets
   Given the site "baz" exists with the domain "example.dev"
   When I go to the admin theme assets page
-  Then I should see "403"
+  Then I should be on the new admin user session page
   
 @create_new_theme_asset
 Scenario: Create a new media file
