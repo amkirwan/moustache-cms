@@ -12,20 +12,20 @@ end
 
 When /^(?:|I )edit the layout "([^\"]*)"$/ do |layout_name|
   layout = find_layout(layout_name)
-  step %{I go to the edit admin layout page for "#{layout.to_param}"}
+  And %{I go to the edit admin layout page for "#{layout.to_param}"}
 end
 
 When /^I follow "([^"]*)" associated with the layout "([^"]*)"$/ do |delete, layout_name|
   layout = find_layout(layout_name)
-  step %{I follow "#{delete}" within "tr#layout_#{layout_name}"}
+  And %{I follow "#{delete}" within "tr#layout_#{layout_name}"}
 end
 
 Then /^(?:|I )should view the page for layout "([^\"]*)"$/ do |layout_name|
   layout = find_layout(layout_name)
-  step %{I should be on the edit admin layout page for "#{layout.to_param}"}
+  And %{I should be on the edit admin layout page for "#{layout.to_param}"}
 end
 
 Then /^(?:|I )should now be editing the layout "([^\"]*)"$/ do |layout_name|
   layout = find_layout(layout_name)
-  step %{I should be on the edit admin layout page for "#{layout.to_param}"} 
+  And %{I should be on the edit admin layout page for "#{layout.to_param}"} 
 end
