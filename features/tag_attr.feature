@@ -10,7 +10,7 @@ Background: Login create default site
    | theme_js  | theme_js.js   | 
    | rails     | rails.png     | 
 
-  And I authenticates as cas user "ak730"
+  And I login as the user "ak730" to the site "foobar.example.com"
 
 @create_new_tag_attribute_for_theme_asset
   Scenario:  Add new tag attribute
