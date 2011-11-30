@@ -3,7 +3,7 @@ Feature: Admin User Management Features as user with editor role
 Background: Create Site
   Given the site "foobar" exists with the domain "example.com"
   Given the user "ak730" exists with the role of "editor" in the site "foobar.example.com"
-  And I authenticates as cas user "ak730"
+  And I login as the user "ak730" to the site "foobar.example.com"
 
 # Actions Passing
   
@@ -44,7 +44,7 @@ Scenario: Given I am logged in as an editor then I can edit my account
 Scenario: Given I am logged in as an editor then I can delete my account
   When I go to the admin users page
   And I follow "Delete" within "tr#ak730"
-  Then I should be on the cms html page
+  Then I should be on the new admin user session page 
   
 @editor_can_delete_own_account_from_page
 Scenario: Given I am logged in as an editor then I can delete my account from my user page
@@ -52,7 +52,7 @@ Scenario: Given I am logged in as an editor then I can delete my account from my
   And I follow "Foobar Baz" within "tr#ak730"
   Then I should now be editing the user "ak730"
   When I follow "Delete User" 
-  Then I should be on the cms html page
+  Then I should be on the new admin user session page
 
 # Actions_Blocked   
   
@@ -60,7 +60,7 @@ Scenario: Given I am logged in as an editor then I can delete my account from my
 Scenario: Should not be able to access site the user is not associated with
   Given the site "baz" exists with the domain "example.dev"
   When I go to the admin users page
-  Then I should see "403"
+  Then I should be on the new admin user session page
   
 @editor_cannot_create_new_user
 Scenario: Editor cannot create new users
