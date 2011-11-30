@@ -31,7 +31,7 @@ gem "unicorn"
 group :development, :test do
   gem "rspec-rails", "~> 2.6" 
   gem "webrat"
-  gem "cucumber-rails"
+  gem "cucumber-rails", "1.0.5"
   gem "capybara", ">= 1.0.0"
   gem "launchy"
   gem "database_cleaner"

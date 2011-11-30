@@ -75,8 +75,6 @@ Factory.define :page_part do |pp|
   pp.filter_name "filter"
 end
 
-
-
 Factory.define :page do |page|
   page.site { Factory.build(:site) }
   page.sequence(:title) { |n| "title_#{n}" }

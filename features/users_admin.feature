@@ -3,7 +3,7 @@ Feature: Admin User Management Features as user with admin role
 Background: Login create default site
   Given the site "foobar" exists with the domain "example.com"
   And the user "ak730" exists with the role of "admin" in the site "foobar.example.com"
-  And I authenticates as cas user "ak730"
+  And I login as the user "ak730" to the site "foobar.example.com"
 
 @admin_users_index
 Scenario: Admin login
@@ -80,7 +80,7 @@ Scenario: Given I am logged in as an admin then I can edit any users account
 Scenario: Given I am logged in as an admin then I can delete my account
   When I go to the admin users page
   And I follow "Delete" within "tr#ak730"
-  Then I should be on the cms html page
+  Then I should be on the new admin user session page
   
 @admin_can_delete_own_account_from_page
 Scenario: Given I am logged in as an admin then I can delete my account from my user page
@@ -88,7 +88,7 @@ Scenario: Given I am logged in as an admin then I can delete my account from my 
   And I follow "Foobar Baz" within "tr#ak730"
   Then I should now be editing the user "ak730"
   When I follow "Delete User" 
-  Then I should be on the cms html page
+  Then I should be on the new admin user session page
   
 @admin_delete_other_user_account
 Scenario: Delete user account as an admin
