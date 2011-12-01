@@ -33,10 +33,10 @@ div.field_with_errors + div.field_with_errors {
 }
 
 div#error_explanation {
-  width: 80%;
   border: 2px solid $error_ex_color;
   padding: 8px;
   margin-bottom: 16px;
+  @include rounded_corners;
   background-color: #f0f0f0;
   h3 {
     text-align: left;
@@ -49,13 +49,13 @@ div#error_explanation {
     color: $light_text;
   }
 
-  ul li {
+  ol li {
     font-size: 1em; /* 14px */
     list-style-type: disc;
     padding: 2px 0;
     margin-left: 2em;
   }
-  ul li:first-child {
+  ol li:first-child {
     padding-top: 8px;
   }
 }

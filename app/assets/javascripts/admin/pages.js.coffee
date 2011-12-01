@@ -3,7 +3,7 @@ jQuery ->
     if $('body.pages').length
 
       /* sort index page pages */
-      $('ul.sortable').sortable
+      $('ol.sortable').sortable
         handle: 'em.sortable_list'
         axis: 'y'
         opacity: 0.6
@@ -16,11 +16,11 @@ jQuery ->
           $.post $(this).attr('data_url'), params
 
       /* hide initial form elements */
-      $('.site_prop #advanced_options').css 'display', 'none'
-      $('.site_prop #advanced_options').prev().find('span').removeClass('rotate')
+      $('#advanced_fields legend').siblings().first().css 'display', 'none'
+      $('#advanced_fields legend').find('span').removeClass('rotate')
 
-      $('.site_prop #page_meta_tags').css 'display', 'none'
-      $('.site_prop #page_meta_tags').prev().find('span').removeClass('rotate')
+      $('#meta_tags_fields legend').siblings().first().css 'display', 'none'
+      $('#meta_tags_fields legend').find('span').removeClass('rotate')
 
 
       /* meta_tag remove new meta tag*/
@@ -43,16 +43,16 @@ jQuery ->
           $.get '/admin/pages/new_meta_tag', ->
 
       /* page parts ajax spinner */
-      $('ul#page_parts_nav a').bind 'ajax:beforeSend', ->
+      $('ol#page_parts_nav a').bind 'ajax:beforeSend', ->
         $('.page_parts div.spinner_wrapper .spinner').removeClass('hidden')
-      $('ul#page_parts_nav a').bind 'ajax:success', ->
+      $('ol#page_parts_nav a').bind 'ajax:success', ->
         $('.page_parts div.spinner_wrapper .spinner').addClass('hidden')
 
 
       /* change page part nav name */
       $('li.page_part_name input').live 'change', ->
         pp_id = $(this).parent().parent().next().attr 'value'
-        page_part_nav_link = $('ul#page_parts_nav #' + pp_id + '_nav').find('a')
+        page_part_nav_link = $('ol#page_parts_nav #' + pp_id + '_nav').find('a')
         old_val = page_part_nav_link.html()
 
         /* if new value isn't blank change it if it is set it back to the old value */

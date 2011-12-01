@@ -22,7 +22,7 @@ jQuery(function() {
 
     $('.foldable legend').mouseup(function() {
       var legend = $(this);
-      legend.siblings('.form_fields').slideToggle('slow', 'linear', function() {
+      legend.siblings().slideToggle('slow', 'linear', function() {
         var arrow = legend.children().first();
         if (arrow.hasClass('rotate')) {
           arrow.removeClass('rotate');

@@ -143,7 +143,7 @@ div#nav {
   ul {
     padding-right: 0px;
     text-align: left;
-    list-style: none;
+
     li {
       border-top: 1px solid $sidebar_border;
       -webkit-transition: background .2s linear;
@@ -188,11 +188,11 @@ body.users li#users,
 body.sites li#sites {
   a:link, a:visited {
     color: $light_text;
-    background: $link_text;
+    background: rgba(44,44,44, 0.8);
   }
   a:hover, a:focus {
     color: $light_text;
-    background: $link_text;
+    background: rgba(44,44,44, 0.8);
   }
 }
 
@@ -301,6 +301,9 @@ form.site_prop {
       border-bottom: 1px solid #F2EFEF;
       background: #FFF6BF;
     }
+    input[type='checkbox'] {
+      width: auto;
+    }
   }
   ul.form_fields, ol.form_fields {
     clear: both;
@@ -327,6 +330,10 @@ form.site_prop {
     li:last-child {
       padding-bottom: 0;
     }
+    li.editor_field {
+      float: left;
+      padding-top: 8px;
+    }
   }
   div.fields_wrap {
     padding: 0.5em 0;
@@ -338,8 +345,6 @@ form.site_prop {
     text-shadow: 0px -1px 0 rgba(0, 0, 0, 0.8);
     padding: 4px 20px;
     border: 1px solid rgba(92, 92, 92, 0.5);
-    //background-image: -moz-linear-gradient(0% 49% 90deg,rgba(155, 61, 14, 1), rgba(155, 61, 14, 1), rgba(155, 61, 14, 0.7) 0%);
-    //background-image: -webkit-gradient(linear, 0% 49%, 0% 51%, from($link_text), to(#B74109));
     background: -moz-linear-gradient(0% 49% 90deg, rgba(44, 44, 44, 1), rgba(44, 44, 44, 1), rgba(44, 44, 44, 0.8) 0%);
     background: -webkit-gradient(linear, 0% 49%, 0% 51%, from(rgba(44, 44, 44, 0.8)), to(rgba(44, 44, 44, 1)));
     cursor:pointer;
@@ -490,7 +495,7 @@ div#pages_list {
 	}
 }
 
-ul#page_parts_nav {
+ol#page_parts_nav {
   height: 25px;
   list-style: none;
   li {
@@ -498,6 +503,7 @@ ul#page_parts_nav {
     margin-top: 3px;
     margin-bottom: 5px;
     padding: calc_em(5px, 14px) calc_em(5px, 14px); 
+    cursor:pointer;
   }
   li.add_page_part, li.delete_page_part {
     padding-right: 0;
