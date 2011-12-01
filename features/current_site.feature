@@ -52,6 +52,6 @@ Scenario: Should not be able to access another sites layout the admin is not ass
 @delete_domain_name_for_current_site
   Scenario: Delete additional domain name for the current site
     When I edit the current site "foobar" with the additional domain "example.org"
-    When I follow "Delete" within "ul.domains_list"
+    When I follow "Delete" within "ol.domains_list"
     Then I should now be editing the current site "foobar"
     And I should see "Successfully deleted the domain name example.org"
