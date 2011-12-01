@@ -1,3 +1,4 @@
+//= require login_focus
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui

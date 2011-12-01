@@ -88,6 +88,10 @@ fieldset#login, fieldset#password_reset {
     background-image: -moz-linear-gradient(0% 12% 90deg, $body_bg, #969696);
     background-color: #E2E1DF;
   }
+  input:focus {
+    outline: none;
+    border: 2px solid darken($header_bg, 10%);
+  }
   input[type='checkbox'] {
     float: left;
   }
