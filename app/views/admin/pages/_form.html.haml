@@ -1,5 +1,5 @@
 = form_for([:admin, @page], :html => { :id => page_form_id, :class => "site_prop", :autocomplete => :off }) do |f|
-  %fieldset 
+  %ol.form_fields
     = render :partial => "shared/error_messages", 
              :locals => { :target => @page }
     = render :partial => "general", :locals => {:f => f}
