@@ -1,13 +1,15 @@
-= foldable_fieldset 'Meta Tags', :id => 'meta_tags_fieldset' do
-  %div.spinner_wrapper
-    = image_tag 'ajax-loader.gif', :class => 'spinner hidden'
-  %ul{ :id => 'site_meta_tags', :class => 'form_fields meta_tags'} 
-    = f.fields_for :meta_tags do |builder|
-      %li{:id => meta_tag_id(builder.object), :class => 'inline meta_tag'}  
-        = builder.label :name
-        = builder.text_field :name
-        = builder.label :content
-        = builder.text_field :content
-        = manage_meta_tag @current_site, builder.object
-    %li#add_meta_tag
-      = add_meta_tag 'Save current site first to add custom site wide meta tags', @current_site
+%li
+  = foldable_fieldset 'Meta Tags', :id => 'meta_tags_fieldset' do
+    %div.fields_wrap
+      %div.spinner_wrapper
+        = image_tag 'ajax-loader.gif', :class => 'spinner hidden'
+      %ol{ :id => 'site_meta_tags', :class => 'form_fields meta_tags' }
+        = f.fields_for :meta_tags do |builder|
+          %li{:id => meta_tag_id(builder.object), :class => 'inline meta_tag'}  
+            = builder.label :name
+            = builder.text_field :name
+            = builder.label :content
+            = builder.text_field :content
+            = manage_meta_tag @current_site, builder.object
+        %li#add_meta_tag
+          = add_meta_tag 'Save current site first to add custom site wide meta tags', @current_site

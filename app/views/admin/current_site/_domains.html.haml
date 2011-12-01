@@ -1,6 +1,6 @@
 - unless @current_site.domain_names.empty?
   %h5 The current site is also accessible from the following domains:
-  %ul{:class => 'form_fields domains_list'} 
+  %ol{:class => 'form_fields domains_list'} 
     - @current_site.domain_names.each.with_index do |domain, index|
       = can_manage_domain?(domain, index)  
     %li#add_domain

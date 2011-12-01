@@ -284,6 +284,7 @@ form.site_prop {
     }
     input {
       font-size: calc_em(12px, 14px);
+      width: 30%;
     }
     input, textarea {
       border: none;
@@ -327,6 +328,9 @@ form.site_prop {
       padding-bottom: 0;
     }
   }
+  div.fields_wrap {
+    padding: 0.5em 0;
+  }
   .submit, .file_field {
     font-size: 1em;
     color: $light_text;
@@ -341,7 +345,7 @@ form.site_prop {
     cursor:pointer;
   }
   .submit:hover, .file_field:hover {
-    background: #9B3D0E;
+    background: lighten(#000, 10%);
   }
   .cancel {
     font-size: 1em;
