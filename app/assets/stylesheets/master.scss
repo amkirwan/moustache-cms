@@ -301,7 +301,7 @@ form.site_prop {
       background: #FFF6BF;
     }
   }
-  ul.form_fields {
+  ul.form_fields, ol.form_fields {
     clear: both;
     list-style: none;
     li {
@@ -335,8 +335,7 @@ form.site_prop {
     padding: 4px 20px;
     border: 1px solid rgba(92, 92, 92, 0.5);
     background-image: -moz-linear-gradient(0% 49% 90deg,rgba(155, 61, 14, 1), rgba(155, 61, 14, 1), rgba(155, 61, 14, 0.7) 0%);
-    background-image: -webkit-gradient(linear, 0% 49%, 0% 51%, from(rgba(155, 61, 14, 0.7)), to(rgba(155, 61, 14, 1)));
-    background-color: #D65719;
+    background-image: -webkit-gradient(linear, 0% 49%, 0% 51%, from($link_text), to(#B74109));
     cursor:pointer;
   }
   .submit:hover, .file_field:hover {
