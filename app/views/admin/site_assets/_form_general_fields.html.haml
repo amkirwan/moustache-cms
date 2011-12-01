@@ -1,11 +1,16 @@
-%ul.form_fields
-  - if @site_asset.new_record?
-    = render :partial => 'new_site_asset', :object => f
-  - else 
-    %li
-      = f.label :name, "Name<abbr title='required' class='required'>*</abbr>".html_safe
-      = f.text_field :name
-    %li
-      = f.label :tags
-      = f.text_field :tags
-    = render :partial => 'site_asset'
+= foldable_fieldset 'General' do
+  %ol.form_fields
+    - if @site_asset.new_record?
+      = render :partial => 'new_site_asset', :object => f
+    - else 
+      %li
+        = f.label :name, "Name<abbr title='required' class='required'>*</abbr>".html_safe
+        = f.text_field :name
+      %li
+        = f.label :tags
+        = f.text_field :tags
+      = render :partial => 'site_asset'
+    %li 
+      = f.submit button_label, :class => "submit"
+      = link_to "Cancel", [:admin, @asset_collection], :class => "cancel"
+
