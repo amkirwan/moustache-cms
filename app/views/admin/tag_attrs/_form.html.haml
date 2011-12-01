@@ -1,7 +1,7 @@
 = form_for([:admin, @theme_asset, @tag_attr], :html => { :class => "site_prop", :autocomplete => :off }) do |f|
   = render :partial => "shared/error_messages", :locals => {:target => @tag_attr}
   %fieldset
-    %ul.form_fields
+    %ol.form_fields
       %li
         = f.label :name
         = f.text_field :name

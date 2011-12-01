@@ -1,6 +1,8 @@
-= foldable_fieldset 'File' do
-  %ul.form_fields
-    %li
-      %span= "#{@theme_asset.asset.file.filename} is available"
-      = link_to 'here', "http://#{request.host}#{@theme_asset.asset.url}"
-    = edit_asset_field
+%li#theme_asset_file_fields
+  = foldable_fieldset 'File' do
+    %div.fields_wrap
+      %ol.form_fields
+        %li
+          %span= "#{@theme_asset.asset.file.filename} is available"
+          = link_to 'here', "http://#{request.host}#{@theme_asset.asset.url}"
+        = edit_asset_field

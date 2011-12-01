@@ -1,5 +1,3 @@
-%fieldset
-  %ul.form_fields
-    %li
-      = f.submit button_label, :class => "submit"
-      = link_to "cancel", [:admin, :theme_assets], :class => "cancel"
+%li#form_submit_fields
+  = f.submit button_label, :class => "submit"
+  = link_to "cancel", [:admin, :theme_assets], :class => "cancel"

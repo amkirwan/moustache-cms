@@ -1,8 +1,11 @@
-%ul.form_fields
-  %li
-    = f.label :name, "Name<abbr title='required' class='required'>*</abbr>".html_safe
-    = f.text_field :name
-  %li
-    = f.label :description
-    = f.text_area :description, :cols => "50", :rows => "3"   
+%li#general_fields
+  = foldable_fieldset 'General' do
+    %div.fields_wrap
+      %ol 
+        %li
+          = f.label :name, "Name<abbr title='required' class='required'>*</abbr>".html_safe
+          = f.text_field :name
+        %li
+          = f.label :description
+          = f.text_area :description, :cols => "50", :rows => "3"   
 

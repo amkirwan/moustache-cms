@@ -315,9 +315,12 @@ form.site_prop {
         display: inline;
       }
     }
-    li.inline {
+    .inline {
       label {
         display: inline;
+      }
+      input { 
+        width: auto;
       }
     } 
     li:first-child {

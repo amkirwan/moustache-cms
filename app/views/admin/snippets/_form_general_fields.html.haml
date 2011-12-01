@@ -1,4 +1,4 @@
-%ul.form_fields
+%ol.form_fields
   %li
     = f.label :name
     = f.text_field :name
@@ -8,3 +8,7 @@
   %li
     = f.label :content
     = f.text_area :content, :cols => "100", :class => "code"
+  %li
+    = f.submit button_label, :class => "submit"
+    = f.submit "Save and Continue Editing", :class => "submit"
+    = link_to "Cancel", [:admin, :snippets], :class => "cancel"

@@ -1,7 +1,4 @@
 = form_for([:admin, @snippet], :html => {:class => "site_prop", :autocomplete => :off}) do |f|
   = render :partial => "shared/error_messages", :locals => {:target => @snippet}
-  %fieldset
-    = foldable_fieldset 'General' do
-      = render :partial => 'form_general_fields', :locals => { :f => f }
-    = render :partial => 'form_submit', :locals => { :f => f, :button_label => button_label }
+  = render :partial => 'form_general_fields', :locals => { :f => f, :button_label => button_label }
     
