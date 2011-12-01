@@ -1,6 +1,6 @@
 = form_tag("/admin/current_site/#{@current_site.id}/domain_names", :method => :post, :class => 'site_prop', :autocomplete => :off)
 %fieldset
-  %ul.form_fields
+  %ol.form_fields
     %li
       = label_tag 'Domain Name'
       = text_field_tag "site[domain_name]"
