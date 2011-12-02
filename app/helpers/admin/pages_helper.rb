@@ -18,11 +18,11 @@ module Admin::PagesHelper
 
   def mongoid_tree_ul(mongoid_tree_set, init=true)
     if mongoid_tree_set.first.parent.nil?
-      content_tag :ul, :class => 'pages' do
+      content_tag :ol, :class => 'pages' do
         render :partial => 'admin/pages/mongoid_tree_item', :collection => mongoid_tree_set, :locals => { :init => init}
       end
     else
-      content_tag :ul, :class => 'sortable pages', :data_url => sort_admin_page_path(mongoid_tree_set.first.parent) do
+      content_tag :ol, :class => 'sortable pages', :data_url => sort_admin_page_path(mongoid_tree_set.first.parent) do
         render :partial => 'admin/pages/mongoid_tree_item', :collection => mongoid_tree_set, :locals => { :init => init}
       end
     end
