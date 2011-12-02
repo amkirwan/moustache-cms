@@ -1,6 +1,6 @@
 %li
-  %span= "#{@site_asset.asset.file.filename} is available"
-  = link_to 'here', "http://#{request.host}#{@site_asset.asset.url}"
+  %span= "Filename with MD5 fingerprint "
+  = link_to "#{@site_asset.asset.file.filename}", "http://#{request.host}#{@site_asset.asset.url}"
 %li.img_thumb 
   = link_to image_tag(@site_asset.asset.url, :class => "site_asset_thumb"), "http://#{request.host}#{@site_asset.asset.url}"
 

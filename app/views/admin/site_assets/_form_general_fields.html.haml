@@ -10,7 +10,7 @@
         = f.label :tags
         = f.text_field :tags
       = render :partial => 'site_asset'
-    %li 
+    %li#submit_fields
       = f.submit button_label, :class => "submit"
       = link_to "Cancel", [:admin, @asset_collection], :class => "cancel"
 
