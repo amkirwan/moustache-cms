@@ -13,6 +13,8 @@ class Ability
       can [:update, :destroy], Page do |page|
         page.editors.include?(user) && page.site_id == user.site_id
       end
+      
+      can :read, ArticleCollection, :site_id => user.site_id
 
       can :read, AssetCollection, :site_id => user.site_id   
       can :create, SiteAsset   
@@ -37,7 +39,7 @@ class Ability
     end
 
     if user.role? :designer
-      can :manage, [Layout, Page, AssetCollection, ThemeAsset, Snippet], :site_id => user.site_id  
+      can :manage, [Layout, Page, ArticleCollection, AssetCollection, ThemeAsset, Snippet], :site_id => user.site_id  
     end
 
     if user.role? :admin

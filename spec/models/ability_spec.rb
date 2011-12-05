@@ -27,6 +27,9 @@ describe Ability do
   let(:page) { Factory.build(:page, :site => site, :page_parts => [page_part], :editors => [ admin, designer, editor ], :meta_tags => [meta_tag]) }
   let(:page_other_site) { Factory.build(:page, :site => other_site, :page_parts => [page_part_other_site], :editors => [ admin_other_site ], :meta_tags => [meta_tag_other_site]) } 
 
+  let(:article_collection) { Factory.build(:article_collection, :site => site, :editors => [admin, designer, editor]) }
+  let(:article_collection_other_site) { Factory.build(:article_collection, :site => other_site, :editors => [admin_other_site]) }
+
   let(:site_asset) { Factory.build(:site_asset, :creator_id => editor.id, :updator_id => editor.id) }
   let(:site_asset_other_site) { Factory.build(:site_asset, :creator_id => editor.id, :updator_id => editor.id) }
   
