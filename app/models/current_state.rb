@@ -51,7 +51,7 @@ class CurrentState
     end 
   end
   
-  def published_at
+  def published_on
     if published?
       return self.time
     else

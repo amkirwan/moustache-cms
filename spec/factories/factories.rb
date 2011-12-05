@@ -65,6 +65,19 @@ Factory.define :snippet do |s|
   s.updated_by Factory.build(:user)                            
 end
 
+Factory.define :leaf do |leaf|
+  leaf.site { Factory.build(:site) }
+  leaf.sequence(:title) { |n| "title_#{n}" }
+  leaf.sequence(:breadcrumb) { |n| "breadcrumb_#{n}" }
+  leaf.layout { Factory.build(:layout) }
+  leaf.current_state { Factory.build(:current_state) }
+  leaf.editors {[ Factory.build(:user) ]}
+  leaf.tags "leaf"
+  leaf.meta_tags { meta_tags('page') }
+  leaf.created_by_id { Factory.build(:user).id }
+  leaf.updated_by_id { Factory.build(:user).id }
+end
+
 Factory.define :page_type do |page_type|
   page_type.name "page_type"
 end
