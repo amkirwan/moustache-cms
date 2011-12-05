@@ -6,13 +6,14 @@ class Article < Leaf
 
   # -- Fields -----------
   field :permalink
-  field :authors
+  field :authors, :type => Array
+
+  # -- Associations -------------
+  embedded_in :article_collection
+
 
   # -- Callbacks ----------
   before_create :permalink_set
-
-  # -- Fields -----------------------------
-  field :permalink
 
   def permalink_set
     time = DateTime.now
@@ -25,7 +26,7 @@ class Article < Leaf
   private 
     # full_path is "/foobar/baz/qux" in http://example.com/asset_collection/10/02/2011/asset_slug
     def full_path_set
-      self.full_path = "#{self.parmalink}" 
+      self.full_path = "#{self.permalink}" 
     end
 
     def slug_set

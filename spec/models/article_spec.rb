@@ -5,10 +5,18 @@ describe Article do
 
   let(:site) { Factory(:site) }
   let(:user) { Factory(:user, :site => site) }
-  let(:layout) { Factory(:layout, :site_id => site.id, :created_by_id => user.id, :updated_by_id => user.id) }
+  let(:layout) { Factory(:layout, :site_id => site.id, :created_by => user, :updated_by => user) }
 
   before(:each) do
-    @leaf = Factory(:leaf, :site_id => site.id, :layout_id => layout.id, :created_by_id => user.id, :updated_by_id => user.id, :editor_ids => [user.id])
+    @article = Factory.build(:article, :site => site, :created_by => user, :updated_by => user)
+    Factory(:article_collection, :site => site, :created_by => user, :updated_by => user, articles => [@article])
+  end
+
+  # -- Associations ----
+  descirbe "article associations" do
+     it "should be embeeded within a article_collection" do
+       @article.should be_embedded_in(:article_collection)
+     end  
   end
 
   # -- Before Create Callback -------------------------------------------      

@@ -68,6 +68,7 @@ end
 Factory.define :leaf do |leaf|
   leaf.site { Factory.build(:site) }
   leaf.sequence(:title) { |n| "title_#{n}" }
+  leaf.sequence(:slug) { |n| "slug_#{n}" }
   leaf.sequence(:breadcrumb) { |n| "breadcrumb_#{n}" }
   leaf.layout { Factory.build(:layout) }
   leaf.current_state { Factory.build(:current_state) }
@@ -115,24 +116,27 @@ Factory.define :parent_page, :parent => :page do |pp|
   pp.page_type { Factory.build(:page_type) }
 end     
 
+Factory.define :article do |article|
+  article.site { Factory.build(:site) }
+  article.sequence(:title) { |n| "title_#{n}" }
+  article.sequence(:slug) { |n| "slug_#{n}" }
+  article.permalink "11/11/11/foobar"
+  article.tags "article"
+  article.sequence(:breadcrumb) { |n| "breadcrumb_#{n}" }
+  article.layout { Factory.build(:layout) }
+  article.current_state { Factory.build(:current_state) }
+  article.meta_tags { meta_tags('article') }
+  article.authors ["article author"]
+  article.created_by_id { Factory.build(:user).id }
+  article.updated_by_id { Factory.build(:user).id }
+end
+
 Factory.define :article_collection do |collection|
   collection.site { Factory.build(:site) }
   collection.sequence(:name) { |n| "name_#{n}" }
   collection.articles { [Factory.build(:article)] }
   collection.created_by_id { Factory.build(:user).id }
   collection.updated_by_id { Factory.build(:user).id }
-end
-
-Factory.define :article do |article|
-  article.sequence(:title) { |n| "title_#{n}" }
-  article.tags "article"
-  article.sequence(:slug) { |n| "slug_#{n}" }
-  article.sequence(:breadcrumb) { |n| "breadcrumb_#{n}" }
-  article.current_state { Factory.build(:current_state) }
-  article.meta_tags { meta_tags('article') }
-  article.author "article author" 
-  article.created_by_id { Factory.build(:user).id }
-  article.updated_by_id { Factory.build(:user).id }
 end
 
 Factory.define :asset_collection do |collection|

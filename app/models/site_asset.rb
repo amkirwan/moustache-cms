@@ -25,10 +25,10 @@ class SiteAsset
 
   taggable
   
-  # -- Associations 
+  # -- Associations ------
   embedded_in :asset_collection  
   
-  # -- Validations 
+  # -- Validations -----
   validates :name, :presence => true
             
   validates :asset, :presence => true

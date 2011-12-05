@@ -17,6 +17,10 @@ HandlebarCms::Application.routes.draw do
       resources :page_parts, :only => [:show, :create, :destroy]
     end
 
+    resources :article_collections do
+      resources :articles
+    end
+
 
     resources :theme_assets do
       resources :tag_attrs
