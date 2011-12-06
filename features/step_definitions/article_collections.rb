@@ -10,11 +10,13 @@ Given /^these article collections exist in the site "([^"]*)" created by user "(
   end
 end
 
-Given /^theses articles exist in the article collection "([^"]*)"$/ do |collection_name, table|
-  collection = find_article_collection(collection_name)
+
+Given /^these articles exist in the article collection "([^"]*)"$/ do |collection_name, table|
+  find_article_collection(collection_name)
+  @article_collection.articles = []
   table.hashes.each do |hash|
-    article = Factory.build(:article, :site => collection.site, :title => hash[:title], :created_by => collection.created_by, :updated_by => collection.updated_by)
-    collection.articles << article 
+    @article_collection.articles << Factory.build(:article, :site => @article_collection.site, :title => hash[:title], :created_by => @article_collection.created_by, :updated_by => @article_collection.updated_by)
+    @article_collection.save
   end
 end
 
@@ -29,7 +31,7 @@ end
 
 When /^I view the article collection "([^"]*)"$/ do |name|
   visit admin_article_collections_path
-  click_on "foobar"
+  click_on name
 end
 
 When /^I change the name to "([^"]*)"$/ do |new_name|
@@ -49,4 +51,11 @@ end
 Then /^I should see an article collection named "([^"]*)"$/ do |name|
   page.should have_content name
 end
+
+Then /^I should see the articles in the collection$/ do |table|
+  table.hashes.each do |hash|
+    page.should have_content hash[:title]
+  end
+end
+
 

@@ -7,19 +7,19 @@ And I login as the user "ak730" to the site "foobar.example.com"
 
 
 @list_collections
-Scenario: List ArticleCollections
-  Given these article collections exist in the site "foobar.example.com" created by user "ak730"
-    | name   |
-    | foobar |
-    | bar    |
-  When I view the article collections
-  Then I should see all the article collections
-    | name   |
-    | foobar |
-    | bar    |
+  Scenario: List ArticleCollections
+    Given these article collections exist in the site "foobar.example.com" created by user "ak730"
+      | name   |
+      | foobar |
+      | bar    |
+    When I view the article collections
+    Then I should see all the article collections
+      | name   |
+      | foobar |
+      | bar    |
 
 @create_article_collection
-Scenario: Create Article Collection
+  Scenario: Create Article Collection
     Given I am on the admin article collections page
     When I follow "New Article Collection"
     And I create a article collection named "foobar"
@@ -31,17 +31,17 @@ Scenario: Create Article Collection
       | name   |
       | foobar |
       | bar    |
-    And theses articles exist in the article collection "foobar"
+    And these articles exist in the article collection "foobar"
       | title         |
       | article       |
-      | article two   |
-      | article three |
+      | article1      |
+      | article2      |
     When I view the article collection "foobar"
-    Then I should see the articles within the collection
-      | name          |
+    Then I should see the articles in the collection
+      | title         |
       | article       |
-      | article two   |
-      | article three |
+      | article1      |
+      | article2      |
 
 @update_article_collection
   Scenario: Update Article Collection Properties

@@ -1,0 +1,13 @@
+- header_content 'shared/header_wrapper', :object => @article_collection, :show => true do
+
+  = render :partial => 'admin/article_collections/submenu'
+                
+- inner_content "shared/inner_wrapper" do
+  
+  %table{:class => "info articles"}
+    %tr
+      %th Title
+      %th Created At
+      %th Updated At
+      %th Updated By
+    = list_articles
