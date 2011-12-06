@@ -79,7 +79,7 @@ describe Admin::SiteAssetsController do
     end
     
     def do_post(post_params=params)
-      post :create,    post_params 
+      post :create, post_params 
     end
     
     it "should create a new site_asset from the params" do

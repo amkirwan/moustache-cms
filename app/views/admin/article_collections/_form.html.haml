@@ -1,0 +1,11 @@
+= form_for([:admin, @article_collection], :html => {:class => "site_prop", :autocomplete => "off" }) do |f|
+  = render :partial => "shared/error_messages", 
+           :locals => { :target => @article_collection }    
+  %fieldset         
+    %ol.form_fields
+      %li
+        = f.label :name
+        = f.text_field :name 
+      %li
+        = f.submit button_label, :class => "submit"
+        = link_to "Cancel", [:admin, :article_collections], :class => "cancel"

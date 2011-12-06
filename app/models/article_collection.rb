@@ -13,4 +13,9 @@ class ArticleCollection
   belongs_to :updated_by, :class_name => "User"
   embeds_many :articles
 
+  # -- Validations -------
+  validates :name,
+            :presence => true,
+            :uniqueness => { :scope => :site_id }
+
 end

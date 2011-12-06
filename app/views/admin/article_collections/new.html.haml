@@ -1,0 +1,4 @@
+- header_content 'shared/header_wrapper', :object => @article_collection 
+
+- inner_content "shared/inner_wrapper" do
+  = render :partial => "form", :locals => { :button_label => "Save Article Collection" }
