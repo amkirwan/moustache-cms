@@ -32,7 +32,6 @@ class Leaf
   belongs_to :layout
   belongs_to :created_by, :class_name => "User"
   belongs_to :updated_by, :class_name => "User"
-  has_and_belongs_to_many :editors, :class_name => "User"
   
   accepts_nested_attributes_for :current_state
   accepts_nested_attributes_for :meta_tags
@@ -74,7 +73,6 @@ class Leaf
 
   # -- Callbacks -----------------------------------------------
   before_validation :format_title, :slug_set, :full_path_set, :breadcrumb_set
-  before_save :uniq_editor_ids
   before_update :update_current_state_time
   after_initialize :default_meta_tags
 
@@ -118,12 +116,7 @@ class Leaf
     self.current_state.name
   end
 
-  def delete_association_of_editor_id(editor_id)
-    editor = User.find(editor_id)
-    self.editor_ids.delete(editor.id)
-    editor.page_ids.delete(self.id)
-    editor.save
-  end
+
 
 # -- Protected Instance Methods -----------------------------------------------
   protected
@@ -165,19 +158,8 @@ class Leaf
       end
     end
   
-    def uniq_editor_ids
-      self.editor_ids.uniq!
-    end
-  
     def update_current_state_time
       self.current_state.time = DateTime.now if self.current_state.changed?
     end
   
-    def delete_from_editors
-      self.editors.each do |editor| 
-        editor.page_ids.delete(self.id)
-        editor.save
-      end  
-    end
-
 end

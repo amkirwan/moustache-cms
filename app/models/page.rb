@@ -27,6 +27,7 @@ class Page < Leaf
   accepts_nested_attributes_for :page_parts
 
   # -- Callbacks -----------
+  before_save :uniq_editor_ids
   after_save :update_user_pages
   #before_destroy :destroy_children
   
@@ -41,6 +42,20 @@ class Page < Leaf
       child.position = index
       child.save
     end
+  end
+
+  def delete_from_editors
+    self.editors.each do |editor| 
+      editor.page_ids.delete(self.id)
+      editor.save
+    end  
+  end
+
+  def delete_association_of_editor_id(editor_id)
+    editor = User.find(editor_id)
+    self.editor_ids.delete(editor.id)
+    editor.page_ids.delete(self.id)
+    editor.save
   end
 
   # -- Private ---------
@@ -61,6 +76,11 @@ class Page < Leaf
         self.slug.strip!
       end
       self.slug.gsub!(/[\s_]/, '-')
+    end
+
+      
+    def uniq_editor_ids
+      self.editor_ids.uniq!
     end
 
     # full_path is "/foobar/baz/qux" in http://example.com/foobar/baz/qux

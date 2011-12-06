@@ -108,6 +108,21 @@ describe Page do
       @page.should embed_many :page_parts
     end
 
+    it "should have many editors" do
+      @page.should have_and_belong_to_many(:editors).of_type(User)
+    end
+
+  end
+
+  # -- Before Save Callback -------------------------------------------  
+  describe "before_save callback" do
+    describe "#uniq_editor_ids" do
+      it "should make editor_ids array unique" do
+        @page.editor_ids = [user.id, user.id]
+        @page.save
+        @page.editor_ids.should == [user.id]
+      end
+    end
   end
   
   # -- Class Methods -----------------------------------------------
@@ -153,6 +168,17 @@ describe Page do
       it "should return false when the page is not the home page" do
         @page.home_page?.should be_false
       end
+    end
+  end
+
+  describe "#delete_editor" do
+    it "should remove the editor from the editor_ids and editor fields" do
+      user = Factory(:user)
+      @page.editors << @user
+      @page.save
+      @page.delete_association_of_editor_id(user.id)
+      @page.save
+      @page.editor_ids.should_not include(user.id)
     end
   end
 

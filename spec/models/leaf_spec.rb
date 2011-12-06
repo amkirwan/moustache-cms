@@ -7,7 +7,7 @@ describe Leaf do
   let(:layout) { Factory(:layout, :site_id => site.id, :created_by_id => user.id, :updated_by_id => user.id) }
 
   before(:each) do
-    @leaf = Factory(:leaf, :site_id => site.id, :layout_id => layout.id, :created_by_id => user.id, :updated_by_id => user.id, :editor_ids => [user.id])
+    @leaf = Factory(:leaf, :site_id => site.id, :layout_id => layout.id, :created_by_id => user.id, :updated_by_id => user.id)
   end
 
 
@@ -37,11 +37,6 @@ describe Leaf do
     it "should reference a user with updated_by" do
       @leaf.should belong_to(:updated_by).of_type(User)
     end
-    
-    it "should have many editors" do
-      @leaf.should have_and_belong_to_many(:editors).of_type(User)
-    end
-
   end 
 
 
@@ -139,6 +134,8 @@ describe Leaf do
       end
 
       it "should set the slug to the title if the slug is nil" do
+        @leaf.slug = nil
+        @leaf.save
         @leaf.slug.should == @leaf.title
       end
     end
@@ -146,11 +143,6 @@ describe Leaf do
     describe "#assign_full_path" do
       it "should set the full path of the page to the parent plus page slug" do
         @leaf.full_path.should == @leaf.slug
-      end
-      
-      it "should set the full path to '404' when the page title is '404" do
-        page2 = Factory(:leaf, :title => "404", :site => site, :layout => layout, :created_by => user, :updated_by => user)
-        page2.full_path.should == "404"
       end
     end
     
@@ -168,17 +160,6 @@ describe Leaf do
       end
     end
 
-  end
-
-  # -- Before Save Callback -------------------------------------------  
-  describe "before_save callback" do
-    describe "#uniq_editor_ids" do
-      it "should make editor_ids array unique" do
-        @leaf.editor_ids = [user.id, user.id]
-        @leaf.save
-        @leaf.editor_ids.should == [user.id]
-      end
-    end
   end
 
   # -- Before Update Callback -------------------------------------------
@@ -278,16 +259,7 @@ describe Leaf do
       end
     end
     
-    describe "#delete_editor" do
-      it "should remove the editor from the editor_ids and editor fields" do
-        user = Factory(:user)
-        @leaf.editors << @user
-        @leaf.save
-        @leaf.delete_association_of_editor_id(user.id)
-        @leaf.save
-        @leaf.editor_ids.should_not include(user.id)
-      end
-    end
+
 
     describe "#status" do
       it "should return the pages current state" do
