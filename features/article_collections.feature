@@ -23,4 +23,33 @@ Scenario: Create Article Collection
     Given I am on the admin article collections page
     When I follow "New Article Collection"
     And I create a article collection named "foobar"
-    Then I sould see an article collection named "foobar" 
+    Then I should see an article collection named "foobar" 
+
+@show_article_collection
+  Scenario: Show the articles in the article colleciton
+    Given these article collections exist in the site "foobar.example.com" created by user "ak730"
+      | name   |
+      | foobar |
+      | bar    |
+    And theses articles exist in the article collection "foobar"
+      | title         |
+      | article       |
+      | article two   |
+      | article three |
+    When I view the article collection "foobar"
+    Then I should see the articles within the collection
+      | name          |
+      | article       |
+      | article two   |
+      | article three |
+
+@update_article_collection
+  Scenario: Update Article Collection Properties
+    Given these article collections exist in the site "foobar.example.com" created by user "ak730"
+      | name   |
+      | foobar |
+      | bar    |
+    When I view the article collection "foobar"
+    And I change the name to "foobar baz"
+    And I press the button "Update Article Collection"
+    Then I should see an article collection named "foobar baz"

@@ -33,7 +33,6 @@ describe Admin::ArticleCollectionsController do
       response.should render_template("admin/article_collections/index")
     end
   end
- 
 
   describe "GET new" do
 
@@ -45,7 +44,7 @@ describe Admin::ArticleCollectionsController do
       get :new
     end
 
-    it "ArticleCollection should receive new" do
+    it "should create a new article_collection" do
       ArticleCollection.should_receive(:new).and_return(@article_collection)
       do_get
     end
@@ -61,6 +60,32 @@ describe Admin::ArticleCollectionsController do
     end
   end
 
+  describe "GET show" do
+
+    before(:each) do
+      ArticleCollection.stub(:find).and_return(@article_collection)
+    end
+
+    def do_get
+      get :show, "id" => @article_collection.to_param
+    end
+
+    it "should find the article collection" do
+      ArticleCollection.should_receive(:find).and_return(@article_collection)
+      do_get
+    end
+
+    it "should assign the @article_collection" do
+      do_get
+      assigns(:article_collection).should == @article_collection
+    end
+
+    it "should render the show layout" do
+      do_get
+      response.should render_template("admin/article_collections/show")
+    end
+
+  end
 
   describe "POST create" do
 
@@ -107,7 +132,7 @@ describe Admin::ArticleCollectionsController do
 
       it "should render the new index template when saving successfully" do
         do_post
-        response.should redirect_to("admin/article_collections")
+        response.should redirect_to("/admin/article_collections")
       end
     end
 
