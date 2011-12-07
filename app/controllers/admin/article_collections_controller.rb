@@ -19,6 +19,11 @@ class Admin::ArticleCollectionsController < AdminBaseController
     respond_with(:admin, @article_collection)
   end
 
+  # GET /admin/article_collections/1/edit
+  def edit
+    respond_with(:admin, @article_collection)
+  end
+
   # POST /admin/article_collections
   def create
     created_updated_by_for @article_collection
