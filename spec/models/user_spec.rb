@@ -173,10 +173,14 @@ describe User do
       @user.should have_many(:snippets_updated).of_type(Snippet)
     end 
    
-    it "should have many editors" do
+    it "should have many pages" do
       @user.should have_and_belong_to_many(:pages)
     end        
-    
+
+    it "should have_and_belong_to_many article_collections" do
+      @user.should have_and_belong_to_many(:article_collections)
+    end
+
     it "should belong to a site" do
       @user.should belong_to(:site)
     end        

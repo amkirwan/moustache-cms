@@ -23,13 +23,15 @@ class User
 
   has_many :pages_created, :class_name => "Page", :foreign_key => :created_by_id
   has_many :pages_updated, :class_name => "Page", :foreign_key => :updated_by_id
-  has_and_belongs_to_many :pages, :class_name => "Page"
 
   has_many :snippets_created, :class_name => "Snippet", :foreign_key => :created_by_id
   has_many :snippets_updated, :class_name => "Snippet", :foreign_key => :updated_by_id
 
   has_many :theme_assets_created, :class_name => "ThemeAsset", :foreign_key => :created_by_id
   has_many :theme_assets_updated, :class_name => "ThemeAsset", :foreign_key => :updated_by_id
+
+  has_and_belongs_to_many :pages, :class_name => "Page", :inverse_of => :editors
+  has_and_belongs_to_many :article_collections, :class_name => "ArticleCollection", :inverse_of => :editors
 
   belongs_to :site
 
