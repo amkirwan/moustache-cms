@@ -20,4 +20,13 @@ class ArticleCollection
             :presence => true,
             :uniqueness => { :scope => :site_id }
 
+  validates :site_id,
+            :presence => true
+
+  validates :created_by_id,
+            :presence => true
+
+  validates :updated_by_id,
+            :presence => true
+
 end

@@ -32,4 +32,33 @@ describe "ArticleCollection" do
     end
     
   end
+
+  # -- Validations -----
+  describe "validations" do
+
+    it "should be valid" do
+      @article_collection.should be_valid
+    end
+
+    it "should not be valid without a site" do
+      @article_collection.site_id = nil
+      @article_collection.should_not be_valid
+    end
+
+    it "should not be valid without a name" do
+      @article_collection.name = nil 
+      @article_collection.should_not be_valid
+    end
+
+    it "should not be valid without a created_by" do
+      @article_collection.created_by_id = nil
+      @article_collection.should_not be_valid
+    end
+    
+    it "should not be valid without a updated_by" do
+      @article_collection.updated_by_id = nil
+      @article_collection.should_not be_valid
+    end
+  end
+
 end
