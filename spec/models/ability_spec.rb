@@ -27,8 +27,11 @@ describe Ability do
   let(:page) { Factory.build(:page, :site => site, :page_parts => [page_part], :editors => [ admin, designer, editor ], :meta_tags => [meta_tag]) }
   let(:page_other_site) { Factory.build(:page, :site => other_site, :page_parts => [page_part_other_site], :editors => [ admin_other_site ], :meta_tags => [meta_tag_other_site]) } 
 
-  let(:article_collection) { Factory.build(:article_collection, :site => site, :editors => [admin, designer, editor]) }
-  let(:article_collection_other_site) { Factory.build(:article_collection, :site => other_site, :editors => [admin_other_site]) }
+  let(:article) { Factory.build(:article, :site => site) } 
+  let(:article_other_site) { Factory.build(:article, :site => other_site) } 
+  
+  let(:article_collection) { Factory.build(:article_collection, :site => site, :editors => [admin, designer, editor], :articles => [article]) }
+  let(:article_collection_other_site) { Factory.build(:article_collection, :site => other_site, :editors => [admin_other_site], :articles => [article_other_site]) }
 
   let(:site_asset) { Factory.build(:site_asset, :creator_id => editor.id, :updator_id => editor.id) }
   let(:site_asset_other_site) { Factory.build(:site_asset, :creator_id => editor.id, :updator_id => editor.id) }
@@ -56,6 +59,10 @@ describe Ability do
   def page_part_first
     page.page_parts.first
   end
+
+  def article_first
+    article_collection.articles.first
+  end
   
 
   describe "Editor" do
@@ -81,10 +88,6 @@ describe Ability do
 
 
       describe "Page Approved" do
-        it "should allow the user with a role of editor to create pages" do
-          editor_ability.should be_able_to(:create, page)
-        end
-
         it "should allow the user with a role of editor to read pages" do
           editor_ability.should be_able_to(:read, page)
         end
@@ -98,18 +101,34 @@ describe Ability do
         end      
       end
 
+      describe "ArticleCollection Approved" do
+        it "should allow the user with a role of editor to read article_collection" do
+          editor_ability.should be_able_to(:read, article_collection)
+        end
+      end
+
+      describe "Article Approved" do
+        it "should allow the user with a role of editor to manage articles if they are editors of the collection" do
+          editor_ability.should be_able_to(:manage, article_first)
+        end
+      end
+
+      describe "Article Approved" do
+        it "should allow the user with a role of editor to manage the articles that they are an editor for" do
+
+          editor_ability.should be_able_to(:manage, site_asset_first)
+        end
+      end
+
       describe "AssetCollection Approved" do
-        it "should allow the user with a role of editor to read(:index, :show) asset_collection" do
+        it "should allow the user with a role of editor to read asset_collection" do
           editor_ability.should be_able_to(:read, asset_collection)
         end
       end
 
       describe "SiteAsset Approved" do
         it "should allow the user with a role of editor to manage the site_assets" do
-          editor_ability.should be_able_to(:read, site_asset_first)
-          editor_ability.should be_able_to(:create, site_asset_first)
-          editor_ability.should be_able_to(:update, site_asset_first)
-          editor_ability.should be_able_to(:destroy, site_asset_first)
+          editor_ability.should be_able_to(:manage, site_asset_first)
         end
       end
 
@@ -124,10 +143,7 @@ describe Ability do
 
       describe "PageParts Approved" do
         it "should allow the user with a role of editor to manage the pages meta_tags" do 
-          editor_ability.should be_able_to(:read, page_part_first)
-          editor_ability.should be_able_to(:create, page_part_first)
-          editor_ability.should be_able_to(:update, page_part_first)
-          editor_ability.should be_able_to(:destroy, page_part_first)
+          editor_ability.should be_able_to(:manage, page_part_first)
         end
       end
     end
@@ -161,6 +177,10 @@ describe Ability do
       end
 
       describe "Page Model Not Approved" do
+        it "should not allow the user with a role of editor to create pages" do
+          editor_ability.should_not be_able_to(:create, Factory(:page, :site => site))
+        end
+
         it "should not allow the user with a role of editor to read a page they are not an editor for" do
           editor_ability.should_not be_able_to(:read, Factory.build(:page))
         end
@@ -171,6 +191,27 @@ describe Ability do
 
         it "should not allow the user with a role of editor to destroy pages they are not an editor for" do
           editor_ability.should_not be_able_to(:destroy, Factory.build(:page))
+        end
+      end
+      
+      describe "ArticleCollection Not Approved" do
+        it "should not allow the user with a role of editor to create article_collections" do
+          editor_ability.should_not be_able_to(:create, article_collection)
+        end
+        
+        it "should not allow the user with a role of editor to update article_collections" do
+          editor_ability.should_not be_able_to(:update, article_collection)
+        end
+        
+        it "should not allow the user with a role of editor to delte article_collections" do
+          editor_ability.should_not be_able_to(:destroy, article_collection)
+        end
+      end
+
+      describe "Article Approved" do
+        it "should not allow the user with a role of editor to manage articles if they are not an editor of the collection" do
+          collection = Factory.build(:article_collection, :site => site, :editors => [], :articles => [article]) 
+          editor_ability.should_not be_able_to(:manage, collection.articles.first)
         end
       end
       
@@ -229,6 +270,12 @@ describe Ability do
         end
       end
 
+      describe "Designer ArticleCollection Approved" do
+        it "should allow the user with the role of designer to manage the article_collections" do
+          designer_ability.should be_able_to(:manage, article_collection)
+        end
+      end
+
     end
   end
 
@@ -268,19 +315,16 @@ describe Ability do
       admin_ability.should_not be_able_to(:manage, asset_collection_other_site)
 
       admin_ability.should_not be_able_to(:read, asset_collection_other_site.site_assets.first)
-      admin_ability.should_not be_able_to(:update, asset_collection_other_site.site_assets.first)
-      admin_ability.should_not be_able_to(:destroy, asset_collection_other_site.site_assets.first)
 
-      admin_ability.should_not be_able_to(:read, page_other_site.meta_tags.first)
-      admin_ability.should_not be_able_to(:update, page_other_site.meta_tags.first)
-      admin_ability.should_not be_able_to(:destroy, page_other_site.meta_tags.first)
+      admin_ability.should_not be_able_to(:manage, page_other_site.meta_tags.first)
 
-      admin_ability.should_not be_able_to(:read, page_other_site.page_parts.first)
-      admin_ability.should_not be_able_to(:update, page_other_site.page_parts.first)
-      admin_ability.should_not be_able_to(:destroy, page_other_site.page_parts.first)
+      admin_ability.should_not be_able_to(:manage, page_other_site.page_parts.first)
 
+      admin_ability.should_not be_able_to(:read, article_collection_other_site)
+      admin_ability.should_not be_able_to(:manage, article_collection_other_site.articles.first)
 
       admin_ability.should_not be_able_to(:change_password, admin_other_site)
+      admin_ability.should_not be_able_to(:manage, admin_other_site)
     end
   end
 end

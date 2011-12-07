@@ -9,26 +9,25 @@ class Ability
       can [:update, :destroy], User, :username => user.username, :site_id => user.site_id
       can :change_password, User, :id => user.id, :site_id => user.site_id
 
-      can [:create, :read], Page, :site_id => user.site_id
-      can [:update, :destroy], Page do |page|
+      can [:read, :update, :destroy], Page do |page|
         page.editors.include?(user) && page.site_id == user.site_id
       end
       
       can :read, ArticleCollection, :site_id => user.site_id
+      can :manage, Article, do |article|
+        article._parent.editors.include?(user) && article.site_id == user.site_id
+      end
 
       can :read, AssetCollection, :site_id => user.site_id   
-      can :create, SiteAsset   
-      can [:read, :update, :destroy], SiteAsset, do |site_asset|
+      can :manage, SiteAsset, do |site_asset|
         site_asset._parent.site_id == user.site_id
       end
 
-      can :create, PagePart
-      can [:read, :update, :destroy], PagePart, do |page_part|
+      can :manage, PagePart, do |page_part|
         page_part._parent.site_id == user.site_id
       end
 
-      can :create, MetaTag
-      can [:read, :update, :destroy], MetaTag, do |meta_tag|
+      can :manage, MetaTag, do |meta_tag|
         if meta_tag._parent.class.name == "Site"
           meta_tag._parent.id == user.site_id
         else
