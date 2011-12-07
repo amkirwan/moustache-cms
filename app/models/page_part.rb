@@ -30,8 +30,8 @@ class PagePart
   private
     # -- callbacks methods --
     def filter_check
-      if filter_name == "haml"
-        filter_name = "html"
+      if filter_name.nil?
+        fitler_name = "haml"
       end
     end
 end

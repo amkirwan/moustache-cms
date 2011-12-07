@@ -11,7 +11,8 @@ class CurrentState
   field :time, type: DateTime
   
   # -- Associations ---
-  embedded_in :page, inverse_of: :current_state
+  #embedded_in :page, inverse_of: :current_state
+  embedded_in :publishable, :polymorphic => true
   
   # -- Validations --------------------------------------------------
   validates :name,

@@ -3,6 +3,8 @@ class ArticleCollection
   include Mongoid::Document
   include Mongoid::Timestamps
 
+  attr_accessible :name,
+                  :editor_ids
 
     # -- Fields --------------- 
   field :name

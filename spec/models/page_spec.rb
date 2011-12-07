@@ -5,7 +5,6 @@ describe Page do
   let(:user) { Factory(:user, :site => site) }
   let(:layout) { Factory(:layout, :site_id => site.id, :created_by_id => user.id, :updated_by_id => user.id) }
   let(:parent) { Factory(:page, :site_id => site.id, :layout_id => layout.id, :created_by_id => user.id, :updated_by_id => user.id, :editor_ids => [user.id], :post_container => true) }
-
   before(:each) do                 
     @page = Factory(:page, :site_id => site.id, :parent => parent , :layout_id => layout.id, :created_by_id => user.id, :updated_by_id => user.id, :editor_ids => [user.id])
   end
@@ -25,7 +24,93 @@ describe Page do
     
   end
 
-  # -- After Save Callback --------------
+  # -- Before Validation Callback -------------------------------------------  
+  describe "before_validation callback" do
+    describe "#format_title" do
+      it "should remove any leading or trainling white space from the title" do
+        @page.title = " Hello, World!  \n"
+        @page.save
+        @page.title.should == "Hello, World!"
+      end
+    end
+    
+    describe "#assign_full_path" do
+      it "should set the full path of the page to the parent plus page slug" do
+        @page.full_path.should == "#{@page.parent.full_path}/#{@page.slug}".squeeze("/")
+      end
+      
+      it "should set the full path to '/' when it is the root page" do
+        @page.parent.full_path.should == "/"
+      end
+      
+      it "should set the full path to '404' when the page title is '404" do
+        page2 = Factory(:page, :title => "404", :site => site, :layout => layout, :created_by => user, :updated_by => user)
+        page2.full_path.should == "404"
+      end
+    end
+    
+    describe "#slug_set" do
+      it "should set the page path to index when there the root node is not set, when there is one page document" do
+        @page.parent.slug.should == "/"
+      end
+      
+      it "should set the slug to the page title when the slug is blank and when the root.node exists" do
+        page2 = Factory(:page, :slug => nil, :parent => parent, :site => site, :layout => layout, :created_by => user, :updated_by => user)
+        page2.slug.should == page2.title.downcase.gsub(/[\s_]/, '-')
+        page2 = nil
+      end
+      
+      it "should remove any leading or trailing white space from the slug" do
+        @page.slug = " Hello, World!  \n"
+        @page.save
+        @page.slug.should == "hello,-world!"
+      end 
+    end  
+    
+    describe "#assign_breadcrumb" do
+      it "should set the breadcrumb to the page title when the slug is nil" do
+        @page.breadcrumb = nil
+        @page.save
+        @page.breadcrumb.should == @page.title.downcase
+      end
+
+      it "should remove any leading or trailing white space from the breadcrumb" do
+        @page.breadcrumb = " Hello, World!  \n"
+        @page.save
+        @page.breadcrumb.should == "hello, world!"
+      end
+    end
+  end
+  
+  # -- Before Save Callback -------------------------------------------  
+  describe "before_save callback" do
+    describe "#uniq_editor_ids" do
+      it "should make editor_ids array unique" do
+        @page.editor_ids = [user.id, user.id]
+        @page.save
+        @page.editor_ids.should == [user.id]
+      end
+    end
+  end
+  
+  # -- Before Update Callback -------------------------------------------
+  describe "before_update callback" do 
+    describe "#update_current_state_time" do
+      it "should set the current_state.published_at to the current DateTime when the current_state is published" do
+        @page.current_state.name = "published"
+        @page.save
+        @page.current_state.time.should_not == nil
+      end
+
+      it "should not set the current_state.published_at to the current DateTime when the current_state is not published" do
+        @page.current_state.name = "draft"
+        @page.save
+        @page.current_state.time.should_not == nil
+      end
+    end
+  end
+  
+  # -- After Save Callback -------------------------------------------      
   describe "after_save callback" do
     describe "#update_user_pages" do
       it "should add the page association to the users who are editors" do
@@ -35,54 +120,86 @@ describe Page do
       end
     end
   end
-  
-  # -- Validations  ---------------------
+
+  # -- Validations  -----------------------------------------------
   describe "validations" do
     it "should be valid" do
       @page.should be_valid
     end
+    
+    it "should not be valid without a site" do
+      @page.site_id = nil
+      @page.should_not be_valid
+    end
+    
+    it "should not be valid without a title" do
+      @page.title = nil 
+      @page.should_not be_valid
+    end
 
+    it "should not be valid without a unique title" do
+      Factory.build(:page, 
+                    :title => @page.title,
+                    :site_id => site.id, 
+                    :layout => layout, 
+                    :created_by => user, 
+                    :updated_by => user).should_not be_valid
+    end
+
+    
+    it "should not be valid without a slug" do
+      @page.stub(:slug_set).and_return(nil)
+      @page.slug = nil
+      @page.should_not be_valid
+    end
+   
+    it "should not be valid without a full_path" do
+      @page.stub(:full_path_set).and_return(nil)
+      @page.full_path = nil
+      @page.should_not be_valid
+    end
+    
+    it "should not be valid without a unique full_path" do
+      Factory.build(:page, 
+                    :full_path => @page.full_path,
+                    :site_id => site.id, 
+                    :layout => layout, 
+                    :created_by => user, 
+                    :updated_by => user).should_not be_valid
+    end
+    
+    it "should not be valid without a breadcrumb" do
+      @page.stub(:breadcrumb_set).and_return(nil)
+      @page.breadcrumb = nil
+      @page.should_not be_valid
+    end
+
+    it "should not be valid without a current state" do
+      @page.current_state = nil
+      @page.should_not be_valid
+    end
+    
+    it "should not be valid without a layout" do
+      @page.layout_id = nil
+      @page.should_not be_valid
+    end
+    
+    it "should not be valid without a created_by" do
+      @page.created_by_id = nil
+      @page.should_not be_valid
+    end
+    
+    it "should not be valid without a updated_by" do
+      @page.updated_by_id = nil
+      @page.should_not be_valid
+    end
+  
     it "should not be valid if the page_part name already exists" do
       @page.page_parts.create(:name => @page.page_parts.first.name).should_not be_valid
     end
   end
-
-  # -- Before Validations ----------------
-   describe "before_validations" do
-    describe "slug_set" do
-      it "should set the slug to empyt when the site_id is nil" do
-        @page.site_id = nil
-        @page.save
-        @page.slug.should == ""
-      end
-
-      it "should set the slug to 404 when the title is 404" do
-        @page.title = "404"
-        @page.save
-        @page.slug.should == "404"
-      end
-
-      it "should set the slug to '/' when it is the root page" do
-        @page.stub(:root?).and_return(true)
-        @page.save
-        @page.slug.should == "/"
-      end
-
-      it "should set the slug to the title when the slug is blank" do
-        @page.slug = "" 
-        @page.save
-        @page.slug.should == @page.title.downcase.gsub(/[\s_]/, '-')
-      end
-
-      it "should set the slug to the slug when set" do
-        @page.slug = "foobar"
-        @page.save
-        @page.slug == "foobar"
-      end
-    end
-  end
   
-  # --  Scopes -------------------------
+  # --  Scopes -----------------------------------------------------
   describe "Scopes" do
     describe "Page#published" do
       it "should return the published items as a mongoid criteria" do
@@ -103,51 +220,37 @@ describe Page do
   
   # --  Associations -----------------------------------------------
   describe "Associations" do
+    
+    it "should embed one current state" do
+      @page.should embed_one :current_state
+    end
+
+    it "should embed_many meta_tags" do 
+      @page.should embed_many :meta_tags
+    end 
 
     it "should embed many page_parts" do
       @page.should embed_many :page_parts
     end
-
+    
+    it "should reference a site" do
+      @page.should belong_to(:site)
+    end
+    
+    it "should reference a layout" do
+      @page.should belong_to(:layout)
+    end
+    
+    it "should reference a user with created_by" do
+      @page.should belong_to(:created_by).of_type(User)
+    end
+    
+    it "should reference a user with updated_by" do
+      @page.should belong_to(:updated_by).of_type(User)
+    end
+    
     it "should have many editors" do
       @page.should have_and_belong_to_many(:editors).of_type(User)
-    end
-
-  end
-
-  # -- Validations ----
-  describe "Validations" do
-    it "should not be valid without a breadcrumb" do
-      @page.stub(:breadcrumb_set).and_return(nil)
-      @page.breadcrumb = nil
-      @page.should_not be_valid
-    end
-  end
-
-  # -- Before Save Callback -------------------------------------------  
-  describe "before_save callback" do
-    describe "#uniq_editor_ids" do
-      it "should make editor_ids array unique" do
-        @page.editor_ids = [user.id, user.id]
-        @page.save
-        @page.editor_ids.should == [user.id]
-      end
-    end
-  end
-
-  # -- Before Validation Callback ----
-  describe "before validation callback" do
-    describe "#assign_breadcrumb" do
-      it "should set the breadcrumb to the page title when the slug is nil" do
-        @page.breadcrumb = nil
-        @page.save
-        @page.breadcrumb.should == @page.title.downcase
-      end
-
-      it "should remove any leading or trailing white space from the breadcrumb" do
-        @page.breadcrumb = " Hello, World!  \n"
-        @page.save
-        @page.breadcrumb.should == "hello, world!"
-      end
     end
   end
   
@@ -195,21 +298,38 @@ describe Page do
         @page.home_page?.should be_false
       end
     end
-  end
-
-  describe "#delete_editor" do
-    it "should remove the editor from the editor_ids and editor fields" do
-      user = Factory(:user)
-      @page.editors << @user
-      @page.save
-      @page.delete_association_of_editor_id(user.id)
-      @page.save
-      @page.editor_ids.should_not include(user.id)
+    
+    describe "#published_on" do
+      it "shortcut to the current_state published_at property" do
+        @page.published_on.should == @page.current_state.published_on
+      end
     end
+    
+    describe "#delete_editor" do
+      it "should remove the editor from the editor_ids and editor fields" do
+        user = Factory(:user)
+        @page.editors << @user
+        @page.save
+        @page.delete_association_of_editor_id(user.id)
+        @page.save
+        @page.editor_ids.should_not include(user.id)
+      end
+    end
+
+    describe "#status" do
+      it "should return the pages current state" do
+        @page.current_state.name = "published"
+        @page.save
+        @page.status.should == "published"
+      end
+    end
+    
+    describe "#post_container?" do
+      it "should return true when the current page is a container" do
+        @page.post_container = false
+        @page.post_container?.should == false
+      end
+    end
+
   end
-
 end
-
-
-
-

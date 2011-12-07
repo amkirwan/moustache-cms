@@ -4,13 +4,9 @@ class Leaf
 
   include Mongoid::TaggableWithContext
 
-  attr_accessible :site_id,
-                  :layout_id, 
-                  :title, 
+  attr_accessible :title, 
                   :slug,
-                  :layout_id,
                   :full_path,
-                  :breadcrumb,
                   :current_state, 
                   :current_state_attributes,
                   :meta_tags_attributes,
@@ -20,17 +16,12 @@ class Leaf
   field :title
   field :slug
   field :full_path
-  field :breadcrumb
 
   taggable
 
   # -- Associations-------------------------
   embeds_one :current_state
   embeds_many :meta_tags, :as => :meta_taggable
-  belongs_to :site
-  belongs_to :layout
-  belongs_to :created_by, :class_name => "User"
-  belongs_to :updated_by, :class_name => "User"
   
   accepts_nested_attributes_for :current_state
   accepts_nested_attributes_for :meta_tags
@@ -44,28 +35,9 @@ class Leaf
             :presence => true,
             :uniqueness => { :scope => :site_id }
 
-  validates_presence_of :site_id,
-                        :slug, 
-                        :current_state,
-                        :layout_id, 
-                        :created_by_id, 
-                        :updated_by_id 
+  validates :current_state,
+            :presence => true
 
-  validate :site_id_match_create, :on => :create unless Rails.env == "test"
-  validate :site_id_match_update, :on => :update unless Rails.env == "test"
-
-  # protect against creating a page in a site the user does not have permission to
-  def site_id_match_create
-    unless User.find(created_by_id).site_id == site_id && User.find(updated_by_id).site_id == site_id
-      errors.add(:site_id, "The pages site_id must match the users site_id")
-    end
-  end
-
-  def site_id_match_update
-    unless User.find(updated_by_id).site_id == site_id
-      errors.add(:site_id, "The pages site_id must match the users site_id")
-    end
-  end
 
   # -- Callbacks -----------------------------------------------
   before_validation :format_title, :slug_set, :full_path_set

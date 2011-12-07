@@ -116,18 +116,17 @@ Factory.define :parent_page, :parent => :page do |pp|
 end     
 
 Factory.define :article do |article|
-  article.site { Factory.build(:site) }
   article.sequence(:title) { |n| "title_#{n}" }
   article.sequence(:slug) { |n| "slug_#{n}" }
-  article.permalink "11/11/11/foobar"
   article.tags "article"
-  article.sequence(:breadcrumb) { |n| "breadcrumb_#{n}" }
-  article.layout { Factory.build(:layout) }
+  article.layout_id { Factory.build(:layout).id }
   article.current_state { Factory.build(:current_state) }
   article.meta_tags { meta_tags('article') }
+  article.content "article content"
   article.authors ["article author"]
-  article.created_by_id { Factory.build(:user).id }
-  article.updated_by_id { Factory.build(:user).id }
+  article.filter_name "published"
+  article.creator_id { Factory.build(:user).id }
+  article.updator_id { Factory.build(:user).id }
 end
 
 Factory.define :article_collection do |collection|

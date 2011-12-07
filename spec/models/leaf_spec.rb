@@ -22,23 +22,7 @@ describe Leaf do
       @leaf.should embed_one :current_state
     end
 
-    it "should reference a site" do
-      @leaf.should belong_to(:site)
-    end
-
-    it "should reference a layout" do
-      @leaf.should belong_to(:layout)
-    end
-
-    it "should reference a user with created_by" do
-      @leaf.should belong_to(:created_by).of_type(User)
-    end
-    
-    it "should reference a user with updated_by" do
-      @leaf.should belong_to(:updated_by).of_type(User)
-    end
   end 
-
 
   # -- Validations  -----------------------------------------------
   describe "validations" do
