@@ -88,11 +88,7 @@ describe Leaf do
                     :updated_by => user).should_not be_valid
     end
     
-    it "should not be valid without a breadcrumb" do
-      @leaf.stub(:breadcrumb_set).and_return(nil)
-      @leaf.breadcrumb = nil
-      @leaf.should_not be_valid
-    end
+
 
     it "should not be valid without a current state" do
       @leaf.current_state = nil
@@ -145,21 +141,6 @@ describe Leaf do
         @leaf.full_path.should == @leaf.slug
       end
     end
-    
-    describe "#assign_breadcrumb" do
-      it "should set the breadcrumb to the page title when the slug is nil" do
-        @leaf.breadcrumb = nil
-        @leaf.save
-        @leaf.breadcrumb.should == @leaf.title.downcase
-      end
-
-      it "should remove any leading or trailing white space from the breadcrumb" do
-        @leaf.breadcrumb = " Hello, World!  \n"
-        @leaf.save
-        @leaf.breadcrumb.should == "hello, world!"
-      end
-    end
-
   end
 
   # -- Before Update Callback -------------------------------------------

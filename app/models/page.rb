@@ -7,6 +7,7 @@ class Page < Leaf
 
   attr_accessible :parent_id,
                   :page_parts,
+                  :editor_ids,
                   :page_parts_attributes,
                   :post_container,
                   :meta_tags_attributes
@@ -26,7 +27,12 @@ class Page < Leaf
   
   accepts_nested_attributes_for :page_parts
 
+  # -- Validations ----
+  validates :breadcrumb,
+            :presence => true
+
   # -- Callbacks -----------
+  before_validation :breadcrumb_set
   before_save :uniq_editor_ids
   after_save :update_user_pages
   #before_destroy :destroy_children
@@ -76,6 +82,15 @@ class Page < Leaf
         self.slug.strip!
       end
       self.slug.gsub!(/[\s_]/, '-')
+    end
+
+    def breadcrumb_set
+      if self.breadcrumb.blank?
+        self.breadcrumb = self.title.downcase
+      else
+        self.breadcrumb.downcase!
+        self.breadcrumb.strip!
+      end
     end
 
       

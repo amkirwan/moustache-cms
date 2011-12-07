@@ -114,6 +114,15 @@ describe Page do
 
   end
 
+  # -- Validations ----
+  describe "Validations" do
+    it "should not be valid without a breadcrumb" do
+      @page.stub(:breadcrumb_set).and_return(nil)
+      @page.breadcrumb = nil
+      @page.should_not be_valid
+    end
+  end
+
   # -- Before Save Callback -------------------------------------------  
   describe "before_save callback" do
     describe "#uniq_editor_ids" do
@@ -121,6 +130,23 @@ describe Page do
         @page.editor_ids = [user.id, user.id]
         @page.save
         @page.editor_ids.should == [user.id]
+      end
+    end
+  end
+
+  # -- Before Validation Callback ----
+  describe "before validation callback" do
+    describe "#assign_breadcrumb" do
+      it "should set the breadcrumb to the page title when the slug is nil" do
+        @page.breadcrumb = nil
+        @page.save
+        @page.breadcrumb.should == @page.title.downcase
+      end
+
+      it "should remove any leading or trailing white space from the breadcrumb" do
+        @page.breadcrumb = " Hello, World!  \n"
+        @page.save
+        @page.breadcrumb.should == "hello, world!"
       end
     end
   end

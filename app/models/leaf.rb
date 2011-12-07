@@ -11,7 +11,6 @@ class Leaf
                   :layout_id,
                   :full_path,
                   :breadcrumb,
-                  :editor_ids,
                   :current_state, 
                   :current_state_attributes,
                   :meta_tags_attributes,
@@ -45,9 +44,6 @@ class Leaf
             :presence => true,
             :uniqueness => { :scope => :site_id }
 
-  validates :breadcrumb,
-            :presence => true
-
   validates_presence_of :site_id,
                         :slug, 
                         :current_state,
@@ -72,7 +68,7 @@ class Leaf
   end
 
   # -- Callbacks -----------------------------------------------
-  before_validation :format_title, :slug_set, :full_path_set, :breadcrumb_set
+  before_validation :format_title, :slug_set, :full_path_set
   before_update :update_current_state_time
   after_initialize :default_meta_tags
 
@@ -147,15 +143,6 @@ class Leaf
     # should override in child
     def full_path_set
       self.full_path = self.slug
-    end
-  
-    def breadcrumb_set
-      if self.breadcrumb.blank?
-        self.breadcrumb = self.title.downcase
-      else
-        self.breadcrumb.downcase!
-        self.breadcrumb.strip!
-      end
     end
   
     def update_current_state_time
