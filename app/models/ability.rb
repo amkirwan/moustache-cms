@@ -9,7 +9,8 @@ class Ability
       can [:update, :destroy], User, :username => user.username, :site_id => user.site_id
       can :change_password, User, :id => user.id, :site_id => user.site_id
 
-      can [:read, :update, :destroy], Page do |page|
+      can :read, Page, :site_id => user.site_id
+      can [:update, :destroy], Page do |page|
         page.editors.include?(user) && page.site_id == user.site_id
       end
       
@@ -38,11 +39,14 @@ class Ability
     end
 
     if user.role? :designer
-      can :manage, [Layout, Page, ArticleCollection, AssetCollection, ThemeAsset, Snippet], :site_id => user.site_id  
+      can :manage, [Layout, ThemeAsset, Snippet], :site_id => user.site_id  
     end
 
     if user.role? :admin
       can :manage, Site, :id => user.site_id
+      can :manage, Page, :site_id => user.site_id
+      can :manage, ArticleCollection, :site_id => user.site_id
+      can :manage, AssetCollection, :site_id => user.site_id
 
       can :manage, User, :site_id => user.site_id
       cannot :change_password, User do |u|

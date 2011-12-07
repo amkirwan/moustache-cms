@@ -246,17 +246,7 @@ describe Ability do
         end
       end
 
-      describe "Designer Page Model Approved" do
-        it "should allow the user with the role of designer to manage the sites pages" do
-          designer_ability.should be_able_to(:manage, page)
-        end
-      end
 
-      describe "Designer AssetCollection Model Approved" do
-        it "should allow the user with the role of designer to manage the sites asset_collection" do
-          designer_ability.should be_able_to(:manage, asset_collection)
-        end
-      end
 
       describe "Designer ThemeAsset Model Approved" do
         it "should allow the user with the role of designer to manage the sites theme_assets" do
@@ -269,13 +259,6 @@ describe Ability do
           designer_ability.should be_able_to(:manage, snippet)
         end
       end
-
-      describe "Designer ArticleCollection Approved" do
-        it "should allow the user with the role of designer to manage the article_collections" do
-          designer_ability.should be_able_to(:manage, article_collection)
-        end
-      end
-
     end
   end
 
@@ -285,6 +268,24 @@ describe Ability do
       describe "Admin Site Model Approved" do
         it "should allow the user with the role of admin to manager the site" do
           admin_ability.should be_able_to(:manager, site)
+        end
+      end
+
+      describe "Admin Page Model Approved" do
+        it "should allow the user with the role of admin to manage the sites pages" do
+          admin_ability.should be_able_to(:manage, page)
+        end
+      end
+
+      describe "Admin AssetCollection Model Approved" do
+        it "should allow the user with the role of admin to manage the sites asset_collection" do
+          admin_ability.should be_able_to(:manage, asset_collection)
+        end
+      end
+
+      describe "Admin ArticleCollection Approved" do
+        it "should allow the user with the role of admin to manage the article_collections" do
+          admin_ability.should be_able_to(:manage, article_collection)
         end
       end
 
