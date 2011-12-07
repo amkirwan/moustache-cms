@@ -30,32 +30,7 @@ Scenario: Given I am logged in as an editor then I can see the pages
   And I should see the delete image "delete_button.png" associated with "foobar"
   And I should see the page "bar" 
   And I should see the delete image "delete_button.png" associated with "bar"
-  And I should see "New Page"
-  
-@create_new_page_page
-Scenario: Create a new page
-  Given these pages exist in the site "foobar.example.com" created by user "ak730"
-  | title     | status    | 
-  | Home Page | published | 
-  When I go to the admin pages page
-  And I follow "New Page"
-  Then I should be on the new admin page page
-  And I select "Home Page" from "page_parent_id"
-  And I fill in "page_title" with "foobar" 
-  When I fill in "page_meta_tags_attributes_0_content" with "meta_title_foobar"
-  And I fill in "page_meta_tags_attributes_1_content" with "meta_keywords_foobar"
-  And I fill in "page_meta_tags_attributes_2_content" with "meta_description_foobar" 
-  And I check "editor_id_ak730" 
-  And I check "editor_id_foo"
-  And I select "app" from "page_layout_id" 
-  And I select "published" from "page_current_state_attributes_name" 
-  And I fill in "page_page_parts_attributes_0_name" with "content" 
-  And I select "markdown" from "page_page_parts_attributes_0_filter_name" 
-  And I fill in "page_page_parts_attributes_0_content" with "Hello, World!" 
-  And I press "Create Page" 
-  Then I should be on the admin pages page
-  And I should see "Successfully created the page foobar"
-  And I should see "foobar" 
+  And I should not see "New Page"
   
 @edit_a_existing_page
 Scenario: Edit an existing page the user is an editor of
@@ -123,6 +98,15 @@ Scenario: Delete page the user is an editor of
   
 
 # Actions_Blocked  
+
+  
+@create_should_not_create_pages
+Scenario: Create a new page
+  Given these pages exist in the site "foobar.example.com" created by user "ak730"
+  | title     | status    | 
+  | Home Page | published | 
+  When I go to the admin pages page
+  And I should not see "New Page"
 
 @editor_should_not_access_other_site 
 Scenario: Should not be able to access site the user is not associated with

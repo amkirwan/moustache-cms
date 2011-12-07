@@ -15,9 +15,8 @@ And these pages exist in the site "foobar.example.com" created by user "ak730"
 | foobar | published | 
 And I login as the user "ak730" to the site "foobar.example.com"
 
-@new_page_part
+@wip
   Scenario: Edit page part
-    pending
     When I go to the admin pages page
     And I follow "foobar"
     Then I should now be editing the page "foobar"
@@ -26,14 +25,14 @@ And I login as the user "ak730" to the site "foobar.example.com"
     And I should see "page part name"
     And I should see "Successfully created the page part page part name"
 
-@delete_page_part
+@wip
   Scenario: Delete a page part when more than one exists
     When the default additional page part exists in the page "foobar" 
     And I follow "Delete"
     Then I should now be editing the page "foobar"
     And I should see "Successfully deleted the page part page part name"
 
-@cannot_delete_last_page_part
+@wip
   Scenario: Cannot delete page part if it is the only one on the page
     When I go to the admin pages page
     And I follow "foobar"
