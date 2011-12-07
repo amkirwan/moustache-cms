@@ -72,7 +72,6 @@ Factory.define :leaf do |leaf|
   leaf.sequence(:breadcrumb) { |n| "breadcrumb_#{n}" }
   leaf.layout { Factory.build(:layout) }
   leaf.current_state { Factory.build(:current_state) }
-  leaf.editors {[ Factory.build(:user) ]}
   leaf.tags "leaf"
   leaf.meta_tags { meta_tags('page') }
   leaf.created_by_id { Factory.build(:user).id }
@@ -135,6 +134,7 @@ Factory.define :article_collection do |collection|
   collection.site { Factory.build(:site) }
   collection.sequence(:name) { |n| "name_#{n}" }
   collection.articles { [Factory.build(:article)] }
+  collection.editors {[ Factory.build(:user) ]}
   collection.created_by_id { Factory.build(:user).id }
   collection.updated_by_id { Factory.build(:user).id }
 end

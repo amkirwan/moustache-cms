@@ -49,7 +49,30 @@ And I login as the user "ak730" to the site "foobar.example.com"
       | name   |
       | foobar |
       | bar    |
+    And these articles exist in the article collection "foobar"
+      | title         |
+      | article       |
+      | article1      |
+      | article2      |
     When I view the article collection "foobar"
+    And I click the link "Edit Collection Props"
     And I change the name to "foobar baz"
     And I press the button "Update Article Collection"
     Then I should see an article collection named "foobar baz"
+
+@delete_article_collection
+  Scenario: Delete Article Collection
+    Given these article collections exist in the site "foobar.example.com" created by user "ak730"
+      | name   |
+      | foobar |
+      | bar    |
+    And these articles exist in the article collection "foobar"
+      | title         |
+      | article       |
+      | article1      |
+      | article2      |
+    When I view the article collection "foobar"
+    And I click the link "Delete Collection"
+    Then I should be returned to the "admin article collections page"
+    Then I should see the message "Successfully deleted the article collection foobar"
+

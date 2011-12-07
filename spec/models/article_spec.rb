@@ -9,11 +9,11 @@ describe Article do
 
   before(:each) do
     @article = Factory.build(:article, :site => site, :created_by => user, :updated_by => user)
-    Factory(:article_collection, :site => site, :created_by => user, :updated_by => user, articles => [@article])
+    Factory(:article_collection, :site => site, :created_by => user, :updated_by => user, :articles => [@article])
   end
 
   # -- Associations ----
-  descirbe "article associations" do
+  describe "article associations" do
      it "should be embeeded within a article_collection" do
        @article.should be_embedded_in(:article_collection)
      end  

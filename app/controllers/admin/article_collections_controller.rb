@@ -33,5 +33,22 @@ class Admin::ArticleCollectionsController < AdminBaseController
     end
     respond_with(:admin, @article_collection, :location => [:admin, :article_collections])
   end
+
+  # PUT /admin/article_collections/1
+  def update
+    @article_collection.updated_by = @current_admin_user
+    if @article_collection.update_attributes(params[:article_collection])
+      flash[:notice] = "Successfully updated the article collection #{@article_collection.name}"
+    end
+    respond_with(:admin, @article_collection)
+  end
+
+  # DELETE /admin/article_collections/1
+  def destroy
+    if @article_collection.destroy
+      flash[:notice] = "Successfully deleted the article collection #{@article_collection.name}"
+    end
+    respond_with(:admin, @article_collection)
+  end
 end
 

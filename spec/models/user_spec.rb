@@ -165,15 +165,23 @@ describe User do
       @user.should have_many(:theme_assets_updated).of_type(ThemeAsset)
     end        
     
-    it "should reference many snippets crated" do
+    it "should reference many snippets created" do
       @user.should have_many(:snippets_created).of_type(Snippet)
     end
     
-     it "should reference many snippets crated" do
+    it "should reference many snippets updated" do
       @user.should have_many(:snippets_updated).of_type(Snippet)
     end 
+
+    it "should have_many article_collections created" do
+      @user.should have_many(:article_collections_created).of_type(ArticleCollection)
+    end
+    
+     it "should have_many article_collections updated" do
+      @user.should have_many(:article_collections_updated).of_type(ArticleCollection)
+    end 
    
-    it "should have many pages" do
+    it "should have_and_belong_to_many many pages" do
       @user.should have_and_belong_to_many(:pages)
     end        
 

@@ -1,11 +1,21 @@
 = form_for([:admin, @article_collection], :html => {:class => "site_prop", :autocomplete => "off" }) do |f|
   = render :partial => "shared/error_messages", 
            :locals => { :target => @article_collection }    
-  %fieldset         
-    %ol.form_fields
-      %li
-        = f.label :name
-        = f.text_field :name 
-      %li
+  %ol.form_fields
+    %li#general_fields
+      = foldable_fieldset "General" do  
+        %div.fields_wrap
+          = f.label :name
+          = f.text_field :name 
+    %li#editor_fields
+      = foldable_fieldset "Editors" do
+        %ol.form_fields
+          - User.all_from_current_site(@current_site).asc(:username).each do |user|
+            %li.editor_field.inline
+              = check_box_tag "article_collection[editor_ids][]", user.id, @article_collection.editor_ids.include?(user.id), :id => "editor_id_#{user.username}"
+              = label_tag "article_collection[editor_ids][#{user.username}]", user.username.downcase
+
+    %li#submit_fields
+      %fieldset
         = f.submit button_label, :class => "submit"
         = link_to "Cancel", [:admin, :article_collections], :class => "cancel"

@@ -13,6 +13,8 @@ module ApplicationHelper
     case name
     when "pages"
       name  
+    when "article_collections", "articles"
+      "articles"
     when "site_assets", "asset_collections"
       "site_assets"
     when "snippets"

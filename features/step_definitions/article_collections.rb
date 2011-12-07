@@ -6,7 +6,7 @@ Given /^these article collections exist in the site "([^"]*)" created by user "(
   user = User.find_by_username(username)
   site = Site.match_domain(site).first
   table.hashes.each do |hash|
-    Factory(:article_collection, :site => site, :name => hash[:name], :created_by => user, :updated_by => user)
+    Factory(:article_collection, :site => site, :name => hash[:name], :editors => [user], :created_by_id => user.id, :updated_by_id => user.id)
   end
 end
 
@@ -15,7 +15,7 @@ Given /^these articles exist in the article collection "([^"]*)"$/ do |collectio
   find_article_collection(collection_name)
   @article_collection.articles = []
   table.hashes.each do |hash|
-    @article_collection.articles << Factory.build(:article, :site => @article_collection.site, :title => hash[:title], :created_by => @article_collection.created_by, :updated_by => @article_collection.updated_by)
+    @article_collection.articles << Factory.build(:article, :site => @article_collection.site, :title => hash[:title], :created_by_id => @article_collection.created_by_id, :updated_by_id => @article_collection.updated_by_id)
     @article_collection.save
   end
 end
@@ -38,6 +38,11 @@ When /^I change the name to "([^"]*)"$/ do |new_name|
   fill_in 'Name', :with => new_name
 end
 
+When /^I click the link "([^"]*)"$/ do |link_name|
+  click_on link_name
+end
+
+
 When /^I press the button "([^"]*)"$/ do |button_name|
   click_on button_name
 end
@@ -57,5 +62,17 @@ Then /^I should see the articles in the collection$/ do |table|
     page.should have_content hash[:title]
   end
 end
+
+Then /^I should see the message "([^"]*)"$/ do |message|
+  page.should have_content message 
+end
+
+Then /^I should be returned to the "([^"]*)"$/ do |page_name|
+  page_name.gsub!(/\s+/, '_')
+  page_name.gsub!('page', 'path')
+  uri = URI.parse(current_url)
+  "#{uri.path}".should == admin_article_collections_path
+end
+
 
 

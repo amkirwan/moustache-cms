@@ -30,6 +30,9 @@ class User
   has_many :theme_assets_created, :class_name => "ThemeAsset", :foreign_key => :created_by_id
   has_many :theme_assets_updated, :class_name => "ThemeAsset", :foreign_key => :updated_by_id
 
+  has_many :article_collections_created, :class_name => "ArticleCollection", :foreign_key => :created_by_id
+  has_many :article_collections_updated, :class_name => "ArticleCollection", :foreign_key => :updated_by_id
+
   has_and_belongs_to_many :pages, :class_name => "Page", :inverse_of => :editors
   has_and_belongs_to_many :article_collections, :class_name => "ArticleCollection", :inverse_of => :editors
 

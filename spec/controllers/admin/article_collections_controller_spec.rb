@@ -177,7 +177,95 @@ describe Admin::ArticleCollectionsController do
         response.should render_template("admin/article_collections/new")
       end
     end
+  end
 
+  #PUT update
+  describe "PUT update" do
+    let(:params) { { "id" => @article_collection.to_param, "article_collection" => { "name" => "foobar" }} }
+
+    before(:each) do
+      ArticleCollection.stub(:find).and_return(@article_collection)
+    end
+
+    def do_put(put_params=params)
+      put :update, put_params
+    end
+
+    it "should find the article collection" do
+      ArticleCollection.should_receive(:find).and_return(@article_collection)
+      do_put
+    end
+
+    it "should assign @asset_collection" do
+      do_put
+      assigns(:article_collection).should == @article_collection
+    end
+    
+    it "should update updated_by attribute" do
+      @article_collection.should_receive(:updated_by=).with(@admin_user)
+      do_put
+    end
+
+    context "valid params" do
+      before(:each) do
+        @article_collection.should_receive(:update_attributes).and_return(true)
+      end
+
+      it "should redirect to the show template" do
+        do_put
+        response.should redirect_to("/admin/article_collections/#{@article_collection.to_param}")
+      end
+    end
+
+    context "invalid params" do
+      before(:each) do
+        @article_collection.should_receive(:update_attributes).and_return(false)
+        @article_collection.stub(:errors => { :anything => "ac errors" })
+      end
+
+      it "should render the edit template" do
+        do_put
+        response.should render_template("admin/article_collections/edit")
+      end
+    end
+  end
+
+  #Delete destroy
+  describe "DELETE destroy" do
+    let (:params) { { "id" => @article_collection.to_param } }
+
+    before(:each) do
+      ArticleCollection.stub(:find).and_return(@article_collection)
+    end
+
+    def do_delete(delete_params=params)
+      delete :destroy, delete_params
+    end
+
+    it "should find the article collection" do
+      ArticleCollection.should_receive(:find).and_return(@article_collection)
+      do_delete
+    end
+
+    it "should assign @article_collection" do
+      do_delete
+      assigns(:article_collection).should @article_collection
+    end
+    
+    it "should receive destroy and return true" do
+      @article_collection.should_receive(:destroy).and_return(true)
+      do_delete
+    end
+    
+    it "should assign the flash message" do
+      do_delete
+      flash[:notice].should == "Successfully deleted the article collection #{@article_collection.name}"
+    end
+    
+    it "should redirect to the index path" do
+      do_delete
+      response.should redirect_to admin_article_collection_path
+    end
   end
 
 end
