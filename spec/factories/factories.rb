@@ -115,6 +115,15 @@ Factory.define :parent_page, :parent => :page do |pp|
   pp.page_type { Factory.build(:page_type) }
 end     
 
+Factory.define :author do |author|
+  author.site { Factory.build(:site) }
+  author.prefix "prefix"
+  author.firstname "foobar"
+  author.middlename "middle"
+  author.lastname "baz"
+  author.profile "this is the author profile"
+end
+
 Factory.define :article do |article|
   article.sequence(:title) { |n| "title_#{n}" }
   article.sequence(:slug) { |n| "slug_#{n}" }
