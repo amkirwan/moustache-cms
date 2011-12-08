@@ -5,7 +5,7 @@ describe Author do
   let(:user) { Factory(:user, :site => site) }
 
   before(:each) do
-    @author = Factory(:author, :site => site)
+    @author = Factory(:author, :site => site, :firstname => "Anthony", :middlename => "Michael", :lastname => "Kirwan")
   end
 
   # -- Associations ---
@@ -22,4 +22,23 @@ describe Author do
       @author.should belong_to(:updated_by).of_type(User)
     end
   end
+
+  # -- Before Save ---
+  describe "Before Save" do
+    it "should remove any extra white space" do
+      @author.firstname = "     Anthony   "
+      @author.save
+      @author.firstname.should == "Anthony"
+    end
+  end
+
+  # -- Instance Methods ---
+  describe "Instance Methods" do
+    describe "#full_name" do
+      it "should return the authors full_name" do
+        @author.full_name == "Anthony Michael Kirwan"
+      end
+    end
+  end
+
 end

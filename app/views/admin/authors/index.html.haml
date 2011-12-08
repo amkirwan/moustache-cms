@@ -1,0 +1,5 @@
+- header_content 'shared/header_wrapper', :object => :Author do
+  = can_create? Author
+
+- inner_content "shared/inner_wrapper" do
+  = list_objects @authors, :message => 'Add An Author', :link => :author
