@@ -13,6 +13,7 @@ class Layout
   
   #-- Associations-----------------------------------------------
   has_many :pages, :dependent => :nullify
+  has_many :article_collections
   belongs_to :site
   belongs_to :created_by, :class_name => "User"
   belongs_to :updated_by, :class_name => "User"

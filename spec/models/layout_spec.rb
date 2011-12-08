@@ -86,19 +86,23 @@ describe Layout do
  
   # -- Associations ----------------------------------------------------
   context "associations" do
-    it "should reference many pages" do
+    it "should have_many pages" do
       @layout.should have_many(:pages)
     end
-    
-    it "should reference a layout" do
+
+    it "should have_many article_collections" do
+      @layout.should have_many(:article_collections)
+    end
+ 
+    it "should belong_to a site" do
       @layout.should belong_to(:site)
     end
-    
-    it "should reference a user with created_by" do
+
+    it "should belong_to a user with created_by" do
       @layout.should belong_to(:created_by).of_type(User)
     end
     
-    it "should reference a user with updated_by" do
+    it "should belong_to a user with updated_by" do
       @layout.should belong_to(:updated_by).of_type(User)
     end
   end

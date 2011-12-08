@@ -5,8 +5,13 @@
     %li#general_fields
       = foldable_fieldset "General" do  
         %div.fields_wrap
-          = f.label :name
-          = f.text_field :name 
+          %ol.form_fields
+            %li{:class => "inline"}
+              = f.label :name, "Name<abbr title='required' class='required'>*</abbr>".html_safe
+              = f.text_field :name 
+            %li{:class => "inline"}
+              = f.label :layout, "Layout<abbr title='required' class='required'>*</abbr>".html_safe
+              = f.collection_select :layout_id, Layout.all, :id, :name
     %li#editor_fields
       = foldable_fieldset "Editors" do
         %ol.form_fields

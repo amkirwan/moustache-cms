@@ -3,10 +3,9 @@ require 'spec_helper'
 describe "ArticleCollection" do
   let(:site) { Factory(:site) }
   let(:user) { Factory(:user) }
-  let(:article) { Factory.build(:article, :site => site, :created_by => user, :updated_by => user) }
 
   before(:each) do
-    @article_collection = Factory(:article_collection, :articles => [article], :site => site, :created_by => user, :updated_by => user)           
+    @article_collection = Factory(:article_collection, :site => site, :created_by => user, :updated_by => user)           
   end
 
   # --  Associations ---- 
@@ -21,6 +20,10 @@ describe "ArticleCollection" do
 
     it "should belong_to a user with updated_by" do
       @article_collection.should belong_to(:updated_by).of_type(User)
+    end
+
+    it "should belong_to a layout with layout_id" do
+      @article_collection.should belong_to(:layout).of_type(Layout)
     end
 
     it "should have_and_belong_to_many editors" do
