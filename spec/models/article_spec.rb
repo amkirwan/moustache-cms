@@ -84,20 +84,43 @@ describe Article do
 
   end
 
-  # -- Before Create Callback -------------------------------------------      
-  describe "before_create callback" do
+    # -- Before Validation Callback -------------------------------------------  
+  describe "before_validation callback" do
+    describe "#format_title" do
+      it "should remove any leading or trainling white space from the title" do
+        @article.title = " Hello, World!  \n"
+        @article.save
+        @article.title.should == "Hello, World!"
+      end
+    end
+    
+    describe "#slug_set" do
+      it "should set the slug to the article title when the slug is blank" do
+        @article.slug = nil 
+        @article.save
+        @article.slug.should == @article.title.gsub(/[\s_]/, '-')
+       end
+      
+      it "should remove any leading or trailing white space from the slug" do
+        @article.slug = " Hello, World!  \n"
+        @article.save
+        @article.slug.should == "hello,-world!"
+      end 
+    end  
+
     describe "#permalink_set" do
-      it "it should set the permalink in the format 'collection/year/month/day/post-title'" do
+      it "should set the permalink" do
         time = DateTime.now
         year = time.year.to_s
         month = time.month.to_s
         day = time.day.to_s
-        @article.permalink.should == "/#{@article_collection.name}/#{year}/#{month}/#{day}/#{@article.slug}"
+
+        @article.permalink = nil
+        @article.save
+        collection_name = @article.article_collection.name.gsub(/[\s_]/, '-')
+        @article.permalink.should == "/#{collection_name}/#{year}/#{month}/#{day}/#{@article.slug}"
       end
     end
   end
-
-
-
 
 end

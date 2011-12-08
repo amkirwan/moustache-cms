@@ -60,14 +60,6 @@ class Article
   alias :full_path :permalink
   alias :full_path= :permalink=
 
-  def permalink_set
-    time = DateTime.now
-    year = time.year.to_s
-    month = time.month.to_s
-    day = time.day.to_s
-    self.permalink = "/#{self._parent.name}/#{year}/#{month}/#{day}/#{self.slug}"
-  end
-
   private 
     def format_title
       self.title.strip! unless self.title.nil?
@@ -82,4 +74,15 @@ class Article
       end
       self.slug.gsub!(/[\s_]/, '-')
     end
+
+    def permalink_set
+      if self.permalink.nil?
+        time = DateTime.now
+        year = time.year.to_s
+        month = time.month.to_s
+        day = time.day.to_s
+        collection_name = self._parent.name.gsub(/[\s_]/, '-')
+        self.permalink = "/#{collection_name}/#{year}/#{month}/#{day}/#{self.slug}" 
+      end
+  end
 end
