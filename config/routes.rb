@@ -17,7 +17,7 @@ HandlebarCms::Application.routes.draw do
       resources :page_parts, :only => [:show, :create, :destroy]
     end
 
-    resource :authors
+    resources :authors
 
     resources :article_collections do
       resources :articles
