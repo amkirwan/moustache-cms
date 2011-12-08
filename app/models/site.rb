@@ -20,6 +20,7 @@ class Site
   has_many :asset_collections, :dependent => :destroy
   has_many :theme_assets, :dependent => :destroy
   has_many :snippets, :dependent => :destroy
+  has_many :authors, :dependent => :destroy
     
   accepts_nested_attributes_for :meta_tags
 

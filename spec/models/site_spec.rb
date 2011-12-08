@@ -67,6 +67,10 @@ describe Site do
     it "should embed many meta_tags" do
       @site.should embed_many :meta_tags
     end
+
+    it "should have many authors" do
+      @site.should have_many(:authors).with_dependent(:destroy)
+    end
   end
   
   
