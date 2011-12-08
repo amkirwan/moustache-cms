@@ -39,7 +39,7 @@ class Ability
     end
 
     if user.role? :designer
-      can :manage, [Layout, ThemeAsset, Snippet], :site_id => user.site_id  
+      can :manage, [Layout, ThemeAsset, Snippet, Author], :site_id => user.site_id  
     end
 
     if user.role? :admin

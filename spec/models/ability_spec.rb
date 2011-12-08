@@ -27,6 +27,9 @@ describe Ability do
   let(:page) { Factory.build(:page, :site => site, :page_parts => [page_part], :editors => [ admin, designer, editor ], :meta_tags => [meta_tag]) }
   let(:page_other_site) { Factory.build(:page, :site => other_site, :page_parts => [page_part_other_site], :editors => [ admin_other_site ], :meta_tags => [meta_tag_other_site]) } 
 
+  let(:author) { Factory.build(:author, :site => site) }
+  let(:author_other_site) { Factory.build(:author, :site => other_site) } 
+
   let(:article) { Factory.build(:article, :site => site) } 
   let(:article_other_site) { Factory.build(:article, :site => other_site) } 
   
@@ -246,8 +249,6 @@ describe Ability do
         end
       end
 
-
-
       describe "Designer ThemeAsset Model Approved" do
         it "should allow the user with the role of designer to manage the sites theme_assets" do
           designer_ability.should be_able_to(:manage, theme_asset)
@@ -257,6 +258,12 @@ describe Ability do
       describe "Designer Snippet Model Approved" do
         it "should allow the user with the role of designer to manage the sites snippets" do
           designer_ability.should be_able_to(:manage, snippet)
+        end
+      end
+
+      describe "Designer Author Approved" do
+        it "should allow the user with the role of designer to manage the authors" do
+          designer_ability.should be_able_to(:manage, author)
         end
       end
     end
