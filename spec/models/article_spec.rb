@@ -84,7 +84,7 @@ describe Article do
 
   end
 
-    # -- Before Validation Callback -------------------------------------------  
+  # -- Before Validation Callback -------------------------------------------  
   describe "before_validation callback" do
     describe "#format_title" do
       it "should remove any leading or trainling white space from the title" do
@@ -119,6 +119,15 @@ describe Article do
         @article.save
         collection_name = @article.article_collection.name.gsub(/[\s_]/, '-')
         @article.permalink.should == "/#{collection_name}/#{year}/#{month}/#{day}/#{@article.slug}"
+      end
+    end
+  end
+
+  # -- Instance Methods -----
+  describe "Instance Methods" do
+    describe "#updated_by" do
+      it "should return the user who last updated the article" do
+        @article.updated_by.should == user
       end
     end
   end

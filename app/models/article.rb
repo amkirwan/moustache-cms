@@ -57,8 +57,13 @@ class Article
   # -- Callbacks ----------
   before_validation :format_title, :slug_set, :permalink_set
 
+  # -- Instance Methods -----
   alias :full_path :permalink
   alias :full_path= :permalink=
+
+  def updated_by
+    User.find(self.updator_id)
+  end
 
   private 
     def format_title
