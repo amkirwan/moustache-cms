@@ -180,6 +180,14 @@ describe User do
      it "should have_many article_collections updated" do
       @user.should have_many(:article_collections_updated).of_type(ArticleCollection)
     end 
+
+     it "should have_many authors created" do
+      @user.should have_many(:authors_created).of_type(Author)
+    end
+    
+     it "should have_many authors updated" do
+      @user.should have_many(:authors_updated).of_type(Author)
+    end 
    
     it "should have_and_belong_to_many many pages" do
       @user.should have_and_belong_to_many(:pages)

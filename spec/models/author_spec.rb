@@ -13,5 +13,13 @@ describe Author do
     it "should belong to a site" do
       @author.should belong_to(:site)
     end
+
+    it "should belong_to a user with created_by" do
+      @author.should belong_to(:created_by).of_type(User)
+    end
+    
+    it "should belong_to a user with updated_by" do
+      @author.should belong_to(:updated_by).of_type(User)
+    end
   end
 end
