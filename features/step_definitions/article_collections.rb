@@ -15,7 +15,7 @@ Given /^these articles exist in the article collection "([^"]*)"$/ do |collectio
   find_article_collection(collection_name)
   @article_collection.articles = []
   table.hashes.each do |hash|
-    @article_collection.articles << Factory.build(:article, :site => @article_collection.site, :title => hash[:title], :created_by_id => @article_collection.created_by_id, :updated_by_id => @article_collection.updated_by_id)
+    @article_collection.articles << Factory.build(:article, :title => hash[:title], :creator_id => @article_collection.created_by_id, :updator_id => @article_collection.updated_by_id)
     @article_collection.save
   end
 end

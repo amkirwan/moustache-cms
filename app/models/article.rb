@@ -2,6 +2,7 @@ class Article
   include Mongoid::Document 
   include Mongoid::Timestamps
 
+  include HandlebarCms::Published
   include Mongoid::TaggableWithContext
 
   attr_accessible :title,
