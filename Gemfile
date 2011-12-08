@@ -25,6 +25,7 @@ gem "redcarpet", "~> 1.11"
 gem "carrierwave-mongoid", :git => "git://github.com/jnicklas/carrierwave-mongoid.git", :require => "carrierwave/mongoid"
 gem "mime-types"
 gem "mongoid_taggable_with_context", :git => "git://github.com/amkirwan/mongoid_taggable_with_context.git", :branch => "master"
+gem "kaminari"
 
 gem "unicorn"
 

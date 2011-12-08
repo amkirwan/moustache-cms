@@ -123,6 +123,8 @@ GEM
       thor (~> 0.14)
     json (1.6.3)
     json_pure (1.6.1)
+    kaminari (0.12.4)
+      rails (>= 3.0.0)
     kgio (2.6.0)
     launchy (2.0.5)
       addressable (~> 2.2.6)
@@ -254,6 +256,7 @@ DEPENDENCIES
   haml-rails (~> 0.3)
   hpricot
   jquery-rails
+  kaminari
   launchy
   mime-types
   mongoid (~> 2.3.3)
