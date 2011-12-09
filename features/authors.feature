@@ -25,6 +25,15 @@ And I login as the user "ak730" to the site "foobar.example.com"
     And I create a new author
     Then I should see the author "Anthony M Kirwan"
 
+@show_author
+  Scenario: Show the Author
+    Given these authors exists in the site "foobar.example.com"
+      | firstname | middlename  | lastname | profile                          |
+      | Anthony   | M           | Kirwan   | This is Anthony Kirwan's profile |
+      | Bob       |             | Gimlich  | This is Bob Gimlich's profile    |
+    When I view the author "Anthony M Kirwan"
+    Then I should see the "Anthony M Kirwan" profile
+
 @update_author
   Scenario: Update Author
     Given these authors exists in the site "foobar.example.com"

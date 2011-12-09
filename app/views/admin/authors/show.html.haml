@@ -1,0 +1,6 @@
+- header_content 'shared/header_wrapper', :object => :author, :title => @author.full_name do
+  - can? :show, @author
+
+- inner_content "shared/inner_wrapper" do
+
+  = render :partial => "author_show"  

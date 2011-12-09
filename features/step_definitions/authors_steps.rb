@@ -33,6 +33,11 @@ When /^I delete the author "([^"]*)"$/ do |author_name|
   click_on "Delete Author"
 end
 
+When /^I view the author "([^"]*)"$/ do |author_name|
+  first, middle, last = author_name.split(' ')
+  visit admin_author_path(Author.where(:lastname => last).first.id)
+end
+
 
 Then /^I should see the authors$/ do |table|
   table.hashes.each do |hash|
@@ -48,4 +53,13 @@ end
 Then /^the author "([^"]*)" should not be in the list of authors$/ do |author_name|
   page.should have_content "Successfully deleted the user #{author_name}"
   page.should_not have_link author_name
+end
+
+Then /^I should see the "([^"]*)" profile$/ do |author_name|
+  first, middle, last = author_name.split(' ')
+  author = Author.where(:lastname => last).first
+  page.should have_content author.firstname
+  page.should have_content author.middlename
+  page.should have_content author.lastname
+  page.should have_content author.profile
 end

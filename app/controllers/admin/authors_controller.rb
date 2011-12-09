@@ -14,6 +14,11 @@ class Admin::AuthorsController < AdminBaseController
     respond_with(:admin, @author)
   end
 
+  # GET /admin/authors/1
+  def show
+    respond_with(:admin, @author)
+  end
+
   # GET /admin/authors/1/edit
   def edit
     respond_with(:admin, @author)
@@ -29,6 +34,7 @@ class Admin::AuthorsController < AdminBaseController
     respond_with(:admin, @author, :location => [:admin, :authors])
   end
 
+  # PUT /admin/authors/1
   def update
     @author.updated_by = @current_admin_user
     if @author.update_attributes(params[:author])
@@ -37,6 +43,7 @@ class Admin::AuthorsController < AdminBaseController
     respond_with(:admin, @author, :location => [:admin, :authors])
   end
 
+  # DELETE /admin/authors/1
   def destroy
     if @author.destroy
       flash[:notice] = "Successfully deleted the user #{@author.full_name}"

@@ -37,7 +37,6 @@ describe Admin::AuthorsController do
   end
 
   describe "GET new" do
-    
     before(:each) do
       @author.as_new_record
       Author.stub(:new).and_return(@author)
@@ -62,6 +61,32 @@ describe Admin::AuthorsController do
       response.should render_template('admin/authors/new')
     end
   end
+
+  describe "GET show" do
+    before(:each) do
+      Author.stub(:find).and_return(@author)
+    end
+
+    def do_get
+      get :show, :id => @author.to_param
+    end
+
+    it "Author should receive find and return the author" do
+      Author.should_receive(:find).and_return(@author)
+      do_get
+    end
+
+    it "should assign the @author" do
+      do_get
+      assigns[:author].should == @author
+    end
+
+    it "should render the show template" do
+      do_get
+      response.should render_template('admin/authors/show')
+    end
+  end
+
 
   describe "GET edit" do
     let(:params) { { "id" => @author.to_param } }
