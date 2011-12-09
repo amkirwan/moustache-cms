@@ -36,4 +36,11 @@ class Admin::AuthorsController < AdminBaseController
     end
     respond_with(:admin, @author, :location => [:admin, :authors])
   end
+
+  def destroy
+    if @author.destroy
+      flash[:notice] = "Successfully deleted the user #{@author.full_name}"
+    end
+    respond_with(:admin, @author, :location => [:admin, :authors])
+  end
 end

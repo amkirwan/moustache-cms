@@ -34,3 +34,13 @@ And I login as the user "ak730" to the site "foobar.example.com"
     When I view the authors page
     And I edit the author "Anthony M Kirwan" and change the name to "Patrick Kane"
     Then I should see the author "Patrick Kane"
+
+@destroy_author
+  Scenario: Destroy Author
+    Given these authors exists in the site "foobar.example.com"
+    | firstname | middlename  | lastname | profile                          |
+    | Anthony   | M           | Kirwan   | This is Anthony Kirwan's profile |
+    | Bob       |             | Gimlich  | This is Bob Gimlich's profile    |
+    When I view the authors page
+    And I delete the author "Anthony M Kirwan"
+    Then the author "Anthony M Kirwan" should not be in the list of authors

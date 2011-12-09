@@ -207,4 +207,47 @@ describe Admin::AuthorsController do
     end
   end
 
+  describe "DELETE destroy" do
+    let(:params) { { "id" => @author.to_param } }
+
+    before(:each) do
+      Author.stub(:find).and_return(@author)
+    end
+
+    def do_delete(delete_params=params)
+      delete :destroy, delete_params
+    end
+
+    it "should find the author" do
+      Author.should_receive(:find).with(params["id"]).and_return(@author)
+      do_delete
+    end
+
+    it "should assign the @author" do
+      do_delete
+      assigns[:author].should == @author
+    end
+
+    context "with valid params" do
+      before(:each) do
+        @author.stub(:destroy).and_return(true)
+      end
+
+      it "should destroy the author" do
+        @author.should_receive(:destroy).and_return(true)
+        do_delete
+      end
+
+      it "should assign the flash message" do
+        do_delete
+        flash[:notice].should_not be_nil
+      end
+
+      it "should render the admin authors page" do
+        do_delete
+        response.should redirect_to [:admin, :authors]
+      end
+    end
+  end
+
 end

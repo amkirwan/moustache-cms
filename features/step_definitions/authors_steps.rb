@@ -28,6 +28,12 @@ When /^I edit the author "([^"]*)" and change the name to "([^"]*)"$/ do |old_au
   click_on "Update Author"
 end
 
+When /^I delete the author "([^"]*)"$/ do |author_name|
+  click_on author_name
+  click_on "Delete Author"
+end
+
+
 Then /^I should see the authors$/ do |table|
   table.hashes.each do |hash|
     page.should have_content hash[:full_name] 
@@ -36,4 +42,9 @@ end
 
 Then /^I should see the author "([^"]*)"$/ do |author|
     page.should have_content author
+end
+
+
+Then /^the author "([^"]*)" should not be in the list of authors$/ do |author_name|
+  page.should_not have_content author_name
 end
