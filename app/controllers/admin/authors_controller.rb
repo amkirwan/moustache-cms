@@ -11,11 +11,12 @@ class Admin::AuthorsController < AdminBaseController
 
   # GET /admin/authors/new
   def new
-    respond_with(:admin, @authors)
+    respond_with(:admin, @author)
   end
 
   # GET /admin/authors/1/edit
   def edit
+    respond_with(:admin, @author)
   end
 
   # POST /admin/authors
@@ -24,6 +25,14 @@ class Admin::AuthorsController < AdminBaseController
     @author.site = @current_site
     if @author.save
       flash[:notice] = "Successfully created the author #{@author.full_name}"
+    end
+    respond_with(:admin, @author, :location => [:admin, :authors])
+  end
+
+  def update
+    @author.updated_by = @current_admin_user
+    if @author.update_attributes(params[:author])
+      flash[:notice] = "Successfully updated the author #{@author.full_name}"
     end
     respond_with(:admin, @author, :location => [:admin, :authors])
   end

@@ -63,7 +63,6 @@ describe Admin::AuthorsController do
     end
   end
 
-
   describe "GET edit" do
     let(:params) { { "id" => @author.to_param } }
 
@@ -149,6 +148,61 @@ describe Admin::AuthorsController do
       it "should render the new template" do
         do_post
         response.should render_template('admin/authors/new')
+      end
+    end
+  end
+
+  describe "PUT update" do
+    let(:params) { { "id" => @author.to_param, "author" => { "firstname" => "Anthony", "lastname" => "Kiwran" } } }
+
+    before(:each) do
+      Author.stub(:find).and_return(@author)
+    end
+
+    def do_put(put_params=params)
+      put :update, put_params
+    end
+
+    it "should receive find and return @author" do
+      Author.should_receive(:find).with(params['id']).and_return(@author)
+      do_put
+    end
+
+    it "should assign @author" do
+      do_put
+      assigns[:author].should == @author
+    end
+
+    it "should assign updated_by" do
+      @author.should_receive(:updated_by=).with(@admin_user)
+      do_put
+    end
+    
+    context "valid params" do
+      before(:each) do
+        Author.stub(:save).and_return(true)
+      end
+
+      it "should assign the flash message" do
+        do_put
+        flash[:notice].should_not be_nil
+      end
+
+      it "should redirect to admin authors page" do
+        do_put
+        response.should redirect_to('/admin/authors')
+      end
+    end
+
+    context "invalid params" do
+      before(:each) do
+        Author.stub(:save).and_return(false)
+        @author.stub(:errors => { "author" => "author error" })
+      end
+
+      it "should render the edit template" do
+        do_put
+        response.should render_template('admin/authors/edit')
       end
     end
   end

@@ -18,8 +18,14 @@ When /^I create a new author$/ do
   click_on "Create Author"
 end
 
-When /^I edit the author "([^"]*)"$/ do |author_name|
-  click_on author_name
+When /^I edit the author "([^"]*)" and change the name to "([^"]*)"$/ do |old_author_name, new_author_name|
+  click_on old_author_name
+  first, last = new_author_name.split(' ')
+  fill_in "Firstname", :with => first
+  fill_in "Middlename", :with => ""
+  fill_in "Lastname", :with => last
+  fill_in "Profile", :with => "This is now #{first} #{last} profile"
+  click_on "Update Author"
 end
 
 Then /^I should see the authors$/ do |table|
