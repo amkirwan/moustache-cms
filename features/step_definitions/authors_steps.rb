@@ -46,5 +46,6 @@ end
 
 
 Then /^the author "([^"]*)" should not be in the list of authors$/ do |author_name|
-  page.should_not have_content author_name
+  page.should have_content "Successfully deleted the user #{author_name}"
+  page.should_not have_link author_name
 end
