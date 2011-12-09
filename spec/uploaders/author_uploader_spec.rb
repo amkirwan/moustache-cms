@@ -10,7 +10,7 @@ describe AuthorUploader do
   
   before do
     AuthorUploader.enable_processing = true
-    @uploader = AuthorUploader.new(author, :asset)
+    @uploader = AuthorUploader.new(author, :image)
     @uploader.store!(AssetFixtureHelper.open("rails.png"))
   end
   
@@ -35,7 +35,7 @@ describe AuthorUploader do
     end  
   end                   
   
-  it "should change the uploaded filename to the name of the theme_asset" do
+  it "should change the uploaded filename to the name of the full_name of the author" do
     @uploader.filename.should =~  /^anthony-kirwan-(.*).png$/
   end
   

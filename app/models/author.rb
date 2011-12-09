@@ -6,6 +6,7 @@ class Author
                   :firstname,
                   :middlename,
                   :lastname,
+                  :image,
                   :profile
 
   # -- Fields ------
@@ -14,7 +15,7 @@ class Author
   field :middlename
   field :lastname
   field :profile
-  mount_uploader :asset, AuthorUploader
+  mount_uploader :image, AuthorUploader
 
   # -- Associations ---
   belongs_to :site

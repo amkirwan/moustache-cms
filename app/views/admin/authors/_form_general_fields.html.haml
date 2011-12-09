@@ -1,0 +1,24 @@
+= foldable_fieldset 'General' do
+  %ol.form_fields
+    %li
+      = f.label :prefix
+      = f.text_field :prefix
+    %li
+      = f.label :firstname
+      = f.text_field :firstname
+    %li
+      = f.label :middlename
+      = f.text_field :middlename
+    %li
+      = f.label :lastname
+      = f.text_field :lastname
+    %li
+      = f.label :image, "Author Photo"
+      = f.file_field :image, :class => "file_field"
+      = f.hidden_field :image_cache
+    %li
+      = f.label :profile
+      = f.text_area :profile
+    %li
+      = f.submit button_label, :class => "submit"
+      = link_to "Cancel", [:admin, :layouts], :class => "cancel" 

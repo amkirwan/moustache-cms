@@ -9,6 +9,15 @@ When /^I view the authors page$/ do
   visit admin_authors_path
 end
 
+When /^I create a new author$/ do
+  fill_in "Firstname", :with => "Anthony"
+  fill_in "Middlename", :with => "M"
+  fill_in "Lastname", :with => "Kirwan" 
+  attach_file('Author Photo', 'spec/fixtures/assets/rails.png')
+  fill_in "Profile", :with => "This is Anthony Kirwan's profile"
+  click_on "Create Author"
+end
+
 Then /^I should see the authors$/ do |table|
   table.hashes.each do |hash|
     if hash[:middlename].empty?

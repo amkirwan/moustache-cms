@@ -37,7 +37,6 @@ class ThemeAssetUploader < CarrierWave::Uploader::Base
     
   # Override the filename of the uploaded files:
    def filename
-     #"#{model.name}.#{file.extension}" if original_filename
      if original_filename
         @name ||= "#{model.name.split('.').first}-#{Digest::MD5.hexdigest(File.dirname(current_path))}"
         "#{@name}.#{file.extension}"

@@ -1,0 +1,4 @@
+= form_for([:admin, @author], :html => {:class => "site_prop", :autocomplete => :off}) do |f|
+  = render :partial => "shared/error_messages",  
+           :locals => { :target => @author }
+  = render :partial => 'form_general_fields', :locals => { :f => f, :button_label => button_label }
