@@ -14,6 +14,7 @@ class Author
   field :middlename
   field :lastname
   field :profile
+  mount_uploader :asset, AuthorUploader
 
   # -- Associations ---
   belongs_to :site
@@ -25,7 +26,7 @@ class Author
   before_save :strip_whitespace
 
   def full_name
-    if self.middlename.nil?
+    if self.middlename.empty?
       self.firstname.capitalize + ' ' + self.lastname.capitalize
     else
       self.firstname.capitalize + ' ' + self.middlename.capitalize + ' ' + self.lastname.capitalize
