@@ -18,6 +18,10 @@ When /^I create a new author$/ do
   click_on "Create Author"
 end
 
+When /^I edit the author "([^"]*)"$/ do |author_name|
+  click_on author_name
+end
+
 Then /^I should see the authors$/ do |table|
   table.hashes.each do |hash|
     page.should have_content hash[:full_name] 

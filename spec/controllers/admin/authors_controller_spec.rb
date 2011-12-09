@@ -64,6 +64,33 @@ describe Admin::AuthorsController do
   end
 
 
+  describe "GET edit" do
+    let(:params) { { "id" => @author.to_param } }
+
+    before(:each) do
+      Author.stub(:find).and_return(@author)
+    end
+
+    def do_get
+      get :edit, params
+    end
+
+    it "should find the author" do
+      Author.should_receive(:find).with(params["id"]).and_return(@author)
+      do_get
+    end
+
+    it "should assign the @author" do
+      do_get
+      assigns[:author].should == @author
+    end
+
+    it "should render the edit template" do
+      do_get
+      response.should render_template('admin/authors/edit')
+    end
+  end
+
   describe "POST create" do
 
     let(:params) { { "author" => {"firstname" => "Anthony", "lastname" => "Kirwan", "asset_cache" => "1/rails.png" }} }

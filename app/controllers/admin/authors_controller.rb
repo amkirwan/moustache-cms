@@ -14,6 +14,10 @@ class Admin::AuthorsController < AdminBaseController
     respond_with(:admin, @authors)
   end
 
+  # GET /admin/authors/1/edit
+  def edit
+  end
+
   # POST /admin/authors
   def create
     created_updated_by_for @author

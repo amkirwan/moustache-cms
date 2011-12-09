@@ -32,4 +32,4 @@ And I login as the user "ak730" to the site "foobar.example.com"
       | Anthony   | M           | Kirwan   | This is Anthony Kirwan's profile |
       | Bob       |             | Gimlich  | This is Bob Gimlich's profile    |
     When I view the authors page
-
+    And I edit the author "Anthony M Kirwan"
