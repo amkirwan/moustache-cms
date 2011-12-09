@@ -14,15 +14,22 @@ And I login as the user "ak730" to the site "foobar.example.com"
       | Bob       |             | Gimlich  | This is Bob Gimlich's profile    |
     When I view the authors page
     Then I should see the authors
-      | firstname | middlename  | lastname |
-      | Anthony   | M           | Kirwan   | 
-      | Bob       |             | Gimlich  |
+      |   full_name      |
+      | Anthony M Kirwan |
+      | Bob Gimlich      |
 
 @create_an_author
   Scenario: Create Author
     Given I am on the admin authors page
     When I follow "New Author"
     And I create a new author
-    Then I should see the authors
-      | firstname | middlename  | lastname |
-      | Anthony   | M           | Kirwan   | 
+    Then I should see the author "Anthony M Kirwan"
+
+@update_author
+  Scenario: Update Author
+    Given these authors exists in the site "foobar.example.com"
+      | firstname | middlename  | lastname | profile                          |
+      | Anthony   | M           | Kirwan   | This is Anthony Kirwan's profile |
+      | Bob       |             | Gimlich  | This is Bob Gimlich's profile    |
+    When I view the authors page
+

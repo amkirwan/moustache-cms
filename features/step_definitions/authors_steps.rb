@@ -20,11 +20,10 @@ end
 
 Then /^I should see the authors$/ do |table|
   table.hashes.each do |hash|
-    if hash[:middlename].empty?
-      name = hash[:firstname] + ' ' + hash[:lastname]
-    else
-      name = hash[:firstname] + ' ' + hash[:middlename] + ' ' + hash[:lastname]
-    end
-    page.should have_content name
+    page.should have_content hash[:full_name] 
   end
+end
+
+Then /^I should see the author "([^"]*)"$/ do |author|
+    page.should have_content author
 end
