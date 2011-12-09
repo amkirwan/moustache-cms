@@ -46,7 +46,7 @@ module ApplicationHelper
     else
       if block_given?
         title = options[:show] == true ? "#{options[:object].class.name.underscore.titleize}" : "Editing #{options[:object].class.name.underscore.titleize}"
-        options.merge!(:body => capture(&block), :title => "#{title} <b>#{view_identifier(options[:object]).titleize}</b>")
+        options.merge!(:body => capture(&block), :title => "#{title} #{view_identifier(options[:object]).titleize}")
       end
     end
     concat(render(:partial => partial_name, :locals => options))
