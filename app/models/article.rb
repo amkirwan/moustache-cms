@@ -23,9 +23,7 @@ class Article
   field :content
   field :filter_name
   field :authors, :type => Array
-  field :creator_id
-  field :updator_id
-  field :layout_id
+  field :author_ids, :type => Array
 
   taggable
 
@@ -33,6 +31,10 @@ class Article
   embeds_one :current_state, :as => :publishable
   embeds_many :meta_tags, :as => :meta_taggable
   embedded_in :article_collection
+  has_and_belongs_to_many :authors, :inverse_of => nil
+  belongs_to :created_by, :class_name => "User"
+  belongs_to :updated_by, :class_name => "User"
+  belongs_to :layout, :class_name => "Layout"
 
     # -- Validations -----------------------------------------------
   validates :title,
@@ -46,10 +48,10 @@ class Article
   validates :slug,
             :presence => true
 
-  validates :creator_id,
+  validates :created_by_id,
             :presence => true
 
-  validates :updator_id,
+  validates :updated_by_id,
             :presence => true
 
   validates :filter_name,

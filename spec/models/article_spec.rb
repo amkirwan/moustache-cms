@@ -7,7 +7,7 @@ describe Article do
   let(:user) { Factory(:user, :site => site) }
 
   before(:each) do
-    @article = Factory.build(:article, :creator_id => user.id, :updator_id => user.id)
+    @article = Factory.build(:article, :created_by_id => user.id, :updated_by_id => user.id)
     @article_collection =Factory(:article_collection, :site => site, :created_by => user, :updated_by => user, :articles => [@article])
   end
 
@@ -68,12 +68,12 @@ describe Article do
     end
 
     it "should not be valid without a creator_id" do
-      @article.creator_id = nil
+      @article.created_by_id = nil
       @article.should_not be_valid
     end
 
     it "should not be valid without a updator_id" do
-      @article.updator_id = nil
+      @article.updated_by_id = nil
       @article.should_not be_valid
     end
 
@@ -125,11 +125,6 @@ describe Article do
 
   # -- Instance Methods -----
   describe "Instance Methods" do
-    describe "#updated_by" do
-      it "should return the user who last updated the article" do
-        @article.updated_by.should == user
-      end
-    end
   end
 
 end
