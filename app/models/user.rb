@@ -5,7 +5,12 @@ class User
   
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :timeoutable
    
-  attr_accessible :firstname, :lastname, :email, :password, :password_confirmation, :remember_me
+  attr_accessible :firstname,
+                  :lastname,
+                  :email,
+                  :password,
+                  :password_confirmation, 
+                  :remember_me
   
   # -- Fields -----------------------------------------------    
   field :username
@@ -35,6 +40,9 @@ class User
 
   has_many :authors_created, :class_name => "Author", :foreign_key => :created_by_id
   has_many :authors_updated, :class_name => "Author", :foreign_key => :updated_by_id
+
+  has_many :articles_created, :class_name => "Article", :foreign_key => :created_by_id
+  has_many :articles_updated, :class_name => "Article", :foreign_key => :updated_by_id
 
   has_and_belongs_to_many :pages, :class_name => "Page", :inverse_of => :editors
   has_and_belongs_to_many :article_collections, :class_name => "ArticleCollection", :inverse_of => :editors
@@ -103,6 +111,10 @@ class User
 
     clean_up_passwords if self.respond_to?(:password)
     result
+  end
+
+  def articles_created
+    ArticleCollection.where(:site_id => self.site_id, "articles.created_by_id" => self.id).to_a
   end
   
   private

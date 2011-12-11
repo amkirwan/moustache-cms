@@ -188,6 +188,14 @@ describe User do
      it "should have_many authors updated" do
       @user.should have_many(:authors_updated).of_type(Author)
     end 
+
+     it "should have_many articles created" do
+      @user.should have_many(:articles_created).of_type(Article)
+    end
+    
+     it "should have_many articles updated" do
+      @user.should have_many(:articles_updated).of_type(Article)
+    end 
    
     it "should have_and_belong_to_many many pages" do
       @user.should have_and_belong_to_many(:pages)
@@ -244,6 +252,19 @@ describe User do
         @user.role = "editor"
         @user.role?(:admin).should == false
       end
+
+      describe "#articles_created" do
+        it "should return all the articles the user has created" do
+          article = Factory.build(:article, :created_by => @user)
+          article_collection = Factory(:article_collection, :site => site, :articles => [article])
+          @user.articles_created.first.should == article
+        end
+
+        it "should return empty articles_created if the user has not created articles" do
+          @auser.articles_created.should== article
+        end
+      end
     end
+
   end
 end
