@@ -28,13 +28,14 @@ class Article
   taggable
 
   # -- Associations -------------
-  belongs_to :article_collection
   embeds_one :current_state, :as => :publishable
   embeds_many :meta_tags, :as => :meta_taggable
-  has_and_belongs_to_many :authors, :inverse_of => nil
+  belongs_to :article_collection
   belongs_to :created_by, :class_name => "User"
   belongs_to :updated_by, :class_name => "User"
   belongs_to :layout, :class_name => "Layout"
+
+  has_and_belongs_to_many :authors, :inverse_of => nil
 
     # -- Validations -----------------------------------------------
   validates :title,

@@ -13,13 +13,6 @@ describe Article do
 
   # -- Associations ----
   describe "article associations" do
-     it "should belong to article_collection" do
-       @article.should belong_to(:article_collection)
-     end  
-
-     it "shuld embed one current state" do
-       @article.should embed_one(:current_state)
-     end
 
     it "should embed one current state" do
       @article.should embed_one :current_state
@@ -28,6 +21,23 @@ describe Article do
     it "should embed_many meta_tags" do 
       @article.should embed_many :meta_tags
     end 
+
+    it "should belong to article_collection" do
+      @article.should belong_to(:article_collection)
+    end  
+
+    it "should belong to created_by of" do
+      @article.should belong_to(:created_by).of_type(User)
+    end
+
+    it "should belong to updated_by of" do
+      @article.should belong_to(:updated_by).of_type(User)
+    end
+
+    it "should belong to a layout" do
+      @article.should belong_to(:layout)
+    end
+    
   end
 
   # -- Validations ------
