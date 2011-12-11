@@ -93,6 +93,10 @@ describe Layout do
     it "should have_many article_collections" do
       @layout.should have_many(:article_collections)
     end
+
+    it "should have_many articles" do
+      @layout.should have_many(:articles)
+    end
  
     it "should belong_to a site" do
       @layout.should belong_to(:site)
