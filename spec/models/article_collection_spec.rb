@@ -26,14 +26,14 @@ describe "ArticleCollection" do
       @article_collection.should belong_to(:layout).of_type(Layout)
     end
 
+    it "should have_many articles_id" do
+      @article_collection.should have_many(:articles)
+    end
+
     it "should have_and_belong_to_many editors" do
       @article_collection.should have_and_belong_to_many(:editors).of_type(User)
     end
 
-    it "should embed many articles" do
-      @article_collection.should embed_many :articles
-    end
-    
   end
 
   # -- Validations -----

@@ -15,9 +15,8 @@ class ArticleCollection
   belongs_to :layout
   belongs_to :created_by, :class_name => "User"
   belongs_to :updated_by, :class_name => "User"
-  has_and_belongs_to_many :editors, :class_name => "User", :inverse_of => :users
-
-  embeds_many :articles
+  has_many :articles
+  has_and_belongs_to_many :editors, :class_name => "User", :inverse_of => :article_collections
 
   # -- Validations -------
   validates :name,

@@ -13,8 +13,8 @@ describe Article do
 
   # -- Associations ----
   describe "article associations" do
-     it "should be embeeded within a article_collection" do
-       @article.should be_embedded_in(:article_collection)
+     it "should belong to article_collection" do
+       @article.should belong_to(:article_collection)
      end  
 
      it "shuld embed one current state" do

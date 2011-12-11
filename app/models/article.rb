@@ -28,9 +28,9 @@ class Article
   taggable
 
   # -- Associations -------------
+  belongs_to :article_collection
   embeds_one :current_state, :as => :publishable
   embeds_many :meta_tags, :as => :meta_taggable
-  embedded_in :article_collection
   has_and_belongs_to_many :authors, :inverse_of => nil
   belongs_to :created_by, :class_name => "User"
   belongs_to :updated_by, :class_name => "User"
@@ -64,10 +64,6 @@ class Article
   alias :full_path :permalink
   alias :full_path= :permalink=
 
-  def updated_by
-    User.find(self.updator_id)
-  end
-
   private 
     def format_title
       self.title.strip! unless self.title.nil?
@@ -89,7 +85,7 @@ class Article
         year = time.year.to_s
         month = time.month.to_s
         day = time.day.to_s
-        collection_name = self._parent.name.gsub(/[\s_]/, '-')
+        collection_name = self.article_collection.name.gsub(/[\s_]/, '-')
         self.permalink = "/#{collection_name}/#{year}/#{month}/#{day}/#{self.slug}" 
       end
   end
