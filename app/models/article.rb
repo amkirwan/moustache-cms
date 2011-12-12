@@ -34,8 +34,7 @@ class Article
   belongs_to :created_by, :class_name => "User"
   belongs_to :updated_by, :class_name => "User"
   belongs_to :layout, :class_name => "Layout"
-
-  has_and_belongs_to_many :authors, :inverse_of => nil
+  has_and_belongs_to_many :authors
 
     # -- Validations -----------------------------------------------
   validates :title,

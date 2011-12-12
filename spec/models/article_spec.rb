@@ -37,6 +37,10 @@ describe Article do
     it "should belong to a layout" do
       @article.should belong_to(:layout)
     end
+
+    it "should has_and_belong_to_many authors" do
+      @article.should have_and_belong_to_many(:authors)
+    end
     
   end
 

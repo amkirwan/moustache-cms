@@ -21,7 +21,7 @@ class Author
   belongs_to :site
   belongs_to :created_by, :class_name => "User"
   belongs_to :updated_by, :class_name => "User"
-
+  has_and_belongs_to_many :articles
 
   # -- Callbacks ---
   before_save :strip_whitespace
@@ -32,6 +32,20 @@ class Author
     else
       self.firstname.capitalize + ' ' + self.middlename.capitalize + ' ' + self.lastname.capitalize
     end
+  end
+
+  def articles
+    collection = ArticleCollection.where(:site_id => site.id)
+    articles = []
+    collection.each do |ac|
+      ac.articles.each do |article|
+        art = article.where(:article_ids => self.id).first
+        unless art.nil? 
+          articles << art
+        end
+      end
+    end
+    articles  
   end
 
   private 
