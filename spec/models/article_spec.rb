@@ -7,8 +7,8 @@ describe Article do
   let(:user) { Factory(:user, :site => site) }
 
   before(:each) do
-    @article = Factory.build(:article, :created_by_id => user.id, :updated_by_id => user.id)
-    @article_collection =Factory(:article_collection, :site => site, :created_by => user, :updated_by => user, :articles => [@article])
+   @article_collection = Factory(:article_collection, :articles => [], :site => site, :created_by => user, :updated_by => user)
+   @article = Factory(:article, :created_by_id => user.id, :updated_by_id => user.id, :article_collection => @article_collection)
   end
 
   # -- Associations ----
@@ -87,6 +87,11 @@ describe Article do
     it "should not be valid without a slug" do
       @article.stub(:slug_set).and_return(nil)
       @article.slug = nil
+      @article.should_not be_valid
+    end
+
+    it "should not be valid without a article_collection_id" do
+      @article.article_collection_id = nil
       @article.should_not be_valid
     end
 

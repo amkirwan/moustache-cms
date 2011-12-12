@@ -16,7 +16,7 @@ class Ability
       
       can :read, ArticleCollection, :site_id => user.site_id
       can :manage, Article, do |article|
-        article._parent.editors.include?(user) && article.site_id == user.site_id
+        article.article_collection.editors.include?(user) && article.site_id == user.site_id
       end
 
       can :read, AssetCollection, :site_id => user.site_id   
@@ -46,6 +46,7 @@ class Ability
       can :manage, Site, :id => user.site_id
       can :manage, Page, :site_id => user.site_id
       can :manage, ArticleCollection, :site_id => user.site_id
+      can :manage, Article, :site_id => user.site_id
       can :manage, AssetCollection, :site_id => user.site_id
 
       can :manage, User, :site_id => user.site_id

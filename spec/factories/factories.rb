@@ -122,9 +122,21 @@ Factory.define :author do |author|
   author.middlename "middle"
   author.lastname "baz"
   author.profile "this is the author profile"
+  author.image { File.open("#{Rails.root}/spec/fixtures/assets/rails.png") }
+  author.created_by_id { Factory.build(:user).id }
+  author.updated_by_id { Factory.build(:user).id }
+end
+
+Factory.define :article_collection do |collection|
+  collection.site { Factory.build(:site) }
+  collection.sequence(:name) { |n| "name_#{n}" }
+  collection.editors {[ Factory.build(:user) ]}
+  collection.created_by_id { Factory.build(:user).id }
+  collection.updated_by_id { Factory.build(:user).id }
 end
 
 Factory.define :article do |article|
+  article.site { Factory.build(:site) }
   article.sequence(:title) { |n| "title_#{n}" }
   article.sequence(:slug) { |n| "slug_#{n}" }
   article.tags "article"
@@ -134,18 +146,11 @@ Factory.define :article do |article|
   article.content "article content"
   article.author_ids { [Factory.build(:user).id] }
   article.filter_name "published"
+  article.article_collection { Factory.build(:article_collection) }
   article.created_by_id { Factory.build(:user).id }
   article.updated_by_id { Factory.build(:user).id }
 end
 
-Factory.define :article_collection do |collection|
-  collection.site { Factory.build(:site) }
-  collection.sequence(:name) { |n| "name_#{n}" }
-  collection.articles { [Factory.build(:article)] }
-  collection.editors {[ Factory.build(:user) ]}
-  collection.created_by_id { Factory.build(:user).id }
-  collection.updated_by_id { Factory.build(:user).id }
-end
 
 Factory.define :asset_collection do |collection|
   collection.sequence(:name) { |n| "name_#{n}" }

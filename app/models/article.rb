@@ -52,6 +52,9 @@ class Article
   validates :slug,
             :presence => true
 
+  validates :article_collection_id,
+            :presence => true
+
   validates :created_by_id,
             :presence => true
 

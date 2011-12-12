@@ -30,11 +30,11 @@ describe Ability do
   let(:author) { Factory.build(:author, :site => site) }
   let(:author_other_site) { Factory.build(:author, :site => other_site) } 
 
-  let(:article) { Factory.build(:article, :site => site) } 
-  let(:article_other_site) { Factory.build(:article, :site => other_site) } 
-  
-  let(:article_collection) { Factory.build(:article_collection, :site => site, :editors => [admin, designer, editor], :articles => [article]) }
-  let(:article_collection_other_site) { Factory.build(:article_collection, :site => other_site, :editors => [admin_other_site], :articles => [article_other_site]) }
+  let(:article_collection) { Factory(:article_collection, :site => site, :articles => [], :editors => [admin, designer, editor]) }
+  let(:article_collection_other_site) { Factory(:article_collection, :site => other_site, :articles => [], :editors => [admin_other_site]) }
+
+  let(:article) { Factory(:article, :site => site, :article_collection => article_collection) } 
+  let(:article_other_site) { Factory(:article, :site => other_site, :article_collection => article_collection_other_site) } 
 
   let(:site_asset) { Factory.build(:site_asset, :creator_id => editor.id, :updator_id => editor.id) }
   let(:site_asset_other_site) { Factory.build(:site_asset, :creator_id => editor.id, :updator_id => editor.id) }
@@ -112,14 +112,7 @@ describe Ability do
 
       describe "Article Approved" do
         it "should allow the user with a role of editor to manage articles if they are editors of the collection" do
-          editor_ability.should be_able_to(:manage, article_first)
-        end
-      end
-
-      describe "Article Approved" do
-        it "should allow the user with a role of editor to manage the articles that they are an editor for" do
-
-          editor_ability.should be_able_to(:manage, site_asset_first)
+          editor_ability.should be_able_to(:manage, article)
         end
       end
 
@@ -290,6 +283,12 @@ describe Ability do
         end
       end
 
+      describe "Admin Article Model approved" do
+        it "should allow the user with the role of admin to manage the sites articles" do
+          admin_ability.should be_able_to(:manage, article)
+        end
+      end
+
       describe "Admin ArticleCollection Approved" do
         it "should allow the user with the role of admin to manage the article_collections" do
           admin_ability.should be_able_to(:manage, article_collection)
@@ -329,7 +328,8 @@ describe Ability do
       admin_ability.should_not be_able_to(:manage, page_other_site.page_parts.first)
 
       admin_ability.should_not be_able_to(:read, article_collection_other_site)
-      admin_ability.should_not be_able_to(:manage, article_collection_other_site.articles.first)
+
+      admin_ability.should_not be_able_to(:manage, article_other_site)
 
       admin_ability.should_not be_able_to(:change_password, admin_other_site)
       admin_ability.should_not be_able_to(:manage, admin_other_site)

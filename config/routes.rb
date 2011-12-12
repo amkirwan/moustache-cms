@@ -19,9 +19,9 @@ HandlebarCms::Application.routes.draw do
 
     resources :authors
 
-    resources :article_collections do
-      resources :articles
-    end
+    resources :article_collections
+
+    resources :articles
 
     resources :theme_assets do
       resources :tag_attrs
