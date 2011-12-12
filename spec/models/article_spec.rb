@@ -14,6 +14,10 @@ describe Article do
   # -- Associations ----
   describe "article associations" do
 
+    it "should belong to a site" do
+      @article.should belong_to(:site)
+    end
+
     it "should embed one current state" do
       @article.should embed_one :current_state
     end
@@ -48,6 +52,11 @@ describe Article do
   describe "Validations" do
     it "should be valid" do
       @article.should be_valid
+    end
+
+    it "should not be valid without a site_id" do
+      @article.site_id = nil
+      @article.should_not be_valid
     end
         
     it "should not be valid without a title" do

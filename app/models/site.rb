@@ -21,6 +21,7 @@ class Site
   has_many :theme_assets, :dependent => :destroy
   has_many :snippets, :dependent => :destroy
   has_many :authors, :dependent => :destroy
+  has_many :articles, :dependent => :destroy
     
   accepts_nested_attributes_for :meta_tags
 

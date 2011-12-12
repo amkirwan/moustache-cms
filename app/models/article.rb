@@ -30,13 +30,17 @@ class Article
   # -- Associations -------------
   embeds_one :current_state, :as => :publishable
   embeds_many :meta_tags, :as => :meta_taggable
+  belongs_to :site
   belongs_to :article_collection
   belongs_to :created_by, :class_name => "User"
   belongs_to :updated_by, :class_name => "User"
   belongs_to :layout, :class_name => "Layout"
   has_and_belongs_to_many :authors
 
-    # -- Validations -----------------------------------------------
+  # -- Validations -----------------------------------------------
+  validates :site_id,
+            :presence => true
+
   validates :title,
             :presence => true,
             :uniqueness => { :case_sensitive => false, :scope => :article_collection }

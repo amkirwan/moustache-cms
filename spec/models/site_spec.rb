@@ -71,6 +71,10 @@ describe Site do
     it "should have many authors" do
       @site.should have_many(:authors).with_dependent(:destroy)
     end
+
+    it "should have many articles" do
+      @site.should have_many(:articles).with_dependent(:destroy)
+    end
   end
   
   
