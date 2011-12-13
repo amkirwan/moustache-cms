@@ -11,7 +11,10 @@ class Admin::ArticlesController < AdminBaseController
     respond_with(:admin, @article_collection, @articles)
   end
 
-  
+  #/admin/article_collections/1/articles/new
+  def new
+    respond_with(:admin, @article_collection, @articles)
+  end
 
 
 end
