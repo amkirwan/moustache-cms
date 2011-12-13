@@ -15,6 +15,7 @@ class Ability
       end
       
       can :read, ArticleCollection, :site_id => user.site_id
+      
       can :manage, Article, do |article|
         article.article_collection.editors.include?(user) && article.site_id == user.site_id
       end

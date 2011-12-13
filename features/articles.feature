@@ -8,6 +8,13 @@ And these article collections exist in the site "foobar.example.com" created by 
     | name   |
     | foobar |
     | bar    |
-When I view the article collections
 
-
+@list_articles
+  Scenario: List Articles
+    Given these articles exist in the article collection "foobar"
+      | title     |
+      | article 1 |
+      | article 2 |
+      | article 3 |
+    When I view the articles in the collection "foobar"
+    Then I should see all the articles in the collection "foobar"

@@ -1,0 +1,8 @@
+%tr{:id => "#{article.title}", :class => "#{cycle('even', 'odd')}"}
+  %td.title= article.title
+  %td.created_at= article.created_at.strftime("%a %b #{article.created_at.day.ordinalize} %Y")
+  %td.updated_at= article.updated_at.strftime("%a %b #{article.created_at.day.ordinalize} %Y")
+  %td.updated_by= article.updated_by.username
+  %td.status= article.status
+  - if can? :destroy, article
+    %td.delete= link_to "Delete", [:admin, @article_collection, article], :method => :delete, :confirm => "Are you sure you want to delete the article #{article.title}", :class => "delete"

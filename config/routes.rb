@@ -19,9 +19,11 @@ HandlebarCms::Application.routes.draw do
 
     resources :authors
 
-    resources :article_collections
-
-    resources :articles
+    resources :article_collections do
+      get :new_meta_tag, :on => :collection
+      resources :meta_tags, :except => [:index, :show] 
+      resources :articles
+    end
 
     resources :theme_assets do
       resources :tag_attrs

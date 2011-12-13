@@ -82,7 +82,11 @@ module ApplicationHelper
     if collection.empty?
       content_tag :div, :class => 'add_some' do 
         content_tag :h4 do
-          link_to options[:message], [:new, :admin, options[:link]]
+          if options.include?(:collection)
+            link_to options[:message], [:new, :admin, options[:collection], options[:link]]
+          else
+            link_to options[:message], [:new, :admin, options[:link]]
+          end
         end
       end
     else
