@@ -25,3 +25,20 @@ And these article collections exist in the site "foobar.example.com" created by 
     When I follow "New Article"
     And I create an article titled "My Blog Post"
     Then I should see an article titled "My Blog Post" 
+
+@update_article
+  Scenario: Update Article Collection Properties
+    Given these article collections exist in the site "foobar.example.com" created by user "ak730"
+      | name   |
+      | foobar |
+      | bar    |
+    And these articles exist in the article collection "foobar"
+      | title         |
+      | article       |
+      | article1      |
+      | article2      |
+    When I view the article collection "foobar"
+    And I click the link "Edit Collection Props"
+    And I change the name to "foobar baz"
+    And I press the button "Update Article Collection"
+    Then I should see an article collection named "foobar baz"
