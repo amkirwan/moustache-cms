@@ -14,7 +14,8 @@ describe Admin::ArticlesController do
 
     before(:each) do
       ArticleCollection.stub(:find).and_return(@ac)
-      @ac.stub(:articles).and_return(@articles)
+      @ac.stub_chain(:articles, :asc).and_return(articles)
+      articles.stub(:page).and_return(articles)
     end
 
     def do_get
@@ -28,7 +29,7 @@ describe Admin::ArticlesController do
 
     it "should assign the @articles" do
       do_get
-      assigns(:articles).should == @articles
+      assigns(:articles).should == articles
     end
     
     it "should render the view" do
