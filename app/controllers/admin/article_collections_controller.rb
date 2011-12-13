@@ -16,7 +16,7 @@ class Admin::ArticleCollectionsController < AdminBaseController
 
   # GET /admin/article_collections/1
   def show
-    respond_with(:admin, @article_collection)
+    redirect_to [:admin, @article_collection, :articles]
   end
 
   # GET /admin/article_collections/1/edit

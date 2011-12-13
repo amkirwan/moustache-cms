@@ -82,7 +82,7 @@ describe Admin::ArticleCollectionsController do
 
     it "should render the show layout" do
       do_get
-      response.should render_template("admin/article_collections/show")
+      response.should redirect_to [:admin, @article_collection, :articles]
     end
 
   end
