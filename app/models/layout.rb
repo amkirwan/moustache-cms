@@ -28,6 +28,9 @@ class Layout
             
   validates_presence_of :content, :created_by_id, :updated_by_id, :site_id
 
+  # -- Scopes ----
+  scope :all_from_current_site, lambda { |current_site| { :where => { :site_id => current_site.id }} }
+
   #-- Private Instance Methods ----------------------------------
   private 
   

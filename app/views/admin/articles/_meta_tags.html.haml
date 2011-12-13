@@ -1,0 +1,15 @@
+%li#meta_tags_fields
+  = foldable_fieldset 'Article Meta Tags', :id => 'meta_tags_fieldset' do
+    %div.fields_wrap
+      %div.spinner_wrapper
+        = image_tag 'ajax-loader.gif', :class => 'spinner hidden'
+      %ol{ :id => 'article_meta_tags', :class => 'form_fields meta_tags'} 
+        = f.fields_for :meta_tags do |builder|
+          %li{:id => meta_tag_id(builder.object), :class => 'inline meta_tag'}  
+            = builder.label :name
+            = builder.text_field :name
+            = builder.label :content
+            = builder.text_field :content
+            = manage_meta_tag @article, builder.object
+        %li#add_meta_tag
+          = add_meta_tag 'Save article first to add custom meta tags', @article

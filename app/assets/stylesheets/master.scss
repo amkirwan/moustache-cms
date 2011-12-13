@@ -315,6 +315,14 @@ form.site_prop {
       input[type="radio"] {
         display: inline;
       }
+      p {
+        font-style: italic;
+        font-size: calc_em(12px, 14px);
+        line-height: 1.25;
+        margin-left:  calc_em(4px, 14px);
+        margin-bottom: 0.3em;
+        width: 75%;
+      }
     }
     .inline {
       label {

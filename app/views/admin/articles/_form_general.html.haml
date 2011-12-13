@@ -1,0 +1,15 @@
+%li#general_fields
+  = foldable_fieldset 'General' do
+    %div.fields_wrap
+      %ol
+        %li
+          = f.label :title, "Title<abbr title='required' class='required'>*</abbr>".html_safe
+          = f.text_field :title
+        %li{:class => "inline"}
+          = f.label :layout
+          = f.collection_select :layout_id, Layout.all_from_current_site(@current_site), :id, :name, {:include_blank => true}
+          %p Leave this blank to use the layout specified in the article collection properties. Selecting a layout will override the layout for the collection.
+        = f.fields_for :current_state do |builder|
+          %li{:class => "inline"}
+            = builder.label :current_state, "Status<abbr title='required' class='required'>*</abbr>".html_safe
+            = builder.collection_select :name, CurrentState.all, :id, :name

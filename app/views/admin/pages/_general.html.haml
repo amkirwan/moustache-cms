@@ -10,7 +10,7 @@
           = f.text_field :title
         %li{:class => "inline"}
           = f.label :layout, "Layout<abbr title='required' class='required'>*</abbr>".html_safe
-          = f.collection_select :layout_id, Layout.all, :id, :name
+          = f.collection_select :layout_id, Layout.all_from_current_site(@current_site), :id, :name
         = f.fields_for :current_state do |builder|
           %li{:class => "inline"}
             = builder.label :current_state, "Status<abbr title='required' class='required'>*</abbr>".html_safe

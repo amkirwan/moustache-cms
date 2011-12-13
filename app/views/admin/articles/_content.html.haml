@@ -1,0 +1,10 @@
+%li#article_content
+  = foldable_fieldset 'Content' do
+    %div.fields_wrap
+      %ol
+        %li.inline
+          = f.label :filter_name, "Filter<abbr title='required' class='required'>*</abbr>".html_safe
+          = f.collection_select :filter_name, Filter.all_page_filters, :id, :name, {}, {:class => "page_part_filter"}
+        %li
+          = f.label :content, "Content<abbr title='required' class='required'>*</abbr>".html_safe
+          = f.text_area :content, :class => "article_content code"

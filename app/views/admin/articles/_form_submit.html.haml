@@ -1,0 +1,4 @@
+%li#submit_fields
+  %fieldset
+    = f.submit button_label, :class => "submit"
+    = link_to "Cancel", [:admin, @article_collection, :articles], :class => "cancel"

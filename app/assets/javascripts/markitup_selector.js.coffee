@@ -16,7 +16,6 @@ jQuery ->
     #END:pageFilter
     
     if $('body.pages').length
-
       filters = []
       $('.page_parts select').each -> 
         filters.push $(this)
@@ -40,3 +39,12 @@ jQuery ->
           contentSettings $(this).text(), snippetContent
     else if $('body.theme_assets').length
       contentSettings "css", $('textarea.code')
+    else if $('body.articles').length
+      $('#article_filter_name option:selected').each ->
+        contentSettings $(this).text(), $('textarea#article_content')  
+
+      $('#article_filter_name').change ->
+        $('#article_filter_name option:selected').each ->
+          articleContent = $('textarea.article_content')
+          articleContent.markItUpRemove()
+          contentSettings $(this).text(), articleContent

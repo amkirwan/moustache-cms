@@ -18,3 +18,10 @@ And these article collections exist in the site "foobar.example.com" created by 
       | article 3 |
     When I view the articles in the collection "foobar"
     Then I should see all the articles in the collection "foobar"
+
+@create_article
+  Scenario: Create Article Collection
+    Given I view the article collection "foobar"
+    When I follow "New Article"
+    And I create an article titled "My Blog Post"
+    Then I should see an article titled "My Blog Post" 
