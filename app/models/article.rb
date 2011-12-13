@@ -37,6 +37,8 @@ class Article
   belongs_to :layout, :class_name => "Layout"
   has_and_belongs_to_many :authors
 
+  accepts_nested_attributes_for :meta_tags
+
   # -- Validations -----------------------------------------------
   validates :site_id,
             :presence => true
@@ -48,6 +50,9 @@ class Article
   validates :permalink,
             :presence => true,
             :uniqueness => { :case_sensitive => false, :scope => :article_collection }
+
+  validates :content,
+            :presence => true
 
   validates :slug,
             :presence => true
@@ -66,6 +71,7 @@ class Article
 
   # -- Callbacks ----------
   before_validation :format_title, :slug_set, :permalink_set
+  after_initialize :default_meta_tags
 
   # -- Instance Methods -----
   alias :full_path :permalink
@@ -95,5 +101,13 @@ class Article
         collection_name = self.article_collection.name.gsub(/[\s_]/, '-')
         self.permalink = "/#{collection_name}/#{year}/#{month}/#{day}/#{self.slug}" 
       end
-  end
+    end
+
+    def default_meta_tags
+      if self.new_record? && self.meta_tags.size == 0
+        self.meta_tags.build(:name => "title", :content => "")
+        self.meta_tags.build(:name => "keywords", :content => "")
+        self.meta_tags.build(:name => "description", :content => "")
+      end
+    end
 end

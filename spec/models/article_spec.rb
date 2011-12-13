@@ -90,6 +90,11 @@ describe Article do
       @article.should_not be_valid
     end
 
+    it "should not be valid without content" do
+      @article.content = nil
+      @article.should_not be_valid
+    end
+
     it "should not be valid without a article_collection_id" do
       @article.article_collection_id = nil
       @article.should_not be_valid
