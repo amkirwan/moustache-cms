@@ -4,4 +4,5 @@
     %th Created At
     %th Updated At
     %th Updated By
-  = render @articles.asc(:created_at)
+  = render @articles
+  = paginate @articles

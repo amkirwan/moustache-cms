@@ -7,7 +7,7 @@ class Admin::ArticlesController < AdminBaseController
 
   #/admin/article_collections/1/articles
   def index
-    @articles = @article_collection.articles.page(params[:page])
+    @articles = @article_collection.articles.asc(:created_at).page(params[:page])
     respond_with(:admin, @article_collection, @articles)
   end
 
