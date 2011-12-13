@@ -1,6 +1,0 @@
-%tr{:id => "#{article.title}", :class => "#{cycle('even', 'odd')}"}
-  %td.title= article.title
-  %td.created_at= article.created_at.strftime("%a %b #{article.created_at.day.ordinalize} %Y")
-  %td.updated_at= article.updated_at.strftime("%a %b #{article.created_at.day.ordinalize} %Y")
-  %td.updated_by= article.updated_by.username
-  %td.status= article.status
