@@ -30,12 +30,11 @@ class Ability
       end
 
       can :manage, MetaTag, do |meta_tag|
-        if meta_tag._parent.class.name == "Site"
-          meta_tag._parent.id == user.site_id
-        else
+        if meta_tag._parent.respond_to?(:site_id)
           meta_tag._parent.site_id == user.site_id
         end
       end
+
       cannot :manage, [Site, Layout, ThemeAsset, Snippet]
     end
 
@@ -49,6 +48,12 @@ class Ability
       can :manage, ArticleCollection, :site_id => user.site_id
       can :manage, Article, :site_id => user.site_id
       can :manage, AssetCollection, :site_id => user.site_id
+
+      can :manage, MetaTag, do |meta_tag|
+        if meta_tag._parent.class.name == "Site"
+          meta_tag._parent.id == user.site_id
+        end
+      end
 
       can :manage, User, :site_id => user.site_id
       cannot :change_password, User do |u|

@@ -130,10 +130,7 @@ describe Ability do
 
       describe "MetaTags Approved" do
         it "should allow the user with a role of editor to manage the pages meta_tags" do 
-          editor_ability.should be_able_to(:read, meta_tag_first)
-          editor_ability.should be_able_to(:create, meta_tag_first)
-          editor_ability.should be_able_to(:update, meta_tag_first)
-          editor_ability.should be_able_to(:destroy, meta_tag_first)
+          editor_ability.should be_able_to(:manage, page.meta_tags.first)
         end
       end
 
@@ -204,14 +201,14 @@ describe Ability do
         end
       end
 
-      describe "Article Approved" do
+      describe "Article Not Approved" do
         it "should not allow the user with a role of editor to manage articles if they are not an editor of the collection" do
           collection = Factory.build(:article_collection, :site => site, :editors => [], :articles => [article]) 
           editor_ability.should_not be_able_to(:manage, collection.articles.first)
         end
       end
       
-      describe "AssetCollection Approved" do
+      describe "AssetCollection Not Approved" do
         it "should not allow the user with a role of editor to create asset_collections" do
           editor_ability.should_not be_able_to(:create, asset_collection)
         end
@@ -229,6 +226,12 @@ describe Ability do
         it "should not allow the editor to manage the theme_assets" do
           editor_ability.should_not be_able_to(:manage, theme_asset)
         end  
+      end
+
+      describe "MetaTags Model Not Approved" do
+        it "should not allow the editor to manage the sites meta_tags" do
+          editor_ability.should_not be_able_to(:manage, site.meta_tags.first)
+        end
       end
     end
   end
@@ -298,6 +301,12 @@ describe Ability do
       describe "Admin User Model Approved" do
         it "should allow the user with the role of admin to manager the user accounts for the site" do
           admin_ability.should be_able_to(:manager, editor)
+        end
+      end
+
+      describe "Admin MetaTag Approved" do
+        it "should allow the user with the role of admin to manage the sites meta tags" do
+          admin_ability.should be_able_to(:manager, site.meta_tags.first)
         end
       end
     end
