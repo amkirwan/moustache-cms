@@ -40,7 +40,7 @@ class Admin::ArticleCollectionsController < AdminBaseController
     if @article_collection.update_attributes(params[:article_collection])
       flash[:notice] = "Successfully updated the article collection #{@article_collection.name}"
     end
-    respond_with(:admin, @article_collection)
+    respond_with(:admin, @article_collection, :location => [:admin, :article_collections])
   end
 
   # DELETE /admin/article_collections/1

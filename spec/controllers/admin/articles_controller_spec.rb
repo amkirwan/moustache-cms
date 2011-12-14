@@ -226,4 +226,47 @@ describe Admin::ArticlesController do
       end
     end
   end
+
+  describe "DELETE destroy" do
+    before(:each) do
+      @ac.stub_chain(:articles, :find).and_return(@article)
+    end
+
+    def do_delete
+      delete :destroy, :article_collection_id => @ac.to_param, :id => @article.to_param
+    end
+
+    it "should assign the article collection" do
+      do_delete
+      assigns(:article_collection).should == @ac
+    end
+
+
+    it "should assign the article" do
+      do_delete
+      assigns(:article).should == @article 
+    end
+
+    context "with valid params" do
+      before(:each) do
+        @article.stub(:destroy).and_return(true)
+      end
+
+      it "should receive destroy" do
+        @article.should_receive(:destroy).and_return(true)
+        do_delete
+      end
+
+      it "should assign the flash message" do
+        do_delete
+        flash[:notice].should_not be_empty
+      end
+      
+      it "should redirect to the index path" do
+        do_delete
+        response.should redirect_to [:admin, @ac, :articles]
+      end
+    end
+  end
+
 end

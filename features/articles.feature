@@ -37,3 +37,16 @@ And these article collections exist in the site "foobar.example.com" created by 
     And I click the link "article1"
     And I change the title of the article to "foobar baz"
     Then I should see an article collection named "foobar baz"
+
+
+@delete_article
+  Scenario: Delete Article 
+    Given these articles exist in the article collection "foobar"
+      | title         |
+      | article       |
+      | article1      |
+      | article2      |
+    When I view the article collection "foobar"
+    And I click the link "article1"
+    And I click the link "Delete Article"
+    Then I should see the message "Successfully deleted the article article1"

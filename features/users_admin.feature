@@ -14,13 +14,13 @@ Scenario: Admin login
   | foobar | editor | foobar.example.com |
   When I go to the admin users page 
   Then I should be on the admin users page
-  And I should see "Foobar Baz" within "tr#foo"
+  And I should see "Anthony Kirwan" within "tr#foo"
   And I should see "foo" within "tr#foo"
   And I should see "Admin" within "tr#foo"
-  And I should see "Foobar Baz" within "tr#bar"
+  And I should see "Anthony Kirwan" within "tr#bar"
   And I should see "bar" within "tr#bar" 
   And I should see "Editor" within "tr#bar" 
-  And I should see "Foobar Baz" within "tr#foobar"
+  And I should see "Anthony Kirwan" within "tr#foobar"
   And I should see "foobar" within "tr#foobar" 
   And I should see "Editor" within "tr#foobar" 
 
@@ -30,18 +30,18 @@ Scenario: Create A New user
   And I follow "New User" 
   Then I should be on the new admin user page 
   When I fill in "user_username" with "foobar" 
-  And I fill in "user_firstname" with "foobar"
-  And I fill in "user_lastname" with "baz"
+  And I fill in "user_firstname" with "Anthony "
+  And I fill in "user_lastname" with "Kirwan"
   And I fill in "user_email" with "foobar@example.com" 
   And I choose "user_role_admin" 
   And I press "Create User" 
   Then I should be on the admin users page 
-  And I should see "Successfully created user profile for Foobar Baz"
+  And I should see "Successfully created user profile for Anthony Kirwan"
 
 @admin_edit_own_account
 Scenario: Given I am logged in as an admin then I can edit my account
   When I go to the admin users page
-  And I follow "Foobar Baz" within "tr#ak730"
+  And I follow "Anthony Kirwan" within "tr#ak730"
   Then I should now be editing the user "ak730"
   And I fill in "user[firstname]" with "Foobar" 
   And I fill in "user[lastname]" with "Baz" 
@@ -62,7 +62,7 @@ Scenario: Given I am logged in as an admin then I can edit any users account
   | foo    | admin  | foobar.example.com |
   | bar    | editor | foobar.example.com |
   When I go to the admin users page
-  And I follow "Foobar Baz" within "tr#foo"
+  And I follow "Anthony Kirwan" within "tr#foo"
   Then I should now be editing the user "foo"
   And the "user[email]" field should contain "foo@example.com"
   And the "user_role_admin" checkbox should be checked 
@@ -70,7 +70,7 @@ Scenario: Given I am logged in as an admin then I can edit any users account
   Then I choose "user_role_editor" 
   And I press "Update User" 
   Then I should be on the admin users page
-  And I should see "Successfully updated user profile for Foobar Baz"
+  And I should see "Successfully updated user profile for Anthony Kirwan"
   When I edit the account information for the user "foo"
   Then I should now be editing the user "foo"
   And the "user[email]" field should contain "baz@example.com"
@@ -85,7 +85,7 @@ Scenario: Given I am logged in as an admin then I can delete my account
 @admin_can_delete_own_account_from_page
 Scenario: Given I am logged in as an admin then I can delete my account from my user page
   When I go to the admin users page
-  And I follow "Foobar Baz" within "tr#ak730"
+  And I follow "Anthony Kirwan" within "tr#ak730"
   Then I should now be editing the user "ak730"
   When I follow "Delete User" 
   Then I should be on the new admin user session page
@@ -98,6 +98,6 @@ Scenario: Delete user account as an admin
   | bar    | editor | foobar.example.com |
   When I go to the admin users page
   And I follow "Delete" within "tr#foobar"
-  Then I should see "Successfully deleted user profile for Foobar Baz"
+  Then I should see "Successfully deleted user profile for Anthony Kirwan"
   And I should be on the admin users page
                                                    

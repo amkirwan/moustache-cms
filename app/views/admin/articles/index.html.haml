@@ -1,7 +1,5 @@
 - header_content 'shared/header_wrapper', :object => :Article do
-  - if can? :create, Article
-    %div{:id => "new_article", :class => "create"}
-      = link_to "New Article", [:new, :admin, @article_collection, :article], :class => "action create"
+  = render :partial => 'admin/articles/submenu'
 
 - inner_content "shared/inner_wrapper" do
   = list_objects @articles, :message => 'Add An Article', :collection => @article_collection, :link => :article

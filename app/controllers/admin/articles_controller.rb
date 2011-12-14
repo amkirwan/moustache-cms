@@ -42,6 +42,14 @@ class Admin::ArticlesController < AdminBaseController
     end
   end
 
+  # DELETE /admina/article_collection/1/articles/1
+  def destroy
+    if @article.destroy
+      flash[:notice] = "Successfully deleted the article #{@article.title}"
+    end
+    respond_with(:admin, @article_collection, @article, :location => [:admin, @article_collection, :articles])
+  end
+
   def new_meta_tag
     @base_class = Page.new
     @meta_tag = MetaTag.new

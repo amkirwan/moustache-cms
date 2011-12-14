@@ -15,10 +15,10 @@ Scenario: Given I am logged in as an editor then I cannot list all the users
   | bar    | editor | foobar.example.com |
   When I go to the admin users page
   Then I should be on the admin users page
-  And I should see "Foobar Baz" within "tr#foo"
+  And I should see "Anthony Kirwan" within "tr#foo"
   And I should see "foo" within "tr#foo"
   And I should see "Admin" within "tr#foo"
-  And I should see "Foobar Baz" within "tr#bar"
+  And I should see "Anthony Kirwan" within "tr#bar"
   And I should see "bar" within "tr#bar" 
   And I should see "Editor" within "tr#bar"
   
@@ -49,7 +49,7 @@ Scenario: Given I am logged in as an editor then I can delete my account
 @editor_can_delete_own_account_from_page
 Scenario: Given I am logged in as an editor then I can delete my account from my user page
   When I go to the admin users page
-  And I follow "Foobar Baz" within "tr#ak730"
+  And I follow "Anthony Kirwan" within "tr#ak730"
   Then I should now be editing the user "ak730"
   When I follow "Delete User" 
   Then I should be on the new admin user session page
