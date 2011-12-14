@@ -9,6 +9,11 @@ When /^I create an article titled "([^"]*)"$/ do |title|
   click_on "Create Article" 
 end
 
+When /^I change the title of the article to "([^"]*)"$/ do |title|
+  fill_in 'Title*', :with => title
+  click_on "Update Article" 
+end
+
 Then /^I should see all the articles in the collection "([^"]*)"$/ do |ac_name|
   ac = find_article_collection(ac_name)
   ac.articles.each do |article|

@@ -19,6 +19,8 @@ end
 
 Given /^the user "([^\"]*)" exists with the role of "([^\"]*)" in the site "([^\"]*)"$/ do |username, role, site| 
   user = Factory(:user, :username => username,
+                 :firstname => "Anthony",
+                 :lastname => "Kirwan",
                  :email => "#{username}@example.com",
                  :role => role,
                  :site => Site.match_domain(site).first)

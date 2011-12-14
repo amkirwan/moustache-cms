@@ -12,4 +12,4 @@
             = builder.text_field :content
             = manage_meta_tag @article, builder.object
         %li#add_meta_tag
-          = add_meta_tag 'Save article first to add custom meta tags', @article
+          = add_meta_tag 'Save article first to add custom meta tags', @article, [:new, :admin, @article_collection, @article, :meta_tag]

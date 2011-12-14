@@ -14,7 +14,7 @@ describe Admin::ArticlesController do
     let(:articles) { [@article] }
 
     before(:each) do
-      @ac.stub_chain(:articles, :asc).and_return(articles)
+      @ac.stub_chain(:articles, :desc).and_return(articles)
       articles.stub(:page).and_return(articles)
     end
 
@@ -57,6 +57,37 @@ describe Admin::ArticlesController do
     it "should assign the @article" do
       do_get
       assigns(:article).should == @article
+    end
+
+    it "should render the template" do
+      do_get
+      response.should render_template('admin/articles/new')
+    end
+  end
+
+  #GET edit
+  describe "GET edit" do
+    before(:each) do
+      @ac.stub_chain(:articles, :find).and_return(@article)
+    end
+
+    def do_get
+      get :edit, :article_collection_id => @ac.to_param, :id => @article.to_param
+    end
+
+    it "should assign the @article_collection" do
+      do_get
+      assigns(:article_collection).should == @ac
+    end
+
+    it "should assign the @article" do
+      do_get
+      assigns(:article).should == @article
+    end
+
+    it "should render the template" do
+      do_get
+      response.should render_template('admin/articles/edit')
     end
   end
 
@@ -129,6 +160,70 @@ describe Admin::ArticlesController do
         response.should render_template("admin/articles/new")
       end
     end
+  end
 
+  describe "PUT update" do
+    let(:params) { { "article_collection_id" => @ac.to_param, "id" => @article.to_param, "article" => { "title" => "foobar"}} }
+
+    before(:each) do
+      @ac.stub_chain(:articles, :find).and_return(@article)
+    end
+    
+    def do_put(put_params=params)
+      put :update, put_params
+    end
+
+    it "should assign the article_collection" do
+      do_put
+      assigns[:article_collection].should == @ac
+    end
+
+    it "should assign the article" do
+      do_put
+      assigns[:article].should == @article
+    end
+
+    it "should update updated_by attribute" do
+      @article.should_receive(:updated_by=).with(@admin_user)
+      do_put
+    end
+
+    context "valid params" do
+      before(:each) do
+        @article.stub(:update_attributes).and_return(true)
+      end
+
+      it "should receive update_attributes" do
+        @article.should_receive(:update_attributes).and_return(true)
+        do_put
+      end
+
+      it "should assign a flash message" do
+        do_put
+        flash[:notice].should_not be_empty
+      end
+
+      it "should redirect_to the index page" do
+        do_put
+        response.should redirect_to [:admin, @ac, :articles]
+      end
+    end
+
+    context "invalid params" do
+      before(:each) do
+        @article.stub(:update_attributes).and_return(false)
+        @article.stub(:errors => { :anything => "ac errors" })
+      end
+
+      it "should receive update_attributes" do
+        @article.should_receive(:update_attributes).and_return(false)
+        do_put
+      end
+
+      it "should render the edit template" do
+        do_put
+        response.should render_template('admin/articles/edit')
+      end
+    end
   end
 end

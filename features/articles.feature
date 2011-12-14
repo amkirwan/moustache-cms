@@ -28,17 +28,12 @@ And these article collections exist in the site "foobar.example.com" created by 
 
 @update_article
   Scenario: Update Article Collection Properties
-    Given these article collections exist in the site "foobar.example.com" created by user "ak730"
-      | name   |
-      | foobar |
-      | bar    |
-    And these articles exist in the article collection "foobar"
+    Given these articles exist in the article collection "foobar"
       | title         |
       | article       |
       | article1      |
       | article2      |
     When I view the article collection "foobar"
-    And I click the link "Edit Collection Props"
-    And I change the name to "foobar baz"
-    And I press the button "Update Article Collection"
+    And I click the link "article1"
+    And I change the title of the article to "foobar baz"
     Then I should see an article collection named "foobar baz"

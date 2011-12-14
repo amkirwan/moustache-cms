@@ -2,7 +2,8 @@ class Admin::MetaTagsController < AdminBaseController
 
   load_resource :site
   load_resource :page
-  load_and_authorize_resource :meta_tag, :through => [:site, :page]
+  load_resource :article
+  load_and_authorize_resource :meta_tag, :through => [:site, :page, :article]
   before_filter :assign_base_class
 
   respond_to :html, :except => :show
@@ -45,6 +46,8 @@ class Admin::MetaTagsController < AdminBaseController
     def assign_base_class
       if params[:page_id]
         @base_class = @page
+      elsif params[:article_id]
+        @base_class = @article
       else
         @base_class = @site
       end
