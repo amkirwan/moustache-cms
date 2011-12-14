@@ -12,4 +12,4 @@
             = builder.text_field :content
             = manage_meta_tag @current_site, builder.object
         %li#add_meta_tag
-          = add_meta_tag 'Save current site first to add custom site wide meta tags', @current_site
+          = add_meta_tag 'Save current site first to add custom site wide meta tags', @current_site, [:new, :admin, @current_site, :meta_tag]

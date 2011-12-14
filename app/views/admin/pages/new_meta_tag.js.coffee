@@ -7,7 +7,7 @@ replaceCharWith = (str, oldChar, newChar) ->
 if $('li#add_meta_tag').length
   $('li#add_meta_tag').before('<%= escape_javascript(render(:partial => "admin/meta_tags/meta_tag")) %>').fadeIn()
 
-  meta_tags = $('ul.meta_tags').find('li.meta_tag')
+  meta_tags = $('ol.meta_tags').find('li.meta_tag')
 
   if meta_tags.length > 0
     metaTagCount = meta_tags.length - 1
