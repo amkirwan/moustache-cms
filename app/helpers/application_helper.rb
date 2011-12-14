@@ -15,6 +15,8 @@ module ApplicationHelper
       name  
     when "article_collections", "articles"
       "articles"
+    when "authors"
+      name
     when "site_assets", "asset_collections"
       "site_assets"
     when "snippets"
