@@ -27,6 +27,10 @@ class Article
 
   taggable
 
+  # -- Index -----
+  index :title
+  index :permalink
+
   # -- Associations -------------
   embeds_one :current_state, :as => :publishable
   embeds_many :meta_tags, :as => :meta_taggable
