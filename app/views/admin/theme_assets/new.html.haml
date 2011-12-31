@@ -1,5 +1,4 @@
-- header_content 'shared/header_wrapper', :object => :ThemeAsset do
-  = can_create? ThemeAsset
+- header_content 'shared/header_wrapper', :object => @theme_asset
 
 - inner_content "shared/inner_wrapper" do
   = render :partial => "form",  
