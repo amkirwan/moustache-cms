@@ -1,7 +1,7 @@
 class ThemeAsset 
   include Mongoid::Document
   include Mongoid::Timestamps
-  
+
   attr_accessible :name, 
                   :description, 
                   :content_type,
@@ -76,7 +76,7 @@ class ThemeAsset
   def update_file_content(file_contents)
     File.open(self.asset.path, "wb") { |f| f.write(file_contents) }
   end
-  
+
 end
 
 
