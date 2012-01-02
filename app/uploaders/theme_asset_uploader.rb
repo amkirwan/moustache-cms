@@ -37,8 +37,7 @@ class ThemeAssetUploader < CarrierWave::Uploader::Base
     
   # Override the filename of the uploaded files:
   def filename
-    @name ||= "#{model.name.split('.').first}-#{::Digest::MD5.hexdigest(File.read(file.path))}"
-    "#{@name}.#{file.extension}"
+    "#{model.name.split('.').first}.#{file.extension}" if original_filename
   end    
 
    def image?(sanitized_file)    
@@ -68,9 +67,10 @@ class ThemeAssetUploader < CarrierWave::Uploader::Base
       end
    end
 
-  version :without_fingerprint do
+  version :with_fingerprint do
     def full_filename (for_file = model.asset.file)
-      "#{model.name.split('.').first}.#{model.asset.file.extension}" 
+      name ||= "#{model.name.split('.').first}-#{::Digest::MD5.hexdigest(File.read(model.asset.file.path))}"
+      "#{name}.#{model.asset.file.extension}"
     end
   end
 
@@ -89,6 +89,8 @@ class ThemeAssetUploader < CarrierWave::Uploader::Base
         "images"
       when javascript?(sanitized_file)
         "javascripts"
+      when image?(sanitized_file)
+        "images"
       else
         "assets"
       end

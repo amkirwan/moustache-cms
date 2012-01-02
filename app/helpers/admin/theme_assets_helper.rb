@@ -34,9 +34,9 @@ module Admin::ThemeAssetsHelper
         content_tag :li do
           text_area_tag :theme_asset_file_content, @theme_asset.asset.read, :class => "code", :cols => "80", :rows => "30"
         end
-      elsif version == :without_md5
+      elsif version == :with_md5
         content_tag :li, :class => 'img_thumb' do
-          link_to image_tag(@theme_asset.asset.url, :class => "theme_asset_thumb"), "http://#{request.host}#{@theme_asset.asset.without_fingerprint.url}" 
+          link_to image_tag(@theme_asset.asset.with_fingerprint.url, :class => "theme_asset_thumb"), "http://#{request.host}#{@theme_asset.asset.url}" 
         end
       else
         content_tag :li, :class => 'img_thumb' do

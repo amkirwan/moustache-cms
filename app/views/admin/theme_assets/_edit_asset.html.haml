@@ -2,13 +2,12 @@
   = foldable_fieldset 'File' do
     %div.fields_wrap
       %ol.form_fields
+        = edit_asset_field 
         %li
-          %h5 Asset without MD5 Fingerprint
-          %span= "#{@theme_asset.asset.without_fingerprint.file.filename} is available"
-          = link_to 'here', "http://#{request.host}#{@theme_asset.asset.without_fingerprint.url}"
-        = edit_asset_field :without_md5
-        %li
-          %h5 Asset with MD5 Fingerprint
+          %h5 Asset 
           %span= "#{@theme_asset.asset.file.filename} is available"
           = link_to 'here', "http://#{request.host}#{@theme_asset.asset.url}"
-        = edit_asset_field 
+        %li
+          %h5 Asset with MD5 Fingerprint
+          %span= "#{@theme_asset.asset.with_fingerprint.file.filename} is available"
+          = link_to 'here', "http://#{request.host}#{@theme_asset.asset.with_fingerprint.url}"
