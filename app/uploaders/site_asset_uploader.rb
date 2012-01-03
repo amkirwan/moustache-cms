@@ -37,11 +37,7 @@ class SiteAssetUploader < CarrierWave::Uploader::Base
     
   # Override the filename of the uploaded files:
     def filename
-      #"#{model.name}.#{file.extension}" 
-      if original_filename
-        @name ||= "#{model.name.split('.').first}-#{Digest::MD5.hexdigest(File.dirname(current_path))}"
-        "#{@name}.#{file.extension}"
-      end
+      "#{model.name.split('.').first}.#{file.extension}" if original_filename
     end  
 
    def image?(sanitized_file)    
@@ -52,6 +48,13 @@ class SiteAssetUploader < CarrierWave::Uploader::Base
         types.first.content_type.include? 'image'
       end
    end
+
+  version :with_fingerprint do
+    def full_filename (for_file = model.asset.file)
+      name ||= "#{model.name.split('.').first}-#{::Digest::MD5.hexdigest(File.read(model.asset.file.path))}"
+      "#{name}.#{model.asset.file.extension}"
+    end
+  end
    
    
    private
