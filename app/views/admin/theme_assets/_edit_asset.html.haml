@@ -5,9 +5,9 @@
         = edit_asset_field 
         %li
           %h5 Asset 
-          %span= "#{@theme_asset.asset.file.filename} is available"
-          = link_to 'here', "http://#{request.host}#{@theme_asset.asset.url}"
+          %span= "#{@theme_asset.asset.without_fingerprint.file.filename} is available"
+          = link_to 'here', "http://#{request.host}#{@theme_asset.asset.without_fingerprint.url}"
         %li
           %h5 Asset with MD5 Fingerprint
-          %span= "#{@theme_asset.asset.with_fingerprint.file.filename} is available"
-          = link_to 'here', "http://#{request.host}#{@theme_asset.asset.with_fingerprint.url}"
+          %span= "#{@theme_asset.asset.file.filename} is available"
+          = link_to 'here', "http://#{request.host}#{@theme_asset.asset.url}"

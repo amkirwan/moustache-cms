@@ -23,8 +23,8 @@ module ApplicationHelper
       name  
     when "layouts"
       name
-    when "theme_assets"
-      name
+    when "theme_collections", "theme_assets"
+      "theme_assets"  
     when "users"
       name
     when "current_site"

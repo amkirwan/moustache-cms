@@ -3,6 +3,8 @@
   = render :partial => 'admin/asset_collections/submenu'
                 
 - inner_content "shared/inner_wrapper" do
+  %div.breadcrumb
+    = link_to "&laquo Site Asset Collections".html_safe, [:admin, :asset_collections]
   
   %div{ :id => "collection_#{@asset_collection.name}" }
     %ul{ :id => 'assets', :class => 'show_asset_collection' }

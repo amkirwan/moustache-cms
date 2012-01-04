@@ -36,9 +36,10 @@ class AuthorUploader < CarrierWave::Uploader::Base
    end
     
   # Override the filename of the uploaded files:
-    def filename
-      "#{model.name.split('.').first}.#{file.extension}" if original_filename
-    end  
+  def filename
+    hex = ::Digest::MD5.hexdigest(File.read(model.asset.file.path))
+    @name ||= "#{model.name.split('.').first}-#{hex}.#{model.asset.file.extension}" if original_filename
+  end   
 
    def image?(sanitized_file)    
      types = mime_types(sanitized_file)
@@ -49,10 +50,14 @@ class AuthorUploader < CarrierWave::Uploader::Base
       end
    end
 
-  version :with_fingerprint do
+  version :without_fingerprint do
     def full_filename (for_file = model.asset.file)
-      name ||= "#{model.name.split('.').first}-#{::Digest::MD5.hexdigest(File.read(model.asset.file.path))}"
-      "#{name}.#{model.asset.file.extension}"
+      name_split = for_file.split('-')
+      hash_ext = name_split.pop
+      ext = hash_ext.split('.').pop
+      name = name_split.join('-')
+      name += ".#{ext}"
+      @name ||= name
     end
   end
    
