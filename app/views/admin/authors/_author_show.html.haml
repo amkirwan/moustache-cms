@@ -1,4 +1,12 @@
 %h5.author_name= @author.full_name
 %p.author_profile= @author.profile
 %p.author_image= @author.image
+%ul
+  %li
+    %h5 Author image
+    %span= "#{@author.asset.without_fingerprint.file.filename} is available"
+    = link_to 'here', "http://#{request.host}#{@author.asset.without_fingerprint.url}"
+  %li
+    %h5 Author image with MD5 Fingerprint
+    %span= "#{@author.asset.file.filename} is available"
 
