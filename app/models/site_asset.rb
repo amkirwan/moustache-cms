@@ -35,7 +35,7 @@ class SiteAsset
   
   # -- Callbacks
   before_save :update_asset_attributes
-  before_update :recreate, :if => "self.name_changed?"
+  before_update :recreate
   after_destroy :remove_folder  
     
   # -- Instance Methods     

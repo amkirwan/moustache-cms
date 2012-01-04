@@ -1,0 +1,6 @@
+- header_content 'shared/header_wrapper', :object => :ThemeCollection do
+  = can_create? ThemeCollection
+
+- inner_content "shared/inner_wrapper" do
+
+  = list_objects @theme_collections, :message => 'Add A Theme Collection', :link => :theme_collection 

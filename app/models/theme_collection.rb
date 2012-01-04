@@ -1,4 +1,4 @@
-class AssetCollection
+class ThemeCollection
   include Mongoid::Document
   include Mongoid::Timestamps
   
@@ -9,10 +9,10 @@ class AssetCollection
   belongs_to :site
   belongs_to :created_by, :class_name => "User"
   belongs_to :updated_by, :class_name => "User"
-  embeds_many :site_assets
+  embeds_many :theme_assets
   
   # -- Validations ---------------
-  validates_associated :site_assets
+  validates_associated :theme_assets
 
   validates :name,
             :presence => true,
@@ -31,7 +31,8 @@ class AssetCollection
   before_destroy :remove_folder 
 
   def remove_folder
-    FileUtils.rm_rf(File.join(Rails.root, 'public', 'site_assets', site.id.to_s, name))
+    FileUtils.rm_rf(File.join(Rails.root, 'public', 'theme_assets', site.id.to_s, name))
   end
 
 end
+

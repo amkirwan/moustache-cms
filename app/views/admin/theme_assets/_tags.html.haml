@@ -4,5 +4,5 @@
     = builder.text_field :name
     = builder.label :value
     = builder.text_field :value
-    = link_to "Delete", [:admin, @theme_asset, builder.object], :confirm => "Are you sure you want to delete the tag attribute #{builder.object.name}", :method => :delete, :class => "delete tag_attr_delete", :remote => true
-%li#add_tag_attr= link_to "Add Tag Attribute", [:new, :admin, @theme_asset, :tag_attr], :remote => true
+    = link_to "Delete", [:admin, @theme_collection, @theme_asset, builder.object], :confirm => "Are you sure you want to delete the tag attribute #{builder.object.name}", :method => :delete, :class => "delete tag_attr_delete", :remote => true
+%li#add_tag_attr= link_to "Add Tag Attribute", [:new, :admin, @theme_collection, @theme_asset, :tag_attr], :remote => true

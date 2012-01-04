@@ -1,0 +1,9 @@
+- header_content 'shared/header_wrapper', :object => @theme_collection, :show => true do
+
+  = render :partial => 'admin/theme_collections/submenu'
+                
+- inner_content "shared/inner_wrapper" do
+  
+  %div{ :id => "collection_#{@theme_collection.name}" }
+    %ul{ :id => 'assets', :class => 'show_asset_collection' }
+      = add_assets?

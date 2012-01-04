@@ -1,13 +1,14 @@
 class Admin::TagAttrsController < AdminBaseController 
 
-  load_and_authorize_resource :theme_asset
+  load_and_authorize_resource :theme_collection
+  load_resource :theme_asset, :through => :theme_collection
   load_resource :tag_attr, :through => :theme_asset
 
   respond_to :html, :xml, :json
   respond_to :js, :only => [:new, :destroy]
 
   def new
-    respond_with(:admin, @theme_asset, @tag_attr)
+    respond_with(:admin, @theme_collection, @theme_asset, @tag_attr)
   end
 
   def edit

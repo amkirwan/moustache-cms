@@ -15,7 +15,7 @@
     %li#layouts 
       = link_to "Layouts", [:admin, :layouts]
     %li#theme_assets
-      = link_to "Theme Assets", [:admin, :theme_assets]
+      = link_to "Theme Assets", [:admin, :theme_collections]
     - if current_admin_user.role?('admin')
       %li#users
         = link_to "User Profiles", [:admin, :users]

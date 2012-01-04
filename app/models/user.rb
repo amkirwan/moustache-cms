@@ -35,6 +35,12 @@ class User
   has_many :theme_assets_created, :class_name => "ThemeAsset", :foreign_key => :created_by_id
   has_many :theme_assets_updated, :class_name => "ThemeAsset", :foreign_key => :updated_by_id
 
+  has_many :asset_collections_created, :class_name => "AssetCollection", :foreign_key => :created_by_id
+  has_many :asset_collections_updated, :class_name => "AssetCollection", :foreign_key => :updated_by_id
+
+  has_many :theme_collections_created, :class_name => "ThemeCollection", :foreign_key => :created_by_id
+  has_many :theme_collections_updated, :class_name => "ThemeCollection", :foreign_key => :updated_by_id
+
   has_many :article_collections_created, :class_name => "ArticleCollection", :foreign_key => :created_by_id
   has_many :article_collections_updated, :class_name => "ArticleCollection", :foreign_key => :updated_by_id
 

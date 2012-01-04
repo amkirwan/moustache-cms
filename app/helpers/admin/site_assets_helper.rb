@@ -4,7 +4,7 @@ module Admin::SiteAssetsHelper
     if @asset_collection.site_assets.empty?
       content_tag :div, :class => 'add_some' do
         content_tag :h4 do
-          link_to 'Add Some Assets', [:new, :admin, @asset_collection, :site_asset]
+          link_to "Add Some Assets to the Collection #{@asset_collection.name}" , [:new, :admin, @asset_collection, :site_asset]
         end
       end
     else

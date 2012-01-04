@@ -51,6 +51,10 @@ describe Ability do
   let(:theme_asset) { Factory.build(:theme_asset, :site => site, :created_by => admin, :tag_attrs => [tag_attr]) }
   let(:theme_asset_other_site) { Factory.build(:theme_asset, :site => other_site, :created_by => admin_other_site, :tag_attrs => [tag_attr_other_site]) }
 
+  let(:theme_collection) { Factory.build(:theme_collection, :site => site, :created_by => admin, :theme_assets => [theme_asset]) }
+
+  let(:theme_collection_other_site) { Factory.build(:theme_collection, :site => other_site, :created_by => admin, :theme_assets => [theme_asset_other_site]) }
+
   def site_asset_first
     asset_collection.site_assets.first
   end
@@ -223,8 +227,8 @@ describe Ability do
       end
 
       describe "ThemeAsset Model Not Approved" do
-        it "should not allow the editor to manage the theme_assets" do
-          editor_ability.should_not be_able_to(:manage, theme_asset)
+        it "should not allow the editor to manage the theme_collection" do
+          editor_ability.should_not be_able_to(:manage, theme_collection)
         end  
       end
 
@@ -246,8 +250,8 @@ describe Ability do
       end
 
       describe "Designer ThemeAsset Model Approved" do
-        it "should allow the user with the role of designer to manage the sites theme_assets" do
-          designer_ability.should be_able_to(:manage, theme_asset)
+        it "should allow the user with the role of designer to manage the sites theme_collection" do
+          designer_ability.should be_able_to(:manage, theme_collection)
         end
       end
 
@@ -298,6 +302,12 @@ describe Ability do
         end
       end
 
+      describe "Admin ThemeCollection Approved" do
+        it "should allow the user with the role of admin to manage the theme_collections" do
+          admin_ability.should be_able_to(:manage, theme_collection)
+        end
+      end
+
       describe "Admin User Model Approved" do
         it "should allow the user with the role of admin to manager the user accounts for the site" do
           admin_ability.should be_able_to(:manager, editor)
@@ -327,7 +337,7 @@ describe Ability do
       admin_ability.should_not be_able_to(:manage, admin_other_site)
       admin_ability.should_not be_able_to(:manage, page_other_site)
       admin_ability.should_not be_able_to(:manage, layout_other_site)
-      admin_ability.should_not be_able_to(:manage, theme_asset_other_site)
+      admin_ability.should_not be_able_to(:manage, theme_collection_other_site)
       admin_ability.should_not be_able_to(:manage, asset_collection_other_site)
 
       admin_ability.should_not be_able_to(:read, asset_collection_other_site.site_assets.first)

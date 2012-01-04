@@ -19,25 +19,23 @@ class ThemeAsset
   field :width, :type => Integer
   field :height, :type => Integer
   field :file_size, :type => Integer 
+  field :creator_id
+  field :updator_id
   mount_uploader :asset, ThemeAssetUploader
    
   # -- Associations ----------
+  embedded_in :article_collection  
   embeds_many :tag_attrs, :as => :tag_attrable
-  belongs_to :site
-  belongs_to :created_by, :class_name => "User"
-  belongs_to :updated_by, :class_name => "User"
 
   accepts_nested_attributes_for :tag_attrs
 
   # -- Validations --------------
   validates :name, :presence => true 
-  validates :site_id,
-            :presence => true            
   validates :asset, :presence => true
   
   # -- Callbacks
   before_save :update_asset_attributes
-  before_update :recreate, :if => "self.name_changed?"
+  before_update :recreate
     
   def recreate
     self.asset.recreate_versions!
@@ -49,9 +47,9 @@ class ThemeAsset
   end
   
   # -- Class Methods --------
-  scope :css_files, lambda { |site| { :where => { :content_type => "text/css", :site_id => site.id }} }
-  scope :js_files, lambda { |site| { :where => { :content_type => "text/javascript", :site_id => site.id }} }
-  scope :images, lambda { |site| { :where => { :content_type => /^image/i, :site_id => site.id }} }
+  scope :css_files, lambda { { :where => { :content_type => "text/css" }} }
+  scope :js_files, lambda { { :where => { :content_type => "text/javascript" }} }
+  scope :images, lambda { { :where => { :content_type => /^image/i }} }
   scope :find_by_name, lambda { |name| { :where => { :name => name }} }
 
 
@@ -63,7 +61,7 @@ class ThemeAsset
 
 
   def self.other_files(site)
-    not_in(:content_type => ['text/css', 'text/javascript', /^image/i]).where(:site_id => site.id)
+    ThemeCollection.criteria.for_ids(site.id).where("theme_assets.content_type" => {"$nin" => ['text/css', 'text/javascript', /^image/i]}).to_a
   end
   
   # -- Instance Methods ----------

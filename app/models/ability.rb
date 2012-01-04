@@ -14,8 +14,7 @@ class Ability
         page.editors.include?(user) && page.site_id == user.site_id
       end
       
-      can :read, ArticleCollection, :site_id => user.site_id
-      
+      can :read, ArticleCollection, :site_id => user.site_id   
       can :manage, Article, do |article|
         article.article_collection.editors.include?(user) && article.site_id == user.site_id
       end
@@ -34,12 +33,14 @@ class Ability
           meta_tag._parent.site_id == user.site_id
         end
       end
-
       cannot :manage, [Site, Layout, ThemeAsset, Snippet]
     end
 
     if user.role? :designer
-      can :manage, [Layout, ThemeAsset, Snippet, Author], :site_id => user.site_id  
+      can :manage, [Layout, ThemeCollection, Snippet, Author], :site_id => user.site_id  
+      can :manage, ThemeAsset, do |theme_asset|
+        theme_asset._parent.site_id == user.site_id
+      end
     end
 
     if user.role? :admin

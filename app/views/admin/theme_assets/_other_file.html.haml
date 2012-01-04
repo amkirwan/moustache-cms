@@ -1,4 +1,0 @@
-%tr{:id => "#{other_file.name}_js", :class => "#{cycle('even', 'odd', :name => 'table_list')}"}
-  %td.name= link_to other_file.name, [:edit, :admin, other_file]
-  - if can? :destroy, other_file
-    %td.delete= link_to "Delete", [:admin, other_file], :method => :delete, :confirm => "Are you sure you want to delete the JS theme file #{other_file.name}", :class => "delete"

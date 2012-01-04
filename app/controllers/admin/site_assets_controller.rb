@@ -66,11 +66,6 @@ class Admin::SiteAssetsController < AdminBaseController
       end
     end 
     
-    def creator_updator_set_id(site_asset)
-      site_asset.creator_id = current_admin_user.id
-      site_asset.updator_id = current_admin_user.id
-    end
-
     def process_name(original_filename)
       #@site_asset.name = original_filename.chomp(File.extname(original_filename))
       @site_asset.name = original_filename

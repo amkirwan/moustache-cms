@@ -89,4 +89,9 @@ class AdminBaseController < ApplicationController
         redirect_to path_redirect, :notice => notice
       end
     end
+
+    def creator_updator_set_id(site_asset)
+      site_asset.creator_id = current_admin_user.id
+      site_asset.updator_id = current_admin_user.id
+    end
 end

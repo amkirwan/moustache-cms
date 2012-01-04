@@ -173,6 +173,22 @@ describe User do
       @user.should have_many(:snippets_updated).of_type(Snippet)
     end 
 
+    it "should have_many asset_collections created" do
+      @user.should have_many(:asset_collections_created).of_type(AssetCollection)
+    end
+    
+     it "should have_many asset_collections updated" do
+      @user.should have_many(:asset_collections_updated).of_type(AssetCollection)
+    end 
+
+    it "should have_many theme_collections created" do
+      @user.should have_many(:theme_collections_created).of_type(ThemeCollection)
+    end
+    
+     it "should have_many theme_collections updated" do
+      @user.should have_many(:theme_collections_updated).of_type(ThemeCollection)
+    end 
+
     it "should have_many article_collections created" do
       @user.should have_many(:article_collections_created).of_type(ArticleCollection)
     end

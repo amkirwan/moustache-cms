@@ -1,0 +1,5 @@
+- header_content 'shared/header_wrapper', :object => @theme_collection do
+  = can_destroy? @theme_collection
+
+- inner_content "shared/inner_wrapper" do
+  = render :partial => "form", :locals => { :button_label => "Update Theme Collection" }

@@ -1,6 +1,6 @@
-= form_for([:admin, @theme_asset], :html => {:class => "site_prop", :multipart => true, :autocomplete => "off"}) do |f|
-  = render :partial => "shared/error_messages", 
-           :locals => { :target => @theme_asset }
+= form_for([:admin, @theme_collection, @theme_asset], :html => {:class => "site_prop", :multipart => true, :autocomplete => "off"}) do |f|
+  = render :partial => "shared/error_messages", :locals => { :target => @theme_asset }
+           
   %ol.form_fields
     = render :partial => 'form_general_fields', :locals => { :f => f }
     = render :partial => 'theme_asset_type', :locals => { :f => f }

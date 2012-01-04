@@ -26,9 +26,11 @@ HandlebarCms::Application.routes.draw do
       end
     end
 
-    resources :theme_assets do
-      resources :tag_attrs
-    end  
+    resources :theme_collections do
+      resources :theme_assets do 
+        resources :tag_attrs
+      end
+    end
 
     resources :snippets 
 

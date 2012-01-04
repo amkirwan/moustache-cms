@@ -18,21 +18,12 @@ describe ThemeAsset do
   
   # --  Associations -----------------------------------------------
    describe "associations" do
+     it "shouldbe embedded_in the article_collection" do
+       @theme_asset_css.should be_embedded_in(:article_collection)
+     end
 
      it "should embed many tag_attrs as tag_attrable" do
       @theme_asset_css.should embed_many(:tag_attrs)
-     end
-
-     it "should belong_to a site" do
-       @theme_asset_image.should belong_to(:site)
-     end
-
-     it "should belong_to a user with created_by" do
-       @theme_asset_image.should belong_to(:created_by).of_type(User)
-     end
-
-     it "should belong_to a user with updated_by" do
-       @theme_asset_image.should belong_to(:updated_by).of_type(User)
      end
    end
    

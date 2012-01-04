@@ -1,0 +1,16 @@
+- if can? :create, SiteAsset
+  %div{:id => "new_site_asset", :class => "actions" }
+    %ul.submenu
+      %li.top_menu
+        Actions<span class="fold_arrow"></span>
+        %ul 
+          - if can? :create, @theme_collection
+            %li
+              = link_to "New Assets", [:new, :admin, @theme_collection, :theme_asset]
+          - if can? :update, @theme_collection
+            %li
+              = link_to "Edit Collection Props", [:edit, :admin, @theme_collection]
+          - if can? :destroy, @theme_collection
+            %li
+              = link_to "Delete Collection", [:admin, @theme_collection], :confirm => "Are you sure you want to delete the theme #{@theme_collection.name}", :method => :delete
+ 

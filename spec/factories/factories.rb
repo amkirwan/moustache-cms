@@ -151,7 +151,6 @@ Factory.define :article do |article|
   article.updated_by_id { Factory.build(:user).id }
 end
 
-
 Factory.define :asset_collection do |collection|
   collection.sequence(:name) { |n| "name_#{n}" }
   collection.site_assets { [ Factory.build(:site_asset) ] }
@@ -173,6 +172,13 @@ Factory.define :tag_attr do |tag|
   tag.value "tag attribute value"
 end
 
+Factory.define :theme_collection do |collection|
+  collection.sequence(:name) { |n| "name_#{n}" }
+  collection.theme_assets { [ Factory.build(:theme_asset) ] }
+  collection.created_by_id { Factory.build(:user).id }
+  collection.updated_by_id { Factory.build(:user).id }
+end
+
 Factory.define :theme_asset do |asset| 
   asset.name "asset_name"
   asset.content_type "content_type"
@@ -181,6 +187,6 @@ Factory.define :theme_asset do |asset|
   asset.height 200
   asset.file_size 200
   asset.tag_attrs { [ Factory.build(:tag_attr) ] }
-  asset.created_by { Factory.build(:user) }
-  asset.updated_by { Factory.build(:user) }
+  asset.created_by_id { Factory.build(:user).id }
+  asset.updated_by_id { Factory.build(:user).id }
 end
