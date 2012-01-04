@@ -1,2 +1,2 @@
 %div.add_some
-  %h4= link_to "Add Some Theme Assets to the theme #{@theme_collection.name}", [:new, :admin, @theme_collection, :theme_asset]
+  %h4= link_to "Add Some Theme Assets to the theme #{@theme_collection.name.humanize}", [:new, :admin, @theme_collection, :theme_asset]

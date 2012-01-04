@@ -10,7 +10,7 @@ tmp/**/*
 tmp/*
 public/site_assets/*
 public/uploads
-public/sites/**/*
+public/theme_assets/**/*
 public/cached
 spec/tmp/**/*
 config/mongoid_production.yml
