@@ -2,8 +2,7 @@
   = link_to image_tag(@site_asset.asset.url, :class => "site_asset_thumb"), "http://#{request.host}#{@site_asset.asset.url}"
 %li
   %span= "Filename "
-  = link_to "#{@site_asset.asset.without_fingerprint.file.filename}", "http://#{request.host}#{@site_asset.asset.without_fingerprint.url}"
+  = link_to "#{@site_asset.asset.file.filename}", "http://#{request.host}#{@site_asset.asset.url}"
 %li
   %span= "Filename with MD5 fingerprint "
-  = link_to "#{@site_asset.asset.file.filename}", "http://#{request.host}#{@site_asset.asset.url}"
-
+  = link_to "#{@site_asset.filename_md5}", "http://#{request.host}#{@site_asset.url_md5}"

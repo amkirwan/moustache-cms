@@ -45,6 +45,7 @@ class Admin::SiteAssetsController < AdminBaseController
   # PUT /admin/asset_collections/id/site_assets/1
   def update
     @site_asset.updator_id = current_admin_user.id
+    change_name_md5
     respond_with(:admin, @asset_collection, @site_asset) do |format|
       if @site_asset.update_attributes(params[:site_asset])
         format.html { redirect_to [:admin, @asset_collection, :site_assets], :notice => "Successfully updated the asset #{@site_asset.name}" }
@@ -67,7 +68,6 @@ class Admin::SiteAssetsController < AdminBaseController
     end 
     
     def process_name(original_filename)
-      #@site_asset.name = original_filename.chomp(File.extname(original_filename))
       @site_asset.name = original_filename
     end
 
@@ -78,5 +78,22 @@ class Admin::SiteAssetsController < AdminBaseController
         try_site_asset_cache
         process_name(params[:site_asset][:name])
       end
+    end
+
+    def change_name_md5
+      @site_asset.name = params[:site_asset][:name]
+      if @site_asset.name_changed?
+        old_name_split = @site_asset.filename_md5_was.split('-')
+        hash_ext = old_name_split.pop
+        hash = hash_ext.split('.').shift
+        @site_asset.filename_md5 = "#{@site_asset.name.split('.').first}-#{hash}.#{@site_asset.asset.file.extension}"
+        generate_paths
+      end
+    end
+
+    def generate_paths
+      @site_asset.file_path_md5 = File.join(Rails.root, 'public', @site_asset.asset.store_dir, '/', @site_asset.filename_md5)
+      @site_asset.url_md5 = "/#{@site_asset.asset.store_dir}/#{@site_asset.filename_md5}"
+      @site_asset.file_path_md5_old = @site_asset.file_path_md5_was if @site_asset.file_path_md5_changed?
     end
 end
