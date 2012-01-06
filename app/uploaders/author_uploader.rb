@@ -7,7 +7,7 @@ class AuthorUploader < CarrierWave::Uploader::Base
   storage :file
 
   def store_dir
-    "sites/#{model.site_id}/#{model.class.to_s.underscore}"
+    "authors/#{model.site_id}"
   end    
   
   before :store, :remember_cache_id
@@ -36,10 +36,6 @@ class AuthorUploader < CarrierWave::Uploader::Base
    end
     
   # Override the filename of the uploaded files:
-  def filename
-    hex = ::Digest::MD5.hexdigest(File.read(model.asset.file.path))
-    @name ||= "#{model.name.split('.').first}-#{hex}.#{model.asset.file.extension}" if original_filename
-  end   
 
    def image?(sanitized_file)    
      types = mime_types(sanitized_file)
@@ -49,18 +45,6 @@ class AuthorUploader < CarrierWave::Uploader::Base
         types.first.content_type.include? 'image'
       end
    end
-
-  version :without_fingerprint do
-    def full_filename (for_file = model.asset.file)
-      name_split = for_file.split('-')
-      hash_ext = name_split.pop
-      ext = hash_ext.split('.').pop
-      name = name_split.join('-')
-      name += ".#{ext}"
-      @name ||= name
-    end
-  end
-   
    
    private
 

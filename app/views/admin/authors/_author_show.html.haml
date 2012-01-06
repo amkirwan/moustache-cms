@@ -4,9 +4,6 @@
 %ul
   %li
     %h5 Author image
-    %span= "#{@author.asset.without_fingerprint.file.filename} is available"
-    = link_to 'here', "http://#{request.host}#{@author.asset.without_fingerprint.url}"
-  %li
-    %h5 Author image with MD5 Fingerprint
-    %span= "#{@author.asset.file.filename} is available"
+    %span= "#{@author.image.file.filename} is available"
+    = link_to 'here', "http://#{request.host}#{@author.image.url}"
 

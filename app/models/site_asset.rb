@@ -59,6 +59,7 @@ class SiteAsset
       self.filename_md5 = "#{self.name.split('.').first}-#{md5}.#{self.asset.file.extension}"
       self.file_path_md5 = File.join(Rails.root, 'public', self.asset.store_dir, '/', self.filename_md5)
       self.url_md5 = "/#{self.asset.store_dir}/#{self.filename_md5}"
+      FileUtils.mkdir_p File.join(Rails.root, 'public', self.asset.store_dir)
       File.open(self.file_path_md5, 'wb') { |f| f.write(chunk) }
     end
   end
