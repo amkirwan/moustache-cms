@@ -37,8 +37,7 @@ class ThemeAssetUploader < CarrierWave::Uploader::Base
     
   # Override the filename of the uploaded files:
   def filename
-    hex = ::Digest::MD5.hexdigest(File.read(model.asset.file.path))
-    @name ||= "#{model.name.split('.').first}-#{hex}.#{model.asset.file.extension}" if original_filename
+    @name ||= "#{model.name.split('.').first}.#{model.asset.file.extension}"
   end    
 
    def image?(sanitized_file)    
@@ -67,17 +66,6 @@ class ThemeAssetUploader < CarrierWave::Uploader::Base
         types.first.content_type.include? 'javascript'
       end
    end
-
-  version :without_fingerprint do
-    def full_filename (for_file = model.asset.file)
-      name_split = for_file.split('-')
-      hash_ext = name_split.pop
-      ext = hash_ext.split('.').pop
-      name = name_split.join('-')
-      name += ".#{ext}"
-      @name ||= name
-    end
-  end
 
    private
    

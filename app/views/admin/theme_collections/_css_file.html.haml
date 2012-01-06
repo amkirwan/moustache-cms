@@ -1,5 +1,5 @@
 %tr{:id => "#{css_file.name}_css", :class => "#{cycle('even', 'odd', :name => 'table_list')}"}
-  %td.name= link_to css_file.name, [:edit, :admin, css_file]
+  %td.name= link_to css_file.name, [:edit, :admin, @theme_collection, css_file]
   - if can? :destroy, css_file
-    %td.delete= link_to "Delete", [:admin, css_file], :method => :delete, :confirm => "Are you sure you want to delete the CSS theme file #{css_file.name}", :class => "delete"
+    %td.delete= link_to "Delete", [:admin, @theme_collection, css_file], :method => :delete, :confirm => "Are you sure you want to delete the CSS theme file #{css_file.name}", :class => "delete"
 

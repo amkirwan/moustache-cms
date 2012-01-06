@@ -11,9 +11,9 @@ class Admin::ThemeCollectionsController < AdminBaseController
   
   # GET /admin/asset_collections/1
   def show
-    @css_files = @theme_collection.theme_assets.css_files
-    @js_files = @theme_collection.theme_assets.js_files
-    @images = @theme_collection.theme_assets.images
+    @css_files = @theme_collection.theme_assets.css_files.asc(:name)
+    @js_files = @theme_collection.theme_assets.js_files.asc(:name)
+    @images = @theme_collection.theme_assets.images.asc(:name)
     @other_files = ThemeAsset.other_files(@current_site)
     respond_with(:admin, @theme_collection)
   end
