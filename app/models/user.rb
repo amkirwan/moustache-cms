@@ -32,9 +32,6 @@ class User
   has_many :snippets_created, :class_name => "Snippet", :foreign_key => :created_by_id
   has_many :snippets_updated, :class_name => "Snippet", :foreign_key => :updated_by_id
 
-  has_many :theme_assets_created, :class_name => "ThemeAsset", :foreign_key => :created_by_id
-  has_many :theme_assets_updated, :class_name => "ThemeAsset", :foreign_key => :updated_by_id
-
   has_many :asset_collections_created, :class_name => "AssetCollection", :foreign_key => :created_by_id
   has_many :asset_collections_updated, :class_name => "AssetCollection", :foreign_key => :updated_by_id
 
