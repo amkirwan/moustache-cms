@@ -38,11 +38,19 @@ class SiteAsset
   validates :asset, :presence => true
   
   # -- Callbacks
+  before_validation :set_name
   before_save :update_asset_attributes, :calc_md5
   before_update :recreate, :move_file_md5
   after_destroy :remove_folder  
     
   # -- Instance Methods     
+  def set_name
+    if self.name.strip.empty?
+      name_split = self.asset.file.filename.split('.')
+      self.name = name_split.slice(0, name_split.length - 1).join('.')
+    end
+  end
+
   def recreate
     self.asset.recreate_versions!
   end

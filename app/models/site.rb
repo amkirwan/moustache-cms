@@ -18,7 +18,6 @@ class Site
   has_many :pages, :dependent => :destroy
   has_many :layouts, :dependent => :destroy
   has_many :asset_collections, :dependent => :destroy
-  has_many :theme_assets, :dependent => :destroy
   has_many :snippets, :dependent => :destroy
   has_many :authors, :dependent => :destroy
   has_many :articles, :dependent => :destroy

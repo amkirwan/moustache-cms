@@ -18,6 +18,15 @@ module HandlebarCms
         engine.render(nil, attributes)
       end
 
+      def stylesheet_md5(name)
+        attributes = style_attributes
+        file = @current_site.css_file_by_name(name)
+        set_default_attribute_values(attributes, file)
+        set_link_attributes(attributes, file)
+        engine = gen_haml('stylesheet')
+        engine.render(nil, attributes)
+      end
+
       def stylesheets
         @css_files = @current_site.css_files
         haml_render = ""
