@@ -8,7 +8,7 @@ if $(pagePartId).length
   
   $(pagePartNavId).fadeToggle 'slow', 'linear', ->
     $(this).remove()
-    $('#page_parts_nav .tab').last().addClass('page_part_selected').addClass('selected')
-    $('ul.page_part').last().removeClass('hidden')
+    $('#page_parts_nav .tab').last().addClass('selected')
+    $('#page_parts_wrapper ol').last().removeClass('page_part_selected hidden')
     $('.delete_page_part').html('<%= delete_page_part %>')
 

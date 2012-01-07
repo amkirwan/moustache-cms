@@ -1,10 +1,10 @@
 $('.page_parts .form_fields').last().next().after('<%= escape_javascript(render :partial => "page_part", :locals => { :index => (@page.page_parts.size - 1) } ) %>')
 
 /* hide current showing page part */
-$('ul.page_part_selected').removeClass('page_part_selected').addClass('hidden')
+$('ol.page_part_selected').removeClass('page_part_selected').addClass('hidden')
 
 /* show new page path */
-$('ul#page_part_<%= @page_part.id %>').removeClass('hidden').addClass('page_part_selected')
+$('ol#page_part_<%= @page_part.id %>').removeClass('hidden').addClass('page_part_selected')
 
 /* remove css for seleted nav */
 $('#page_parts_nav .selected').removeClass('selected')
@@ -13,6 +13,6 @@ $('#page_parts_nav .selected').removeClass('selected')
 $('#page_parts_nav .tab').last().after('<%= escape_javascript(render :partial => "page_part_nav") %>')
 
 /* add markitup form */
-$('ul#page_part_<%= @page_part.id %> textarea').markItUp(markdownSettings)
+$('ol#page_part_<%= @page_part.id %> textarea').markItUp(markdownSettings)
 
 $('.delete_page_part').html('<%= delete_page_part %>')
