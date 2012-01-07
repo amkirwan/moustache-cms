@@ -36,7 +36,7 @@ class HandlebarCms::Mustache::CmsPage < Mustache
     part = @page.page_parts.first
     process_with_filter(part)
   end
-  
+
   def respond_to?(method)
     if method.to_s =~ /^editable_text_(.*)/ && @page.page_parts.find_by_name($1)
       true     
@@ -48,9 +48,9 @@ class HandlebarCms::Mustache::CmsPage < Mustache
       true
     elsif method.to_s =~ /^meta_tag_(.*)/ 
       true
-    elsif method.to_s =~ /^nav_children_(.*)/ && @current_site.page_by_render_tag($1)
+    elsif method.to_s =~ /^nav_children_(.*)/ && @current_site.page_by_title($1)
       true
-    elsif method.to_s =~ /^nav_siblings_and_self_(.*)/ && @current_site.page_by_render_tag($1)
+    elsif method.to_s =~ /^nav_siblings_and_self_(.*)/ && @current_site.page_by_title($1)
       true
     else
       super

@@ -105,6 +105,10 @@ class Page
   def self.find_by_title(title)
     self.where(:title => title).first
   end
+
+  def self.find_by_slug(slug)
+    self.where(:slug => slug).first
+  end
   
   # -- Scopes ----------------------------------------------------------
   scope :published, :where => { "current_state.name" => "published" }

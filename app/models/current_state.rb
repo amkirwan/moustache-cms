@@ -69,7 +69,7 @@ class CurrentState
   end
   
   @statuses = [
-    CurrentState.new(:name => "published", :time => nil),
-    CurrentState.new(:name => "draft", :time => nil)
+    CurrentState.new(:name => "draft", :time => nil),
+    CurrentState.new(:name => "published", :time => nil)
   ]
 end

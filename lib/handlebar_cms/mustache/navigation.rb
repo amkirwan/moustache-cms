@@ -1,6 +1,11 @@
 module HandlebarCms
   module Mustache
     module Navigation
+
+      def nav_primary
+        engine = gen_haml('nav_primary')
+        engine.render(TagHelper.instance, {:request => @request, :homepage => @current_site.page_by_full_path('/')})  
+      end
       
       def nav_child_pages
         engine = gen_haml('nav_child_pages')
