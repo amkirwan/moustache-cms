@@ -88,7 +88,7 @@ class Page
   # -- Callbacks -----------------------------------------------
   before_validation :format_title, :slug_set, :full_path_set, :breadcrumb_set
   before_save :uniq_editor_ids
-  before_update :update_current_state_time
+  after_update :update_current_state_time
   after_save :update_user_pages
   #before_destroy :destroy_children
   after_initialize :default_meta_tags
@@ -165,12 +165,12 @@ class Page
         self.slug = "/"
         self.parent = nil
       elsif self.slug.blank?
-        self.slug = self.title.downcase
+        self.slug = self.title.gsub('_', '-')
+        self.slug = self.slug.parameterize
       else
-        self.slug.downcase!
-        self.slug.strip!
+        self.slug = self.title.gsub('_', '-')
+        self.slug = self.slug.parameterize
       end
-      self.slug.gsub!(/[\s_]/, '-')
     end
   
     # full_path is "/foobar/baz/qux" in http://example.com/foobar/baz/qux
