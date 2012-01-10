@@ -2,6 +2,8 @@ class Admin::PagesController < AdminBaseController
   
   load_and_authorize_resource 
 
+  before_filter :selected_page_part, :only => [:edit, :update]
+
   respond_to :html, :except => [:show, :sort, :new_meta_tag, :update]
   respond_to :xml, :json
   respond_to :js, :only => [:edit, :destroy, :sort, :new_meta_tag]
@@ -17,8 +19,8 @@ class Admin::PagesController < AdminBaseController
   def new
     parent_page
     @page.build_current_state
-    @page.page_parts.build
-    @page.page_parts.first.name = "content"
+    @page.page_parts.build(:name => 'content')
+    @selected_page_part = @page.page_parts.first
     respond_with(:admin, @page)
   end
   
@@ -34,18 +36,16 @@ class Admin::PagesController < AdminBaseController
   
   def edit
     parent_page
-    @selected_page_part = selected_page_part
     respond_with(:admin, @page)
   end
   
   def update
     @page.updated_by = @current_admin_user
-    @selected_page_part = selected_page_part
     respond_with(:admin, @page) do |format|
       if @page.update_attributes(params[:page]) 
         flash[:notice] = "Successfully updated the page #{@page.title}"
-        #format.html { params[:commit] == "Save and Continue Editing" ? edit_admin_page_path(@page, :view => @selected_page_part.name) : [:admin, :pages] } 
-        format.html { redirect_to edit_admin_page_path(@page, :view => @selected_page_part.name) }
+         format.html { redirect_to redirector_path(@page), :notice => "Successfully updated the page #{@page.title}" }
+        #format.html { redirect_to edit_admin_page_path(@page, :view => @selected_page_part.name) }
       else
         format.html { render :edit }
       end 
@@ -73,7 +73,7 @@ class Admin::PagesController < AdminBaseController
   private 
 
     def selected_page_part
-      params[:view].nil? ? @page.page_parts.first : @page.page_parts.where(:name => params[:view]).first
+      @selected_page_part = params[:view].nil? ? @page.page_parts.first : @page.page_parts.where(:name => params[:view]).first
     end
 
     def parent_page
@@ -83,5 +83,9 @@ class Admin::PagesController < AdminBaseController
       else
         @parent_page = @page.parent
       end
+    end
+
+    def redirector_path(object)
+     params[:commit] == "Save and Continue Editing" ? edit_admin_page_path(object, :view => @selected_page_part.name) : [:admin, :pages]
     end
 end
