@@ -12,4 +12,7 @@ module Admin::ArticlesHelper
     end
   end
 
+  def published?(article)
+    article.current_state.published? ? 'published' : 'draft'
+  end
 end
