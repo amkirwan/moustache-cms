@@ -6,7 +6,8 @@ class Admin::ArticleCollectionsController < AdminBaseController
 
   # GET /admin/article_collections
   def index
-    respond_with(:admin, @article_collections)
+
+    respond_with(:admin, @article_collections.asc(:name))
   end
 
   # GET /admin/article_collections/new
