@@ -1,9 +1,8 @@
-%table{:class => "info articles"}
+%table{:class => "info articles", :class => "articles info #{cycle('even', 'odd')}"}
   %tr
     %th Title
-    %th Created At
-    %th Updated At
-    %th Updated By
+    %th Last Updated At 
+    %th Last Updated By
     %th Status
     %th
   = render @articles
