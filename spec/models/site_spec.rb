@@ -142,6 +142,13 @@ describe Site do
         @site.css_files.should == theme_asset_csses
       end
     end
+
+    describe "#articles_by_name" do
+      it "should returna llthe articles for the given article collection" do
+        article_collection = Factory(:article_collection, :site => @site, :name => "news", :articles => [Factory.build(:article)])
+        @site.articles_by_name('news').should == article_collection.articles
+      end
+    end
     
     describe "#css_file_by_name(name)" do
       it "should return the css file by the given name" do

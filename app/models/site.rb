@@ -20,6 +20,7 @@ class Site
   has_many :asset_collections, :dependent => :destroy
   has_many :snippets, :dependent => :destroy
   has_many :authors, :dependent => :destroy
+  has_many :article_collections, :dependent => :destroy
   has_many :articles, :dependent => :destroy
     
   accepts_nested_attributes_for :meta_tags
@@ -65,11 +66,11 @@ class Site
   end
   
   def page_by_full_path(path)   
-    pages.where(:full_path => path).first
+    pages.where(:full_path => path.to_s).first
   end
   
   def page_by_title(title)  
-    pages.where(:title => title).first
+    pages.where(:title => title.to_s).first
   end
   
   def css_files        
@@ -77,11 +78,15 @@ class Site
   end
   
   def css_file_by_name(name)
-    ThemeAsset.where(:name => name, :site_id => self.id, :content_type => "text/css").first
+    ThemeAsset.where(:name => name.to_s, :site_id => self.id, :content_type => "text/css").first
   end 
   
   def snippet_by_name(name)                        
-    Snippet.find_by_site_and_name(self, name).first
+    Snippet.find_by_site_and_name(self, name.to_s).first
+  end
+
+  def articles_by_name(name)
+    article_collections(:name => name.to_s).first.articles
   end
   
   private  
