@@ -7,6 +7,7 @@
 //= require admin/theme_assets
 //= require admin/site_assets
 //= require admin/current_site
+//= require admin/articles
 //= require plupload/plupload.full
 //= require plupload/jquery.plupload.queue/jquery.plupload.queue
 //= require site_asset_plupload
@@ -32,7 +33,7 @@ jQuery(function() {
       });
     });
 
-    $('.foldable legend').mouseup(function() {
+    $('fieldset.page_parts').mouseup(function() {
       var legend = $(this);
       legend.siblings('div#page_parts_wrapper').slideToggle('slow', 'linear', function() {
         var arrow = legend.children().first();

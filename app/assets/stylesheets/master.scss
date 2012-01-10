@@ -292,7 +292,7 @@ form.site_prop {
       font-size: calc_em(12px, 14px);
       width: 30%;
     }
-    input, textarea {
+    input {
       border: none;
       border-right: 1px solid #FFF;
       border-bottom: 1px solid #FFF;
@@ -300,6 +300,16 @@ form.site_prop {
       @include rounded_corners;
       background-image: -webkit-gradient(linear, 0% 0%, 0% 12%, from(#969696), to(#E2E1DF));
       background-image: -moz-linear-gradient(0% 12% 90deg, #E2E1DF, #969696);
+      background-color: #E2E1DF;
+    }
+    textarea {
+      border: none;
+      border-right: 1px solid #FFF;
+      border-bottom: 1px solid #FFF;
+      padding: 4px 8px;
+      @include rounded_corners;
+      background-image: -webkit-gradient(linear, 0% 0%, 0% 5%, from(#969696), to(#E2E1DF));
+      background-image: -moz-linear-gradient(0% 5% 90deg, #E2E1DF, #969696);
       background-color: #E2E1DF;
     }
     input:focus, textarea:focus {
@@ -352,6 +362,9 @@ form.site_prop {
       padding-top: 8px;
     }
   }
+  #article_img_url {
+    width: 60%;
+  }
   div.fields_wrap {
     padding: 0.5em 0;
   }
@@ -396,7 +409,7 @@ form.site_prop {
   }
 }
 
-div#page_parts_wrapper { width: 100%; }
+div#page_parts_content_wrapper { width: 100%; }
 
 .img_thumb {
   width: 15%;
@@ -415,18 +428,18 @@ img.site_asset_thumb:hover, img.theme_asset_thumb {
 
 span.fold_arrow {
   display: inline-block;
-  width: 9px;
-  height: 6px;
+  width: 6px;
+  height: 9px;
   position: relative;
   left: calc_em(10px, 14px);
   bottom: 1px;
   background: transparent image-url("fold-arrow.png") no-repeat 0 0
 }
 span.rotate {
-  -webkit-transform: rotate(-90deg);
-  -moz-transform: rotate(-90deg);
-  -o-transform: rotate(-90deg);
-  transform: rotate(-90deg);
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
 }
 
 div#pages_list {
