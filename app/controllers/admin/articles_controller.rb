@@ -14,6 +14,7 @@ class Admin::ArticlesController < AdminBaseController
 
   # GET /admin/article_collections/1/articles/new
   def new
+    @article.build_current_state
     respond_with(:admin, @article_collection, @articles)
   end
 
@@ -37,7 +38,7 @@ class Admin::ArticlesController < AdminBaseController
     @article.updated_by = @current_admin_user
     respond_with(:admin, @article_collection, @article) do |format| 
       if @article.update_attributes(params[:article])
-        format.html { redirect_to [:admin, @article_collection, :articles], :notice =>  "Successfully updated the article #{@article.title} in the collection @{@article_collection.name}"}
+        format.html { redirect_to [:admin, @article_collection, :articles], :notice =>  "Successfully updated the article #{@article.title} in the collection #{@article_collection.name}"}
       end
     end
   end
