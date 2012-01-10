@@ -74,7 +74,7 @@ module Admin::PagesHelper
     if @page.new_record?
       'new_page'
     else
-      'edit_page_' + @page.title.downcase
+      'edit_page_' + @page.title.parameterize('_')
     end
   end
 
