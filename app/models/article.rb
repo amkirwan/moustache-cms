@@ -6,6 +6,8 @@ class Article
   include Mongoid::TaggableWithContext
 
   attr_accessible :title,
+                  :subheading,
+                  :img_url,
                   :permalink,
                   :slug,
                   :content,
@@ -18,6 +20,8 @@ class Article
 
   # -- Fields -----------
   field :title
+  field :subheading
+  field :img_url
   field :permalink
   field :slug
   field :content
@@ -41,6 +45,7 @@ class Article
   belongs_to :layout, :class_name => "Layout"
   has_and_belongs_to_many :authors
 
+  accepts_nested_attributes_for :current_state
   accepts_nested_attributes_for :meta_tags
 
   # -- Validations -----------------------------------------------
@@ -64,6 +69,9 @@ class Article
   validates :article_collection_id,
             :presence => true
 
+  validates :current_state,
+            :presence => true
+
   validates :created_by_id,
             :presence => true
 
@@ -75,11 +83,18 @@ class Article
 
   # -- Callbacks ----------
   before_validation :format_title, :slug_set, :permalink_set
+  before_update :update_slug_permalink
+  after_update :update_current_state_time
   after_initialize :default_meta_tags
 
   # -- Instance Methods -----
   alias :full_path :permalink
   alias :full_path= :permalink=
+
+  # -- Accepts_nested -----
+  def current_state_attributes=(attributes)
+    self.current_state = CurrentState.find_by_name(attributes[:name])
+  end
 
   private 
     def format_title
@@ -87,23 +102,32 @@ class Article
     end
     
     def slug_set
-      if slug.blank? 
-        self.slug = self.title.downcase
+      if slug.nil? && self.new_record?
+        self.slug = self.title.gsub('_', '-')
+        self.slug = self.title.parameterize
       else
-        self.slug.downcase!
-        self.slug.strip!
+        parse_slug(self.slug)
       end
-      self.slug.gsub!(/[\s_]/, '-')
     end
 
     def permalink_set
-      if self.permalink.nil?
+      if self.permalink.empty? && self.new_record?
         time = DateTime.now
         year = time.year.to_s
         month = time.month.to_s
         day = time.day.to_s
         collection_name = self.article_collection.name.gsub(/[\s_]/, '-')
-        self.permalink = "/#{collection_name}/#{year}/#{month}/#{day}/#{self.slug}" 
+        self.permalink = "/#{collection_name.parameterize}/#{year}/#{month}/#{day}/#{self.slug}" 
+      end
+    end
+
+    def update_slug_permalink
+      if self.permalink_changed? 
+        permalink_split = self.permalink.split('/')
+        parse_slug(permalink_split.pop)
+        permalink = permalink_split.join('/')
+        permalink.gsub!('_', '-')
+        self.permalink = '/' + permalink.parameterize('/') + '/' + self.slug
       end
     end
 
@@ -113,5 +137,14 @@ class Article
         self.meta_tags.build(:name => "keywords", :content => "")
         self.meta_tags.build(:name => "description", :content => "")
       end
+    end
+
+    def parse_slug(slug)
+      self.slug.gsub!('_', '-')
+      self.slug = slug.parameterize
+    end
+
+    def update_current_state_time
+      self.current_state.time = DateTime.now if self.current_state.changed?
     end
 end
