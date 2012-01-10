@@ -53,12 +53,11 @@ class Article
             :presence => true
 
   validates :title,
-            :presence => true,
-            :uniqueness => { :case_sensitive => false, :scope => :article_collection }
-            
-  validates :permalink,
-            :presence => true,
-            :uniqueness => { :case_sensitive => false, :scope => :article_collection }
+            :presence => true
+
+  validate :unique_title
+
+  validate :unique_permalink
 
   validates :content,
             :presence => true
@@ -80,6 +79,18 @@ class Article
 
   validates :filter_name,
             :presence => true
+
+  def unique_title
+    if Article.exists?(:conditions => { :title => /^#{self.title}$/, :article_collection_id => self.article_collection_id, :site_id => self.site_id})
+      errors.add(:title, 'within this collection is already taken')
+    end
+  end
+
+  def unique_permalink
+    if Article.exists?(:conditions => { :permalink => /^#{self.permalink}$/, :article_collection_id => self.article_collection_id, :site_id => self.site_id})
+      errors.add(:permalink, 'within this collection is already taken')
+    end
+  end
 
   # -- Callbacks ----------
   before_validation :format_title, :slug_set, :permalink_set
@@ -111,7 +122,7 @@ class Article
     end
 
     def permalink_set
-      if self.permalink.empty? && self.new_record?
+      if self.permalink.blank? && self.new_record?
         time = DateTime.now
         year = time.year.to_s
         month = time.month.to_s
