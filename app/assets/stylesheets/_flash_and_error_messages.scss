@@ -21,7 +21,7 @@ div#flash_notice_wrapper, div#flash_notice, div#flash_alert {
 div.field_with_errors {
   padding: 5px;
   background-color: $error_ex_color;
-  display: table;
+  //display: table;
   @include rounded_corners_top_left_and_right;
   label {
     color: $light_text;

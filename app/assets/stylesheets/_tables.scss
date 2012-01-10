@@ -66,3 +66,13 @@ table.users {
 table.layouts {
   width: 70%;
 }
+
+table.articles {
+  tr.draft {
+    background: $page_index_draft;
+  }
+  td.title {
+    padding-left: 4px;
+    text-align: left;
+  }
+}
