@@ -1,7 +1,8 @@
 = form_for([:admin, @page], :html => { :id => page_form_id, :class => "site_prop", :autocomplete => :off }) do |f|
   %ol.form_fields
-    = render :partial => "shared/error_messages", 
-             :locals => { :target => @page }
+
+    = render :partial => "shared/error_messages", :locals => { :target => @page } 
+    = hidden_field_tag :view, @selected_page_part.name
     = render :partial => "general", :locals => {:f => f}
     = render :partial => "advanced_options", :locals => {:f => f}
     = render :partial => "meta_tags", :locals => {:f => f}

@@ -43,7 +43,9 @@ class Admin::PagesController < AdminBaseController
     @selected_page_part = selected_page_part
     respond_with(:admin, @page) do |format|
       if @page.update_attributes(params[:page]) 
-        format.html { redirect_to redirector_path(@page), :notice => "Successfully updated the page #{@page.title}" }
+        flash[:notice] = "Successfully updated the page #{@page.title}"
+        #format.html { params[:commit] == "Save and Continue Editing" ? edit_admin_page_path(@page, :view => @selected_page_part.name) : [:admin, :pages] } 
+        format.html { redirect_to edit_admin_page_path(@page, :view => @selected_page_part.name) }
       else
         format.html { render :edit }
       end 
