@@ -17,7 +17,7 @@ body {
   padding: 0;
   margin: 0;
   text-align: left;
-  background: $body_bg image-url("body_bg.png") no-repeat left top;
+  background: $body_bg image-url("body_bg.png") repeat-x left top;
 }
 
 
@@ -433,14 +433,14 @@ span.fold_arrow {
   position: relative;
   left: calc_em(10px, 14px);
   bottom: 1px;
-  background: transparent image-url("fold-arrow.png") no-repeat 0 0
+  background: transparent image-url("hs.png") no-repeat 0 0
 }
 
 span.action_arrow {
   @extend .fold_arrow;
   width: 9px;
   height: 6px;
-  background: transparent image-url("fold-arrow-down.png") no-repeat 0 0
+  background: transparent image-url("hs.png") no-repeat -10px 0
 }
 span.rotate {
   -webkit-transform: rotate(90deg);
@@ -464,10 +464,10 @@ div#pages_list {
         width: 20px;
         float: left;
         cursor: move;
-        background: transparent image-url("page_list_move.png") no-repeat 0 0
+        background: transparent image-url("hs.png") no-repeat -25px 0
       }
       em.draft {
-        background: transparent image-url("page_list_move_draft.png") no-repeat 0 0
+        background: transparent image-url("hs.png") no-repeat -50px 0
       }
       strong {
         display: block;
