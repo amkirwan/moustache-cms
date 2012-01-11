@@ -205,7 +205,7 @@ div#content {
   width: percentage(($content_section_width - 16px) / $container_width);
   margin: 1em 0; 
   padding-left: 16px;
-  background: $content_bg; 
+  background: $content_bg image-url("content_bg.png") repeat-y 0 0;
 }
 
 div#content_header_wrapper {
