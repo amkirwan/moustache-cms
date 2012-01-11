@@ -13,7 +13,9 @@ public/uploads
 public/theme_assets/**/*
 public/authors/**/*
 public/cached
+public/assets
 spec/tmp/**/*
 config/mongoid_production.yml
 config/deploy.rb
 config/unicorn.conf
+
