@@ -81,13 +81,13 @@ class Article
             :presence => true
 
   def unique_title
-    if Article.exists?(:conditions => { :title => /^#{self.title}$/, :article_collection_id => self.article_collection_id, :site_id => self.site_id})
+    if Article.exists?(:conditions => { :id => { "$ne" => self.id}, :title => /^#{self.title}$/, :article_collection_id => self.article_collection_id, :site_id => self.site_id})
       errors.add(:title, 'within this collection is already taken')
     end
   end
 
   def unique_permalink
-    if Article.exists?(:conditions => { :permalink => /^#{self.permalink}$/, :article_collection_id => self.article_collection_id, :site_id => self.site_id})
+    if Article.exists?(:conditions => { :id => { "$ne" => self.id}, :permalink => /^#{self.permalink}$/, :article_collection_id => self.article_collection_id, :site_id => self.site_id})
       errors.add(:permalink, 'within this collection is already taken')
     end
   end
