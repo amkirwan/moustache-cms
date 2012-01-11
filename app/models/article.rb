@@ -1,6 +1,7 @@
 class Article 
   include Mongoid::Document 
   include Mongoid::Timestamps
+  include Mongoid::MultiParameterAttributes
 
   include HandlebarCms::Published
   include Mongoid::TaggableWithContext
@@ -16,7 +17,9 @@ class Article
                   :filter_name,
                   :authors,
                   :layout_id,
-                  :tags
+                  :tags,
+                  :set_date,
+                  :date
 
   # -- Fields -----------
   field :title
@@ -28,6 +31,8 @@ class Article
   field :filter_name
   field :authors, :type => Array
   field :author_ids, :type => Array
+  field :set_date, :type => Boolean
+  field :date, :type => Time
 
   taggable
 
@@ -94,6 +99,7 @@ class Article
 
   # -- Callbacks ----------
   before_validation :format_title, :slug_set, :permalink_set
+  before_save :set_date?
   before_update :update_slug_permalink
   after_update :update_current_state_time
   after_initialize :default_meta_tags
@@ -102,12 +108,23 @@ class Article
   alias :full_path :permalink
   alias :full_path= :permalink=
 
+  def truncate_words(text, length = 30, end_string = ' &hellip;')
+    return if text == nil
+    words = text.split()
+    words[0..(length-1)].join(' ') + (words.length > length ? end_string : '')
+  end
+
   # -- Accepts_nested -----
   def current_state_attributes=(attributes)
     self.current_state = CurrentState.find_by_name(attributes[:name])
   end
 
   private 
+    def set_date?
+      if !self.set_date
+        self.date = nil
+      end
+    end
     def format_title
       self.title.strip! unless self.title.nil?
     end

@@ -8,3 +8,9 @@
         %li
           = f.label :tags
           = f.text_field :tags
+        %li
+          = f.label :date
+          = f.datetime_select :date
+        %li.inline 
+          = f.label :set_date, "Check to set the date time for this article"
+          = f.check_box :set_date
