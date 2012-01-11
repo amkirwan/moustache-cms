@@ -29,7 +29,7 @@ module Admin::PagesHelper
   end
 
   def mongoid_tree_item_id(mongoid_tree_item)
-    mongoid_tree_item.title + '_' + mongoid_tree_item.id.to_s
+    mongoid_tree_item.title.parameterize + '_' + mongoid_tree_item.id.to_s
   end
 
   def mongoid_tree_item_class(mongoid_tree_item)
