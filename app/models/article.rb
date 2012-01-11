@@ -119,6 +119,16 @@ class Article
     self.current_state = CurrentState.find_by_name(attributes[:name])
   end
 
+  def datetime
+    return "" if self.date.nil?
+    self.date.iso8601
+  end
+
+  def date_at
+    return "" if self.date.nil?
+    self.date.strftime("%B %d, %Y at %l%P") 
+  end
+
   private 
     def set_date?
       if !self.set_date
