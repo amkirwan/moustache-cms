@@ -435,6 +435,13 @@ span.fold_arrow {
   bottom: 1px;
   background: transparent image-url("fold-arrow.png") no-repeat 0 0
 }
+
+span.action_arrow {
+  @extend .fold_arrow;
+  width: 9px;
+  height: 6px;
+  background: transparent image-url("fold-arrow-down.png") no-repeat 0 0
+}
 span.rotate {
   -webkit-transform: rotate(90deg);
   -moz-transform: rotate(90deg);
