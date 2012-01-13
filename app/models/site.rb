@@ -77,8 +77,14 @@ class Site
     theme_assets.css_files(self)
   end
   
-  def css_file_by_name(name)
-    ThemeAsset.where(:name => name.to_s, :site_id => self.id, :content_type => "text/css").first
+  def css_file_by_name(theme_name, css_name)
+    theme_collection = ThemeCollection.first(:conditions => {:name => theme_name, :site_id => self.id})
+    theme_collection.theme_assets.where(:name => css_name, :content_type => 'text/css').first
+  end 
+
+  def js_file_by_name(theme_name, js_name)
+    theme_collection = ThemeCollection.first(:conditions => {:name => theme_name, :site_id => self.id})
+    theme_collection.theme_assets.where(:name => js_name, :content_type => 'application/x-javascript').first
   end 
   
   def snippet_by_name(name)                        

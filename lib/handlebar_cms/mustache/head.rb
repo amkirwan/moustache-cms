@@ -9,22 +9,16 @@ module HandlebarCms
       end   
       
       # -- Css ----
-      def stylesheet(name)
-        attributes = style_attributes
-        file = @current_site.css_file_by_name(name)
-        set_default_attribute_values(attributes, file)
-        set_link_attributes(attributes, file)
-        engine = gen_haml('stylesheet')
-        engine.render(nil, attributes)
-      end
-
-      def stylesheet_md5(name)
-        attributes = style_attributes
-        file = @current_site.css_file_by_name(name)
-        set_default_attribute_values(attributes, file)
-        set_link_attributes(attributes, file)
-        engine = gen_haml('stylesheet')
-        engine.render(nil, attributes)
+      def stylesheet
+        lambda do |text|
+          theme_name, css_name = text.split(',').each { |arg| arg.strip! }
+          attributes = style_attributes
+          file = @current_site.css_file_by_name(theme_name, css_name)
+          set_default_attribute_values(attributes, file)
+          set_link_attributes(attributes, file)
+          engine = gen_haml('stylesheet')
+          engine.render(nil, attributes)
+        end
       end
 
       def stylesheets
@@ -40,22 +34,39 @@ module HandlebarCms
         haml_render
       end
       alias_method :stylesheets_all, :stylesheets
+
+      # -- js ---
+      def js_file
+        lambda do |text|
+          theme_name, js_name = text.split(',').each { |arg| arg.strip! }
+          file = @current_site.js_file_by_name(theme_name, js_name)
+          engine = gen_haml('javascript')
+          engine.render(nil, {:src => file.url_md5})
+        end
+      end
       
       # -- Meta Tags ----
-      def meta_tag(name)
-        engine = gen_haml('meta_tag')
-        engine.render(nil, {:name => name, :content => meta_tag_name(name)})
+      def meta_tag
+        lambda do |text|
+          engine = gen_haml('meta_tag')
+          engine.render(nil, {:name => name, :content => meta_tag_name(text).content})
+        end
       end
     
-      def meta_tags
+      def page_meta_tags
+        meta_tags = 
         engine = gen_haml('meta_tags')
         engine.render(nil, {:page => @page})
       end    
-      alias_method :meta_tags_all, :meta_tags
       
       private 
+        def meta_tag_with_name(name)
+          engine = gen_haml('meta_tag')
+          engine.render(nil, {:name => name, :content => meta_tag_name(name).content})
+        end
+
         def set_default_attribute_values(attributes, file)
-          attributes['href'] = file.asset.url
+          attributes['href'] = file.url_md5
           attributes['rel'] = 'stylesheet'
         end
 
@@ -71,8 +82,10 @@ module HandlebarCms
         end
         
         def meta_tag_name(name)
-          !@page.meta_tags.where(:name => name).first.send(:content).blank? ? @page.meta_tags.where(:name => name).first.send(:content) :
-          !@current_site.meta_tags.where(:name => name).first.blank? ? @current_site.meta_tags.where(:name => name).first.send(:content) : ''
+          meta_tag = @page.meta_tags.where(:name => name).first
+          meta_tag = @current_site.meta_tags.where(:name => name).first if meta_tag.nil?
+          meta_tag = "" if meta_tag.nil?
+          meta_tag
         end
 
     end

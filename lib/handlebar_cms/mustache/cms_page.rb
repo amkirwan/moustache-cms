@@ -44,8 +44,6 @@ class HandlebarCms::Mustache::CmsPage < Mustache
       true
     elsif method.to_s =~ /^snippet_(.*)/ && @current_site.snippet_by_name($1)
       true
-    elsif method.to_s =~ /^stylesheet_(.*)/ && @current_site.css_file_by_name($1)
-      true
     elsif method.to_s =~ /^meta_tag_(.*)/ 
       true
     elsif method.to_s =~ /^nav_children_(.*)/ && @current_site.page_by_title($1)
@@ -59,15 +57,13 @@ class HandlebarCms::Mustache::CmsPage < Mustache
   
   def method_missing(name, *args, &block)
     if name.to_s =~ /^editable_text_(.*)/
-      editable_text($1)   
+      editable_text_with_name($1)   
     elsif name.to_s =~ /^page_part_(.*)/
-      editable_text($1)
+      editable_text_with_name($1)
     elsif name.to_s =~ /^snippet_(.*)/
-      snippet($1)
-    elsif name.to_s =~ /^stylesheet_(.*)/
-      stylesheet($1)
+      snippet_with_name($1)
     elsif name.to_s =~ /^meta_tag_(.*)/
-      meta_tag($1)
+      meta_tag_with_name($1)
     elsif name.to_s =~ /^nav_children_(.*)/
       nav_children($1)
     elsif name.to_s =~ /^nav_siblings_and_self_(.*)/
@@ -75,6 +71,21 @@ class HandlebarCms::Mustache::CmsPage < Mustache
     else
       super
     end    
+  end
+
+  def editable_text
+    lambda do |text|
+      part = @page.page_parts.find_by_name(text)
+      process_with_filter(part)
+    end
+  end
+
+  alias_method :page_part, :editable_text
+
+  def snippet
+    lambda do |text|
+      process_with_filter(@current_site.snippet_by_name(text)) 
+    end
   end
   
   private 
@@ -85,12 +96,12 @@ class HandlebarCms::Mustache::CmsPage < Mustache
       end
     end  
 
-    def editable_text(part_name)
+    def editable_text_with_name(part_name)
       part = @page.page_parts.find_by_name(part_name)
       process_with_filter(part)
-    end  
+    end
     
-    def snippet(name)        
+    def snippet_with_name(name)        
       process_with_filter(@current_site.snippet_by_name(name)) 
     end
     

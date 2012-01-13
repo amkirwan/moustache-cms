@@ -96,6 +96,9 @@ class ThemeAsset
     end
   end
 
+  def css_file_by_name(name)
+    self.css_files.where(:name => name).first
+  end
   
   def update_file_content(file_contents)
     if self.content_type == "text/css" || self.content_type == "application/x-javascript"
