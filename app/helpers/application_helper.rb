@@ -42,12 +42,17 @@ module ApplicationHelper
   
   def header_content(partial_name, options={}, &block)
     if options[:object].class == Symbol
-      options.merge!(:body => capture(&block), :title => options[:object].to_s.underscore.titleize.pluralize)
+      title = options[:title].nil? ? options[:object].to_s.underscore.titleize.pluralize : options[:title]
+      options.merge!(:body => capture(&block), :title => title)
     elsif options[:object].new_record?
       options.merge!(:body => "", :title => "Create New #{options[:object].class.name.underscore.titleize}")
     else
       if block_given?
-        title = options[:show] == true ? "#{options[:object].class.name.underscore.titleize}" : "Editing #{options[:object].class.name.underscore.titleize}"
+        if options[:title].nil?
+          title = options[:show] == true ? "#{options[:object].class.name.underscore.titleize}" : "Editing #{options[:object].class.name.underscore.titleize}"
+        else
+          title = options[:title]
+        end
         options.merge!(:body => capture(&block), :title => "#{title} #{view_identifier(options[:object]).titleize}")
       end
     end
