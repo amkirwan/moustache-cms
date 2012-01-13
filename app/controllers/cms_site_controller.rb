@@ -8,7 +8,7 @@ class CmsSiteController < ApplicationController
     if !@page.nil? && (@page.published? || current_admin_user)
       mustache_response = HandlebarCms::Mustache::CmsPage.new(self).render
       response.etag = mustache_response
-      if request.fresh?(response.etag)
+      if request.fresh?(response)
         head :not_modified
       else
         render :text => mustache_response, :status => 200
