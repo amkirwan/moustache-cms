@@ -6,7 +6,13 @@ class CmsSiteController < ApplicationController
   
   def render_html
     if !@page.nil? && (@page.published? || current_admin_user)
-      render :text => HandlebarCms::Mustache::CmsPage.new(self).render, :status => 200
+      mustache_response = HandlebarCms::Mustache::CmsPage.new(self).render
+      response.etag = mustache_response
+      if request.fresh?(response.etag)
+        head :not_modified
+      else
+        render :text => mustache_response, :status => 200
+      end
     else
       render_404
     end
