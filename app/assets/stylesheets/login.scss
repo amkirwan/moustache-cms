@@ -83,7 +83,7 @@ fieldset#login, fieldset#password_reset {
     width: calc_percent(($login_wrapper_width - 16px), $login_wrapper_width);
     font-size: calc_em(16px, 14px);
     border: 2px solid lighten($header_bg, 30%);
-    padding: 0.5em calc_percent(8px, $login_wrapper_width);
+    padding: 0.5em;
     background-image: -webkit-gradient(linear, 0% 0%, 0% 12%, from(#969696), to($body_bg));
     background-image: -moz-linear-gradient(0% 12% 90deg, $body_bg, #969696);
     background-color: #E2E1DF;
