@@ -7,14 +7,12 @@
     = javascript_include_tag "application"
     = csrf_meta_tag
   %body{:class => body_id_set}
-  #wrapper
-    #header
-      %h1#site_name
-        = link_to "#{@current_site.name.titleize} Site", "/" 
-      = render :partial => "layouts/admin/welcome"
-    #main
-      = render :partial => "layouts/admin/nav"
-      #content
-        = yield
-  #footer
-   
+    #wrapper
+      #header
+        %h1#site_name
+          = link_to "#{@current_site.name.titleize} Site", "/" 
+        = render :partial => "layouts/admin/welcome"
+      #main
+        = render :partial => "layouts/admin/nav"
+        #content
+          = yield
