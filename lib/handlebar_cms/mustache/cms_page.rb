@@ -29,7 +29,17 @@ class HandlebarCms::Mustache::CmsPage < Mustache
   end
   
   def template
-    @page.layout.content
+    if @page.class == Page
+      @page.layout.content
+    elsif @page.class == Article
+      if @page.layout.nil?
+        @page.article_collection.layout.content
+      else
+        @page.layout.content
+      end
+    else
+      @page.layout.content
+    end
   end
   
   def yield

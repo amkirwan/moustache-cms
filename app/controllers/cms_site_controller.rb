@@ -27,6 +27,9 @@ class CmsSiteController < ApplicationController
     def load_page
       @page = @current_site.page_by_full_path("/#{params[:page_path]}")
       if @page.nil?
+        @page = @current_site.article_by_permalink("/#{params[:page_path]}")
+      end
+      if @page.nil?
         render_404
       end
     end

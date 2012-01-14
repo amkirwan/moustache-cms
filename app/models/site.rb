@@ -68,6 +68,10 @@ class Site
   def page_by_full_path(path)   
     pages.where(:full_path => path.to_s).first
   end
+
+  def article_by_permalink(path)
+    articles.where(:permalink => path.to_s).first
+  end
   
   def page_by_title(title)  
     pages.where(:title => title.to_s).first

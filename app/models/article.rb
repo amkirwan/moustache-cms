@@ -64,9 +64,6 @@ class Article
 
   validate :unique_permalink
 
-  validates :content,
-            :presence => true
-
   validates :slug,
             :presence => true
 
