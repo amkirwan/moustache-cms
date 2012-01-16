@@ -4,21 +4,20 @@
   %ol.form_fields
     %li#general_fields
       = foldable_fieldset "General" do  
-        %div.fields_wrap
-          %ol.form_fields
-            %li{:class => "inline"}
-              = f.label :name, "Name<abbr title='required' class='required'>*</abbr>".html_safe
-              = f.text_field :name 
-            %li{:class => "inline"}
-              = f.label :layout, "Layout<abbr title='required' class='required'>*</abbr>".html_safe
-              = f.collection_select :layout_id, Layout.all, :id, :name
+        %ol.form_fields
+          %li{:class => "inline"}
+            = f.label :name, "Name<abbr title='required' class='required'>*</abbr>".html_safe
+            = f.text_field :name 
+          %li{:class => "inline"}
+            = f.label "layout_id", "Layout<abbr title='required' class='required'>*</abbr>".html_safe
+            = f.collection_select :layout_id, Layout.all, :id, :name
     %li#editor_fields
       = foldable_fieldset "Editors" do
         %ol.form_fields
           - User.all_from_current_site(@current_site).asc(:username).each do |user|
             %li.editor_field.inline
               = check_box_tag "article_collection[editor_ids][]", user.id, @article_collection.editor_ids.include?(user.id), :id => "editor_id_#{user.username}"
-              = label_tag "article_collection[editor_ids][#{user.username}]", user.username.downcase
+              = label_tag "editor_id_#{user.username}", user.username.downcase
 
     %li#submit_fields
       %fieldset

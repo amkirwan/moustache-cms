@@ -25,13 +25,13 @@
         = link_to 'Change Password', change_password_admin_user_path(@user)
     - if admin?
       %li{:id => "role", :class => "inline"}
-        = f.label :role, "Role <abbr title='required' class='required'>*</abbr>".html_safe 
-        = f.radio_button :role, 'admin'
-        = f.label :admin
+        %p.label_for Role <abbr title='required' class='required'>*</abbr>
+        = f.radio_button :role, 'admin' 
+        = f.label :role_admin, 'Admin'
         = f.radio_button :role, 'designer'
-        = f.label :designer
+        = f.label :role_designer, 'Designer'
         = f.radio_button :role, 'editor'
-        = f.label :editor
+        = f.label :role_editor, 'Editor'
     %li
       = f.submit button_label, :class => "submit"
       = link_to "Cancel", [:admin, :users], :class => "cancel"

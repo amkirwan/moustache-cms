@@ -8,4 +8,7 @@
         = f.text_field :name 
       %li
         = f.submit button_label, :class => "submit"
-        = link_to "Cancel", [:admin, :asset_collections], :class => "cancel"
+        - if @asset_collection.new_record?
+          = link_to "Cancel", [:admin, :asset_collections], :class => "cancel"
+        - else
+          = link_to "Cancel", [:admin, @asset_collection], :class => "cancel"

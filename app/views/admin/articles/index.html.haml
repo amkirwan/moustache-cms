@@ -3,6 +3,6 @@
 
 - inner_content "shared/inner_wrapper" do
   %div.breadcrumb
-    = link_to "&laquo Site Article Collections".html_safe, [:admin, :article_collections]
+    = link_to "&laquo; Site Article Collections".html_safe, [:admin, :article_collections]
 
   = list_objects @articles, :message => 'Add An Article', :collection => @article_collection, :link => :article

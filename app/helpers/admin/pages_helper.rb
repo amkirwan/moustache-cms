@@ -22,7 +22,7 @@ module Admin::PagesHelper
         render :partial => 'admin/pages/mongoid_tree_item', :collection => mongoid_tree_set, :locals => { :init => init}
       end
     else
-      content_tag :ol, :class => 'sortable pages', :data_url => sort_admin_page_path(mongoid_tree_set.first.parent) do
+      content_tag :ol, :class => 'sortable pages', 'data-url' => sort_admin_page_path(mongoid_tree_set.first.parent) do
         render :partial => 'admin/pages/mongoid_tree_item', :collection => mongoid_tree_set, :locals => { :init => init}
       end
     end

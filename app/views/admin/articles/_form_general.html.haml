@@ -12,10 +12,12 @@
           = f.label :img_url, "Associated Image URL for Article"
           = f.text_field :img_url
         %li{:class => "inline"}
-          = f.label :layout
+          = f.label "layout_id", "Layout"
           = f.collection_select :layout_id, Layout.all_from_current_site(@current_site), :id, :name, {:include_blank => true}
           %p Leave this blank to use the layout specified in the article collection properties. Selecting a layout will override the layout for the collection.
         = f.fields_for :current_state do |builder|
           %li{:class => "inline"}
-            = builder.label :current_state, "Status<abbr title='required' class='required'>*</abbr>".html_safe
+            = builder.label "name", "Status<abbr title='required' class='required'>*</abbr>".html_safe
             = builder.collection_select :name, CurrentState.all, :id, :name
+          %li
+            = builder.hidden_field :id

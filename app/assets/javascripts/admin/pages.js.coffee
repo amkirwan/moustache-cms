@@ -13,7 +13,7 @@ jQuery ->
           params += '&_method=put'
           params += '&' + $('meta[name=csrf-param]').attr('content') + '=' + $('meta[name=csrf-token]').attr('content')
 
-          $.post $(this).attr('data_url'), params
+          $.post $(this).attr('data-url'), params
 
       /* hide initial form elements */
       $('#advanced_fields legend').siblings().first().hide()

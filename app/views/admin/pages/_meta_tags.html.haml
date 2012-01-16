@@ -11,5 +11,7 @@
             = builder.label :content
             = builder.text_field :content
             = manage_meta_tag @page, builder.object
+          %li
+            = builder.hidden_field :id
         %li#add_meta_tag
           = add_meta_tag 'Save page first to add custom meta tags', @page, [:new, :admin, @page, :meta_tag]

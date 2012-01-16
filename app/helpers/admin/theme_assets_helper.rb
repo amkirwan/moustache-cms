@@ -23,8 +23,10 @@ module Admin::ThemeAssetsHelper
 
   def add_tag_attrs(message, f_builder)
     if @theme_asset.new_record?
-      content_tag :p do
-        content_tag :i, message
+      content_tag :li do 
+        content_tag :p do
+          content_tag :i, message
+        end
       end
     else
       render :partial => 'tags', :locals => {:f => f_builder}

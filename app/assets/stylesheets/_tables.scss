@@ -23,9 +23,11 @@ table.info {
     background: $content_table_heading;
   } 
   th:first-child {
-    padding-left: 4px;
+    text-align: left;
+    padding-left: 8px;
   }
   th:last-child {
+    text-indent: -9999px;
     border-right: 0;
     background: $body_bg;
   }

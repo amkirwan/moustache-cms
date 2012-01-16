@@ -9,10 +9,11 @@
   %body{:class => body_id_set}
     #wrapper
       #header
-        %h1#site_name
+        %h1#site
           = link_to "#{@current_site.name.titleize} Site", "/" 
         = render :partial => "layouts/admin/welcome"
       #main
         = render :partial => "layouts/admin/nav"
         #content
           = yield
+    #footer

@@ -4,4 +4,4 @@
       - User.all_from_current_site(@current_site).asc(:username).each do |user|
         %li.editor_field.inline
           = check_box_tag "page[editor_ids][]", user.id, page.editor_ids.include?(user.id), :id => "editor_id_#{user.username}"
-          = label_tag "page[editor_ids][#{user.username}]", user.username.downcase
+          = label_tag "editor_id_#{user.username}]", user.username.downcase

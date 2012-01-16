@@ -3,7 +3,7 @@
     = f.label :name
     = f.text_field :name
   %li
-    = f.label :filter
+    = f.label :filter_name
     = f.collection_select :filter_name, Filter.all, :id, :name
   %li
     = f.label :content
