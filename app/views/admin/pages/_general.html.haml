@@ -2,7 +2,7 @@
   = foldable_fieldset 'General' do
     %div.fields_wrap
       %ol 
-        %li
+        %li.hidden
           = hidden_field_tag :view, @selected_page_part.name
         %li
           = f.label :parent_id

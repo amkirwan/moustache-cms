@@ -372,7 +372,7 @@ form.site_prop {
     width: 60%;
   }
   div.fields_wrap {
-    padding: 0.5em 0;
+    padding: 0.5em 8px;
   }
   .submit, .file_field {
     font-size: 1em;
@@ -394,13 +394,13 @@ form.site_prop {
     margin-left: 0.5em;
   }
   .foldable, .grouping {
-    padding: 0 8px 4px 8px;
+    padding-bottom: 4px;
     margin-bottom: 8px;
     @include rounded_corners;
     background-color: $foldable_bg;
     legend {
-      padding: 4px 8px;
-      margin-left: - 8px;
+      padding: 4px 0px;
+      text-indent: 8px;
       @include rounded_corners_top_left_and_right;
       color: $light_text;
       width: 100%;
@@ -550,6 +550,7 @@ ol#page_parts_nav {
   }
   li.add_page_part, li.delete_page_part {
     padding-right: 0;
+    margin-right: 5px;
     float: right;
   }
   a:link, a:visited {
@@ -559,6 +560,9 @@ ol#page_parts_nav {
   a:hover, a:focus {
     color: $hover_text;
     text-decoration: none;
+  }
+  .tab:first-child {
+    margin-left: 5px;
   }
   .selected {
     background: $foldable_bg;
