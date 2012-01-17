@@ -19,8 +19,3 @@
             = builder.collection_select :name, CurrentState.all, :id, :name
           %li
             = builder.hidden_field :id
-        - if !@page.parent.try(:post_container?)
-          %li{:class => "inline"} 
-            = f.label :post_container
-            = f.check_box :post_container
-      

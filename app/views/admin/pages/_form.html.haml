@@ -3,9 +3,9 @@
 
     = render :partial => "shared/error_messages", :locals => { :target => @page } 
     = render :partial => "general", :locals => {:f => f}
-    = render :partial => "advanced_options", :locals => {:f => f}
-    = render :partial => "meta_tags", :locals => {:f => f}
-    = render :partial => "editors", :locals => {:f => f, :page => @page}
     = render :partial => "page_parts", :locals => {:f => f}
+    = render :partial => "editors", :locals => {:f => f, :page => @page}
+    = render :partial => "meta_tags", :locals => {:f => f}
+    = render :partial => "advanced_options", :locals => {:f => f}
     = render :partial => "form_submit", :locals => { :f => f, :button_label => button_label }
   

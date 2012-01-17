@@ -16,6 +16,10 @@ jQuery ->
           $.post $(this).attr('data-url'), params
 
       /* hide initial form elements */
+
+      $('#page_editors_fields legend').siblings().first().hide()
+      $('#page_editors_fields legend').find('span').removeClass('rotate')
+
       $('#advanced_fields legend').siblings().first().hide()
       $('#advanced_fields legend').find('span').removeClass('rotate')
 
