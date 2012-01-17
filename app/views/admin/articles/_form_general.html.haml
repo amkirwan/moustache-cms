@@ -8,9 +8,6 @@
         %li
           = f.label :subheading
           = f.text_area :subheading, :cols => 40, :rows => 5
-        %li
-          = f.label :img_url, "Associated Image URL for Article"
-          = f.text_field :img_url
         %li{:class => "inline"}
           = f.label "layout_id", "Layout"
           = f.collection_select :layout_id, Layout.all_from_current_site(@current_site), :id, :name, {:include_blank => true}

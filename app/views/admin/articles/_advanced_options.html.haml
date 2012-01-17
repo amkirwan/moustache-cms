@@ -9,6 +9,9 @@
           = f.label :tags
           = f.text_field :tags
         %li
+          = f.label :img_url, "Associated Image URL for Article"
+          = f.text_field :img_url
+        %li
           %p.label_for Datetime  
           = f.datetime_select :date
         %li.inline 
