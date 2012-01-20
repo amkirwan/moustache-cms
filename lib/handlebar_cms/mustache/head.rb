@@ -11,9 +11,9 @@ module HandlebarCms
       # -- Css ----
       def stylesheet
         lambda do |text|
-          theme_name, css_name = text.split(',').each { |arg| arg.strip! }
+          hash = Hash[*text.scan(/(\w+):([&.\w\s\-]+)/).to_a.flatten]
           attributes = style_attributes
-          file = @current_site.css_file_by_name(theme_name, css_name)
+          file = @current_site.css_file_by_name(hash['theme_name'], hash['name'])
           unless file.nil?
             set_default_attribute_values(attributes, file)
             set_link_attributes(attributes, file)
@@ -40,8 +40,8 @@ module HandlebarCms
       # -- js ---
       def js_file
         lambda do |text|
-          theme_name, js_name = text.split(',').each { |arg| arg.strip! }
-          file = @current_site.js_file_by_name(theme_name, js_name)
+          hash = Hash[*text.scan(/(\w+):([&.\w\s\-]+)/).to_a.flatten]
+          file = @current_site.js_file_by_name(hash['theme_name'], hash['name'])
           unless file.nil?
             engine = gen_haml('javascript')
             engine.render(nil, {:src => file.url_md5})
