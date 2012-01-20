@@ -97,6 +97,17 @@ class HandlebarCms::Mustache::CmsPage < Mustache
       process_with_filter(@current_site.snippet_by_name(text)) 
     end
   end
+
+  def image
+    lambda do |text|
+      hash = Hash[*text.scan(/(\w+):([&.\w\s\-]+)/).to_a.flatten]
+      image = @current_site.site_asset_by_name(hash['collection'], hash['filename'])
+      unless image.nil?
+        engine = gen_haml('image')
+        engine.render(nil, {:src => image.url_md5, :id => hash['id'], :class_name => hash['class'], :alt => hash['alt'], :title => hash['title']})
+      end
+    end
+  end
   
   private 
     def controller_ivars_set

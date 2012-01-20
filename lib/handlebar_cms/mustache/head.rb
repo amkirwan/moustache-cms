@@ -14,10 +14,12 @@ module HandlebarCms
           theme_name, css_name = text.split(',').each { |arg| arg.strip! }
           attributes = style_attributes
           file = @current_site.css_file_by_name(theme_name, css_name)
-          set_default_attribute_values(attributes, file)
-          set_link_attributes(attributes, file)
-          engine = gen_haml('stylesheet')
-          engine.render(nil, attributes)
+          unless file.nil?
+            set_default_attribute_values(attributes, file)
+            set_link_attributes(attributes, file)
+            engine = gen_haml('stylesheet')
+            engine.render(nil, attributes)
+          end
         end
       end
 
@@ -40,8 +42,10 @@ module HandlebarCms
         lambda do |text|
           theme_name, js_name = text.split(',').each { |arg| arg.strip! }
           file = @current_site.js_file_by_name(theme_name, js_name)
-          engine = gen_haml('javascript')
-          engine.render(nil, {:src => file.url_md5})
+          unless file.nil?
+            engine = gen_haml('javascript')
+            engine.render(nil, {:src => file.url_md5})
+          end
         end
       end
       
@@ -53,12 +57,6 @@ module HandlebarCms
         end
       end
     
-      def page_meta_tags
-        meta_tags = 
-        engine = gen_haml('meta_tags')
-        engine.render(nil, {:page => @page})
-      end    
-      
       private 
         def meta_tag_with_name(name)
           engine = gen_haml('meta_tag')

@@ -98,6 +98,11 @@ class Site
   def articles_by_name(name)
     article_collections(:name => name.to_s).first.articles
   end
+
+  def site_asset_by_name(asset_collection, file_name)
+    asset_collection = AssetCollection.first(:conditions => {:name => asset_collection, :site_id => self.id})
+    asset_collection.site_assets.where(:name => file_name).first
+  end
   
   private  
     def old_domain
