@@ -385,7 +385,7 @@ form.site_prop {
     background: -webkit-gradient(linear, 0% 49%, 0% 51%, from(rgba(44, 44, 44, 0.8)), to(rgba(44, 44, 44, 1)));
     cursor:pointer;
   }
-  .submit:hover, .file_field:hover {
+  .submit:hover {
     background: lighten(#000, 10%);
   }
   .cancel {
