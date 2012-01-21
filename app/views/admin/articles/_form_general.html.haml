@@ -5,9 +5,6 @@
         %li
           = f.label :title, "Title<abbr title='required' class='required'>*</abbr>".html_safe
           = f.text_field :title
-        %li
-          = f.label :subheading
-          = f.text_area :subheading, :cols => 40, :rows => 5
         %li{:class => "inline"}
           = f.label "layout_id", "Layout"
           = f.collection_select :layout_id, Layout.all_from_current_site(@current_site), :id, :name, {:include_blank => true}

@@ -3,7 +3,6 @@ pagePartNavId = '#' + '<%= @page_part.id %>' + '_nav'
 
 if $(pagePartId).length
   $(pagePartId).fadeToggle 'slow', 'linear', ->
-    $(this).next().remove()
     $(this).remove()
   
   $(pagePartNavId).fadeToggle 'slow', 'linear', ->

@@ -1,5 +1,5 @@
 = fields_for("page[page_parts_attributes][#{index}]", @page_part) do |builder|
-  %ol{:id => "page_part_#{@page_part.id}", :class => "form_fields page_part page_part_selected" }
+  %ol{:id => "page_part_#{@page_part.id}", :class => "form_fields page_part" }
     %li.page_part_name
       = builder.label :name, "Page Part Name<abbr title='required' class='required'>*</abbr>".html_safe
       = builder.text_field :name
@@ -9,4 +9,4 @@
     %li.page_parts_content
       = builder.label :content, "Page Part Content<abbr title='required' class='required'>*</abbr>".html_safe 
       = builder.text_area :content, :class => "page_part_contents code" 
-%input{:id => "page_page_parts_attributes_#{index}_id", :name => "page[page_parts_attributes[#{index}][id]", :type => 'hidden', :value => "#{@page_part.id}"}
+    = builder_hidden_attribute(builder, @page)
