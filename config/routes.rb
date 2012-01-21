@@ -26,6 +26,8 @@ HandlebarCms::Application.routes.draw do
       end
     end
 
+    match 'articles/new_meta_tag' => 'articles#new_meta_tag', :as => 'articles_new_meta_tag'
+
     resources :theme_collections do
       resources :theme_assets do 
         resources :tag_attrs
