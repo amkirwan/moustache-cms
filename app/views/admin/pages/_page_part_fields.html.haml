@@ -9,3 +9,4 @@
     %li.page_parts_content
       = builder.label :content, "Page Part Content<abbr title='required' class='required'>*</abbr>".html_safe 
       = builder.text_area :content, :class => "page_part_contents code"
+    = builder_hidden_attribute(builder, @page)

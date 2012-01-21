@@ -45,7 +45,6 @@ class Admin::PagesController < AdminBaseController
       if @page.update_attributes(params[:page]) 
         flash[:notice] = "Successfully updated the page #{@page.title}"
          format.html { redirect_to redirector_path(@page), :notice => "Successfully updated the page #{@page.title}" }
-        #format.html { redirect_to edit_admin_page_path(@page, :view => @selected_page_part.name) }
       else
         format.html { render :edit }
       end 
@@ -86,6 +85,6 @@ class Admin::PagesController < AdminBaseController
     end
 
     def redirector_path(object)
-     params[:commit] == "Save and Continue Editing" ? edit_admin_page_path(object, :view => @selected_page_part.name) : [:admin, :pages]
+      params[:commit] == "Save and Continue Editing" ? edit_admin_page_path(object, :view => @selected_page_part.name) : [:admin, :pages]
     end
 end

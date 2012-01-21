@@ -14,6 +14,7 @@ class Article
                   :content,
                   :current_state, 
                   :current_state_attributes,
+                  :meta_tags_attributes,
                   :filter_name,
                   :authors,
                   :layout_id,

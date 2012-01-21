@@ -4,10 +4,11 @@
 //= require jquery-ui
 //= require markitup_selector
 //= require admin/pages
+//= require admin/articles
+//= require admin/meta_tags
 //= require admin/theme_assets
 //= require admin/site_assets
 //= require admin/current_site
-//= require admin/articles
 //= require plupload/plupload.full
 //= require plupload/jquery.plupload.queue/jquery.plupload.queue
 //= require site_asset_plupload

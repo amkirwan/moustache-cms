@@ -28,7 +28,6 @@ class Page
   field :slug
   field :full_path
   field :breadcrumb
-  field :post_container, :type => Boolean, :default => false    
 
   taggable
 

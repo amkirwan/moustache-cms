@@ -1,5 +1,5 @@
 pageId = ->
-  '<%= @page.title + '_' + @page.id.to_s %>'
+  '<%= @page.title.parameterize + '_' + @page.id.to_s %>'
 
 if $('div#content')
   $('div#content').prepend('<%= escape_javascript(render :partial => "shared/flash_notice") %>')

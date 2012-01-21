@@ -1,7 +1,7 @@
 class Admin::ArticlesController < AdminBaseController
 
   load_and_authorize_resource :article_collection
-  load_and_authorize_resource :article, :through => :article_collection
+  load_and_authorize_resource :article, :through => :article_collection, :except => :new_meta_tag
 
   respond_to :html, :xml, :json
   respond_to :js, :only => :new_meta_tag
@@ -24,8 +24,8 @@ class Admin::ArticlesController < AdminBaseController
 
   # POST /admin/article_collections/1/articles
   def create
-    created_updated_by_for @article
     @article.site = @current_site
+    created_updated_by_for @article
     respond_with(:admin, @article_collection, @article) do |format|
       if @article.save
         format.html { redirect_to [:admin, @article_collection, :articles], :notice => "Successfully created the article #{@article.title} in the collection #{@article_collection.name}" }

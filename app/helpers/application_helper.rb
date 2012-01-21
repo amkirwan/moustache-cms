@@ -129,4 +129,13 @@ module ApplicationHelper
   def header_title(page_title)
     content_for(:title) { page_title }
   end
+
+  def builder_hidden_attribute(builder, object)
+    unless object.new_record?
+      content_tag :li do
+        builder.hidden_field :id
+      end
+    end
+  end
+
 end
