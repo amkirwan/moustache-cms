@@ -41,7 +41,6 @@ class SiteAsset
   before_validation :set_name
   before_save :update_asset_attributes, :calc_md5
   before_update :recreate, :move_file_md5
-  after_destroy :remove_folder  
     
   # -- Instance Methods     
   def set_name
