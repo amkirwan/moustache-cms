@@ -6,7 +6,7 @@ jQuery ->
       $('form#new_site_asset li#submit_fields').html('<li><a href=' + site_asset + ' class="cancel">back to collection</a><a href=' + site_asset_new + ' class="cancel">reset form</a></li>')
 
       $("div#uploader").pluploadQueue
-        runtimes: "gears,flash,html5"
+        runtimes: "gears,html5"
         url:  $('form#new_site_asset').attr('action')
         rename: true
         multipart: true
