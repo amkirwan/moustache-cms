@@ -7,7 +7,7 @@ jQuery ->
           $(this).remove()
         false
 
-      /* new page ajax add meta_tag */
+      /* new page, new article, new site meta_tag */
       if $('p#meta_tag_message').length
         $('#meta_tag_message').remove()
         $('#add_meta_tag').append('<span class="fake_link">Add Meta Tag</span>')
