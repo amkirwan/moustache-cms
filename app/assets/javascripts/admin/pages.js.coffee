@@ -16,15 +16,10 @@ jQuery ->
           $.post $(this).attr('data-url'), params
 
       /* hide initial form elements */
-
-      $('#page_editors_fields legend').siblings().first().hide()
-      $('#page_editors_fields legend').find('span').removeClass('rotate')
-
-      $('#advanced_fields legend').siblings().first().hide()
-      $('#advanced_fields legend').find('span').removeClass('rotate')
-
-      $('#meta_tags_fields legend').siblings().first().hide()
-      $('#meta_tags_fields legend').find('span').removeClass('rotate')
+      $('legend').each ->
+        $(this).siblings().first().hide()      
+      $('legend').each ->
+        $(this).find('span').removeClass('rotate')
 
       /* page parts ajax spinner */
       $('ol#page_parts_nav a').bind 'ajax:beforeSend', ->

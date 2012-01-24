@@ -2,4 +2,8 @@
   = can_destroy? @page
 
 - inner_content "shared/inner_wrapper" do
+  %div.breadcrumb
+    = link_to "&laquo; Pages".html_safe, [:admin, :pages]
+    = link_to 'View Page', @page.full_path, :target => "_blank", :class => 'view_page'
+
   = render :partial => "form", :locals => { :button_label => "Update Page"}

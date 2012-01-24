@@ -232,7 +232,22 @@ div#content_inner_wrapper {
 
 .breadcrumb {
   padding-bottom: 2em;
+  text-align: center;
+  a:first-child {
+    float: left;
+  }
+  a.view_page:link, a.view_page:visited {
+    @extend  .action;
+  }
 }
+
+
+a:hover.action, a:focus.action {
+  text-decoration: none;
+  background: lighten(#000, 10%)
+}
+
+
 
 ul.submenu {
   list-style: none;
