@@ -56,6 +56,8 @@ class Ability
         end
       end
 
+      can :manage, CustomField
+
       can :manage, User, :site_id => user.site_id
       cannot :change_password, User do |u|
         u.id != user.id

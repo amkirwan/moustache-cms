@@ -6,6 +6,7 @@
 //= require admin/pages
 //= require admin/articles
 //= require admin/meta_tags
+//= require admin/custom_fields
 //= require admin/theme_assets
 //= require admin/site_assets
 //= require admin/current_site

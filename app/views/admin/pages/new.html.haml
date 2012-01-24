@@ -1,4 +1,7 @@
 - header_content 'shared/header_wrapper', :object => @page 
 
 - inner_content "shared/inner_wrapper" do
+  %div.breadcrumb
+    = link_to "&laquo; Pages".html_safe, [:admin, :pages]
+
   = render :partial => "form", :locals => { :button_label => "Create Page"}

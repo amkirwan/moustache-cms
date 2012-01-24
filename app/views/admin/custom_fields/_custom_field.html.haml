@@ -1,0 +1,9 @@
+= fields_for @base_class do |record|
+  = record.fields_for(:custom_fields, @custom_field) do |builder|
+    %li{:class => "inline custom_field"}
+      = builder.label :name
+      = builder.text_field :name
+      = builder.label :content
+      = builder.text_field :content
+      %span{ :class => "fake_link delete_new_custom_field"} Delete
+
