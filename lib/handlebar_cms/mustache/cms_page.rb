@@ -1,22 +1,6 @@
 require 'haml'
-
-class TagHelper
-  include Singleton
-  include ActionView::Helpers
-
-  def page_full_path_with_request(request, page)
-    "#{request.protocol}#{request.host.downcase}" + page.full_path
-  end
-end
-
-class RedcarpetSingleton
-  include Singleton
-
-  def self.markdown
-    @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML,:autolink => true, :space_after_headers => true) 
-  end
-
-end
+require 'tag_helper'
+require 'redcarpet_singleton'
 
 class HandlebarCms::Mustache::CmsPage < Mustache
   include Head
@@ -108,7 +92,19 @@ class HandlebarCms::Mustache::CmsPage < Mustache
       end
     end
   end
-  
+
+  def page_paginate_children
+    lambda do |text|
+      @child_pages = @page.children.page @controller.params[:page]
+      unless @child_pages.nil?
+        options = Hash[*text.scan(/(\w+).to_sym:([&.\w\s\-]+)/).to_a.flatten]
+        context = ActionView::Base.new("#{Rails.root}/app/views", {}, @controller,nil)
+        engine = gen_haml('paginate')
+        engine.render(context, {:child_pages => @child_pages, :options => options})
+      end
+    end
+  end
+
   private 
     def controller_ivars_set
       variables = @controller.instance_variable_names

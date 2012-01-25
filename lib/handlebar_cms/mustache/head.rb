@@ -7,6 +7,10 @@ module HandlebarCms
         engine = Haml::Engine.new(%{%title= title})
         engine.render(nil, {:title => @page.title})
       end   
+
+      def page_title
+        @page.title
+      end
       
       # -- Css ----
       def stylesheet
