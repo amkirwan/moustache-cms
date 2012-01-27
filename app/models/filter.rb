@@ -21,10 +21,6 @@ class Filter
     @filters
   end
   
-  def self.all_page_filters
-    @filters_page
-  end
-  
   def self.find(id)
     filter = @filters.find { |filter| filter.id == id.to_s.downcase }
     filter unless filter.nil?
@@ -39,13 +35,6 @@ class Filter
   @filters = [
     Filter.new(:name => "markdown"),
     Filter.new(:name => "textile"),
-    Filter.new(:name => "haml"),
     Filter.new(:name => "html")
   ]
-  
-  @filters_page = [
-    Filter.new(:name => "markdown"),
-    Filter.new(:name => "textile"),
-    Filter.new(:name => "html")
-    ]
 end
