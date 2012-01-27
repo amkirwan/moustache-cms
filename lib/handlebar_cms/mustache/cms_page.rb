@@ -70,7 +70,9 @@ class HandlebarCms::Mustache::CmsPage < Mustache
   def editable_text
     lambda do |text|
       part = @page.page_parts.find_by_name(text)
-      process_with_filter(part)
+      unless part.nil?
+        process_with_filter(part)
+      end
     end
   end
 
@@ -95,7 +97,7 @@ class HandlebarCms::Mustache::CmsPage < Mustache
 
   def page_paginate_children
     lambda do |text|
-      @child_pages = @page.children.page @controller.params[:page]
+      @child_pages = @page.children.asc(:title).page(@controller.params[:page])
       unless @child_pages.nil?
         options = Hash[*text.scan(/(\w+).to_sym:([&.\w\s\-]+)/).to_a.flatten]
         context = ActionView::Base.new("#{Rails.root}/app/views", {}, @controller,nil)
@@ -133,15 +135,17 @@ class HandlebarCms::Mustache::CmsPage < Mustache
         RedCloth.new(preprocessed_content).to_html
       when "html"
         preprocessed_content  
-      when "haml"
-        gen_haml(part.content).render(Object.new, {:current_site => @current_site, :request => @request, :page => @page })
       else
         preprocessed_content  
       end
     end    
     
     def gen_haml(template_name)
-      template = File.read("#{File.dirname(__FILE__)}/templates/#{template_name}.haml")
+      if File.exists?("#{File.dirname(__FILE__)}/templates/#{template_name}.haml")
+        template = File.read("#{File.dirname(__FILE__)}/templates/#{template_name}.haml")
+      elsif File.exists?("#{File.dirname(__FILE__)}/custom_templates/#{template_name}.haml")
+        template = File.read("#{File.dirname(__FILE__)}/custom_templates/#{template_name}.haml") 
+      end
       Haml::Engine.new(template, :attr_wrapper => "\"")
     end
 
