@@ -86,7 +86,7 @@ class Page
   
   # -- Callbacks -----------------------------------------------
   before_validation :format_title, :slug_set, :full_path_set, :breadcrumb_set
-  before_save :uniq_editor_ids
+  before_save :uniq_editor_ids, :strip_page_parts
   after_update :update_current_state_time
   after_save :update_user_pages
   #before_destroy :destroy_children
@@ -192,6 +192,12 @@ class Page
   
     def uniq_editor_ids
       self.editor_ids.uniq!
+    end
+
+    def strip_page_parts
+      self.page_parts.each do |part|
+        part.content.strip!
+      end
     end
   
     def update_current_state_time
