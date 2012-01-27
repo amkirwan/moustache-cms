@@ -100,7 +100,7 @@ class HandlebarCms::Mustache::CmsPage < Mustache
       @child_pages = @page.children.asc(:title).page(@controller.params[:page])
       unless @child_pages.nil?
         options = Hash[*text.scan(/(\w+).to_sym:([&.\w\s\-]+)/).to_a.flatten]
-        context = ActionView::Base.new("#{Rails.root}/app/views", {}, @controller,nil)
+        context = ActionView::Base.new("#{Rails.root}/lib/handlebar-cms/mustache/custom_templates", {}, @controller,nil)
         engine = gen_haml('paginate')
         engine.render(context, {:child_pages => @child_pages, :options => options})
       end
