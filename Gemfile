@@ -13,6 +13,7 @@ gem "coffeebeans"
 
 gem "devise"
 
+gem "haml"
 gem "haml-rails", "~> 0.3"
 gem "mongoid", "~> 2.3.3"
 gem "bson", "~> 1.3.1"

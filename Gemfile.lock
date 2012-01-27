@@ -253,6 +253,7 @@ DEPENDENCIES
   database_cleaner
   devise
   factory_girl_rails
+  haml
   haml-rails (~> 0.3)
   hpricot
   jquery-rails
