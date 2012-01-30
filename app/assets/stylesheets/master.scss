@@ -187,7 +187,7 @@ body.snippets li#snippets,
 body.layouts li#layouts,
 body.theme_assets li#theme_assets,
 body.users li#users,
-body.sites li#sites {
+body.current_site li#site {
   a:link, a:visited {
     color: $light_text;
     background: rgba(44,44,44, 0.8);
