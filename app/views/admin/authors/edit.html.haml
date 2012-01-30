@@ -2,5 +2,8 @@
   = can_destroy? @author
 
 - inner_content 'shared/inner_wrapper' do
+  %div.breadcrumb
+    = link_to "&laquo; Authors".html_safe, [:admin, :authors]
+
   = render :partial => 'form',  
            :locals => { :button_label => 'Update Author' }

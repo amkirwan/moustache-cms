@@ -2,5 +2,8 @@
   = can_destroy? @theme_asset
 
 - inner_content "shared/inner_wrapper" do
+  %div.breadcrumb
+    = link_to "&laquo; #{@theme_collection.name.titleize}".html_safe, [:admin, @theme_collection]
+
   = render :partial => "form",  
            :locals => { :button_label => "Update Theme Asset" }

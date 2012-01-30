@@ -2,5 +2,8 @@
   = can_destroy? @layout
 
 - inner_content 'shared/inner_wrapper' do
+  %div.breadcrumb
+    = link_to "&laquo; Layouts".html_safe, [:admin, :layouts]
+
   = render :partial => 'form',  
            :locals => { :button_label => 'Update Layout' }

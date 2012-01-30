@@ -1,4 +1,7 @@
 - header_content 'shared/header_wrapper', :object => @asset_collection 
 
 - inner_content "shared/inner_wrapper" do
+  %div.breadcrumb
+    = link_to "&laquo; Site Asset Collections".html_safe, [:admin, :asset_collections]
+
   = render :partial => "form", :locals => { :button_label => "Save Collection" }

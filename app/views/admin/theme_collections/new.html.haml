@@ -1,4 +1,7 @@
 - header_content 'shared/header_wrapper', :object => @theme_collection 
 
 - inner_content "shared/inner_wrapper" do
+  %div.breadcrumb
+    = link_to "&laquo; Theme Collections".html_safe, [:admin, :theme_collections]
+
   = render :partial => "form", :locals => { :button_label => "Save Theme Collection" }

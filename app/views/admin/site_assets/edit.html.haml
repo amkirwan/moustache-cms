@@ -2,5 +2,8 @@
   = can_destroy? @site_asset
 
 - inner_content "shared/inner_wrapper" do
+  %div.breadcrumb
+    = link_to "&laquo; #{@asset_collection.name.titleize} Collection".html_safe, [:admin, @asset_collection]
+
   = render :partial => "form",
            :locals => { :button_label => "Update Asset" }

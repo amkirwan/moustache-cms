@@ -1,4 +1,7 @@
 - header_content 'shared/header_wrapper', :object => @snippet
 
 - inner_content "shared/inner_wrapper" do
+  %div.breadcrumb
+    = link_to "&laquo; Snippets".html_safe, [:admin, :snippets]
+
   = render :partial => "form", :locals => { :button_label => "Create Snippet"}

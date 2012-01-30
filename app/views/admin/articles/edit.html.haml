@@ -4,4 +4,7 @@
       = link_to "Delete Article", [:admin, @article_collection, @article], :confirm => "Are you sure you want to delete the article #{@article.title}", :method => :delete, :class => "action delete"
 
 - inner_content "shared/inner_wrapper" do
+  %div.breadcrumb
+    = link_to "&laquo; #{@article_collection.name.titleize} Collection".html_safe, [:admin, @article_collection]
+
   = render :partial => "form",:locals => { :button_label => "Update Article" }

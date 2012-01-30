@@ -2,5 +2,8 @@
   = can_destroy? @snippet
 
 - inner_content "shared/inner_wrapper" do
+  %div.breadcrumb
+    = link_to "&laquo; Snippets".html_safe, [:admin, :snippets]
+
   = render :partial => "form",  
            :locals => { :button_label => "Update Snippet" }
