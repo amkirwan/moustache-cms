@@ -2,8 +2,7 @@ class Admin::PagesController < AdminBaseController
   
   load_and_authorize_resource 
 
-  before_filter :selected_page_part, :only => [:edit, :update]
-
+  before_filter :selected_page_part, :only => :edit 
   respond_to :html, :except => [:show, :sort, :new_meta_tag, :update]
   respond_to :xml, :json
   respond_to :js, :only => [:edit, :destroy, :sort, :new_meta_tag]
@@ -40,12 +39,15 @@ class Admin::PagesController < AdminBaseController
   end
   
   def update
+    logger.debug "*"*10 + " #{params} " + "*"*10 + "\n"
     @page.updated_by = @current_admin_user
     respond_with(:admin, @page) do |format|
       if @page.update_attributes(params[:page]) 
         flash[:notice] = "Successfully updated the page #{@page.title}"
-         format.html { redirect_to redirector_path(@page), :notice => "Successfully updated the page #{@page.title}" }
+        selected_page_part 
+        format.html { redirect_to redirector_path(@page), :notice => "Successfully updated the page #{@page.title}" }
       else
+        selected_page_part 
         format.html { render :edit }
       end 
     end
@@ -72,7 +74,14 @@ class Admin::PagesController < AdminBaseController
   private 
 
     def selected_page_part
-      @selected_page_part = params[:view].nil? ? @page.page_parts.first : @page.page_parts.where(:name => params[:view]).first
+      return @selected_page_part = @page.page_parts.first if params[:view].nil? || params[:view].empty?
+
+      @selected_page_part = @page.page_parts.find(params[:view])
+      if @selected_page_part.nil?
+        @selected_page_part = @page.page_parts.first
+      else
+        @selected_page_part 
+      end
     end
 
     def parent_page
@@ -85,6 +94,6 @@ class Admin::PagesController < AdminBaseController
     end
 
     def redirector_path(object)
-      params[:commit] == "Save and Continue Editing" ? edit_admin_page_path(object, :view => @selected_page_part.name) : [:admin, :pages]
+      params[:commit] == "Save and Continue Editing" ? edit_admin_page_path(object, :view => @selected_page_part.id) : [:admin, :pages]
     end
 end

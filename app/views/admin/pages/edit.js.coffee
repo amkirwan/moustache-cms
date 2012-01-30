@@ -1,5 +1,5 @@
 if $('#view').length > 0
-  $('#view').attr 'value', '<%= @selected_page_part.name.parameterize('_') %>'
+  $('#view').attr 'value', '<%= @selected_page_part.id %>'
 
 
 if $('ol#page_parts_nav').length > 0

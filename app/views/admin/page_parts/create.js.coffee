@@ -12,7 +12,17 @@ $('#page_parts_nav .selected').removeClass('selected')
 /* add to page part nav and make it the selected tab*/
 $('#page_parts_nav .tab').last().after('<%= escape_javascript(render :partial => "page_part_nav") %>')
 
+
 /* add markitup form */
 $('ol#page_part_<%= @page_part.id %> textarea').markItUp(markdownSettings)
 
 $('.delete_page_part').html('<%= delete_page_part %>')
+
+if $('#view').length > 0
+  $('#view').attr 'value', '<%= @page_part.id %>'
+
+/* add ajax event for showing spinner when clicking on the tab */
+$('.tab a').last().bind 'ajax:beforeSend', ->
+  $('.page_parts div.spinner_wrapper .spinner').removeClass('hidden')
+$('.tab a').last().bind 'ajax:success', ->
+  $('.page_parts div.spinner_wrapper .spinner').addClass('hidden')

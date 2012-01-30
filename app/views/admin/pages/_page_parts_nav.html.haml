@@ -1,4 +1,7 @@
 %ol#page_parts_nav
+  - unless @selected_page_part.nil?
+    %li.hidden
+      = hidden_field_tag :view, @selected_page_part.id
   - @page.page_parts.each do |page_part|
     = page_part_selected(page_part)
   %li.delete_page_part

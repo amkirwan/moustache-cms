@@ -91,18 +91,18 @@ module Admin::PagesHelper
       content = content_tag :span, '&#124; '.html_safe, :class => 'menu_separator'
       content += link_to "Delete", [:admin, @page, @selected_page_part], :method => :delete, :confirm => "Are you sure you want to delete the page part #{@selected_page_part.name}", :class => "delete", :remote => true
       content
- end
+    end
   end
 
   def page_part_selected(page_part)
     unless @page.new_record?
-      if @selected_page_part.name == page_part.name
+      if @selected_page_part.id == page_part.id
         content_tag :li, :id => "#{page_part.id}_nav", :class => 'tab selected' do
-          link_to page_part.name, edit_admin_page_path(@page, :view => page_part.name), :remote => true
+          link_to page_part.name, edit_admin_page_path(@page, :view => page_part.id), :remote => true
         end
       else
         content_tag :li, :id => "#{page_part.id}_nav", :class => 'tab' do
-          link_to page_part.name, edit_admin_page_path(@page, :view => page_part.name), :remote => true
+          link_to page_part.name, edit_admin_page_path(@page, :view => page_part.id), :remote => true
         end
       end
     end

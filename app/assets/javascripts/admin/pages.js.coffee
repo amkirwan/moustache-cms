@@ -21,12 +21,14 @@ jQuery ->
       $('legend').each ->
         $(this).find('span').removeClass('rotate')
 
+      $('fieldset.page_parts legend').siblings().first().show()
+      $('fieldset.page_parts legend').find('span').addClass('rotate')
+
       /* page parts ajax spinner */
       $('ol#page_parts_nav a').bind 'ajax:beforeSend', ->
         $('.page_parts div.spinner_wrapper .spinner').removeClass('hidden')
       $('ol#page_parts_nav a').bind 'ajax:success', ->
         $('.page_parts div.spinner_wrapper .spinner').addClass('hidden')
-
 
       /* change page part nav name */
       $('li.page_part_name input').live 'change', ->

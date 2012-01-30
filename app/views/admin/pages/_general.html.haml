@@ -2,9 +2,6 @@
   = foldable_fieldset 'General' do
     %div.fields_wrap
       %ol 
-        - unless @selected_page_part.nil?
-          %li.hidden
-            = hidden_field_tag :view, @selected_page_part.name
         %li
           = f.label :parent_id
           = f.collection_select :parent_id, Page.all_from_current_site(@current_site).order(:title), :id, :title, { :include_blank => true, :selected => parent_selected(@parent_page) }
