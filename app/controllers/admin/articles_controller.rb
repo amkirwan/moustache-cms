@@ -54,6 +54,7 @@ class Admin::ArticlesController < AdminBaseController
   def new_meta_tag
     @base_class = Page.new
     @meta_tag = MetaTag.new
+    render 'admin/meta_tags/new.js'
   end
 
 end

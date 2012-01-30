@@ -13,7 +13,9 @@ HandlebarCms::Application.routes.draw do
     resources :pages do 
       put :sort, :on => :member
       get :new_meta_tag, :on => :collection
+      get :new_custom_field, :on => :collection
       resources :meta_tags, :except => [:index, :show] 
+      resources :custom_fields, :except => [:index, :show]
       resources :page_parts, :only => [:show, :create, :destroy]
     end
 

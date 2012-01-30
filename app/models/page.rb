@@ -21,6 +21,7 @@ class Page
                   :page_parts_attributes,
                   :post_container,
                   :meta_tags_attributes,
+                  :custom_fields_attributes,
                   :tags
                   
   # -- Fields -----------------------------
@@ -38,6 +39,7 @@ class Page
   # -- Associations-------------------------
   embeds_one :current_state, :as => :publishable
   embeds_many :meta_tags, :as => :meta_taggable
+  embeds_many :custom_fields, :as => :custom_fieldable
   embeds_many :page_parts 
   belongs_to :site
   belongs_to :layout
@@ -47,6 +49,7 @@ class Page
   
   accepts_nested_attributes_for :current_state
   accepts_nested_attributes_for :meta_tags
+  accepts_nested_attributes_for :custom_fields
   accepts_nested_attributes_for :page_parts
   
   # -- Validations -----------------------------------------------

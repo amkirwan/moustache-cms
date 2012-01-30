@@ -70,6 +70,10 @@ module Admin::PagesHelper
     id = "meta_tag_" + meta_tag.name.gsub('.', '_').downcase
   end
 
+  def custom_field_id(custom_field)
+    id = "custom_field_" + custom_field.name.gsub('.', '_').downcase
+  end
+
   def page_form_id
     if @page.new_record?
       'new_page'

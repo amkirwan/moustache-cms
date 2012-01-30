@@ -15,4 +15,14 @@ module Admin::ArticlesHelper
   def published?(article)
     article.current_state.published? ? 'published' : 'draft'
   end
+
+ def manage_meta_tag article, meta_tag 
+    case meta_tag.name
+    when "title", "keywords", "description"
+    else
+      link_to "Delete", [:admin, article, meta_tag], :confirm => "Are you sure you want to delete the meta tag #{meta_tag.name}", :method => :delete, :class => "delete", :remote => true
+    end
+  end
+
+
 end

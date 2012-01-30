@@ -7,16 +7,14 @@ jQuery ->
           $(this).remove()
         false
 
-      /* new page ajax add meta_tag */
+      /* new page, new article, new site meta_tag */
       if $('p#meta_tag_message').length
         $('#meta_tag_message').remove()
         $('#add_meta_tag').append('<span class="fake_link">Add Meta Tag</span>')
         $('#add_meta_tag .fake_link').click ->
-          $('#meta_tags_fieldset .spinner').ajaxStart ->
-            $(this).removeClass('hidden')
-          $('#meta_tags_fieldset .spinner').ajaxStop ->
-            $(this).addClass('hidden')
+          $('#meta_tags_fieldset .spinner').removeClass('hidden')
           $.get '/admin/pages/new_meta_tag', ->
+            $('#meta_tags_fieldset .spinner').addClass('hidden')
 
       /* meta_tag ajax spinner */
       $('#add_meta_tag a').bind 'ajax:before', ->

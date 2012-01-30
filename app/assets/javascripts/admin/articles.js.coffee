@@ -15,19 +15,3 @@ jQuery ->
           $(this).remove()
         false
 
-      /* new article ajax add meta_tag */
-      if $('p#meta_tag_message').length
-        $('#meta_tag_message').remove()
-        $('#add_meta_tag').append('<span class="fake_link">Add Meta Tag</span>')
-        $('#add_meta_tag .fake_link').click ->
-          $('#meta_tags_fieldset .spinner').ajaxStart ->
-            $(this).removeClass('hidden')
-          $('#meta_tags_fieldset .spinner').ajaxStop ->
-            $(this).addClass('hidden')
-          $.get '/admin/articles/new_meta_tag', ->
-
-      /* meta_tag ajax spinner */
-      $('#add_meta_tag').bind 'ajax:before', ->
-        $('#meta_tags_fieldset .spinner').removeClass('hidden')
-      $('#add_meta_tag').bind 'ajax:complete', ->
-        $('#meta_tags_fieldset .spinner').addClass('hidden')

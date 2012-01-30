@@ -5,7 +5,7 @@ class Admin::PagesController < AdminBaseController
   before_filter :selected_page_part, :only => :edit 
   respond_to :html, :except => [:show, :sort, :new_meta_tag, :update]
   respond_to :xml, :json
-  respond_to :js, :only => [:edit, :destroy, :sort, :new_meta_tag]
+  respond_to :js, :only => [:edit, :destroy, :sort, :new_meta_tag, :new_custom_field]
 
   def index
     respond_with(:admin, @pages)
@@ -69,6 +69,13 @@ class Admin::PagesController < AdminBaseController
   def new_meta_tag
     @base_class = Page.new
     @meta_tag = MetaTag.new
+    render 'admin/meta_tags/new.js'
+  end
+
+  def new_custom_field
+    @base_class = Page.new
+    @custom_field = CustomField.new
+    render 'admin/custom_fields/new'
   end
 
   private 
