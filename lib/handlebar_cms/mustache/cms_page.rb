@@ -89,7 +89,7 @@ class HandlebarCms::Mustache::CmsPage < Mustache
       hash = Hash[*text.scan(/(\w+):([&.\w\s\-]+)/).to_a.flatten]
       image = @current_site.site_asset_by_name(hash['collection_name'], hash['name'])
       unless image.nil?
-        engine = gen_haml('image')
+        engine = gen_haml('image.haml')
         engine.render(nil, {:src => image.url_md5, :id => hash['id'], :class_name => hash['class'], :alt => hash['alt'], :title => hash['title']})
       end
     end
@@ -100,8 +100,8 @@ class HandlebarCms::Mustache::CmsPage < Mustache
       @child_pages = @page.children.asc(:title).page(@controller.params[:page])
       unless @child_pages.nil?
         options = Hash[*text.scan(/(\w+).to_sym:([&.\w\s\-]+)/).to_a.flatten]
-        context = ActionView::Base.new("#{Rails.root}/lib/handlebar-cms/mustache/custom_templates", {}, @controller,nil)
-        engine = gen_haml('paginate')
+        context = ActionView::Base.new("#{Rails.root}/lib/handlebar_cms/mustache/custom_templates", {}, @controller,nil)
+        engine = gen_haml('paginate.haml')
         engine.render(context, {:child_pages => @child_pages, :options => options})
       end
     end
@@ -141,10 +141,10 @@ class HandlebarCms::Mustache::CmsPage < Mustache
     end    
     
     def gen_haml(template_name)
-      if File.exists?("#{File.dirname(__FILE__)}/templates/#{template_name}.haml")
-        template = File.read("#{File.dirname(__FILE__)}/templates/#{template_name}.haml")
-      elsif File.exists?("#{File.dirname(__FILE__)}/custom_templates/#{template_name}.haml")
-        template = File.read("#{File.dirname(__FILE__)}/custom_templates/#{template_name}.haml") 
+      if File.exists?("#{File.dirname(__FILE__)}/templates/#{template_name}")
+        template = File.read("#{File.dirname(__FILE__)}/templates/#{template_name}")
+      elsif File.exists?("#{File.dirname(__FILE__)}/custom_templates/#{template_name}")
+        template = File.read("#{File.dirname(__FILE__)}/custom_templates/#{template_name}") 
       end
       Haml::Engine.new(template, :attr_wrapper => "\"")
     end

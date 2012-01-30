@@ -21,7 +21,7 @@ module HandlebarCms
           unless file.nil?
             set_default_attribute_values(attributes, file)
             set_link_attributes(attributes, file)
-            engine = gen_haml('stylesheet')
+            engine = gen_haml('stylesheet.haml')
             engine.render(nil, attributes)
           end
         end
@@ -34,7 +34,7 @@ module HandlebarCms
           attributes = style_attributes
           set_default_attribute_values(attributes, file)
           set_link_attributes(attributes, file)
-          engine = gen_haml('stylesheet')
+          engine = gen_haml('stylesheet.haml')
           haml_render += engine.render(nil, attributes)
         end
         haml_render
@@ -47,7 +47,7 @@ module HandlebarCms
           hash = Hash[*text.scan(/(\w+):([&.\w\s\-]+)/).to_a.flatten]
           file = @current_site.js_file_by_name(hash['theme_name'], hash['name'])
           unless file.nil?
-            engine = gen_haml('javascript')
+            engine = gen_haml('javascript.haml')
             engine.render(nil, {:src => file.url_md5})
           end
         end
@@ -56,14 +56,14 @@ module HandlebarCms
       # -- Meta Tags ----
       def meta_tag
         lambda do |text|
-          engine = gen_haml('meta_tag')
+          engine = gen_haml('meta_tag.haml')
           engine.render(nil, {:name => name, :content => meta_tag_name(text).content})
         end
       end
     
       private 
         def meta_tag_with_name(name)
-          engine = gen_haml('meta_tag')
+          engine = gen_haml('meta_tag.haml')
           engine.render(nil, {:name => name, :content => meta_tag_name(name).content})
         end
 
