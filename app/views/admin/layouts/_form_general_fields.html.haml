@@ -3,7 +3,10 @@
     %li 
       = f.label :name, "Name<abbr title='required' class='required'>*</abbr>".html_safe
       = f.text_field :name
-    %li 
+    %li.code_content
+      %p.label_for Content
+      %pre#layout_content= @layout.content
+    %li.code_submit 
       = f.label :content, "Content<abbr title='required' class='required'>*</abbr>".html_safe
       = f.text_area :content, :class => "code"
     %li

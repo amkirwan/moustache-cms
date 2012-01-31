@@ -668,3 +668,16 @@ div.markItUp {
   }
 }
 
+/* ace editor */
+#layout_content { 
+    margin: 0;
+    position: relative;
+    height: 500px;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+.code_content {
+  margin-right: 1em;
+}

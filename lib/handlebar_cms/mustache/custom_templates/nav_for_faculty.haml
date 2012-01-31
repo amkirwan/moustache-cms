@@ -1,0 +1,4 @@
+- ('A'..'Z').to_a.each do |letter|
+  %a{:href => "http://handlebar-cms.dev/faculty/#{letter.downcase}"} #{letter} 
+  - unless letter == 'Z'
+    | 
