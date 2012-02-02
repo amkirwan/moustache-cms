@@ -6,8 +6,9 @@ $(document).ready ->
       @extRe = new RegExp("^.*\\.(" + extensions.join("|") + ")$", "g")
 
   class HandlebarEditor
-    constructor: (elementId) ->
-      @editor = ace.edit elementId
+    constructor: (@elementId) ->
+      @element = $('#' + @elementId)
+      @editor = ace.edit @elementId
       @editor.setTheme "ace/theme/twilight"
 
     @modes = [  
@@ -26,32 +27,42 @@ $(document).ready ->
       @editor.getSession().setMode HandlebarEditor.modesByName[filterText].mode
 
     hideUpdateTextarea: ->
-      $('.code_submit').hide()
-      $('.site_prop').submit ->
-        $('.code_submit textarea').val @editor.getSession().getValue()
+      $('.content_submit').hide()
+      $('.site_prop').submit =>
+        #update hidden textarea
+        @element.parent().next().find('textarea').val @editor.getSession().getValue()
+        #$('.content_submit textarea').val @editor.getSession().getValue()
 
     createEditor: (elementId) ->
       @editor = ace.edit elementId
       @editor.setTheme "ace/theme/twilight"
 
-  if $("body.layouts").length
-    hbEditor.editor = createEditor "layout_content"
+  if $("body.layouts #layout_content").length
+    hbEditor = new HandlebarEditor("layout_content")
+    hbEditor.hideUpdateTextarea()
+    hbEditor.contentSettings "html"
 
-    HTMLMode = ace.require("ace/mode/html").Mode
-    hbEditor.editor.getSession().setMode(new HTMLMode())
-
-    $('.code_submit').hide()
-    $('.site_prop').submit ->
-      $('.code_submit textarea').val hbEditor.editor.getSession().getValue()
-
-  else if $("body.snippets").length
+  else if $("body.snippets #snippet_content").length
     hbEditor = new HandlebarEditor("snippet_content")
+    hbEditor.hideUpdateTextarea()
 
     $('#snippet_filter_name').each ->
       hbEditor.contentSettings $(@).val() 
     $('#snippet_filter_name').change ->
       hbEditor.contentSettings $(@).val()
-    
-    hbEditor.hideUpdateTextarea()
+
+  else if $("body.articles #article_content").length
+    hbEditorSub = new HandlebarEditor("article_subheading_content")
+    hbEditorSub.hideUpdateTextarea()
+
+    hbEditorContent = new HandlebarEditor("article_content")
+    hbEditorContent.hideUpdateTextarea()
+
+    $('#article_filter_name').each ->
+      hbEditorSub.contentSettings $(@).val() 
+      hbEditorContent.contentSettings $(@).val() 
+    $('#article_filter_name').change ->
+      hbEditorSub.contentSettings $(@).val()
+      hbEditorContent.contentSettings $(@).val() 
 
 

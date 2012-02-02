@@ -2,12 +2,18 @@
   = foldable_fieldset 'Content' do
     %div.fields_wrap
       %ol
-        %li
-          = f.label :subheading
-          = f.text_area :subheading, :cols => 40, :rows => 5
         %li.inline
           = f.label :filter_name, "Filter<abbr title='required' class='required'>*</abbr>".html_safe
           = f.collection_select :filter_name, Filter.all, :id, :name, {}, {:class => "page_part_filter"}
-        %li
-          = f.label :content, "Content<abbr title='required' class='required'>*</abbr>".html_safe
-          = f.text_area :content, :class => "article_content code"
+        %li.content
+          %p.label_for Subheading
+          %pre#article_subheading_content= @article.subheading
+        %li.content_submit
+          = f.label :subheading
+          = f.text_area :subheading, :class => "code"
+        %li.content
+          %p.label_for Content
+          %pre#article_content= @article.content
+        %li.content_submit
+          = f.label :content
+          = f.text_area :content, :class => "code"

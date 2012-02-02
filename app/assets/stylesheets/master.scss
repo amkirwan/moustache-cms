@@ -669,15 +669,21 @@ div.markItUp {
 }
 
 /* ace editor */
-#layout_content, #snippet_content { 
+.content {
+  position: relative;
+  margin-right: 1em;
+}
+
+#snippet_content, #layout_content, #article_content,  {
     margin: 0;
     position: relative;
-    height: 500px;
+    height: calc_em(500px, 12px);
     width: 100%;
     top: 0;
     left: 0;
 }
 
-.code_content {
-  margin-right: 1em;
+#article_subheading_content {
+ @extend #snippet_content;
+ height: calc_em(150px, 12px);
 }
