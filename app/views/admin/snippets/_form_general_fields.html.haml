@@ -6,7 +6,10 @@
     %li
       = f.label :filter_name
       = f.collection_select :filter_name, Filter.all, :id, :name
-    %li
+    %li.code_content
+      %p.label_for Content
+      %pre#snippet_content= @snippet.content
+    %li.code_submit
       = f.label :content
       = f.text_area :content, :cols => "100", :class => "code"
     %li

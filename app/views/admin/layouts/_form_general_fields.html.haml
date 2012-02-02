@@ -7,7 +7,7 @@
       %p.label_for Content
       %pre#layout_content= @layout.content
     %li.code_submit 
-      = f.label :content, "Content<abbr title='required' class='required'>*</abbr>".html_safe
+      = f.label :content
       = f.text_area :content, :class => "code"
     %li
       = f.submit button_label, :class => "submit"
