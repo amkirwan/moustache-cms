@@ -674,13 +674,17 @@ div.markItUp {
   margin-right: 1em;
 }
 
-#snippet_content, #layout_content, #article_content,  {
+#snippet_content, #layout_content, #article_content {
     margin: 0;
-    position: relative;
+    position: relative !important;
     height: calc_em(500px, 12px);
     width: 100%;
     top: 0;
     left: 0;
+}
+
+.page_part_content {
+ @extend #snippet_content;
 }
 
 #article_subheading_content {

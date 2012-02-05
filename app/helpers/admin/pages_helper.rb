@@ -116,7 +116,7 @@ module Admin::PagesHelper
     if page_part.new_record? || @selected_page_part == page_part
       'page_part_selected'
     else
-      'hidden'
+      'page_part'
     end
   end
 
