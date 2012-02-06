@@ -4,7 +4,7 @@
       = render :partial => 'page_parts_nav'
       %div.spinner_wrapper
         = image_tag 'ajax-loader.gif', :class => 'spinner hidden'
-      %div#page_parts_content_wrapper
+      %div#page_parts_content_wrapper.fields_wrap
         = render :partial => 'page_part_fields', :locals => { :f => f }
 - unless @selected_page_part.nil?
   %li#selected_page_part.hidden

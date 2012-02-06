@@ -1,7 +1,8 @@
 %li#page_editors_fields
   = foldable_fieldset 'Page Editors' do
-    %ol.form_fields
-      - User.all_from_current_site(@current_site).asc(:username).each do |user|
-        %li.editor_field.inline
-          = check_box_tag "page[editor_ids][]", user.id, page.editor_ids.include?(user.id), :id => "editor_id_#{user.username}"
-          = label_tag "editor_id_#{user.username}]", user.username.downcase
+    %div.fields_wrap
+      %ol.form_fields.group
+        - User.all_from_current_site(@current_site).asc(:username).each do |user|
+          %li.editor_field.inline
+            = check_box_tag "page[editor_ids][]", user.id, page.editor_ids.include?(user.id), :id => "editor_id_#{user.username}"
+            = label_tag "editor_id_#{user.username}]", user.username.downcase

@@ -386,7 +386,7 @@ form.site_prop {
   #article_img_url {
     width: 60%;
   }
-  div.fields_wrap {
+  .fields_wrap {
     padding: 0.5em 8px;
   }
   .submit, .file_field {
@@ -690,4 +690,13 @@ div.markItUp {
 #article_subheading_content {
  @extend #snippet_content;
  height: calc_em(150px, 12px);
+}
+
+.ace_gutter, .ace_layer {
+  min-width: calc_em(50px, 12px) !important;
+}
+
+.ace_gutter-cell {
+  text-align: left !important;
+  padding-left: 1em !important;
 }
