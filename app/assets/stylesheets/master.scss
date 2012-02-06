@@ -339,6 +339,7 @@ form.site_prop {
   ul.form_fields, ol.form_fields {
     clear: both;
     list-style: none;
+    padding-left: 0.5em;
     li {
       list-style: none;
       padding-bottom: 8px;
@@ -671,7 +672,7 @@ div.markItUp {
 /* ace editor */
 .content {
   position: relative;
-  margin-right: 1em;
+  margin-right: 1.5em;
   padding-top: 0.5em;
   background: darken(#FFF, 5%) !important;
   border: 1px solid lighten($sidebar_border, 10%);
