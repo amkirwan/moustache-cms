@@ -18,4 +18,4 @@ spec/tmp/**/*
 config/mongoid_production.yml
 config/deploy.rb
 config/unicorn.conf
-
+lib/handlebar_cms/mustache/site_custom_tags.rb
