@@ -24,9 +24,9 @@ $(document).ready ->
     $('fieldset.page_parts legend').find('span').addClass('rotate')
 
     /* page parts ajax spinner */
-    $('ol#page_parts_nav a').bind 'click', ->
+    $('ol#page_parts_nav a').live 'click', ->
       $('.page_parts div.spinner_wrapper .spinner').removeClass('hidden')
-    $('ol#page_parts_nav a').bind 'ajax:success', ->
+    $('ol#page_parts_nav a').live 'ajax:success', ->
       $('.page_parts div.spinner_wrapper .spinner').addClass('hidden')
 
     /* change page part nav name */

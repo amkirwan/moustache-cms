@@ -17,8 +17,7 @@ $('.delete_page_part').html('<%= delete_page_part %>')
 if $('#view').length > 0
   $('#view').attr 'value', '<%= @page_part.id %>'
 
-/* add ajax event for showing spinner when clicking on the tab */
-$('.tab a').last().bind 'ajax:beforeSend', ->
-  $('.page_parts div.spinner_wrapper .spinner').removeClass('hidden')
-$('.tab a').last().bind 'ajax:success', ->
-  $('.page_parts div.spinner_wrapper .spinner').addClass('hidden')
+editor = new HandlebarEditor '<%= @page_part.id %>_content'
+editor.contentSettings $('.page_parts select').last().val()
+editor.hideUpdateTextarea()
+HandlebarEditor.editors.push editor

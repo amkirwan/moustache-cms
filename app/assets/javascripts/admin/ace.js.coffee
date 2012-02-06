@@ -1,15 +1,20 @@
 $(document).ready -> 
 
-  class Mode
+  root = global ? window
+
+  class root.Mode
     constructor: (@name, @desc, @klass, extensions) ->
       @mode = new @klass()
       @extRe = new RegExp("^.*\\.(" + extensions.join("|") + ")$", "g")
 
-  class HandlebarEditor
-    constructor: (@elementId) ->
+  class root.HandlebarEditor
+    constructor: (@elementId, wrapLimit = null, printMargin = 80) ->
       @element = $('#' + @elementId)
       @editor = ace.edit @elementId
       @editor.setTheme "ace/theme/twilight"
+      @editor.session.setUseWrapMode true
+      @editor.session.setWrapLimitRange wrapLimit, wrapLimit
+      @editor.renderer.setPrintMarginColumn printMargin
 
     @modes = [  
       new Mode("css", "CSS", ace.require("ace/mode/css").Mode, ["css"]),
@@ -22,6 +27,8 @@ $(document).ready ->
     @modesByName: {}
     for mode in @modes
       @modesByName[mode.name] = mode
+
+    @editors: []
 
     contentSettings: (filterText) ->
       @editor.getSession().setMode HandlebarEditor.modesByName[filterText].mode
@@ -74,13 +81,18 @@ $(document).ready ->
     $('.page_parts select').each -> 
       filters.push @
 
-    editors = [] 
+    HandlebarEditor.editors = [] 
     $('.page_part_content').each (index) ->
       editor = new HandlebarEditor @.id
-      editors.push editor
       editor.contentSettings $(filters[index]).val()
       editor.hideUpdateTextarea()
+      HandlebarEditor.editors.push editor
 
-    # hide after adding editor to view otherwise they don't render correctly
+    # hide all page parts that are not selected 
+    # after adding editor to view otherwise they don't render correctly
     $('ol.page_part').each ->
       $(@).hide()
+
+    $('.page_part_filter').live 'change', ->
+      editor = HandlebarEditor.editors[$('.page_part_filter').index(@)]
+      editor.contentSettings $(@).val()
