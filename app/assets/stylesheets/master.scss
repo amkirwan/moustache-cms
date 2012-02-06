@@ -349,7 +349,7 @@ form.site_prop {
         font-style: italic;
         font-size: calc_em(12px, 14px);
         line-height: 1.25;
-        margin-left:  calc_em(4px, 14px);
+        padding-left:  calc_em(4px, 14px);
         margin-bottom: 0.3em;
         width: 100%;
       }
@@ -672,6 +672,11 @@ div.markItUp {
 .content {
   position: relative;
   margin-right: 1em;
+  padding-top: 0.5em;
+  background: darken(#FFF, 5%) !important;
+  border: 1px solid lighten($sidebar_border, 10%);
+  @include rounded_corners;
+  padding-bottom: 0 !important;
 }
 
 #snippet_content, #layout_content, #article_content {
@@ -692,11 +697,14 @@ div.markItUp {
  height: calc_em(150px, 12px);
 }
 
-.ace_gutter, .ace_layer {
+.ace_gutter{
   min-width: calc_em(50px, 12px) !important;
+  border-top: 1px solid lighten($sidebar_border, 10%);
+  background: darken(#FFF, 15%) !important;
 }
 
 .ace_gutter-cell {
-  text-align: left !important;
+  //text-align: left !important;
   padding-left: 1em !important;
+  color: $med_text !important;
 }

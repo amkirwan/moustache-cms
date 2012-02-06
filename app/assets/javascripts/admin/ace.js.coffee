@@ -8,13 +8,16 @@ $(document).ready ->
       @extRe = new RegExp("^.*\\.(" + extensions.join("|") + ")$", "g")
 
   class root.HandlebarEditor
-    constructor: (@elementId, wrapLimit = null, printMargin = 80) ->
+    constructor: (@elementId, wrapLimit = null, printMargin = 80, tabSize = 2) ->
       @element = $('#' + @elementId)
       @editor = ace.edit @elementId
       @editor.setTheme "ace/theme/twilight"
       @editor.session.setUseWrapMode true
       @editor.session.setWrapLimitRange wrapLimit, wrapLimit
+      @editor.session.setTabSize tabSize
+      @editor.session.setUseSoftTabs true
       @editor.renderer.setPrintMarginColumn printMargin
+      @editor.renderer.setShowPrintMargin false
 
     @modes = [  
       new Mode("css", "CSS", ace.require("ace/mode/css").Mode, ["css"]),
@@ -88,6 +91,7 @@ $(document).ready ->
       editor.hideUpdateTextarea()
       HandlebarEditor.editors.push editor
 
+    console.log HandlebarEditor.editors[0]
     # hide all page parts that are not selected 
     # after adding editor to view otherwise they don't render correctly
     $('ol.page_part').each ->
