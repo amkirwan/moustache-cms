@@ -12,7 +12,7 @@ $(document).ready ->
       @element = $('#' + @elementId)
       @editor = ace.edit @elementId
       @editor.setTheme "ace/theme/twilight"
-      @editor.session.setUseWrapMode true
+      @editor.session.setUseWrapMode false
       @editor.session.setWrapLimitRange wrapLimit, wrapLimit
       @editor.session.setTabSize tabSize
       @editor.session.setUseSoftTabs true
