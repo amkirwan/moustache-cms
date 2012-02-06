@@ -91,7 +91,6 @@ $(document).ready ->
       editor.hideUpdateTextarea()
       HandlebarEditor.editors.push editor
 
-    console.log HandlebarEditor.editors[0]
     # hide all page parts that are not selected 
     # after adding editor to view otherwise they don't render correctly
     $('ol.page_part').each ->
