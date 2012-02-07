@@ -1,0 +1,6 @@
+%li{:class => "content #{class_type}"}
+  %p.label_for Content
+  %pre#theme_asset_content= @theme_asset.asset.read 
+%li.content_submit 
+  = label_tag :content
+  = text_area_tag :theme_asset_file_content, @theme_asset.asset.read, :class => "code"

@@ -79,6 +79,15 @@ $(document).ready ->
       hbEditorSub.contentSettings $(@).val()
       hbEditorContent.contentSettings $(@).val() 
 
+  else if $("body.theme_assets #theme_asset_content").length
+    hbEditor = new HandlebarEditor("theme_asset_content")
+    hbEditor.hideUpdateTextarea()
+
+    if $('li.css_asset')
+      hbEditor.contentSettings 'css'  
+    else if $('li.js_asset')
+      hbEditor.contentSettings 'javascript'  
+
   else if $("body.pages .page_parts").length
     filters = []
     $('.page_parts select').each -> 

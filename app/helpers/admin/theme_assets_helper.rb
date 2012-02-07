@@ -21,6 +21,14 @@ module Admin::ThemeAssetsHelper
     !@theme_asset.new_record? && (@theme_asset.stylesheet? || @theme_asset.javascript?)
   end
 
+  def theme_asset_is_js
+    !@theme_asset.new_record? && @theme_asset.javascript?
+  end
+  
+  def theme_asset_is_css
+    !@theme_asset.new_record? && @theme_asset.stylesheet?
+  end
+
   def add_tag_attrs(message, f_builder)
     if @theme_asset.new_record?
       content_tag :li do 
@@ -33,20 +41,12 @@ module Admin::ThemeAssetsHelper
     end
   end
 
-  def edit_asset_field(version=nil)
-      if theme_asset_is_js_or_css
-        content_tag :li do
-          text_area_tag :theme_asset_file_content, @theme_asset.asset.read, :class => "code", :cols => "80", :rows => "30"
-        end
-      elsif version == :with_md5
-        content_tag :li, :class => 'img_thumb' do
-          link_to image_tag(@theme_asset.asset.with_fingerprint.url, :class => "theme_asset_thumb"), "http://#{request.host}#{@theme_asset.asset.url}" 
-        end
-      else
-        content_tag :li, :class => 'img_thumb' do
-          link_to image_tag(@theme_asset.asset.url, :class => "theme_asset_thumb"), "http://#{request.host}#{@theme_asset.asset.url}" 
-        end
-      end
+  def edit_asset_field
+    if theme_asset_is_js
+      render :partial => 'edit_asset_fields', :locals => { :class_type => 'js_asset' }
+    elsif theme_asset_is_css 
+      render :partial => 'edit_asset_fields', :locals => { :class_type => 'css_asset' }
+    end
   end
 
 end
