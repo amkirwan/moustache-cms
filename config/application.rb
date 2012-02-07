@@ -50,7 +50,7 @@ module HandlebarCms
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
-    config.assets.precompile += %w(login_focus.js)
+    config.assets.precompile += %w(login_focus.js ace_editor.js)
     
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
