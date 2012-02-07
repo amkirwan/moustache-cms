@@ -678,6 +678,7 @@ div.markItUp {
   border: 1px solid lighten($sidebar_border, 10%);
   @include rounded_corners;
   padding-bottom: 0 !important;
+  margin-bottom: 1em !important;
 }
 
 #snippet_content, #layout_content, #article_content, #theme_asset_content {
