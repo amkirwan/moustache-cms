@@ -2,7 +2,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
-//= require markitup_selector
 //= require admin/pages
 //= require admin/articles
 //= require admin/meta_tags

@@ -1,2 +1,1 @@
 //= require_directory ./markitup
-
