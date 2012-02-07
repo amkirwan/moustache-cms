@@ -1,4 +1,4 @@
-%ul{:role => "navigation"}
+%ul
   - homepage.children.each do |page|
     %li{ :id => 'nav-' + page.title.parameterize('-')} 
       = link_to page.title, page_full_path_with_request(request, page), {:id => page.title.downcase.gsub(/\s/, '_') } 
