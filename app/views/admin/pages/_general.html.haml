@@ -4,13 +4,13 @@
       %ol 
         %li
           = f.label :parent_id
-          = f.collection_select :parent_id, Page.all_from_current_site(@current_site).order(:title), :id, :title, { :include_blank => true, :selected => parent_selected(@parent_page) }
+          = f.collection_select :parent_id, Page.all_from_current_site(@current_site).order_by(:title, :asc), :id, :title, { :include_blank => true, :selected => parent_selected(@parent_page) }
         %li
           = f.label :title, "Title<abbr title='required' class='required'>*</abbr>".html_safe
           = f.text_field :title
         %li{:class => "inline"}
           = f.label 'layout_id', "Layout<abbr title='required' class='required'>*</abbr>".html_safe
-          = f.collection_select :layout_id, Layout.all_from_current_site(@current_site), :id, :name
+          = f.collection_select :layout_id, Layout.all_from_current_site(@current_site), :id, :name, :prompt => true
         = f.fields_for :current_state do |builder|
           %li{:class => "inline"}
             = builder.label 'name', "Status<abbr title='required' class='required'>*</abbr>".html_safe
