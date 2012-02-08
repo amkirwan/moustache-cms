@@ -226,7 +226,7 @@ exportAce(ACE_NAMESPACE);
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/ace', ['require', 'exports', 'module' , 'ace/lib/fixoldbrowsers', 'ace/lib/dom', 'ace/lib/event', 'ace/editor', 'ace/edit_session', 'ace/undomanager', 'ace/virtual_renderer', 'ace/theme/textmate'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 require("./lib/fixoldbrowsers");
 
@@ -277,7 +277,7 @@ exports.edit = function(el) {
 */
 
 ace.define('ace/lib/fixoldbrowsers', ['require', 'exports', 'module' , 'ace/lib/regexp', 'ace/lib/es5-shim'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 require("./regexp");
 require("./es5-shim");
@@ -294,7 +294,7 @@ require("./es5-shim");
  */
  
 ace.define('ace/lib/regexp', ['require', 'exports', 'module' ], function(require, exports, module) {
-"use strict";
+//"use strict";
 
     //---------------------------------
     //  Private variables
@@ -1490,7 +1490,7 @@ var prepareString = "a"[0] != "a",
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/lib/dom', ['require', 'exports', 'module' ], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var XHTML_NS = "http://www.w3.org/1999/xhtml";
 
@@ -1779,7 +1779,7 @@ exports.getParentWindow = function(document) {
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/lib/event', ['require', 'exports', 'module' , 'ace/lib/keys', 'ace/lib/useragent', 'ace/lib/dom'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var keys = require("./keys");
 var useragent = require("./useragent");
@@ -2110,7 +2110,7 @@ For more information about SproutCore, visit http://www.sproutcore.com
 // Most of the following code is taken from SproutCore with a few changes.
 
 ace.define('ace/lib/keys', ['require', 'exports', 'module' , 'ace/lib/oop'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var oop = require("./oop");
 
@@ -2242,7 +2242,7 @@ exports.keyCodeToString = function(keyCode) {
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/lib/oop', ['require', 'exports', 'module' ], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 exports.inherits = (function() {
     var tempCtor = function() {};
@@ -2303,7 +2303,7 @@ exports.implement = function(proto, mixin) {
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/lib/useragent', ['require', 'exports', 'module' ], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var os = (navigator.platform.match(/mac|win|linux/i) || ["other"])[0].toLowerCase();
 var ua = navigator.userAgent;
@@ -2411,7 +2411,7 @@ exports.getOS = function() {
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/editor', ['require', 'exports', 'module' , 'ace/lib/fixoldbrowsers', 'ace/lib/oop', 'ace/lib/lang', 'ace/lib/useragent', 'ace/keyboard/textinput', 'ace/mouse/mouse_handler', 'ace/mouse/fold_handler', 'ace/keyboard/keybinding', 'ace/edit_session', 'ace/search', 'ace/range', 'ace/lib/event_emitter', 'ace/commands/command_manager', 'ace/commands/default_commands'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 require("./lib/fixoldbrowsers");
 
@@ -3640,7 +3640,7 @@ exports.Editor = Editor;
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/lib/lang', ['require', 'exports', 'module' ], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 exports.stringReverse = function(string) {
     return string.split("").reverse().join("");
@@ -3792,7 +3792,7 @@ exports.deferredCall = function(fcn) {
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/keyboard/textinput', ['require', 'exports', 'module' , 'ace/lib/event', 'ace/lib/useragent', 'ace/lib/dom'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var event = require("../lib/event");
 var useragent = require("../lib/useragent");
@@ -4070,7 +4070,7 @@ exports.TextInput = TextInput;
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/mouse/mouse_handler', ['require', 'exports', 'module' , 'ace/lib/event', 'ace/mouse/default_handlers', 'ace/mouse/default_gutter_handler', 'ace/mouse/mouse_event'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var event = require("../lib/event");
 var DefaultHandlers = require("./default_handlers").DefaultHandlers;
@@ -4193,7 +4193,7 @@ exports.MouseHandler = MouseHandler;
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/mouse/default_handlers', ['require', 'exports', 'module' , 'ace/lib/event', 'ace/lib/dom', 'ace/lib/browser_focus'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var event = require("../lib/event");
 var dom = require("../lib/dom");
@@ -4480,7 +4480,7 @@ function calcDistance(ax, ay, bx, by) {
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/lib/browser_focus', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/lib/event', 'ace/lib/event_emitter'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var oop = require("./oop");
 var event = require("./event");
@@ -4585,7 +4585,7 @@ exports.BrowserFocus = BrowserFocus;
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/lib/event_emitter', ['require', 'exports', 'module' ], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var EventEmitter = {};
 
@@ -4703,7 +4703,7 @@ exports.EventEmitter = EventEmitter;
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/mouse/default_gutter_handler', ['require', 'exports', 'module' ], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 function GutterHandler(editor) {
     editor.setDefaultHandler("gutterclick", function(e) {
@@ -4756,7 +4756,7 @@ exports.GutterHandler = GutterHandler;
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/mouse/mouse_event', ['require', 'exports', 'module' , 'ace/lib/event'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var event = require("../lib/event");
 
@@ -4901,7 +4901,7 @@ var MouseEvent = exports.MouseEvent = function(domEvent, editor) {
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/mouse/fold_handler', ['require', 'exports', 'module' ], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 function FoldHandler(editor) {
     
@@ -4972,7 +4972,7 @@ exports.FoldHandler = FoldHandler;
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/keyboard/keybinding', ['require', 'exports', 'module' , 'ace/lib/keys', 'ace/lib/event', 'ace/commands/default_commands'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var keyUtil  = require("../lib/keys");
 var event = require("../lib/event");
@@ -5101,7 +5101,7 @@ exports.KeyBinding = KeyBinding;
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/commands/default_commands', ['require', 'exports', 'module' , 'ace/lib/lang'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var lang = require("../lib/lang");
 
@@ -5492,7 +5492,7 @@ exports.commands = [{
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/edit_session', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/lib/lang', 'ace/lib/event_emitter', 'ace/selection', 'ace/mode/text', 'ace/range', 'ace/document', 'ace/background_tokenizer', 'ace/edit_session/folding', 'ace/edit_session/bracket_match'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var oop = require("./lib/oop");
 var lang = require("./lib/lang");
@@ -7205,7 +7205,7 @@ exports.EditSession = EditSession;
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/selection', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/lib/lang', 'ace/lib/event_emitter', 'ace/range'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var oop = require("./lib/oop");
 var lang = require("./lib/lang");
@@ -7714,7 +7714,7 @@ exports.Selection = Selection;
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/range', ['require', 'exports', 'module' ], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var Range = function(startRow, startColumn, endRow, endColumn) {
     this.start = {
@@ -8035,7 +8035,7 @@ exports.Range = Range;
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/mode/text', ['require', 'exports', 'module' , 'ace/tokenizer', 'ace/mode/text_highlight_rules', 'ace/mode/behaviour', 'ace/unicode'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var Tokenizer = require("../tokenizer").Tokenizer;
 var TextHighlightRules = require("./text_highlight_rules").TextHighlightRules;
@@ -8253,7 +8253,7 @@ exports.Mode = Mode;
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/tokenizer', ['require', 'exports', 'module' ], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var Tokenizer = function(rules, flag) {
     flag = flag ? "g" + flag : "g";
@@ -8420,7 +8420,7 @@ exports.Tokenizer = Tokenizer;
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/mode/text_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/lang'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var lang = require("../lib/lang");
 
@@ -8532,7 +8532,7 @@ exports.TextHighlightRules = TextHighlightRules;
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/mode/behaviour', ['require', 'exports', 'module' ], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var Behaviour = function() {
    this.$behaviours = {};
@@ -8591,7 +8591,7 @@ var Behaviour = function() {
 
 exports.Behaviour = Behaviour;
 });ace.define('ace/unicode', ['require', 'exports', 'module' ], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 /*
 XRegExp Unicode plugin pack: Categories 1.0
@@ -8734,7 +8734,7 @@ function addUnicodePackage (pack) {
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/document', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/lib/event_emitter', 'ace/range', 'ace/anchor'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var oop = require("./lib/oop");
 var EventEmitter = require("./lib/event_emitter").EventEmitter;
@@ -9140,7 +9140,7 @@ exports.Document = Document;
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/anchor', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/lib/event_emitter'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var oop = require("./lib/oop");
 var EventEmitter = require("./lib/event_emitter").EventEmitter;
@@ -9333,7 +9333,7 @@ var Anchor = exports.Anchor = function(doc, row, column) {
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/background_tokenizer', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/lib/event_emitter'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var oop = require("./lib/oop");
 var EventEmitter = require("./lib/event_emitter").EventEmitter;
@@ -9510,7 +9510,7 @@ exports.BackgroundTokenizer = BackgroundTokenizer;
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/edit_session/folding', ['require', 'exports', 'module' , 'ace/range', 'ace/edit_session/fold_line', 'ace/edit_session/fold', 'ace/token_iterator'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var Range = require("../range").Range;
 var FoldLine = require("./fold_line").FoldLine;
@@ -10266,7 +10266,7 @@ exports.Folding = Folding;
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/edit_session/fold_line', ['require', 'exports', 'module' , 'ace/range'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var Range = require("../range").Range;
 
@@ -10539,7 +10539,7 @@ exports.FoldLine = FoldLine;
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/edit_session/fold', ['require', 'exports', 'module' ], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 /**
  * Simple fold-data struct.
@@ -10654,7 +10654,7 @@ var Fold = exports.Fold = function(range, placeholder) {
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/token_iterator', ['require', 'exports', 'module' ], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var TokenIterator = function(session, initialRow, initialColumn) {
     this.$session = session;
@@ -10771,7 +10771,7 @@ exports.TokenIterator = TokenIterator;
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/edit_session/bracket_match', ['require', 'exports', 'module' , 'ace/token_iterator'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var TokenIterator = require("../token_iterator").TokenIterator;
 
@@ -10953,7 +10953,7 @@ exports.BracketMatch = BracketMatch;
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/search', ['require', 'exports', 'module' , 'ace/lib/lang', 'ace/lib/oop', 'ace/range'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var lang = require("./lib/lang");
 var oop = require("./lib/oop");
@@ -11257,7 +11257,7 @@ Search.SELECTION = 2;
 exports.Search = Search;
 });
 ace.define('ace/commands/command_manager', ['require', 'exports', 'module' , 'ace/lib/keys'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var keyUtil = require("../lib/keys");
 
@@ -11496,7 +11496,7 @@ exports.CommandManager = CommandManager;
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/undomanager', ['require', 'exports', 'module' ], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var UndoManager = function() {
     this.reset();
@@ -11591,7 +11591,7 @@ exports.UndoManager = UndoManager;
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/virtual_renderer', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/lib/dom', 'ace/lib/event', 'ace/lib/useragent', 'ace/layer/gutter', 'ace/layer/marker', 'ace/layer/text', 'ace/layer/cursor', 'ace/scrollbar', 'ace/renderloop', 'ace/lib/event_emitter', 'text!ace/css/editor.css'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var oop = require("./lib/oop");
 var dom = require("./lib/dom");
@@ -12449,7 +12449,7 @@ exports.VirtualRenderer = VirtualRenderer;
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/layer/gutter', ['require', 'exports', 'module' , 'ace/lib/dom', 'ace/lib/oop', 'ace/lib/event_emitter'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var dom = require("../lib/dom");
 var oop = require("../lib/oop");
@@ -12636,7 +12636,7 @@ exports.Gutter = Gutter;
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/layer/marker', ['require', 'exports', 'module' , 'ace/range', 'ace/lib/dom'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var Range = require("../range").Range;
 var dom = require("../lib/dom");
@@ -12857,7 +12857,7 @@ exports.Marker = Marker;
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/layer/text', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/lib/dom', 'ace/lib/lang', 'ace/lib/useragent', 'ace/lib/event_emitter'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var oop = require("../lib/oop");
 var dom = require("../lib/dom");
@@ -13424,7 +13424,7 @@ exports.Text = Text;
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/layer/cursor', ['require', 'exports', 'module' , 'ace/lib/dom'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var dom = require("../lib/dom");
 
@@ -13571,7 +13571,7 @@ exports.Cursor = Cursor;
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/scrollbar', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/lib/dom', 'ace/lib/event', 'ace/lib/event_emitter'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var oop = require("./lib/oop");
 var dom = require("./lib/dom");
@@ -13664,7 +13664,7 @@ exports.ScrollBar = ScrollBar;
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/renderloop', ['require', 'exports', 'module' , 'ace/lib/event'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 var event = require("./lib/event");
 
@@ -14020,7 +14020,7 @@ ace.define("text!ace/css/editor.css", [], "@import url(//fonts.googleapis.com/cs
  * ***** END LICENSE BLOCK ***** */
 
 ace.define('ace/theme/textmate', ['require', 'exports', 'module' , 'ace/lib/dom'], function(require, exports, module) {
-"use strict";
+//"use strict";
 
 exports.isDark = false;
 exports.cssClass = "ace-tm";
