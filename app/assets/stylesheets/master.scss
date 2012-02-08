@@ -462,7 +462,7 @@ span.action_arrow {
   @extend .fold_arrow;
   width: 9px;
   height: 6px;
-  background: transparent image-url("hs.png") no-repeat -10px 0
+  background: transparent image-url("hs.png") no-repeat -7px 0
 }
 span.rotate {
   -webkit-transform: rotate(90deg);
@@ -473,86 +473,108 @@ span.rotate {
 
 div#pages_list {
 	width: 100%;
-	ol.pages {
-		display: block;
-		list-style: none;
-    width: 100%;
-		li {
-			position: relative;
-			padding-top: 0.5em;
-      margin-left: 1em;
-      em.sortable_list {
-        height: 28px;
-        width: 20px;
-        float: left;
-        cursor: move;
-        background: transparent image-url("hs.png") no-repeat -25px 0
-      }
-      em.draft {
-        background: transparent image-url("hs.png") no-repeat -50px 0
-      }
-      strong {
-        display: block;
-        height: 2em;
-        line-height: 2em;
-        padding-left: 5px;
-        @include rounded_corners;
-        -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
-        -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);  
-        box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
-        text-shadow: 0 1px 0 lighten($link_text, 80%);
-        a:link, a:visited {
-          font-size: 14px;
-          line-height: 26px;
-          padding: 4px 10px;
-          margin-right: 8px;
-          text-decoration: none;
-          color: $link_text;
-          text-decoration: none;
-          -webkit-transition: color 0.3s ease;
-          -moz-transition: color 0.3s ease;
-          -o-transition: color 0.3s ease;
-          transition: color 0.3s ease;
-        }
-        a:hover, a:focus {
-          color: $hover_text; 
-          text-decoration: none;
-        }
-        
-      }
-      strong.published {
-        border-top: 1px solid #D2D1D0;
-        background: $page_index_published;
-      }
-      strong.draft {
-        border-top: 1px solid #CBBCAF;
-        background: $page_index_draft;
-      }
-      strong.home_page {
-        border-left: 1px solid #D2D1D0;
-      }
-      div {
-        color: $med_text;
-        position: absolute;
-        right: 20px;
-        top: 1.25em;
-        font-size: calc_em(12px, 14px);
-        span {
-          line-height: 1;
-          vertical-align: top;
-          text-shadow: 0 1px 0 lighten($med_text, 60%);
-        }
-        a {
-          position: relative;
-          top: -2px;
-        }
-      }
-		}
-		li#home_page {
-      margin-left: 0;
-		}
-	}
 }
+
+ol.pages {
+  display: block;
+  list-style: none;
+  width: 100%;
+  li {
+    position: relative;
+    padding-top: 0.5em;
+    margin-left: 1em;
+    .page_fold_arrow {
+      position: absolute;
+      left: -1em;
+      height: 28px;
+      width: 8px;
+      cursor: pointer;
+      background: transparent image-url("hs.png") no-repeat -16px 0;
+    }
+    .add_child_page {
+      height: 16px;
+      width: 16px;
+      margin: 0 0.3em;
+      cursor: pointer;
+      background: transparent image-url("hs.png") no-repeat -16px -30px;
+    }
+    .delete_page {
+      height: 16px;
+      width: 16px;
+      cursor: pointer;
+      background: transparent image-url("hs.png") no-repeat 0 -30px;
+    }
+    em.sortable_list {
+      height: 28px;
+      width: 20px;
+      float: left;
+      cursor: move;
+      background: transparent image-url("hs.png") no-repeat -40px 0;
+    }
+    em.draft {
+      background: transparent image-url("hs.png") no-repeat -65px 0;
+    }
+    strong {
+      display: block;
+      height: 2em;
+      line-height: 2em;
+      padding-left: 5px;
+      @include rounded_corners;
+      -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+      -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);  
+      box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+      text-shadow: 0 1px 0 lighten($link_text, 80%);
+      a:link, a:visited {
+        font-size: 14px;
+        line-height: 26px;
+        padding: 4px 10px;
+        margin-right: 8px;
+        text-decoration: none;
+        color: $link_text;
+        text-decoration: none;
+        -webkit-transition: color 0.3s ease;
+        -moz-transition: color 0.3s ease;
+        -o-transition: color 0.3s ease;
+        transition: color 0.3s ease;
+      }
+      a:hover, a:focus {
+        color: $hover_text; 
+        text-decoration: none;
+      }
+    }
+    strong.published {
+      border-top: 1px solid #D2D1D0;
+      background: $page_index_published;
+    }
+    strong.draft {
+      border-top: 1px solid #CBBCAF;
+      background: $page_index_draft;
+    }
+    strong.home_page {
+      border-left: 1px solid #D2D1D0;
+    }
+    .page_info {
+      color: $med_text;
+      position: absolute;
+      right: 20px;
+      top: 1.25em;
+      font-size: calc_em(12px, 14px);
+      span {
+        line-height: 1;
+        vertical-align: top;
+        text-shadow: 0 1px 0 lighten($med_text, 60%);
+      }
+      a {
+        display: inline-block;
+      }
+    }
+  }
+  li#home_page {
+    margin-left: 0;
+  }
+}
+
+/* fold-arrow */
 
 ol#page_parts_nav {
   height: 25px;
@@ -691,12 +713,12 @@ div.markItUp {
 }
 
 .page_part_content {
- @extend #snippet_content;
+  @extend #snippet_content;
 }
 
 #article_subheading_content {
- @extend #snippet_content;
- height: calc_em(150px, 12px);
+  @extend #snippet_content;
+  height: calc_em(150px, 12px);
 }
 
 .ace_gutter{
@@ -710,3 +732,6 @@ div.markItUp {
   padding-left: 1em !important;
   color: $med_text !important;
 }
+
+
+

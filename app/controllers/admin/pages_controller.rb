@@ -93,8 +93,10 @@ class Admin::PagesController < AdminBaseController
 
     def parent_page
       home_page = current_site.pages.where(:full_path => '/').first
-      if @page.new_record?
+      if @page.new_record? && params[:parent_id].nil?
         @parent_page = home_page
+      elsif !params[:parent_id].nil?
+        @parent_page = Page.where(:site_id => current_site.id).find(params[:parent_id])
       else
         @parent_page = @page.parent
       end

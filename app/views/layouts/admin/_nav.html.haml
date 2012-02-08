@@ -23,5 +23,5 @@
       %li#users
         = link_to "Your Profile", [:edit, :admin, @current_admin_user]
     - if current_admin_user.role?('admin')
-      %li#site
+      %li#current_site
         = link_to "Site Settings", [:edit, :admin, @current_site]

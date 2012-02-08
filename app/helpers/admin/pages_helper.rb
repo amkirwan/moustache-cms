@@ -10,26 +10,42 @@ module Admin::PagesHelper
     end
   end
 
+  def can_add_child_page_mongoid_tree_item?(mongoid_tree_item)
+    if can? :create, mongoid_tree_item
+      link_to "<div class=\"add_child_page\"></div>".html_safe, new_admin_page_path(:parent_id => mongoid_tree_item.id), :class => "create"
+    end
+  end
+
   def can_destroy_mongoid_tree_item?(mongoid_tree_item)
-    if (can? :destroy, mongoid_tree_item) && !mongoid_tree_item.root?
-      link_to( image_tag('delete_button.png', :alt => "delete page", :class => "delete_image"), admin_page_path(mongoid_tree_item), :method => :delete, :confirm => "Are you sure you want to delete the page #{mongoid_tree_item.title}", :class => "delete", :remote => true) 
+    return if mongoid_tree_item.root?
+
+    if can? :destroy, mongoid_tree_item 
+      link_to "<div class=\"delete_page\"></div>".html_safe, admin_page_path(mongoid_tree_item), :method => :delete, :confirm => "Are you sure you want to delete the page #{mongoid_tree_item.title}", :class => "delete", :remote => true
     end
   end
 
   def mongoid_tree_ul(mongoid_tree_set, init=true)
     if mongoid_tree_set.first.parent.nil?
       content_tag :ol, :class => 'pages' do
-        render :partial => 'admin/pages/mongoid_tree_item', :collection => mongoid_tree_set, :locals => { :init => init}
+        render :partial => 'admin/pages/mongoid_tree_item', :collection => mongoid_tree_set, :locals => { :init => init }
       end
     else
       content_tag :ol, :class => 'sortable pages', 'data-url' => sort_admin_page_path(mongoid_tree_set.first.parent) do
-        render :partial => 'admin/pages/mongoid_tree_item', :collection => mongoid_tree_set, :locals => { :init => init}
+        render :partial => 'admin/pages/mongoid_tree_item', :collection => mongoid_tree_set, :locals => { :init => init }
       end
     end
   end
 
   def mongoid_tree_item_id(mongoid_tree_item)
     mongoid_tree_item.title.parameterize + '_' + mongoid_tree_item.id.to_s
+  end
+
+  def fold_arrow?(mongoid_tree_item)
+    return if mongoid_tree_item.root?
+
+    if mongoid_tree_item.children.size > 0
+      link_to "<div class=\"page_fold_arrow\"></div>".html_safe, admin_page_path(mongoid_tree_item), :remote => true
+    end
   end
 
   def mongoid_tree_item_class(mongoid_tree_item)
