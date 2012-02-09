@@ -3,8 +3,8 @@
 
 - inner_content "shared/inner_wrapper" do
 
-  - if @pages.empty?
+  - if @root_pages.empty?
     = render :partial => 'add_a_page'
   - else 
     #pages_list
-      = mongoid_tree_ul(@pages)
+      = render_pages @root_pages 

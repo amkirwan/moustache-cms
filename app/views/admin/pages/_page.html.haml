@@ -1,0 +1,9 @@
+%li{:id => page_id(page)}
+  = fold_arrow? page
+  = page_is_sortable? page
+  %strong{:class => page_classes(page)}= link_to page.title, [:edit, :admin, page] 
+  %div.page_info
+    %span= page_time_format(page)
+    = can_add_child_page? page
+    = can_destroy_page? page
+  = render_child_pages page

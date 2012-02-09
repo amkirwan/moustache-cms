@@ -1,8 +1,10 @@
 class Admin::PagesController < AdminBaseController
   
+  before_filter :root_pages, :only => :index
+  before_filter :selected_page_part, :only => :edit 
+
   load_and_authorize_resource 
 
-  before_filter :selected_page_part, :only => :edit 
   respond_to :html, :except => [:show, :sort, :new_meta_tag, :update]
   respond_to :xml, :json
   respond_to :js, :only => [:edit, :destroy, :sort, :new_meta_tag, :new_custom_field]
@@ -79,6 +81,10 @@ class Admin::PagesController < AdminBaseController
   end
 
   private 
+
+    def root_pages
+      @root_pages = @pages = Page.roots.where(:site_id => @current_site.id)
+    end
 
     def selected_page_part
       return @selected_page_part = @page.page_parts.first if params[:view].nil? || params[:view].empty?
