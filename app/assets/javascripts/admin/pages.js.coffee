@@ -30,13 +30,26 @@ $(document).ready ->
       $('.page_parts div.spinner_wrapper .spinner').addClass 'hidden'
 
     $('.page_fold_arrow').live 'ajax:beforeSend', ->
-      contentTop = $('#content').offset().top
-      pageFoldTop = $(this).offset().top
-      $('.spinner').css('top', pageFoldTop - contentTop - 72)
-      $('.spinner').removeClass 'hidden'
+      pageList = $(this).parent()
+      pageFoldArrow = $(this)
+      if pageList.hasClass('child_pages')
+        if pageFoldArrow.hasClass('page_fold_arrow_ccw')
+          pageList.children('.pages').first().slideUp 'slow', ->
+            pageFoldArrow.removeClass 'page_fold_arrow_ccw'
+          false
+        else
+          pageList.children('.pages').first().slideDown 'slow', ->
+            pageFoldArrow.addClass 'page_fold_arrow_ccw'
+          false
+      else
+        contentTop = $('#content').offset().top
+        pageFoldTop = $(this).offset().top
+        $('.spinner').css('top', pageFoldTop - contentTop - 72)
+        $('.spinner').removeClass 'hidden'
     $('.page_fold_arrow').live 'ajax:success', ->
-      $('.spinner').addClass 'hidden'
-      $('.spinner').css('top', 0)
+      unless $('.spinner').hasClass 'hidden'
+        $('.spinner').addClass 'hidden'
+        $('.spinner').css('top', 0)
 
     /* change page part nav name */
     $('li.page_part_name input').live 'change', ->

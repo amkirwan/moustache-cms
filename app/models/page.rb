@@ -137,6 +137,7 @@ class Page
   def sort_children(page_ids)
     page_ids.each_with_index do |id, index|
       child = self.children.find(id)
+      logger.debug "*"*20 + '= ' + child.id.to_s
       child.position = index
       child.save
     end
