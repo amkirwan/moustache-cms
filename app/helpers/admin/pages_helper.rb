@@ -46,7 +46,7 @@ module Admin::PagesHelper
     return if page.root?
 
     if page.children.size > 0
-      link_to "<div class=\"page_fold_arrow\"></div>".html_safe, admin_page_path(page), :remote => true
+      link_to "<div></div>".html_safe, admin_page_path(page), :remote => true, :class => "page_fold_arrow"
     end
   end
 

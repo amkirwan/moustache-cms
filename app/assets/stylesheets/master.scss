@@ -450,25 +450,19 @@ img.site_asset_thumb:hover, img.theme_asset_thumb {
 
 span.fold_arrow {
   display: inline-block;
-  width: 6px;
-  height: 9px;
+  width: 9px;
+  height: 6px;
   position: relative;
   left: calc_em(10px, 14px);
   bottom: 1px;
-  background: transparent image-url("hs.png") no-repeat 0 0
+  background: transparent image-url("hs.png") no-repeat -6px 0
 }
 
-span.action_arrow {
-  @extend .fold_arrow;
-  width: 9px;
-  height: 6px;
-  background: transparent image-url("hs.png") no-repeat -7px 0
-}
-span.rotate {
-  -webkit-transform: rotate(90deg);
-  -moz-transform: rotate(90deg);
-  -o-transform: rotate(90deg);
-  transform: rotate(90deg);
+span.rotate-ccw {
+  @extend span.fold_arrow;
+  background-position: 0 0;
+  height: 9px;
+  width: 6px;
 }
 
 div#pages_list {
@@ -490,6 +484,12 @@ ol.pages {
       width: 8px;
       cursor: pointer;
       background: transparent image-url("hs.png") no-repeat -16px 0;
+    }
+    .page_fold_arrow_ccw {
+      @extend .page_fold_arrow;
+      left: -1.5em;
+      background-position: -25px 0;
+      width: 13px;
     }
     .add_child_page {
       height: 16px;
@@ -675,6 +675,7 @@ div.add_some {
 
 .spinner {
   position: absolute;
+  z-index: 200;
   left: 50%;
   padding: 20px;
   margin-top: 10px;

@@ -105,12 +105,12 @@ module ApplicationHelper
     options[:class].nil? ? options[:class] = 'foldable' : options[:class] = "#{options[:class]} foldable"
     if options[:id].nil? 
       content_tag :fieldset, :class => "#{options[:class]}" do 
-        concat(content_tag :legend, "#{label}<span class='fold_arrow rotate'></span>".html_safe)
+        concat(content_tag :legend, "#{label}<span class='fold_arrow'></span>".html_safe)
         yield
       end
     else
       content_tag :fieldset, :id => "#{options[:id]}", :class => "#{options[:class]}" do 
-        concat(content_tag :legend, "#{label}<span class='fold_arrow rotate'></span>".html_safe)
+        concat(content_tag :legend, "#{label}<span class='fold_arrow'></span>".html_safe)
         yield
       end
     end

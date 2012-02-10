@@ -24,21 +24,28 @@ $(document).ready(function() {
     var legend = $(this);
     legend.siblings().slideToggle('slow', 'linear', function() {
       var arrow = legend.children().first();
-      if (arrow.hasClass('rotate')) {
-        arrow.removeClass('rotate');
+      if (arrow.hasClass('rotate-ccw')) {
+        arrow.removeClass('rotate-ccw');
       } else { 
-        arrow.addClass('rotate');
+        arrow.addClass('rotate-ccw');
       }
     });
   });
 
+  $('fieldsset.page_parts')
   $('fieldset.page_parts').mouseup(function() {
     var legend = $(this);
     legend.siblings('div#page_parts_wrapper').slideToggle('slow', 'linear', function() {
       var arrow = legend.children().first();
       if (arrow.hasClass('rotate')) {
+        arrow.css('background-position', '0 0')
+        arrow.css('width', '6px')
+        arrow.css('top', '0')
         arrow.removeClass('rotate');
       } else { 
+        arrow.css('background-position', '-6px 0')
+        arrow.css('width', '9px')
+        arrow.css('top', '1px')
         arrow.addClass('rotate');
       }
     });

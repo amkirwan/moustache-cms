@@ -2,6 +2,8 @@
   = can_create? Page
 
 - inner_content "shared/inner_wrapper" do
+  %div.spinner_wrapper
+    = image_tag 'ajax-loader.gif', :class => 'spinner hidden'
 
   - if @root_pages.empty?
     = render :partial => 'add_a_page'

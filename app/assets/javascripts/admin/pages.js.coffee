@@ -18,16 +18,25 @@ $(document).ready ->
     $('legend').each ->
       $(this).siblings().first().hide()      
     $('legend').each ->
-      $(this).find('span').removeClass('rotate')
+      $(this).find('span').addClass('rotate-ccw')
 
     $('fieldset.page_parts legend').siblings().first().show()
-    $('fieldset.page_parts legend').find('span').addClass('rotate')
+    $('fieldset.page_parts legend').find('span').removeClass('rotate-ccw')
 
     /* page parts ajax spinner */
-    $('ol#page_parts_nav a').live 'click', ->
-      $('.page_parts div.spinner_wrapper .spinner').removeClass('hidden')
+    $('ol#page_parts_nav a').live 'ajax:beforeSend', ->
+      $('.page_parts div.spinner_wrapper .spinner').removeClass 'hidden'
     $('ol#page_parts_nav a').live 'ajax:success', ->
-      $('.page_parts div.spinner_wrapper .spinner').addClass('hidden')
+      $('.page_parts div.spinner_wrapper .spinner').addClass 'hidden'
+
+    $('.page_fold_arrow').live 'ajax:beforeSend', ->
+      contentTop = $('#content').offset().top
+      pageFoldTop = $(this).offset().top
+      $('.spinner').css('top', pageFoldTop - contentTop - 72)
+      $('.spinner').removeClass 'hidden'
+    $('.page_fold_arrow').live 'ajax:success', ->
+      $('.spinner').addClass 'hidden'
+      $('.spinner').css('top', 0)
 
     /* change page part nav name */
     $('li.page_part_name input').live 'change', ->
