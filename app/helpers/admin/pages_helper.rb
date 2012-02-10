@@ -32,7 +32,7 @@ module Admin::PagesHelper
         render pages
       end
     else
-      content_tag :ol, :class => 'sortable pages', 'data-url' => sort_admin_page_path(pages.first.parent) do
+      content_tag :ol, :class => 'pages sortable', 'data-url' => sort_admin_page_path(pages.first.parent) do
         render pages
       end
     end

@@ -1,19 +1,22 @@
 $(document).ready ->
   if $('body.pages').length
 
+    root = global ? window
     /* sort index page pages */
-    $('ol.sortable').sortable
-      handle: 'em.sortable_list'
-      axis: 'y'
-      opacity: 0.6
-      update: (event, ui) ->
-        params = $(this).sortable 'serialize'
-          'key': 'children[]' 
-        params += '&_method=put'
-        params += '&' + $('meta[name=csrf-param]').attr('content') + '=' + $('meta[name=csrf-token]').attr('content')
+    root.sortablePageList = (pageList) ->
+      pageList.sortable
+        handle: 'em.sortable_list'
+        axis: 'y'
+        opacity: 0.6
+        update: (event, ui) ->
+          params = $(this).sortable 'serialize'
+            'key': 'children[]' 
+          params += '&_method=put'
+          params += '&' + $('meta[name=csrf-param]').attr('content') + '=' + $('meta[name=csrf-token]').attr('content')
+          $.post $(this).attr('data-url'), params
 
-        $.post $(this).attr('data-url'), params
-
+    root.sortablePageList($('ol.sortable'))
+  
     /* hide initial form elements */
     $('legend').each ->
       $(this).siblings().first().hide()      
