@@ -32,6 +32,8 @@ class Admin::PagesController < AdminBaseController
     respond_with(:admin, @page) do |format|
       if @page.save
         format.html { redirect_to redirector_path(@page), :notice => "Successfully created the page #{@page.title}" }
+      else
+        @parent_page = Page.where(:site_id => current_site.id).find(params[:page][:parent_id])
       end
     end
   end
