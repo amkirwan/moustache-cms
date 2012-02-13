@@ -1,4 +1,5 @@
-jQuery ->
+$(document).ready ->
+
   setClear = ->
     container = $('.show_asset_collection')
     containerWidth = container.width()
@@ -13,10 +14,7 @@ jQuery ->
         $(this).css 'clear', 'left'
         currentWidth = $(this).outerWidth true
 
-  $(document).ready ->
-    if $('body.site_assets').length
+  if $('body.site_assets').length
+    setClear()
+    $(window).resize ->
       setClear()
-      $(window).resize ->
-        setClear()
-     
-  
