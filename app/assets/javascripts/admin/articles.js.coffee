@@ -10,7 +10,7 @@ jQuery ->
       $('#meta_tags_fields legend').find('span').removeClass('rotate')
 
       /* meta_tag remove new meta tag*/
-      $('span.delete_new_meta_tag').live 'click', ->      
+      $('span.delete_new_meta_tag').on 'click', ->      
         $(this).parent().fadeToggle 'slow', 'linear', ->
           $(this).remove()
         false

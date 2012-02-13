@@ -105,6 +105,6 @@ $(document).ready ->
     $('ol.page_part').each ->
       $(@).hide()
 
-    $('.page_part_filter').live 'change', ->
+    $('.page_part_filter').on 'change', ->
       editor = HandlebarEditor.editors[$('.page_part_filter').index(@)]
       editor.contentSettings $(@).val()

@@ -1,12 +1,12 @@
 jQuery ->
   $(document).ready ->
     if $('body.current_site').length
-      $('span.delete_new_domain_name').live 'click', ->      
+      $('span.delete_new_domain_name').on 'click', ->      
         $(this).parent().fadeToggle 'slow', 'linear', ->
           $(this).remove()
         false 
 
-      $('span.delete_new_meta_tag').live 'click', ->      
+      $('span.delete_new_meta_tag').on 'click', ->      
         $(this).parent().fadeToggle 'slow', 'linear', ->
           $(this).remove()
         false 

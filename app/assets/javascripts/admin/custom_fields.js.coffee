@@ -2,7 +2,7 @@ jQuery ->
   $(document).ready ->
 
       /* custom_field remove new custom field */
-      $('span.delete_new_custom_field').live 'click', ->      
+      $('span.delete_new_custom_field').on 'click', ->      
         $(this).parent().fadeToggle 'slow', 'linear', ->
           $(this).remove()
         false

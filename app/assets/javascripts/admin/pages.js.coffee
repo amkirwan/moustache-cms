@@ -23,16 +23,19 @@ $(document).ready ->
     $('legend').each ->
       $(this).find('span').addClass('rotate-ccw')
 
+    /* Save current index page view to sessionStorage */
+      #$('.edit_page').on
+
     $('fieldset.page_parts legend').siblings().first().show()
     $('fieldset.page_parts legend').find('span').removeClass('rotate-ccw')
 
     /* page parts ajax spinner */
-    $('ol#page_parts_nav a').live 'ajax:beforeSend', ->
+    $('ol#page_parts_nav a').on 'ajax:beforeSend', ->
       $('.page_parts div.spinner_wrapper .spinner').removeClass 'hidden'
-    $('ol#page_parts_nav a').live 'ajax:success', ->
+    $('ol#page_parts_nav a').on 'ajax:success', ->
       $('.page_parts div.spinner_wrapper .spinner').addClass 'hidden'
 
-    $('.page_fold_arrow').live 'ajax:beforeSend', ->
+    $('.page_fold_arrow').on 'ajax:beforeSend', ->
       pageList = $(this).parent()
       pageFoldArrow = $(this)
       if pageList.hasClass('child_pages')
@@ -49,13 +52,13 @@ $(document).ready ->
         pageFoldTop = $(this).offset().top
         $('.spinner').css('top', pageFoldTop - contentTop - 72)
         $('.spinner').removeClass 'hidden'
-    $('.page_fold_arrow').live 'ajax:success', ->
+    $('.page_fold_arrow').on 'ajax:success', ->
       unless $('.spinner').hasClass 'hidden'
         $('.spinner').addClass 'hidden'
         $('.spinner').css('top', 0)
 
     /* change page part nav name */
-    $('li.page_part_name input').live 'change', ->
+    $('li.page_part_name input').on 'change', ->
       pp_id = $(this).parent().siblings().last().children().first().attr 'value'
       page_part_nav_link = $('ol#page_parts_nav #' + pp_id + '_nav').find('a')
       old_val = page_part_nav_link.html()
