@@ -8,7 +8,7 @@ class Admin::PagesController < AdminBaseController
 
   respond_to :html, :except => [:show, :sort, :new_meta_tag, :update]
   respond_to :xml, :json
-  respond_to :js, :only => [:show, :edit, :destroy, :sort, :new_meta_tag, :new_custom_field]
+  respond_to :js, :only => [:show, :edit, :update, :destroy, :sort, :new_meta_tag, :new_custom_field]
 
   def index
     respond_with(:admin, @pages)
@@ -44,7 +44,6 @@ class Admin::PagesController < AdminBaseController
   end
   
   def update
-    logger.debug "*"*10 + " #{params} " + "*"*10 + "\n"
     @page.updated_by = @current_admin_user
     respond_with(:admin, @page) do |format|
       if @page.update_attributes(params[:page]) 
@@ -53,7 +52,6 @@ class Admin::PagesController < AdminBaseController
         format.html { redirect_to redirector_path(@page), :notice => "Successfully updated the page #{@page.title}" }
       else
         selected_page_part 
-        format.html { render :edit }
       end 
     end
   end
@@ -87,17 +85,6 @@ class Admin::PagesController < AdminBaseController
 
     def root_pages
       @root_pages = @pages = Page.roots.where(:site_id => @current_site.id)
-    end
-
-    def selected_page_part
-      return @selected_page_part = @page.page_parts.first if params[:view].nil? || params[:view].empty?
-
-      @selected_page_part = @page.page_parts.find(params[:view])
-      if @selected_page_part.nil?
-        @selected_page_part = @page.page_parts.first
-      else
-        @selected_page_part 
-      end
     end
 
     def parent_page

@@ -3,9 +3,11 @@ class Admin::PagePartsController < AdminBaseController
   load_and_authorize_resource :page
   load_and_authorize_resource :page_part, :through => :page
 
+  before_filter :selected_page_part, :only => :edit
+
   respond_to :html, :except => :show
   respond_to :xml, :json
-  respond_to :js, :only => [:create, :destroy]
+  respond_to :js, :only => [:edit, :create, :destroy]
 
   def show
     respond_with(:admin, @page, @page_part)
@@ -20,6 +22,10 @@ class Admin::PagePartsController < AdminBaseController
         format.html { redirect_to edit_admin_page_path(@page, :view => @page_part.name), :notice => "Successfully created the page part #{@page_part.name}" }
       end
     end
+  end
+
+  def edit
+    respond_with(:admin, @page, @page_part)
   end
 
   def destroy

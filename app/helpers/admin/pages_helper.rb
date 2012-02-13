@@ -116,11 +116,11 @@ module Admin::PagesHelper
     unless @page.new_record?
       if @selected_page_part.id == page_part.id
         content_tag :li, :id => "#{page_part.id}_nav", :class => 'tab selected' do
-          link_to page_part.name, edit_admin_page_path(@page, :view => page_part.id), :remote => true
+          link_to page_part.name, edit_admin_page_page_part_path(@page, page_part.id, :view => page_part.id), :remote => true
         end
       else
         content_tag :li, :id => "#{page_part.id}_nav", :class => 'tab' do
-          link_to page_part.name, edit_admin_page_path(@page, :view => page_part.id), :remote => true
+          link_to page_part.name, edit_admin_page_page_part_path(@page, page_part.id, :view => page_part.id), :remote => true
         end
       end
     end

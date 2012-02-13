@@ -16,7 +16,7 @@ HandlebarCms::Application.routes.draw do
       get :new_custom_field, :on => :collection
       resources :meta_tags, :except => [:index, :show] 
       resources :custom_fields, :except => [:index, :show]
-      resources :page_parts, :only => [:show, :create, :destroy]
+      resources :page_parts, :except => [:index, :new, :update] 
     end
 
     resources :authors
