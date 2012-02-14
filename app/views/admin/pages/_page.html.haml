@@ -1,4 +1,4 @@
-%li{:id => page_id(page)}
+%li{:id => page_id(page), :data => {:page_id => page.id} }
   = fold_arrow? page
   = page_is_sortable? page
   %strong{:class => page_classes(page)}= link_to page.title, [:edit, :admin, page], :class => 'edit_page'

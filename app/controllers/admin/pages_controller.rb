@@ -45,6 +45,7 @@ class Admin::PagesController < AdminBaseController
   
   def update
     @page.updated_by = @current_admin_user
+    @page_title_was =  @page.title
     respond_with(:admin, @page) do |format|
       if @page.update_attributes(params[:page]) 
         flash[:notice] = "Successfully updated the page #{@page.title}"

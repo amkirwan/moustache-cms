@@ -39,7 +39,11 @@ module Admin::PagesHelper
   end
 
   def page_id(page)
-    page.title.parameterize + '_' + page.id.to_s
+    page.title.parameterize('_') + '_' + page.id.to_s
+  end
+
+  def page_id_was
+    @page_title_was.parameterize('_') + '_' + @page.id.to_s
   end
 
   def fold_arrow?(page)
