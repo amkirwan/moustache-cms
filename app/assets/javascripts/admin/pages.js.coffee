@@ -22,17 +22,26 @@ $(document).ready ->
       $(this).find('span').addClass('rotate-ccw')
     
     root.setLocalStore = (key, val) ->
-      localStorage.setItem key, val
+      localStorage.setItem key, JSON.stringify(val)
 
     root.getLocalStore = (store) ->
-      localStorage.getItem store
+      JSON.parse localStorage.getItem(store)
 
     pageListGet = (page_ids) ->
       $('.spinner').removeClass 'hidden'
       if page_ids.length > 0
-        $.ajax '/admin/pages/' + page_ids.shift() + '.js', 
+        page_id = page_ids.shift()
+        $.ajax '/admin/pages/' + page_id + '.js', 
           success: (data) ->
             pageListGet page_ids
+          complete: ->
+            if page_id == $.cookies.get('page_parent_id') 
+              page_id = $.cookies.get('page_created_updated_id')
+              el = $("li").find("[data-page_id='" + page_id + "']")
+              el.find('.edit_page').animate({ color: '#e2e288' }, 1000).delay(1500).animate({ color: '#d54e0e' }, 3000)
+              el.find('.page_info span').stop().animate({ color: '#e2e288' }, 1000).delay(1500).animate({ color: '#9C9C9C' }, 3000)
+              $.cookies.del('page_created_updated_id')
+              $.cookies.del('page_parent_id')
           error: ->
             pageListGet page_ids
       else
@@ -40,16 +49,16 @@ $(document).ready ->
 
 
     if $('#pages_list').length && localStorage?.pagesState?
-      pageList = JSON.parse getLocalStore('pagesState')
-      pageListGet pageList.page_ids
+      pagesList = getLocalStore('pagesState')
+      pageListGet pagesList.page_ids
 
     # Save current index page view to sessionStorage 
     if localStorage?
       $('.edit_page').live 'click', ->
-        pageList = page_ids: []
+        pagesList = page_ids: []
         $('.page_fold_arrow_ccw').each ->
-          pageList.page_ids.push $(@).parent().attr('data-page_id')
-        setLocalStore 'pagesState', JSON.stringify pageList
+          pagesList.page_ids.push $(@).parent().attr('data-page_id')
+        setLocalStore 'pagesState', pagesList
 
     $('fieldset.page_parts legend').siblings().first().show()
     $('fieldset.page_parts legend').find('span').removeClass('rotate-ccw')

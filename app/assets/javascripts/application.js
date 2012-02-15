@@ -2,6 +2,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
+//= require admin/jquery.cookies.min
 //= require admin/pages
 //= require admin/articles
 //= require admin/meta_tags

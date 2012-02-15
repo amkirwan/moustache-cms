@@ -8,9 +8,11 @@ class Admin::PagesController < AdminBaseController
 
   respond_to :html, :except => [:show, :sort, :new_meta_tag, :update]
   respond_to :xml, :json
-  respond_to :js, :only => [:show, :edit, :update, :destroy, :sort, :new_meta_tag, :new_custom_field]
+  respond_to :js, :only => [:show, :edit, :destroy, :sort, :new_meta_tag, :new_custom_field]
 
   def index
+    @page_created_updated_id = cookies[:page_created_updated_id]
+    @page = Page.where(:site_id => current_site.id).find(@page_created_updated_id) unless @page_created_updated_id.nil?
     respond_with(:admin, @pages)
   end
 
@@ -31,6 +33,8 @@ class Admin::PagesController < AdminBaseController
     created_updated_by_for @page
     respond_with(:admin, @page) do |format|
       if @page.save
+        cookies[:page_created_updated_id] = @page.id
+        cookies[:page_parent_id] = @page.parent.id
         format.html { redirect_to redirector_path(@page), :notice => "Successfully created the page #{@page.title}" }
       else
         @parent_page = Page.where(:site_id => current_site.id).find(params[:page][:parent_id])
@@ -48,6 +52,7 @@ class Admin::PagesController < AdminBaseController
     @page_title_was =  @page.title
     respond_with(:admin, @page) do |format|
       if @page.update_attributes(params[:page]) 
+        set_page_cookies unless params[:commit] == "Save and Continue Editing"
         flash[:notice] = "Successfully updated the page #{@page.title}"
         selected_page_part 
         format.html { redirect_to redirector_path(@page), :notice => "Successfully updated the page #{@page.title}" }
@@ -86,6 +91,11 @@ class Admin::PagesController < AdminBaseController
 
     def root_pages
       @root_pages = @pages = Page.roots.where(:site_id => @current_site.id)
+    end
+
+    def set_page_cookies
+      cookies[:page_created_updated_id] = @page.id
+      cookies[:page_parent_id] = @page.parent.id
     end
 
     def parent_page
