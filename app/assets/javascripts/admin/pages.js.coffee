@@ -27,6 +27,10 @@ $(document).ready ->
     root.getLocalStore = (store) ->
       JSON.parse localStorage.getItem(store)
 
+    ###
+    Recursively call pageListGet with page_ids from localStorage and call them via ajax
+    If the page page_parent_id cookie then highlight the text
+    ###
     pageListGet = (page_ids) ->
       $('.spinner').removeClass 'hidden'
       if page_ids.length > 0
@@ -47,7 +51,10 @@ $(document).ready ->
       else
         $('.spinner').addClass 'hidden'
 
-
+    ###
+    If the page_list and the localStorage pagesState exists then call call the pageListGet with the
+    stored page_ids
+    ###
     if $('#pages_list').length && localStorage?.pagesState?
       pagesList = getLocalStore('pagesState')
       pageListGet pagesList.page_ids
@@ -60,6 +67,7 @@ $(document).ready ->
           pagesList.page_ids.push $(@).parent().attr('data-page_id')
         setLocalStore 'pagesState', pagesList
 
+    # Show the page_parts field on edit page
     $('fieldset.page_parts legend').siblings().first().show()
     $('fieldset.page_parts legend').find('span').removeClass('rotate-ccw')
 
@@ -69,6 +77,8 @@ $(document).ready ->
     $('ol#page_parts_nav a').on 'ajax:success', ->
       $('.page_parts div.spinner_wrapper .spinner').addClass 'hidden'
 
+    # on the index page rotate arrow if the child has child_pages.
+    # Then hide and show the spinner before and after ajax call
     $('.page_fold_arrow').live 'ajax:beforeSend', ->
       pageList = $(@).parent()
       pageFoldArrow = $(@)

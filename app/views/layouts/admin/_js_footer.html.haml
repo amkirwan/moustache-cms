@@ -1,11 +1,12 @@
 = javascript_include_tag "application"
 = javascript_include_tag "ace_editor"
 
-- if @page_created_id && @page.parent.children.count == 1
+-# if the page is created and it is the only child of the parent then add the parent to the localStorage
+- if @page_created_updated_id && @page.parent.children.count == 1
   :javascript
     (function() {
       var pagesList;
-
+      
       if ($('#pages_list').length && ((typeof localStorage !== "undefined" && localStorage !== null ? localStorage.pagesState : void 0) != null)) {
         pagesList = JSON.parse(localStorage.getItem('pagesState'));
         pagesList.page_ids.push("#{@page.parent.id}");

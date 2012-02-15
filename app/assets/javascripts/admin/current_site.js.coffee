@@ -10,13 +10,13 @@ $(document).ready ->
         $(this).remove()
       false 
 
-    /* meta_tag ajax spinner */
+    # meta_tag ajax spinner 
     $('#add_meta_tag a').bind 'ajax:before', ->
       $('#meta_tags_fieldset .spinner').removeClass('hidden')
     $('#add_meta_tag a').bind 'ajax:complete', ->
       $('#meta_tags_fieldset .spinner').addClass('hidden')
 
-    /* domains ajax spinner */
+    # domains ajax spinner
     $('#add_domain a').bind 'ajax:before', ->
       $('#domains_fieldset .spinner').removeClass('hidden')
     $('#add_domain a').bind 'ajax:complete', ->
