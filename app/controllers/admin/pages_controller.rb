@@ -43,7 +43,6 @@ class Admin::PagesController < AdminBaseController
   
   def edit
     selected_page_part
-    session.delete(:selected_page_part_id)
     parent_page
     respond_with(:admin, @page)
   end
@@ -103,7 +102,13 @@ class Admin::PagesController < AdminBaseController
     def selected_page_part
       return @selected_page_part = @page.page_parts.first if session[:selected_page_part_id].nil? || session[:selected_page_part_id].empty?
 
-      @selected_page_part = @page.page_parts.find(session[:selected_page_part_id])
+      begin
+        @selected_page_part = @page.page_parts.find(session[:selected_page_part_id])
+      rescue
+        @selected_page_part = @page.page_parts.first
+      ensure
+        session.delete(:selected_page_part_id)
+      end
       if @selected_page_part.nil?
         @selected_page_part = @page.page_parts.first
       else
