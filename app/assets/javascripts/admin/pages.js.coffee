@@ -27,6 +27,10 @@ $(document).ready ->
     root.getLocalStore = (store) ->
       JSON.parse localStorage.getItem(store)
 
+    highlight = (el) ->
+      el.find('.edit_page').first().animate({ color: '#e2e288' }, 1000).delay(1500).animate({ color: '#d54e0e' }, 3000)
+      el.find('.page_info span').first().animate({ color: '#e2e288' }, 1000).delay(1500).animate({ color: '#9C9C9C' }, 3000)
+
     ###
     Recursively call pageListGet with page_ids from localStorage and call them via ajax
     If the page page_parent_id cookie then highlight the text
@@ -42,10 +46,7 @@ $(document).ready ->
             if page_id == $.cookies.get('page_parent_id') 
               page_id = $.cookies.get('page_created_updated_id')
               el = $("li").find("[data-page_id='" + page_id + "']")
-              el.find('.edit_page').animate({ color: '#e2e288' }, 1000).delay(1500).animate({ color: '#d54e0e' }, 3000)
-              el.find('.page_info span').stop().animate({ color: '#e2e288' }, 1000).delay(1500).animate({ color: '#9C9C9C' }, 3000)
-              $.cookies.del('page_created_updated_id')
-              $.cookies.del('page_parent_id')
+              highlight el
           error: ->
             pageListGet page_ids
       else
@@ -56,8 +57,17 @@ $(document).ready ->
     stored page_ids
     ###
     if $('#pages_list').length && localStorage?.pagesState?
+      page_id = $.cookies.get('page_created_updated_id')
+      # highlight root pages and pages that are children of the rootpage
+      if $("[data-page_id='" + page_id + "']").length
+        el = $("[data-page_id='" + page_id + "']")
+        highlight el
       pagesList = getLocalStore('pagesState')
+      # recursivley get other page parts
       pageListGet pagesList.page_ids
+      # delete cookies when done getting all page parts
+      $.cookies.del('page_created_updated_id')
+      $.cookies.del('page_parent_id')
 
     # Save current index page view to sessionStorage 
     if localStorage?
