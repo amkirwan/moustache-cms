@@ -2,7 +2,7 @@
 = javascript_include_tag "ace_editor"
 
 -# if the page is created and it is the only child of the parent then add the parent to the localStorage
-- if @page_created_updated_id && @page.parent.children.count == 1
+- if !@page.root? && @page_created_updated_id && @page.parent.children.count == 1
   :javascript
     (function() {
       var pagesList;

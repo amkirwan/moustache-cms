@@ -113,5 +113,3 @@ $(document).ready ->
       else
         page_part_nav_link.html old_val
         $(this).attr 'value', old_val
-
-

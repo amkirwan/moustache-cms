@@ -4,7 +4,7 @@ class Admin::PagesController < AdminBaseController
 
   load_and_authorize_resource 
 
-  before_filter :selected_page_part, :only => :edit 
+  before_filter :remove_selected_page_part, :except => :edit
 
   respond_to :html, :except => [:show, :sort, :new_meta_tag, :update]
   respond_to :xml, :json
@@ -33,8 +33,7 @@ class Admin::PagesController < AdminBaseController
     created_updated_by_for @page
     respond_with(:admin, @page) do |format|
       if @page.save
-        cookies[:page_created_updated_id] = @page.id
-        cookies[:page_parent_id] = @page.parent.id
+        set_page_cookies
         format.html { redirect_to redirector_path(@page), :notice => "Successfully created the page #{@page.title}" }
       else
         @parent_page = Page.where(:site_id => current_site.id).find(params[:page][:parent_id])
@@ -43,6 +42,8 @@ class Admin::PagesController < AdminBaseController
   end
   
   def edit
+    selected_page_part
+    session.delete(:selected_page_part_id)
     parent_page
     respond_with(:admin, @page)
   end
@@ -53,8 +54,8 @@ class Admin::PagesController < AdminBaseController
     respond_with(:admin, @page) do |format|
       if @page.update_attributes(params[:page]) 
         set_page_cookies unless params[:commit] == "Save and Continue Editing"
+        set_page_part unless params[:commit] == "Update Page"
         flash[:notice] = "Successfully updated the page #{@page.title}"
-        selected_page_part 
         format.html { redirect_to redirector_path(@page), :notice => "Successfully updated the page #{@page.title}" }
       else
         selected_page_part 
@@ -71,7 +72,6 @@ class Admin::PagesController < AdminBaseController
   def sort
     @page = current_site.pages.find(params[:id])
     @page.sort_children(params[:children])
-    
     flash.now[:notice] = "Updated Page Positions"
   end
 
@@ -87,7 +87,34 @@ class Admin::PagesController < AdminBaseController
     render 'admin/custom_fields/new'
   end
 
+
+  
   private 
+
+    def set_page_part
+      if params[:view]
+        session[:selected_page_part_id] = params[:view]
+      else
+        session[:selected_page_part_id] = @page.page_parts.first.id
+      end 
+    end
+
+
+    def selected_page_part
+      return @selected_page_part = @page.page_parts.first if session[:selected_page_part_id].nil? || session[:selected_page_part_id].empty?
+
+      @selected_page_part = @page.page_parts.find(session[:selected_page_part_id])
+      if @selected_page_part.nil?
+        @selected_page_part = @page.page_parts.first
+      else
+        @selected_page_part 
+      end
+    end
+
+    def remove_selected_page_part
+      session.delete(:selected_page_part_id)
+    end
+
 
     def root_pages
       @root_pages = @pages = Page.roots.where(:site_id => @current_site.id)
@@ -95,7 +122,7 @@ class Admin::PagesController < AdminBaseController
 
     def set_page_cookies
       cookies[:page_created_updated_id] = @page.id
-      cookies[:page_parent_id] = @page.parent.id
+      cookies[:page_parent_id] = @page.parent.id unless @page.root?
     end
 
     def parent_page
@@ -110,6 +137,7 @@ class Admin::PagesController < AdminBaseController
     end
 
     def redirector_path(object)
-      params[:commit] == "Save and Continue Editing" ? edit_admin_page_path(object, :view => @selected_page_part.id) : [:admin, :pages]
+      params[:commit] == "Save and Continue Editing" ? edit_admin_page_path(object) : [:admin, :pages]
     end
+
 end

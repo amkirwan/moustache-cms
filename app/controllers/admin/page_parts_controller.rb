@@ -36,5 +36,19 @@ class Admin::PagePartsController < AdminBaseController
       format.html { redirect_to [:edit, :admin, @page] }
     end
   end
+
+  private 
+
+    def selected_page_part
+      return @selected_page_part = @page.page_parts.first if params[:view].nil? || params[:view].empty?
+
+      @selected_page_part = @page.page_parts.find(params[:view])
+      if @selected_page_part.nil?
+        @selected_page_part = @page.page_parts.first
+      else
+        @selected_page_part 
+      end
+    end
+
   
 end
