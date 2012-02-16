@@ -123,3 +123,16 @@ $(document).ready ->
       else
         page_part_nav_link.html old_val
         $(this).attr 'value', old_val
+
+    $('#pages_list .delete_message').live 'ajax:beforeSend', (e) ->
+      e.stopPropagation()
+      if confirm $(@).attr('data-message')
+        if $(@).closest('li').hasClass('child_pages')
+          if confirm('Deleteing the page ' + $(@).attr('data-title') + ' will delete the page and all child pages it is the parent of!')
+            true
+          else
+            false
+        else
+          true
+      else
+        false
