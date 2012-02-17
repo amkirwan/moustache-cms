@@ -92,7 +92,7 @@ class Page
   before_save :uniq_editor_ids, :strip_page_parts
   after_update :update_current_state_time
   after_save :update_user_pages
-  #before_destroy :destroy_children
+  before_destroy :destroy_children
   after_initialize :default_meta_tags
   
   # -- Class Mehtods --------------------------------------------------
