@@ -54,6 +54,10 @@ module Admin::PagesHelper
     end
   end
 
+  def child_pages
+    "child_pages" unless @page.children.empty?
+  end
+
   def page_classes(page)
     if page.published?
       page.home_page? ? 'home_page published' : 'published'

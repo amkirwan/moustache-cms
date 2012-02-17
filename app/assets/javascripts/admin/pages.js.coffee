@@ -58,7 +58,7 @@ $(document).ready ->
     ###
     if $('#pages_list').length && localStorage?.pagesState?
       page_id = $.cookies.get('page_created_updated_id')
-      # highlight root pages and pages that are children of the rootpage
+      # highlight root pages and pages that are children of the root page
       if $("[data-page_id='" + page_id + "']").length
         el = $("[data-page_id='" + page_id + "']")
         highlight el
@@ -126,7 +126,7 @@ $(document).ready ->
 
     $('#pages_list .delete_message').live 'ajax:beforeSend', (e) ->
       e.stopPropagation()
-      if confirm $(@).attr('data-message')
+      if confirm($(@).attr('data-message'))
         if $(@).closest('li').hasClass('child_pages')
           if confirm('Deleteing the page ' + $(@).attr('data-title') + ' will delete the page and all child pages it is the parent of!')
             true
@@ -136,3 +136,33 @@ $(document).ready ->
           true
       else
         false
+
+
+    if $('.edit_page .delete').length
+      $.rails.allowAction = (element) ->
+        answer = false
+        message = element.data 'confirm'
+        if !message
+          return true
+
+        if $.rails.fire(element, 'confirm') 
+          answer = $.rails.confirm message
+          if answer && element.hasClass('child_pages')
+            answer = $.rails.confirm('Deleteing the page ' + $(@).attr('data-title') + ' will delete the page and all child pages it is the parent of!')
+        answer
+
+###
+    $('.edit_page .delete').live 'click', (e) ->
+      if confirm($(@).attr('data-message'))
+        if $(@).closest('li').hasClass('child_pages')
+          if confirm('Deleteing the page ' + $(@).attr('data-title') + ' will delete the page and all child pages it is the parent of!')
+            true
+          else 
+            e.stopImmediatePropagation()
+            false
+        else
+          true
+      else
+        e.stopImmediatePropagation()
+        false
+###

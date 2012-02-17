@@ -1,7 +1,8 @@
 - header_content 'shared/header_wrapper', :object => @page do
-  = can_destroy? @page
+  %div{:id => "delete_page", :class => "delete edit_page"}
+    = link_to "Delete Page", [:admin, @page], :method => :delete, :confirm => "Are you sure you want to delete the page #{@page.title}", 'data-title' => "#{@page.title}", :class => "action delete #{child_pages}"
 
-- inner_content "shared/inner_wrapper" do
+- inner_content "shared/inner_wrapper"  do
   %div.breadcrumb
     = link_to "&laquo; Pages".html_safe, [:admin, :pages]
     = link_to 'View Page', @page.full_path, :target => "_blank", :class => 'view_page'
