@@ -30,6 +30,8 @@ $(document).ready ->
     highlight = (el) ->
       el.find('.edit_page').first().animate({ color: '#e2e288' }, 1000).delay(1500).animate({ color: '#d54e0e' }, 3000)
       el.find('.page_info span').first().animate({ color: '#e2e288' }, 1000).delay(1500).animate({ color: '#9C9C9C' }, 3000)
+      $.cookies.del('page_created_updated_id')
+      $.cookies.del('page_parent_id')
 
     ###
     Recursively call pageListGet with page_ids from localStorage and call them via ajax
@@ -66,8 +68,7 @@ $(document).ready ->
       # recursivley get other page parts
       pageListGet pagesList.page_ids
       # delete cookies when done getting all page parts
-      $.cookies.del('page_created_updated_id')
-      $.cookies.del('page_parent_id')
+
 
     # Save current index page view to sessionStorage 
     if localStorage?
