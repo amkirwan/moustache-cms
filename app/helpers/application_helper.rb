@@ -7,6 +7,10 @@ module ApplicationHelper
   def superuser?
     @current_admin_user.role?('superuser') ? true : false
   end
+
+  def current_user?(user)
+    user == @current_admin_user
+  end
   
   def body_id_set
     name = controller.controller_name

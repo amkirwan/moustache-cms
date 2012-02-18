@@ -2,5 +2,8 @@
   %td.name= link_to user.full_name, [:edit, :admin, user]
   %td.username= user.username
   %td.role= user.role.capitalize
-  %td.delete= link_to "Delete", [:admin, user], :method => :delete, :remote => :true, :confirm => "Are are you sure you want to delete the user #{user.full_name}?"
+  - if current_user? user
+    %td.delete= link_to "Delete", [:admin, user], :method => :delete, :confirm => "Are are you sure you want to delete your account?"
+  - else
+    %td.delete= link_to "Delete", [:admin, user], :method => :delete, :remote => :true, :confirm => "Are are you sure you want to delete the user #{user.full_name}?"
 

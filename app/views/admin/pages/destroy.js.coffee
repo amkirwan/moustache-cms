@@ -16,7 +16,7 @@ $('#<%= page_id @page %>').fadeToggle "slow", "linear", ->
       pagesList = page_ids: []
       $('.page_fold_arrow_ccw').each ->
         pagesList.page_ids.push $(@).parent().attr('data-page_id')
-      setLocalStore 'pagesState', pagesList
+      setSessionStore 'pagesState', pagesList
     parent.remove()
 
 

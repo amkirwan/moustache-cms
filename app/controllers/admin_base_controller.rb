@@ -55,7 +55,9 @@ class AdminBaseController < ApplicationController
     
     def logout
       reset_session
-      redirect_to cms_html_path
+      cookies.to_hash.each_key do |k| 
+        cookies.delete(k.to_sym)
+      end
     end
 
     def discard_flash_message

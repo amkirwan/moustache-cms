@@ -21,11 +21,11 @@ $(document).ready ->
     $('legend').each ->
       $(this).find('span').addClass('rotate-ccw')
     
-    root.setLocalStore = (key, val) ->
-      localStorage.setItem key, JSON.stringify(val)
+    root.setSessionStore = (key, val) ->
+      sessionStorage.setItem key, JSON.stringify(val)
 
-    root.getLocalStore = (store) ->
-      JSON.parse localStorage.getItem(store)
+    root.getSessionStore = (store) ->
+      JSON.parse sessionStorage.getItem(store)
 
     highlight = (el) ->
       el.find('.edit_page').first().animate({ color: '#e2e288' }, 1000).delay(1500).animate({ color: '#d54e0e' }, 3000)
@@ -34,7 +34,7 @@ $(document).ready ->
       $.cookies.del('page_parent_id')
 
     ###
-    Recursively call pageListGet with page_ids from localStorage and call them via ajax
+    Recursively call pageListGet with page_ids from sessionStorage and call them via ajax
     If the page page_parent_id cookie then highlight the text
     ###
     pageListGet = (page_ids) ->
@@ -55,28 +55,28 @@ $(document).ready ->
         $('.spinner').addClass 'hidden'
 
     ###
-    If the page_list and the localStorage pagesState exists then call call the pageListGet with the
+    If the page_list and the sessionStorage pagesState exists then call call the pageListGet with the
     stored page_ids
     ###
-    if $('#pages_list').length && localStorage?.pagesState?
+    if $('#pages_list').length && sessionStorage?.pagesState?
       page_id = $.cookies.get('page_created_updated_id')
       # highlight root pages and pages that are children of the root page
       if $("[data-page_id='" + page_id + "']").length
         el = $("[data-page_id='" + page_id + "']")
         highlight el
-      pagesList = getLocalStore('pagesState')
+      pagesList = getSessionStore('pagesState')
       # recursivley get other page parts
       pageListGet pagesList.page_ids
       # delete cookies when done getting all page parts
 
 
     # Save current index page view to sessionStorage 
-    if localStorage?
+    if sessionStorage?
       $('.edit_page').live 'click', ->
         pagesList = page_ids: []
         $('.page_fold_arrow_ccw').each ->
           pagesList.page_ids.push $(@).parent().attr('data-page_id')
-        setLocalStore 'pagesState', pagesList
+        setSessionStore 'pagesState', pagesList
 
     # Show the page_parts field on edit page
     $('fieldset.page_parts legend').siblings().first().show()

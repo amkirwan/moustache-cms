@@ -53,12 +53,14 @@ class Admin::UsersController < AdminBaseController
       end
     end
   end
-  
+
   def destroy
     if @user.delete
       if current_admin_user? @user
         reset_session
-        respond_with [:new, :admin, :user_session]
+        respond_with do |format|
+          format.html { redirect_to [:new, :admin, :user_session] }
+        end
       else
         flash[:notice] = "Successfully deleted user profile for #{@user.full_name}" 
         respond_with do |format|
@@ -67,6 +69,7 @@ class Admin::UsersController < AdminBaseController
       end
     end
   end 
+
 
   def change_password
   end

@@ -7,4 +7,3 @@ $("div#flash_notice_wrapper").delay(1000).fadeToggle "slow", "linear", ->
 $('#<%= @user.username %>').fadeToggle "slow", "linear", ->
   $(this).remove()
 
-window.location.replace('<%= new_admin_user_session_path %>')

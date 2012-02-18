@@ -33,7 +33,6 @@ $(document).ready(function() {
     });
   });
 
-  $('fieldsset.page_parts')
   $('fieldset.page_parts').mouseup(function() {
     var legend = $(this);
     legend.siblings('div#page_parts_wrapper').slideToggle('slow', 'linear', function() {
@@ -50,6 +49,10 @@ $(document).ready(function() {
         arrow.addClass('rotate');
       }
     });
+  });
+
+  $('.logout').on('click', function() {
+    sessionStorage.clear();
   });
 
 });
