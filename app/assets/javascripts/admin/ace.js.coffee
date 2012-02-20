@@ -8,16 +8,27 @@ $(document).ready ->
       @extRe = new RegExp("^.*\\.(" + extensions.join("|") + ")$", "g")
 
   class root.HandlebarEditor
-    constructor: (@elementId, wrapLimit = null, printMargin = 80, tabSize = 2) ->
+    constructor: (args) ->
+      @options = $.extend({ 
+        tabSize: 2
+        useWrapMode: false
+        wrapLimit: NaN
+        printMargin: 80
+        filter: 'html'
+      }, args)
+
+      @elementId = args.elementId
       @element = $('#' + @elementId)
       @editor = ace.edit @elementId
       @editor.setTheme "ace/theme/twilight"
-      @editor.session.setUseWrapMode false
-      @editor.session.setWrapLimitRange wrapLimit, wrapLimit
-      @editor.session.setTabSize tabSize
+      @editor.session.setUseWrapMode @options.useWrapMode
+      @editor.session.setWrapLimitRange @options.wrapLimit, @options.wrapLimit
+      @editor.session.setTabSize @options.tabSize
       @editor.session.setUseSoftTabs true
-      @editor.renderer.setPrintMarginColumn printMargin
+      @editor.renderer.setPrintMarginColumn @options.printMargin
       @editor.renderer.setShowPrintMargin false
+      @contentSettings @options.filter
+      @hideUpdateTextarea()
 
     @modes = [  
       new Mode("css", "CSS", ace.require("ace/mode/css").Mode, ["css"]),
@@ -35,11 +46,13 @@ $(document).ready ->
 
     contentSettings: (filterText) ->
       @editor.getSession().setMode HandlebarEditor.modesByName[filterText].mode
+      @editor.getSession().setMode HandlebarEditor.modesByName[filterText].mode
 
+    # on form submit update hidden textarea with ace editor content
     hideUpdateTextarea: ->
       $('.content_submit').hide()
+      #update hidden textarea
       $('.site_prop').submit =>
-        #update hidden textarea
         @element.parent().next().find('textarea').val @editor.getSession().getValue()
 
     createEditor: (elementId) ->
@@ -52,52 +65,34 @@ $(document).ready ->
       'editor =' + @editor.toString()
 
   if $("body.layouts #layout_content").length
-    hbEditor = new HandlebarEditor("layout_content")
-    hbEditor.hideUpdateTextarea()
-    hbEditor.contentSettings "html"
+    hbEditor = new HandlebarEditor elementId: "layout_content", filter: 'html'
 
   else if $("body.snippets #snippet_content").length
-    hbEditor = new HandlebarEditor("snippet_content")
-    hbEditor.hideUpdateTextarea()
-
-    $('#snippet_filter_name').each ->
-      hbEditor.contentSettings $(@).val() 
+    hbEditor = new HandlebarEditor elementId: 'snippet_content', filter: $('#snippet_filter_name').val()
     $('#snippet_filter_name').change ->
       hbEditor.contentSettings $(@).val()
 
   else if $("body.articles #article_content").length
-    hbEditorSub = new HandlebarEditor("article_subheading_content")
-    hbEditorSub.hideUpdateTextarea()
-
-    hbEditorContent = new HandlebarEditor("article_content")
-    hbEditorContent.hideUpdateTextarea()
-
-    $('#article_filter_name').each ->
-      hbEditorSub.contentSettings $(@).val() 
-      hbEditorContent.contentSettings $(@).val() 
+    hbEditorSub = new HandlebarEditor elementId: "article_subheading_content", filter: $('#article_filter_name')
+    hbEditorContent = new HandlebarEditor elemntId: "article_content", filter: $('#article_filter_name')
     $('#article_filter_name').change ->
       hbEditorSub.contentSettings $(@).val()
       hbEditorContent.contentSettings $(@).val() 
 
   else if $("body.theme_assets #theme_asset_content").length
-    hbEditor = new HandlebarEditor("theme_asset_content")
-    hbEditor.hideUpdateTextarea()
-
     if $('li.css_asset')
-      hbEditor.contentSettings 'css'  
+      hbEditor = new HandlebarEditor elementId: 'theme_asset_content', filter: 'css'
     else if $('li.js_asset')
-      hbEditor.contentSettings 'javascript'  
-
+      hbEditor = new HandlebarEditor elementId: 'theme_asset_content', filter: 'javascript'
+    
   else if $("body.pages .page_parts").length
     filters = []
-    $('.page_parts select').each -> 
+    $('.page_part_filter').each -> 
       filters.push @
 
     HandlebarEditor.editors = [] 
     $('.page_part_content').each (index) ->
-      editor = new HandlebarEditor @.id
-      editor.contentSettings $(filters[index]).val()
-      editor.hideUpdateTextarea()
+      editor = new HandlebarEditor  { elementId: @.id, filter: $(filters[index]).val() }
       HandlebarEditor.editors.push editor
 
     # hide all page parts that are not selected 
