@@ -11,8 +11,7 @@ class Admin::PagesController < AdminBaseController
   respond_to :js, :only => [:show, :edit, :destroy, :sort, :new_meta_tag, :new_custom_field]
 
   def index
-    @page_created_updated_id = cookies[:page_created_updated_id]
-    @page = Page.where(:site_id => current_site.id).find(@page_created_updated_id) unless @page_created_updated_id.nil?
+    page_created_updated
     respond_with(:admin, @pages)
   end
 
@@ -98,6 +97,16 @@ class Admin::PagesController < AdminBaseController
       end 
     end
 
+    def page_created_updated
+      @page_created_updated_id = cookies[:page_created_updated_id]
+      begin
+        @page = Page.where(:site_id => current_site.id).find(@page_created_updated_id) unless @page_created_updated_id.nil?
+      rescue
+        @page = Page.where(:site_id => current_site.id).first
+      end
+    end
+
+
 
     def selected_page_part
       return @selected_page_part = @page.page_parts.first if session[:selected_page_part_id].nil? || session[:selected_page_part_id].empty?
@@ -109,6 +118,7 @@ class Admin::PagesController < AdminBaseController
       ensure
         session.delete(:selected_page_part_id)
       end
+
       if @selected_page_part.nil?
         @selected_page_part = @page.page_parts.first
       else
