@@ -76,26 +76,26 @@ $(document).ready ->
       'element =' + @element.toString() + ' ' +
       'editor =' + @editor.toString()
 
-  if $("body.layouts #layout_content").length
-    hbEditor = new HandlebarEditor elementId: "layout_content", filter: 'html'
+  if $("body.layouts #asset_content").length
+    hbEditor = new HandlebarEditor elementId: "asset_content", filter: 'html'
 
-  else if $("body.snippets #snippet_content").length
-    hbEditor = new HandlebarEditor elementId: 'snippet_content', filter: $('#snippet_filter_name').val()
+  else if $("body.snippets #asset_content").length
+    hbEditor = new HandlebarEditor elementId: 'asset_content', filter: $('#snippet_filter_name').val()
     $('#snippet_filter_name').change ->
       hbEditor.contentSettings $(@).val()
 
   else if $("body.articles #article_content").length
-    hbEditorSub = new HandlebarEditor elementId: "article_subheading_content", filter: $('#article_filter_name')
-    hbEditorContent = new HandlebarEditor elemntId: "article_content", filter: $('#article_filter_name')
+    hbEditorSub = new HandlebarEditor elementId: "article_subheading_content", filter: $('#article_filter_name').val()
+    hbEditorContent = new HandlebarEditor elementId: "article_content", filter: $('#article_filter_name').val()
     $('#article_filter_name').change ->
       hbEditorSub.contentSettings $(@).val()
       hbEditorContent.contentSettings $(@).val() 
 
-  else if $("body.theme_assets #theme_asset_content").length
+  else if $("body.theme_assets #asset_content").length
     if $('li.css_asset')
-      hbEditor = new HandlebarEditor elementId: 'theme_asset_content', filter: 'css'
+      hbEditor = new HandlebarEditor elementId: 'asset_content', filter: 'css'
     else if $('li.js_asset')
-      hbEditor = new HandlebarEditor elementId: 'theme_asset_content', filter: 'javascript'
+      hbEditor = new HandlebarEditor elementId: 'asset_content', filter: 'javascript'
     
   else if $("body.pages .page_parts").length
     filters = []

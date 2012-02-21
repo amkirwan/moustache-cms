@@ -1,0 +1,8 @@
+%p.label_for.ace_label Content
+%select.line_wrap
+  = grouped_options_for_select({'Line Wrap' => ['No wrap', 'Soft wrap']})
+
+- if builder
+  %pre{:id => "#{builder.object.id}_content", :class => "page_part_content"}= builder.object.content
+- else
+  %pre#asset_content= asset

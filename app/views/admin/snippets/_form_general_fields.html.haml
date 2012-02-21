@@ -7,8 +7,7 @@
       = f.label :filter_name
       = f.collection_select :filter_name, Filter.all, :id, :name
     %li.content
-      %p.label_for Content
-      %pre#snippet_content= @snippet.content
+      = render :partial => 'shared/ace_editor', :locals => { :asset => @snippet.content, :builder => nil }
     %li.content_submit
       = f.label :content
       = f.text_area :content, :cols => "100", :class => "code"

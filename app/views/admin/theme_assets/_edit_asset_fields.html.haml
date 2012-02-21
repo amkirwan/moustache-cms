@@ -1,6 +1,5 @@
 %li{:class => "content #{class_type}"}
-  %p.label_for Content
-  %pre#theme_asset_content= @theme_asset.asset.read 
+  = render :partial => 'shared/ace_editor', :locals => { :asset => @theme_asset.asset.read, :builder => nil }
 %li.content_submit 
   = label_tag :content
   = text_area_tag :theme_asset_file_content, @theme_asset.asset.read, :class => "code"

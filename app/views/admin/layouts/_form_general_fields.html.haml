@@ -4,8 +4,7 @@
       = f.label :name, "Name<abbr title='required' class='required'>*</abbr>".html_safe
       = f.text_field :name
     %li.content
-      %p.label_for Content
-      %pre#layout_content= @layout.content
+      = render :partial => 'shared/ace_editor', :locals => { :asset => @layout.content, :builder => nil }
     %li.content_submit 
       = f.label :content
       = f.text_area :content, :class => "code"
