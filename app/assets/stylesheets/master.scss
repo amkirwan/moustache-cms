@@ -702,6 +702,16 @@ div.markItUp {
   @include rounded_corners;
   padding-bottom: 0 !important;
   margin-bottom: 1em !important;
+  p.ace_label {
+    float: left;
+    width: 30% !important;
+  }
+}
+
+.line_wrap {
+  float: right;
+  margin-bottom: 1em;
+  margin-right: calc_em(8px, 14px);
 }
 
 #snippet_content, #layout_content, #article_content, #theme_asset_content {

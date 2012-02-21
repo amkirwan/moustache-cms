@@ -12,7 +12,7 @@ $(document).ready ->
       @options = $.extend({ 
         tabSize: 2
         useWrapMode: false
-        wrapLimit: NaN
+        wrapLimit: 80
         printMargin: 80
         filter: 'html'
       }, args)
@@ -27,8 +27,7 @@ $(document).ready ->
       @editor.session.setUseSoftTabs true
       @editor.renderer.setPrintMarginColumn @options.printMargin
       @editor.renderer.setShowPrintMargin false
-      @contentSettings @options.filter
-      @hideUpdateTextarea()
+      @setupView()
 
     @modes = [  
       new Mode("css", "CSS", ace.require("ace/mode/css").Mode, ["css"]),
@@ -44,8 +43,12 @@ $(document).ready ->
 
     @editors: []
 
+    setupView:  ->
+      @contentSettings @options.filter
+      @hideUpdateTextarea()
+      @lineWrapModeChange() 
+
     contentSettings: (filterText) ->
-      @editor.getSession().setMode HandlebarEditor.modesByName[filterText].mode
       @editor.getSession().setMode HandlebarEditor.modesByName[filterText].mode
 
     # on form submit update hidden textarea with ace editor content
@@ -54,6 +57,15 @@ $(document).ready ->
       #update hidden textarea
       $('.site_prop').submit =>
         @element.parent().next().find('textarea').val @editor.getSession().getValue()
+
+    lineWrapModeChange: -> 
+      editor = @editor
+      $('.line_wrap').change ->
+        if $(@).val() == 'Soft wrap'
+          editor.getSession().setUseWrapMode true
+          editor.getSession().setWrapLimitRange @options.wrapLimit, @options.wrapLimit
+        else
+          editor.getSession().setUseWrapMode false
 
     createEditor: (elementId) ->
       @editor = ace.edit elementId
@@ -92,7 +104,7 @@ $(document).ready ->
 
     HandlebarEditor.editors = [] 
     $('.page_part_content').each (index) ->
-      editor = new HandlebarEditor  { elementId: @.id, filter: $(filters[index]).val() }
+      editor = new HandlebarEditor elementId: @.id, filter: $(filters[index]).val()
       HandlebarEditor.editors.push editor
 
     # hide all page parts that are not selected 

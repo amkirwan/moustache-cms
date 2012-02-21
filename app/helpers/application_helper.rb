@@ -45,6 +45,7 @@ module ApplicationHelper
   end
   
   def header_content(partial_name, options={}, &block)
+    options[:class_name] = nil if options[:class_name].nil?
     if options[:object].class == Symbol
       title = options[:title].nil? ? options[:object].to_s.underscore.titleize.pluralize : options[:title]
       options.merge!(:body => capture(&block), :title => title)

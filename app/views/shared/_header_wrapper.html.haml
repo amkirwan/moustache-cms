@@ -1,5 +1,10 @@
 - header_title "#{title}"
 = render :partial => "shared/flash_notice"
-#content_header_wrapper
-  %h2!= title
-  = body
+- if "#{class_name.nil?}"
+  #content_header_wrapper{ :class => "#{class_name}" }
+    %h2!= title
+    = body
+- else
+  #content_header_wrapper{ :class => "#{class_name}" }
+    %h2!= title
+    = body

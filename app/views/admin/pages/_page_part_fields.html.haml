@@ -7,7 +7,9 @@
       = builder.label :filter_name, "Filter<abbr title='required' class='required'>*</abbr>".html_safe
       = builder.collection_select :filter_name, Filter.all, :id, :name, {}, {:class => "page_part_filter"}
     %li.content
-      %p.label_for Content
+      %p.label_for.ace_label Content
+      %select.line_wrap
+        = grouped_options_for_select({'Line Wrap' => ['No wrap', 'Soft wrap']})
       %pre{:id => "#{builder.object.id}_content", :class => "page_part_content"}= builder.object.content
     %li.content_submit
       = builder.label :content, "Page Part Content<abbr title='required' class='required'>*</abbr>".html_safe 
