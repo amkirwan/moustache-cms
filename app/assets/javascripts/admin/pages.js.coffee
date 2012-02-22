@@ -132,32 +132,19 @@ $(document).ready ->
         page_part_nav_link.html old_val
         $(this).attr 'value', old_val
 
-    # index page custom confirm delete
-    $('#pages_list .delete_message').live 'ajax:beforeSend', (e) ->
-      e.stopPropagation()
-      if confirm($(@).attr('data-message'))
-        if $(@).closest('li').hasClass('child_pages')
-          if confirm('Deleteing the page ' + $(@).attr('data-title') + ' will delete the page and all child pages it is the parent of!')
-            true
-          else
-            false
-        else
-          true
-      else
-        false
-
 
     # edit page custom confirm delete
-    if $('.edit_page .delete').length
+    if $('body.pages').length
       $.rails.allowAction = (element) ->
         answer = false
+        console.log element
         message = element.data 'confirm'
         if !message
           return true
 
         if $.rails.fire(element, 'confirm') 
           answer = $.rails.confirm message
-          if answer && element.hasClass('child_pages')
+          if answer && element.hasClass('child_pages') || answer && element.parentsUntil('li').parent().hasClass('child_pages')
             answer = $.rails.confirm('Deleteing the page ' + $(@).attr('data-title') + ' will delete the page and all child pages it is the parent of!')
         answer
 

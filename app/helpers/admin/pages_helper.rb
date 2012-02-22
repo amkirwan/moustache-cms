@@ -20,7 +20,7 @@ module Admin::PagesHelper
     return if page.root?
 
     if can? :destroy, page 
-      link_to "<div class=\"delete_page\"></div>".html_safe, admin_page_path(page), :method => :delete, 'data-message' => "Are you sure you want to delete the page #{page.title}?", 'data-title' => "#{page.title}", :class => "delete delete_message", :remote => true
+      link_to "<div class=\"delete_page\"></div>".html_safe, admin_page_path(page), :method => :delete, :confirm => "Are you sure you want to delete the page #{page.title}?", 'data-title' => "#{page.title}", :class => "delete", :remote => true
     end
   end
 
