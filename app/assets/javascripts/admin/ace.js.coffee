@@ -104,7 +104,7 @@ $(document).ready ->
 
     HandlebarEditor.editors = [] 
     $('.page_part_content').each (index) ->
-      editor = new HandlebarEditor elementId: @.id, filter: $(filters[index]).val()
+      editor = new HandlebarEditor elementId: $(@).attr('id'), filter: $(filters[index]).val()
       HandlebarEditor.editors.push editor
 
     # hide all page parts that are not selected 

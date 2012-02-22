@@ -20,6 +20,15 @@ $(document).ready ->
       $(this).siblings().first().hide()      
     $('legend').each ->
       $(this).find('span').addClass('rotate-ccw')
+
+    # if this is a new page show the general field
+    $('#new_page #general_fields legend').siblings().first().show()
+    $('#new_page #general_fields legend').find('span').removeClass 'rotate-ccw'
+
+    # Show the page_parts field on edit page
+    $('fieldset.page_parts legend').siblings().first().show()
+    $('fieldset.page_parts legend').find('span').removeClass 'rotate-ccw'
+
     
     root.setSessionStore = (key, val) ->
       sessionStorage.setItem key, JSON.stringify(val)
@@ -78,9 +87,7 @@ $(document).ready ->
           pagesList.page_ids.push $(@).parent().attr('data-page_id')
         setSessionStore 'pagesState', pagesList
 
-    # Show the page_parts field on edit page
-    $('fieldset.page_parts legend').siblings().first().show()
-    $('fieldset.page_parts legend').find('span').removeClass('rotate-ccw')
+
 
     # page parts ajax spinner 
     $('ol#page_parts_nav a').on 'ajax:beforeSend', ->
@@ -125,6 +132,7 @@ $(document).ready ->
         page_part_nav_link.html old_val
         $(this).attr 'value', old_val
 
+    # index page custom confirm delete
     $('#pages_list .delete_message').live 'ajax:beforeSend', (e) ->
       e.stopPropagation()
       if confirm($(@).attr('data-message'))
@@ -139,6 +147,7 @@ $(document).ready ->
         false
 
 
+    # edit page custom confirm delete
     if $('.edit_page .delete').length
       $.rails.allowAction = (element) ->
         answer = false
@@ -152,18 +161,3 @@ $(document).ready ->
             answer = $.rails.confirm('Deleteing the page ' + $(@).attr('data-title') + ' will delete the page and all child pages it is the parent of!')
         answer
 
-###
-    $('.edit_page .delete').live 'click', (e) ->
-      if confirm($(@).attr('data-message'))
-        if $(@).closest('li').hasClass('child_pages')
-          if confirm('Deleteing the page ' + $(@).attr('data-title') + ' will delete the page and all child pages it is the parent of!')
-            true
-          else 
-            e.stopImmediatePropagation()
-            false
-        else
-          true
-      else
-        e.stopImmediatePropagation()
-        false
-###
