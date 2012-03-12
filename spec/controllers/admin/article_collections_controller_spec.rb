@@ -12,6 +12,7 @@ describe Admin::ArticleCollectionsController do
       
     before(:each) do
       ArticleCollection.stub(:accessible_by).and_return(article_collections)
+      article_collections.stub(:asc)
     end
     
     def do_get
@@ -23,7 +24,7 @@ describe Admin::ArticleCollectionsController do
       do_get
     end
     
-    it "should assign the found layouts" do
+    it "should assign the found article collection" do
       do_get
       assigns(:article_collections).should == article_collections
     end
@@ -211,9 +212,9 @@ describe Admin::ArticleCollectionsController do
         @article_collection.should_receive(:update_attributes).and_return(true)
       end
 
-      it "should redirect to the show template" do
+      it "should redirect to the index page" do
         do_put
-        response.should redirect_to("/admin/article_collections/#{@article_collection.to_param}")
+        response.should redirect_to("/admin/article_collections")
       end
     end
 

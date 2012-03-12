@@ -88,12 +88,16 @@ class Page
   end
   
   # -- Callbacks -----------------------------------------------
+  after_initialize :default_meta_tags
   before_validation :format_title, :slug_set, :full_path_set, :breadcrumb_set
   before_save :uniq_editor_ids, :strip_page_parts
   after_update :update_current_state_time
   after_save :update_user_pages
   before_destroy :destroy_children
-  after_initialize :default_meta_tags
+
+  # -- Scopes ----------------------------------------------------------
+  scope :published, :where => { "current_state.name" => "published" }
+  scope :all_from_current_site, lambda { |current_site| { :where => { :site_id => current_site.id }} }
   
   # -- Class Mehtods --------------------------------------------------
   def self.find_by_id(page_id)
@@ -111,11 +115,6 @@ class Page
   def self.find_by_slug(slug)
     self.where(:slug => slug).first
   end
-  
-  # -- Scopes ----------------------------------------------------------
-  scope :published, :where => { "current_state.name" => "published" }
-  scope :all_from_current_site, lambda { |current_site| { :where => { :site_id => current_site.id }} }
-
 
   # -- Accepts_nested -----
   def current_state_attributes=(attributes)
@@ -160,19 +159,21 @@ class Page
     
     # slug is "foobar" in http://example.com/10/02/2011/foobar
     def slug_set
-      if self.site_id.nil?
-        self.slug = ""
-      elsif self.title == "404"
-        self.slug = "404"
-      elsif self.root?
-        self.slug = "/"
-        self.parent = nil
-      elsif self.slug.blank?
-        self.slug = self.title.gsub('_', '-')
-        self.slug = self.slug.parameterize
-      else
-        self.slug = self.title.gsub('_', '-')
-        self.slug = self.slug.parameterize
+      unless self.title.nil?
+        if self.site_id.nil?
+          self.slug = ""
+        elsif self.title == "404"
+          self.slug = "404"
+        elsif self.root?
+          self.slug = "/"
+          self.parent = nil
+        elsif self.slug.blank?
+          self.slug = self.title.gsub('_', '-')
+          self.slug = self.slug.parameterize
+        else
+          self.slug = self.slug.gsub('_', '-')
+          self.slug = self.slug.parameterize
+        end
       end
     end
   

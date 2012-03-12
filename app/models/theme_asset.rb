@@ -2,6 +2,8 @@ class ThemeAsset
   include Mongoid::Document
   include Mongoid::Timestamps
 
+  include HandlebarCms::CalcMd5
+
   attr_accessible :name, 
                   :description, 
                   :content_type,
@@ -10,8 +12,8 @@ class ThemeAsset
                   :file_size,
                   :asset,
                   :theme_asset_attributes,
-                  :tag_attrs_attributes
-  
+                  :custom_fields_attributes
+
   # -- Fields --------------- 
   field :name
   field :description
@@ -21,17 +23,12 @@ class ThemeAsset
   field :file_size, :type => Integer 
   field :creator_id
   field :updator_id
-  field :filename_md5
-  field :file_path_md5
-  field :file_path_md5_old
-  field :url_md5
   mount_uploader :asset, ThemeAssetUploader
    
   # -- Associations ----------
   embedded_in :article_collection  
-  embeds_many :tag_attrs, :as => :tag_attrable
-
-  accepts_nested_attributes_for :tag_attrs
+  embeds_many :custom_fields, :as => :custom_fieldable
+  accepts_nested_attributes_for :custom_fields
 
   # -- Validations --------------
   validates :name, :presence => true 
@@ -39,17 +36,18 @@ class ThemeAsset
   
   # -- Callbacks
   before_validation :set_name
-  before_save :update_asset_attributes, :calc_md5
+  before_save :update_asset_attributes
   before_update :recreate
-  before_destroy :destroy_md5
 
   def set_name
-    if self.name.strip.empty?
-      name_split = self.asset.file.filename.split('.')
-      self.name = name_split.slice(0, name_split.length - 1).join('.')
+    unless self.name.nil?
+      if self.name.strip.empty?
+        name_split = self.asset.file.filename.split('.')
+        self.name = name_split.slice(0, name_split.length - 1).join('.')
+      end
     end
   end
-    
+
   def recreate
     self.asset.recreate_versions!
   end
@@ -59,24 +57,13 @@ class ThemeAsset
     self.file_size = asset.file.size 
   end
 
-  def calc_md5
-    if self.new_record?
-      chunk = self.asset.read
-      md5 = ::Digest::MD5.hexdigest(chunk)
-      self.filename_md5 = "#{self.name.split('.').first}-#{md5}.#{self.asset.file.extension}"
-      self.file_path_md5 = File.join(Rails.root, 'public', self.asset.store_dir, '/', self.filename_md5)
-      self.url_md5 = "/#{self.asset.store_dir}/#{self.filename_md5}"
-      FileUtils.mkdir_p File.join(Rails.root, 'public', self.asset.store_dir)
-      File.open(self.file_path_md5, 'wb') { |f| f.write(chunk) }
-    end
-  end
-  
-  # -- Class Methods --------
+    # -- Class Methods --------
   scope :css_files, lambda { { :where => { :content_type => "text/css" }} }
   scope :js_files, lambda { { :where => { :content_type => "application/x-javascript" }} }
-  scope :images, lambda { { :where => { :content_type => /^image/i }} }
-  scope :find_by_name, lambda { |name| { :where => { :name => name }} }
+  scope :images, lambda { { :where => { :content_type => /^image\/*/i }} }
+  scope :other_files, lambda { { :where => { :content_type => {"$nin" => ['text/css', 'application/x-javascript', 'image/jpg', 'image/jpeg', 'image/gif', 'image/png', 'image/vnd.microsoft.icon'] } } }}
 
+  scope :find_by_name, lambda { |name| { :where => { :name => name }} }
 
   def self.find_by_content_type_and_site_id(opts={})
     [:content_type, :site].inject(scoped) do |combined_scope, attr| 
@@ -84,11 +71,10 @@ class ThemeAsset
     end
   end
 
-
-  def self.other_files(site)
-    ThemeCollection.criteria.for_ids(site.id).where("theme_assets.content_type" => {"$nin" => ['text/css', 'text/javascript', /^image/i]}).asc(:name).to_a
+  def other_files
+    self.not_in(:content_type => ['text/css', 'application/x-javascript'])
   end
-  
+
   # -- Instance Methods ----------
   %w{image stylesheet javascript}.each do |type|
     define_method("#{type}?") do
@@ -112,15 +98,4 @@ class ThemeAsset
     end 
   end
 
-  def destroy_md5
-    if self.respond_to?(:file_path_md5)
-      if File.exists?(self.file_path_md5)
-        File.delete(self.file_path_md5)
-      end
-    end
-  end
-
 end
-
-
-

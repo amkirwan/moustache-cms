@@ -1,8 +1,0 @@
-= fields_for record_object do |record|
-  = record.fields_for(:tag_attrs, @tag_attr) do |builder|
-    %li{:class => "inline tag_attr"}
-      = builder.label :name
-      = builder.text_field :name
-      = builder.label :value
-      = builder.text_field :value
-      %span{ :class => "fake_link delete_new_tag_attr"} Delete

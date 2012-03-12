@@ -12,7 +12,7 @@ describe Admin::SiteAssetsController do
   end
 
   # -- GET Index ----------------------------------------------- 
-  describe "GET show" do
+  describe "GET index" do
 
     before(:each) do
       @asset_collection.stub_chain(:site_assets, :find).and_return(@site_asset)

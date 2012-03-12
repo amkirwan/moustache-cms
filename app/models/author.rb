@@ -2,6 +2,8 @@ class Author
   include Mongoid::Document 
   include Mongoid::Timestamps
 
+  include HandlebarCms::CalcMd5
+
   attr_accessible :prefix,
                   :firstname,
                   :middlename,
@@ -15,10 +17,6 @@ class Author
   field :middlename
   field :lastname
   field :profile
-  field :filename_md5
-  field :file_path_md5
-  field :file_path_md5_old
-  field :url_md5
   mount_uploader :image, AuthorUploader
 
   # -- Associations ---
@@ -27,8 +25,16 @@ class Author
   belongs_to :updated_by, :class_name => "User"
   has_and_belongs_to_many :articles
 
+  # -- Validations ----
+  validates :firstname,
+            :presence => true
+
+  validates :lastname,
+            :presence => true
+
+
   # -- Callbacks ---
-  before_save :strip_whitespace, :calc_md5
+  before_save :strip_whitespace
 
   def full_name
     if self.middlename.empty?
@@ -48,21 +54,6 @@ class Author
       FileUtils.mkdir_p File.join(Rails.root, 'public', self.image.store_dir)
       File.open(self.file_path_md5, 'wb') { |f| f.write(chunk) }
     end
-  end
-
-
-  def articles
-    collection = ArticleCollection.where(:site_id => site.id)
-    articles = []
-    collection.each do |ac|
-      ac.articles.each do |article|
-        art = article.where(:article_ids => self.id).first
-        unless art.nil? 
-          articles << art
-        end
-      end
-    end
-    articles  
   end
 
   private 

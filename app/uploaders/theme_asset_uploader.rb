@@ -7,7 +7,11 @@ class ThemeAssetUploader < CarrierWave::Uploader::Base
   storage :file
 
   def store_dir
-    "theme_assets/#{model._parent.site_id}/#{model._parent.name}/#{asset_type(model.asset_identifier)}"
+    if model.new_record?
+      "theme_assets/#{model._parent.site_id}/#{model._parent.name}/#{asset_type(model.asset.identifier)}" 
+    else 
+      "theme_assets/#{model._parent.site_id}/#{model._parent.name}/#{asset_type(model.asset_identifier)}" 
+    end
   end
   
   before :store, :remember_cache_id

@@ -36,7 +36,7 @@ describe AuthorUploader do
   end                   
   
   it "should change the uploaded filename to the name of the full_name of the author" do
-    @uploader.filename.should =~  /^anthony-kirwan-(.*).png$/
+    @uploader.filename.should ==  "anthony-kirwan.png"
   end
   
   it "should white list these extenstiosn" do
@@ -50,7 +50,7 @@ describe AuthorUploader do
   describe "storeage paths" do
     
     it "should set the storage directory to image for image files" do
-      @uploader.store_dir.should == "sites/#{@uploader.model.site_id}/#{@uploader.model.class.to_s.underscore}"
+      @uploader.store_dir.should == "authors/#{@uploader.model.site_id}"
     end
   end
 end

@@ -56,24 +56,24 @@ describe Site do
       @site.should have_many(:asset_collections).with_dependent(:destroy)
     end 
     
-    it "should have many theme_assets" do
-      @site.should have_many(:theme_assets).with_dependent(:destroy)
-    end
-
     it "should have many snippets" do
       @site.should have_many(:snippets).with_dependent(:destroy)
-    end
-
-    it "should embed many meta_tags" do
-      @site.should embed_many :meta_tags
     end
 
     it "should have many authors" do
       @site.should have_many(:authors).with_dependent(:destroy)
     end
 
+    it "should have many article collections" do
+      @site.should have_many(:article_collections).with_dependent(:destroy)
+    end
+
     it "should have many articles" do
       @site.should have_many(:articles).with_dependent(:destroy)
+    end
+
+    it "should embed many meta_tags" do
+      @site.should embed_many :meta_tags
     end
   end
   
@@ -138,29 +138,48 @@ describe Site do
     
     describe "#css_files" do
       it "should return all the css files for the site" do
-        theme_asset_csses = [Factory(:theme_asset, :site => @site, :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css")]
-        @site.css_files.should == theme_asset_csses
+        theme_collection = Factory(:theme_collection, :site => @site)
+        theme_collection.theme_assets << theme_asset_css = Factory.build(:theme_asset, :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css")
+        @site.css_files.should == [theme_asset_css]
       end
     end
 
-    describe "#articles_by_name" do
-      it "should returna llthe articles for the given article collection" do
-        article_collection = Factory(:article_collection, :site => @site, :name => "news", :articles => [Factory.build(:article)])
+    describe "#css_file_by_name(theme_name, name)" do
+      it "should return the css file by the given name" do
+        theme_collection = Factory(:theme_collection, :name => 'baz', :site => @site)
+        theme_collection.theme_assets << theme_asset_css = Factory.build(:theme_asset, :name => 'foobar', :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css")
+        @site.css_file_by_name("baz", "foobar").should == theme_asset_css
+      end
+    end   
+
+    describe "#js_file_by_name(theme_name, name)" do
+      it "should return the css file by the given name" do
+        theme_collection = Factory(:theme_collection, :name => 'baz', :site => @site)
+        theme_collection.theme_assets << theme_asset_js = Factory.build(:theme_asset, :name => 'foobar', :asset => AssetFixtureHelper.open("theme_js.js"), :content_type => "application/x-javascript")
+        @site.js_file_by_name("baz", "foobar").should == theme_asset_js
+      end
+    end   
+
+    describe "#articles_by_name(name)" do
+      it "should return all the articles for the given article collection" do
+        article_collection = Factory(:article_collection, :site => @site, :name => "news")
+        article_collection.articles << Factory.build(:article)
         @site.articles_by_name('news').should == article_collection.articles
       end
     end
-    
-    describe "#css_file_by_name(name)" do
-      it "should return the css file by the given name" do
-        theme_asset_css = Factory(:theme_asset, :name => "foobar", :site => @site, :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css")
-        @site.css_file_by_name("foobar").should == theme_asset_css
-      end
-    end   
     
     describe "#snippets_by_name(name)" do
       it "should return the snippet by the given name" do
         snippet = Factory(:snippet, :name => "foobar", :site_id => @site.id)    
         @site.snippet_by_name("foobar").should == snippet
+      end
+    end
+
+    describe "#site_assets_by_name(asset_collection, file_name)" do
+      it "should return the site asset by name" do
+        asset_collection = Factory(:asset_collection, :name => 'baz', :site => @site)  
+        asset_collection.site_assets << asset = Factory.build(:site_asset, :name => 'foobar')
+        @site.site_asset_by_name('baz', 'foobar').should == asset
       end
     end
   end

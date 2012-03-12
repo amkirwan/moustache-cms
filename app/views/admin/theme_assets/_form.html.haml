@@ -4,6 +4,6 @@
   %ol.form_fields
     = render :partial => 'form_general_fields', :locals => { :f => f }
     = render :partial => 'theme_asset_type', :locals => { :f => f }
-    = render :partial => 'form_tag_attrs', :object => f
+    = render :partial => 'form_custom_fields', :locals => { :f => f }
     = render :partial => 'form_submit', :locals => { :f => f, :button_label => button_label }
 

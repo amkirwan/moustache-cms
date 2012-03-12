@@ -28,6 +28,23 @@ describe Author do
 
   end
 
+  # -- Validations  -----------------------------------------------
+  describe "validations" do
+    it "should be valid" do
+      @author.should be_valid    
+    end
+
+    it "should not be valid without a firstname" do
+      @author.firstname = nil
+      @author.should_not be_valid 
+    end
+
+    it "should not be valid without a lastname" do
+      @author.lastname = nil
+      @author.should_not be_valid
+    end
+  end
+
   # -- Before Save ---
   describe "Before Save" do
     it "should remove any extra white space" do
@@ -45,19 +62,11 @@ describe Author do
       end
     end
 
-    describe "#articles" do
-      it "should return all the articles the author has created" do
-        article = Factory.build(:article, :authors => [user])
-        article_collection = Factory(:article_collection, :site => site, :articles => [article])
-        puts "*"*10 + "#{@author.articles}"
-        @author.articles.first.should == article 
-      end
-
-      it "should return no artilces for the author if none have been created by the author" do
-        @author.articles.should be_empty
+    describe "#md5" do
+      it "should calculate an md5 for the author image" do
+        pending "calculated in lib/calc_md5 this version just changes the path for the author image"
       end
     end
+
   end
-
-
 end

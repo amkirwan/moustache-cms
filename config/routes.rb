@@ -13,9 +13,8 @@ HandlebarCms::Application.routes.draw do
     resources :pages do 
       put :sort, :on => :member
       get :new_meta_tag, :on => :collection
-      get :new_custom_field, :on => :collection
       resources :meta_tags, :except => [:index, :show] 
-      resources :custom_fields, :except => [:index, :show]
+      resources :custom_fields, :only => [:new, :destroy]
       resources :page_parts, :except => [:index, :new, :update] 
     end
 
@@ -31,8 +30,8 @@ HandlebarCms::Application.routes.draw do
     match 'articles/new_meta_tag' => 'articles#new_meta_tag', :as => 'articles_new_meta_tag'
 
     resources :theme_collections do
-      resources :theme_assets do 
-        resources :tag_attrs
+      resources :theme_assets do
+        resources :custom_fields, :only => [:new, :destroy]
       end
     end
 

@@ -11,7 +11,6 @@ describe Admin::MetaTagsController do
     Page.stub(:find).and_return(@page)
   end
 
-
   # -- Get New ----
   describe "GET /new" do
 

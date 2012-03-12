@@ -156,15 +156,7 @@ describe User do
     it "should reference many pages updated" do
       @user.should have_many(:pages_updated).of_type(Page)
     end
-
-    it "should reference many theme_assets created" do
-      @user.should have_many(:theme_assets_created).of_type(ThemeAsset)
-    end
-    
-    it "should reference many theme_assets updated" do
-      @user.should have_many(:theme_assets_updated).of_type(ThemeAsset)
-    end        
-    
+ 
     it "should reference many snippets created" do
       @user.should have_many(:snippets_created).of_type(Snippet)
     end
@@ -271,13 +263,13 @@ describe User do
 
       describe "#articles_created" do
         it "should return all the articles the user has created" do
-          article = Factory.build(:article, :created_by => @user)
-          article_collection = Factory(:article_collection, :site => site, :articles => [article])
-          @user.articles_created.first.should == article
+          article_collection = Factory(:article_collection, :site => site)
+          article_collection.articles << Factory.build(:article, :created_by => @user)
+          @user.articles_created.count.should == 1
         end
 
         it "should return empty articles_created if the user has not created articles" do
-          @auser.articles_created.should== article
+          @user.articles_created.should == []
         end
       end
     end

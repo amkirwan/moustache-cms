@@ -13,10 +13,11 @@ describe Admin::PagesController do
       get :index
     end
     
-    let(:pages) { [mock_model("Pages"), mock_model("Pages")] }
+    let(:pages) { [mock_model(Page), mock_model(Page)] }
     
     before(:each) do
       Page.stub(:accessible_by).and_return(pages)
+      controller.stub(:root_pages)
     end
     
     it "should receive accessible_by" do
@@ -35,6 +36,22 @@ describe Admin::PagesController do
     end
   end
   
+  # -- GET show --------------
+  describe "GET show" do
+    before(:each) do
+      Page.stub(:find).and_return(@page)
+    end
+
+    def do_get
+      get :show, :id => @page.to_param
+    end
+
+    it "should assign @page" do
+      do_get
+      assigns[:page].should == @page
+    end
+  end
+
   # -- GET New ----------------------------------------------- 
   describe "GET new" do
     
@@ -42,7 +59,7 @@ describe Admin::PagesController do
       @page.as_new_record
       page_part = mock_model("PagePart", :name => "content")
       @page.stub_chain(:page_parts, :build)
-      @page.stub_chain(:page_parts, :first).and_return(page_part.as_null_object)
+      @page.stub_chain(:page_parts, :first).and_return(page_part)
       Page.stub(:new).and_return(@page)
     end
     
@@ -69,10 +86,15 @@ describe Admin::PagesController do
       @page.should_receive(:build_current_state)
       do_get
     end
-    
+
     it "should build a neste page_parts" do
       @page.should_receive(:page_parts)
       do_get
+    end
+
+    it "should assign the selected page part" do
+      do_get
+      assigns[:selected_page_part].should_not be_nil
     end
     
     it "should render new template for page" do
@@ -80,32 +102,15 @@ describe Admin::PagesController do
       response.should render_template("admin/pages/new")
     end   
   end
-  
+
   # -- Post Create ----------------------------------------------- 
   describe "POST create" do
-    let(:page_type) { mock_model("PageType") }
-    let(:status) { mock_model("CurrentStatus") }
-    let(:filter) { mock_model("Filter", :name => "foobar") }
-    let(:layout) { mock_model("Layout") }
-    let(:page_parts) { [ mock_model("PagePart") ] }
-    let(:params) {{ "page" => { 
-                    "parent_id" => "4d922d505dfe2f082e00006e",
-                    "name" => "foobar",
-                    "title" => "foobar", 
-                    "filter" => { "name" => filter.name }, 
-                    "meta_data" => { "title" => "foobar", "keywords" => "foobar, keywords", "description" => "foobar description"},
-                    "page_type_attributes"=> { "id" => page_type.to_param },
-                    "current_state_attributes"=> { "id"=> status.to_param }, 
-                    "editor_ids"=>["#{@admin_user.to_param}"],
-                    "layout_id" => layout.to_param,
-                    "page_parts_attributes" => { "0" => { "name" => "content", "content" => "Hello, World" }}} }}
+
+    let(:params) {{ "id" => @page.to_param, "page" => { "name" => "foobar" } }}
     
     before(:each) do
-      @parent_mock = mock_model("Page", :id => "4d922d505dfe2f082e00006e")
-      Page.stub(:find).and_return(@parent_mock)
-      User.stub(:find).and_return(@admin_user)
-      CurrentState.stub(:find).and_return(status)
-      Filter.stub(:find).and_return(filter)
+      @parent_mock = mock_model("Page", :id => '1')
+      Page.stub_chain(:where, :find).and_return(@parent_mock)
       Page.stub(:new).with(params["page"]).and_return(@page)
     end
     
@@ -138,6 +143,11 @@ describe Admin::PagesController do
         @page.should_receive(:save).and_return(true)
         do_post
       end
+
+      it "should set the cookies" do
+        controller.should_receive(:set_page_cookies)
+        do_post
+      end
       
       it "should create a flash message that the page was saved" do
         do_post
@@ -156,7 +166,7 @@ describe Admin::PagesController do
       end     
     end
     
-    context "when the page failes to save" do
+    context "when the page fails to save" do
       before(:each) do
         @page.stub(:save).and_return(false)
         @page.stub(:errors => { :page => "page errors" })
@@ -174,9 +184,9 @@ describe Admin::PagesController do
     end 
   end
   
-  # -- GETE edit ----------------------------------------------- 
+  # -- GET edit ----------------------------------------------- 
   describe "GET edit" do
-    let(:params) {{ "id" => @page.to_param, :view => "#{@page.page_parts.first.name}" }}
+    let(:params) {{ "id" => @page.to_param }}
     
     before(:each) do
       Page.stub(:find).and_return(@page)
@@ -196,13 +206,14 @@ describe Admin::PagesController do
       assigns(:page).should == @page
     end
 
-    it "should receive parent page" do
-      controller.should_receive(:parent_page)
+    it "should receive selected_part" do
+      controller.should_receive(:selected_page_part)
       do_get
     end
 
-    it "should receive selected_part" do
-      controller.should_receive(:selected_page_part)
+
+    it "should receive parent page" do
+      controller.should_receive(:parent_page)
       do_get
     end
 
@@ -219,31 +230,16 @@ describe Admin::PagesController do
   
   # -- Puts Update ----------------------------------------------- 
   describe "PUTS update" do
-    let(:page_type) { mock_model("PageType") }
-    let(:status) { mock_model("CurrentStatus").as_null_object }
-    let(:filter) { mock_model("Filter", :name => "foobar") }
-    let(:layout) { mock_model("Layout") }
-    let(:page_parts) { [ mock_model("PagePart") ] }
-    let(:params) {{ "id" => @page.to_param,
-                    "page" => { 
-                    "parent_id" => "4d922d505dfe2f082e00006e",
-                    "name" => "foobar",
-                    "title" => "foobar", 
-                    "page_type_attributes"=> { "id" => page_type.to_param },
-                    "current_state_attributes"=> { "id"=> status.to_param }, 
-                    "editor_ids"=>[ @admin_user.to_param ], 
-                    "layout_id" => layout.to_param,
-                    "page_parts_attributes" => { "0" => { "name" => "content", "content" => "Hello, World", "filter_name" => filter.name }}} }}
-    
-    before(:each) do
-      @parent_mock = mock_model("Page", :id => "4d922d505dfe2f082e00006e")
-      CurrentState.stub(:find_by_name).and_return(status)
-      Page.stub(:find).and_return(@page)
-    end 
-    
+    let(:params) {{ "id" => @page.to_param, "page" => { "name" => "foobar" } }}
+
     def do_puts(puts_params=params)
        put :update, puts_params
     end
+    
+    before(:each) do
+      @parent_mock = mock_model("Page", :id => '1')
+      Page.stub(:find).and_return(@page)
+    end 
     
     it "should find the record to update with Page#find" do
       Page.should_receive(:find).with(params["id"]).and_return(@page)
@@ -253,6 +249,11 @@ describe Admin::PagesController do
     it "should assign @page for the view" do
       do_puts
       assigns(:page).should == @page
+    end
+
+    it "should assign page title was" do
+      do_puts
+      assigns[:page_title_was].should_not be_nil
     end
     
     context "with valid params" do

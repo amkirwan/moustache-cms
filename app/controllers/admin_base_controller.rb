@@ -26,33 +26,6 @@ class AdminBaseController < ApplicationController
       obj.updated_by_id = current_admin_user.id
     end
   
-    def assign_site
-      hostname = HandlebarCms::Application.config.domain.downcase
-    
-      if hostname.nil?
-        flash[:error] = "No hostname defined"
-        return redirect_to(admin_pages_path)
-      else
-        if Site.count == 0
-          @default_site = Site.create(:name => "Default Site", :hostname => hostname)
-        elsif Site.count == 1
-          @default_site = Site.where(:hostname => hostname).first
-        end
-      end
-    
-      unless @default_site
-        flash[:error] = "No site defined for that hostname"
-      end
-    end
-    
-    def current_site
-      @current_site ||= Site.match_domain(request.host.downcase).first
-      if @current_site.nil?
-        render :file => "#{Rails.root}/public/404.html", :status => 404
-      end
-      @current_site
-    end
-    
     def logout
       reset_session
       cookies.to_hash.each_key do |k| 
@@ -68,21 +41,9 @@ class AdminBaseController < ApplicationController
 
     
   private
-    def fake_login
-      if Rails.env == "test"   
-        session[:cas_user] = CASClient::Frameworks::Rails::Filter.fake_user if session[:cas_user].nil?
-      elsif Rails.env == 'development'
-        CASClient::Frameworks::Rails::Filter.fake("ak730")
-        #CASClient::Frameworks::Rails::Filter.fake("cds27")
-        #session[:cas_user] = 'ak730' if session[:cas_user].nil?
-        #session[:cas_user] = 'jb509' if session[:cas_user].nil?
-        #session[:cas_user] = 'mac0' if session[:cas_user].nil?
-        #session[:cas_user] = 'mas3' if session[:cas_user].nil?
-      end
-    end
 
     def redirector_path(object)
-     params[:commit] == "Save and Continue Editing" ? [:edit, :admin, object] : [:admin, object.class.name.pluralize.downcase.to_sym]
+     params[:commit] == "Save and Continue Editing" ? [:edit, :admin, object] : [:admin, object.class.name.tableize.to_sym]
     end
     
     def redirector(path_continue, path_redirect, notice=nil)

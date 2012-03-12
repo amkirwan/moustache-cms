@@ -96,7 +96,6 @@ Factory.define :page do |page|
   page.layout { Factory.build(:layout) }
   page.current_state { Factory.build(:current_state) }
   page.editors {[ Factory.build(:user) ]}
-  page.post_container false
   page.tags "page"
   page.meta_tags { meta_tags('page') }
   page.page_parts {[ Factory.build(:page_part) ]}
@@ -152,6 +151,7 @@ Factory.define :article do |article|
 end
 
 Factory.define :asset_collection do |collection|
+  collection.site { Factory.build(:site) }
   collection.sequence(:name) { |n| "name_#{n}" }
   collection.site_assets { [ Factory.build(:site_asset) ] }
   collection.created_by_id { Factory.build(:user).id }
@@ -167,16 +167,9 @@ Factory.define :site_asset do |asset|
   asset.file_size 200
 end
 
-Factory.define :tag_attr do |tag|
+Factory.define :custom_field do |tag|
   tag.sequence(:name) { |n| "name_#{n}" }
-  tag.value "tag attribute value"
-end
-
-Factory.define :theme_collection do |collection|
-  collection.sequence(:name) { |n| "name_#{n}" }
-  collection.theme_assets { [ Factory.build(:theme_asset) ] }
-  collection.created_by_id { Factory.build(:user).id }
-  collection.updated_by_id { Factory.build(:user).id }
+  tag.content "tag attribute value"
 end
 
 Factory.define :theme_asset do |asset| 
@@ -186,7 +179,14 @@ Factory.define :theme_asset do |asset|
   asset.width 200
   asset.height 200
   asset.file_size 200
-  asset.tag_attrs { [ Factory.build(:tag_attr) ] }
-  asset.created_by_id { Factory.build(:user).id }
-  asset.updated_by_id { Factory.build(:user).id }
+  asset.creator_id { Factory.build(:user).id }
+  asset.updator_id { Factory.build(:user).id }
+end
+
+Factory.define :theme_collection do |collection|
+  collection.site { Factory.build(:site) }
+  collection.sequence(:name) { |n| "name_#{n}" }
+  collection.theme_assets { [ Factory.build(:theme_asset) ] }
+  collection.created_by_id { Factory.build(:user).id }
+  collection.updated_by_id { Factory.build(:user).id }
 end

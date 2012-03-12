@@ -22,6 +22,7 @@ class Site
   has_many :authors, :dependent => :destroy
   has_many :article_collections, :dependent => :destroy
   has_many :articles, :dependent => :destroy
+  has_many :theme_collections, :dependent => :destroy
     
   accepts_nested_attributes_for :meta_tags
 
@@ -78,7 +79,11 @@ class Site
   end
   
   def css_files        
-    theme_assets.css_files(self)
+    css_files = []
+    self.theme_collections.each do |tc|
+      css_files << tc.theme_assets.css_files.to_a
+    end
+    css_files.flatten
   end
   
   def css_file_by_name(theme_name, css_name)
@@ -91,12 +96,12 @@ class Site
     theme_collection.theme_assets.where(:name => js_name, :content_type => 'application/x-javascript').first
   end 
   
+  def articles_by_name(name)
+    self.article_collections(:name => name.to_s).first.articles
+  end
+  
   def snippet_by_name(name)                        
     Snippet.find_by_site_and_name(self, name.to_s).first
-  end
-
-  def articles_by_name(name)
-    article_collections(:name => name.to_s).first.articles
   end
 
   def site_asset_by_name(asset_collection, file_name)

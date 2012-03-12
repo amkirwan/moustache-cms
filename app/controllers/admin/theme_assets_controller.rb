@@ -1,7 +1,7 @@
 class Admin::ThemeAssetsController < AdminBaseController
   include HandlebarCms::AssetCache  
   
-  load_and_authorize_resource :theme_collection
+  load_resource :theme_collection
   load_and_authorize_resource :theme_asset, :through => :theme_collection  
 
   respond_to :html, :xml, :json
@@ -16,7 +16,6 @@ class Admin::ThemeAssetsController < AdminBaseController
 
   # GET /admin/theme_assets/new 
   def new
-    @theme_asset.tag_attrs.build
     respond_with(:admin, @theme_collection, @theme_asset) 
   end
     

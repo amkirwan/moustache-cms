@@ -73,9 +73,8 @@ module HandlebarCms
         end
 
         def set_link_attributes(attributes, file)
-          attributes.each_key do |k|
-            attr = file.tag_attrs.where('name' => k).first
-            attributes[k] = attr.value unless attr.nil?
+          file.custom_fields.each do |field|
+            attributes[field.name] = field.content
           end
         end
 
@@ -85,7 +84,7 @@ module HandlebarCms
         
         def meta_tag_name(name)
           meta_tag = @page.meta_tags.where(:name => name).first
-          meta_tag = @current_site.meta_tags.where(:name => name).first if meta_tag.nil?
+          meta_tag = @current_site.meta_tags.where(:name => name).first if meta_tag.nil? || meta_tag.content.empty?
           meta_tag = "" if meta_tag.nil?
           meta_tag
         end

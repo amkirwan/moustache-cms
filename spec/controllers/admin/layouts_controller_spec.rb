@@ -76,24 +76,24 @@ describe Admin::LayoutsController do
       Layout.should_receive(:new).with(params["layout"]).and_return(@layout)
       do_post
     end
+
+    it "should assign created_by and updated by to the current user" do
+      controller.should_receive(:created_updated_by_for).with(@layout)
+      do_post
+    end
     
     it "should assign @layout for the view" do
       do_post
       assigns(:layout).should == @layout
     end
     
-    it "should assign created_by and updated by to the current user" do
-      controller.should_receive(:created_updated_by_for).with(@layout)
-      do_post
-    end
-    
     it "should assign the current_site" do
-      @layout.should_receive(:site=)
+      @layout.should_receive(:site=).with(@site)
       do_post
     end
     
     context "when it saves the layout successfully" do
-      it "should receive save the layout" do
+      it "should save the layout" do
         @layout.should_receive(:save).and_return(true)
         do_post
       end

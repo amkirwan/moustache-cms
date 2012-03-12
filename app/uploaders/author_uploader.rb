@@ -36,6 +36,9 @@ class AuthorUploader < CarrierWave::Uploader::Base
    end
     
   # Override the filename of the uploaded files:
+  def filename
+    @name ||= "#{model.firstname.parameterize}-#{model.lastname.parameterize}.#{model.image.file.extension}"
+  end
 
    def image?(sanitized_file)    
      types = mime_types(sanitized_file)

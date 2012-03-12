@@ -6,7 +6,7 @@ class Admin::PagesController < AdminBaseController
 
   before_filter :remove_selected_page_part, :except => :edit
 
-  respond_to :html, :except => [:show, :sort, :new_meta_tag, :update]
+  respond_to :html, :except => [:show, :sort, :new_meta_tag, :new_custom_field]
   respond_to :xml, :json
   respond_to :js, :only => [:show, :edit, :destroy, :sort, :new_meta_tag, :new_custom_field]
 
@@ -105,8 +105,6 @@ class Admin::PagesController < AdminBaseController
         @page = Page.where(:site_id => current_site.id).first
       end
     end
-
-
 
     def selected_page_part
       return @selected_page_part = @page.page_parts.first if session[:selected_page_part_id].nil? || session[:selected_page_part_id].empty?

@@ -1,6 +1,5 @@
 module LoginHelpers  
 
-  
   def stub_current_admin_user(user)
     User.stub(:where).and_return(users = [user])
     users.stub(:first).and_return(user)
@@ -21,24 +20,30 @@ module LoginHelpers
   end             
 
   def login_editor
-    @editor_user = Factory(:editor)
-    @site = Factory(:site, :users => [@editor_user])
-    controller.stub(:current_site).and_return(@site)
-    sign_in @admin_user
+    @current_site = @site = mock_model(Site, :id => "1").as_null_object
+    @current_admin_user = @editor_user = Factory(:editor, :site_id => @site.id)
+    #controller.stub(:current_site).and_return(@site)
+    stub_current_site(@site)
+    sign_in @editor_user
+    @editor_user
   end
 
   def login_designer
-    @designer_user = Factory(:designer)
-    @site = Factory(:site, :users => [@designer_user])
-    controller.stub(:current_site).and_return(@site)
-    sign_in @admin_user
+    @current_site = @site = mock_model(Site, :id => "1").as_null_object
+    @current_admin_user = @designer_user = Factory(:designer, :site_id => @site.id)
+    #controller.stub(:current_site).and_return(@site)
+    stub_current_site(@site)
+    sign_in @designer_user
+    @designer_user
   end
 
   def login_admin
-    @site = mock_model(Site, :id => "1").as_null_object
-    @admin_user = Factory(:admin, :site_id => @site.id)
-    controller.stub(:current_site).and_return(@site)
+    @current_site = @site = mock_model(Site, :id => "1").as_null_object
+    @current_admin_user = @admin_user = Factory(:admin, :site_id => @site.id)
+    #controller.stub(:current_site).and_return(@site)
+    stub_current_site(@site)
     sign_in @admin_user
+    @admin_user
   end
 
 end

@@ -10,8 +10,8 @@ describe SiteAsset do
   end
 
   before(:each) do
-    @site_asset = Factory.build(:site_asset, :asset => AssetFixtureHelper.open("rails.png"), :content_type => "image/png")
-    @ac = Factory(:asset_collection, :site => site, :site_assets => [@site_asset], :created_by => user, :updated_by => user)
+    @ac = Factory(:asset_collection, :site => site, :created_by => user, :updated_by => user)
+    @ac.site_assets << @site_asset = Factory.build(:site_asset, :asset => AssetFixtureHelper.open("rails.png"), :content_type => "image/png")
   end
   
   describe "it should allow mass assignment of the fields" do
@@ -35,10 +35,10 @@ describe SiteAsset do
   end   
   
   # -- Callbacks -----------
-  describe "before_save" do
+  context "before_save" do
     describe "#update_asset_attributes" do
       it "should set the size of the file" do
-        @site_asset.file_size.should == 200
+        @site_asset.file_size.should == AssetFixtureHelper.open('rails.png').size
       end  
       
       it "should set the file content_type" do   
@@ -46,16 +46,15 @@ describe SiteAsset do
       end
     end
   end
-    
-  describe "before_update" do
-    describe "#recreate" do
 
+  context "before_update" do
+    describe "#recreate" do
       it "should update the filename and recreate version when a new name is given" do
-        @ac.site_assets.first.update_attributes(:name => "new_name")
-        site_asset = @ac.site_assets.first
+        @ac.site_assets.last.update_attributes(:name => "new_name")
+        #site_asset = @ac.site_assets.first
+        site_asset = AssetCollection.first.site_assets.where(:name => 'new_name').first
         
         site_asset.asset.filename.should == "new_name.png"
-        site_asset.asset.url.should =~ /new_name.png/
       end  
     end
   end
@@ -68,7 +67,7 @@ describe SiteAsset do
    end 
    
    # -- Instance Methods ----------
-   describe "Instance Methods" do
+   context "Instance Methods" do
      describe "#image?" do
        it "should return true that the site_asset is an image" do
          @site_asset.should be_image
@@ -80,4 +79,5 @@ describe SiteAsset do
        end  
      end
    end
+
 end

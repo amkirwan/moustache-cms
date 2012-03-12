@@ -20,7 +20,7 @@ class Admin::SnippetsController < AdminBaseController
   
   def create   
     created_updated_by_for @snippet
-    @snippet.site_id = @current_site.id
+    @snippet.site = @current_site
     respond_with(:admin, @snippet) do |format|
       if @snippet.save
         format.html { redirector [:edit, :admin, @snippet], [:admin, :snippets], "Successfully created the snippet #{@snippet.name}" }
@@ -42,7 +42,7 @@ class Admin::SnippetsController < AdminBaseController
   end
   
   def destroy
-    @snippet.delete
+    @snippet.destroy
     flash[:notice] = "Successfully deleted the snippet #{@snippet.name}"
     respond_with(:admin, @snippet)
   end

@@ -115,11 +115,7 @@ class User
     clean_up_passwords if self.respond_to?(:password)
     result
   end
-
-  def articles_created
-    ArticleCollection.where(:site_id => self.site_id, "articles.created_by_id" => self.id).to_a
-  end
-  
+ 
   private
   
     def tester?

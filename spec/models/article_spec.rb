@@ -8,7 +8,7 @@ describe Article do
 
   before(:each) do
    @article_collection = Factory(:article_collection, :articles => [], :site => site, :created_by => user, :updated_by => user)
-   @article = Factory(:article, :created_by_id => user.id, :updated_by_id => user.id, :article_collection => @article_collection)
+   @article = Factory(:article, :site => site, :created_by_id => user.id, :updated_by_id => user.id, :article_collection => @article_collection)
   end
 
   # -- Associations ----
@@ -66,6 +66,7 @@ describe Article do
 
     it "should not be valid without a unique title" do
       Factory.build(:article, 
+                    :site => site,
                     :title => @article.title,
                     :article_collection => @article_collection).should_not be_valid
     end
@@ -78,6 +79,7 @@ describe Article do
 
     it "should not be valid without a unique permalink" do
       Factory.build(:article, 
+                    :site => site,
                     :title => @article.title,
                     :slug => @article.slug,
                     :permalink => @article.permalink,
@@ -87,11 +89,6 @@ describe Article do
     it "should not be valid without a slug" do
       @article.stub(:slug_set).and_return(nil)
       @article.slug = nil
-      @article.should_not be_valid
-    end
-
-    it "should not be valid without content" do
-      @article.content = nil
       @article.should_not be_valid
     end
 
@@ -129,7 +126,7 @@ describe Article do
     
     describe "#slug_set" do
       it "should set the slug to the article title when the slug is blank" do
-        @article.slug = nil 
+        @article.slug = nil
         @article.save
         @article.slug.should == @article.title.gsub(/[\s_]/, '-')
        end
@@ -137,7 +134,7 @@ describe Article do
       it "should remove any leading or trailing white space from the slug" do
         @article.slug = " Hello, World!  \n"
         @article.save
-        @article.slug.should == "hello,-world!"
+        @article.slug.should == "hello-world"
       end 
     end  
 

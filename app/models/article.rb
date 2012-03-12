@@ -63,6 +63,9 @@ class Article
 
   validate :unique_title
 
+  validates :permalink,
+            :presence => true
+
   validate :unique_permalink
 
   validates :slug,
@@ -106,12 +109,6 @@ class Article
   alias :full_path :permalink
   alias :full_path= :permalink=
 
-  def truncate_words(text, length = 30, end_string = ' &hellip;')
-    return if text == nil
-    words = text.split()
-    words[0..(length-1)].join(' ') + (words.length > length ? end_string : '')
-  end
-
   # -- Accepts_nested -----
   def current_state_attributes=(attributes)
     self.current_state = CurrentState.find_by_name(attributes[:name])
@@ -138,16 +135,16 @@ class Article
     end
     
     def slug_set
-      if slug.nil? && self.new_record?
+      if self.slug.nil? || self.slug.empty? 
         self.slug = self.title.gsub('_', '-')
-        self.slug = self.title.parameterize
+        self.slug = self.slug.parameterize
       else
         parse_slug(self.slug)
       end
     end
 
     def permalink_set
-      if self.permalink.blank? && self.new_record?
+      if self.permalink.nil? || self.permalink.blank? 
         time = DateTime.now
         year = time.year.to_s
         month = time.month.to_s

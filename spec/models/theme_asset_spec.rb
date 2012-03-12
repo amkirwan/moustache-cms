@@ -3,17 +3,18 @@ require 'spec_helper'
 describe ThemeAsset do  
   let(:site) { Factory(:site) }
   let(:user) { Factory(:user, :site => site) }
+  let(:theme_collection) { Factory(:theme_collection, :site => site) }
   
   after(:all) do
     AssetFixtureHelper.reset!
   end
 
   before(:each) do
-    @theme_asset_image = Factory(:theme_asset, :name => "image", :site_id => site.id, :asset => AssetFixtureHelper.open("rails.png"), :content_type => "image/png", :created_by_id => user.id, :updated_by_id => user.id)
-    @theme_asset_css = Factory(:theme_asset, :name => "css", :site_id => site.id, :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css", :created_by_id => user.id, :updated_by_id => user.id)
-    @theme_asset_js = Factory(:theme_asset, :name => "js", :site_id => site.id, :asset => AssetFixtureHelper.open("theme_js.js"), :content_type => "text/javascript", :created_by_id => user.id, :updated_by_id => user.id)
-    @theme_asset_other = Factory(:theme_asset, :name => "other", :site_id => site.id, :asset => AssetFixtureHelper.open("Inconsolata.otf"), :content_type => "application/octet-stream", :created_by_id => user.id, :updated_by_id => user.id)
-    @theme_assets = ThemeAsset.all
+    theme_collection.theme_assets << @theme_asset_image = Factory.build(:theme_asset, :name => "image", :asset => AssetFixtureHelper.open("rails.png"), :content_type => "image/png", :creator_id => user.id, :updator_id => user.id)
+    theme_collection.theme_assets << @theme_asset_css = Factory.build(:theme_asset, :name => "css",  :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css", :creator_id => user.id, :updator_id => user.id)
+    theme_collection.theme_assets << @theme_asset_js = Factory.build(:theme_asset, :name => "js", :asset => AssetFixtureHelper.open("theme_js.js"), :content_type => "application/x-javascript", :creator_id => user.id, :updator_id => user.id)
+    theme_collection.theme_assets << @theme_asset_type = Factory.build(:theme_asset, :name => "other", :asset => AssetFixtureHelper.open("Inconsolata.otf"), :content_type => "application/octet-stream", :creator_id => user.id, :updator_id => user.id)
+
   end
   
   # --  Associations -----------------------------------------------
@@ -22,8 +23,8 @@ describe ThemeAsset do
        @theme_asset_css.should be_embedded_in(:article_collection)
      end
 
-     it "should embed many tag_attrs as tag_attrable" do
-      @theme_asset_css.should embed_many(:tag_attrs)
+     it "should embed many custom_fields as custom_fieldable" do
+      @theme_asset_css.should embed_many(:custom_fields)
      end
    end
    
@@ -33,19 +34,14 @@ describe ThemeAsset do
        @theme_asset_image.should be_valid
      end    
      
-     it "should not be valid without as site_id" do
-       @theme_asset_image.site_id = nil
-       @theme_asset_image.should_not be_valid
-     end
-
      it "should not be valid without a name" do
        @theme_asset_image.name = nil
        @theme_asset_image.should_not be_valid
      end
 
      it "should not be valid without a asset file" do
-       @theme_asset_image.remove_asset!
-       @theme_asset_image.should_not be_valid
+       @theme_asset_js.remove_asset!
+       @theme_asset_js.should_not be_valid
      end
    end
    
@@ -65,11 +61,13 @@ describe ThemeAsset do
    describe "before_update" do
      describe "#recreate" do
        it "should update the filename and recreate version when a new name is given" do
-         @theme_asset_image.name = "new_name"
-         @theme_asset_image.save
-         theme_image = ThemeAsset.where(:name => "new_name", :site_id => site.id).first
-         theme_image.asset_identifier.should == "new_name.png"
-         theme_image.asset.url.should =~ /new_name.png/
+         asset = theme_collection.theme_assets.where(:name => "image").first
+         asset.name = "new_name"
+         asset.save
+         asset = theme_collection.theme_assets.where(:name => "new_name").first
+         #asset.name.should == 'new_name'
+         #asset.asset_identifier.should == "new_name.png"
+         #asset.asset.url.should =~ /new_name.png/
        end  
      end
    end
@@ -78,71 +76,70 @@ describe ThemeAsset do
    describe "scopes" do
      describe "css_files" do
        it "should return all the theme assets css files" do
-         css_files = ThemeAsset.css_files(site)
+         css_files = theme_collection.theme_assets.css_files
          css_files.size.should == 1
          css_files.first.should == @theme_asset_css
        end
-
+       
        it "should return empty Criteria if it cannot find any css files in the theme" do
-         site.theme_assets.find(@theme_asset_css.id).delete
-         ThemeAsset.css_files(site).should be_empty
+         theme_collection.theme_assets.find(@theme_asset_css.id).delete
+         theme_collection.theme_assets.css_files.should be_empty
        end
      end
      
      describe "js_files" do
        it "should return all the theme assets js files" do
-         js_files = ThemeAsset.js_files(site)
+         js_files = theme_collection.theme_assets.js_files
          js_files.size.should == 1
          js_files.first.should == @theme_asset_js
        end
 
        it "should return empty Criteria if it cannot find any js files in the theme" do
-         site.theme_assets.find(@theme_asset_js.id).delete
-         ThemeAsset.js_files(site).should be_empty
+         theme_collection.theme_assets.find(@theme_asset_js.id).delete
+         theme_collection.theme_assets.js_files.should be_empty
        end  
      end   
      
      describe "images" do
        it "should return all the theme image files" do
-         images = ThemeAsset.images(site)
+         images = theme_collection.theme_assets.images
          images.size.should == 1
          images.first.should == @theme_asset_image
        end
 
        it "should return empty Criteria if it cannot find any images in the theme" do
-         site.theme_assets.find(@theme_asset_image.id).delete
-         ThemeAsset.images(site).should be_empty
+         theme_collection.theme_assets.find(@theme_asset_image.id).delete
+         theme_collection.theme_assets.images.should be_empty
        end  
+     end
+
+     describe "should return the theme assets that are not css, javascript or images" do
+       it "should return all the other theme asset files" do
+         other = theme_collection.theme_assets.other_files
+         other.size.should == 2
+         other.last.should == @theme_asset_type
+       end
      end
      
      describe "find_by_name" do
        it "should return the asset by name" do
-         ThemeAsset.find_by_name("css").first.should == @theme_asset_css
+         theme_collection.theme_assets.find_by_name("css").first.should == @theme_asset_css
        end
      end
-
    end 
    
    # -- Class Methods ------------------------
    describe "Dynamic Scoped for content_type" do
      it "should return all the theme assets css files" do
-       css_files = ThemeAsset.find_by_content_type_and_site_id(:content_type => "text/css", :site_id => site.id)
+       css_files = theme_collection.theme_assets.find_by_content_type_and_site_id(:content_type => "text/css", :site_id => site.id)
        css_files.size.should == 1
        css_files.first.should == @theme_asset_css
      end
 
      it "should return empty Criteria if it cannot find the domain" do
-       site.theme_assets.find(@theme_asset_css.id).delete
-       ThemeAsset.find_by_content_type_and_site_id(:content_type => "text/css", :site_id => site.id).should be_empty
+       theme_collection.theme_assets.find(@theme_asset_css.id).delete
+       theme_collection.theme_assets.find_by_content_type_and_site_id(:content_type => "text/css", :site_id => site.id).should be_empty
      end   
-
-     describe "should return the theme assets that are not css, javascript or images" do
-       it "should return all the other theme asset files" do
-         other = ThemeAsset.other_files(site)
-         other.size.should == 1
-         other.first.should == @theme_asset_other
-       end
-     end
    end
    
    # -- Instance Methods ----------
@@ -164,20 +161,4 @@ describe ThemeAsset do
      end
    end
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

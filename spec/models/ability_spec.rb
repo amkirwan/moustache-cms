@@ -45,11 +45,8 @@ describe Ability do
   let(:snippet) { Factory.build(:snippet, :site => site) }
   let(:snippet_other_site) { Factory.build(:snippet, :site => other_site) }
 
-  let(:tag_attr) { Factory.build(:tag_attr) }
-  let(:tag_attr_other_site) { Factory.build(:tag_attr) }
-
-  let(:theme_asset) { Factory.build(:theme_asset, :site => site, :created_by => admin, :tag_attrs => [tag_attr]) }
-  let(:theme_asset_other_site) { Factory.build(:theme_asset, :site => other_site, :created_by => admin_other_site, :tag_attrs => [tag_attr_other_site]) }
+  let(:theme_asset) { Factory.build(:theme_asset, :creator_id => admin.id, :updator_id => admin.id) }
+  let(:theme_asset_other_site) { Factory.build(:theme_asset, :creator_id => admin_other_site.id, :updator_id => admin_other_site.id) }
 
   let(:theme_collection) { Factory.build(:theme_collection, :site => site, :created_by => admin, :theme_assets => [theme_asset]) }
 

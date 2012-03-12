@@ -1,5 +1,8 @@
 require "spec_helper"
 
+class Simple < Mustache
+end
+
 describe HandlebarCms::Mustache::CmsPage do
   let(:site) { Factory(:site)}
   let(:user) { Factory(:user, :site => site) }
@@ -13,11 +16,16 @@ describe HandlebarCms::Mustache::CmsPage do
                                       :content => "define editable text method **strong**", 
                                       :filter_name => "markdown") 
     
-    @tag_attr_type = Factory.build(:tag_attr, 'name' => 'type', 'value' => 'text/css')
-    @tag_attr_media = Factory.build(:tag_attr, 'name' => 'media', 'value' => 'screen')
-  
-    @theme_asset_css = Factory(:theme_asset, :site => site, :name => "foobar", :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css", :tag_attrs => [@tag_attr_type])
-    @theme_asset_css_2 = Factory(:theme_asset, :site => site, :name => "baz", :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css", :tag_attrs => [@tag_attr_type, @tag_attr_media])
+    @theme_collection = Factory(:theme_collection, :name => 'thorn', :site => site, :theme_assets => [@theme_asset_css, @theme_asset_css_2])
+
+    @tag_attr_type = Factory.build(:custom_field, 'name' => 'type', 'content' => 'text/css')
+    @tag_attr_media = Factory.build(:custom_field, 'name' => 'media', 'content' => 'screen')
+
+    @theme_collection.theme_assets << Factory.build(:theme_asset, :name => "foobar", :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css", :custom_fields => [@tag_attr_type])
+    @theme_collection.theme_assets << Factory.build(:theme_asset,:name => "baz", :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css", :custom_fields => [@tag_attr_type, @tag_attr_media])
+
+    @theme_asset_css = @theme_collection.theme_assets.where(:name => 'foobar').first
+    @theme_asset_css_2 = @theme_collection.theme_assets.where(:name => 'baz').first
     
     @request = mock_model("Request", :host => "test.com", :protocol => 'http')
     
@@ -84,11 +92,13 @@ describe HandlebarCms::Mustache::CmsPage do
     end  
     
     it "should return all the css files" do
-      @cmsp.stylesheets_all.should == %(<link href="#{@theme_asset_css_2.asset.url}" media="screen" rel="stylesheet" type="text/css" />\n<link href="#{@theme_asset_css.asset.url}" rel="stylesheet" type="text/css" />\n)
+      @cmsp.stylesheets.should == %(<link href="#{@theme_asset_css.url_md5}" rel="stylesheet" type="text/css" />\n<link href="#{@theme_asset_css_2.url_md5}" media="screen" rel="stylesheet" type="text/css" />\n)
     end
     
     it "should return a stylesheet by name" do
-      @cmsp.stylesheet_foobar.should == %(<link href="#{@theme_asset_css.asset.url}" rel="stylesheet" type="text/css" />\n)
+      @page.layout.content = "{{#stylesheet}}theme_name:thorn, name:foobar{{/stylesheet}}"
+      cms_page = HandlebarCms::Mustache::CmsPage.new(@controller)
+      cms_page.render.should == %(<link href="#{@theme_asset_css.url_md5}" rel="stylesheet" type="text/css" />\n)
     end
 
     describe "meta tags" do
@@ -118,13 +128,6 @@ describe HandlebarCms::Mustache::CmsPage do
       it "should return the meta description from the site" do
         @page.meta_tags.where(:name => 'description').first.content = ""
         @cmsp.meta_tag_description.should == %(<meta content="description site" name="description" />\n)
-      end
-
-      it "should render all the meta_tags" do
-        @cmsp.meta_tags.should == %(<meta content="title page" name="title" />
-<meta content="keywords page" name="keywords" />
-<meta content="description page" name="description" />
-)
       end
 
     end

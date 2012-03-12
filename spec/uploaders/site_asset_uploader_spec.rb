@@ -37,11 +37,11 @@ describe SiteAssetUploader do
   end
   
   it "should set the storage directory" do
-    @uploader.store_dir.should == "site_assets/#{@uploader.model._parent.site_id}/#{asset_collection.name}/#{@uploader.mounted_as}/#{@uploader.model.id}"
+    @uploader.store_dir.should == "site_assets/#{@uploader.model._parent.site_id}/#{@uploader.model._parent.name}"
   end
   
   it "should change the uploaded filename to the name of the site_asset" do
-    @uploader.filename.should =~  /^foobar-(.*).png$/
+    @uploader.filename.should =~  /^foobar.png$/
   end
   
   it "should white list these extenstiosn" do

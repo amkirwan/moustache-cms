@@ -3,16 +3,19 @@ require "carrierwave/test/matchers"
 
 describe ThemeAssetUploader do
   include CarrierWave::Test::Matchers
-  
+
   let(:site) { Factory(:site) }
-  let(:theme_asset) { Factory(:theme_asset, :name => "foobar", :site => site) }
-  let(:theme_asset_css) { Factory(:theme_asset, :name => "foobar", :site => site, :asset => AssetFixtureHelper.open("theme_css.css")) }
-  let(:theme_asset_js) { Factory(:theme_asset, :name => "foobar", :site => site, :asset => AssetFixtureHelper.open("theme_js.js")) }
-  let(:theme_asset_otf) { Factory(:theme_asset, :name => "foobar", :site => site, :asset => AssetFixtureHelper.open("Inconsolata.otf")) }
+  let(:user) { Factory(:user, :site => site) }
+  let(:theme_collection) { Factory(:theme_collection, :site => site) }
   
   before do
+    theme_collection.theme_assets << @theme_asset = Factory.build(:theme_asset, :name => "foobar") 
+    theme_collection.theme_assets << @theme_asset_css = Factory.build(:theme_asset, :name => "foobar", :asset => AssetFixtureHelper.open("theme_css.css")) 
+    theme_collection.theme_assets << @theme_asset_js = Factory.build(:theme_asset, :name => "foobar", :asset => AssetFixtureHelper.open("theme_js.js")) 
+    theme_collection.theme_assets << @theme_asset_otf = Factory.build(:theme_asset, :name => "foobar", :asset => AssetFixtureHelper.open("Inconsolata.otf"))
+    
     ThemeAssetUploader.enable_processing = true
-    @uploader = ThemeAssetUploader.new(theme_asset, :asset)
+    @uploader = ThemeAssetUploader.new(@theme_asset, :asset)
     @uploader.store!(AssetFixtureHelper.open("rails.png"))
   end
   
@@ -38,7 +41,7 @@ describe ThemeAssetUploader do
   end                   
   
   it "should change the uploaded filename to the name of the theme_asset" do
-    @uploader.filename.should =~  /^foobar-(.*).png$/
+    @uploader.filename.should =~  /^foobar.png$/
   end
   
   it "should white list these extenstiosn" do
@@ -51,28 +54,28 @@ describe ThemeAssetUploader do
   
   describe "storeage paths" do
     before(:each) do
-      @uploader_css = ThemeAssetUploader.new(theme_asset_css, :asset)
+      @uploader_css = ThemeAssetUploader.new(@theme_asset_css, :asset)
       @uploader_css.store!(AssetFixtureHelper.open("theme_css.css"))
-      @uploader_js = ThemeAssetUploader.new(theme_asset_js, :asset)
+      @uploader_js = ThemeAssetUploader.new(@theme_asset_js, :asset)
       @uploader_js.store!(AssetFixtureHelper.open("theme_js.js"))
-      @uploader_otf = ThemeAssetUploader.new(theme_asset_otf, :asset)
+      @uploader_otf = ThemeAssetUploader.new(@theme_asset_otf, :asset)
       @uploader_otf.store!(AssetFixtureHelper.open("Inconsolata.otf"))
     end
     
     it "should set the storage directory to image for image files" do
-      @uploader.store_dir.should == "sites/#{@uploader.model.site_id}/#{@uploader.model.class.to_s.underscore}/images"
+      @uploader.store_dir.should == "theme_assets/#{@uploader.model._parent.site_id}/#{@uploader.model._parent.name}/images"
     end
     
     it "should set the storage dir to stylesheet for css files" do
-      @uploader_css.store_dir.should == "sites/#{@uploader_css.model.site_id}/#{@uploader_css.model.class.to_s.underscore}/stylesheets"
+      @uploader_css.store_dir.should == "theme_assets/#{@uploader.model._parent.site_id}/#{@uploader.model._parent.name}/stylesheets"
     end
     
     it "should set the storage dir to javascript for js files" do
-      @uploader_js.store_dir.should == "sites/#{@uploader_js.model.site_id}/#{@uploader_js.model.class.to_s.underscore}/javascripts"
+      @uploader_js.store_dir.should == "theme_assets/#{@uploader.model._parent.site_id}/#{@uploader.model._parent.name}/javascripts"
     end
     
     it "should set the storage dir to asset for other files" do
-      @uploader_otf.store_dir.should == "sites/#{@uploader_otf.model.site_id}/#{@uploader_otf.model.class.to_s.underscore}/assets"
+      @uploader_otf.store_dir.should == "theme_assets/#{@uploader.model._parent.site_id}/#{@uploader.model._parent.name}/assets"
     end
   end
 end
