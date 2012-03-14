@@ -7,7 +7,7 @@
 require 'cucumber/rails'
 require 'spork'
 
-Spork prefork do
+Spork.prefork do
   require Rails.root.join("spec/spec_helpers/asset_fixture_helper.rb")
   # Capybara defaults to XPath selectors rather than Webrat's default of CSS3. In
   # order to ease the transition to Capybara we set the default here. If you'd
@@ -35,7 +35,7 @@ Spork prefork do
   # Remove/comment out the lines below if your app doesn't have a database.
   # For some databases (like MongoDB and CouchDB) you may need to use :truncation instead.
   begin
-    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.strategy = :truncation
     DatabaseCleaner.orm = "mongoid"
     Before { DatabaseCleaner.clean }
   rescue NameError
