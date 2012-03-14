@@ -139,7 +139,7 @@ describe Admin::AuthorsController do
     end
 
     it "should assign created_by and updated by to the current user" do
-      controller.should_receive(:created_updated_by_for).with(@author)
+      controller.should_receive(:created_updated_by_for).with(instance_of(Author))
       do_post
     end
 
@@ -205,7 +205,7 @@ describe Admin::AuthorsController do
     
     context "valid params" do
       before(:each) do
-        Author.stub(:save).and_return(true)
+        @author.stub(:update_attributes).and_return(true)
       end
 
       it "should assign the flash message" do
@@ -221,7 +221,7 @@ describe Admin::AuthorsController do
 
     context "invalid params" do
       before(:each) do
-        Author.stub(:save).and_return(false)
+        @author.stub(:update_attributes).and_return(false)
         @author.stub(:errors => { "author" => "author error" })
       end
 

@@ -68,7 +68,7 @@ describe Admin::SnippetsController do
     end
 
     it "should assign created_by and updated by to the current user" do
-      controller.should_receive(:created_updated_by_for).with(@snippet)
+      controller.should_receive(:created_updated_by_for).with(instance_of(Snippet))
       do_post
     end
 
@@ -78,11 +78,15 @@ describe Admin::SnippetsController do
     end
 
     it "should assign the current site" do
-      @snippet.should_receive(:site=).with(@current_site)
+      @snippet.should_receive(:site=).with(instance_of(Site))
       do_post
     end
 
     context "with valid params" do
+      before(:each) do
+        @snippet.stub(:save).and_return(true)
+      end
+      
       it "should save the snippet" do
         @snippet.should_receive(:save).and_return(true)
         do_post
@@ -170,6 +174,10 @@ describe Admin::SnippetsController do
     end
 
     context "with valid params" do
+      before(:each) do
+        @snippet.stub(:update_attributes).and_return(true)
+      end
+
       it "should update the snippet" do
         @snippet.should_receive(:update_attributes).with(params['snippet']).and_return(true)
         do_put
@@ -214,7 +222,7 @@ describe Admin::SnippetsController do
     end
 
     it "should find the snippet" do
-      Snippet.should_receive(:find).with(@snippet.to_param).and_return(@param)
+      Snippet.should_receive(:find).with(@snippet.to_param).and_return(@snippet)
       do_delete
     end
 

@@ -4,9 +4,10 @@ describe Admin::SiteAssetsController do
 
   before(:each) do
     login_admin
-    @site_asset = mock_model(SiteAsset, :site_id => @site.id).as_null_object
+    @asset_collection = mock_model(AssetCollection, :site_id => @site.id)
+    @site_asset = mock_model(SiteAsset, :_parent => @asset_collection).as_null_object
     @site_assets = [@site_asset]
-    @asset_collection = mock_model(AssetCollection, :site_assets => @site_assets, :site_id => @site.id)
+    @asset_collection.stub(:site_assets).and_return(@site_assets)
 
     AssetCollection.stub(:find).and_return(@asset_collection)
   end
@@ -98,7 +99,7 @@ describe Admin::SiteAssetsController do
     end
      
     it "should assign creator and updator to the current user" do
-      controller.should_receive(:creator_updator_set_id).with(@site_asset)
+      controller.should_receive(:creator_updator_set_id).with(instance_of(SiteAsset))
       do_post
     end
 
@@ -108,6 +109,10 @@ describe Admin::SiteAssetsController do
     end
       
     context "with valid params" do
+      before(:each) do
+        @site_asset.stub(:save).and_return(true)
+      end
+
       it "should save the site_asset to the collection" do
         @site_asset.should_receive(:save).and_return(true)
         do_post
@@ -179,6 +184,10 @@ describe Admin::SiteAssetsController do
     end
     
     describe "with valid params" do
+      before(:each) do
+        @site_asset.stub(:update_attributes).and_return(true)
+      end
+
       it "should receive update_attributes and return true" do
         @site_asset.should_receive(:update_attributes).and_return(true)
         do_put

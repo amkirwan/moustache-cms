@@ -118,7 +118,7 @@ describe Admin::ArticleCollectionsController do
     let(:params) { {"article_collection" => {"name" => "foobar"}} }
 
     before(:each) do
-        ArticleCollection.stub(:new).and_return(@article_collection.as_new_record)
+      ArticleCollection.stub(:new).and_return(@article_collection.as_new_record)
     end
 
     def do_post(post_params=params)
@@ -136,12 +136,12 @@ describe Admin::ArticleCollectionsController do
     end
 
     it "should assign created_by and updated by to the current user" do
-      controller.should_receive(:created_updated_by_for).with(@article_collection)
+      controller.should_receive(:created_updated_by_for).with(instance_of(ArticleCollection))
       do_post
     end
 
     it "should assig nthe current site to the @article_collection" do
-      @article_collection.should_receive(:site=)
+      @article_collection.should_receive(:site=).with(instance_of(Site))
       do_post
     end
 
@@ -237,6 +237,7 @@ describe Admin::ArticleCollectionsController do
 
     before(:each) do
       ArticleCollection.stub(:find).and_return(@article_collection)
+      @article_collection.stub(:destroy).and_return(true)
     end
 
     def do_delete(delete_params=params)
@@ -250,7 +251,7 @@ describe Admin::ArticleCollectionsController do
 
     it "should assign @article_collection" do
       do_delete
-      assigns(:article_collection).should @article_collection
+      assigns(:article_collection).should eq @article_collection
     end
     
     it "should receive destroy and return true" do

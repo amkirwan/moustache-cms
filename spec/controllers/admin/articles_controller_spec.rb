@@ -114,7 +114,7 @@ describe Admin::ArticlesController do
     end
 
     it "should receive created_updated_by_for" do
-      controller.should_receive(:created_updated_by_for).with(@article)
+      controller.should_receive(:created_updated_by_for).with(instance_of(Article))
       do_post
     end
 

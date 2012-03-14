@@ -47,6 +47,6 @@ class Admin::AssetCollectionsController < AdminBaseController
   def destroy
     @asset_collection.destroy
     flash[:notice] = "Successfully deleted the asset collection #{@asset_collection.name}"
-    respond_with(:admin, @asset_collection)
+    respond_with(:admin, @asset_collection, :location => [:admin, :asset_collections])
   end
 end

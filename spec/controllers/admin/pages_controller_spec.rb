@@ -1,10 +1,14 @@
 require 'spec_helper'
 
 describe Admin::PagesController do
+
+  let(:parent_page) { mock_model(Page, :site_id => @site.id) }
   
   before(:each) do
     login_admin
-    @page = mock_model(Page, :site_id => @site.id).as_null_object
+    @page_part = mock_model(PagePart)
+    @page_parts = [@page_part]
+    @page = mock_model(Page, :title => 'foobar', :parent => parent_page, :site_id => @site.id, :page_parts => @page_parts).as_null_object
   end
   
   # -- GET Index ----------------------------------------------- 
@@ -129,16 +133,20 @@ describe Admin::PagesController do
     end
     
     it "should assign the current_site to the page" do
-      @page.should_receive(:site_id)
+      @page.should_receive(:site=).with(instance_of(Site))
       do_post
     end
     
     it "should assign created_by and updated by to the current user" do
-      controller.should_receive(:created_updated_by_for).with(@page)
+      controller.should_receive(:created_updated_by_for).with(instance_of(Page))
       do_post
     end
     
     context "when the page saves successfully" do
+      before(:each) do
+        @page.stub(:save).and_return(true)
+      end
+
       it "should save the page" do
         @page.should_receive(:save).and_return(true)
         do_post
@@ -253,12 +261,12 @@ describe Admin::PagesController do
 
     it "should assign page title was" do
       do_puts
-      assigns[:page_title_was].should_not be_nil
+      assigns[:page_title_was].should == @page.title
     end
     
     context "with valid params" do
       before(:each) do
-        @page.stub(:upate_attributes).and_return(true)
+        @page.stub(:update_attributes).and_return(true)
       end
 
       it "should update the attributes of the page" do

@@ -3,7 +3,7 @@ Factory.define :meta_tag do |meta|
   meta.content "foobar"
 end
 
-def meta_tags(type)
+def set_meta_tags(type)
     [ Factory.build(:meta_tag, name: 'title', content: "title #{type}"),
       Factory.build(:meta_tag, name: 'keywords', content: "keywords #{type}"),
       Factory.build(:meta_tag, name: 'description', content: "description #{type}")]
@@ -12,7 +12,7 @@ end
 Factory.define :site do |site|
   site.sequence(:name) { |n| "name_#{n}" }
   site.sequence(:subdomain)  { |n| "foobar_#{n}" }
-  site.meta_tags { meta_tags('site') }
+  site.meta_tags { set_meta_tags('site') }
   site.default_domain  "com" 
   site.domain_names { [] }
 end
@@ -73,7 +73,7 @@ Factory.define :leaf do |leaf|
   leaf.layout { Factory.build(:layout) }
   leaf.current_state { Factory.build(:current_state) }
   leaf.tags "leaf"
-  leaf.meta_tags { meta_tags('page') }
+  leaf.meta_tags { set_meta_tags('page') }
   leaf.created_by_id { Factory.build(:user).id }
   leaf.updated_by_id { Factory.build(:user).id }
 end
@@ -97,7 +97,7 @@ Factory.define :page do |page|
   page.current_state { Factory.build(:current_state) }
   page.editors {[ Factory.build(:user) ]}
   page.tags "page"
-  page.meta_tags { meta_tags('page') }
+  page.meta_tags { set_meta_tags('page') }
   page.page_parts {[ Factory.build(:page_part) ]}
   page.created_by_id { Factory.build(:user).id }
   page.updated_by_id { Factory.build(:user).id }
@@ -141,7 +141,7 @@ Factory.define :article do |article|
   article.tags "article"
   article.layout_id { Factory.build(:layout).id }
   article.current_state { Factory.build(:current_state) }
-  article.meta_tags { meta_tags('article') }
+  article.meta_tags { set_meta_tags('article') }
   article.content "article content"
   article.author_ids { [Factory.build(:user).id] }
   article.filter_name "published"

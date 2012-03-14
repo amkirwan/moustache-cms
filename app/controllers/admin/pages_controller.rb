@@ -26,9 +26,15 @@ class Admin::PagesController < AdminBaseController
     @selected_page_part = @page.page_parts.first
     respond_with(:admin, @page)
   end
-  
+
+  def edit
+    selected_page_part
+    parent_page
+    respond_with(:admin, @page)
+  end
+   
   def create
-    @page.site_id = current_site.id
+    @page.site = current_site
     created_updated_by_for @page
     respond_with(:admin, @page) do |format|
       if @page.save
@@ -38,12 +44,6 @@ class Admin::PagesController < AdminBaseController
         @parent_page = Page.where(:site_id => current_site.id).find(params[:page][:parent_id])
       end
     end
-  end
-  
-  def edit
-    selected_page_part
-    parent_page
-    respond_with(:admin, @page)
   end
   
   def update
@@ -85,8 +85,6 @@ class Admin::PagesController < AdminBaseController
     render 'admin/custom_fields/new'
   end
 
-
-  
   private 
 
     def set_page_part
@@ -139,9 +137,8 @@ class Admin::PagesController < AdminBaseController
     end
 
     def parent_page
-      home_page = current_site.pages.where(:full_path => '/').first
       if @page.new_record? && params[:parent_id].nil?
-        @parent_page = home_page
+        @parent_page = current_site.pages.where(:full_path => '/').first # homepage
       elsif !params[:parent_id].nil?
         @parent_page = Page.where(:site_id => current_site.id).find(params[:parent_id])
       else

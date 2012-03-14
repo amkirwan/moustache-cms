@@ -78,7 +78,7 @@ describe Admin::LayoutsController do
     end
 
     it "should assign created_by and updated by to the current user" do
-      controller.should_receive(:created_updated_by_for).with(@layout)
+      controller.should_receive(:created_updated_by_for).with(instance_of(Layout))
       do_post
     end
     
@@ -88,11 +88,15 @@ describe Admin::LayoutsController do
     end
     
     it "should assign the current_site" do
-      @layout.should_receive(:site=).with(@site)
+      @layout.should_receive(:site=).with(instance_of(Site))
       do_post
     end
     
     context "when it saves the layout successfully" do
+      before(:each) do
+        @layout.stub(:save).and_return(true)
+      end
+
       it "should save the layout" do
         @layout.should_receive(:save).and_return(true)
         do_post
@@ -188,7 +192,11 @@ describe Admin::LayoutsController do
       do_put
     end
     
-    context "when the layer saves successfully" do
+    context "valid params" do
+      before(:each) do
+        @layout.stub(:update_attributes).and_return(true)
+      end
+
       it "should update the attributes of the layout" do
         @layout.should_receive(:update_attributes).with(params["layout"])
         do_put

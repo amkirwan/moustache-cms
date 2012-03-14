@@ -48,15 +48,18 @@ describe Admin::DomainNamesController do
     end
 
     context "with valid params" do
+      before(:each) do
+        @current_site.stub(:save).and_return(true)
+      end
 
       it "should receive domain_names and add the domain name to the array" do
         @current_site.should_receive(:domain_names)
         do_post
       end
 
-      it "should save the current_site" do
-        @current_site.should_receive(:save)
+      it "should set the flash message" do
         do_post
+        flash[:notice].should == "Successfully created the domain name #{params["site"]["domain_name"]}"
       end
 
       it "should redirect to the current_site" do
@@ -64,10 +67,6 @@ describe Admin::DomainNamesController do
         response.should redirect_to([:edit, :admin, @current_site])
       end
 
-      it "should set the flash message" do
-        do_post
-        flash[:notice].should == "Successfully created the domain name #{params["site"]["domain_name"]}"
-      end
     end
 
     context "with invalid params" do
@@ -109,6 +108,9 @@ describe Admin::DomainNamesController do
     end
       
     context "with valid params" do
+      before(:each) do
+        @current_site.stub(:save).and_return(true)
+      end
       it "should destroy the meta_tag" do
         @current_site.should_receive(:domain_names).and_return(domain_names)
         domain_names.should_receive(:delete_at)

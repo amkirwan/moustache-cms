@@ -133,16 +133,21 @@ describe Admin::AssetCollectionsController do
     end
     
     it "should assign created_by and updated by to the current user" do
-      controller.should_receive(:created_updated_by_for).with(@asset_collection)
+      controller.should_receive(:created_updated_by_for).with(instance_of(AssetCollection))
       do_post
     end
     
     it "should assign the current_site" do
-      @asset_collection.should_receive(:site=).with(@site)
+      @asset_collection.should_receive(:site=).with(instance_of(Site))
       do_post
     end
     
     context "with valid params" do
+      before(:each) do
+        @asset_collection.stub(:save).and_return(true)
+      end
+
+    
       it "should receive save and return true" do
         @asset_collection.should_receive(:save).and_return(true)
         do_post
@@ -204,6 +209,10 @@ describe Admin::AssetCollectionsController do
     end
     
     context "with valid params" do
+      before(:each) do
+        @asset_collection.stub(:update_attributes).and_return(true)
+      end
+
       it "should receive update_attributes and update" do
         @asset_collection.should_receive(:update_attributes).with(params["asset_collection"]).and_return(true)
         do_put
@@ -236,7 +245,7 @@ describe Admin::AssetCollectionsController do
   describe "DELETE destroy" do
     before(:each) do
       AssetCollection.stub(:find).and_return(@asset_collection)
-      @asset_collection.stub(:persisted?).and_return(false)
+      #@asset_collection.stub(:persisted?).and_return(false)
     end
     
     def do_delete
@@ -250,7 +259,7 @@ describe Admin::AssetCollectionsController do
     
     it "should assign @asset_collection" do
       do_delete
-      assigns(:asset_colletion).should @asset_collection
+      assigns(:asset_collection).should == @asset_collection
     end
     
     it "should receive destroy and return true" do

@@ -17,7 +17,11 @@ class Admin::SnippetsController < AdminBaseController
   def new
     respond_with(:admin, @snippet)
   end
-  
+ 
+  def edit
+    respond_with(:admin, @snippet)
+  end
+    
   def create   
     created_updated_by_for @snippet
     @snippet.site = @current_site
@@ -27,11 +31,7 @@ class Admin::SnippetsController < AdminBaseController
       end
     end
   end
-  
-  def edit
-    respond_with(:admin, @snippet)
-  end
-  
+ 
   def update                
     @snippet.updated_by = @current_admin_user      
     respond_with(:admin, @snippet) do |format|

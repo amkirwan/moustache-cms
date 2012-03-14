@@ -7,7 +7,8 @@ describe CmsSiteController do
   describe "GET dynamic_page" do
     
     let(:current_site) { Factory(:site)}
-    let(:page) { mock_model(Page).as_null_object }
+    let(:layout) { Factory(:layout, :site => current_site) }
+    let(:page) { mock_model(Page, :layout => layout, :published? => true).as_null_object }
     
     before(:each) do
       Site.stub(:match_domain).with("test.host").and_return(@criteria_sites = [current_site])
@@ -59,6 +60,7 @@ describe CmsSiteController do
         end
 
         it "should render the page if the user is an admin user" do
+          page.stub(:published? => false)
           controller.stub(:current_admin_user).and_return(true)
           do_get
           response.code.should == "200"

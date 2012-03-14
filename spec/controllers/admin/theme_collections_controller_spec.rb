@@ -131,11 +131,15 @@ describe Admin::ThemeCollectionsController do
     end
 
     it "should assign created_updated_by" do
-      controller.should_receive(:created_updated_by_for).with(@theme_collection)
+      controller.should_receive(:created_updated_by_for).with(instance_of(ThemeCollection))
       do_post
     end
 
     context "with valid params" do
+      before(:each) do
+        @theme_collection.stub(:save).and_return(true)
+      end
+
       it "should receive save and return true" do
         @theme_collection.should_receive(:save).and_return(true)
         do_post
@@ -197,6 +201,10 @@ describe Admin::ThemeCollectionsController do
     end
 
     context "with valid params" do
+      before(:each) do
+        @theme_collection.stub(:update_attributes).and_return(true)
+      end
+
       it "should receive update_attributes and return true" do
         @theme_collection.should_receive(:update_attributes).with(params['theme_collection']).and_return(true)
         do_put

@@ -11,7 +11,7 @@ end
 gem "jquery-rails", "~> 1.0.19"
 gem "coffeebeans"
 
-gem "devise"
+gem "devise", "~> 1.5"
 
 gem "haml"
 gem "haml-rails", "~> 0.3"
@@ -31,14 +31,14 @@ gem "kaminari"
 gem "unicorn"
 
 group :development, :test do
-  gem "rspec-rails", "~> 2.6" 
+  gem "rspec-rails", :git => "git://github.com/rspec/rspec-rails.git"
   gem "webrat"
-  gem "cucumber-rails", "1.0.5"
-  gem "capybara", ">= 1.0.0"
+  gem "cucumber-rails"
+  gem "capybara"
   gem "launchy"
   gem "database_cleaner"
   gem "factory_girl_rails"
-  gem "mongoid-rspec", "~> 1.4.4"
+  gem "mongoid-rspec"
   gem "hpricot"
   gem "syntax"   
   gem "relish"

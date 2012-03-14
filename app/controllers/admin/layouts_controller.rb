@@ -16,6 +16,10 @@ class Admin::LayoutsController < AdminBaseController
   def new
     respond_with(:admin, @layout)
   end
+
+  def edit
+    respond_with(:admin, @layout)
+  end
   
   def create
     created_updated_by_for @layout
@@ -25,10 +29,6 @@ class Admin::LayoutsController < AdminBaseController
         format.html { redirect_to redirector_path(@layout), :notice => "Successfully created the layout #{@layout.name}" }
       end
     end
-  end
-  
-  def edit
-    respond_with(:admin, @layout)
   end
   
   def update    

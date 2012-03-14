@@ -5,7 +5,7 @@ describe Admin::ThemeAssetsController do
   before(:each) do
     login_admin
     @theme_collection = mock_model(ThemeCollection, :site_id => @site.id).as_null_object
-    @theme_asset = mock_model(ThemeAsset, :_parent => @theme_collection).as_null_object
+    @theme_asset = mock_model(ThemeAsset, :name => 'foobar', :_parent => @theme_collection, :filename_md5 => '12345', :asset => double('Asset').as_null_object).as_null_object
     @theme_assets = [@theme_asset]
     @theme_collection.stub(:theme_assets).and_return(@theme_assets)
 
@@ -76,6 +76,10 @@ describe Admin::ThemeAssetsController do
     end
     
     context "with valid params" do
+      before(:each) do
+        @theme_asset.stub(:save).and_return(true)
+      end
+      
       it "should receive and save the theme_asset" do
         @theme_asset.should_receive(:save).and_return(true)
         do_post
@@ -165,8 +169,13 @@ describe Admin::ThemeAssetsController do
     end     
     
     describe "with valid params" do
+      before(:each) do
+        @theme_asset.stub(:update_attributes).and_return(true)
+        @theme_asset.stub(:update_file_content).and_return(true)
+      end
+
       it "should receive update_attributes and return true" do
-        @theme_asset.should_receive(:update_attributes).and_return(true)
+        @theme_asset.should_receive(:update_attributes).with(params["theme_asset"]).and_return(true)
         do_put
       end             
       
