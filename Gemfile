@@ -32,7 +32,6 @@ gem "unicorn"
 
 group :development, :test do
   gem "rspec-rails", :git => "git://github.com/rspec/rspec-rails.git"
-  gem "webrat"
   gem "cucumber-rails"
   gem "capybara"
   gem "launchy"
@@ -43,4 +42,8 @@ group :development, :test do
   gem "syntax"   
   gem "relish"
   gem "spork"
+  gem "guard"
+  gem "guard-cucumber"
+  gem "guard-rspec"
+  gem "guard-spork"
 end
