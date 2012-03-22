@@ -5,10 +5,6 @@
         %li.inline
           = f.label :filter_name, "Filter<abbr title='required' class='required'>*</abbr>".html_safe
           = f.collection_select :filter_name, Filter.all, :id, :name, {}, {:class => "page_part_filter"}
-        %li#line_wrap_mode.inline
-          %p.label_for.mode Line Wrap Mode
-          %select.line_wrap
-            = grouped_options_for_select({'Line Wrap' => ['No wrap', 'Soft wrap']})
         %li.content
           %p.label_for.ace_label Subheading
           %pre#article_subheading_content= @article.subheading
