@@ -60,12 +60,13 @@ $(document).ready ->
 
     lineWrapModeChange: -> 
       editor = @editor
-      $('.line_wrap').change ->
-        if $(@).val() == 'Soft wrap'
-          editor.getSession().setUseWrapMode true
-          editor.getSession().setWrapLimitRange @options.wrapLimit, @options.wrapLimit
-        else
-          editor.getSession().setUseWrapMode false
+      if $('.line_wrap').length
+        $('.line_wrap').change ->
+          if $(@).val() == 'Soft wrap'
+            editor.getSession().setUseWrapMode true
+            editor.getSession().setWrapLimitRange @options.wrapLimit, @options.wrapLimit
+          else
+            editor.getSession().setUseWrapMode false
 
     createEditor: (elementId) ->
       @editor = ace.edit elementId
@@ -85,8 +86,9 @@ $(document).ready ->
       hbEditor.contentSettings $(@).val()
 
   else if $("body.articles #article_content").length
-    hbEditorSub = new HandlebarEditor elementId: "article_subheading_content", filter: $('#article_filter_name').val()
-    hbEditorContent = new HandlebarEditor elementId: "article_content", filter: $('#article_filter_name').val()
+    hbEditorSub = new HandlebarEditor elementId: "article_subheading_content", filter: $('#article_filter_name').val(), useWrapMode: true
+    hbEditorContent = new HandlebarEditor elementId: "article_content", filter: $('#article_filter_name').val(), useWrapMode: true
+
     $('#article_filter_name').change ->
       hbEditorSub.contentSettings $(@).val()
       hbEditorContent.contentSettings $(@).val() 

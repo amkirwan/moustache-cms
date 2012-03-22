@@ -61,10 +61,12 @@ class Site
       (self.domain_names << self.full_subdomain).uniq!
    end
   end
-  
+
   def add_full_subdomain(domain)
     (domain_names << domain).uniq!
   end
+
+  alias :add_domain :add_full_subdomain
   
   def page_by_full_path(path)   
     pages.where(:full_path => path.to_s).first

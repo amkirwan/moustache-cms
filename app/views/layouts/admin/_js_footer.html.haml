@@ -1,5 +1,6 @@
 = javascript_include_tag "application"
 = javascript_include_tag "ace_editor"
+= javascript_include_tag "jquery.simulate.drag-sortable" if Rails.env != 'production'
 
 -# if the page is created and it is the only child of the parent then add the parent to the localStorage
 - if @page_created_updated_id && !@page.root? && @page.parent.children.count == 1

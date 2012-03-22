@@ -12,7 +12,7 @@ module Admin::PagesHelper
 
   def can_add_child_page?(page)
     if can? :create, page
-      link_to "<div class=\"add_child_page\"></div>".html_safe, new_admin_page_path(:parent_id => page.id), :class => "create"
+      link_to "<div class=\"add_child_page\">Add Page</div>".html_safe, new_admin_page_path(:parent_id => page.id), :class => "create"
     end
   end
 
@@ -20,7 +20,7 @@ module Admin::PagesHelper
     return if page.root?
 
     if can? :destroy, page 
-      link_to "<div class=\"delete_page\"></div>".html_safe, admin_page_path(page), :method => :delete, :confirm => "Are you sure you want to delete the page #{page.title}?", 'data-title' => "#{page.title}", :class => "delete", :remote => true
+      link_to "<div class=\"delete_page delete_#{page.title.parameterize('_')}\">Delete Page</div>".html_safe, admin_page_path(page), :method => :delete, :confirm => "Are you sure you want to delete the page #{page.title}?", 'data-title' => "#{page.title}", :class => "delete", :remote => true
     end
   end
 

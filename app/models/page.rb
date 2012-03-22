@@ -201,7 +201,7 @@ class Page
 
     def strip_page_parts
       self.page_parts.each do |part|
-        part.content.strip!
+        part.content.strip! unless part.content.nil?
       end
     end
   

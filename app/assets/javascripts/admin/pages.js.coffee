@@ -14,6 +14,8 @@ $(document).ready ->
           params += '&_method=put'
           params += '&' + $('meta[name=csrf-param]').attr('content') + '=' + $('meta[name=csrf-token]').attr('content')
           $.post $(this).attr('data-url'), params
+    
+    root.sortablePageList $('.sortable').first()
 
     # hide initial form elements 
     $('legend').each ->
@@ -87,12 +89,10 @@ $(document).ready ->
           pagesList.page_ids.push $(@).parent().attr('data-page_id')
         setSessionStore 'pagesState', pagesList
 
-
-
     # page parts ajax spinner 
-    $('ol#page_parts_nav a').on 'ajax:beforeSend', ->
+    $('ol#page_parts_nav a').live 'ajax:beforeSend', ->
       $('.page_parts div.spinner_wrapper .spinner').removeClass 'hidden'
-    $('ol#page_parts_nav a').on 'ajax:success', ->
+    $('ol#page_parts_nav a').live 'ajax:success', ->
       $('.page_parts div.spinner_wrapper .spinner').addClass 'hidden'
 
     # on the index page rotate arrow if the child has child_pages.
@@ -119,32 +119,30 @@ $(document).ready ->
         $('.spinner').addClass 'hidden'
         $('.spinner').css('top', 0)
 
-    # change page part nav name 
+    # Change page part nav name 
     $('li.page_part_name input').on 'change', ->
       pp_id = $(this).parent().siblings().last().children().first().attr 'value'
       page_part_nav_link = $('ol#page_parts_nav #' + pp_id + '_nav').find('a')
       old_val = page_part_nav_link.html()
 
-      /* if new value isn't blank change it if it is set it back to the old value */
+      # If new value isn't blank change it if it is set it back to the old value 
       if $(this).attr('value').trim()
         page_part_nav_link.html $(this).attr('value')
       else
         page_part_nav_link.html old_val
         $(this).attr 'value', old_val
 
-
     # edit page custom confirm delete
     if $('body.pages').length
       $.rails.allowAction = (element) ->
         answer = false
-        console.log element
         message = element.data 'confirm'
         if !message
           return true
 
         if $.rails.fire(element, 'confirm') 
           answer = $.rails.confirm message
-          if answer && element.hasClass('child_pages') || answer && element.parentsUntil('li').parent().hasClass('child_pages')
+          if answer && element.parentsUntil('li').parent().children().first().hasClass('page_fold_arrow')
             answer = $.rails.confirm('Deleteing the page ' + $(@).attr('data-title') + ' will delete the page and all child pages it is the parent of!')
         answer
 
