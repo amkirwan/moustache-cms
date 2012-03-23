@@ -9,7 +9,6 @@ Background: Login to site and navigate to users index page
     | bar  | admin |
     | qux  | editor|
 
-
   @users
   Scenario: List the users with access to the site
     Given I view the list of users with access to the site admin section
@@ -35,7 +34,15 @@ Background: Login to site and navigate to users index page
     Then I should see the flash message "Successfully updated the password for Anthony Kirwan"
 
   @delete_user
+  Scenario: Delete User account
+    Given I view the list of users with access to the site admin section
+    When I edit the user profile "foo" and delete the user
+    Then I should see the flash message "Successfully deleted the user profile for Foobar Baz"
+    And the user should be removed from the users list
+
+  @javascript @delete_user_from_users_index
   Scenario: Delete user
     Given I view the list of users with access to the site admin section
-    When I delete the user "foo"
+    When I delete the user "foo" from sites list of users
     Then I should see the flash message "Successfully deleted the user profile for Foobar Baz"
+    And the user should be removed from the users list

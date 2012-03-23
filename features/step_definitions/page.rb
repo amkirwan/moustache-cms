@@ -74,7 +74,8 @@ When /^I hide the child page "([^"]*)"$/ do |child_title|
   find(page_id_selector(@parent_page)).find('.page_fold_arrow').click
 end
 
-When /^I delete the page "([^"]*)"$/ do |title|
+When /^I edit the page "([^"]*)" and delete it$/ do |title|
+  @page = find_page_by_title(title)
   click_link title
   click_link 'Delete Page'
 end

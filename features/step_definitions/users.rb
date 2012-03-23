@@ -1,3 +1,7 @@
+def find_user_by_username(username)
+  User.where(:site => @site, :username => username).first
+end
+
 Given /^I view the list of users with access to the site admin section$/ do
   visit '/admin/users'
 end
@@ -40,10 +44,18 @@ When /^I change my password to "([^"]*)"$/ do |new_password|
   click_button 'Change Password'
 end
 
-When /^I delete the user "([^"]*)"$/ do |username|
+When /^I edit the user profile "([^"]*)" and delete the user$/ do |username|
+  within "tr##{username}" do
+    click_link "Foobar Baz"
+  end
+  click_link "Delete User"
+end
+
+When /^I delete the user "([^"]*)" from sites list of users$/ do |username|
   within "tr##{username}" do
     click_link 'Delete'
   end
+  dialog_ok
 end
 
 Then /^the user Patrick Kane should be on the list of users with access to the sites admin section$/ do
@@ -60,4 +72,8 @@ Then /^I should see the users listed$/ do
     page.should have_content(user.username)  
     page.should have_content(user.role.capitalize)
   end
+end
+
+Then /^the user should be removed from the users list$/ do
+  page.should_not have_content('foo')  
 end

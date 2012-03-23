@@ -31,10 +31,18 @@ Background: Login to site
   @delete_page
   Scenario: Delete page
     Given I view the pages in the site
-    When I delete the page "foobar"
+    When I edit the page "foobar" and delete it
     Then I should see the flash message "Successfully deleted the page foobar"
+    And the page should be removed from the pages list
 
   # Javascript steps
+  @javascript @delete_page_from_page_index
+  Scenario: Destroy page from index page
+    Given I view the pages in the site
+    When I delete the page "foobar" from the pages list
+    Then I should see the flash message "Successfully deleted the page foobar"
+    And the page should be removed from the pages list
+
   @javascript @expand_child_pages
   Scenario: Request child pages when clicking on the parent page's fold arrow
     Given the page "foobar" has a child page "quuxer"
@@ -48,13 +56,6 @@ Background: Login to site
     And I view the pages in the site
     When I hide the child page "quuxer"
     Then then "quuxer" should not be expanded within "foobar"
-
-  @javascript @delete_page_js
-  Scenario: Destroy page using javascript
-    Given I view the pages in the site
-    When I delete the page "foobar" from the pages list
-    Then I should see the flash message "Successfully deleted the page foobar"
-    And the page should be removed from the pages list
 
   @javascript @delete_double_confirm
   Scenario: Destroy page that has child pages accepting double confirmation
