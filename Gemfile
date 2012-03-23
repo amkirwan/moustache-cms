@@ -43,7 +43,7 @@ group :development, :test do
   gem "relish"
   gem "spork"
   gem "guard"
-  gem "guard-cucumber"
+  gem "guard-cucumber", :git => "git://github.com/netzpirat/guard-cucumber.git"
   gem "guard-rspec"
   gem "guard-spork"
 end
