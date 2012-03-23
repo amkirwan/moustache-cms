@@ -12,7 +12,6 @@ Background: Login to site
   @pages
   Scenario: List index pages
     Given I view the pages in the site
-    When I view the pages in the site
     Then I should see the pages listed
 
   @create_page

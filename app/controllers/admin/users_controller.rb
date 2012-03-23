@@ -25,7 +25,7 @@ class Admin::UsersController < AdminBaseController
     @user.site = @current_site
     respond_with(:admin, @user) do |format|
       if @user.save
-        format.html { redirect_to [:admin, :users], :notice => "Successfully created user profile for #{@user.full_name}" }
+        format.html { redirect_to [:admin, :users], :notice => "Successfully created the user profile for #{@user.full_name}" }
       end
     end
   end
@@ -43,7 +43,7 @@ class Admin::UsersController < AdminBaseController
           sign_in(@user, :bypass => true)
           format.html { redirect_to [:admin, @user] }
         else
-          flash[:notice] = "Successfully updated user profile for #{@user.full_name}"
+          flash[:notice] = "Successfully updated the user profile for #{@user.full_name}"
           format.html { redirect_to [:admin, :users] }
         end
       else
@@ -62,7 +62,7 @@ class Admin::UsersController < AdminBaseController
           format.html { redirect_to [:new, :admin, :user_session] }
         end
       else
-        flash[:notice] = "Successfully deleted user profile for #{@user.full_name}" 
+        flash[:notice] = "Successfully deleted the user profile for #{@user.full_name}" 
         respond_with do |format|
           format.html { redirect_to [:admin, :users] }
         end

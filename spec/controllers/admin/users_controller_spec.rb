@@ -142,7 +142,7 @@ describe Admin::UsersController do
       
       it "should should create a flash notice" do 
         do_post
-        flash[:notice].should == "Successfully created user profile for #{@admin_user.full_name}"
+        flash[:notice].should == "Successfully created the user profile for #{@admin_user.full_name}"
       end 
       
       it "should redirect to the admin users path" do
@@ -238,7 +238,7 @@ describe Admin::UsersController do
     context "when the update updates just the profile" do
       it "should set a flash[:notice] message" do
         do_put
-        flash[:notice].should == "Successfully updated user profile for #{@admin_user.full_name}"
+        flash[:notice].should == "Successfully updated the user profile for #{@admin_user.full_name}"
       end         
       
       it "should redirect to INDEX" do
@@ -305,7 +305,7 @@ describe Admin::UsersController do
       
       it "should set a flash message" do
         do_destroy
-        flash[:notice].should == "Successfully deleted user profile for #{@admin_user.full_name}"
+        flash[:notice].should == "Successfully deleted the user profile for #{@admin_user.full_name}"
       end
 
       it "should redirect to admin_users index action" do

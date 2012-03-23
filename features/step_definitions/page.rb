@@ -82,13 +82,13 @@ end
 When /^I delete the page "([^"]*)" from the pages list$/ do |title|
   @page = find_page_by_title(title)
   find(".delete_#{@page.title.parameterize('_')}").click # find delete div
-  page.driver.browser.switch_to.alert.accept
+  dialog_ok
 end
 
 When /^I delete the page "([^"]*)" from the pages list that has a child page then I should need to double confirm the delete$/ do |parent_title|
   find(".delete_#{@page.title.parameterize('_')}").click # find delete div
-  page.driver.browser.switch_to.alert.accept
-  page.driver.browser.switch_to.alert.accept
+  dialog_ok
+  dialog_ok
 end
 
 When /^I move the "([^"]*)" to come before "([^"]*)"$/ do |page_to_move, target_page|
