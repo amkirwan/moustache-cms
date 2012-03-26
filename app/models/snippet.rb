@@ -30,4 +30,10 @@ class Snippet
             
   #-- Scopes ----      
   scope :find_by_site_and_name, lambda { |site, name| { :where => { :name => name, :site_id => site.id  }} } 
+
+  #-- Class Methods --
+  def self.snippet_by_name(name)
+    self.where(:name => name.to_s).first  
+  end
+
 end

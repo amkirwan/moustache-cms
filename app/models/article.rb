@@ -105,6 +105,12 @@ class Article
   after_update :update_current_state_time
   after_initialize :default_meta_tags
 
+  # -- Class Methods --
+  def self.article_by_permalink(path)
+    self.where(:permalink => path).first
+  end
+
+
   # -- Instance Methods -----
   alias :full_path :permalink
   alias :full_path= :permalink=

@@ -18,8 +18,8 @@
         = f.label :password, "Password<abbr title='required' class='required'>*</abbr>".html_safe
         = f.password_field :password
       %li
-        = f.label :password_confirmation, "Password<abbr title='required' class='required'>*</abbr>".html_safe
-        = f.password_field :password
+        = f.label :password_confirmation, "Password Confirmation<abbr title='required' class='required'>*</abbr>".html_safe
+        = f.password_field :password_confirmation
     - elsif can_change_password?
       %li 
         = link_to 'Change Password', change_password_admin_user_path(@user)

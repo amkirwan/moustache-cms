@@ -32,4 +32,8 @@ class ArticleCollection
   validates :updated_by_id,
             :presence => true
 
+  # -- Class Methods --
+  def self.articles_by_name(name)
+    self.where(:name => name.to_s).first.articles
+  end
 end

@@ -153,6 +153,15 @@ describe Article do
     end
   end
 
+  # -- Class Methods ----
+  describe "Class Methods" do
+    describe "article_by_permalink" do
+      it "should return the article with the given permalink" do
+        Article.article_by_permalink(@article.permalink).should == @article
+      end
+    end
+  end
+
   # -- Instance Methods -----
   describe "Instance Methods" do
   end

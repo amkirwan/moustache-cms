@@ -69,17 +69,25 @@ class Site
   alias :add_domain :add_full_subdomain
   
   def page_by_full_path(path)   
-    pages.where(:full_path => path.to_s).first
-  end
-
-  def article_by_permalink(path)
-    articles.where(:permalink => path.to_s).first
+    self.pages.find_by_full_path(path)
   end
   
   def page_by_title(title)  
-    pages.where(:title => title.to_s).first
+    self.pages.find_by_title(title)
+  end
+ 
+  def article_by_permalink(path)
+    self.articles.article_by_permalink(path)
+  end
+
+  def articles_by_name(name)
+    self.article_collections.articles_by_name(name)
   end
   
+  def snippet_by_name(name)                        
+    self.snippets.snippet_by_name(name)
+  end
+
   def css_files        
     css_files = []
     self.theme_collections.each do |tc|
@@ -98,14 +106,6 @@ class Site
     theme_collection.theme_assets.where(:name => js_name, :content_type => 'application/x-javascript').first
   end 
   
-  def articles_by_name(name)
-    self.article_collections(:name => name.to_s).first.articles
-  end
-  
-  def snippet_by_name(name)                        
-    Snippet.find_by_site_and_name(self, name.to_s).first
-  end
-
   def site_asset_by_name(asset_collection, file_name)
     asset_collection = AssetCollection.first(:conditions => {:name => asset_collection, :site_id => self.id})
     asset_collection.site_assets.where(:name => file_name).first

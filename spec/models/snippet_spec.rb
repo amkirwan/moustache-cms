@@ -79,19 +79,14 @@ describe Snippet do
       end
     end
   end
+
+  # -- Class Methods ----
+  describe "Class Methods" do
+    describe "snippet_by_name" do
+      it "should return the snippet by name" do
+        Snippet.snippet_by_name(@snippet.name).should == @snippet  
+      end
+    end
+  end
+
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

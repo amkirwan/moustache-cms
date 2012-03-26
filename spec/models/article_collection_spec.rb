@@ -64,4 +64,13 @@ describe "ArticleCollection" do
     end
   end
 
+  # -- Class Methods ---
+  describe "Class Methods" do
+    describe "articles_by_name" do
+      it "should return all the articles from a collection" do
+        ArticleCollection.articles_by_name(@article_collection.name).should == @article_collection.articles  
+      end
+    end   
+  end
+
 end
