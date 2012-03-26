@@ -101,7 +101,7 @@ class Page
   
   # -- Class Mehtods --------------------------------------------------
   def self.find_by_id(page_id)
-    Page.find(page_id)
+    self.find(page_id)
   end
   
   def self.find_by_full_path(full_path)

@@ -19,6 +19,7 @@ When /^I create the user Patrick Kane$/ do
   fill_in 'Lastname*', :with => 'Kane'
   fill_in 'Email*', :with => 'pkane@example.com'
   fill_in 'Password*', :with => 'foobar7'
+  fill_in 'Password Confirmation*', :with => 'foobar7'
   choose 'Admin'
   click_button 'Create User' 
 end

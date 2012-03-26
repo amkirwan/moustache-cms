@@ -39,5 +39,9 @@ module Create
     @parent = Factory(:page, :title => 'Homepage', :site => @site, :layout => @layout, :created_by => @user, :updated_by => @user)
   end
 
+  def create_snippet(name)
+    @snippet = Factory(:snippet, :name => name, :site => @site)
+  end
+
 end
 World(Create)

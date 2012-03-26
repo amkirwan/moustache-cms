@@ -70,7 +70,7 @@ When /^I hide the child page "([^"]*)"$/ do |child_title|
   @child_page = find_page_by_title(child_title)
   @parent_page = @child_page.parent
   step %{I show "#{@parent_page.title}"'s child pages}
-  step %{then "#{@child_page.title}" should be expanded in the view}
+  step %{"#{@child_page.title}" should be expanded in the view}
   find(page_id_selector(@parent_page)).find('.page_fold_arrow').click
 end
 
@@ -133,11 +133,11 @@ When /^I delete the page part baz$/ do
   dialog_ok
 end
 
-Then /^then "([^"]*)" should be expanded in the view$/ do |child_title|
+Then /^"([^"]*)" should be expanded in the view$/ do |child_title|
   page.should have_content child_title
 end
 
-Then /^then "([^"]*)" should not be expanded within "([^"]*)"$/ do |child_title, parent_title|
+Then /^"([^"]*)" should not be expanded within "([^"]*)"$/ do |child_title, parent_title|
   @parent_page = find_page_by_title(parent_title)
   wait_for_ajax
   find(page_id_selector(@parent_page) + " ol.pages").should_not be_visible

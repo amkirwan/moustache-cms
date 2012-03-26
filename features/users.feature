@@ -1,6 +1,6 @@
 Feature: Manage Users
 
-Background: Login to site and navigate to users index page
+Background: Login to site and create users
   Given I have the site "foobar" setup
   And I am an authenticated user with the role of "admin"
   And these users have admin access

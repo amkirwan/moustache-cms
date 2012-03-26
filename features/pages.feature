@@ -48,14 +48,14 @@ Background: Login to site
     Given the page "foobar" has a child page "quuxer"
     And I view the pages in the site
     When I show "foobar"'s child pages 
-    Then then "quuxer" should be expanded in the view
+    Then "quuxer" should be expanded in the view
 
   @javascript @hide_child_pages
   Scenario: When I click on on a pages fold arrow it should hide the child pages when they are showing
     Given the page "foobar" has a child page "quuxer"
     And I view the pages in the site
     When I hide the child page "quuxer"
-    Then then "quuxer" should not be expanded within "foobar"
+    Then "quuxer" should not be expanded within "foobar"
 
   @javascript @delete_double_confirm
   Scenario: Destroy page that has child pages accepting double confirmation
