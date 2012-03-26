@@ -142,7 +142,9 @@ $(document).ready ->
 
         if $.rails.fire(element, 'confirm') 
           answer = $.rails.confirm message
-          if answer && element.parentsUntil('li').parent().children().first().hasClass('page_fold_arrow')
-            answer = $.rails.confirm('Deleteing the page ' + $(@).attr('data-title') + ' will delete the page and all child pages it is the parent of!')
+          list = element.parentsUntil('li').parent() 
+          if answer && list.children().first().hasClass('page_fold_arrow')
+            page_name = $('#' + list.attr('id') + ' > ' + 'strong').text()
+            answer = $.rails.confirm('Deleteing the page ' + page_name + ' will delete the page and all child pages it is the parent of!')
         answer
 
