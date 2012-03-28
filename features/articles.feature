@@ -13,7 +13,7 @@ Background: Login to site and create articles
 
   @article_collections
   Scenario: Show all the article collections
-    Given I view the article collections for the site
+    Given I view the article collections in the site
     Then I should see the article collections
 
   @articles_in_ac
@@ -23,7 +23,7 @@ Background: Login to site and create articles
 
   @article_collection_create
   Scenario: Create a new article collection
-    Given I view the article collections for the site
+    Given I view the article collections in the site
     When I create a article collection with the name "spotlight"
     Then I should see "spotlight" in the article collections list
     And I should see the flash message "Successfully created the article collection spotlight"
@@ -37,7 +37,7 @@ Background: Login to site and create articles
 
   @article_collection_update
   Scenario: Update a article collection
-    Given I view the article collections for the site
+    Given I view the article collections in the site
     When I change the article collection "blog" to "qux"
     Then I should see "qux" in the article collections list
     And I should see the flash message "Successfully updated the article collection qux"
@@ -51,7 +51,7 @@ Background: Login to site and create articles
 
   @delete_article_collection
   Scenario: Delete an article collection
-    Given I view the article collections for the site
+    Given I view the article collections in the site
     When I edit the article collection "blog" and delete it
     Then the article collection "blog" should be removed from the article collections list
     And I should see the flash message "Successfully deleted the article collection blog"
@@ -65,7 +65,7 @@ Background: Login to site and create articles
 
   @javascript @delete_article_collection 
   Scenario: Delete an article collection from article collections index page
-    Given I view the article collections for the site
+    Given I view the article collections in the site
     When I delete the article collection "blog" from the article collections list
     Then the article collection "blog" should be removed from the article collections list
     And I should see the flash message "Successfully deleted the article collection blog"

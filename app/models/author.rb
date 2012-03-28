@@ -32,12 +32,13 @@ class Author
   validates :lastname,
             :presence => true
 
+  validates :image, :presence => true
 
   # -- Callbacks ---
   before_save :strip_whitespace
 
   def full_name
-    if self.middlename.empty?
+    if self.middlename.nil? || self.middlename.empty?
       self.firstname.capitalize + ' ' + self.lastname.capitalize
     else
       self.firstname.capitalize + ' ' + self.middlename.capitalize + ' ' + self.lastname.capitalize
@@ -58,8 +59,8 @@ class Author
 
   private 
     def strip_whitespace
-      self.firstname.strip!
-      self.middlename.strip!
-      self.lastname.strip!
+      self.firstname.strip! unless self.firstname.nil?
+      self.middlename.strip! unless self.middlename.nil?
+      self.lastname.strip! unless self.lastname.nil?
     end
 end

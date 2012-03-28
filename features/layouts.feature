@@ -15,7 +15,7 @@ Background: Login to site and create layouts
 
   @create_layout
   Scenario: Create Layout
-    Given I want to create a new layout in the site
+    Given I want to create a layout in the site
     When I create a layout with the name "qux"
     Then I should see "qux" in the layouts list
     And I should see the flash message "Successfully created the layout qux"
@@ -23,7 +23,7 @@ Background: Login to site and create layouts
   @update_layout
   Scenario: Update Layout
     Given I view the layouts in the site
-    When I change the layout name to "quuxer"
+    When I change the layout name "foobar" to "quuxer"
     Then I should see "quuxer" in the layouts list
     And I should see the flash message "Successfully updated the layout quuxer"
 

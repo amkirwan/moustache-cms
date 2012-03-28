@@ -2,13 +2,9 @@ def find_user_by_username(username)
   User.where(:site => @site, :username => username).first
 end
 
-Given /^I view the list of users with access to the site admin section$/ do
-  visit '/admin/users'
-end
-
 Given /^these users have admin access$/ do |table|
   table.hashes.each do |hash|
-    Factory(:user, :site => @site, :username => hash[:user], :email => "#{hash[:user]}@example.com")
+    Factory(:user, :site => @site, :username => hash[:user], :email => "#{hash[:user]}@example.com", :firstname => hash[:firstname], :lastname => hash[:lastname])
   end
 end
 
@@ -25,9 +21,7 @@ When /^I create the user Patrick Kane$/ do
 end
 
 When /^I change the fullname to Patrick Kane and username to pk88 of the user foo$/ do
-  within 'tr#foo' do
-    click_link 'Foobar Baz'
-  end
+  click_link 'Foo Handlebar'
   fill_in 'Username*', :with => 'pk88'
   fill_in 'Firstname*', :with => 'Patrick'
   fill_in 'Lastname*', :with => 'Kane'
@@ -45,18 +39,12 @@ When /^I change my password to "([^"]*)"$/ do |new_password|
   click_button 'Change Password'
 end
 
-When /^I edit the user profile "([^"]*)" and delete the user$/ do |username|
-  within "tr##{username}" do
-    click_link "Foobar Baz"
-  end
-  click_link "Delete User"
+When /^I edit the user profile for "([^"]*)" and delete the user profile$/ do |fullname|
+  delete_within_item fullname, 'Delete User'
 end
 
 When /^I delete the user "([^"]*)" from sites list of users$/ do |username|
-  within "tr##{username}" do
-    click_link 'Delete'
-  end
-  dialog_ok
+  delete_from_index "tr##{username}"
 end
 
 Then /^the user Patrick Kane should be on the list of users with access to the sites admin section$/ do

@@ -55,5 +55,10 @@ module Create
   def create_asset_collection(name)
     @asset_collection = Factory(:asset_collection, :name => name, :site => @site)
   end
+
+  def create_author(props)
+    @author = Factory(:author, :firstname => props[:firstname], :lastname => props[:lastname], :site => @site)
+  end
 end
+
 World(Create)

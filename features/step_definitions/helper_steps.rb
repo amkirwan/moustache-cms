@@ -10,7 +10,3 @@ Given /^I visit "(.*)"$/ do |path|
   visit path
 end
 
-Then /^I should see the flash message "(.*)"$/ do |message|
-  page.should have_content message
-end
-

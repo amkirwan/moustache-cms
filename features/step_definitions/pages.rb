@@ -33,10 +33,6 @@ Given /^these pages exist$/ do |table|
   end
 end
 
-Given /^I view the pages in the site$/ do
-  visit '/admin/pages'
-end
-
 Given /^I want to create a new page in the site$/ do
   step %{I view the pages in the site}
   click_link 'New Page'
@@ -76,8 +72,7 @@ end
 
 When /^I edit the page "([^"]*)" and delete it$/ do |title|
   @page = find_page_by_title(title)
-  click_link title
-  click_link 'Delete Page'
+  delete_within_item title, 'Delete Page'
 end
 
 When /^I delete the page "([^"]*)" from the pages list$/ do |title|
@@ -149,14 +144,8 @@ Then /^I should see the pages listed$/ do
   end
 end
 
-Then /^I should see "([^"]*)" in the pages list$/ do |title|
-  path_should_be admin_pages_path
-  page.should have_content title
-end
-
 Then /^the page should be removed from the pages list$/ do 
-  sleep 1
-  page.should_not have_selector(page_id_selector(@page))
+  removed_item_by_selector page_id_selector(@page)
 end
 
 Then /^page part nav tab should show "([^"]*)"$/ do |nav_name|

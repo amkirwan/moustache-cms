@@ -15,17 +15,12 @@ Given /^these articles exist in the collection "([^"]*)"$/ do |ac_title, table|
   end
 end
 
-Given /^I view the article collections for the site$/ do
-  visit '/admin/article_collections'
-end
-
 Given /^I view the article collection "([^"]*)"$/ do |ac_title|
   visit '/admin/article_collections'
   click_link ac_title
 end
 
 When /^I create a article collection with the name "([^"]*)"$/ do |name|
-  visit '/admin/article_collections'
   click_link 'New Article Collection'
   fill_in 'Name', :with => name
   check 'amkirwan'
@@ -33,7 +28,6 @@ When /^I create a article collection with the name "([^"]*)"$/ do |name|
 end
 
 When /^I change the article collection "([^"]*)" to "([^"]*)"$/ do |old_name, new_name|
-  visit '/admin/article_collections'
   click_link old_name
   click_link 'Edit Collection Props'
   fill_in 'Name', :with => new_name
@@ -41,16 +35,11 @@ When /^I change the article collection "([^"]*)" to "([^"]*)"$/ do |old_name, ne
 end
 
 When /^I edit the article collection "([^"]*)" and delete it$/ do |name|
-  click_link name
-  click_link 'Delete Collection'
+  delete_within_item name, 'Delete Collection'
 end
 
 When /^I delete the article collection "([^"]*)" from the article collections list$/ do |name|
-  within "tr#ac_#{name}" do
-    click_link 'Delete'
-  end
-  dialog_ok
-  wait_for_ajax
+  delete_from_index("tr#ac_#{name}")
 end
 
 When /^I create a article "([^"]*)"$/ do |title|

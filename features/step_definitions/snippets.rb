@@ -2,10 +2,6 @@ def find_snippet_by_name(name)
   Snippet.where(:site => @site, :name => name).first
 end
 
-Given /^I view the snippets in the site$/ do
-  visit '/admin/snippets'
-end
-
 Given /^these snippets exist$/ do |table|
   table.hashes.each do |hash|
     create_snippet(hash[:name])
@@ -31,17 +27,12 @@ When /^I change the snippet name to "([^"]*)"$/ do |snippet_name|
 end
 
 When /^I edit the snippet "([^"]*)" and delete it$/ do |snippet_name|
-  click_link snippet_name
-  click_link 'Delete Snippet'
+  delete_within_item snippet_name, 'Delete Snippet'
 end
 
 
 When /^I delete the snippet "([^"]*)" from the snippets list$/ do |snippet_name|
-  within "tr#snippet_#{snippet_name}" do
-    click_link 'Delete'
-  end
-  dialog_ok
-  wait_for_ajax
+  delete_from_index "tr#snippet_#{snippet_name}"
 end
 
 Then /^I should see the snippets listed$/ do
@@ -50,11 +41,6 @@ Then /^I should see the snippets listed$/ do
   end
 end
 
-Then /^I should see "([^"]*)" in the snippets list$/ do |snippet_name|
-  page.should have_content snippet_name
-end 
-
-
 Then /^the snippet should be removed from the snippets list$/ do
-  page.should_not have_selector('tr#snippet_foobar')
+  removed_item_by_selector 'tr#snippet_foobar'
 end

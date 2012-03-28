@@ -1,4 +1,4 @@
-%tr{:id => "author_#{author.full_name}", :class => "#{cycle('even', 'odd')}"}
+%tr{:id => "author_#{author.full_name.parameterize('_')}", :class => "#{cycle('even', 'odd')}"}
   %td.name= link_to author.full_name, [:edit, :admin, author]
   - if can? :destroy, author
     %td.delete= link_to "Delete", [:admin, author], :method => :delete, :confirm => "Are you sure you want to delete the author #{author.full_name}", :class => "delete"
