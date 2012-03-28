@@ -43,5 +43,17 @@ module Create
     @snippet = Factory(:snippet, :name => name, :site => @site)
   end
 
+  def create_article_collection(name)
+    @article_collection = Factory(:article_collection, :name => name, :site => @site)
+  end
+
+  def create_article(title, article_collection)
+    article_collection.articles << @article = Factory.build(:article, :site => @site, :title => title, :created_by => @user, :updated_by => @user)
+    @article
+  end
+
+  def create_asset_collection(name)
+    @asset_collection = Factory(:asset_collection, :name => name, :site => @site)
+  end
 end
 World(Create)
