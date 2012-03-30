@@ -68,15 +68,6 @@ When /^I delete the article "([^"]*)" from the articles list$/ do |title|
   wait_for_ajax
 end
 
-Then /^I should see "([^"]*)" in the article collections list$/ do |name|
-  path_should_be admin_article_collections_path
-  page.should have_content name
-end
-
-Then /^I should see "([^"]*)" in the articles list$/ do |title|
-  page.should have_content title
-end
-
 Then /^I should see the article collections$/ do
   @site.article_collections.each do |ac|
     step %{I should see "#{ac.name}" in the article collections list}

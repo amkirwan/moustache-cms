@@ -46,10 +46,6 @@ When /^I upload "([^"]*)" to the asset collection "([^"]*)"$/ do |file_name, ass
   click_link 'Add files'
 end
 
-Then /^I should see "([^"]*)" in the site assets collections list$/ do |title|
-  page.should have_content title
-end
-
 Then /^I should see the site assets collections$/ do
   @site.asset_collections.each do |ac|
     step %{I should see "#{ac.name}" in the site assets collections list}

@@ -59,6 +59,15 @@ module Create
   def create_author(props)
     @author = Factory(:author, :firstname => props[:firstname], :lastname => props[:lastname], :site => @site)
   end
+
+  def create_theme_collection(props)
+    @theme_collection = Factory(:theme_collection, :name => props[:name], :site => @site)
+  end
+
+  def create_theme_asset(props, theme_collection)
+    @theme_asset = Factory.build(:theme_asset, :name => props[:name]) 
+    theme_collection.theme_assets << @theme_asset
+  end
 end
 
 World(Create)

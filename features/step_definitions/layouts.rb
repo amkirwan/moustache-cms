@@ -9,7 +9,7 @@ Given /^these layouts exist$/ do |table|
 end
 
 Given /^I want to create a layout in the site$/ do
-  new_form '/admin/layouts', 'New Layout'
+  new_form 'layouts', 'New Layout'
 end
 
 When /^I create a layout with the name "([^"]*)"$/ do |name|

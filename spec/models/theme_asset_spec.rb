@@ -116,7 +116,7 @@ describe ThemeAsset do
      describe "should return the theme assets that are not css, javascript or images" do
        it "should return all the other theme asset files" do
          other = theme_collection.theme_assets.other_files
-         other.size.should == 2
+         other.size.should == 1
          other.last.should == @theme_asset_type
        end
      end

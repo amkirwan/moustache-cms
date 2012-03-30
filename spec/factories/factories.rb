@@ -1,3 +1,4 @@
+
 Factory.define :meta_tag do |meta|
   meta.name "title"
   meta.content "foobar"
@@ -118,7 +119,6 @@ Factory.define :author do |author|
   author.site { Factory.build(:site) }
   author.prefix "prefix"
   author.firstname "foobar"
-  author.middlename "middle"
   author.lastname "baz"
   author.profile "this is the author profile"
   author.image { File.open("#{Rails.root}/spec/fixtures/assets/rails.png") }
@@ -186,7 +186,7 @@ end
 Factory.define :theme_collection do |collection|
   collection.site { Factory.build(:site) }
   collection.sequence(:name) { |n| "name_#{n}" }
-  collection.theme_assets { [ Factory.build(:theme_asset) ] }
+  collection.theme_assets { [] }
   collection.created_by_id { Factory.build(:user).id }
   collection.updated_by_id { Factory.build(:user).id }
 end

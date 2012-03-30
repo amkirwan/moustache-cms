@@ -43,6 +43,11 @@ describe Author do
       @author.lastname = nil
       @author.should_not be_valid
     end
+
+    it "should not be valid without a image" do
+      @author.remove_image!
+      @author.should_not be_valid
+    end
   end
 
   # -- Before Save ---

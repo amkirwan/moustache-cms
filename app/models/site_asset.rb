@@ -31,8 +31,7 @@ class SiteAsset
   
   # -- Validations -----
   validates :name, :presence => true
-            
-  validates :asset, :presence => true
+  validates :asset, :presence => { :message => "must have a file selected" }
   
   # -- Callbacks
   before_validation :set_name
