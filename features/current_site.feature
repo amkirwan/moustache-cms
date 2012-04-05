@@ -38,8 +38,16 @@ Background: Login to the site "foobar" and manage the settings
     Then I should see the flash message "Successfully updated the site foobar"
 
   @javascript @remove_added_domain
-  Scenario: Delete added domain field
+  Scenario: Delete added domain 
     When I add an additional domain name field and delete it
-    Then it should be removed from the page
+    Then the additional domain name should be removed from the site
 
+  @javascript @add_meta_tag
+  Scenario: Add meta tag to site
+    When I add an additional meta tag with the name "viewport" and the content "width=device-width, initial-scale=1.0"
+    Then I should see the flash message "Successfully updated the site foobar"
 
+  @javascript @delete_meta_tag
+  Scenario: Delete added meta tag
+    When I add an additional meta tag and delete it 
+    Then the additional meta tag should be removed from the site
