@@ -247,7 +247,9 @@ a:hover.action, a:focus.action {
   background: lighten(#000, 10%)
 }
 
-
+p.info {
+  margin-bottom: 1em;
+}
 
 ul.submenu {
   list-style: none;

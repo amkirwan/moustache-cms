@@ -7,6 +7,60 @@ describe Admin::CurrentSiteController do
     @current_site = @site
   end
 
+  require 'spec_helper'
+
+  describe "GET index" do
+    def do_get
+      get :index
+    end
+
+    let(:sites) { [mock_model(Site), mock_model(Site)] }  
+
+    before(:each) do
+      Site.stub(:accessible_by).and_return(sites)
+    end
+
+    it "should assign all the sites" do
+      do_get
+      assigns(:current_sites).should == sites
+    end
+
+    it "should assign the sites with current sites" do
+      do_get
+      assigns(:sites).should == sites
+    end
+  end
+  
+  describe "GET new" do
+    def do_get
+      get :new
+    end
+
+    before(:each) do
+      @new_site = mock_model(Site).as_new_record
+      Site.stub(:new).and_return(@new_site)
+    end
+
+    it "should receive new and return" do
+      Site.should_receive(:new).and_return(@new_site)
+      do_get  
+    end
+
+    it "should assign the @new_site for the view" do
+      do_get
+      assigns(:current_site).should == @new_site  
+    end
+
+    it "should assign the @site for the view" do
+      do_get
+      assigns(:site).should == @new_site  
+    end
+
+    it "should render the new template" do
+      do_get
+      response.should render_template("admin/current_site/new")
+    end
+  end
 
   describe "GET edit" do
     let(:params) {{ "id" => @current_site.to_param }}
@@ -32,6 +86,57 @@ describe Admin::CurrentSiteController do
     it "should render the edit template" do
       do_get
       response.should render_template("admin/current_site/edit")
+    end
+  end
+
+  describe "POST create" do
+    let(:params) {{ "site"=> {"name" => "blog", "subdomain" => "blog", "domain" => "org"} }}
+
+    def do_post(post_params=params)
+      post :create, post_params
+    end
+
+    before(:each) do
+      @site.as_new_record
+      Site.stub(:new).and_return(@site) 
+    end
+
+    it "should create a new site from the params" do
+      Site.should_receive(:new).with(params["site"]).and_return(@site)
+      do_post
+    end
+
+    it "should assign the @site for the view" do
+      do_post
+      assigns(:site).should == @site
+    end
+
+    context "with valid params" do
+      before(:each) do
+        @site.stub(:save).and_return(true)
+      end
+
+      it "should assign the flash message" do
+        do_post
+        flash[:notice].should_not be_empty
+      end
+
+      it "should redirect to the sites page" do
+        do_post
+        response.should redirect_to [:admin, :sites]
+      end
+    end
+
+    context "with invalid params" do
+      before(:each) do
+        @site.stub(:save).and_return(false)
+        @site.stub(:errors => {:anything => "site errors"})
+      end
+
+      it "should render the new template" do
+        do_post
+        response.should render_template('admin/current_site/new')
+      end
     end
   end
 

@@ -274,5 +274,15 @@ describe User do
       end
     end
 
+    describe "#clone_and_add_to_site" do
+      it "should add the current user as a user to a new site" do
+        new_site = Factory(:site, :name => 'blog')
+        @user.clone_and_add_to_site(new_site)        
+        Site.where(:name => 'blog').first.users.count.should == 1
+        #new_site.reload
+        #new_site.users.count.should == 1
+      end  
+    end
+
   end
 end

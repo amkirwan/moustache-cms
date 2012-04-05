@@ -1,0 +1,5 @@
+- header_content 'shared/header_wrapper', :object => :Site do
+  = can_create? Site
+
+- inner_content "shared/inner_wrapper" do
+  = list_objects @current_sites, :message => 'Add A Site', :link => :site

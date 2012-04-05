@@ -1,0 +1,18 @@
+= form_for([:admin, @site], :html => {:class => "site_prop", :autocomplete => :off}) do |f|
+  %p.info Creating a new site will create a default admin user account with your current user profile and password. Your current account and the new account will not be linked so changes you make in one will not be applyed to the other.
+  = render :partial => "shared/error_messages", :locals => { :target => @site }
+  = foldable_fieldset 'General' do
+    %ol.form_fields
+      %li
+        = f.label :name, "Name<abbr title='required' class='required'>*</abbr>".html_safe
+        = f.text_field :name, :placeholder => 'blog'
+      %li
+        = f.label :subdomain, "Subdomain<abbr title='required' class='required'>*</abbr>".html_safe
+        = f.text_field :subdomain, :placeholder => 'blog'
+      %li
+        = f.label :default_domain, "Domain<abbr title='required' class='required'>*</abbr>".html_safe
+        = f.text_field :default_domain, :placeholder => 'com'
+      %li
+        = f.submit button_label, :class => "submit"
+        = link_to "Cancel", [:admin, :sites], :class => "cancel" 
+   

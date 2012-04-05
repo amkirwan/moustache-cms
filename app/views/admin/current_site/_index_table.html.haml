@@ -1,0 +1,5 @@
+%table{:class => "info sites two_col"}
+  %tr
+    %th Site Name
+    %th Delete Site
+  = render :partial => 'site', :collection => @sites.asc(:name)

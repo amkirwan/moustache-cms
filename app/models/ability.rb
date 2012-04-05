@@ -44,7 +44,9 @@ class Ability
     end
 
     if user.role? :admin
-      can :manage, Site, :id => user.site_id
+      #can :manage, Site, :id => user.site_id
+      can [:read, :create], Site
+      can [:update, :destroy], Site, :id => user.site_id
       can :manage, Page, :site_id => user.site_id
       can :manage, ArticleCollection, :site_id => user.site_id
       can :manage, Article, :site_id => user.site_id

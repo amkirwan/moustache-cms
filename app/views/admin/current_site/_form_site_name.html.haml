@@ -1,5 +1,8 @@
 %li
+  %p Manage other #{link_to 'Sites', admin_sites_path}
+%li
   = foldable_fieldset 'Site Name', :id => 'current_site_name' do
     %div.fields_wrap
       = f.label :name
       = f.text_field :name
+

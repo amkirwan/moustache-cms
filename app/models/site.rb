@@ -2,7 +2,7 @@ class Site
   include Mongoid::Document
   include Mongoid::Timestamps 
   
-  attr_accessible :name, :subdomain, :domain_names, :meta_tags_attributes
+  attr_accessible :name, :subdomain, :domain_names, :default_domain, :meta_tags_attributes
   
   field :name
   field :subdomain

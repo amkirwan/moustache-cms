@@ -77,7 +77,19 @@ describe Site do
     end
   end
   
-  
+  # -- Callbacks ---
+  describe "Callbacks" do
+   describe "#add_subdomain_to_domain_names" do
+      it "should add the new subdomain and delete the old one" do
+        @site.subdomain = "baz"
+        @site.default_domain = "chicago-cubs.com"
+        @site.save
+        @site.full_subdomain.should == "baz.chicago-cubs.com"
+        @site.domain_names.should have(1).item
+      end
+    end
+  end
+
   # -- Scope ------------------------------------------------------
   describe "Scope" do
     describe "#match_domain" do
@@ -101,16 +113,6 @@ describe Site do
     describe "#full_subdomain" do
       it "should return the full domain" do
         @site.full_subdomain.should == "#{@site.subdomain}.com"
-      end
-    end
-    
-    describe "#add_subdomain_to_domain_names" do
-      it "should add the new subdomain and delete the old one" do
-        @site.subdomain = "baz"
-        @site.default_domain = "chicago-cubs.com"
-        @site.save
-        @site.full_subdomain.should == "baz.chicago-cubs.com"
-        @site.domain_names.should have(1).item
       end
     end
     

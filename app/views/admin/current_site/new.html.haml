@@ -1,0 +1,8 @@
+- header_content 'shared/header_wrapper', :object => @site
+
+- inner_content "shared/inner_wrapper" do
+  %div.breadcrumb
+    = link_to "&laquo; Sites".html_safe, [:admin, :sites]
+
+  = render :partial => "new_form",  
+           :locals => { :button_label => "Create Site" }

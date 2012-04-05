@@ -6,6 +6,7 @@ class User
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :timeoutable
    
   attr_accessible :firstname,
+                  :middlename,
                   :lastname,
                   :email,
                   :password,
@@ -15,6 +16,7 @@ class User
   # -- Fields -----------------------------------------------    
   field :username
   field :firstname
+  field :middlename
   field :lastname
   field :email
   field :role 
@@ -92,7 +94,11 @@ class User
   end
 
   def full_name
-    "#{firstname.capitalize} #{lastname.capitalize}"
+    if middlename.nil? || middlename.blank?
+      "#{firstname.capitalize} #{lastname.capitalize}"
+    else
+      "#{firstname.capitalize} #{middlename.slice(0).capitalize} #{lastname.capitalize}"
+    end
   end
 
   def update_with_password(params={})
@@ -114,6 +120,13 @@ class User
 
     clean_up_passwords if self.respond_to?(:password)
     result
+  end
+
+  def clone_and_add_to_site(site)
+    new_user = self.clone
+    new_user.password = self.password
+    new_user.site_id = site.id
+    new_user.save
   end
  
   private

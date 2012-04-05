@@ -1,7 +1,7 @@
 module Admin::CurrentSiteHelper
 
   def site_domain_name_id(domain)
-    'site_domain_name_' + domain.gsub(/\./, '_')
+    'site_domain_name_' + domain.gsub(/\./, '_') 
   end
 
   def can_manage_domain?(domain, index)

@@ -271,7 +271,10 @@ describe Ability do
     context "Admin Approved" do
       describe "Admin Site Model Approved" do
         it "should allow the user with the role of admin to manager the site" do
-          admin_ability.should be_able_to(:manager, site)
+          admin_ability.should be_able_to(:read, site)
+          admin_ability.should be_able_to(:update, site)
+          admin_ability.should be_able_to(:destroy, site)
+          admin_ability.should be_able_to(:create, Site.new)
         end
       end
 
