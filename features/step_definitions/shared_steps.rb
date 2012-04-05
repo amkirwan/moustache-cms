@@ -20,8 +20,29 @@ def new_form(path, new_link)
   click_link new_link
 end
 
+def add_meta_tag(name, content, submit)
+  click_link 'Add Meta Tag'
+  wait_for_ajax
+  # find new name input
+  find(:xpath, "//ol[contains(@class, 'meta_tags')]/li[last()-1]/input[1]").set name
+  # find new content input
+  find(:xpath, "//ol[contains(@class, 'meta_tags')]/li[last()-1]/input[last()]").set content
+  click_button submit
+end
+
 Given /^I view the (.*) in the site$/ do |index_page|
   visit "/admin/#{index_page.gsub(/[\s]/, '_')}"
+end
+
+When /^I delete the last meta tag added to the (?:.*)$/ do
+  within(:xpath, "//ol[contains(@class, 'meta_tags')]/li[last()-2]") do
+    click_link 'Delete'
+  end
+  dialog_ok
+end
+
+When /^I add an additional meta tag with the name "([^"]*)" and the content "([^"]*)" and click "([^"]*)"$/ do |name, content, button_name|
+  add_meta_tag(name, content, button_name)
 end
 
 Then /^I should see "([^"]*)" in the (?:.*) list$/ do |content|
@@ -31,3 +52,5 @@ end
 Then /^I should see the flash message "(.*)"$/ do |message|
   page.should have_content message
 end
+
+

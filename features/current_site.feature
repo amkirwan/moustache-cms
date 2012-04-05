@@ -44,10 +44,13 @@ Background: Login to the site "foobar" and manage the settings
 
   @javascript @add_meta_tag
   Scenario: Add meta tag to site
-    When I add an additional meta tag with the name "viewport" and the content "width=device-width, initial-scale=1.0"
+    When I view the site settings
+    And I add an additional meta tag with the name "viewport" and the content "width=device-width, initial-scale=1.0" and click "Update Site"
     Then I should see the flash message "Successfully updated the site foobar"
 
   @javascript @delete_meta_tag
   Scenario: Delete added meta tag
-    When I add an additional meta tag and delete it 
+    When I view the site settings
+    And I add an additional meta tag with the name "viewport" and the content "width=device-width, initial-scale=1.0" and click "Update Site"
+    And I delete the last meta tag added to the site
     Then the additional meta tag should be removed from the site

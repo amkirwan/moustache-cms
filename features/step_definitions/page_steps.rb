@@ -128,6 +128,18 @@ When /^I delete the page part baz$/ do
   dialog_ok
 end
 
+
+When /^I add a new meta tag to the page "([^"]*)"$/ do |page|
+  steps %{
+    And I edit the page "#{page}"
+    And I expand "Page Meta Tags"
+    And I add an additional meta tag with the name "viewport" and the content "width=device-width, initial-scale=1.0" and click "Update Page"
+    And I edit the page "#{page}"
+    And I expand "Page Meta Tags"
+  }
+end
+
+
 Then /^"([^"]*)" should be expanded in the view$/ do |child_title|
   page.should have_content child_title
 end

@@ -119,3 +119,17 @@ Background: Login to site
     When I edit the page "foobar" with an additional page part baz
     And I add a page part
     Then I can switch between the page parts in the page part navigation tabs
+
+  @javascript @add_meta_tag
+  Scenario: add meta tag to the page
+    Given I view the pages in the site
+    When I edit the page "foobar"
+    And I expand "Page Meta Tags"
+    And I add an additional meta tag with the name "viewport" and the content "width=device-width, initial-scale=1.0" and click "Update Page"
+    Then I should see the flash message "Successfully updated the page foobar"
+
+  @javascript @delete_meta_tag
+  Scenario: Delete added meta tag
+    Given I view the pages in the site
+    When I add a new meta tag to the page "foobar"
+    And I delete the last meta tag added to the page
