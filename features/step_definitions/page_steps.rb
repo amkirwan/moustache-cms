@@ -128,6 +128,11 @@ When /^I delete the page part baz$/ do
   dialog_ok
 end
 
+When /^I expand "([^"]*)"$/ do |fieldset_legend|
+  #find(:xpath, "//fieldset[@id='meta_tags_fieldset']/legend").click
+  page.find('legend', :text => fieldset_legend).click
+  wait_for_ajax
+end
 
 When /^I add a new meta tag to the page "([^"]*)"$/ do |page|
   steps %{
@@ -139,6 +144,20 @@ When /^I add a new meta tag to the page "([^"]*)"$/ do |page|
   }
 end
 
+When /^I add a custom field with the name "([^"]*)" and the content "([^"]*)"$/ do |name, content|
+  click_link 'Add Custom Field'
+  find(:xpath, "//ol[contains(@class, 'custom_fields')]/li[1]/input[1]").set name
+  find(:xpath, "//ol[contains(@class, 'custom_fields')]/li[1]/input[2]").set content
+end 
+
+When /^I add a new custom field to the page "([^"]*)"$/ do |page|
+  steps %{
+    And I edit the page "#{page}"
+    And I expand "Page Custom Fields"
+    And I add a custom field with the name "foobar" and the content "custom content" 
+  }  
+  click_button 'Update Page'
+end
 
 Then /^"([^"]*)" should be expanded in the view$/ do |child_title|
   page.should have_content child_title

@@ -54,11 +54,6 @@ When /^I add an additional domain name field and delete it$/ do
   dialog_ok
 end
 
-When /^I expand "([^"]*)"$/ do |fieldset_legend|
-  find(:xpath, "//fieldset[@id='meta_tags_fieldset']/legend").click
-  wait_for_ajax
-end
-
 Then /^I should see all the sites listed$/ do
   Site.all.each do |site|
     step %{I should see "#{site.name}" in the sites list}

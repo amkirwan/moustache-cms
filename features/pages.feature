@@ -133,3 +133,9 @@ Background: Login to site
     Given I view the pages in the site
     When I add a new meta tag to the page "foobar"
     And I delete the last meta tag added to the page
+
+  @javascript @add_custom_field
+  Scenario: Add custom field to the page
+    Given I view the pages in the site
+    When I add a new custom field to the page "foobar"
+    Then I should see the flash message "Successfully updated the page foobar"
