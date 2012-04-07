@@ -32,7 +32,7 @@ gem "unicorn"
 
 group :development, :test do
   gem "rspec-rails", :git => "git://github.com/rspec/rspec-rails.git"
-  gem "cucumber-rails"
+  gem "cucumber-rails", :require => false
   gem "capybara"
   gem "launchy"
   gem "database_cleaner"
