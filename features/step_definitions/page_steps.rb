@@ -128,19 +128,11 @@ When /^I delete the page part baz$/ do
   dialog_ok
 end
 
-When /^I expand "([^"]*)"$/ do |fieldset_legend|
-  #find(:xpath, "//fieldset[@id='meta_tags_fieldset']/legend").click
-  page.find('legend', :text => fieldset_legend).click
-  wait_for_ajax
-end
-
 When /^I add a new meta tag to the page "([^"]*)"$/ do |page|
   steps %{
     And I edit the page "#{page}"
     And I expand "Page Meta Tags"
-    And I add an additional meta tag with the name "viewport" and the content "width=device-width, initial-scale=1.0" and click "Update Page"
-    And I edit the page "#{page}"
-    And I expand "Page Meta Tags"
+    And I add an additional meta tag with the name "viewport" and the content "width=device-width, initial-scale=1.0" and click "Save and Continue Editing"
   }
 end
 
@@ -156,7 +148,15 @@ When /^I add a new custom field to the page "([^"]*)"$/ do |page|
     And I expand "Page Custom Fields"
     And I add a custom field with the name "foobar" and the content "custom content" 
   }  
-  click_button 'Update Page'
+  click_button 'Save and Continue Editing'
+end
+
+When /^I delete the last custom field added to the page$/ do
+  step %{I expand "Page Custom Fields"}
+  within(:xpath, "//ol[contains(@class, 'custom_fields')]/li[last()-2]") do
+    click_link 'Delete'
+  end  
+  dialog_ok
 end
 
 Then /^"([^"]*)" should be expanded in the view$/ do |child_title|
@@ -222,3 +222,5 @@ Then /^I can switch between the page parts in the page part navigation tabs$/ do
   wait_for_ajax
   page_part_nav(:selected => pp_id, :other_tabs => [foobar_id, baz_id])
 end
+
+

@@ -78,20 +78,6 @@ Background: Login to site
     And I change the page part name to "changed_page_part_name"
     Then page part nav tab should show "changed_page_part_name"
 
-
-  @javascript @change_page_position
-  Scenario: Move page
-    Given I view the pages in the site
-    When I move the "qux" to come before "foboar"
-    Then I should see the flash message "Updated Page Position"
-
-  @javascript @change_page_part_name
-  Scenario: Changing a page part name should change the name in the tab
-    Given I view the pages in the site
-    When I edit the page "foobar"
-    And I change the page part name to "changed_page_part_name"
-    Then page part nav tab should show "changed_page_part_name"
-
   @javascript @add_page_part
   Scenario: Add a page part to the page
     Given I view the pages in the site
@@ -133,9 +119,18 @@ Background: Login to site
     Given I view the pages in the site
     When I add a new meta tag to the page "foobar"
     And I delete the last meta tag added to the page
+    Then I should see the flash message "Successfully updated the page foobar"
 
   @javascript @add_custom_field
   Scenario: Add custom field to the page
     Given I view the pages in the site
     When I add a new custom field to the page "foobar"
     Then I should see the flash message "Successfully updated the page foobar"
+
+  @javascript @delete_custom_field
+  Scenario: Delete custom field from the page
+    Given I view the pages in the site
+    When I add a new custom field to the page "foobar"
+    And I delete the last custom field added to the page
+    Then I should see the flash message "Successfully updated the page foobar"
+

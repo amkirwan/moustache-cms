@@ -1,3 +1,7 @@
+def path_should_be(path)
+  current_path.should == path
+end
+
 def delete_within_item(item_link, delete_link)
   click_link item_link
   click_link delete_link
@@ -34,7 +38,13 @@ Given /^I view the (.*) in the site$/ do |index_page|
   visit "/admin/#{index_page.gsub(/[\s]/, '_')}"
 end
 
-When /^I delete the last meta tag added to the (?:.*)$/ do
+When /^I expand "([^"]*)"$/ do |fieldset_legend|
+  page.find('legend', :text => fieldset_legend).click
+  wait_for_ajax
+end
+
+When /^I delete the last meta tag added to the (.*)$/ do |page|
+  step %{I expand "Page Meta Tags"} if page == "page"
   within(:xpath, "//ol[contains(@class, 'meta_tags')]/li[last()-2]") do
     click_link 'Delete'
   end
@@ -52,5 +62,3 @@ end
 Then /^I should see the flash message "(.*)"$/ do |message|
   page.should have_content message
 end
-
-
