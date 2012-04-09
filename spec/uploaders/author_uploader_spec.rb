@@ -4,9 +4,9 @@ require "carrierwave/test/matchers"
 describe AuthorUploader do
   include CarrierWave::Test::Matchers
   
-  let(:user) { Factory(:user) }
-  let(:site) { Factory(:site, :users => [user]) }
-  let(:author) { Factory.build(:author, :firstname => "Anthony", :middlename => '', :lastname => "Kirwan") }  
+  let(:user) { FactoryGirl.create(:user) }
+  let(:site) { FactoryGirl.create(:site, :users => [user]) }
+  let(:author) { FactoryGirl.build(:author, :firstname => "Anthony", :middlename => '', :lastname => "Kirwan") }  
   
   before do
     AuthorUploader.enable_processing = true

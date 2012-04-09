@@ -20,10 +20,10 @@ describe HandlebarCms::CalcMd5 do
   end
 
   before(:each) do
-    @site = Factory(:site)
-    @user = Factory(:user, :site => @site)
-    @ac = Factory(:asset_collection, :site => @site, :created_by => @user, :updated_by => @user)
-    @ac.site_assets << @site_asset = Factory.build(:site_asset, :asset => AssetFixtureHelper.open("rails.png"), :content_type => "image/png")
+    @site = FactoryGirl.create(:site)
+    @user = FactoryGirl.create(:user, :site => @site)
+    @ac = FactoryGirl.create(:asset_collection, :site => @site, :created_by => @user, :updated_by => @user)
+    @ac.site_assets << @site_asset = FactoryGirl.build(:site_asset, :asset => AssetFixtureHelper.open("rails.png"), :content_type => "image/png")
   end
 
   describe "#calc_md5" do

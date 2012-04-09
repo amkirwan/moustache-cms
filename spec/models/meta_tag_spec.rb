@@ -3,7 +3,7 @@ require "spec_helper"
 describe MetaTag do 
 
   before(:each) do
-    @meta_tag = Factory.build(:meta_tag)
+    @meta_tag = FactoryGirl.build(:meta_tag)
   end
 
   # -- Associations --

@@ -2,16 +2,16 @@ require 'spec_helper'
 
 describe SiteAsset do  
   
-  let(:user) { Factory(:user)}
-  let(:site) { Factory(:site, :users => [user]) }
+  let(:user) { FactoryGirl.create(:user)}
+  let(:site) { FactoryGirl.create(:site, :users => [user]) }
   
   after(:all) do
     AssetFixtureHelper.reset!
   end
 
   before(:each) do
-    @ac = Factory(:asset_collection, :site => site, :created_by => user, :updated_by => user)
-    @ac.site_assets << @site_asset = Factory.build(:site_asset, :asset => AssetFixtureHelper.open("rails.png"), :content_type => "image/png")
+    @ac = FactoryGirl.create(:asset_collection, :site => site, :created_by => user, :updated_by => user)
+    @ac.site_assets << @site_asset = FactoryGirl.build(:site_asset, :asset => AssetFixtureHelper.open("rails.png"), :content_type => "image/png")
   end
   
   describe "it should allow mass assignment of the fields" do
@@ -74,7 +74,7 @@ describe SiteAsset do
        end     
        
        it "should return false when the site_asset is not an image" do 
-          site_asset = Factory.build(:site_asset, :asset => AssetFixtureHelper.open("hello.pdf"))
+          site_asset = FactoryGirl.build(:site_asset, :asset => AssetFixtureHelper.open("hello.pdf"))
           site_asset.should_not be_image
        end  
      end

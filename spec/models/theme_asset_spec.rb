@@ -1,19 +1,19 @@
 require 'spec_helper'
 
 describe ThemeAsset do  
-  let(:site) { Factory(:site) }
-  let(:user) { Factory(:user, :site => site) }
-  let(:theme_collection) { Factory(:theme_collection, :site => site) }
+  let(:site) { FactoryGirl.create(:site) }
+  let(:user) { FactoryGirl.create(:user, :site => site) }
+  let(:theme_collection) { FactoryGirl.create(:theme_collection, :site => site) }
   
   after(:all) do
     AssetFixtureHelper.reset!
   end
 
   before(:each) do
-    theme_collection.theme_assets << @theme_asset_image = Factory.build(:theme_asset, :name => "image", :asset => AssetFixtureHelper.open("rails.png"), :content_type => "image/png", :creator_id => user.id, :updator_id => user.id)
-    theme_collection.theme_assets << @theme_asset_css = Factory.build(:theme_asset, :name => "css",  :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css", :creator_id => user.id, :updator_id => user.id)
-    theme_collection.theme_assets << @theme_asset_js = Factory.build(:theme_asset, :name => "js", :asset => AssetFixtureHelper.open("theme_js.js"), :content_type => "application/x-javascript", :creator_id => user.id, :updator_id => user.id)
-    theme_collection.theme_assets << @theme_asset_type = Factory.build(:theme_asset, :name => "other", :asset => AssetFixtureHelper.open("Inconsolata.otf"), :content_type => "application/octet-stream", :creator_id => user.id, :updator_id => user.id)
+    theme_collection.theme_assets << @theme_asset_image = FactoryGirl.build(:theme_asset, :name => "image", :asset => AssetFixtureHelper.open("rails.png"), :content_type => "image/png", :creator_id => user.id, :updator_id => user.id)
+    theme_collection.theme_assets << @theme_asset_css = FactoryGirl.build(:theme_asset, :name => "css",  :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css", :creator_id => user.id, :updator_id => user.id)
+    theme_collection.theme_assets << @theme_asset_js = FactoryGirl.build(:theme_asset, :name => "js", :asset => AssetFixtureHelper.open("theme_js.js"), :content_type => "application/x-javascript", :creator_id => user.id, :updator_id => user.id)
+    theme_collection.theme_assets << @theme_asset_type = FactoryGirl.build(:theme_asset, :name => "other", :asset => AssetFixtureHelper.open("Inconsolata.otf"), :content_type => "application/octet-stream", :creator_id => user.id, :updator_id => user.id)
 
   end
   

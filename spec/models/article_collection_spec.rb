@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 describe "ArticleCollection" do
-  let(:site) { Factory(:site) }
-  let(:user) { Factory(:user) }
+  let(:site) { FactoryGirl.create(:site) }
+  let(:user) { FactoryGirl.create(:user) }
 
   before(:each) do
-    @article_collection = Factory(:article_collection, :site => site, :created_by => user, :updated_by => user)           
+    @article_collection = FactoryGirl.create(:article_collection, :site => site, :created_by => user, :updated_by => user)           
   end
 
   # --  Associations ---- 

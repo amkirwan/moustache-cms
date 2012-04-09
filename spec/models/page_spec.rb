@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 describe Page do   
-  let(:site) { Factory(:site) }
-  let(:user) { Factory(:user, :site => site) }
-  let(:layout) { Factory(:layout, :site_id => site.id, :created_by_id => user.id, :updated_by_id => user.id) }
-  let(:parent) { Factory(:page, :site_id => site.id, :layout_id => layout.id, :created_by_id => user.id, :updated_by_id => user.id, :editor_ids => [user.id]) }
+  let(:site) { FactoryGirl.create(:site) }
+  let(:user) { FactoryGirl.create(:user, :site => site) }
+  let(:layout) { FactoryGirl.create(:layout, :site_id => site.id, :created_by_id => user.id, :updated_by_id => user.id) }
+  let(:parent) { FactoryGirl.create(:page, :site_id => site.id, :layout_id => layout.id, :created_by_id => user.id, :updated_by_id => user.id, :editor_ids => [user.id]) }
   before(:each) do                 
-    @page = Factory(:page, :site_id => site.id, :parent => parent , :layout_id => layout.id, :created_by_id => user.id, :updated_by_id => user.id, :editor_ids => [user.id])
+    @page = FactoryGirl.create(:page, :site_id => site.id, :parent => parent , :layout_id => layout.id, :created_by_id => user.id, :updated_by_id => user.id, :editor_ids => [user.id])
   end
   
   # -- Assignment -------------------------------------------
@@ -82,7 +82,7 @@ describe Page do
     end
 
     it "should not be valid without a unique title" do
-      Factory.build(:page, 
+      FactoryGirl.build(:page, 
                     :title => @page.title,
                     :site_id => site.id, 
                     :layout => layout, 
@@ -104,7 +104,7 @@ describe Page do
     end
     
     it "should not be valid without a unique full_path" do
-      Factory.build(:page, 
+      FactoryGirl.build(:page, 
                     :full_path => @page.full_path,
                     :site_id => site.id, 
                     :layout => layout, 
@@ -177,7 +177,7 @@ describe Page do
       end
       
       it "should set the full path to '404' when the page title is '404" do
-        page2 = Factory(:page, :title => "404", :site => site, :layout => layout, :created_by => user, :updated_by => user)
+        page2 = FactoryGirl.create(:page, :title => "404", :site => site, :layout => layout, :created_by => user, :updated_by => user)
         page2.full_path.should == "404"
       end
     end
@@ -188,7 +188,7 @@ describe Page do
       end
       
       it "should set the slug to the page title when the slug is blank and when the root.node exists" do
-        page2 = Factory(:page, :slug => nil, :parent => parent, :site => site, :layout => layout, :created_by => user, :updated_by => user)
+        page2 = FactoryGirl.create(:page, :slug => nil, :parent => parent, :site => site, :layout => layout, :created_by => user, :updated_by => user)
         page2.slug.should == page2.title.downcase.gsub(/[\s_]/, '-')
         page2 = nil
       end
@@ -314,7 +314,7 @@ describe Page do
 
     describe "#delete_association_of_editor_id" do
       it "should remove the editor from the editor_ids and editor fields" do
-        user = Factory(:user)
+        user = FactoryGirl.create(:user)
         @page.editors << @user
         @page.save
         @page.delete_association_of_editor_id(user.id)
@@ -325,8 +325,8 @@ describe Page do
 
     describe "sort_children" do
       it "should update the pages in the array postion property to match their postion in the given array" do
-        page0 = Factory(:page, :site => site, :parent => @page)
-        page1 = Factory(:page, :site => site, :parent => @page)
+        page0 = FactoryGirl.create(:page, :site => site, :parent => @page)
+        page1 = FactoryGirl.create(:page, :site => site, :parent => @page)
         page0.reload.position.should == 0 
         page1.reload.position.should == 1 
         @page.sort_children([page1.id.to_s, page0.id.to_s])

@@ -8,7 +8,7 @@ describe HandlebarCms::Published do
 
   before(:each) do
     @dummy_class = DummyClass.new
-    @dummy_class.current_state = Factory.build(:current_state)
+    @dummy_class.current_state = FactoryGirl.build(:current_state)
     @dummy_class.extend(HandlebarCms::Published)
   end
 

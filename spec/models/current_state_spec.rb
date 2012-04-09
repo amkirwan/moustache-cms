@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
 
 describe CurrentState do  
   before(:each) do
-    @current_state = Factory.build(:current_state)
+    @current_state = FactoryGirl.build(:current_state)
   end
    
   # -- Validations -------------------------------

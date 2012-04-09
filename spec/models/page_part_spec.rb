@@ -1,12 +1,12 @@
 require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
 
 describe PagePart do 
-  let(:user) { Factory(:user) }
-  let(:layout) { Factory(:layout, :created_by => user, :updated_by => user) }
-  let(:site) { Factory(:site) }  
+  let(:user) { FactoryGirl.create(:user) }
+  let(:layout) { FactoryGirl.create(:layout, :created_by => user, :updated_by => user) }
+  let(:site) { FactoryGirl.create(:site) }  
   before(:each) do
-    @page = Factory(:page, :site => site, :layout => layout, :created_by => user, :updated_by => user)
-    @page_part = Factory.build(:page_part)
+    @page = FactoryGirl.create(:page, :site => site, :layout => layout, :created_by => user, :updated_by => user)
+    @page_part = FactoryGirl.build(:page_part)
   end
 
   # -- Validations ----------------------------------------------- 

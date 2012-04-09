@@ -4,15 +4,15 @@ require "carrierwave/test/matchers"
 describe ThemeAssetUploader do
   include CarrierWave::Test::Matchers
 
-  let(:site) { Factory(:site) }
-  let(:user) { Factory(:user, :site => site) }
-  let(:theme_collection) { Factory(:theme_collection, :site => site) }
+  let(:site) { FactoryGirl.create(:site) }
+  let(:user) { FactoryGirl.create(:user, :site => site) }
+  let(:theme_collection) { FactoryGirl.create(:theme_collection, :site => site) }
   
   before do
-    theme_collection.theme_assets << @theme_asset = Factory.build(:theme_asset, :name => "foobar") 
-    theme_collection.theme_assets << @theme_asset_css = Factory.build(:theme_asset, :name => "foobar", :asset => AssetFixtureHelper.open("theme_css.css")) 
-    theme_collection.theme_assets << @theme_asset_js = Factory.build(:theme_asset, :name => "foobar", :asset => AssetFixtureHelper.open("theme_js.js")) 
-    theme_collection.theme_assets << @theme_asset_otf = Factory.build(:theme_asset, :name => "foobar", :asset => AssetFixtureHelper.open("Inconsolata.otf"))
+    theme_collection.theme_assets << @theme_asset = FactoryGirl.build(:theme_asset, :name => "foobar") 
+    theme_collection.theme_assets << @theme_asset_css = FactoryGirl.build(:theme_asset, :name => "foobar", :asset => AssetFixtureHelper.open("theme_css.css")) 
+    theme_collection.theme_assets << @theme_asset_js = FactoryGirl.build(:theme_asset, :name => "foobar", :asset => AssetFixtureHelper.open("theme_js.js")) 
+    theme_collection.theme_assets << @theme_asset_otf = FactoryGirl.build(:theme_asset, :name => "foobar", :asset => AssetFixtureHelper.open("Inconsolata.otf"))
     
     ThemeAssetUploader.enable_processing = true
     @uploader = ThemeAssetUploader.new(@theme_asset, :asset)

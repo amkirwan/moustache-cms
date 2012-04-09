@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe Snippet do  
-  let(:site) { Factory(:site) } 
-  let(:user) { Factory(:user, :site_id => site.id) }
+  let(:site) { FactoryGirl.create(:site) } 
+  let(:user) { FactoryGirl.create(:user, :site_id => site.id) }
   before(:each) do
-    @snippet = Factory(:snippet, :site => site, :created_by_id => user.id, :updated_by_id => user.id)
+    @snippet = FactoryGirl.create(:snippet, :site => site, :created_by_id => user.id, :updated_by_id => user.id)
   end 
   
   # -- Mass Assignment ---
@@ -48,7 +48,7 @@ describe Snippet do
     end        
     
     it "should not be valid without a unique name" do 
-      Factory.build(:snippet, :name => @snippet.name, :site_id => site.id).should_not be_valid
+      FactoryGirl.build(:snippet, :name => @snippet.name, :site_id => site.id).should_not be_valid
     end
     
     it "should not be valid without a filter" do

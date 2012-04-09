@@ -2,55 +2,55 @@ require 'spec_helper'
 require "cancan/matchers"
 
 describe Ability do
-  let(:site) { Factory(:site) }
-  let(:other_site) { Factory(:site) }
+  let(:site) { FactoryGirl.create(:site) }
+  let(:other_site) { FactoryGirl.create(:site) }
 
-  let(:admin) { Factory.build(:admin, :site => site) }
-  let(:admin_other_site) { Factory.build(:admin, :site => other_site) }
-  let(:designer) { Factory.build(:designer, :site => site) }
-  let(:editor) { Factory.build(:editor, :site => site) }
+  let(:admin) { FactoryGirl.build(:admin, :site => site) }
+  let(:admin_other_site) { FactoryGirl.build(:admin, :site => other_site) }
+  let(:designer) { FactoryGirl.build(:designer, :site => site) }
+  let(:editor) { FactoryGirl.build(:editor, :site => site) }
 
   let(:admin_ability) { Ability.new(admin) }
   let(:admin_ability_other_site) { Ability.new(admin_other_site) }
   let(:designer_ability) { Ability.new(designer) }
   let(:editor_ability) { Ability.new(editor) }
 
-  let(:layout) { Factory.build(:layout, :site => site) }
-  let(:layout_other_site) { Factory.build(:layout, :site => other_site) }
+  let(:layout) { FactoryGirl.build(:layout, :site => site) }
+  let(:layout_other_site) { FactoryGirl.build(:layout, :site => other_site) }
 
-  let(:meta_tag) { Factory.build(:meta_tag) }
-  let(:meta_tag_other_site) { Factory.build(:meta_tag) }
+  let(:meta_tag) { FactoryGirl.build(:meta_tag) }
+  let(:meta_tag_other_site) { FactoryGirl.build(:meta_tag) }
 
-  let(:page_part) { Factory.build(:page_part) }
-  let(:page_part_other_site) { Factory.build(:page_part) }
+  let(:page_part) { FactoryGirl.build(:page_part) }
+  let(:page_part_other_site) { FactoryGirl.build(:page_part) }
   
-  let(:page) { Factory.build(:page, :site => site, :page_parts => [page_part], :editors => [ admin, designer, editor ], :meta_tags => [meta_tag]) }
-  let(:page_other_site) { Factory.build(:page, :site => other_site, :page_parts => [page_part_other_site], :editors => [ admin_other_site ], :meta_tags => [meta_tag_other_site]) } 
+  let(:page) { FactoryGirl.build(:page, :site => site, :page_parts => [page_part], :editors => [ admin, designer, editor ], :meta_tags => [meta_tag]) }
+  let(:page_other_site) { FactoryGirl.build(:page, :site => other_site, :page_parts => [page_part_other_site], :editors => [ admin_other_site ], :meta_tags => [meta_tag_other_site]) } 
 
-  let(:author) { Factory.build(:author, :site => site) }
-  let(:author_other_site) { Factory.build(:author, :site => other_site) } 
+  let(:author) { FactoryGirl.build(:author, :site => site) }
+  let(:author_other_site) { FactoryGirl.build(:author, :site => other_site) } 
 
-  let(:article_collection) { Factory(:article_collection, :site => site, :articles => [], :editors => [admin, designer, editor]) }
-  let(:article_collection_other_site) { Factory(:article_collection, :site => other_site, :articles => [], :editors => [admin_other_site]) }
+  let(:article_collection) { FactoryGirl.create(:article_collection, :site => site, :articles => [], :editors => [admin, designer, editor]) }
+  let(:article_collection_other_site) { FactoryGirl.create(:article_collection, :site => other_site, :articles => [], :editors => [admin_other_site]) }
 
-  let(:article) { Factory(:article, :site => site, :article_collection => article_collection) } 
-  let(:article_other_site) { Factory(:article, :site => other_site, :article_collection => article_collection_other_site) } 
+  let(:article) { FactoryGirl.create(:article, :site => site, :article_collection => article_collection) } 
+  let(:article_other_site) { FactoryGirl.create(:article, :site => other_site, :article_collection => article_collection_other_site) } 
 
-  let(:site_asset) { Factory.build(:site_asset, :creator_id => editor.id, :updator_id => editor.id) }
-  let(:site_asset_other_site) { Factory.build(:site_asset, :creator_id => editor.id, :updator_id => editor.id) }
+  let(:site_asset) { FactoryGirl.build(:site_asset, :creator_id => editor.id, :updator_id => editor.id) }
+  let(:site_asset_other_site) { FactoryGirl.build(:site_asset, :creator_id => editor.id, :updator_id => editor.id) }
   
-  let(:asset_collection) { Factory.build(:asset_collection, :site => site, :created_by => admin, :site_assets => [site_asset]) }
-  let(:asset_collection_other_site) { Factory.build(:asset_collection, :site => other_site, :created_by => admin, :site_assets => [site_asset_other_site]) }
+  let(:asset_collection) { FactoryGirl.build(:asset_collection, :site => site, :created_by => admin, :site_assets => [site_asset]) }
+  let(:asset_collection_other_site) { FactoryGirl.build(:asset_collection, :site => other_site, :created_by => admin, :site_assets => [site_asset_other_site]) }
 
-  let(:snippet) { Factory.build(:snippet, :site => site) }
-  let(:snippet_other_site) { Factory.build(:snippet, :site => other_site) }
+  let(:snippet) { FactoryGirl.build(:snippet, :site => site) }
+  let(:snippet_other_site) { FactoryGirl.build(:snippet, :site => other_site) }
 
-  let(:theme_asset) { Factory.build(:theme_asset, :creator_id => admin.id, :updator_id => admin.id) }
-  let(:theme_asset_other_site) { Factory.build(:theme_asset, :creator_id => admin_other_site.id, :updator_id => admin_other_site.id) }
+  let(:theme_asset) { FactoryGirl.build(:theme_asset, :creator_id => admin.id, :updator_id => admin.id) }
+  let(:theme_asset_other_site) { FactoryGirl.build(:theme_asset, :creator_id => admin_other_site.id, :updator_id => admin_other_site.id) }
 
-  let(:theme_collection) { Factory.build(:theme_collection, :site => site, :created_by => admin, :theme_assets => [theme_asset]) }
+  let(:theme_collection) { FactoryGirl.build(:theme_collection, :site => site, :created_by => admin, :theme_assets => [theme_asset]) }
 
-  let(:theme_collection_other_site) { Factory.build(:theme_collection, :site => other_site, :created_by => admin, :theme_assets => [theme_asset_other_site]) }
+  let(:theme_collection_other_site) { FactoryGirl.build(:theme_collection, :site => other_site, :created_by => admin, :theme_assets => [theme_asset_other_site]) }
 
   def site_asset_first
     asset_collection.site_assets.first
@@ -152,7 +152,7 @@ describe Ability do
 
       describe "User Model Not Approved" do
         it "should not allow the user with a role of editor to create a new user record" do
-          editor_ability.should_not be_able_to(:new, Factory.build(:user))
+          editor_ability.should_not be_able_to(:new, FactoryGirl.build(:user))
         end
 
         it "should not allow the user with a role of editor to edit another user records" do
@@ -172,19 +172,19 @@ describe Ability do
 
       describe "Page Model Not Approved" do
         it "should not allow the user with a role of editor to create pages" do
-          editor_ability.should_not be_able_to(:create, Factory(:page, :site => site))
+          editor_ability.should_not be_able_to(:create, FactoryGirl.create(:page, :site => site))
         end
 
         it "should not allow the user with a role of editor to read a page they are not an editor for" do
-          editor_ability.should_not be_able_to(:read, Factory.build(:page))
+          editor_ability.should_not be_able_to(:read, FactoryGirl.build(:page))
         end
 
         it "should not allow the user with a role of editor to update a page they are not an editor for" do
-          editor_ability.should_not be_able_to(:update, Factory.build(:page))
+          editor_ability.should_not be_able_to(:update, FactoryGirl.build(:page))
         end
 
         it "should not allow the user with a role of editor to destroy pages they are not an editor for" do
-          editor_ability.should_not be_able_to(:destroy, Factory.build(:page))
+          editor_ability.should_not be_able_to(:destroy, FactoryGirl.build(:page))
         end
       end
       
@@ -204,7 +204,7 @@ describe Ability do
 
       describe "Article Not Approved" do
         it "should not allow the user with a role of editor to manage articles if they are not an editor of the collection" do
-          collection = Factory.build(:article_collection, :site => site, :editors => [], :articles => [article]) 
+          collection = FactoryGirl.build(:article_collection, :site => site, :editors => [], :articles => [article]) 
           editor_ability.should_not be_able_to(:manage, collection.articles.first)
         end
       end

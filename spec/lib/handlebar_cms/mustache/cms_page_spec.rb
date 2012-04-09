@@ -4,25 +4,25 @@ class Simple < Mustache
 end
 
 describe HandlebarCms::Mustache::CmsPage do
-  let(:site) { Factory(:site)}
-  let(:user) { Factory(:user, :site => site) }
-  let(:layout) { Factory(:layout, :site => site, :created_by => user, :updated_by => user) }
+  let(:site) { FactoryGirl.create(:site)}
+  let(:user) { FactoryGirl.create(:user, :site => site) }
+  let(:layout) { FactoryGirl.create(:layout, :site => site, :created_by => user, :updated_by => user) }
 
   before(:each) do
     @controller = CmsSiteController.new
-    @page = Factory(:page, :title => "foobar", :site => site, :created_by => user, :updated_by => user)
-    @page.page_parts << Factory.build(:page_part, 
+    @page = FactoryGirl.create(:page, :title => "foobar", :site => site, :created_by => user, :updated_by => user)
+    @page.page_parts << FactoryGirl.build(:page_part, 
                                       :name => "content", 
                                       :content => "define editable text method **strong**", 
                                       :filter_name => "markdown") 
     
-    @theme_collection = Factory(:theme_collection, :name => 'thorn', :site => site, :theme_assets => [@theme_asset_css, @theme_asset_css_2])
+    @theme_collection = FactoryGirl.create(:theme_collection, :name => 'thorn', :site => site, :theme_assets => [@theme_asset_css, @theme_asset_css_2])
 
-    @tag_attr_type = Factory.build(:custom_field, 'name' => 'type', 'content' => 'text/css')
-    @tag_attr_media = Factory.build(:custom_field, 'name' => 'media', 'content' => 'screen')
+    @tag_attr_type = FactoryGirl.build(:custom_field, 'name' => 'type', 'content' => 'text/css')
+    @tag_attr_media = FactoryGirl.build(:custom_field, 'name' => 'media', 'content' => 'screen')
 
-    @theme_collection.theme_assets << Factory.build(:theme_asset, :name => "foobar", :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css", :custom_fields => [@tag_attr_type])
-    @theme_collection.theme_assets << Factory.build(:theme_asset,:name => "baz", :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css", :custom_fields => [@tag_attr_type, @tag_attr_media])
+    @theme_collection.theme_assets << FactoryGirl.build(:theme_asset, :name => "foobar", :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css", :custom_fields => [@tag_attr_type])
+    @theme_collection.theme_assets << FactoryGirl.build(:theme_asset,:name => "baz", :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css", :custom_fields => [@tag_attr_type, @tag_attr_media])
 
     @theme_asset_css = @theme_collection.theme_assets.where(:name => 'foobar').first
     @theme_asset_css_2 = @theme_collection.theme_assets.where(:name => 'baz').first
@@ -135,8 +135,8 @@ describe HandlebarCms::Mustache::CmsPage do
   
   describe "navigaton" do 
     before(:each) do
-      @page2 = Factory(:page, :title => "foobar2", :site => site, :parent => @page, :created_by => user, :updated_by => user)
-      @page3 = Factory(:page, :title => "foobar3", :site => site, :parent => @page, :created_by => user, :updated_by => user)
+      @page2 = FactoryGirl.create(:page, :title => "foobar2", :site => site, :parent => @page, :created_by => user, :updated_by => user)
+      @page3 = FactoryGirl.create(:page, :title => "foobar3", :site => site, :parent => @page, :created_by => user, :updated_by => user)
     end
     
     after(:each) do

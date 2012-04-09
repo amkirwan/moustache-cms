@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe User do   
-  let(:site) { Factory(:site) }
+  let(:site) { FactoryGirl.create(:site) }
 
   before(:each) do
-    @user = Factory(:user, :username => "foobar", :site => site)
+    @user = FactoryGirl.create(:user, :username => "foobar", :site => site)
   end 
   
   # -- Mass Assignment -------------------------------------------
@@ -75,7 +75,7 @@ describe User do
     
     context "duplicate pid should be valid on a different site" do
       it "should be valid with duplicate pid on a different site" do  
-        Factory.build(:user, :username => "{@user.username}", :site => Factory.build(:site)).should be_valid
+        FactoryGirl.build(:user, :username => "{@user.username}", :site => FactoryGirl.build(:site)).should be_valid
       end     
     end
   
@@ -86,16 +86,16 @@ describe User do
     
     context "duplicate email should be valid on a different site" do
       it "should be valid with duplicate email on a different site" do  
-        Factory.build(:user, :email => "#{@user.email}", :site => Factory.build(:site)).should be_valid
+        FactoryGirl.build(:user, :email => "#{@user.email}", :site => FactoryGirl.build(:site)).should be_valid
       end     
     end
   
     it "should not be valid without a correctly formated email address" do
-      Factory.build(:user, :email => "abcdefg").should_not be_valid
+      FactoryGirl.build(:user, :email => "abcdefg").should_not be_valid
     end
     
     it "should not be valid with a username < 3" do
-      Factory.build(:user, :username => "ab").should_not be_valid
+      FactoryGirl.build(:user, :username => "ab").should_not be_valid
     end 
   end
 
@@ -263,8 +263,8 @@ describe User do
 
       describe "#articles_created" do
         it "should return all the articles the user has created" do
-          article_collection = Factory(:article_collection, :site => site)
-          article_collection.articles << Factory.build(:article, :created_by => @user)
+          article_collection = FactoryGirl.create(:article_collection, :site => site)
+          article_collection.articles << FactoryGirl.build(:article, :created_by => @user)
           @user.articles_created.count.should == 1
         end
 
@@ -276,7 +276,7 @@ describe User do
 
     describe "#clone_and_add_to_site" do
       it "should add the current user as a user to a new site" do
-        new_site = Factory(:site, :name => 'blog')
+        new_site = FactoryGirl.create(:site, :name => 'blog')
         @user.clone_and_add_to_site(new_site)        
         Site.where(:name => 'blog').first.users.count.should == 1
         #new_site.reload

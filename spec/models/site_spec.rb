@@ -3,9 +3,9 @@ require 'spec_helper'
 describe Site do   
   
   before(:each) do
-    @site = Factory(:site)  
-    @user = Factory(:user, :site => @site)    
-    @layout = Factory(:layout, :site => @site, :created_by => @user, :updated_by => @user) 
+    @site = FactoryGirl.create(:site)  
+    @user = FactoryGirl.create(:user, :site => @site)    
+    @layout = FactoryGirl.create(:layout, :site => @site, :created_by => @user, :updated_by => @user) 
   end
   
   # -- Validations -------------------------------------------
@@ -25,7 +25,7 @@ describe Site do
     end
     
     it "should not be valid with a duplicate name" do
-      Factory.build(:site, :name => @site.name).should_not be_valid
+      FactoryGirl.build(:site, :name => @site.name).should_not be_valid
     end
     
     it "should not be valid without a subdomain" do
@@ -34,7 +34,7 @@ describe Site do
     end    
     
     it "should not be valid with a duplicate hostname" do
-      Factory.build(:site, :subdomain => @site.subdomain).should_not be_valid
+      FactoryGirl.build(:site, :subdomain => @site.subdomain).should_not be_valid
     end
   end
   
@@ -126,61 +126,61 @@ describe Site do
     
     describe "#page_by_title" do
       it "should return the page by the title" do   
-        @site.pages << page = Factory(:page, :title => "foobar", :site => @site, :layout => @layout, :created_by => @user, :updated_by => @user)
+        @site.pages << page = FactoryGirl.create(:page, :title => "foobar", :site => @site, :layout => @layout, :created_by => @user, :updated_by => @user)
         @site.page_by_title(page.title).should == page
       end
     end
     
     describe "#page_by_full_path" do
       it "should return the page" do    
-        @site.pages << page = Factory(:page, :site => @site, :layout => @layout, :created_by => @user, :updated_by => @user)
+        @site.pages << page = FactoryGirl.create(:page, :site => @site, :layout => @layout, :created_by => @user, :updated_by => @user)
         @site.page_by_full_path(page.full_path).should == page
       end
     end
     
     describe "#css_files" do
       it "should return all the css files for the site" do
-        theme_collection = Factory(:theme_collection, :site => @site)
-        theme_collection.theme_assets << theme_asset_css = Factory.build(:theme_asset, :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css")
+        theme_collection = FactoryGirl.create(:theme_collection, :site => @site)
+        theme_collection.theme_assets << theme_asset_css = FactoryGirl.build(:theme_asset, :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css")
         @site.css_files.should == [theme_asset_css]
       end
     end
 
     describe "#css_file_by_name(theme_name, name)" do
       it "should return the css file by the given name" do
-        theme_collection = Factory(:theme_collection, :name => 'baz', :site => @site)
-        theme_collection.theme_assets << theme_asset_css = Factory.build(:theme_asset, :name => 'foobar', :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css")
+        theme_collection = FactoryGirl.create(:theme_collection, :name => 'baz', :site => @site)
+        theme_collection.theme_assets << theme_asset_css = FactoryGirl.build(:theme_asset, :name => 'foobar', :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css")
         @site.css_file_by_name("baz", "foobar").should == theme_asset_css
       end
     end   
 
     describe "#js_file_by_name(theme_name, name)" do
       it "should return the css file by the given name" do
-        theme_collection = Factory(:theme_collection, :name => 'baz', :site => @site)
-        theme_collection.theme_assets << theme_asset_js = Factory.build(:theme_asset, :name => 'foobar', :asset => AssetFixtureHelper.open("theme_js.js"), :content_type => "application/x-javascript")
+        theme_collection = FactoryGirl.create(:theme_collection, :name => 'baz', :site => @site)
+        theme_collection.theme_assets << theme_asset_js = FactoryGirl.build(:theme_asset, :name => 'foobar', :asset => AssetFixtureHelper.open("theme_js.js"), :content_type => "application/x-javascript")
         @site.js_file_by_name("baz", "foobar").should == theme_asset_js
       end
     end   
 
     describe "#articles_by_name(name)" do
       it "should return all the articles for the given article collection" do
-        article_collection = Factory(:article_collection, :site => @site, :name => "news")
-        article_collection.articles << Factory.build(:article)
+        article_collection = FactoryGirl.create(:article_collection, :site => @site, :name => "news")
+        article_collection.articles << FactoryGirl.build(:article)
         @site.articles_by_name('news').should == article_collection.articles
       end
     end
     
     describe "#snippets_by_name(name)" do
       it "should return the snippet by the given name" do
-        snippet = Factory(:snippet, :name => "foobar", :site_id => @site.id)    
+        snippet = FactoryGirl.create(:snippet, :name => "foobar", :site_id => @site.id)    
         @site.snippet_by_name("foobar").should == snippet
       end
     end
 
     describe "#site_assets_by_name(asset_collection, file_name)" do
       it "should return the site asset by name" do
-        asset_collection = Factory(:asset_collection, :name => 'baz', :site => @site)  
-        asset_collection.site_assets << asset = Factory.build(:site_asset, :name => 'foobar')
+        asset_collection = FactoryGirl.create(:asset_collection, :name => 'baz', :site => @site)  
+        asset_collection.site_assets << asset = FactoryGirl.build(:site_asset, :name => 'foobar')
         @site.site_asset_by_name('baz', 'foobar').should == asset
       end
     end

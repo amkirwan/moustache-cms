@@ -4,10 +4,10 @@ require "carrierwave/test/matchers"
 describe SiteAssetUploader do
   include CarrierWave::Test::Matchers
   
-  let(:user) { Factory(:user) }
-  let(:site) { Factory(:site, :users => [user]) }
-  let(:site_asset) { Factory.build(:site_asset, :name => "foobar") }  
-  let(:asset_collection) { Factory(:asset_collection, :site => site, :site_assets => [site_asset], :created_by => user, :updated_by => user)}
+  let(:user) { FactoryGirl.create(:user) }
+  let(:site) { FactoryGirl.create(:site, :users => [user]) }
+  let(:site_asset) { FactoryGirl.build(:site_asset, :name => "foobar") }  
+  let(:asset_collection) { FactoryGirl.create(:asset_collection, :site => site, :site_assets => [site_asset], :created_by => user, :updated_by => user)}
   
   before do
     SiteAssetUploader.enable_processing = true

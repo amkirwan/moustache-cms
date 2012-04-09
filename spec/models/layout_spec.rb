@@ -2,11 +2,11 @@
 require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
 
 describe Layout do   
-  let(:user) { Factory(:user) }
-  let(:site) { Factory(:site) }
+  let(:user) { FactoryGirl.create(:user) }
+  let(:site) { FactoryGirl.create(:site) }
   
   before(:each) do
-    @layout = Factory(:layout, :site_id => site.id, :created_by_id => user.id, :updated_by_id => user.id)
+    @layout = FactoryGirl.create(:layout, :site_id => site.id, :created_by_id => user.id, :updated_by_id => user.id)
   end
 
   # -- Assignment -------------------------------------------------------------- 
@@ -54,12 +54,12 @@ describe Layout do
     end
     
     it "should not be valid without a unique layout name" do
-      Factory.build(:layout, :name => "#{@layout.name}", :site => site, :created_by => user, :updated_by => user).should_not be_valid
+      FactoryGirl.build(:layout, :name => "#{@layout.name}", :site => site, :created_by => user, :updated_by => user).should_not be_valid
     end     
     
     context "should be valid when the layout name is associated with a different site" do
       it "should be valid " do
-        Factory.build(:layout, :name => "#{@layout.name}", :site => Factory.build(:site), :created_by => user, :updated_by => user).should be_valid
+        FactoryGirl.build(:layout, :name => "#{@layout.name}", :site => FactoryGirl.build(:site), :created_by => user, :updated_by => user).should be_valid
       end
     end
     

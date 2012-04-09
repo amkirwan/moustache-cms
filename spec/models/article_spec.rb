@@ -3,12 +3,12 @@ require 'spec_helper'
 
 describe Article do
 
-  let(:site) { Factory(:site) }
-  let(:user) { Factory(:user, :site => site) }
+  let(:site) { FactoryGirl.create(:site) }
+  let(:user) { FactoryGirl.create(:user, :site => site) }
 
   before(:each) do
-   @article_collection = Factory(:article_collection, :articles => [], :site => site, :created_by => user, :updated_by => user)
-   @article = Factory(:article, :site => site, :created_by_id => user.id, :updated_by_id => user.id, :article_collection => @article_collection)
+   @article_collection = FactoryGirl.create(:article_collection, :articles => [], :site => site, :created_by => user, :updated_by => user)
+   @article = FactoryGirl.create(:article, :site => site, :created_by_id => user.id, :updated_by_id => user.id, :article_collection => @article_collection)
   end
 
   # -- Associations ----
@@ -65,7 +65,7 @@ describe Article do
     end
 
     it "should not be valid without a unique title" do
-      Factory.build(:article, 
+      FactoryGirl.build(:article, 
                     :site => site,
                     :title => @article.title,
                     :article_collection => @article_collection).should_not be_valid
@@ -78,7 +78,7 @@ describe Article do
     end
 
     it "should not be valid without a unique permalink" do
-      Factory.build(:article, 
+      FactoryGirl.build(:article, 
                     :site => site,
                     :title => @article.title,
                     :slug => @article.slug,

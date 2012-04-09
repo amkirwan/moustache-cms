@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 describe Author do
-  let(:site) { Factory(:site) }
-  let(:user) { Factory(:user, :site => site) }
+  let(:site) { FactoryGirl.create(:site) }
+  let(:user) { FactoryGirl.create(:user, :site => site) }
 
   before(:each) do
-    @author = Factory(:author, :site => site, :firstname => "Anthony", :middlename => "Michael", :lastname => "Kirwan")
+    @author = FactoryGirl.create(:author, :site => site, :firstname => "Anthony", :middlename => "Michael", :lastname => "Kirwan")
   end
 
   # -- Associations ---

@@ -21,7 +21,7 @@ module LoginHelpers
 
   def login_editor
     @current_site = @site = mock_model(Site, :id => "1").as_null_object
-    @current_admin_user = @editor_user = Factory(:editor, :site_id => @site.id)
+    @current_admin_user = @editor_user = FactoryGirl.create(:editor, :site_id => @site.id)
     #controller.stub(:current_site).and_return(@site)
     stub_current_site(@site)
     sign_in @editor_user
@@ -30,7 +30,7 @@ module LoginHelpers
 
   def login_designer
     @current_site = @site = mock_model(Site, :id => "1").as_null_object
-    @current_admin_user = @designer_user = Factory(:designer, :site_id => @site.id)
+    @current_admin_user = @designer_user = FactoryGirl.create(:designer, :site_id => @site.id)
     #controller.stub(:current_site).and_return(@site)
     stub_current_site(@site)
     sign_in @designer_user
@@ -39,7 +39,7 @@ module LoginHelpers
 
   def login_admin
     @current_site = @site = mock_model(Site, :id => "1").as_null_object
-    @current_admin_user = @admin_user = Factory(:admin, :site_id => @site.id)
+    @current_admin_user = @admin_user = FactoryGirl.create(:admin, :site_id => @site.id)
     #controller.stub(:current_site).and_return(@site)
     stub_current_site(@site)
     sign_in @admin_user

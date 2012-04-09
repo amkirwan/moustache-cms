@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe ThemeCollection do
-  let(:site) { Factory(:site) }
+  let(:site) { FactoryGirl.create(:site) }
 
   before(:each) do
-    @theme_collection = Factory(:theme_collection, :site => site) 
+    @theme_collection = FactoryGirl.create(:theme_collection, :site => site) 
   end
 
   # -- Associations ---

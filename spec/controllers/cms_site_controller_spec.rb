@@ -6,8 +6,8 @@ describe CmsSiteController do
   # -- GET dynamic_page ----------------------------------------------- 
   describe "GET dynamic_page" do
     
-    let(:current_site) { Factory(:site)}
-    let(:layout) { Factory(:layout, :site => current_site) }
+    let(:current_site) { FactoryGirl.create(:site)}
+    let(:layout) { FactoryGirl.create(:layout, :site => current_site) }
     let(:page) { mock_model(Page, :layout => layout, :published? => true).as_null_object }
     
     before(:each) do
