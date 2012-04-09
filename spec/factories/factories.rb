@@ -1,192 +1,185 @@
-
-Factory.define :meta_tag do |meta|
-  meta.name "title"
-  meta.content "foobar"
-end
-
 def set_meta_tags(type)
-    [ Factory.build(:meta_tag, name: 'title', content: "title #{type}"),
-      Factory.build(:meta_tag, name: 'keywords', content: "keywords #{type}"),
-      Factory.build(:meta_tag, name: 'description', content: "description #{type}")]
+    [ 
+      FactoryGirl.build(:meta_tag, name: 'title', content: "title #{type}"),
+      FactoryGirl.build(:meta_tag, name: 'keywords', content: "keywords #{type}"),
+      FactoryGirl.build(:meta_tag, name: 'description', content: "description #{type}")
+    ]
 end
 
-Factory.define :site do |site|
-  site.sequence(:name) { |n| "name_#{n}" }
-  site.sequence(:subdomain)  { |n| "foobar_#{n}" }
-  site.meta_tags { set_meta_tags('site') }
-  site.default_domain  "com" 
-  site.domain_names { [] }
+def assign_created_updated_by(obj)
+  obj.created_by = FactoryGirl.build(:user, site_id: obj.site_id)
+  obj.updated_by = FactoryGirl.build(:user, site_id: obj.site_id)
 end
 
-Factory.define :user do |user|
-  user.sequence(:username) { |n| "foobar_#{n}"}
-  user.firstname "foobar" 
-  user.lastname  "baz" 
-  user.sequence(:email) { |n| "foobar_#{n}@example.com" }
-  user.role "admin" 
-  user.site { Factory.build(:site) }
-  user.password "foobar7"
+def page_associations(page)
+  page.layout = FactoryGirl.build(:layout, site_id: page.site_id)
+  page.current_state = FactoryGirl.build(:current_state)
+  page.editors = [ FactoryGirl.build(:user, site_id: page.site_id) ]
+  page.page_parts [ FactoryGirl.build(:page_part) ]
+  assign_created_updated_by(page)
 end
 
-Factory.define :admin, :parent => :user do |admin|
-  admin.role "admin" 
+def article_associations(article) 
+  article.layout = FactoryGirl.build(:layout, site_id: article.site_id)
+  article.current_state = FactoryGirl.build(:current_state)
+  article.authors = [ FactoryGirl.build(:author, site_id: article.site_id) ] 
+  article.article_collection = FactoryGirl.build(:article_collection)
 end
 
-Factory.define :designer, :parent => :user do |designer|
-  designer.role "designer"
+def assign_asset_collection(asset_collection)
+  assign_created_updated_by(asset_collection)
 end
 
-Factory.define :editor, :parent => :user do |editor|
-  editor.role "editor"
-end
+FactoryGirl.define do
+  factory :meta_tag do 
+    name "title"
+    content "foobar"
+  end
 
-Factory.define :filter do |filter|
-  filter.name "filter"
-end
+  factory :site do 
+    sequence(:name) { |n| "name_#{n}" }
+    sequence(:subdomain)  { |n| "foobar_#{n}" }
+    meta_tags { set_meta_tags('site') }
+    default_domain  "com" 
+  end
 
-Factory.define :layout do |layout|
-  layout.site { Factory.build(:site) }
-  layout.sequence(:name) { |n| "layout_#{n}" }
-  layout.content "Hello, World!"
-  layout.created_by Factory.build(:user)
-  layout.updated_by Factory.build(:user) 
-end
+  factory :user do
+    sequence(:username) { |n| "foobar_#{n}"}
+    firstname "foobar" 
+    lastname  "baz" 
+    sequence(:email) { |n| "foobar_#{n}@example.com" }
+    role "admin" 
+    site 
+    password "foobar7"
+  end
 
-Factory.define :current_state do |cs|
-  cs.name "published"
-  cs.time DateTime.new
-end       
+  factory :admin, :parent => :user do 
+    role "admin" 
+  end
 
-Factory.define :snippet do |s|  
-  s.site { Factory.build(:site) }
-  s.sequence(:name) { |n| "name_#{n}" }
-  s.content "snippet content"
-  s.filter_name "snippet filter"
-  s.created_by Factory.build(:user)
-  s.updated_by Factory.build(:user)                            
-end
+  factory :designer, :parent => :user do
+    role "designer"
+  end
 
-Factory.define :leaf do |leaf|
-  leaf.site { Factory.build(:site) }
-  leaf.sequence(:title) { |n| "title_#{n}" }
-  leaf.sequence(:slug) { |n| "slug_#{n}" }
-  leaf.sequence(:breadcrumb) { |n| "breadcrumb_#{n}" }
-  leaf.layout { Factory.build(:layout) }
-  leaf.current_state { Factory.build(:current_state) }
-  leaf.tags "leaf"
-  leaf.meta_tags { set_meta_tags('page') }
-  leaf.created_by_id { Factory.build(:user).id }
-  leaf.updated_by_id { Factory.build(:user).id }
-end
+  factory :editor, :parent => :user do 
+    role "editor"
+  end
 
-Factory.define :page_type do |page_type|
-  page_type.name "page_type"
-end
+  factory :filter do 
+    name "filter"
+  end
 
-Factory.define :page_part do |pp|
-  pp.sequence(:name) { |n| "page_part_#{n}" }
-  pp.content "Page Part Hello, World!"
-  pp.filter_name "filter"
-end
+  factory :layout do 
+    association :site, strategy: :build
+    sequence(:name) { |n| "layout_#{n}" }
+    content "Hello, World!"
+    after_build { |layout| assign_created_updated_by(layout) }
+  end
 
-Factory.define :page do |page|
-  page.site { Factory.build(:site) }
-  page.sequence(:title) { |n| "title_#{n}" }
-  page.sequence(:slug) { |n| "slug_#{n}" }
-  page.sequence(:breadcrumb) { |n| "breadcrumb_#{n}" }
-  page.layout { Factory.build(:layout) }
-  page.current_state { Factory.build(:current_state) }
-  page.editors {[ Factory.build(:user) ]}
-  page.tags "page"
-  page.meta_tags { set_meta_tags('page') }
-  page.page_parts {[ Factory.build(:page_part) ]}
-  page.created_by_id { Factory.build(:user).id }
-  page.updated_by_id { Factory.build(:user).id }
-end
+  factory :current_state do
+    name "published"
+    time DateTime.new
+  end
 
-Factory.define :parent_page, :parent => :page do |pp|
-  pp.parent
-  pp.sequence(:title) { |n| "parent_title_#{n}" }
-  pp.slug 
-  pp.sequence(:full_path) { |n| "parent_full_path_#{n}" }
-  pp.sequence(:breadcrumb) { |n| "parent_breadcrumb_#{n}" }
-  pp.current_state { Factory.build(:current_state) }
-  pp.page_parts {[ Factory.build(:page_part) ]}
-  pp.page_type { Factory.build(:page_type) }
-end     
+  factory :snippet do 
+    association :site, strategy: :build
+    sequence(:name) { |n| "name_#{n}" }
+    content "snippet content"
+    filter_name "snippet filter"
+    after_build { |snippet| assign_created_updated_by(snippet) }
+  end
 
-Factory.define :author do |author|
-  author.site { Factory.build(:site) }
-  author.prefix "prefix"
-  author.firstname "foobar"
-  author.lastname "baz"
-  author.profile "this is the author profile"
-  author.image { File.open("#{Rails.root}/spec/fixtures/assets/rails.png") }
-  author.created_by_id { Factory.build(:user).id }
-  author.updated_by_id { Factory.build(:user).id }
-end
+  factory :page_type do 
+    name "page_type"
+  end
 
-Factory.define :article_collection do |collection|
-  collection.site { Factory.build(:site) }
-  collection.sequence(:name) { |n| "name_#{n}" }
-  collection.editors {[ Factory.build(:user) ]}
-  collection.created_by_id { Factory.build(:user).id }
-  collection.updated_by_id { Factory.build(:user).id }
-end
+  factory :page_part do
+    sequence(:name) { |n| "page_part_#{n}" }
+    content "Page Part Hello, World!"
+    filter_name "filter"
+  end
 
-Factory.define :article do |article|
-  article.site { Factory.build(:site) }
-  article.sequence(:title) { |n| "title_#{n}" }
-  article.sequence(:slug) { |n| "slug_#{n}" }
-  article.tags "article"
-  article.layout_id { Factory.build(:layout).id }
-  article.current_state { Factory.build(:current_state) }
-  article.meta_tags { set_meta_tags('article') }
-  article.content "article content"
-  article.author_ids { [Factory.build(:user).id] }
-  article.filter_name "published"
-  article.article_collection { Factory.build(:article_collection) }
-  article.created_by_id { Factory.build(:user).id }
-  article.updated_by_id { Factory.build(:user).id }
-end
+  factory :page do 
+    association :site, strategy: :build
+    sequence(:title) { |n| "title_#{n}" }
+    sequence(:slug) { |n| "slug_#{n}" }
+    sequence(:breadcrumb) { |n| "breadcrumb_#{n}" }
+    tags "page"
+    meta_tags { set_meta_tags('page') }
+    after_build { |page| page_associations(page) }
+  end
 
-Factory.define :asset_collection do |collection|
-  collection.site { Factory.build(:site) }
-  collection.sequence(:name) { |n| "name_#{n}" }
-  collection.site_assets { [ Factory.build(:site_asset) ] }
-  collection.created_by_id { Factory.build(:user).id }
-  collection.updated_by_id { Factory.build(:user).id }
-end
+  factory :parent_page, :parent => :page do
+    parent
+    sequence(:title) { |n| "parent_title_#{n}" }
+    slug 
+    sequence(:full_path) { |n| "parent_full_path_#{n}" }
+    sequence(:breadcrumb) { |n| "parent_breadcrumb_#{n}" }
+  end     
 
-Factory.define :site_asset do |asset|
-  asset.name "asset_name"
-  asset.content_type "content_type"
-  asset.asset { File.open("#{Rails.root}/spec/fixtures/assets/rails.png") }
-  asset.width 200
-  asset.height 200
-  asset.file_size 200
-end
+  factory :author do 
+    association :site, strategy: :build
+    prefix "prefix"
+    firstname "foobar"
+    lastname "baz"
+    profile "this is the author profile"
+    image { File.open("#{Rails.root}/spec/fixtures/assets/rails.png") }
+    after_build { |author| assign_created_updated_by(author) }
+  end
 
-Factory.define :custom_field do |tag|
-  tag.sequence(:name) { |n| "name_#{n}" }
-  tag.content "tag attribute value"
-end
+  factory :article_collection do 
+    association :site, strategy: :build
+    sequence(:name) { |n| "name_#{n}" }
+    editors {[ FactoryGirl.build(:user) ]}
+    after_build { |article_collection| assign_created_updated_by(article_collection) }
+  end
 
-Factory.define :theme_asset do |asset| 
-  asset.name "asset_name"
-  asset.content_type "content_type"
-  asset.asset { File.open("#{Rails.root}/spec/fixtures/assets/rails.png") }
-  asset.width 200
-  asset.height 200
-  asset.file_size 200
-  asset.creator_id { Factory.build(:user).id }
-  asset.updator_id { Factory.build(:user).id }
-end
+  factory :article do 
+    association :site, strategy: :build
+    sequence(:title) { |n| "title_#{n}" }
+    sequence(:slug) { |n| "slug_#{n}" }
+    tags "article"
+    meta_tags { set_meta_tags('article') }
+    content "article content"
+    filter_name "published"
+    after_build { |article| assign_created_updated_by(article) }
+  end
 
-Factory.define :theme_collection do |collection|
-  collection.site { Factory.build(:site) }
-  collection.sequence(:name) { |n| "name_#{n}" }
-  collection.theme_assets { [] }
-  collection.created_by_id { Factory.build(:user).id }
-  collection.updated_by_id { Factory.build(:user).id }
+  factory :asset_collection do 
+    association :site, strategy: :build
+    sequence(:name) { |n| "name_#{n}" }
+    site_assets { [ FactoryGirl.build(:site_asset) ] }
+    after_build { |asset_collection| assign_created_updated_by(asset_collection) }
+  end
+
+  factory :site_asset do 
+    name "asset_name"
+    content_type "content_type"
+    asset { File.open("#{Rails.root}/spec/fixtures/assets/rails.png") }
+    width 200
+    height 200
+    file_size 200
+  end
+
+  factory :custom_field do 
+    sequence(:name) { |n| "name_#{n}" }
+    content "tag attribute value"
+  end
+
+  factory :theme_asset do 
+    name "asset_name"
+    content_type "content_type"
+    asset { File.open("#{Rails.root}/spec/fixtures/assets/rails.png") }
+    width 200
+    height 200
+    file_size 200
+    creator_id { FactoryGirl.build(:user).id }
+    updator_id { FactoryGirl.build(:user).id }
+  end
+
+  factory :theme_collection do 
+    association :site, strategy: :build
+    sequence(:name) { |n| "name_#{n}" }
+    after_build { |theme_collection| assign_created_updated_by(theme_collection) }
+  end
 end
