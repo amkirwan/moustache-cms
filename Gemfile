@@ -44,4 +44,5 @@ group :development, :test do
   gem "guard-cucumber", :git => "git://github.com/netzpirat/guard-cucumber.git"
   gem "guard-rspec"
   gem "guard-spork"
+  gem "guard-pow"
 end

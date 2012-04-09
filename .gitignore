@@ -9,7 +9,6 @@ log/*.log
 tmp/**/*
 tmp/*
 tags
-Guardfile
 public/site_assets/*
 public/uploads
 public/theme_assets/**/*
