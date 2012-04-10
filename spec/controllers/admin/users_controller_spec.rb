@@ -64,7 +64,7 @@ describe Admin::UsersController do
   
   describe "GET new" do        
     before(:each) do 
-      @user = Factory.build(:user)
+      @user = FactoryGirl.build(:user)
       User.stub(:new).and_return(@user)   
     end
     
@@ -93,7 +93,7 @@ describe Admin::UsersController do
     let(:params) {{ "user" => { "username" => "foobar", "firstname" => "foo", "lastname" => "bar", "email" => "foobar@example.com", "role" => "admin" }}}
     
     before(:each) do 
-      @user = Factory.build(:user)
+      @user = FactoryGirl.build(:user)
       @user.stub(:save).and_return(true)
       controller.stub(:admin?).and_return(true)
       User.stub(:new).and_return(@user)

@@ -2,11 +2,11 @@ require 'spec_helper'
 
 
 describe "AssetCollection" do
-  let(:site) { Factory(:site) }
-  let(:user) { Factory(:user) }
+  let(:site) { FactoryGirl.create(:site) }
+  let(:user) { FactoryGirl.create(:user) }
   
   before(:each) do      
-    @asset_collection = Factory(:asset_collection, :site => site, :created_by => user, :updated_by => user)           
+    @asset_collection = FactoryGirl.create(:asset_collection, :site => site, :created_by => user, :updated_by => user)           
   end
   
   # --  Associations ---- 
@@ -40,7 +40,7 @@ describe "AssetCollection" do
     end
     
     it "should not be valid without a unique name" do
-      Factory.build(:asset_collection, :name => @asset_collection.name, :site => @asset_collection.site).should_not be_valid
+      FactoryGirl.build(:asset_collection, :name => @asset_collection.name, :site => @asset_collection.site).should_not be_valid
     end
     
     it "should not be valid without a site_id" do

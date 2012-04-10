@@ -232,7 +232,7 @@ describe User do
 
     describe "full_name" do
       it "should return the users first and lastname" do
-        @user.full_name.should == "Foobar Baz"
+        @user.full_name.should == "Foo Handlebar"
       end
     end
     describe "#role?" do
@@ -259,18 +259,6 @@ describe User do
       it "should return false when the user role is less than the base role" do
         @user.role = "editor"
         @user.role?(:admin).should == false
-      end
-
-      describe "#articles_created" do
-        it "should return all the articles the user has created" do
-          article_collection = FactoryGirl.create(:article_collection, :site => site)
-          article_collection.articles << FactoryGirl.build(:article, :created_by => @user)
-          @user.articles_created.count.should == 1
-        end
-
-        it "should return empty articles_created if the user has not created articles" do
-          @user.articles_created.should == []
-        end
       end
     end
 
