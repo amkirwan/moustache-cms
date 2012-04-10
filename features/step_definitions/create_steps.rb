@@ -52,8 +52,7 @@ module Create
   end
 
   def create_article(title, article_collection)
-    article_collection.articles << @article = FactoryGirl.build(:article, :site => @site, :title => title, :created_by => @user, :updated_by => @user)
-    @article
+    @article = FactoryGirl.create(:article, :article_collection => article_collection, :site => @site, :title => title)
   end
 
   def create_asset_collection(name)
