@@ -9,21 +9,23 @@ group :assets do
 end
 
 gem "jquery-rails"
-
-gem "devise", "~> 1.5"
-gem "cancan", ">= 1.6"
-
 gem "haml-rails", "~> 0.3"
-gem "mongoid", "~> 2.3.3"
-gem "bson", "~> 1.3.1"
-gem "bson_ext", "~> 1.3.1"    
+
+# mongoid
+gem "mongoid", "~> 2.4"
+gem "bson_ext", "~> 1.5"    
 gem "mongoid-tree", :git => "git://github.com/benedikt/mongoid-tree", :require => "mongoid/tree"
+gem "mongoid_taggable_with_context", :git => "git://github.com/amkirwan/mongoid_taggable_with_context.git", :branch => "master"
+gem "carrierwave-mongoid", :require => "carrierwave/mongoid"
+
+# authorization
+gem "devise", "~> 1.5"
+gem "cancan", ">= 1.6" # must come after mongoid in Gemfile
+
 gem "mustache", ">= 0.99"
 gem "RedCloth", "~> 4.2"
 gem "redcarpet", "~> 2.0"
-gem "carrierwave-mongoid", :require => "carrierwave/mongoid"
 gem "mime-types"
-gem "mongoid_taggable_with_context", :git => "git://github.com/amkirwan/mongoid_taggable_with_context.git", :branch => "master"
 gem "kaminari"
 
 gem "unicorn"

@@ -3,5 +3,6 @@
     %td.name= link_to site.name, [:edit, :admin, site]
   - else
     %td.name= link_to site.name, [:admin, site]
+
   - if can? :destroy, site
     %td.delete= link_to "Delete", [:admin, site], :method => :delete, :confirm => "Are you sure you want to delete the site #{site.name}", :class => "delete"
