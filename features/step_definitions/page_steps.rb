@@ -103,7 +103,7 @@ end
 
 When /^I edit the page "([^"]*)" with an additional page part baz$/ do |page_title|
   @page = find_page_by_title(page_title)
-  @page.page_parts << Factory.build(:page_part, :name => 'baz', :filter_name => 'markdown')
+  @page.page_parts << FactoryGirl.build(:page_part, :name => 'baz', :filter_name => 'markdown')
   step %{I edit the page "#{page_title}"}
 end
 

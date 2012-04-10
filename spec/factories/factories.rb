@@ -7,29 +7,11 @@ def set_meta_tags(type)
 end
 
 def assign_created_updated_by(obj, relation)
-  obj.created_by = created_by = FactoryGirl.create(:user, site_id: obj.site_id)
-  obj.updated_by = updated_by = FactoryGirl.create(:user, site_id: obj.site_id)
-  created_by.send(relation.to_s + '_created') << obj
-  updated_by.send(relation.to_s + '_updated') << obj
-end
-
-def page_associations(page)
-  page.layout = FactoryGirl.build(:layout, site_id: page.site_id)
-  page.current_state = FactoryGirl.build(:current_state)
-  page.editors = [ FactoryGirl.build(:user, site_id: page.site_id) ]
-  page.page_parts [ FactoryGirl.build(:page_part) ]
-  assign_created_updated_by(page, :pages)
-end
-
-def article_associations(article) 
-  article.layout = FactoryGirl.build(:layout, site_id: article.site_id)
-  article.current_state = FactoryGirl.build(:current_state)
-  article.authors = [ FactoryGirl.build(:author, site_id: article.site_id) ] 
-  article.article_collection = FactoryGirl.build(:article_collection)
-end
-
-def assign_asset_collection(asset_collection)
-  assign_created_updated_by(asset_collection, :asset_collections)
+  user = FactoryGirl.create(:user, site_id: obj.site_id)
+  obj.created_by = user
+  obj.updated_by = user
+  user.send(relation.to_s + '_created') << obj
+  user.send(relation.to_s + '_updated') << obj
 end
 
 FactoryGirl.define do
@@ -108,7 +90,11 @@ FactoryGirl.define do
     sequence(:breadcrumb) { |n| "breadcrumb_#{n}" }
     tags "page"
     meta_tags { set_meta_tags('page') }
-    after_build { |page| page_associations(page) }
+    layout { FactoryGirl.build(:layout, site_id: "#{site.id}") }
+    current_state { FactoryGirl.build(:current_state) }
+    editors { [ FactoryGirl.build(:user, site_id: "#{site.id}") ] }
+    page_parts { [ FactoryGirl.build(:page_part) ] }
+    after_build { |page| assign_created_updated_by(page, :pages) }
   end
 
   factory :parent_page, :parent => :page do
@@ -126,7 +112,7 @@ FactoryGirl.define do
     lastname "baz"
     profile "this is the author profile"
     image { File.open("#{Rails.root}/spec/fixtures/assets/rails.png") }
-    after_build { |author| assign_created_updated_by(author, :author) }
+    after_build { |author| assign_created_updated_by(author, :authors) }
   end
 
   factory :article_collection do 
@@ -141,13 +127,13 @@ FactoryGirl.define do
     sequence(:title) { |n| "title_#{n}" }
     sequence(:slug) { |n| "slug_#{n}" }
     tags "article"
-    layout_id { FactoryGirl.build(:layout).id }
+    layout { FactoryGirl.build(:layout, site_id: "#{site.id}") }
     current_state { FactoryGirl.build(:current_state) }
     meta_tags { set_meta_tags('article') }
     content "article content"
-    authors { [FactoryGirl.build(:user)] }
+    authors { [FactoryGirl.build(:user, site_id: "#{site.id}")] }
     filter_name "published"
-    article_collection { FactoryGirl.build(:article_collection) }
+    article_collection { FactoryGirl.build(:article_collection, site_id: "#{site.id}") }
     after_build { |article| assign_created_updated_by(article, :articles) }
   end
 
