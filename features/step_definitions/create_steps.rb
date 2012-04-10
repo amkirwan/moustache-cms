@@ -1,71 +1,75 @@
 module Create
   def create_site(site='foobar', domain='example.com')
-    @site = Factory.build(:site, :name => site, :subdomain => site, :default_domain => domain)
+    @site = FactoryGirl.build(:site, :name => site, :subdomain => site, :default_domain => domain)
     @site.add_domain '127.0.0.1'
     @site.save
   end
 
+  def create_user(hash)
+    @user = FactoryGirl.create(:user, :site => @site, :username => hash[:user], :email => "#{hash[:user]}@example.com", :firstname => hash[:firstname], :lastname => hash[:lastname])
+  end
+
   def create_layout(name='foobar')
-    @layout = Factory(:layout, :name => name, :site => @site, :created_by => @user, :updated_by => @user)
+    @layout = FactoryGirl.create(:layout, :name => name, :site => @site, :created_by => @user, :updated_by => @user)
   end  
 
   def create_page(title, status)
-    Factory(:page, :site => @site,
+    FactoryGirl.create(:page, :site => @site,
                      :parent_id => @parent.id,
                      :layout => @layout,
                      :created_by => @user,
                      :updated_by => @user,
                      :editors => [@user],
                      :title => title,
-                     :current_state => Factory.build(:current_state, :name => status),
-                     :page_parts => [Factory.build(:page_part, :name => 'foobar')])
+                     :current_state => FactoryGirl.build(:current_state, :name => status),
+                     :page_parts => [FactoryGirl.build(:page_part, :name => 'foobar')])
 
   end
 
   def create_child_page(title, status, parent)
-    Factory(:page, :site => @site,
+    FactoryGirl.create(:page, :site => @site,
                      :parent_id => parent.id,
                      :layout => @layout,
                      :created_by => @user,
                      :updated_by => @user,
                      :editors => [@user],
                      :title => title,
-                     :current_state => Factory.build(:current_state, :name => status),
-                     :page_parts => [Factory.build(:page_part, :name => 'foobar')])
+                     :current_state => FactoryGirl.build(:current_state, :name => status),
+                     :page_parts => [FactoryGirl.build(:page_part, :name => 'foobar')])
 
   end
 
   def create_homepage
-    @parent = Factory(:page, :title => 'Homepage', :site => @site, :layout => @layout, :created_by => @user, :updated_by => @user)
+    @parent = FactoryGirl.create(:page, :title => 'Homepage', :site => @site, :layout => @layout, :created_by => @user, :updated_by => @user)
   end
 
   def create_snippet(name)
-    @snippet = Factory(:snippet, :name => name, :site => @site)
+    @snippet = FactoryGirl.create(:snippet, :name => name, :site => @site)
   end
 
   def create_article_collection(name)
-    @article_collection = Factory(:article_collection, :name => name, :site => @site)
+    @article_collection = FactoryGirl.create(:article_collection, :name => name, :site => @site)
   end
 
   def create_article(title, article_collection)
-    article_collection.articles << @article = Factory.build(:article, :site => @site, :title => title, :created_by => @user, :updated_by => @user)
+    article_collection.articles << @article = FactoryGirl.build(:article, :site => @site, :title => title, :created_by => @user, :updated_by => @user)
     @article
   end
 
   def create_asset_collection(name)
-    @asset_collection = Factory(:asset_collection, :name => name, :site => @site)
+    @asset_collection = FactoryGirl.create(:asset_collection, :name => name, :site => @site)
   end
 
   def create_author(props)
-    @author = Factory(:author, :firstname => props[:firstname], :lastname => props[:lastname], :site => @site)
+    @author = FactoryGirl.create(:author, :firstname => props[:firstname], :lastname => props[:lastname], :site => @site)
   end
 
   def create_theme_collection(props)
-    @theme_collection = Factory(:theme_collection, :name => props[:name], :site => @site)
+    @theme_collection = FactoryGirl.create(:theme_collection, :name => props[:name], :site => @site)
   end
 
   def create_theme_asset(props, theme_collection)
-    @theme_asset = Factory.build(:theme_asset, :name => props[:name]) 
+    @theme_asset = FactoryGirl.build(:theme_asset, :name => props[:name]) 
     theme_collection.theme_assets << @theme_asset
   end
 end

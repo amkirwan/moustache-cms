@@ -44,10 +44,10 @@ FactoryGirl.define do
   end
 
   factory :user do
-    sequence(:username) { |n| "foobar_#{n}"}
-    firstname "foobar" 
-    lastname  "baz" 
-    sequence(:email) { |n| "foobar_#{n}@example.com" }
+    sequence(:username) { |n| "foo_#{n}"}
+    firstname "foo" 
+    lastname  "handlebar" 
+    sequence(:email) { |n| "foo_#{n}@example.com" }
     role "admin" 
     site 
     password "foobar7"

@@ -5,8 +5,8 @@ Background: Login to site and create users
   And I am an authenticated user with the role of "admin"
   And these users have admin access
     | user | firstname | lastname  | role   | 
-    | foo  | foo       | handlebar | admin  |
     | bar  | bar       | handlebar | admin  |
+    | baz  | baz       | handlebar | admin  |
     | qux  | qux       | handlebar | editor |
   Given I view the users in the site
 
@@ -32,12 +32,12 @@ Background: Login to site and create users
 
   @delete_user
   Scenario: Delete User account
-    When I edit the user profile for "Foo Handlebar" and delete the user profile
-    Then I should see the flash message "Successfully deleted the user profile for Foo Handlebar"
+    When I edit the user profile for "Qux Handlebar" and delete the user profile
+    Then I should see the flash message "Successfully deleted the user profile for Qux Handlebar"
     And the user should be removed from the users list
 
   @javascript @delete_user_from_users_index
   Scenario: Delete user
-    When I delete the user "foo" from sites list of users
-    Then I should see the flash message "Successfully deleted the user profile for Foo Handlebar"
+    When I delete the user "qux" from the sites list of users
+    Then I should see the flash message "Successfully deleted the user profile for Qux Handlebar"
     And the user should be removed from the users list

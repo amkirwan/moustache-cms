@@ -4,7 +4,7 @@ end
 
 Given /^these users have admin access$/ do |table|
   table.hashes.each do |hash|
-    Factory(:user, :site => @site, :username => hash[:user], :email => "#{hash[:user]}@example.com", :firstname => hash[:firstname], :lastname => hash[:lastname])
+    create_user(hash)
   end
 end
 
@@ -43,7 +43,7 @@ When /^I edit the user profile for "([^"]*)" and delete the user profile$/ do |f
   delete_within_item fullname, 'Delete User'
 end
 
-When /^I delete the user "([^"]*)" from sites list of users$/ do |username|
+When /^I delete the user "([^"]*)" from the sites list of users$/ do |username|
   delete_from_index "tr##{username}"
 end
 
@@ -64,5 +64,7 @@ Then /^I should see the users listed$/ do
 end
 
 Then /^the user should be removed from the users list$/ do
-  page.should_not have_content('foo')  
+  within "table.users" do
+    page.should_not have_content('qux')  
+  end
 end

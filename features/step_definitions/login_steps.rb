@@ -10,7 +10,7 @@ Given /^the site "([^\"]*)" exists with the domain "([^\"]*)"$/ do |site, domain
 end
 
 Given /^the user "([^\"]*)" exists with the role of "([^\"]*)" in the site "([^\"]*)"$/ do |username, role, site| 
-  @user = Factory(:user, :username => username,
+  @user = FactoryGirl.create(:user, :username => username,
                  :firstname => "Anthony",
                  :lastname => "Kirwan",
                  :email => "#{username}@example.com",
