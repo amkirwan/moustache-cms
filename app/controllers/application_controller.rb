@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
     def current_site
       @current_site ||= Site.match_domain(request.host.downcase).first
       if @current_site.nil?
-        render :file => "#{Rails.root}/public/404.html", :status => 404
+        render :file => "#{Rails.root}/public/404", :layout => false, :status => 404
       end
       @current_site
     end
