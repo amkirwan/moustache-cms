@@ -70,12 +70,5 @@ describe Author do
         @author.full_name == "Anthony Michael Kirwan"
       end
     end
-
-    describe "#md5" do
-      it "should calculate an md5 for the author image" do
-        pending "calculated in lib/calc_md5 this version just changes the path for the author image"
-      end
-    end
-
   end
 end
