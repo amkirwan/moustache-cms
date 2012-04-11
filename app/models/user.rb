@@ -18,8 +18,26 @@ class User
   field :firstname
   field :middlename
   field :lastname
-  field :email
   field :role 
+
+  # -- Devise Authenticatable -----
+  field :email, :null => false
+  field :encrypted_password, :null => false
+
+  # -- Devise Recoverable ---
+  field :reset_password_token
+  field :reset_password_sent_at, :type => Time
+
+  # -- Devise Rememberable ---
+  field :remember_created_at, :type => Time
+
+  # -- Devise Trackable ---
+  field :sign_in_count,      :type => Integer
+  field :current_sign_in_at, :type => Time
+  field :last_sign_in_at,    :type => Time
+  field :current_sign_in_ip
+  field :last_sign_in_ip
+
 
   # -- Index -------------------------------
   index :username
