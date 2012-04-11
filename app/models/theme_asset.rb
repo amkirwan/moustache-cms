@@ -59,9 +59,9 @@ class ThemeAsset
 
     # -- Class Methods --------
   scope :css_files, lambda { { :where => { :content_type => "text/css" }} }
-  scope :js_files, lambda { { :where => { :content_type => "application/x-javascript" }} }
+  scope :js_files, lambda { { :where => { :content_type => {"$in" => ["application/javascript", "application/x-javascript"]} } } }
   scope :images, lambda { { :where => { :content_type => /^image\/*/i }} }
-  scope :other_files, lambda { { :where => { :content_type => {"$nin" => ['text/css', 'application/x-javascript', 'image/jpg', 'image/jpeg', 'image/gif', 'image/png', 'image/vnd.microsoft.icon'] } } }}
+  scope :other_files, lambda { { :where => { :content_type => {"$nin" => ['text/css', 'application/javascript', 'application/x-javascript', 'image/jpg', 'image/jpeg', 'image/gif', 'image/png', 'image/vnd.microsoft.icon'] } } }}
 
   scope :find_by_name, lambda { |name| { :where => { :name => name }} }
 
@@ -87,7 +87,7 @@ class ThemeAsset
   end
   
   def update_file_content(file_contents)
-    if self.content_type == "text/css" || self.content_type == "application/x-javascript"
+    if self.content_type == "text/css" || self.content_type == "application/javascript"
       File.open(self.asset.path, "w") { |f| f.write(file_contents) }
       File.delete(self.file_path_md5_old) if (!self.file_path_md5_old.nil? && File.exists?(self.file_path_md5_old))
       File.open(self.file_path_md5, 'wb') { |f| f.write(file_contents) }

@@ -26,6 +26,10 @@ describe HandlebarCms::CalcMd5 do
     @ac.site_assets << @site_asset = FactoryGirl.build(:site_asset, :asset => AssetFixtureHelper.open("rails.png"), :content_type => "image/png")
   end
 
+  after(:each) do
+    site_remove_assets(@site)
+  end
+
   describe "#calc_md5" do
     it "should generate an md5 filename on the file contents" do
       hex = ::Digest::MD5.hexdigest(AssetFixtureHelper.open('rails.png').read)

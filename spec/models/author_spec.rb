@@ -8,6 +8,10 @@ describe Author do
     @author = FactoryGirl.create(:author, :site => site, :firstname => "Anthony", :middlename => "Michael", :lastname => "Kirwan")
   end
 
+  after(:each) do
+    remove_author_assets
+  end
+
   # -- Associations ---
   describe "Author Associations" do
     it "should belong to a site" do

@@ -1,7 +1,8 @@
 # encoding: utf-8
-require 'mime/types'
+require 'carrierwave/processing/mime_types'
 
 class SiteAssetUploader < CarrierWave::Uploader::Base
+  include CarrierWave::MimeTypes
 
   # Choose what kind of storage to use for this uploader:
   storage :file
@@ -12,6 +13,8 @@ class SiteAssetUploader < CarrierWave::Uploader::Base
   
   before :store, :remember_cache_id
   after :store, :delete_tmp_dir
+
+  process :set_content_type
 
   # store! nil's the cache_id after it finishes so we need to remember it for deletition
   def remember_cache_id(new_file)

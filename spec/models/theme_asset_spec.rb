@@ -10,13 +10,17 @@ describe ThemeAsset do
   end
 
   before(:each) do
+    @theme_collection = theme_collection
     theme_collection.theme_assets << @theme_asset_image = FactoryGirl.build(:theme_asset, :name => "image", :asset => AssetFixtureHelper.open("rails.png"), :content_type => "image/png", :creator_id => user.id, :updator_id => user.id)
     theme_collection.theme_assets << @theme_asset_css = FactoryGirl.build(:theme_asset, :name => "css",  :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css", :creator_id => user.id, :updator_id => user.id)
-    theme_collection.theme_assets << @theme_asset_js = FactoryGirl.build(:theme_asset, :name => "js", :asset => AssetFixtureHelper.open("theme_js.js"), :content_type => "application/x-javascript", :creator_id => user.id, :updator_id => user.id)
+    theme_collection.theme_assets << @theme_asset_js = FactoryGirl.build(:theme_asset, :name => "js", :asset => AssetFixtureHelper.open("theme_js.js"), :creator_id => user.id, :updator_id => user.id)
     theme_collection.theme_assets << @theme_asset_type = FactoryGirl.build(:theme_asset, :name => "other", :asset => AssetFixtureHelper.open("Inconsolata.otf"), :content_type => "application/octet-stream", :creator_id => user.id, :updator_id => user.id)
 
   end
   
+  after(:each) do
+    remove_theme_assets
+  end
   # --  Associations -----------------------------------------------
    describe "associations" do
      it "shouldbe embedded_in the article_collection" do

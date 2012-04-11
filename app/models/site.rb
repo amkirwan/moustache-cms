@@ -103,7 +103,7 @@ class Site
 
   def js_file_by_name(theme_name, js_name)
     theme_collection = ThemeCollection.first(:conditions => {:name => theme_name, :site_id => self.id})
-    theme_collection.theme_assets.where(:name => js_name, :content_type => 'application/x-javascript').first
+    theme_collection.theme_assets.where(:name => js_name, :content_type => 'application/javascript').first
   end 
   
   def site_asset_by_name(asset_collection, file_name)

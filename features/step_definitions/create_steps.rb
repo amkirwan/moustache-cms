@@ -1,4 +1,5 @@
 module Create
+
   def create_site(site='foobar', domain='example.com')
     @site = FactoryGirl.build(:site, :name => site, :subdomain => site, :default_domain => domain)
     @site.add_domain '127.0.0.1'

@@ -34,6 +34,10 @@ describe HandlebarCms::Mustache::CmsPage do
     @controller.instance_variable_set(:@current_site, site)
     @cmsp = HandlebarCms::Mustache::CmsPage.new(@controller)
   end
+
+  after(:each) do
+    site_remove_assets(site)
+  end
   
   describe "initialize" do
     it "should set controller ivars to cms_page instance" do

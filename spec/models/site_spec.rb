@@ -8,6 +8,9 @@ describe Site do
     @layout = FactoryGirl.create(:layout, :site => @site, :created_by => @user, :updated_by => @user) 
   end
   
+  after(:each) do
+    site_remove_assets(@site)
+  end
   # -- Validations -------------------------------------------
   describe "Validations" do
     it "should be valid" do
@@ -157,7 +160,7 @@ describe Site do
     describe "#js_file_by_name(theme_name, name)" do
       it "should return the css file by the given name" do
         theme_collection = FactoryGirl.create(:theme_collection, :name => 'baz', :site => @site)
-        theme_collection.theme_assets << theme_asset_js = FactoryGirl.build(:theme_asset, :name => 'foobar', :asset => AssetFixtureHelper.open("theme_js.js"), :content_type => "application/x-javascript")
+        theme_collection.theme_assets << theme_asset_js = FactoryGirl.build(:theme_asset, :name => 'foobar', :asset => AssetFixtureHelper.open("theme_js.js"), :content_type => "application/javascript")
         @site.js_file_by_name("baz", "foobar").should == theme_asset_js
       end
     end   

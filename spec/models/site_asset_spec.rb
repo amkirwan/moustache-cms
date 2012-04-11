@@ -14,6 +14,10 @@ describe SiteAsset do
     @ac.site_assets << @site_asset = FactoryGirl.build(:site_asset, :asset => AssetFixtureHelper.open("rails.png"), :content_type => "image/png")
   end
   
+  after(:each) do
+    remove_site_assets
+  end
+
   describe "it should allow mass assignment of the fields" do
     it "should allow mass assignment of" do
       site_asset = SiteAsset.new(:name => "foobar", :content_type => "css", :width => 10, :height => 10, :file_size => 10, :asset => AssetFixtureHelper.open("rails.png"))

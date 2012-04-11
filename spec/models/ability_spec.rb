@@ -28,7 +28,6 @@ describe Ability do
   let(:page_other_site) { FactoryGirl.build(:page, :site => other_site, :page_parts => [page_part_other_site], :editors => [ admin_other_site ], :meta_tags => [meta_tag_other_site]) } 
 
   let(:author) { FactoryGirl.build(:author, :site => site) }
-  let(:author_other_site) { FactoryGirl.build(:author, :site => other_site) } 
 
   let(:article_collection) { FactoryGirl.create(:article_collection, :site => site, :articles => [], :editors => [admin, designer, editor]) }
   let(:article_collection_other_site) { FactoryGirl.create(:article_collection, :site => other_site, :articles => [], :editors => [admin_other_site]) }
@@ -52,6 +51,7 @@ describe Ability do
 
   let(:theme_collection_other_site) { FactoryGirl.build(:theme_collection, :site => other_site, :created_by => admin, :theme_assets => [theme_asset_other_site]) }
 
+
   def site_asset_first
     asset_collection.site_assets.first
   end
@@ -66,6 +66,11 @@ describe Ability do
 
   def article_first
     article_collection.articles.first
+  end
+
+  after do
+    @author = author
+    remove_author_assets
   end
   
 
