@@ -20,7 +20,7 @@ gem "mongoid_taggable_with_context", :git => "git://github.com/amkirwan/mongoid_
 gem "carrierwave-mongoid", :git => "git://github.com/jnicklas/carrierwave-mongoid.git", :branch => "carrierwave-0.6-support"
 
 # authorization
-gem "devise", "~> 1.5"
+gem "devise", "~> 2.0"
 gem "cancan", ">= 1.6" # must come after mongoid in Gemfile
 
 gem "mustache", ">= 0.99"
