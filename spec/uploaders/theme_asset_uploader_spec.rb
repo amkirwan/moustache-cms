@@ -17,11 +17,17 @@ describe ThemeAssetUploader do
     ThemeAssetUploader.enable_processing = true
     @uploader = ThemeAssetUploader.new(@theme_asset, :asset)
     @uploader.store!(AssetFixtureHelper.open("rails.png"))
+    @uploader_css = ThemeAssetUploader.new(@theme_asset_css, :asset)
+    @uploader_css.store!(AssetFixtureHelper.open("theme_css.css"))
+    @uploader_js = ThemeAssetUploader.new(@theme_asset_js, :asset)
+    @uploader_js.store!(AssetFixtureHelper.open("theme_js.js"))
+    @uploader_otf = ThemeAssetUploader.new(@theme_asset_otf, :asset)
+    @uploader_otf.store!(AssetFixtureHelper.open("Inconsolata.otf"))
   end
   
   after do
-    @uploader.remove!
-    SiteAssetUploader.enable_processing = false
+    ThemeAssetUploader.enable_processing = false
+    FileUtils.rm_rf(File.join(Rails.root, 'public', 'theme_assets', @uploader.model._parent.site_id.to_s))
   end  
   
   describe "before_filer" do
@@ -53,15 +59,7 @@ describe ThemeAssetUploader do
   end
   
   describe "storeage paths" do
-    before(:each) do
-      @uploader_css = ThemeAssetUploader.new(@theme_asset_css, :asset)
-      @uploader_css.store!(AssetFixtureHelper.open("theme_css.css"))
-      @uploader_js = ThemeAssetUploader.new(@theme_asset_js, :asset)
-      @uploader_js.store!(AssetFixtureHelper.open("theme_js.js"))
-      @uploader_otf = ThemeAssetUploader.new(@theme_asset_otf, :asset)
-      @uploader_otf.store!(AssetFixtureHelper.open("Inconsolata.otf"))
-    end
-    
+   
     it "should set the storage directory to image for image files" do
       @uploader.store_dir.should == "theme_assets/#{@uploader.model._parent.site_id}/#{@uploader.model._parent.name}/images"
     end

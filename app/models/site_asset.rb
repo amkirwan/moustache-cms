@@ -59,8 +59,4 @@ class SiteAsset
     self.asset.image?(self.asset.file)
   end
 
-  def remove_folder
-    FileUtils.rm_rf(File.join(Rails.root, 'public', asset.store_dir))
-  end
-
 end

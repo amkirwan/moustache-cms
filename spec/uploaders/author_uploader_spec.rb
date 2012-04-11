@@ -15,8 +15,8 @@ describe AuthorUploader do
   end
   
   after do
-    @uploader.remove!
     AuthorUploader.enable_processing = false
+    FileUtils.rm_rf(File.join(Rails.root, 'public', 'authors', @uploader.model.site_id.to_s))
   end 
 
   describe "before_filer" do
