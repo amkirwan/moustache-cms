@@ -16,7 +16,8 @@ gem "mongoid", "~> 2.4"
 gem "bson_ext", "~> 1.5"    
 gem "mongoid-tree", :git => "git://github.com/benedikt/mongoid-tree", :require => "mongoid/tree"
 gem "mongoid_taggable_with_context", :git => "git://github.com/amkirwan/mongoid_taggable_with_context.git", :branch => "master"
-gem "carrierwave-mongoid", :require => "carrierwave/mongoid"
+#gem "carrierwave-mongoid", :require => "carrierwave/mongoid"
+gem "carrierwave-mongoid", :git => "git://github.com/jnicklas/carrierwave-mongoid.git", :branch => "carrierwave-0.6-support"
 
 # authorization
 gem "devise", "~> 1.5"
@@ -31,8 +32,8 @@ gem "kaminari"
 gem "unicorn"
 
 group :development, :test do
-  gem "rspec-rails", :git => "git://github.com/rspec/rspec-rails.git"
-  gem "cucumber-rails", :require => false
+  gem "rspec-rails", "~> 2.9"
+  gem "cucumber-rails", "~> 1.3", :require => false
   gem "capybara"
   gem "launchy"
   gem "database_cleaner"
