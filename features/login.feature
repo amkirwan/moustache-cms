@@ -15,3 +15,11 @@ Background: Create default site
     Given I go to the admin login page
     When I try to login as a user that does not exist
     Then I should see the flash message "Invalid email or password"
+
+  @logout
+  Scenario: logout from the site
+    Given I go to the admin login page
+    When I login as an admin
+    And I view the pages in the site
+    When I logout of the site
+    Then I should see the flash message "Signed out successfully"

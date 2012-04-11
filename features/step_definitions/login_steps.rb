@@ -49,3 +49,6 @@ When /^I try to login as a user that does not exist$/ do
   login "foobar@example.com", "blahblah"
 end
 
+When /^I logout of the site$/ do
+  click_link 'Logout'
+end
