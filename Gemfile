@@ -42,7 +42,6 @@ group :development, :test do
   gem "hpricot"
   gem "syntax"   
   gem "relish"
-  gem "spork"
   gem "guard"
   gem "guard-cucumber", :git => "git://github.com/netzpirat/guard-cucumber.git"
   gem "guard-rspec"
