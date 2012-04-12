@@ -15,20 +15,20 @@ class Ability
       end
       
       can :read, ArticleCollection, :site_id => user.site_id   
-      can :manage, Article, do |article|
+      can :manage, Article do |article|
         article.article_collection.editors.include?(user) && article.site_id == user.site_id
       end
 
       can :read, AssetCollection, :site_id => user.site_id   
-      can :manage, SiteAsset, do |site_asset|
+      can :manage, SiteAsset do |site_asset|
         site_asset._parent.site_id == user.site_id
       end
 
-      can :manage, PagePart, do |page_part|
+      can :manage, PagePart do |page_part|
         page_part._parent.site_id == user.site_id
       end
 
-      can :manage, MetaTag, do |meta_tag|
+      can :manage, MetaTag do |meta_tag|
         if meta_tag._parent.respond_to?(:site_id)
           meta_tag._parent.site_id == user.site_id
         end
@@ -38,7 +38,7 @@ class Ability
 
     if user.role? :designer
       can :manage, [Layout, ThemeCollection, Snippet, Author], :site_id => user.site_id  
-      can :manage, ThemeAsset, do |theme_asset|
+      can :manage, ThemeAsset do |theme_asset|
         theme_asset._parent.site_id == user.site_id
       end
     end
@@ -52,7 +52,7 @@ class Ability
       can :manage, Article, :site_id => user.site_id
       can :manage, AssetCollection, :site_id => user.site_id
 
-      can :manage, MetaTag, do |meta_tag|
+      can :manage, MetaTag do |meta_tag|
         if meta_tag._parent.class.name == "Site"
           meta_tag._parent.id == user.site_id
         end
