@@ -20,3 +20,5 @@ config/mongoid_production.yml
 config/deploy.rb
 config/unicorn.conf
 lib/handlebar_cms/mustache/site_custom_tags.rb
+db/seeds_old.rb
+lib/handlebar_cms/mustache/custom_templates/nav_for_faculty.haml
