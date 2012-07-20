@@ -1,5 +1,5 @@
 %li
   = text_field_tag "site[domain_names][]", domain, :id => "#{site_domain_name_id(domain)}"
-  = link_to "Delete", admin_site_domain_name_path(@current_site, index), :confirm => "Are you sure you want to delete the domain name #{domain}", :method => :delete, :class => "delete", :remote => true
+  = link_to "Delete", admin_site_domain_name_path(@current_site, index), :data => { :confirm => "Are you sure you want to delete the domain name #{domain}", :method => :delete }, :class => "delete", :remote => true
 
 

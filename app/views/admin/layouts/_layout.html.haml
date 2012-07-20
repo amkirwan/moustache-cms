@@ -1,4 +1,4 @@
 %tr{:id => "layout_#{layout.name}", :class => "#{cycle('even', 'odd')}"}
   %td.name= link_to layout.name, [:edit, :admin, layout]
   - if can? :destroy, layout
-    %td.delete= link_to "Delete", [:admin, layout], :method => :delete, :confirm => "Are you sure you want to delete the layout #{layout.name}", :class => "delete"
+    %td.delete= link_to "Delete", [:admin, layout], :method => :delete, :data => { :confirm => "Are you sure you want to delete the layout #{layout.name}" }, :class => "delete"

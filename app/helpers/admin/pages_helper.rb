@@ -20,7 +20,7 @@ module Admin::PagesHelper
     return if page.root?
 
     if can? :destroy, page 
-      link_to "<div class=\"delete_page delete_#{page.title.parameterize('_')}\">Delete Page</div>".html_safe, admin_page_path(page), :method => :delete, :confirm => "Are you sure you want to delete the page #{page.title}?", 'data-title' => "#{page.title}", :class => "delete", :remote => true
+      link_to "<div class=\"delete_page delete_#{page.title.parameterize('_')}\">Delete Page</div>".html_safe, admin_page_path(page), :method => :delete, :data => { :confirm => "Are you sure you want to delete the page #{page.title}?" }, 'data-title' => "#{page.title}", :class => "delete", :remote => true
     end
   end
 
@@ -84,7 +84,7 @@ module Admin::PagesHelper
     case meta_tag.name
     when "title", "keywords", "description"
     else
-      link_to "Delete", [:admin, page, meta_tag], :confirm => "Are you sure you want to delete the meta tag #{meta_tag.name}", :method => :delete, :class => "delete", :remote => true
+      link_to "Delete", [:admin, page, meta_tag], :data => { :confirm => "Are you sure you want to delete the meta tag #{meta_tag.name}" }, :method => :delete, :class => "delete", :remote => true
     end
   end
 
@@ -115,7 +115,7 @@ module Admin::PagesHelper
   def delete_page_part
     if @page.page_parts.size > 1  
       content = content_tag :span, '&#124; '.html_safe, :class => 'menu_separator'
-      content += link_to "Delete", [:admin, @page, @selected_page_part], :method => :delete, :confirm => "Are you sure you want to delete the page part #{@selected_page_part.name}", :class => "delete", :remote => true
+      content += link_to "Delete", [:admin, @page, @selected_page_part], :method => :delete, :data => { :confirm => "Are you sure you want to delete the page part #{@selected_page_part.name}" }, :class => "delete", :remote => true
       content
     end
   end

@@ -10,7 +10,7 @@
             = builder.text_field :name
             = builder.label :content
             = builder.text_field :content
-            =  link_to "Delete", [:admin, @page, builder.object ], :confirm => "Are you sure you want to delete the custom field #{builder.object.name}", :method => :delete, :class => "delete", :remote => true
+            =  link_to "Delete", [:admin, @page, builder.object ], :data => { :confirm => "Are you sure you want to delete the custom field #{builder.object.name}", :method => :delete }, :class => "delete", :remote => true
           = builder_hidden_attribute(builder, @page)
         %li#add_custom_field
           = add_custom_field 'Save page first to add custom fields', @page, [:new, :admin, @page, :custom_field]

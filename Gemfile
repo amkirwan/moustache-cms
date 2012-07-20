@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem "rails", "3.2.3"   
+gem "rails", "3.2.6"   
 
 group :assets do
   gem "sass-rails", "~> 3.2.3"
@@ -14,7 +14,7 @@ gem "haml-rails", "~> 0.3"
 # mongoid
 gem "mongoid", "~> 2.4"
 gem "bson_ext", "~> 1.5"    
-gem "mongoid-tree", :git => "git://github.com/benedikt/mongoid-tree", :require => "mongoid/tree"
+gem "mongoid-tree", :git => "git://github.com/benedikt/mongoid-tree", :tag=> 'v0.7.0', :require => "mongoid/tree"
 gem "mongoid_taggable_with_context", :git => "git://github.com/amkirwan/mongoid_taggable_with_context.git", :branch => "master"
 #gem "carrierwave-mongoid", :require => "carrierwave/mongoid"
 gem "carrierwave-mongoid", :git => "git://github.com/jnicklas/carrierwave-mongoid.git", :branch => "carrierwave-0.6-support"

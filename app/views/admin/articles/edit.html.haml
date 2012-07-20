@@ -1,7 +1,7 @@
 - header_content 'shared/header_wrapper', :object => @article do
   - if can? :destroy, @article
     %div{:id => "delete_article", :class => "delete"}
-      = link_to "Delete Article", [:admin, @article_collection, @article], :confirm => "Are you sure you want to delete the article #{@article.title}", :method => :delete, :class => "action delete"
+      = link_to "Delete Article", [:admin, @article_collection, @article], :data => { :confirm => "Are you sure you want to delete the article #{@article.title}" }, :method => :delete, :class => "action delete"
 
 - inner_content "shared/inner_wrapper" do
   %div.breadcrumb
