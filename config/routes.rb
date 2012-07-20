@@ -1,4 +1,4 @@
-HandlebarCms::Application.routes.draw do   
+Moustachecms::Application.routes.draw do   
 
   namespace :admin do
     devise_for :users, :path => '', :controllers => { :sessions => 'admin/sessions', :passwords => 'admin/passwords' } 

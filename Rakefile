@@ -4,4 +4,4 @@
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
-HandlebarCms::Application.load_tasks
+Moustachecms::Application.load_tasks

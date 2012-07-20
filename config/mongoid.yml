@@ -1,10 +1,10 @@
 development:
   host: localhost
-  database: handlebar_cms_development
+  database: moustache_cms_development
 
 test:
   host: localhost
-  database: handlebar_cms_test
+  database: moustache_cms_test
 
 # set these environment variables on your prod server
 production:
