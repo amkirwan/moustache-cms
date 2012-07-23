@@ -3,7 +3,7 @@ require "spec_helper"
 class Simple < Mustache
 end
 
-describe HandlebarCms::Mustache::CmsPage do
+describe MoustacheCms::Mustache::CmsPage do
   let(:site) { FactoryGirl.create(:site)}
   let(:user) { FactoryGirl.create(:user, :site => site) }
   let(:layout) { FactoryGirl.create(:layout, :site => site, :created_by => user, :updated_by => user) }
@@ -32,7 +32,7 @@ describe HandlebarCms::Mustache::CmsPage do
     @controller.instance_variable_set(:@page, @page)
     @controller.instance_variable_set(:@request, @request)
     @controller.instance_variable_set(:@current_site, site)
-    @cmsp = HandlebarCms::Mustache::CmsPage.new(@controller)
+    @cmsp = MoustacheCms::Mustache::CmsPage.new(@controller)
   end
 
   after(:each) do
@@ -101,7 +101,7 @@ describe HandlebarCms::Mustache::CmsPage do
     
     it "should return a stylesheet by name" do
       @page.layout.content = "{{#stylesheet}}theme_name:thorn, name:foobar{{/stylesheet}}"
-      cms_page = HandlebarCms::Mustache::CmsPage.new(@controller)
+      cms_page = MoustacheCms::Mustache::CmsPage.new(@controller)
       cms_page.render.should == %(<link href="#{@theme_asset_css.url_md5}" rel="stylesheet" type="text/css" />\n)
     end
 

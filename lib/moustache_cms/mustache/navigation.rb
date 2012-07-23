@@ -1,4 +1,4 @@
-module HandlebarCms
+module MoustacheCms
   module Mustache
     module Navigation
 

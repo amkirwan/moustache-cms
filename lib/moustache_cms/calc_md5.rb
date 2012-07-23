@@ -1,4 +1,4 @@
-module HandlebarCms
+module MoustacheCms
   module CalcMd5
     extend ActiveSupport::Concern
 

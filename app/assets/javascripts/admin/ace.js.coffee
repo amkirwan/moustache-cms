@@ -7,7 +7,7 @@ $(document).ready ->
       @mode = new @klass()
       @extRe = new RegExp("^.*\\.(" + extensions.join("|") + ")$", "g")
 
-  class root.HandlebarEditor
+  class root.MoustacheEditor
     constructor: (args) ->
       @options = $.extend({ 
         tabSize: 2
@@ -49,7 +49,7 @@ $(document).ready ->
       @lineWrapModeChange() 
 
     contentSettings: (filterText) ->
-      @editor.getSession().setMode HandlebarEditor.modesByName[filterText].mode
+      @editor.getSession().setMode MoustacheEditor.modesByName[filterText].mode
 
     # on form submit update hidden textarea with ace editor content
     hideUpdateTextarea: ->
@@ -78,16 +78,16 @@ $(document).ready ->
       'editor =' + @editor.toString()
 
   if $("body.layouts #asset_content").length
-    hbEditor = new HandlebarEditor elementId: "asset_content", filter: 'html'
+    hbEditor = new MoustacheEditor elementId: "asset_content", filter: 'html'
 
   else if $("body.snippets #asset_content").length
-    hbEditor = new HandlebarEditor elementId: 'asset_content', filter: $('#snippet_filter_name').val()
+    hbEditor = new MoustacheEditor elementId: 'asset_content', filter: $('#snippet_filter_name').val()
     $('#snippet_filter_name').change ->
       hbEditor.contentSettings $(@).val()
 
   else if $("body.articles #article_content").length
-    hbEditorSub = new HandlebarEditor elementId: "article_subheading_content", filter: $('#article_filter_name').val(), useWrapMode: true
-    hbEditorContent = new HandlebarEditor elementId: "article_content", filter: $('#article_filter_name').val(), useWrapMode: true
+    hbEditorSub = new MoustacheEditor elementId: "article_subheading_content", filter: $('#article_filter_name').val(), useWrapMode: true
+    hbEditorContent = new MoustacheEditor elementId: "article_content", filter: $('#article_filter_name').val(), useWrapMode: true
 
     $('#article_filter_name').change ->
       hbEditorSub.contentSettings $(@).val()
@@ -95,19 +95,19 @@ $(document).ready ->
 
   else if $("body.theme_assets #asset_content").length
     if $('li.css_asset')
-      hbEditor = new HandlebarEditor elementId: 'asset_content', filter: 'css'
+      hbEditor = new MoustacheEditor elementId: 'asset_content', filter: 'css'
     else if $('li.js_asset')
-      hbEditor = new HandlebarEditor elementId: 'asset_content', filter: 'javascript'
+      hbEditor = new MoustacheEditor elementId: 'asset_content', filter: 'javascript'
     
   else if $("body.pages .page_parts").length
     filters = []
     $('.page_part_filter').each -> 
       filters.push @
 
-    HandlebarEditor.editors = [] 
+    MoustacheEditor.editors = [] 
     $('.page_part_content').each (index) ->
-      editor = new HandlebarEditor elementId: $(@).attr('id'), filter: $(filters[index]).val()
-      HandlebarEditor.editors.push editor
+      editor = new MoustacheEditor elementId: $(@).attr('id'), filter: $(filters[index]).val()
+      MoustacheEditor.editors.push editor
 
     # hide all page parts that are not selected 
     # after adding editor to view otherwise they don't render correctly
@@ -115,5 +115,5 @@ $(document).ready ->
       $(@).hide()
 
     $('.page_part_filter').on 'change', ->
-      editor = HandlebarEditor.editors[$('.page_part_filter').index(@)]
+      editor = MoustacheEditor.editors[$('.page_part_filter').index(@)]
       editor.contentSettings $(@).val()

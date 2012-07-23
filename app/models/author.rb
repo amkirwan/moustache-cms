@@ -2,7 +2,7 @@ class Author
   include Mongoid::Document 
   include Mongoid::Timestamps
 
-  include HandlebarCms::CalcMd5
+  include MoustacheCms::CalcMd5
 
   attr_accessible :prefix,
                   :firstname,

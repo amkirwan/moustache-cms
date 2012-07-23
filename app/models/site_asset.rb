@@ -3,7 +3,7 @@ class SiteAsset
   include Mongoid::Timestamps
   
   include Mongoid::TaggableWithContext
-  include HandlebarCms::CalcMd5
+  include MoustacheCms::CalcMd5
 
   attr_accessible :name,
                   :description,

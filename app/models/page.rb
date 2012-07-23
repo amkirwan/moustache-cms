@@ -2,7 +2,7 @@ class Page
   include Mongoid::Document 
   include Mongoid::Timestamps
  
-  include HandlebarCms::Published
+  include MoustacheCms::Published
 
   include Mongoid::Tree 
   include Mongoid::Tree::Ordering

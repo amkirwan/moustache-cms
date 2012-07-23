@@ -335,7 +335,7 @@ describe Page do
       end
     end
     
-    # -- HandlebarCms::Published ----
+    # -- MoustacheCms::Published ----
     describe "#published_on" do
       it "shortcut to the current_state published_at property" do
         @page.published_on.should == @page.current_state.published_on

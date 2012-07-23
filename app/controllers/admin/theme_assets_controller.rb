@@ -1,5 +1,5 @@
 class Admin::ThemeAssetsController < AdminBaseController
-  include HandlebarCms::AssetCache  
+  include MoustacheCms::AssetCache  
   
   load_resource :theme_collection
   load_and_authorize_resource :theme_asset, :through => :theme_collection  

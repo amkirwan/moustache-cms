@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe HandlebarCms::CalcMd5 do
+describe MoustacheCms::CalcMd5 do
   class DummyClass
     include Mongoid::Document
-    include HandlebarCms::CalcMd5
+    include MoustacheCms::CalcMd5
 
     field :name
     field :content_type

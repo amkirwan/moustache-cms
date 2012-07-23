@@ -69,7 +69,6 @@ describe User do
     end
   
     it "should not be valid with duplicate pid within the same site" do  
-      #Factory(:user, :username => @user.username, :site_id => @user.site_id).should_not be_valid
       should validate_uniqueness_of(:username).scoped_to(:site_id)
     end
     
@@ -80,7 +79,6 @@ describe User do
     end
   
     it "should not be valid with duplicate email addresses within the same site" do
-      #Factory.build(:user, :email => "#{@user.email}", :site_id => @user.site_id).should_not be_valid
       should validate_uniqueness_of(:email).scoped_to(:site_id)
     end      
     
@@ -232,7 +230,7 @@ describe User do
 
     describe "full_name" do
       it "should return the users first and lastname" do
-        @user.full_name.should == "Foo Handlebar"
+        @user.full_name.should == "Foo Moustache"
       end
     end
     describe "#role?" do

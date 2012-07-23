@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe HandlebarCms::Published do
+describe MoustacheCms::Published do
   class DummyClass
     include Mongoid::Document  
     embeds_one :current_state 
@@ -9,7 +9,7 @@ describe HandlebarCms::Published do
   before(:each) do
     @dummy_class = DummyClass.new
     @dummy_class.current_state = FactoryGirl.build(:current_state)
-    @dummy_class.extend(HandlebarCms::Published)
+    @dummy_class.extend(MoustacheCms::Published)
   end
 
   describe "#published?" do

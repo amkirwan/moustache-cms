@@ -17,5 +17,5 @@ $('.delete_page_part').html('<%= delete_page_part %>')
 if $('#view').length > 0
   $('#view').attr 'value', '<%= @page_part.id %>'
 
-editor = new HandlebarEditor elementId: '<%= @page_part.id %>_content', filter: $('.page_parts select').last().val()
-HandlebarEditor.editors.push editor
+editor = new MoustacheEditor elementId: '<%= @page_part.id %>_content', filter: $('.page_parts select').last().val()
+MoustacheEditor.editors.push editor

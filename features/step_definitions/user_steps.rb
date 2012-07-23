@@ -21,7 +21,7 @@ When /^I create the user Patrick Kane$/ do
 end
 
 When /^I change the fullname to Patrick Kane and username to pk88 of the user foo$/ do
-  click_link 'Foo Handlebar'
+  click_link 'Foo Moustache'
   fill_in 'Username*', :with => 'pk88'
   fill_in 'Firstname*', :with => 'Patrick'
   fill_in 'Lastname*', :with => 'Kane'

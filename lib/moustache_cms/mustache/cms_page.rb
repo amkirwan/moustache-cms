@@ -2,7 +2,7 @@ require 'haml'
 require 'tag_helper'
 require 'redcarpet_singleton'
 
-class HandlebarCms::Mustache::CmsPage < Mustache
+class MoustacheCms::Mustache::CmsPage < Mustache
   include Head
   include Navigation
   include SiteCustomTags
@@ -100,7 +100,7 @@ class HandlebarCms::Mustache::CmsPage < Mustache
       @child_pages = @page.children.asc(:title).page(@controller.params[:page])
       unless @child_pages.nil?
         options = Hash[*text.scan(/(\w+).to_sym:([&.\w\s\-]+)/).to_a.flatten]
-        context = ActionView::Base.new("#{Rails.root}/lib/handlebar_cms/mustache/custom_templates", {}, @controller,nil)
+        context = ActionView::Base.new("#{Rails.root}/lib/moustache_cms/mustache/custom_templates", {}, @controller,nil)
         engine = gen_haml('paginate.haml')
         engine.render(context, {:child_pages => @child_pages, :options => options})
       end

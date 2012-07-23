@@ -20,9 +20,9 @@ When /^I create a author with the firstname "([^"]*)" and the lastname "([^"]*)"
 end
 
 
-When /^I change the author Foobar Handlebar's firstname to "([^"]*)" and the lastname to "([^"]*)"$/ do |firstname, lastname|
+When /^I change the author Foobar Moustache's firstname to "([^"]*)" and the lastname to "([^"]*)"$/ do |firstname, lastname|
   step %{I view the authors in the site}
-  click_link 'Foobar Handlebar'
+  click_link 'Foobar Moustache'
   fill_in_name(firstname, lastname)
   click_button 'Update Author'
 end
@@ -43,5 +43,5 @@ Then /^I should see the authors listed$/ do
 end
   
 Then /^the author should be removed from the authors list$/ do
-  removed_item_by_selector 'tr#author_foobar_handlebar'
+  removed_item_by_selector 'tr#author_foobar_Moustache'
 end

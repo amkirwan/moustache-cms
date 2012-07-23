@@ -1,8 +1,8 @@
 # Be sure to restart your server when you modify this file.
 
-Moustachecms::Application.config.session_store :cookie_store, :key => '_handlebar_cms_session'
+MoustacheCms::Application.config.session_store :cookie_store, :key => '_moustache_cms_session'
 
 # Use the database for sessions instead of the cookie-based default,
 # which shouldn't be used to store highly confidential information
 # (create the session table with "rails generate session_migration")
-# Moustachecms::Application.config.session_store :active_record_store
+# MoustacheCms::Application.config.session_store :active_record_store

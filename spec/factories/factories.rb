@@ -30,7 +30,7 @@ FactoryGirl.define do
   factory :user do
     sequence(:username) { |n| "foo_#{n}"}
     firstname "foo" 
-    lastname  "handlebar" 
+    lastname  "moustache" 
     sequence(:email) { |n| "foo_#{n}@example.com" }
     role "admin" 
     site 

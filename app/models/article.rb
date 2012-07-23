@@ -3,7 +3,7 @@ class Article
   include Mongoid::Timestamps
   include Mongoid::MultiParameterAttributes
 
-  include HandlebarCms::Published
+  include MoustacheCms::Published
   include Mongoid::TaggableWithContext
 
   attr_accessible :title,

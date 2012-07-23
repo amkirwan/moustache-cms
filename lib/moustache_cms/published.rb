@@ -1,4 +1,4 @@
-module HandlebarCms
+module MoustacheCms
   module Published
     def published?
       self.current_state.published?

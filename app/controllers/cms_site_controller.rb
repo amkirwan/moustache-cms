@@ -6,7 +6,7 @@ class CmsSiteController < ApplicationController
   
   def render_html
     if !@page.nil? && (@page.published? || current_admin_user)
-      mustache_response = HandlebarCms::Mustache::CmsPage.new(self).render
+      mustache_response = MoustacheCms::Mustache::CmsPage.new(self).render
       response.etag = mustache_response
       if request.fresh?(response)
         head :not_modified
@@ -36,7 +36,7 @@ class CmsSiteController < ApplicationController
     
     def render_404
       if @page = @current_site.page_by_full_path("404")
-        render :text => HandlebarCms::Mustache::CmsPage.new(self).render, :status => 404
+        render :text => MoustacheCms::Mustache::CmsPage.new(self).render, :status => 404
       else 
         render :file => "#{Rails.root}/public/404.html", :status => 404
       end
