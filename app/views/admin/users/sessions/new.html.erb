@@ -1,6 +1,6 @@
 <%= content_for(:title) { "Login" } %>
 <div id="login_wrapper">
-  <h2 id="current_site"><%= @current_site.name.titleize %></h2>
+  <h2 id="current_site"><%= @current_site.name %></h2>
   <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
     <fieldset id="login">
       <ol class="login_fields">

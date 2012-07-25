@@ -1,11 +1,11 @@
-site = Site.find_or_create_by(:name => "moustache-cms", :subdomain => "moustache-cms") do |s|
+site = Site.find_or_create_by(:name => "Moustache CMS", :subdomain => "moustache-cms") do |s|
   s.default_domain = "dev"
 end
-admin = User.find_or_create_by(:firstname => "Admin", :lastname => "Admin", :email => "admin@moustachecms.org") do |user|
+admin = User.find_or_create_by(:firstname => "Admin", :lastname => "Moustache", :email => "admin@moustachecms.org") do |user|
   user.username = "admin"
   user.role = "admin"
   user.site_id = site.id
-  user.password = "moustache-admin"
+  user.password = "moustache"
 end
 
 # Create Layout
