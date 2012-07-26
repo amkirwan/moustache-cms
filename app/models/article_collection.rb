@@ -1,7 +1,8 @@
 class ArticleCollection
-
   include Mongoid::Document
   include Mongoid::Timestamps
+
+  include MoustacheCms::FriendlyFilename
 
   attr_accessible :name,
                   :layout_id,
