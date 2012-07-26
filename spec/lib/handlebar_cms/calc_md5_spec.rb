@@ -1,20 +1,6 @@
 require 'spec_helper'
 
 describe MoustacheCms::CalcMd5 do
-  class DummyClass
-    include Mongoid::Document
-    include MoustacheCms::CalcMd5
-
-    field :name
-    field :content_type
-    field :width, :type => Integer
-    field :height, :type => Integer
-    field :file_size, :type => Integer
-    field :creator_id
-    field :updator_id
-    mount_uploader :asset, SiteAssetUploader
-  end
-
   after(:all) do
     AssetFixtureHelper.reset!
   end
