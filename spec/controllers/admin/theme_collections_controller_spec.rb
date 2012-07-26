@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Admin::ThemeCollectionsController do
+
   before(:each) do
     login_admin
     @theme_collection = mock_model(ThemeCollection, :site_id => @site.id).as_null_object
@@ -183,6 +184,7 @@ describe Admin::ThemeCollectionsController do
 
     before(:each) do
       ThemeCollection.stub(:find).and_return(@theme_collection)
+      FileUtils.stub(:mv).and_return(true)
     end
 
     it "should receive find the theme_collection" do
@@ -193,6 +195,11 @@ describe Admin::ThemeCollectionsController do
     it "shoud assign the theme_collection" do
       do_put 
       assigns[:theme_collection].should == @theme_collection
+    end
+
+    it "should update the path to the collection" do
+      controller.should_receive(:move_directory)
+      do_put
     end
 
     it "should assign updated_by" do

@@ -1,6 +1,8 @@
 class ThemeCollection
   include Mongoid::Document
   include Mongoid::Timestamps
+
+  include MoustacheCms::FriendlyFilename
   
   # -- Fields --------------- 
   field :name

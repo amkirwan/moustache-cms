@@ -7,6 +7,7 @@
     = csrf_meta_tag
   %body
   - flash.each do |name, msg|
-    = content_tag :div, msg, :id => "flash_#{name}"
+    - unless name == 'timedout'
+      = content_tag :div, msg, :id => "flash_#{name}"
   #wrapper
     = yield
