@@ -69,9 +69,6 @@ describe ThemeAsset do
          asset.name = "new_name"
          asset.save
          asset = theme_collection.theme_assets.where(:name => "new_name").first
-         #asset.name.should == 'new_name'
-         #asset.asset_identifier.should == "new_name.png"
-         #asset.asset.url.should =~ /new_name.png/
        end  
      end
    end
@@ -163,6 +160,7 @@ describe ThemeAsset do
           @theme_asset_css.update_file_content("hello, world").should be_true
        end
      end
+
    end
 end
 

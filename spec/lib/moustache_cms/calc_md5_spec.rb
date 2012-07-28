@@ -28,6 +28,17 @@ describe MoustacheCms::CalcMd5 do
     end
   end
 
+  describe "CalcMd5#set_asset_folder" do
+    it "should set the asset_folder" do
+      @site_asset.asset_folder.should == 'site_assets'  
+    end
+
+    it "should ovrride the default asset_folder" do
+      @site_asset.asset_folder = 'foobar'
+      @site_asset.asset_folder.should == 'foobar'
+    end
+  end
+
   describe "#move_file_md5" do
     it "should renmae the file" do
       pending

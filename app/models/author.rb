@@ -37,6 +37,8 @@ class Author
   # -- Callbacks ---
   before_save :strip_whitespace
 
+  set_asset_folder :authors
+
   def full_name
     if self.middlename.nil? || self.middlename.empty?
       self.firstname.capitalize + ' ' + self.lastname.capitalize

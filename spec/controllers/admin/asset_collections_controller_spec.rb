@@ -187,6 +187,7 @@ describe Admin::AssetCollectionsController do
     
     before(:each) do
       AssetCollection.stub(:find).and_return(@asset_collection)
+      FileUtils.stub(:mv).and_return(true)
     end
     
     def do_put(put_params=params)
@@ -205,6 +206,11 @@ describe Admin::AssetCollectionsController do
     
     it "should update updated_by attribute" do
       @asset_collection.should_receive(:updated_by=).with(@admin_user)
+      do_put
+    end
+
+    it "should move the directory if the name has changed" do
+      controller.should_receive(:move_directory)
       do_put
     end
     

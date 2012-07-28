@@ -10,3 +10,7 @@ Given /^I visit "(.*)"$/ do |path|
   visit path
 end
 
+Then /^show me the page$/ do
+  save_and_open_page
+end
+

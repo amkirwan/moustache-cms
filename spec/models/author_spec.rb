@@ -70,5 +70,19 @@ describe Author do
         @author.full_name == "Anthony Michael Kirwan"
       end
     end
+
+    describe "#asset_folder" do
+       it "should return the asset_type folder location for public" do
+         @author.asset_folder.should == 'authors'    
+       end
+     end
+
+    describe "#asset_folder=" do
+      it "should set the asset_type folder" do
+        @author.asset_folder = 'foobar'
+        @author.asset_folder.should == 'foobar'    
+      end
+    end
+
   end
 end

@@ -6,11 +6,24 @@ module MoustacheCms
       field :filename_md5, :default => ''
       field :file_path_md5, :default => ''
       field :file_path_md5_old, :default => ''
-      field :url_md5, :default => ''
 
       before_save :calc_md5
-      before_update :calc_md5 #:move_file_md5
+      before_update :calc_md5#, :move_file_md5
       before_destroy :destroy_md5
+      
+      attr_writer :asset_folder  
+    end
+
+    module ClassMethods
+      def set_asset_folder(folder)
+        define_method :asset_folder do 
+          if @asset_folder
+            @asset_folder
+          else
+            folder.to_s
+          end
+        end
+      end
     end
 
     def calc_md5
@@ -19,7 +32,6 @@ module MoustacheCms
         md5 = ::Digest::MD5.hexdigest(chunk)
         self.filename_md5 = set_filename_md5(md5)
         self.file_path_md5 = set_file_path_md5 
-        self.url_md5 = set_url_md5 
         make_dirs
         File.open(self.file_path_md5, 'wb') { |f| f.write(chunk) }
       end
@@ -51,7 +63,7 @@ module MoustacheCms
         if self.class == Author
           "#{self.image.filename.split('.').first}-#{md5}.#{self.image.file.extension}"
         else
-          "#{self.name.split('.').first}-#{md5}.#{self.asset.file.extension}"          
+          "#{self.name}-#{md5}.#{self.asset.file.extension}"          
         end
       end
 
@@ -63,12 +75,26 @@ module MoustacheCms
         end
       end
 
-      def set_url_md5
+      def url_md5
         if self.class == Author
-          "/#{self.image.store_dir}/#{self.filename_md5}"
+          File.join('/', "#{self.asset_folder}", "#{self.filename_md5}")
+        elsif self.class == ThemeAsset
+          theme_asset_url_md5
         else
-          "/#{self.asset.store_dir}/#{self.filename_md5}"
+          File.join('/', "#{self.asset_folder}", self._parent.site_id.to_s, self._parent.name, "#{self.filename_md5}")
         end
+      end
+
+      def theme_asset_url_md5
+        file_type = nil
+        %w{image? stylesheet? javascript?}.each do |type|
+          if self.send(type)
+            file_type = type.sub(/\?/, 's') 
+            break
+          end
+        end
+        file_type = 'assets' if file_type.nil?
+        File.join('/', "#{self.asset_folder}", self._parent.site_id.to_s, self._parent.name, file_type, "#{self.filename_md5}")
       end
 
       def make_dirs

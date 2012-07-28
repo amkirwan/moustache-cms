@@ -1,4 +1,5 @@
 class AdminBaseController < ApplicationController
+  include MoustacheCms::FriendlyFilename
   protect_from_forgery   
 
   force_ssl if Rails.env == 'production'
@@ -58,4 +59,15 @@ class AdminBaseController < ApplicationController
       site_asset.creator_id = current_admin_user.id
       site_asset.updator_id = current_admin_user.id
     end
+
+    def move_directory(old_name, new_name, site_id, dir)
+      if File.exists?(File.join(Rails.root, 'public', dir, site_id.to_s, old_name))
+        if old_name != friendly_filename(new_name)
+          old_dir = File.join(Rails.root, 'public', dir, site_id.to_s, old_name)
+          new_dir = File.join(Rails.root, 'public', dir, site_id.to_s, friendly_filename(new_name))
+          FileUtils.mv(old_dir, new_dir)
+        end
+      end
+    end
+
 end

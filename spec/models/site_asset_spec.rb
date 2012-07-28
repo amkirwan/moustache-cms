@@ -70,18 +70,19 @@ describe SiteAsset do
      end                     
    end 
    
-   # -- Instance Methods ----------
-   context "Instance Methods" do
-     describe "#image?" do
-       it "should return true that the site_asset is an image" do
-         @site_asset.should be_image
-       end     
-       
-       it "should return false when the site_asset is not an image" do 
-          site_asset = FactoryGirl.build(:site_asset, :asset => AssetFixtureHelper.open("hello.pdf"))
-          site_asset.should_not be_image
-       end  
-     end
-   end
+  # -- Instance Methods ----------
+  context "Instance Methods" do
+    describe "#image?" do
+      it "should return true that the site_asset is an image" do
+        @site_asset.should be_image
+      end     
+      
+      it "should return false when the site_asset is not an image" do 
+         site_asset = FactoryGirl.build(:site_asset, :asset => AssetFixtureHelper.open("hello.pdf"))
+         site_asset.should_not be_image
+      end  
+    end
+
+  end
 
 end

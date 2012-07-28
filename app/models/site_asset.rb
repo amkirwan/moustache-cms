@@ -26,6 +26,8 @@ class SiteAsset
 
   taggable
   
+  set_asset_folder :site_assets
+
   # -- Associations ------
   embedded_in :asset_collection  
   
@@ -37,7 +39,7 @@ class SiteAsset
   before_validation :set_name
   before_save :update_asset_attributes
   before_update :recreate
-    
+
   # -- Instance Methods     
   def set_name
     if self.name.strip.empty?

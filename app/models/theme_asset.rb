@@ -24,7 +24,7 @@ class ThemeAsset
   field :creator_id
   field :updator_id
   mount_uploader :asset, ThemeAssetUploader
-   
+
   # -- Associations ----------
   embedded_in :article_collection  
   embeds_many :custom_fields, :as => :custom_fieldable
@@ -38,6 +38,8 @@ class ThemeAsset
   before_validation :set_name
   before_save :update_asset_attributes
   before_update :recreate
+
+  set_asset_folder :theme_assets
 
   def set_name
     unless self.name.nil?
