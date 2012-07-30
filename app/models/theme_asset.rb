@@ -91,10 +91,10 @@ class ThemeAsset
   def update_file_content(file_contents)
     if self.content_type == "text/css" || self.content_type == "application/javascript"
       File.open(self.asset.path, "w") { |f| f.write(file_contents) }
-      File.delete(self.file_path_md5_old) if (!self.file_path_md5_old.nil? && File.exists?(self.file_path_md5_old))
-      File.open(self.file_path_md5, 'wb') { |f| f.write(file_contents) }
-    elsif !File.exists?(self.file_path_md5)
-        File.rename(self.file_path_md5_old, self.file_path_md5)
+      File.open(self.current_path_md5, 'w') { |f| f.write(file_contents) }
+    elsif !File.exists?(self.current_path_md5)
+      logger.debug "old=#{self.current_path_md5} " * 5
+      File.rename(File.join(Rails.root, 'public', self.store_dir_md5, self.filename_md5_was), self.current_path_md5)
     else 
      true
     end 

@@ -47,9 +47,9 @@ module MoustacheCms
     end
 
     def destroy_md5
-      if self.respond_to?(:file_path_md5)
-        if File.exists?(self.file_path_md5)
-          File.delete(self.file_path_md5)
+      if self.respond_to?(:current_path_md5)
+        if File.exists?(self.current_path_md5)
+          File.delete(self.current_path_md5)
         end
       end
     end
@@ -80,7 +80,7 @@ module MoustacheCms
 
       def url_md5
         if self.class == Author
-          File.join('/', "#{self.asset_folder}", "#{self.filename_md5}")
+          File.join('/', "#{self.asset_folder}", self.site_id.to_s, "#{self.filename_md5}")
         elsif self.class == ThemeAsset
           theme_asset_url_md5
         else

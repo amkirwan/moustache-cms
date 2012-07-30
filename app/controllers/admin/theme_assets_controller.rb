@@ -52,7 +52,7 @@ class Admin::ThemeAssetsController < AdminBaseController
       change_name_md5
     end
     respond_with(:admin, @theme_collection, @theme_asset) do |format|
-      if @theme_asset.update_attributes(params[:theme_asset]) && @theme_asset.update_file_content(params[:theme_asset_file_content])
+      if @theme_asset.update_file_content(params[:theme_asset_file_content]) && @theme_asset.update_attributes(params[:theme_asset]) 
         format.html { redirect_to [:admin, @theme_collection, :theme_assets], :notice => "Successfully updated the theme asset #{@theme_asset.name}" }
       end
     end
@@ -74,20 +74,15 @@ class Admin::ThemeAssetsController < AdminBaseController
     def md5_update(data)
       md5 = ::Digest::MD5.hexdigest(data)
       @theme_asset.filename_md5 = "#{@theme_asset.name.split('.').first}-#{md5}.#{@theme_asset.asset.file.extension}"
-      generate_paths
     end
 
     def change_name_md5
       if @theme_asset.name_changed?
+        @theme_asset.filename_md5_old = @theme_asset.filename_md5_was
         old_name_split = @theme_asset.filename_md5_was.split('-')
         hash_ext = old_name_split.pop
         hash = hash_ext.split('.').shift
         @theme_asset.filename_md5 = "#{@theme_asset.name.split('.').first}-#{hash}.#{@theme_asset.asset.file.extension}"
-        generate_paths
       end
-    end
-
-    def generate_paths
-      @theme_asset.file_path_md5 = File.join(Rails.root, 'public', @theme_asset.asset.store_dir, '/', @theme_asset.filename_md5)
     end
 end
