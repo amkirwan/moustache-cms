@@ -16,18 +16,6 @@ describe MoustacheCms::CalcMd5 do
     site_remove_assets(@site)
   end
 
-  describe "#calc_md5" do
-    it "should generate an md5 filename on the file contents" do
-      hex = ::Digest::MD5.hexdigest(AssetFixtureHelper.open('rails.png').read)
-      @site_asset.filename_md5.should =~ /.*#{hex}\.png/
-    end
-
-    it "should generate a md5 file path" do
-      hex = ::Digest::MD5.hexdigest(AssetFixtureHelper.open('rails.png').read)
-      @site_asset.file_path_md5.should == "#{Rails.root}/public/#{@site_asset.asset.store_dir}/#{@site_asset.filename_md5}"
-    end
-  end
-
   describe "CalcMd5#set_asset_folder" do
     it "should set the asset_folder" do
       @site_asset.asset_folder.should == 'site_assets'  
@@ -39,10 +27,29 @@ describe MoustacheCms::CalcMd5 do
     end
   end
 
-  describe "#move_file_md5" do
-    it "should renmae the file" do
-      pending
+  describe "#calc_md5" do
+    it "should generate an md5 filename on the file contents" do
+      hex = ::Digest::MD5.hexdigest(AssetFixtureHelper.open('rails.png').read)
+      @site_asset.filename_md5.should =~ /.*#{hex}\.png/
     end
+  end
+
+  describe "#current_path_md5" do
+    it "should return the curent path to the md5 file" do
+      @site_asset.current_path_md5.should == "#{Rails.root}/public/#{@site_asset.asset.store_dir}/#{@site_asset.filename_md5}"
+    end
+  end
+
+  describe "#store_dir_md5" do
+    it "should return the storage directory of the md5 file" do
+      @site_asset.store_dir_md5.should == @site_asset.asset.store_dir
+    end
+  end
+
+  describe "#store" do
+    it "should return the storage path of the md5 file" do
+      @site_asset.store_path_md5.should == File.join(@site_asset.asset.store_dir, @site_asset.filename_md5)
+    end  
   end
 
   describe "#destroy_md5" do

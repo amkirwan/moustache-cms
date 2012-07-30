@@ -89,7 +89,5 @@ class Admin::ThemeAssetsController < AdminBaseController
 
     def generate_paths
       @theme_asset.file_path_md5 = File.join(Rails.root, 'public', @theme_asset.asset.store_dir, '/', @theme_asset.filename_md5)
-      @theme_asset.url_md5 = "/#{@theme_asset.asset.store_dir}/#{@theme_asset.filename_md5}"
-      @theme_asset.file_path_md5_old = @theme_asset.file_path_md5_was if @theme_asset.file_path_md5_changed?
     end
 end

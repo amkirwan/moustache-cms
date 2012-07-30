@@ -4,11 +4,9 @@ module MoustacheCms
 
     included do
       field :filename_md5, :default => ''
-      field :file_path_md5, :default => ''
-      field :file_path_md5_old, :default => ''
 
-      before_save :calc_md5
-      before_update :calc_md5#, :move_file_md5
+      before_create :calc_md5
+      before_update :calc_md5
       before_destroy :destroy_md5
       
       attr_writer :asset_folder  
@@ -31,16 +29,21 @@ module MoustacheCms
         chunk = read_file
         md5 = ::Digest::MD5.hexdigest(chunk)
         self.filename_md5 = set_filename_md5(md5)
-        self.file_path_md5 = set_file_path_md5 
         make_dirs
-        File.open(self.file_path_md5, 'wb') { |f| f.write(chunk) }
+        File.open(self.current_path_md5, 'wb') { |f| f.write(chunk) }
       end
     end
 
-    def move_file_md5
-      if !File.exists?(self.file_path_md5)
-        File.rename(self.file_path_md5_old, self.file_path_md5)
-      end 
+    def store_dir_md5
+      self.class == Author ? self.image.store_dir : self.asset.store_dir  
+    end
+
+    def store_path_md5
+      if self.class == Author
+        File.join(self.image.store_dir, self.filename_md5)
+      else
+        File.join(self.asset.store_dir, self.filename_md5)
+      end
     end
 
     def destroy_md5
@@ -67,7 +70,7 @@ module MoustacheCms
         end
       end
 
-      def set_file_path_md5
+      def current_path_md5
         if self.class == Author
           File.join(Rails.root, 'public', self.image.store_dir, '/', self.filename_md5)
         else
