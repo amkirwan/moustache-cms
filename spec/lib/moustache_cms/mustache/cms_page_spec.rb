@@ -100,9 +100,9 @@ describe MoustacheCms::Mustache::CmsPage do
     end
     
     it "should return a stylesheet by name" do
-      @page.layout.content = "{{#stylesheet}}theme_name:thorn, name:foobar{{/stylesheet}}"
+      @page.layout.content = "{{#stylesheet}}theme_name:thorn, name:foobar, media:screen{{/stylesheet}}"
       cms_page = MoustacheCms::Mustache::CmsPage.new(@controller)
-      cms_page.render.should == %(<link href="#{@theme_asset_css.url_md5}" rel="stylesheet" type="text/css" />\n)
+      cms_page.render.should == %(<link href="#{@theme_asset_css.url_md5}" media="screen" rel="stylesheet" type="text/css" />\n)
     end
 
     describe "meta tags" do
