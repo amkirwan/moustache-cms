@@ -1,6 +1,10 @@
 site = Site.find_or_create_by(:name => "Moustache CMS", :subdomain => "moustache-cms") do |s|
   s.default_domain = "dev"
 end
+
+site.domain_names << '127.0.0.1'
+site.domain_names << 'localhost'
+
 admin = User.find_or_create_by(:firstname => "Admin", :lastname => "Moustache", :email => "admin@moustachecms.org") do |user|
   user.username = "admin"
   user.role = "admin"
