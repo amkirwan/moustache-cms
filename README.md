@@ -30,7 +30,7 @@ Contributions to the project are always welcomed and encouraged. If you have fou
 
 ## Support 
 
-[wiki](http://github.com/amkirwan/moustache-cms/wiki)
+Checkout the [wiki](http://github.com/amkirwan/moustache-cms/wiki)
 
 ## License 
 
