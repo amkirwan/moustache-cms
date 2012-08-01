@@ -14,7 +14,6 @@ describe Admin::AuthorsController do
     
     before(:each) do
       Author.stub(:accessible_by).and_return(authors)
-      authors.stub(:where).and_return(authors)
     end
     
     def do_get
@@ -29,11 +28,6 @@ describe Admin::AuthorsController do
     it "should assign authors" do
       do_get
       assigns(:authors).should == authors
-    end
-
-    it "should only show the authors for the site" do
-      authors.should_receive(:where).with(:site_id => @current_admin_user.site_id).and_return(authors)
-      do_get  
     end
     
     it "should render in the index template" do

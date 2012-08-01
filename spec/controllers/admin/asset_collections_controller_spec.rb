@@ -13,6 +13,7 @@ describe Admin::AssetCollectionsController do
     
     before(:each) do
       AssetCollection.stub(:accessible_by).and_return(asset_collections)
+      asset_collections.stub(:where).and_return(asset_collections)
     end
     
     def do_get
@@ -27,6 +28,11 @@ describe Admin::AssetCollectionsController do
     it "should assign asset_collections" do
       do_get
       assigns(:asset_collections).should == asset_collections
+    end
+
+    it "should only show the asset collections for the site" do
+      asset_collections.should_receive(:where).with(:site_id => @current_admin_user.site_id).and_return(asset_collections)
+      do_get  
     end
     
     it "should render in the index template" do

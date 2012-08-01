@@ -16,6 +16,7 @@ describe Admin::UsersController do
     
     before(:each) do
       User.stub(:accessible_by).and_return(users)
+      users.stub(:where).and_return(users)
     end
     
     it "should receive accessible_by" do
@@ -27,6 +28,11 @@ describe Admin::UsersController do
     it "should assign the found users" do
       do_get
       assigns(:users).should eq(users)
+    end
+
+    it "should only show the users for the site" do
+      users.should_receive(:where).with(:site_id => @current_admin_user.site_id)
+      do_get  
     end
   
     it "should render index template" do

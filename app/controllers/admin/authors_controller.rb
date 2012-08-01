@@ -6,6 +6,7 @@ class Admin::AuthorsController < AdminBaseController
 
   # GET /admin/authors
   def index
+    @authors = @authors.where(:site_id => current_admin_user.site_id)
     respond_with(:admin, @authors)
   end
 

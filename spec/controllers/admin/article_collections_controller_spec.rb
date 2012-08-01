@@ -12,6 +12,7 @@ describe Admin::ArticleCollectionsController do
       
     before(:each) do
       ArticleCollection.stub(:accessible_by).and_return(article_collections)
+      article_collections.stub(:where).and_return(article_collections)   
       article_collections.stub(:asc)
     end
     
@@ -27,6 +28,11 @@ describe Admin::ArticleCollectionsController do
     it "should assign the found article collection" do
       do_get
       assigns(:article_collections).should == article_collections
+    end
+
+    it "should only show the article collections for the site" do
+      article_collections.should_receive(:where).with(:site_id => @current_admin_user.site_id).and_return(article_collections)
+      do_get  
     end
     
     it "should render the index template" do

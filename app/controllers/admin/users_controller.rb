@@ -6,7 +6,8 @@ class Admin::UsersController < AdminBaseController
   respond_to :js, :only => :destroy
 
   def index               
-    respond_with(:admin, :users)
+    @users = @users.where(:site_id => current_admin_user.site_id)
+    respond_with(:admin, @users)
   end  
   
   def show
@@ -16,7 +17,7 @@ class Admin::UsersController < AdminBaseController
   end
   
   def new
-    respond_with(:admin, :user)
+    respond_with(:admin, @user)
   end                        
   
   def create   
@@ -31,7 +32,7 @@ class Admin::UsersController < AdminBaseController
   end
   
   def edit
-    respond_with(:admin, :user)
+    respond_with(:admin, @user)
   end
   
   def update                    

@@ -6,6 +6,7 @@ class Admin::ThemeCollectionsController < AdminBaseController
   
   # GET /admin/asset_collections
   def index
+    @theme_collections.where(:site_id => current_admin_user.site_id)
     respond_with(:admin, @theme_collections)
   end
   

@@ -5,6 +5,7 @@ class Admin::SnippetsController < AdminBaseController
   respond_to :html, :xml, :json
   
   def index               
+    @snippets = @snippets.where(:site_id => current_admin_user.site_id)
     respond_with(:admin, @snippets)
   end  
   

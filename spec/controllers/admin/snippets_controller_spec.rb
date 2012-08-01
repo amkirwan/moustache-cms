@@ -16,11 +16,17 @@ describe Admin::SnippetsController do
 
     before(:each) do
       Snippet.stub(:accessible_by).and_return(snippets)
+      snippets.stub(:where).and_return(snippets)
     end
 
     it "should assign the snippet" do
       do_get
       assigns[:snippets].should == snippets
+    end
+
+    it "should only show the snippet for the site" do
+      snippets.should_receive(:where).with(:site_id => @current_admin_user.site_id)
+      do_get  
     end
 
     it "should render the template" do

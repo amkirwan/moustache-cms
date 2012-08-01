@@ -15,6 +15,7 @@ describe Admin::ThemeCollectionsController do
     before(:each) do
       @theme_collections = [@theme_collection]
       ThemeCollection.stub(:accessible_by).and_return(@theme_collections)
+      @theme_collections.stub(:where).and_return(@theme_collections)
     end
 
     it "should receive accesible_by" do
@@ -25,6 +26,11 @@ describe Admin::ThemeCollectionsController do
     it "should assign the theme_collections" do
       do_get
       assigns[:theme_collections].should == @theme_collections
+    end
+
+    it "should only show the theme collections for the site" do
+      @theme_collections.should_receive(:where).with(:site_id => @current_admin_user.site_id)
+      do_get  
     end
 
     it "should render the index template" do
