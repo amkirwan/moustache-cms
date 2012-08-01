@@ -12,6 +12,7 @@ describe Admin::LayoutsController do
       
     before(:each) do
       Layout.stub(:accessible_by).and_return(layouts)
+      layouts.stub(:where).and_return(layouts)
     end
     
     def do_get
@@ -22,10 +23,15 @@ describe Admin::LayoutsController do
       Layout.should_receive(:accessible_by).and_return(layouts)
       do_get
     end
-    
+
     it "should assign the found layouts" do
       do_get
       assigns(:layouts).should == layouts
+    end
+
+    it "should only show the layouts for the site" do
+      layouts.should_receive(:where).with(:site_id => @current_admin_user.site_id)
+      do_get  
     end
     
     it "should render the index template" do
