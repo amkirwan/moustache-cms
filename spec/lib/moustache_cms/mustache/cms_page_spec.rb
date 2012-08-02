@@ -24,9 +24,11 @@ describe MoustacheCms::Mustache::CmsPage do
     @theme_collection.theme_assets << FactoryGirl.build(:theme_asset, :name => "foobar", :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css", :custom_fields => [@tag_attr_type])
     @theme_collection.theme_assets << FactoryGirl.build(:theme_asset,:name => "baz", :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css", :custom_fields => [@tag_attr_type, @tag_attr_media])
 
+    @theme_collection.theme_assets << FactoryGirl.build(:theme_asset, :name => "jquery-1.7.2.min", :asset => AssetFixtureHelper.open("jquery-1.7.2.min.js"), :content_type => "text/javascript")
     @theme_asset_css = @theme_collection.theme_assets.where(:name => 'foobar').first
     @theme_asset_css_2 = @theme_collection.theme_assets.where(:name => 'baz').first
     
+    @theme_asset_js = @theme_collection.theme_assets.where(:name => 'jquery-1.7.2.min').first
     @request = mock_model("Request", :host => "test.com", :protocol => 'http')
     
     @controller.instance_variable_set(:@page, @page)
@@ -94,6 +96,12 @@ describe MoustacheCms::Mustache::CmsPage do
     it "should return the page title" do
       @cmsp.title.should == %{<title>#{@page.title}</title>\n}
     end  
+
+    it "should return the javascript file" do
+      @page.layout.content = "{{#js_file}}theme_name:thorn, name:jquery-1.7.2.min{{/js_file}}"  
+      cms_page = MoustacheCms::Mustache::CmsPage.new(@controller)
+      cms_page.render.should == %(<script src="#{@theme_asset_js.url_md5}"></script>\n)
+    end
     
     it "should return all the css files" do
       @cmsp.stylesheets.should == %(<link href="#{@theme_asset_css.url_md5}" rel="stylesheet" type="text/css" />\n<link href="#{@theme_asset_css_2.url_md5}" media="screen" rel="stylesheet" type="text/css" />\n)
