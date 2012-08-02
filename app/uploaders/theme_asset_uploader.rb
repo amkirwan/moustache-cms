@@ -44,7 +44,7 @@ class ThemeAssetUploader < CarrierWave::Uploader::Base
     
   # Override the filename of the uploaded files:
   def filename
-    @name ||= "#{model.name.split('.').first}.#{model.asset.file.extension}"
+    @name ||= "#{model.name}.#{model.asset.file.extension}"
   end    
 
    def image?(sanitized_file)    

@@ -86,7 +86,7 @@ class Admin::SiteAssetsController < AdminBaseController
         old_name_split = @site_asset.filename_md5_was.split('-')
         hash_ext = old_name_split.pop
         hash = hash_ext.split('.').shift
-        @site_asset.filename_md5 = "#{@site_asset.name.split('.').first}-#{hash}.#{@site_asset.asset.file.extension}"
+        @site_asset.filename_md5 = "#{@site_asset.name}-#{hash}.#{@site_asset.asset.file.extension}"
         generate_paths
       end
     end

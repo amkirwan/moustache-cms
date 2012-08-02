@@ -73,7 +73,7 @@ class Admin::ThemeAssetsController < AdminBaseController
 
     def md5_update(data)
       md5 = ::Digest::MD5.hexdigest(data)
-      @theme_asset.filename_md5 = "#{@theme_asset.name.split('.').first}-#{md5}.#{@theme_asset.asset.file.extension}"
+      @theme_asset.filename_md5 = "#{@theme_asset.name}-#{md5}.#{@theme_asset.asset.file.extension}"
     end
 
     def change_name_md5
