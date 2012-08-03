@@ -23,7 +23,6 @@ class ThemeAsset
   field :file_size, :type => Integer 
   field :creator_id
   field :updator_id
-  field :file_type
 
   mount_uploader :asset, ThemeAssetUploader
 
@@ -59,16 +58,6 @@ class ThemeAsset
   def update_asset_attributes         
     self.content_type = asset.file.content_type unless asset.file.content_type.nil?
     self.file_size = asset.file.size 
-    case 
-    when self.image?
-      self.file_type = 'image'
-    when self.stylesheet?
-      self.file_type = 'stylesheet'
-    when  self.javascript?
-      self.file_type = 'javascript'
-    else
-      self.file_type = 'other'
-    end
   end
 
     # -- Class Methods --------
@@ -98,7 +87,7 @@ class ThemeAsset
   end
   
   def update_file_content(file_contents)
-    if self.content_type == "text/css" || self.content_type == "application/javascript"
+    if self.content_type == "text/css" || self.content_type == "application/javascript" || self.content_type == 'application/x-javascript' || self.content_type == 'text/javascript'
       File.open(self.asset.path, "w") { |f| f.write(file_contents) }
       File.open(self.current_path_md5, 'w') { |f| f.write(file_contents) }
     elsif !File.exists?(self.current_path_md5)
