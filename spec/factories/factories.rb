@@ -165,6 +165,7 @@ FactoryGirl.define do
     width 200
     height 200
     file_size 200
+    file_type 'image'
     creator_id { FactoryGirl.build(:user).id }
     updator_id { FactoryGirl.build(:user).id }
   end

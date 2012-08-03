@@ -23,6 +23,8 @@ class ThemeAsset
   field :file_size, :type => Integer 
   field :creator_id
   field :updator_id
+  field :file_type
+
   mount_uploader :asset, ThemeAssetUploader
 
   # -- Associations ----------
@@ -57,13 +59,24 @@ class ThemeAsset
   def update_asset_attributes         
     self.content_type = asset.file.content_type unless asset.file.content_type.nil?
     self.file_size = asset.file.size 
+    case 
+    when self.image?
+      self.file_type = 'image'
+    when self.stylesheet?
+      self.file_type = 'stylesheet'
+    when  self.javascript?
+      self.file_type = 'javascript'
+    else
+      self.file_type = 'other'
+    end
   end
 
     # -- Class Methods --------
   scope :css_files, lambda { { :where => { :content_type => "text/css" }} }
-  scope :js_files, lambda { { :where => { :content_type => {"$in" => ["application/javascript", "application/x-javascript"]} } } }
+  scope :js_files, lambda { { :where => { :content_type => /.*javascript$/i } }}
+  scope :javascripts, lambda { { :where => { :content_type => /.*javascript$/i } }}
   scope :images, lambda { { :where => { :content_type => /^image\/*/i }} }
-  scope :other_files, lambda { { :where => { :content_type => {"$nin" => ['text/css', 'application/javascript', 'application/x-javascript', 'image/jpg', 'image/jpeg', 'image/gif', 'image/png', 'image/vnd.microsoft.icon'] } } }}
+  scope :other_files, lambda { { :where => { :content_type => {"$nin" => ['text/css', 'application/javascript', 'application/x-javascript', 'text/javascript', 'image/jpg', 'image/jpeg', 'image/gif', 'image/png', 'image/vnd.microsoft.icon'] } } }}
 
   scope :find_by_name, lambda { |name| { :where => { :name => name }} }
 
@@ -71,10 +84,6 @@ class ThemeAsset
     [:content_type, :site].inject(scoped) do |combined_scope, attr| 
       combined_scope.where(attr => opts[attr])
     end
-  end
-
-  def other_files
-    self.not_in(:content_type => ['text/css', 'application/x-javascript'])
   end
 
   # -- Instance Methods ----------

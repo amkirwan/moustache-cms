@@ -59,6 +59,11 @@ describe ThemeAsset do
        it "should set the file content_type" do   
          @theme_asset_image.content_type.should == "image/png"         
        end
+
+      it { @theme_asset_image.file_type.should == 'image' }
+      it { @theme_asset_css.file_type.should == 'stylesheet' }
+      it { @theme_asset_js.file_type.should == 'javascript' }
+      it { @theme_asset_type.file_type.should == 'other' }
      end
    end
 
@@ -141,6 +146,10 @@ describe ThemeAsset do
        theme_collection.theme_assets.find(@theme_asset_css.id).delete
        theme_collection.theme_assets.find_by_content_type_and_site_id(:content_type => "text/css", :site_id => site.id).should be_empty
      end   
+
+     it "should return all the image files" do
+       theme_collection.theme_assets.images.count.should == 1
+     end
    end
    
    # -- Instance Methods ----------
