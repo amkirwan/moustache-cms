@@ -120,14 +120,16 @@ class Article
     self.current_state = CurrentState.find_by_name(attributes[:name])
   end
 
+  # This date would is for an associated date like a meeting or event that is distinct from when the article was published or created.
   def datetime
     return "" if self.date.nil?
     self.date.iso8601
   end
 
+  # This returns the associated datetime in words in the format January 06, 2012 at 3pm
   def date_at
     return "" if self.date.nil?
-    self.date.strftime("%B %d, %Y at %l%P") 
+    self.date.strftime("%B %d, %Y at%l%P") 
   end
 
   private 

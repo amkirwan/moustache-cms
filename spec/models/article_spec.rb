@@ -164,6 +164,24 @@ describe Article do
 
   # -- Instance Methods -----
   describe "Instance Methods" do
+
+    describe "#datetime" do
+      it "returns a dateime in iso8601 format for a associated date associated with the artcile" do
+        @article.date = "2012-01-06 15:41:01"
+        @article.datetime.should == "2012-01-06T15:41:01-05:00" 
+      end
+      
+      it "should return an empty string if the dateime is nil" do
+        @article.datetime.should == ''
+      end
+    end
+
+    describe "#date_at" do
+      it "returns" do
+        @article.date = "2012-01-06 15:41:01"
+        @article.date_at.should == "January 06, 2012 at 3pm"
+      end
+    end
   end
 
 end
