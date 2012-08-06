@@ -80,8 +80,8 @@ class Site
     self.articles.article_by_permalink(path)
   end
 
-  def articles_by_name(name)
-    self.article_collections.articles_by_name(name)
+  def articles_by_collection_name(name)
+    self.article_collections.articles_by_collection_name(name)
   end
   
   def snippet_by_name(name)                        

@@ -34,7 +34,7 @@ class ArticleCollection
             :presence => true
 
   # -- Class Methods --
-  def self.articles_by_name(name)
+  def self.articles_by_collection_name(name)
     self.where(:name => name.to_s).first.articles
   end
 end

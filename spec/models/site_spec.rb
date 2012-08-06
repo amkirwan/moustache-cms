@@ -165,11 +165,11 @@ describe Site do
       end
     end   
 
-    describe "#articles_by_name(name)" do
+    describe "#articles_by_collection_name(name)" do
       it "should return all the articles for the given article collection" do
         article_collection = FactoryGirl.create(:article_collection, :site => @site, :name => "news")
         article_collection.articles << FactoryGirl.build(:article)
-        @site.articles_by_name('news').should == article_collection.articles
+        @site.articles_by_collection_name('news').should == article_collection.articles
       end
     end
     
