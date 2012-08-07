@@ -5,6 +5,7 @@ class AdminBaseController < ApplicationController
   force_ssl if Rails.env == 'production'
     
   before_filter :authenticate_admin_user!
+  before_filter :set_admin_user_time_zone
   after_filter :discard_flash_message
 
   check_authorization :unless => :devise_controller? 
@@ -68,6 +69,10 @@ class AdminBaseController < ApplicationController
           FileUtils.mv(old_dir, new_dir)
         end
       end
+    end
+
+    def set_admin_user_time_zone
+      Time.zone = current_admin_user.time_zone if admin_user_signed_in?
     end
 
 end

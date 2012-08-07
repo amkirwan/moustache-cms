@@ -11,7 +11,8 @@ class User
                   :email,
                   :password,
                   :password_confirmation, 
-                  :remember_me
+                  :remember_me,
+                  :time_zone
   
   # -- Fields -----------------------------------------------    
   field :username
@@ -19,6 +20,7 @@ class User
   field :middlename
   field :lastname
   field :role 
+  field :time_zone
 
   # -- Devise Authenticatable -----
   field :email, :null => false
@@ -96,6 +98,9 @@ class User
             :format => { :with => /^([^\s]+)((?:[-a-z0-9]\.)[a-z]{2,})$/i }
   
   validates :site_id,
+            :presence => true
+
+  validates :time_zone,
             :presence => true
 
   # -- Scopes ---------

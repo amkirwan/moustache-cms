@@ -35,6 +35,7 @@ FactoryGirl.define do
     role "admin" 
     site 
     password "foobar7"
+    time_zone "Eastern Time (US & Canada)"
   end
 
   factory :admin, :parent => :user do 
@@ -62,7 +63,7 @@ FactoryGirl.define do
 
   factory :current_state do
     name "published"
-    time DateTime.new
+    time Time.new
   end
 
   factory :snippet do 

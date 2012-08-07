@@ -50,10 +50,7 @@ describe AdminBaseController do
 
 end
 
-
 describe AdminBaseController do
-
-  
 
   controller(AdminBaseController) do 
     skip_authorization_check
@@ -73,6 +70,35 @@ describe AdminBaseController do
     it "should receive created_updated_by method" do
       controller.should_receive(:created_updated_by_for)
       get :index
+    end
+  end
+end
+
+describe AdminBaseController do
+  controller(AdminBaseController) do
+    skip_authorization_check
+    def index
+      #call set_admin_user_time_zone
+      render :nothing => true
+    end
+  end  
+
+  before(:each) do
+    @current_admin_user = login_admin
+    @page = mock_model(Page, :id => '1', :site_id => @site.id)
+  end
+
+  describe "#set_admin_user_time_zone" do
+    it "the controller should call set_admin_user_time_zone" do
+      controller.should_receive(:set_admin_user_time_zone)
+      get :index
+    end
+
+    it "should set the time zone to the one stored for the user " do
+      @current_admin_user.time_zone = "Pacific Time (US & Canada)"
+      @current_admin_user.save
+      get :index
+      Time.zone.to_s.should == "(GMT-08:00) Pacific Time (US & Canada)"
     end
   end
 

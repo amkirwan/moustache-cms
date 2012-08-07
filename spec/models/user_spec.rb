@@ -7,31 +7,6 @@ describe User do
     @user = FactoryGirl.create(:user, :username => "foobar", :site => site)
   end 
   
-  # -- Mass Assignment -------------------------------------------
-  context "mass assignment" do
-    it "should protect against mass assignment of username and role" do
-      user = User.new(:username => "ak730", :role => "admin")
-      user.role.should be_nil
-      user.username.should be_nil
-    end
-    
-    it "should not allow mass assignment of" do
-      @user.should_not allow_mass_assignment_of(:username => "baz", :username => "baz", :role => "bar")
-    end
-    
-    it "should allow mass assignment of" do
-      @user.should allow_mass_assignment_of(:firstname => "x", :lastname => "x", :email => "foobar@example.com")
-    end
-  end
-  
-  context "before_validation set page filter if it isn't set" do
-    it "should make page_ids array unique" do
-      @user.page_ids = [ "4d7cd4617353202ab6000065", "5d7cd4617353202ab6000065", "4d7cd4617353202ab6000065", "4d7cd4617353202ab6000065"]
-      @user.save
-      @user.page_ids.count.should == 2
-    end
-  end
-  
   # -- Validations -----------------------------------------------
   context "validations" do
     it "should create a valid user with valid attributes" do
@@ -67,6 +42,11 @@ describe User do
       @user.site_id = nil
       @user.should_not be_valid
     end
+
+    it "should not be valid without a time_zone " do
+      @user.time_zone = nil
+      @user.should_not be_valid
+    end
   
     it "should not be valid with duplicate pid within the same site" do  
       should validate_uniqueness_of(:username).scoped_to(:site_id)
@@ -92,7 +72,7 @@ describe User do
       FactoryGirl.build(:user, :email => "abcdefg").should_not be_valid
     end
     
-    it "should not be valid with a username < 3" do
+    it "should not be valid with a username < 3 characters" do
       FactoryGirl.build(:user, :username => "ab").should_not be_valid
     end 
   end
