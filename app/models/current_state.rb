@@ -1,75 +1,75 @@
 class CurrentState
   include Mongoid::Document 
   
-  class << self
-    attr_reader :statuses
-  end
-  
   # -- Fields --------------------------------------------------
   field :name
   key :name
-  field :time, type: DateTime
-  
+  field :time, type: Time
+
   # -- Associations ---
-  #embedded_in :page, inverse_of: :current_state
   embedded_in :publishable, :polymorphic => true
-  
+
+  States = %w(draft published)
+
   # -- Validations --------------------------------------------------
   validates :name,
-            :presence => true
+            :presence => true,
+            :inclusion => { :in => States,
+            :message => "%{value} is not a valid option for state" }
             
-            
+  before_save lambda { self.time = Time.zone.now if self.changed? }
+
+
   # -- Class Methods --------------------------------------------------
-  def self.all
-    @statuses
+  class << self
+    def states
+      states = []
+      States.each do |state|
+        states << self.send(state)
+      end  
+      states
+    end
+    alias_method :all, :states
   end
-  
-  def self.find(id)
-    status = @statuses.find { |status| status.id == id.to_s.downcase }
-    if status.nil?
-      status
-    else
-      status
+
+  States.each do |state|
+    singleton_class.send(:define_method, state) do 
+      self.new(:name => state, :time => nil)
     end
   end
-    
-  def self.find_by_name(name)
-    status = @statuses.find { |status| status.name == name.to_s.downcase }
-    if status.nil?
-      status
-    else
-      status_dup = status.dup
-      status_dup
-    end
-  end
-  
+
   # -- Instance Methods --------------------------------------------------
   def published?
-    if self.name == "published"
-      return true
-    else
-      return false
-    end 
+    self.name == 'published'
   end
   
   def published_on
-    if published?
-      return self.time
-    else
-      return nil
-    end
+    published? ? self.time : nil
   end
   
   def draft?
-    if self.name == "draft"
-      return true
-    else
-      return false
-    end
+    self.name == 'draft'
+  end
+
+  def formatted_date_time
+    return "" if self.time.nil?
+    "#{formatted_date} at #{formatted_time} #{formatted_time_zone}"
+    self.time.strftime("%e %b %Y at %l%P %Z").strip
   end
   
-  @statuses = [
-    CurrentState.new(:name => "draft", :time => nil),
-    CurrentState.new(:name => "published", :time => nil)
-  ]
+  def formatted_date
+    return "" if self.time.nil?
+    self.time.strftime("%e %b %Y").strip
+  end
+
+  def formatted_time
+    return "" if self.time.nil?
+    self.time.strftime("%l%P").strip
+  end
+
+  def formatted_time_zone
+    return "" if self.time.nil?
+    self.time.strftime("%Z").strip
+  end
+
 end

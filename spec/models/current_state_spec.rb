@@ -8,45 +8,11 @@ describe CurrentState do
    
   # -- Validations -------------------------------
   context "validations" do    
-    it "should create a valid CurrentState with valid attributes" do
-      @current_state.should be_valid
-    end
-  
-    it "should not be valid without a current_state name" do
-     @current_state.name = nil
-     @current_state.should_not be_valid
-    end
+    it { @current_state.should be_valid }
+    it { should validate_presence_of(:name) }
+    it { should validate_inclusion_of(:name) }
   end
   
-  # -- Class Finder Methods -------------------------------
-  describe "finder methods" do
-    before(:each) do
-      CurrentState.statuses << CurrentState.new(:name => "foobar")  
-    end
-
-    context "CurrentState#all" do
-      it "should return all the statuses" do
-        CurrentState.all.count.should == 3
-      end
-    
-      it "should return objects with class CurrentState" do
-         CurrentState.all.first.should be_a(CurrentState)
-      end
-    end
-  
-    context "CurrentState#find" do
-      it "should have the name of foobar" do
-        CurrentState.find("foobar").name.should == "foobar"
-      end
-    end
-  
-    context "CurrentState#find_by_name" do
-      it "should return the CurrentState with the name given" do
-        CurrentState.find_by_name("foobar").name.should == "foobar"
-      end
-    end
-  end
-
   #-- Instance Methods --------------------------------------------------
   describe "Instance Methods" do
     describe "#published" do
@@ -81,9 +47,33 @@ describe CurrentState do
         @current_state.draft?.should be_false
       end
     end
+
+    describe "#formatted_date_time" do
+      it "should return the date formatted with the date" do
+        @current_state.time = "2012-08-08 15:08:44 -0400"
+        @current_state.formatted_date_time.should == "8 Aug 2012 at  3pm EDT"
+      end
+    end
+
+    describe "#formatted_date" do
+      it "should return the date formatted" do
+        @current_state.time = "2012-08-08 15:08:44 -0400"
+        @current_state.formatted_date.should == "8 Aug 2012"
+      end
+    end
+
+    describe "#formatted_time" do
+      it "should return the time formatted" do
+        @current_state.time = "2012-08-08 15:08:44 -0400"
+        @current_state.formatted_time.should == "3pm"
+      end
+    end
+
+    describe "#formatted_time_zone" do
+      it "should return the time zone" do
+        @current_state.time = "2012-08-08 15:08:44 -0400"
+        @current_state.formatted_time_zone.should == "EDT"
+      end
+    end
   end
 end
-
-
-
-
