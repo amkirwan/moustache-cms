@@ -186,6 +186,6 @@ class Article
     end
 
     def update_current_state_time
-      self.current_state.time = DateTime.now if self.current_state.changed?
+      self.current_state.time = Time.zone.now if self.current_state.changed?
     end
 end

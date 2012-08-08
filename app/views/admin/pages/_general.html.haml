@@ -15,5 +15,3 @@
           %li{:class => "inline"}
             = builder.label 'name', "Status<abbr title='required' class='required'>*</abbr>".html_safe
             = builder.collection_select :name, CurrentState.all, :id, :name
-          %li
-            = builder.hidden_field :id

@@ -29,6 +29,7 @@ describe MoustacheCms::Mustache::CmsPage do
     @theme_asset_css_2 = @theme_collection.theme_assets.where(:name => 'baz').first
     
     @theme_asset_js = @theme_collection.theme_assets.where(:name => 'jquery-1.7.2.min').first
+
     @request = mock_model("Request", :host => "test.com", :protocol => 'http')
     
     @controller.instance_variable_set(:@page, @page)

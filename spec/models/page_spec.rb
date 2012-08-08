@@ -256,16 +256,6 @@ describe Page do
 
   # --  Scopes -----------------------------------------------------
   context "Scopes" do
-    describe "Page#published" do
-      it "should return the published items as a mongoid criteria" do
-        Page.published.should be_an_instance_of(Mongoid::Criteria)
-      end
-      
-      it "should return all the items that have a current_state set to published" do
-        Page.published.count.should be >= 1
-      end
-    end
-
     describe "Page#all_from_current_site" do
       it "should return all the pages from the current_site" do
         Page.all_from_current_site(site).count.should == 2

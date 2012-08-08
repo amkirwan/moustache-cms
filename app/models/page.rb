@@ -37,7 +37,7 @@ class Page
   index :full_path
   
   # -- Associations-------------------------
-  embeds_one :current_state, :as => :publishable
+  embeds_one :current_state, :as => :publishable, :cascade_callbacks => true 
   embeds_many :meta_tags, :as => :meta_taggable
   embeds_many :custom_fields, :as => :custom_fieldable
   embeds_many :page_parts 
@@ -91,12 +91,10 @@ class Page
   after_initialize :default_meta_tags
   before_validation :format_title, :slug_set, :full_path_set, :breadcrumb_set
   before_save :uniq_editor_ids, :strip_page_parts
-  after_update :update_current_state_time
   after_save :update_user_pages
   before_destroy :destroy_children
 
   # -- Scopes ----------------------------------------------------------
-  scope :published, :where => { "current_state.name" => "published" }
   scope :all_from_current_site, lambda { |current_site| { :where => { :site_id => current_site.id }} }
   
   # -- Class Mehtods --------------------------------------------------
@@ -117,9 +115,6 @@ class Page
   end
 
   # -- Accepts_nested -----
-  def current_state_attributes=(attributes)
-      self.current_state = CurrentState.find_by_name(attributes[:name])
-  end
 
   # -- Instance Methods -----------------------------------------------  
   def home_page?
@@ -136,7 +131,6 @@ class Page
   def sort_children(page_ids)
     page_ids.each_with_index do |id, index|
       child = self.children.find(id)
-      logger.debug "*"*20 + '= ' + child.id.to_s
       child.position = index
       child.save
     end
@@ -203,10 +197,6 @@ class Page
       self.page_parts.each do |part|
         part.content.strip! unless part.content.nil?
       end
-    end
-  
-    def update_current_state_time
-      self.current_state.time = DateTime.now if self.current_state.changed?
     end
   
     #rc7 temp fixes for relations for mongoid
