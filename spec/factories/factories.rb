@@ -126,6 +126,7 @@ FactoryGirl.define do
   factory :article do 
     association :site, strategy: :build
     sequence(:title) { |n| "title_#{n}" }
+    subheading 'subheading'  
     sequence(:slug) { |n| "slug_#{n}" }
     tags "article"
     layout { FactoryGirl.build(:layout, site_id: "#{site.id}") }

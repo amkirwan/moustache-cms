@@ -3,8 +3,11 @@ require 'tag_helper'
 require 'redcarpet_singleton'
 
 class MoustacheCms::Mustache::CmsPage < Mustache
+  include AttributeMethods
   include Head
   include Navigation
+  include ArticleTags
+  include UserTags
   include SiteCustomTags
   
   def initialize(controller)
@@ -43,6 +46,7 @@ class MoustacheCms::Mustache::CmsPage < Mustache
     elsif method.to_s =~ /^nav_children_(.*)/ && @current_site.page_by_title($1)
       true
     elsif method.to_s =~ /^nav_siblings_and_self_(.*)/ && @current_site.page_by_title($1)
+    elsif method.to_s =~ /^articles_for_(.*)/
       true
     else
       super
@@ -62,6 +66,8 @@ class MoustacheCms::Mustache::CmsPage < Mustache
       nav_children($1)
     elsif name.to_s =~ /^nav_siblings_and_self_(.*)/
       nav_siblings_and_self($1)
+    elsif name.to_s =~ /^articles_for_(.*)/
+      articles_for($1)
     else
       super
     end    

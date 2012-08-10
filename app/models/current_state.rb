@@ -9,12 +9,12 @@ class CurrentState
   # -- Associations ---
   embedded_in :publishable, :polymorphic => true
 
-  States = %w(draft published)
+  @states = %w(draft published)
 
   # -- Validations --------------------------------------------------
   validates :name,
             :presence => true,
-            :inclusion => { :in => States,
+            :inclusion => { :in => @states,
             :message => "%{value} is not a valid option for state" }
             
   before_save lambda { self.time = Time.zone.now if self.changed? }
@@ -24,7 +24,7 @@ class CurrentState
   class << self
     def states
       states = []
-      States.each do |state|
+      @states.each do |state|
         states << self.send(state)
       end  
       states
@@ -32,7 +32,7 @@ class CurrentState
     alias_method :all, :states
   end
 
-  States.each do |state|
+  @states.each do |state|
     singleton_class.send(:define_method, state) do 
       self.new(:name => state, :time => nil)
     end

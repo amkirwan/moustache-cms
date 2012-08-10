@@ -8,24 +8,27 @@ module MoustacheCms
         @articles.each do |article|
           @article = article
           if article.published?
-            list <<  { "title" => article_title, "subheading" => article_subheading }
+            attrs = self.class.attribute_fields(Article)
+            hash = {}
+            attrs.each do |attr_name|
+              hash[attr_name] = article.send(attr_name)
+            end
+            list << hash
           end
         end
+        Rails.logger.debug "*"*20 + "#{list.inspect}"
         list
       end
 
-      def method_missing(method_id, *arguments, &block)
-        if (method_id =~ /^(article_)(.*)$/) && @article.respond_to?($2)
-          if $2 =~ /(.*)(_id)/
-            super
+      def method_missing(method, *arguments, &block)
+        method_name = method.to_s
+        unless self.class.attribute_methods_generated?
+          self.class.define_attribute_methods(Article)
+
+          if respond_to?(method_name)
+            self.send(method_name, *arguments, &block)
           else
-            method = method_id.to_s.gsub(/^(article_)(.*)$/) { $2 }
-            class_eval do 
-              define_method method_id do 
-                @article.send(method)
-              end
-            end
-            self.send(method_id)
+            super
           end
         else
           super

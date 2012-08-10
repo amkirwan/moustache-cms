@@ -112,13 +112,9 @@ class Article
 
 
   # -- Instance Methods -----
-  alias :full_path :permalink
-  alias :full_path= :permalink=
+  alias_method :full_path, :permalink
+  alias_method :full_path=, :permalink=
 
-  # -- Accepts_nested -----
-  def current_state_attributes=(attributes)
-    self.current_state = CurrentState.find_by_name(attributes[:name])
-  end
 
   # This date would is for an associated date like a meeting or event that is distinct from when the article was published or created.
   def datetime

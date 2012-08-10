@@ -39,6 +39,7 @@ describe MoustacheCms::Mustache::ArticleTags do
   it "should define methods for article attributes that do not end with _id" do
     @cmsp.article_title.should == @article.title
     @cmsp.article_subheading.should == @article.subheading
+    @cmsp.article_authors.should == @article.authors
   end
 
   it "should not define methods that end with _id" do
