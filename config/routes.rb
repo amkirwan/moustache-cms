@@ -1,6 +1,10 @@
+require File.expand_path(File.join(Rails.root, 'lib', 'moustache_cms', 'articles_constraint'))
+
 MoustacheCms::Application.routes.draw do   
 
   namespace :admin do
+    root :to => 'admin/pages#index'
+
     devise_for :users, :path => '', :controllers => { :sessions => 'admin/sessions', :passwords => 'admin/passwords' } 
 
     resources :users do
@@ -45,15 +49,14 @@ MoustacheCms::Application.routes.draw do
       resources :meta_tags, :except => :index 
       resources :domain_names, :except => [:index, :show]
     end
-    
   end
 
   match "/admin" => redirect("/admin/pages")
 
+  match ":articles(/page(/:page))" => 'cms_site#render_html', :as => :articles_page, :constraints => MoustacheCms::ArticlesConstraint.new
+
   scope :controller => "cms_site" do
     get "/" => :render_html, :as => "cms_html", :path => '(*page_path)'
   end
-
-  root :to => 'admin/pages#index'
 
 end

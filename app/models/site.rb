@@ -83,6 +83,10 @@ class Site
   def articles_by_collection_name(name)
     self.article_collections.articles_by_collection_name(name)
   end
+
+  def articles_by_collection_name_desc(name)
+    self.article_collections.articles_by_collection_name_desc(name)
+  end
   
   def snippet_by_name(name)                        
     self.snippets.snippet_by_name(name)

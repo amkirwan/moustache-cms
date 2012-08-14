@@ -17,7 +17,7 @@ class CmsSiteController < ApplicationController
       render_404
     end
   end
-  
+
   private
 
     def request_set
@@ -25,6 +25,29 @@ class CmsSiteController < ApplicationController
     end
   
     def load_page
+      Rails.logger.debug "&"*20 + "#{params}"
+      if !params[:page_path].nil?
+        Rails.logger.debug "&"*20 + "#{params}"
+        @page = @current_site.page_by_full_path("/#{params[:page_path]}")
+        @page = @current_site.article_by_permalink("/#{params[:page_path]}") if @page.nil?
+        render_404 if @page.nil?
+      elsif !params[:articles].nil?
+        @page = @current_site.page_by_full_path("/#{params[:articles]}")
+        render_404 if @page.nil?
+      else
+        Rails.logger.debug "$"*20 + "#{params}"
+        render_404
+      end
+=begin
+      elsif !params[:articles].nil?
+        Rails.logger.debug "*"*20 + "#{params}"
+        @page = @articles = @current_site.page_by_full_path("/#{params[:articles]}")
+        render_404 if @article.nil?
+      else
+        Rails.logger.debug "$"*20 + "#{params}"
+        render_404
+      end
+=begin 
       @page = @current_site.page_by_full_path("/#{params[:page_path]}")
       if @page.nil?
         @page = @article = @current_site.article_by_permalink("/#{params[:page_path]}")
@@ -32,6 +55,7 @@ class CmsSiteController < ApplicationController
       if @page.nil?
         render_404
       end
+=end 
     end
     
     def render_404

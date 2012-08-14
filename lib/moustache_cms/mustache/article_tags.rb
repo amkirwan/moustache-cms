@@ -3,21 +3,46 @@ module MoustacheCms
     module ArticleTags
 
       def articles_for(name)
-        @articles = @current_site.articles_by_collection_name(name.to_s).desc(:created_at)
+        @articles = @current_site.articles_by_collection_name_desc(name.to_s).page(@controller.params[:page]).per(3)
         list = []
         @articles.each do |article|
-          @article = article
           if article.published?
-            attrs = self.class.attribute_fields(Article)
             hash = {}
+            attrs = self.class.attribute_fields(Article)
             attrs.each do |attr_name|
               hash[attr_name] = article.send(attr_name)
             end
+            hash['created_by'] = article.created_by.attributes
+            process_article_with_filter(article, hash)
+            process_with_filter(article)
             list << hash
           end
         end
-        Rails.logger.debug "*"*20 + "#{list.inspect}"
         list
+      end
+
+
+      def process_article_with_filter(article, hash)
+        to_process = %w(subheading content)
+        case article.filter_name  
+        when "markdown"
+          to_process.each { |part| hash[part] = process_with_markdown(hash[part]) }
+        when "textile"
+          to_process.each { |part| hash[part] = process_with_textile(hash[part]) }
+        end
+      end
+
+      def paginate_articles
+        lambda do |text|
+          options = parse_text(text)
+          context = ActionView::Base.new("#{Rails.root}/lib/moustache_cms/mustache/templates", {}, @controller, nil)
+          context.class_eval do
+            include Rails.application.routes.url_helpers
+          end
+          engine = gen_haml('paginate_articles.haml')
+          engine.render(context, {:articles => @articles, :options => options})
+
+        end
       end
 
       def method_missing(method, *arguments, &block)

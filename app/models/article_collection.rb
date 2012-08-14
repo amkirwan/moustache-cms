@@ -37,4 +37,12 @@ class ArticleCollection
   def self.articles_by_collection_name(name)
     self.where(:name => name.to_s).first.articles
   end
+
+  def self.articles_by_collection_name_desc(name, page = nil)
+    if page.nil?
+      self.where(:name => name.to_s).first.articles.desc(:created_at)
+    else
+      self.where(:name => name.to_s).first.articles.desc(:created_at)
+    end
+  end
 end

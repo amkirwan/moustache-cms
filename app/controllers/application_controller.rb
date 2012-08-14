@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base 
+  include MoustacheCms::RequestCurrentSite
+
   protect_from_forgery 
 
   before_filter :current_site
@@ -16,7 +18,7 @@ class ApplicationController < ActionController::Base
     end
   
     def current_site
-      @current_site ||= Site.match_domain(request.host.downcase).first
+      @current_site ||= request_current_site
       if @current_site.nil?
         render :file => "#{Rails.root}/public/404", :layout => false, :status => 404
       end

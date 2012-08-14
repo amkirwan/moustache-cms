@@ -172,7 +172,17 @@ describe Site do
         @site.articles_by_collection_name('news').should == article_collection.articles
       end
     end
-    
+
+    describe "#articles_by_collection_name_desc(name)" do
+      it "should return all the articles for the article collection" do
+        article_collection = FactoryGirl.create(:article_collection, :site => @site, :name => "news")
+        article_collection.articles << FactoryGirl.build(:article)
+        article_collection.articles << FactoryGirl.build(:article)
+        @site.articles_by_collection_name_desc('news').to_a.should == article_collection.articles.to_a
+        
+      end
+    end
+
     describe "#snippets_by_name(name)" do
       it "should return the snippet by the given name" do
         snippet = FactoryGirl.create(:snippet, :name => "foobar", :site_id => @site.id)    

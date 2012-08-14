@@ -6,6 +6,8 @@ describe "ArticleCollection" do
 
   before(:each) do
     @article_collection = FactoryGirl.create(:article_collection, :site => site, :created_by => user, :updated_by => user)           
+    @article_collection.articles << FactoryGirl.build(:article)
+    @article_collection.articles << FactoryGirl.build(:article)
   end
 
   # --  Associations ---- 
@@ -66,11 +68,18 @@ describe "ArticleCollection" do
 
   # -- Class Methods ---
   describe "Class Methods" do
-    describe "articles_by_collection_name" do
+    describe "#articles_by_collection_name" do
       it "should return all the articles from a collection" do
         ArticleCollection.articles_by_collection_name(@article_collection.name).should == @article_collection.articles  
       end
     end   
+
+    describe "#articles_by_collection_name_desc" do
+      it "should return all the articles from the collection sorted in descending order" do
+        ArticleCollection.articles_by_collection_name_desc(@article_collection.name).to_a.should == @article_collection.articles.desc(:created_at).to_a
+      end
+      
+    end
   end
 
 end

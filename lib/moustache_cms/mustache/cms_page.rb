@@ -3,12 +3,13 @@ require 'tag_helper'
 require 'redcarpet_singleton'
 
 class MoustacheCms::Mustache::CmsPage < Mustache
+
   include AttributeMethods
   include Head
   include Navigation
   include ArticleTags
   include UserTags
-  include SiteCustomTags
+  include CustomTags
   
   def initialize(controller)
     @controller = controller
@@ -46,6 +47,7 @@ class MoustacheCms::Mustache::CmsPage < Mustache
     elsif method.to_s =~ /^nav_children_(.*)/ && @current_site.page_by_title($1)
       true
     elsif method.to_s =~ /^nav_siblings_and_self_(.*)/ && @current_site.page_by_title($1)
+      true
     elsif method.to_s =~ /^articles_for_(.*)/
       true
     else
@@ -92,7 +94,7 @@ class MoustacheCms::Mustache::CmsPage < Mustache
 
   def image
     lambda do |text|
-      hash = Hash[*text.scan(/(\w+):([&.\w\s\-]+)/).to_a.flatten]
+      hash = parse_text(text)
       image = @current_site.site_asset_by_name(hash['collection_name'], hash['name'])
       unless image.nil?
         engine = gen_haml('image.haml')
@@ -101,16 +103,8 @@ class MoustacheCms::Mustache::CmsPage < Mustache
     end
   end
 
-  def page_paginate_children
-    lambda do |text|
-      @child_pages = @page.children.asc(:title).page(@controller.params[:page])
-      unless @child_pages.nil?
-        options = Hash[*text.scan(/(\w+).to_sym:([&.\w\s\-]+)/).to_a.flatten]
-        context = ActionView::Base.new("#{Rails.root}/lib/moustache_cms/mustache/custom_templates", {}, @controller,nil)
-        engine = gen_haml('paginate.haml')
-        engine.render(context, {:child_pages => @child_pages, :options => options})
-      end
-    end
+  def parse_text(text)
+    Hash[*text.scan(/(\w+).to_sym:([&.\w\s\-]+)/).to_a.flatten]
   end
 
   private 
@@ -131,21 +125,29 @@ class MoustacheCms::Mustache::CmsPage < Mustache
     end
     
     def process_with_filter(part)
-      preprocessed_content = preprocess(part)
+      preprocessed_content = preprocess(part) 
 
       case part.filter_name
       when "markdown"
-        markdown = RedcarpetSingleton.markdown
-        markdown.render(preprocessed_content)
+        process_with_markdown(preprocessed_content)
       when "textile"
-        RedCloth.new(preprocessed_content).to_html
+        process_with_textile(preprocessed_content)
       when "html"
         preprocessed_content  
       else
         preprocessed_content  
       end
     end    
-    
+
+    def process_with_markdown(content)
+      markdown = RedcarpetSingleton.markdown
+      markdown.render(content)
+    end
+
+    def process_with_textile(content)
+      RedCloth.new(preprocessed_content).to_html
+    end
+
     def gen_haml(template_name)
       if File.exists?("#{File.dirname(__FILE__)}/templates/#{template_name}")
         template = File.read("#{File.dirname(__FILE__)}/templates/#{template_name}")
