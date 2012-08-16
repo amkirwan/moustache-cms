@@ -17,7 +17,7 @@
 //= require_self
 
 $(document).ready(function() {
-  $('#flash_notice_wrapper').delay(3000).fadeToggle('slow', 'linear', function() {
+  $('#flash_notice_wrapper').delay(1500).fadeToggle('slow', 'linear', function() {
     $(this).remove()
   }); 
 
