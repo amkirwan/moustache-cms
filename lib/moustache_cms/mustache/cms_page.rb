@@ -104,7 +104,7 @@ class MoustacheCms::Mustache::CmsPage < Mustache
   end
 
   def parse_text(text)
-    Hash[*text.scan(/(\w+).to_sym:([&.\w\s\-]+)/).to_a.flatten]
+    Hash[*text.scan(/(\w+):([&.\w\s\-]+)/).to_a.flatten]
   end
 
   private 
@@ -159,5 +159,9 @@ class MoustacheCms::Mustache::CmsPage < Mustache
 
     def preprocess(part)
       render part.content
+    end
+
+    def params
+      @controller.params
     end
 end

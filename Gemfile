@@ -27,7 +27,7 @@ gem "mustache", ">= 0.99"
 gem "RedCloth", "~> 4.2"
 gem "redcarpet", "~> 2.0"
 gem "mime-types"
-gem "kaminari", :git => "git://github.com/ivanyv/kaminari.git"
+gem "kaminari"
 
 gem "unicorn"
 

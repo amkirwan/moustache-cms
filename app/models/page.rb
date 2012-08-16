@@ -54,8 +54,7 @@ class Page
   
   # -- Validations -----------------------------------------------
   validates :title,
-            :presence => true,
-            :uniqueness => { :case_sensitive => false, :scope => :site_id }
+            :presence => true
             
   validates :full_path,
             :presence => true,

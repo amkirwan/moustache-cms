@@ -3,7 +3,13 @@ module MoustacheCms
     module ArticleTags
 
       def articles_for(name)
-        @articles = @current_site.articles_by_collection_name_desc(name.to_s).page(@controller.params[:page]).per(3)
+        # assign article if this is not a permalink
+        Rails.logger.debug "I"*20 + "= #{name}"
+        if @controller.params[:year].nil?
+          @articles = @current_site.articles_by_collection_name_desc(name.to_s).page(params[:page]).per(MoustacheCms::Application.config.default_per_page)  
+        else
+          @articles = []
+        end   
         list = []
         @articles.each do |article|
           if article.published?
@@ -14,13 +20,15 @@ module MoustacheCms
             end
             hash['created_by'] = article.created_by.attributes
             process_article_with_filter(article, hash)
-            process_with_filter(article)
             list << hash
           end
         end
         list
       end
 
+      def article
+        @article
+      end
 
       def process_article_with_filter(article, hash)
         to_process = %w(subheading content)
@@ -34,13 +42,15 @@ module MoustacheCms
 
       def paginate_articles
         lambda do |text|
-          options = parse_text(text)
-          context = ActionView::Base.new("#{Rails.root}/lib/moustache_cms/mustache/templates", {}, @controller, nil)
-          context.class_eval do
-            include Rails.application.routes.url_helpers
+          unless @articles.empty?
+            options = parse_text(text)
+            context = ActionView::Base.new("#{Rails.root}/lib/moustache_cms/mustache/templates", {}, @controller, nil)
+            context.class_eval do
+              include Rails.application.routes.url_helpers
+            end
+            engine = gen_haml('paginate_articles.haml')
+            engine.render(context, {:articles => @articles, :options => options})
           end
-          engine = gen_haml('paginate_articles.haml')
-          engine.render(context, {:articles => @articles, :options => options})
 
         end
       end

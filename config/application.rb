@@ -22,6 +22,7 @@ module MoustacheCms
 
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
+    config.autoload_paths += Dir["#{config.root}/lib/**/"] 
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
@@ -58,9 +59,6 @@ module MoustacheCms
     # -- all .rb files in that directory are automatically loaded.
     config.domain = "example.com"
 
-    # Custom directories with classes and modules you want to be autoloadable.
-    config.autoload_paths += Dir["#{config.root}/lib/**/"] 
-    
     # Configure generators values. Many other options are available, be sure to check the documentation.  
     config.generators do |g|  
       g.template_engine :haml
