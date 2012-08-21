@@ -6,11 +6,18 @@
       = foldable_fieldset "General" do  
         %ol.form_fields
           %li{:class => "inline"}
-            = f.label :name, "Name<abbr title='required' class='required'>*</abbr>".html_safe
+            = f.label :name, mark_required('Name')
             = f.text_field :name 
           %li{:class => "inline"}
-            = f.label "layout_id", "Layout<abbr title='required' class='required'>*</abbr>".html_safe
+            %p.info The layout to use when displaying an article from it's permalink.
+            = f.label "layout_id", mark_required('Layout')
             = f.collection_select :layout_id, Layout.all, :id, :name
+          %li{:class => "inline"}
+            %p.info Adding a prefix will add the article collection name as a route prefix to the articles generated permalink. For example adding the prefix to a collection named 'foo' will make the permalink for the article titled 'article1' with a publication date of January 1st, 2012, '/foo/2012/1/1/article1'. Without the prefix the permalink would be '/2012/1/1/article1'.
+            = f.radio_button :permalink_prefix, 'true'
+            = f.label :permlink_prefix_true, 'Add prefix to path'
+            = f.radio_button :permalink_prefix, 'false'
+            = f.label :permlink_prefix_false, 'Do not add prefix to path'
     %li#editor_fields
       = foldable_fieldset "Editors" do
         %ol.form_fields

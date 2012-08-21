@@ -349,10 +349,10 @@ form.site_prop {
         display: inline;
       }
       p {
-        font-style: italic;
         font-size: calc_em(12px, 14px);
         line-height: 1.25;
         padding-left:  calc_em(4px, 14px);
+        margin-top: 1em;
         margin-bottom: 0.3em;
         width: 100%;
       }

@@ -139,16 +139,26 @@ describe Article do
     end  
 
     describe "#permalink_set" do
-      it "should set the permalink" do
+      before(:each) do
         time = DateTime.now
-        year = time.year.to_s
-        month = time.month.to_s
-        day = time.day.to_s
+        @year = time.year.to_s
+        @month = time.month.to_s
+        @day = time.day.to_s
+        @collection_name = @article.article_collection.name.gsub(/[\s_]/, '-')
+      end
 
+      it "should set the permalink" do
         @article.permalink = nil
         @article.save
-        collection_name = @article.article_collection.name.gsub(/[\s_]/, '-')
-        @article.permalink.should == "/#{collection_name}/#{year}/#{month}/#{day}/#{@article.slug}"
+        @article.permalink.should == "/#{@collection_name}/#{@year}/#{@month}/#{@day}/#{@article.slug}"
+      end
+
+      it "should not set the prefix to the path" do
+        @article_collection.permalink_prefix = false
+        @article_collection.save
+        @article.permalink = nil
+        @article.save
+        @article.permalink.should == "/#{@year}/#{@month}/#{@day}/#{@article.slug}"
       end
     end
   end

@@ -6,10 +6,12 @@ class ArticleCollection
 
   attr_accessible :name,
                   :layout_id,
-                  :editor_ids
+                  :editor_ids,
+                  :permalink_prefix
 
     # -- Fields --------------- 
   field :name
+  field :permalink_prefix, :type => Boolean
   
   # -- Associations -------------
   belongs_to :site
@@ -33,11 +35,11 @@ class ArticleCollection
   validates :updated_by_id,
             :presence => true
 
-  # -- Class Methods --
-  def self.articles_by_collection_name(name)
-    self.where(:name => name.to_s).first.articles
+  after_initialize do |ac|
+    ac.permalink_prefix = false if ac.permalink_prefix.nil?
   end
 
+  # -- Class Methods --
   def self.articles_by_collection_name_desc(name, page = nil)
     if page.nil?
       self.where(:name => name.to_s).first.articles.desc(:created_at)

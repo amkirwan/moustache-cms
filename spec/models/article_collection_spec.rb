@@ -64,13 +64,23 @@ describe "ArticleCollection" do
       @article_collection.updated_by_id = nil
       @article_collection.should_not be_valid
     end
+
+    it "should set the permalink_prefix to false for a new article collection" do
+      @article_collection.permalink_prefix.should == false  
+    end
+
+    it "should not set the permalink_prefix to false for a article collection saved to the database where it is set to true" do
+      @article_collection.permalink_prefix = true
+      @article_collection.save
+      ArticleCollection.find(@article_collection.id).permalink_prefix.should == true
+    end
   end
 
   # -- Class Methods ---
   describe "Class Methods" do
     describe "#articles_by_collection_name" do
       it "should return all the articles from a collection" do
-        ArticleCollection.articles_by_collection_name(@article_collection.name).should == @article_collection.articles  
+        ArticleCollection.articles_by_collection_name_desc(@article_collection.name).to_a.should == @article_collection.articles  
       end
     end   
 

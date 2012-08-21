@@ -153,8 +153,12 @@ class Article
         year = time.year.to_s
         month = time.month.to_s
         day = time.day.to_s
-        collection_name = self.article_collection.name.gsub(%r[^a-z0-9\-_], '-')
-        self.permalink = "/#{collection_name}/#{year}/#{month}/#{day}/#{self.slug}" 
+        collection_name = self.article_collection.name.gsub(/[^a-z0-9\-]+/, '-')
+        if self.article_collection.permalink_prefix?
+          self.permalink = "/#{collection_name}/#{year}/#{month}/#{day}/#{self.slug}" 
+        else
+          self.permalink = "/#{year}/#{month}/#{day}/#{self.slug}" 
+        end
       end
     end
 

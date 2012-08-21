@@ -1,5 +1,9 @@
 module ApplicationHelper  
   
+  def mark_required(field_name)
+    "#{field_name}<abbr title='required' class='required'>*</abbr>".html_safe  
+  end
+
   def admin?     
     @current_admin_user.role?("admin") ? true : false
   end

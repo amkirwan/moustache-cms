@@ -120,6 +120,7 @@ FactoryGirl.define do
     association :site, strategy: :build
     sequence(:name) { |n| "name_#{n}" }
     editors {[ FactoryGirl.build(:user) ]}
+    permalink_prefix true
     after_build { |article_collection| assign_created_updated_by(article_collection, :article_collections) }
   end
 
