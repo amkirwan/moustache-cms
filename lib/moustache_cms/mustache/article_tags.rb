@@ -4,7 +4,6 @@ module MoustacheCms
 
       def articles_for(name)
         # assign article if this is not a permalink
-        Rails.logger.debug "I"*20 + "= #{name}"
         if @controller.params[:year].nil?
           @articles = @current_site.articles_by_collection_name_desc(name.to_s).page(params[:page]).per(MoustacheCms::Application.config.default_per_page)  
         else

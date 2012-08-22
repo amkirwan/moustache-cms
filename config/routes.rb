@@ -53,9 +53,12 @@ MoustacheCms::Application.routes.draw do
 
   match "/admin" => redirect("/admin/pages")
 
-  match "*articles" => 'cms_site#render_html', :as => :articles_page, :constraints => MoustacheCms::ArticlesConstraint.new
+  match "*articles" => 'cms_site#render_html', :as => :articles, :constraints => MoustacheCms::ArticlesConstraint.new
   match "*articles/page/:page" => 'cms_site#render_html', :as => :articles_page, :constraints => MoustacheCms::ArticlesConstraint.new
   match "*articles/:year/:month/:day/:title" => 'cms_site#render_html', :as => :article_permalink, :constraints => MoustacheCms::ArticlesConstraint.new
+  match ":year/:month/:day/:title" => 'cms_site#render_html', :constraints => { :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/ }
+  match "page/:page" => 'cms_site#render_html', :constraints => { :id => /\d/ }
+
 
   scope :controller => "cms_site" do
     get "/" => :render_html, :as => "cms_html", :path => '(*page_path)'

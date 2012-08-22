@@ -25,15 +25,21 @@ class CmsSiteController < ApplicationController
     end
   
     def load_page
-      if params[:articles].nil?
+      # render the page if the route is not an article
+      if params[:articles].nil? && params[:year].nil?
         @page = @current_site.page_by_full_path("/#{params[:page_path]}")
         render_404 if @page.nil?
       else 
-        @page = @current_site.page_by_full_path("/#{params[:articles]}")
-        if params[:title]
-          @article = @current_site.article_by_permalink("/#{params[:articles]}/#{params[:year]}/#{params[:month]}/#{params[:day]}/#{params[:title]}".squeeze)
-          render_404 if @article.nil?
-        end
+        # find the page first to render the article into
+        @page = params[:articles] ? @current_site.page_by_full_path("/#{params[:articles]}") : @current_site.page_by_full_path('/')
+        
+        # if the article is not within a collection then the permalink will be under the root page
+        @article = @current_site.article_by_permalink("/#{params[:articles]}/#{params[:year]}/#{params[:month]}/#{params[:day]}/#{params[:title]}".squeeze)
+
+        # Check if the page is the home page and that the article is not nil. 
+        # If it is render 404 because we don't want to render the home page when the
+        # user is looking for a permalink. The root path would 
+        render_404 if @page.home_page? && @article.nil?
         render_404 if @page.nil?
       end
     end
