@@ -33,7 +33,7 @@ class Snippet
 
   #-- Class Methods --
   def self.snippet_by_name(name)
-    self.where(:name => name.to_s).first  
+    self.where(:name => name.to_s).first
   end
 
 end

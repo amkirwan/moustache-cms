@@ -165,6 +165,13 @@ describe Site do
       end
     end   
 
+    describe "#article_collection_by_name" do
+      it "should return the article collection by the name" do
+        article_collection = FactoryGirl.create(:article_collection, :site => @site, :name => "news")
+        @site.article_collection_by_name('news').should == article_collection
+      end
+    end
+
     describe "#articles_by_collection_name(name)" do
       it "should return all the articles for the given article collection" do
         article_collection = FactoryGirl.create(:article_collection, :site => @site, :name => "news")
@@ -195,6 +202,14 @@ describe Site do
         asset_collection = FactoryGirl.create(:asset_collection, :name => 'baz', :site => @site)  
         asset_collection.site_assets << asset = FactoryGirl.build(:site_asset, :name => 'foobar')
         @site.site_asset_by_name('baz', 'foobar').should == asset
+      end
+    end
+
+    describe "#meta_tag_by_name(name)" do
+      it "should return the meta tag with the name" do
+        meta_tag = FactoryGirl.build(:meta_tag, :name => 'foobar')
+        @site.meta_tags << meta_tag
+        @site.meta_tag_by_name('foobar').should == meta_tag
       end
     end
   end

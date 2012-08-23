@@ -4,20 +4,17 @@ module MoustacheCms
       extend ActiveSupport::Concern
 
       module ClassMethods
-        def define_attribute_methods(klass)
-          attrs = attribute_fields(klass)
-          attrs.each do |attr_name|
-            class_eval do
-              define_method "#{klass.to_s.downcase}_#{attr_name}" do
-                @article.send(attr_name)
-              end
+        def define_attribute_method(method_name, calling_method, name)
+          class_eval do
+            define_method method_name do 
+              self.send(calling_method, name)
             end
           end
-          @attribute_methods_generated = true
+          generated_methods << method_name
         end
 
-        def attribute_methods_generated?
-          @attribute_methods_generated ||= false
+        def generated_methods
+          @generated_methods ||= []  
         end
 
         def attribute_fields(klass)

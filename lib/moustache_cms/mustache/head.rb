@@ -61,6 +61,26 @@ module MoustacheCms
         end
       end
     
+      def respond_to?(method)
+        if method.to_s =~ /^meta_tag_(.*)/ 
+          true
+        else
+          super
+        end
+      end
+
+      def method_missing(method_name, *args, &block)
+        if method_name.to_s =~ /^meta_tag_(.*)/
+          self.class.define_attribute_method(method_name, :meta_tag_with_name, $1)
+        end
+
+        if self.class.generated_methods.include?(method_name)
+          self.send(method_name)
+        else
+          super
+        end
+      end
+
       private 
         def meta_tag_with_name(name)
           engine = gen_haml('meta_tag.haml')

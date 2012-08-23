@@ -34,6 +34,7 @@ class CmsSiteController < ApplicationController
         @page = params[:articles] ? @current_site.page_by_full_path("/#{params[:articles]}") : @current_site.page_by_full_path('/')
         
         # if the article is not within a collection then the permalink will be under the root page
+        # if the article is under an article collection then the articles param will be set in the route
         @article = @current_site.article_by_permalink("/#{params[:articles]}/#{params[:year]}/#{params[:month]}/#{params[:day]}/#{params[:title]}".squeeze)
 
         # Check if the page is the home page and that the article is not nil. 

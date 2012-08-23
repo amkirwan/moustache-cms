@@ -80,6 +80,10 @@ class Site
     self.articles.article_by_permalink(path)
   end
 
+  def article_collection_by_name(name)
+    self.article_collections.where(:name => name).first
+  end
+
   def articles_by_collection_name(name)
     self.article_collections.articles_by_collection_name(name)
   end
@@ -113,6 +117,10 @@ class Site
   def site_asset_by_name(asset_collection, file_name)
     asset_collection = AssetCollection.first(:conditions => {:name => asset_collection, :site_id => self.id})
     asset_collection.site_assets.where(:name => file_name).first
+  end
+
+  def meta_tag_by_name(name)
+    self.meta_tags.where(:name => name).first
   end
   
   private  

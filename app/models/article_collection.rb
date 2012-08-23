@@ -40,11 +40,14 @@ class ArticleCollection
   end
 
   # -- Class Methods --
-  def self.articles_by_collection_name_desc(name, page = nil)
-    if page.nil?
-      self.where(:name => name.to_s).first.articles.desc(:created_at)
-    else
-      self.where(:name => name.to_s).first.articles.desc(:created_at)
-    end
+  def self.articles_by_collection_name(name)
+    article_collection = self.where(:name => name.to_s).first
+    article_collection.nil? ? [] : article_collection.articles(:created_at)
   end
+
+  def self.articles_by_collection_name_desc(name)
+    article_collection = self.where(:name => name.to_s).first
+    article_collection.nil? ? [] : article_collection.articles.desc(:created_at)
+  end
+
 end
