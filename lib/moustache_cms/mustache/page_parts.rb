@@ -12,17 +12,9 @@ module MoustacheCms
 
       def snippet
         lambda do |text|
-          process_with_filter(@current_site.snippet_by_name(text)) 
+          snippet = @current_site.snippet_by_name(text)
+          process_with_filter(snippet) unless snippet.nil?
         end
-      end
-
-      def editable_text_with_name(part_name)
-        part = @page.page_parts.find_by_name(part_name)
-        process_with_filter(part)
-      end
-      
-      def snippet_with_name(name)        
-        process_with_filter(@current_site.snippet_by_name(name)) 
       end
 
       def respond_to?(method)
@@ -39,11 +31,11 @@ module MoustacheCms
 
       def method_missing(name, *args, &block)
         if name.to_s =~ /^editable_text_(.*)/
-          editable_text_with_name($1)   
+          editable_text.call($1)   
         elsif name.to_s =~ /^page_part_(.*)/
-          editable_text_with_name($1)
+          editable_text.call($1)
         elsif name.to_s =~ /^snippet_(.*)/
-          snippet_with_name($1)
+          snippet.call($1)
         else
           super
         end    

@@ -1,5 +1,4 @@
 require 'haml'
-require 'redcarpet_singleton'
 
 class MoustacheCms::Mustache::CmsPage < Mustache
 
@@ -33,17 +32,6 @@ class MoustacheCms::Mustache::CmsPage < Mustache
   def yield
     part = @page.page_parts.first
     process_with_filter(part)
-  end
-
-  def image
-    lambda do |text|
-      hash = parse_text(text)
-      image = @current_site.site_asset_by_name(hash['collection_name'], hash['name'])
-      unless image.nil?
-        engine = gen_haml('image.haml')
-        engine.render(nil, {:src => image.url_md5, :id => hash['id'], :class_name => hash['class'], :alt => hash['alt'], :title => hash['title']})
-      end
-    end
   end
 
   protected 
@@ -91,8 +79,11 @@ class MoustacheCms::Mustache::CmsPage < Mustache
     end
   end    
 
+  def markdown
+    @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML,:autolink => true, :no_intra_emphasis => true, :lax_html_block => true, :space_after_headers => true) 
+  end
+
   def process_with_markdown(content)
-    markdown = RedcarpetSingleton.markdown
     markdown.render(content)
   end
 
