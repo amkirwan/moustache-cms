@@ -44,8 +44,6 @@ module MoustacheCms
           self.class.define_attribute_method(method_name, :articles_list_for, $1)
         when /^articles_for_(.*)/
           self.class.define_attribute_method(method_name, :articles_for, $1)
-        else
-          super
         end
 
         if self.class.generated_methods.include?(method_name)
