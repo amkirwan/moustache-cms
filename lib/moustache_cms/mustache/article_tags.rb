@@ -2,13 +2,21 @@ module MoustacheCms
   module Mustache
     module ArticleTags
 
+      # This tag will display the list of articles paginated. From within the paginated list you can
+      # access all the properties of an article to display in your view. Using this tag will only show
+      # the paginated list of articles so you will also want to define an {{ article }} 
       def articles_list_for(name)
         find_articles(name)
         articles_to_list
       end
 
+      # You will either a list of articles for the collection or it will return a single article
+      # if the url matches a permalink in your collection. This tag will be usefull if you display your 
+      # articles the same as in the list view and the permalink view. If you want to display your articles
+      # between the paginated list of articles and an individual artcile then you will want to use the 
+      # articles_list_for tag and the articles. You will most likely want to use this tag inconjunction with the
+      # {{{paginate_articles}}} tag
       def articles_for(name)
-        # assign article if this is a permalink
         @article.nil? ? find_articles(name) : (@articles = [@article])
         articles_to_list
       end
@@ -19,13 +27,12 @@ module MoustacheCms
 
       def paginate_articles
         lambda do |text|
-          if @article.nil?  
-            options = parse_text(text)
-            engine = gen_haml('paginate_articles.haml')
-            context = action_view_context("#{Rails.root}/lib/moustache_cms/mustache/templates")
-            engine.render(context, {:articles => @articles, :options => options})
-          end
+          paginator(text)
         end
+      end
+
+      def paginate
+        paginator  
       end
 
       def respond_to?(method)
@@ -57,6 +64,15 @@ module MoustacheCms
 
      
       private
+
+      def paginator(text=nil)
+        if @article.nil?  
+          options = text.nil? ? {} : parse_text(text)
+          engine = gen_haml('paginate_articles.haml')
+          context = action_view_context("#{Rails.root}/lib/moustache_cms/mustache/templates")
+          engine.render(context, {:articles => @articles, :options => options})
+        end
+      end
 
       def articles_to_list
         @articles_list = [] 
