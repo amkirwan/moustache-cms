@@ -3,7 +3,6 @@ require File.expand_path(File.join(Rails.root, 'lib', 'moustache_cms', 'articles
 MoustacheCms::Application.routes.draw do   
 
   namespace :admin do
-    root :to => 'admin/pages#index'
 
     devise_for :users, :path => '', :controllers => { :sessions => 'admin/sessions', :passwords => 'admin/passwords' } 
 
@@ -63,5 +62,5 @@ MoustacheCms::Application.routes.draw do
   scope :controller => "cms_site" do
     get "/" => :render_html, :as => "cms_html", :path => '(*page_path)'
   end
-
+  root :to => 'admin/pages#index'
 end
