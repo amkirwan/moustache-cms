@@ -24,28 +24,30 @@ module MoustacheCms
         engine.render(action_view_helpers_context, {:request => @request, :page => @current_site.page_by_title(page_title)})
       end
       
-      def respoond_to?(method)
-        if method.to_s =~ /^nav_children_(.*)/ && @current_site.page_by_title($1)
-          true
-        elsif method.to_s =~ /^nav_siblings_and_self_(.*)/ && @current_site.page_by_title($1)
-          true
+      def respond_to?(method)
+        method_name = method.to_s
+        if method_name =~ /^(nav_children)_(.*)$/ && @current_site.page_by_title($1)
+          return true
+        elsif method_name =~ /^(nav_siblings_and_self)_(.*)/ && @current_site.page_by_title($1)
+          return true
         else
           super
         end
       end
 
-      def method_missing(method_name, *arguments, &block)
-        case method_name.to_s
-        when /^nav_children_(.*)/
-          self.class.define_attribute_method(method_name, :nav_children, $1)
-        when /^nav_siblings_and_self_(.*)/ 
-          self.class.define_attribure_method(method_name, :nav_siblings_and_self, $1)
+      def method_missing(method, *arguments, &block)
+        method_name = method.to_s
+        case method_name
+        when /^(nav_children)_(.*)/
+          self.class.define_attribure_method(method_name, $1, $2)
+        when /^(nav_siblings_and_self)_(.*)/
+          self.class.define_attribure_method(method_name, $1, $2)
         else
           super
         end
         
-        if self.class.generated_methods.include?(method_name)
-          self.send(method_name)
+        if self.class.attribute_method_generated?(method)
+          self.send(method)
         else
           super
         end

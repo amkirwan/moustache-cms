@@ -62,30 +62,28 @@ module MoustacheCms
       end
     
       def respond_to?(method)
-        if method.to_s =~ /^meta_tag_(.*)/ 
+        method_name = method.to_s
+        if method_name =~ /^meta_tag_(.*)/ 
           true
         else
           super
         end
       end
 
-      def method_missing(method_name, *args, &block)
-        if method_name.to_s =~ /^meta_tag_(.*)/
-          self.class.define_attribute_method(method_name, :meta_tag_with_name, $1)
+      def method_missing(method, *args, &block)
+        method_name = method.to_s
+        if method_name.to_s =~ /^(meta_tag)_(.*)/
+          self.class.define_meta_tag_method(method_name, $2)
         end
 
-        if self.class.generated_methods.include?(method_name)
-          self.send(method_name)
+        if self.class.generated_methods.include?(method)
+          self.send(method)
         else
           super
         end
       end
 
       private 
-        def meta_tag_with_name(name)
-          engine = gen_haml('meta_tag.haml')
-          engine.render(nil, {:name => name, :content => meta_tag_name(name).content})
-        end
 
         def set_default_attribute_values(attributes, file)
           attributes['href'] = file.url_md5

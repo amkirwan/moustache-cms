@@ -29,25 +29,27 @@ module MoustacheCms
       end
 
       def respond_to?(method)
-        if method =~ /^articles_list_for_(.*)/ && @current_site.article_collection_by_name($1)
-          true
-        elsif method =~ /^articles_for_(.*)/ && @current_site.article_collection_by_name($1)
-          true
+        method_name = method.to_s
+        if method_name =~ /^articles_list_for_(.*)/ && @current_site.article_collection_by_name($1)
+          return true
+        elsif method_name =~ /^articles_for_(.*)/ && @current_site.article_collection_by_name($1)
+          return true
         else
           super
         end
       end
 
-      def method_missing(method_name, *arguments, &block)
-        case method_name.to_s
-        when /^articles_list_for_(.*)/
-          self.class.define_attribute_method(method_name, :articles_list_for, $1)
-        when /^articles_for_(.*)/
-          self.class.define_attribute_method(method_name, :articles_for, $1)
+      def method_missing(method, *arguments, &block)
+        method_name = method.to_s
+        case method_name
+        when /^(articles_list)_for_(.*)/
+          self.class.define_attribute_method(method_name, $1, $2)
+        when /^(articles_for)_(.*)/
+          self.class.define_attribute_method(method_name, $1, $2)
         end
 
-        if self.class.generated_methods.include?(method_name)
-          self.send(method_name)
+        if self.class.generated_methods.include?(method)
+          self.send(method)
         else
           super
         end

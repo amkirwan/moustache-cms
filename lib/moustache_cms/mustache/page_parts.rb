@@ -16,30 +16,28 @@ module MoustacheCms
       end
 
       def respond_to?(method)
-        if method.to_s =~ /^editable_text_(.*)/ && @page.page_parts.find_by_name($1)
-          true     
-        elsif method.to_s =~ /^page_part_(.*)/ && @page.page_parts.find_by_name($1)
-          true
-        elsif method.to_s =~ /^snippet_(.*)/ && @current_site.snippet_by_name($1)
-          true
+        method_name = method.to_s
+        if method_name =~ /^editable_text_(.*)/ && @page.page_parts.find_by_name($1)
+          return true
+        elsif method_name =~ /^page_part_(.*)/ && @page.page_parts.find_by_name($1)
+          return true
+        elsif method_name =~ /^snippet_(.*)/ && @current_site.snippet_by_name($1)
+          return true
         else
           super
         end
       end
 
-      def method_missing(method_name, *args, &block)
-        case method_name.to_s
-        when /^editable_text_(.*)/
-          #page_part.call($1)   
+      def method_missing(method, *args, &block)
+        method_name = method.to_s
+        if method_name =~ /^editable_text_(.*)/ || method_name =~ /^page_part_(.*)/
           self.class.define_page_part_method(method_name, $1)
-        when /^page_part_(.*)/
-          self.class.define_page_part_method(method_name, $1)
-        when /^snippet_(.*)/
+        elsif method_name =~ /^snippet_(.*)/
           self.class.define_snippet_method(method_name, $1)
         end
 
-        if self.class.generated_methods.include?(method_name)
-          self.send(method_name)
+        if self.class.attribute_method_generated?(method)
+          self.send(method)
         else
           super
         end
