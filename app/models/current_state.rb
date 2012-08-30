@@ -51,10 +51,16 @@ class CurrentState
     self.name == 'draft'
   end
 
-  def formatted_date_time
+  def formatted_date_time_with_zone
     return "" if self.time.nil?
     "#{formatted_date} at #{formatted_time} #{formatted_time_zone}"
     self.time.strftime("%e %b %Y at %l%P %Z").strip
+  end
+
+  def formatted_date_time
+    return "" if self.time.nil?
+    "#{formatted_date} at #{formatted_time}"
+    self.time.strftime("%e %b %Y at %l%P").strip
   end
   
   def formatted_date
