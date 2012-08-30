@@ -42,7 +42,7 @@ class Article
   index :permalink
 
   # -- Associations -------------
-  embeds_one :current_state, :as => :publishable
+  embeds_one :current_state, :as => :publishable, :cascade_callbacks => true
   embeds_many :meta_tags, :as => :meta_taggable
   belongs_to :site
   belongs_to :article_collection
@@ -102,7 +102,6 @@ class Article
   before_validation :format_title, :slug_set, :permalink_set
   before_save :set_date?
   before_update :update_slug_permalink
-  after_update :update_current_state_time
   after_initialize :default_meta_tags
 
   # -- Class Methods --
@@ -116,16 +115,31 @@ class Article
   alias_method :full_path=, :permalink=
 
 
-  # This date would is for an associated date like a meeting or event that is distinct from when the article was published or created.
+  # This date is for an associated date like a meeting or event that is distinct from when the article was published or created.
   def datetime
     return "" if self.date.nil?
     self.date.iso8601
   end
 
   # This returns the associated datetime in words in the format January 06, 2012 at 3pm
-  def date_at
-    return "" if self.date.nil?
-    self.date.strftime("%B %d, %Y at%l%P") 
+  def formatted_date_time
+    self.current_state.formatted_date_time
+  end
+
+  def formatted_date_time_with_zone
+    self.current_state.formatted_date_time
+  end
+
+  def formatted_date
+    self.current_state.formatted_date
+  end
+
+  def formatted_time
+    self.current_state.formatted_time
+  end
+
+  def formatted_time_with_zone
+    self.current_state.formatted_time_with_zone
   end
 
   private 
@@ -185,7 +199,4 @@ class Article
       self.slug = slug.parameterize
     end
 
-    def update_current_state_time
-      self.current_state.time = Time.zone.now if self.current_state.changed?
-    end
 end

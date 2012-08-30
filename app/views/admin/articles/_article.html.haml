@@ -1,6 +1,6 @@
 %tr{:id => "#{article.title.parameterize}", :class => "#{cycle('even', 'odd')} #{published?(article)}"}
   %td.title= link_to article.title, [:edit, :admin, @article_collection, article]
-  %td.updated_at= article.updated_at.strftime("%a %b #{article.created_at.day.ordinalize} %Y")
+  %td.updated_at= article.updated_at.strftime("%a %b #{article.updated_at.day.ordinalize} %Y")
   %td.updated_by= article.updated_by.username
   %td.status= article.status
   - if can? :destroy, article
