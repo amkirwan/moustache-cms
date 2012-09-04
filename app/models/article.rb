@@ -152,6 +152,11 @@ class Article
     self.date.strftime("%B %d, %Y")
   end
 
+  def date_at_time_only
+    return "" if self.date.nil?
+    self.date.strftime("%l%P")
+  end
+
   private 
     def set_date?
       if !self.set_date
