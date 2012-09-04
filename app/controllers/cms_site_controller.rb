@@ -1,3 +1,5 @@
+require 'ext/string'
+
 class CmsSiteController < ApplicationController
   
   before_filter :request_set
@@ -6,12 +8,12 @@ class CmsSiteController < ApplicationController
   
   def render_html
     if !@page.nil? && (@page.published? || current_admin_user)
-      mustache_response = MoustacheCms::Mustache::CmsPage.new(self).render
-      response.etag = mustache_response
+      document = MoustacheCms::Mustache::CmsPage.new(self).render
+      response.etag = document
       if request.fresh?(response)
         head :not_modified
       else
-        render :text => mustache_response, :status => 200
+        render :text => document.clean_html, :status => 200
       end
     else
       render_404

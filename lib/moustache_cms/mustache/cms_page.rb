@@ -79,8 +79,12 @@ class MoustacheCms::Mustache::CmsPage < Mustache
     end
   end    
 
+  def remove_empty_paragraph_tags(content)
+    content.gsub(/<p><\/p>/, '')
+  end
+
   def markdown
-    @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML,:autolink => true, :no_intra_emphasis => true, :lax_html_block => true, :space_after_headers => true) 
+    @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML, :autolink => true, :no_intra_emphasis => true, :space_after_headers => true) 
   end
 
   def process_with_markdown(content)
