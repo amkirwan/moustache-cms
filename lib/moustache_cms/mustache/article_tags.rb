@@ -61,7 +61,6 @@ module MoustacheCms
           super
         end
       end
-
      
       private
 
@@ -78,14 +77,15 @@ module MoustacheCms
         @articles_list = [] 
         @articles.each do |article|
           if article.published?
-            hash = {}
-            attrs = self.class.attribute_fields(Article)
-            attrs.each do |attr_name|
-              hash[attr_name] = article.send(attr_name)
-            end
-            hash['created_by'] = article.created_by.attributes
-            process_article_with_filter(article, hash)
-            @articles_list << hash
+            # hash = {}
+            #attrs = self.class.attribute_fields(Article)
+            #attrs.each do |attr_name|
+              # hash[attr_name] = article.send(attr_name)
+            # end
+            # hash['created_by'] = article.created_by.attributes
+            # process_article_with_filter(article, hash)
+            # @articles_list << hash
+            @articles_list << article
           end
         end
         @articles_list

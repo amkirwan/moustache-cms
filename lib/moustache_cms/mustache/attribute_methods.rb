@@ -53,9 +53,9 @@ module MoustacheCms
           self.generated_methods << method_name.to_sym
         end
 
-        def attribute_fields(klass)
-          klass.fields.keys.delete_if { |field| field =~ /(.*)(_ids?)$/ || field =~ /^_(.*)/ }
-        end
+        # def attribute_fields(klass)
+        #   klass.fields.keys.delete_if { |field| field =~ /(.*)(_ids?)$/ || field =~ /^_(.*)/ }
+        # end
       end
 
     end
