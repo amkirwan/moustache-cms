@@ -3,7 +3,7 @@
     %div.fields_wrap
       %ol
         %li.inline
-          = f.label :filter_name, "Filter<abbr title='required' class='required'>*</abbr>".html_safe
+          = f.label :filter_name, mark_required('Filter')
           = f.collection_select :filter_name, Filter.all, :id, :name, {}, {:class => "page_part_filter"}
         %li.content
           %p.label_for.ace_label Content
