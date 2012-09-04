@@ -1,7 +1,7 @@
 module ApplicationHelper  
   
   def mark_required(field_name)
-    "#{field_name}<abbr title='required' class='required'>*</abbr>".html_safe  
+    "#{field_name.to_s}<abbr title='required' class='required'>*</abbr>".html_safe  
   end
 
   def admin?     

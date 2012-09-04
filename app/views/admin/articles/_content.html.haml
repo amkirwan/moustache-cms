@@ -6,12 +6,6 @@
           = f.label :filter_name, "Filter<abbr title='required' class='required'>*</abbr>".html_safe
           = f.collection_select :filter_name, Filter.all, :id, :name, {}, {:class => "page_part_filter"}
         %li.content
-          %p.label_for.ace_label Subheading
-          %pre#article_subheading_content= @article.subheading
-        %li.content_submit
-          = f.label :subheading
-          = f.text_area :subheading, :class => "code"
-        %li.content
           %p.label_for.ace_label Content
           %pre#article_content= @article.content
         %li.content_submit

@@ -86,11 +86,9 @@ $(document).ready ->
       hbEditor.contentSettings $(@).val()
 
   else if $("body.articles #article_content").length
-    hbEditorSub = new MoustacheEditor elementId: "article_subheading_content", filter: $('#article_filter_name').val(), useWrapMode: true
     hbEditorContent = new MoustacheEditor elementId: "article_content", filter: $('#article_filter_name').val(), useWrapMode: true
 
     $('#article_filter_name').change ->
-      hbEditorSub.contentSettings $(@).val()
       hbEditorContent.contentSettings $(@).val() 
 
   else if $("body.theme_assets #asset_content").length

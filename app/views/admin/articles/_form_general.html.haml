@@ -3,8 +3,11 @@
     %div.fields_wrap
       %ol
         %li
-          = f.label :title, "Title<abbr title='required' class='required'>*</abbr>".html_safe
+          = f.label :title, mark_required(:title)
           = f.text_field :title
+        %li
+          = f.label :subheading, mark_required(:subheading)
+          = f.text_field :subheading
         %li{:class => "inline"}
           = f.label "layout_id", "Layout"
           = f.collection_select :layout_id, Layout.all_from_current_site(@current_site), :id, :name, {:include_blank => true}
