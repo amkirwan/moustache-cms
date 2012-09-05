@@ -1,15 +1,15 @@
 = fields_for("page[page_parts_attributes][#{index}]", @page_part) do |builder|
   %ol{:id => "page_part_#{@page_part.id}", :class => "form_fields page_part" }
     %li.page_part_name
-      = builder.label :name, "Page Part Name<abbr title='required' class='required'>*</abbr>".html_safe
+      = builder.label :name, mark_required('Page Part Name')
       = builder.text_field :name
     %li.inline
-      = builder.label :filter_name, "Filter<abbr title='required' class='required'>*</abbr>".html_safe
+      = builder.label :filter_name, mark_required('Filter')
       = builder.collection_select :filter_name, Filter.all, :id, :name, {}, {:class => "page_part_filter"}
     %li.content
       %p.label_for Content
       %pre{:id => "#{builder.object.id}_content", :class => "page_part_content"}= builder.object.content
     %li.content_submit
-      = builder.label :content, "Page Part Content<abbr title='required' class='required'>*</abbr>".html_safe 
+      = builder.label :content 
       = builder.text_area :content, :class => "page_part_contents code" 
     = builder_hidden_attribute(builder, @page)

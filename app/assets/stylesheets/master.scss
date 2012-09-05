@@ -594,6 +594,9 @@ ol#page_parts_nav {
     padding-right: 0;
     margin-right: 5px;
     float: right;
+    p {
+      margin: 0;
+    }
   }
   a:link, a:visited {
     text-decoration: none;
@@ -710,11 +713,13 @@ div.markItUp {
   p.ace_label {
     float: left;
     width: 30% !important;
+    margin-bottom: 0.5em !important;
   }
 
 .line_wrap {
   float: right;
-  margin-bottom: 1em;
+  margin-top: 1em !important;
+  margin-bottom: 0.5em;
   margin-right: calc_em(8px, 14px);
 }
 

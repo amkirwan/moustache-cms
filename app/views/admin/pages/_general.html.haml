@@ -6,12 +6,12 @@
           = f.label :parent_id
           = f.collection_select :parent_id, Page.all_from_current_site(@current_site).order_by(:title, :asc), :id, :title, { :include_blank => true, :selected => parent_selected(@parent_page) }
         %li
-          = f.label :title, "Title<abbr title='required' class='required'>*</abbr>".html_safe
+          = f.label :title, mark_required('Title')
           = f.text_field :title
         %li{:class => "inline"}
-          = f.label 'layout_id', "Layout<abbr title='required' class='required'>*</abbr>".html_safe
+          = f.label 'layout_id', mark_required('Layout')
           = f.collection_select :layout_id, Layout.all_from_current_site(@current_site), :id, :name, :prompt => true
         = f.fields_for :current_state do |builder|
           %li{:class => "inline"}
-            = builder.label 'name', "Status<abbr title='required' class='required'>*</abbr>".html_safe
+            = builder.label 'name', mark_required('Status')
             = builder.collection_select :name, CurrentState.all, :id, :name

@@ -106,7 +106,7 @@ module Admin::PagesHelper
 
  def add_page_part
     if @page.new_record?
-      content_tag :p, content_tag(:i, "Save page first to add additonal page parts")
+      content_tag :p, content_tag(:i, "Page must be saved first before you can add additional page parts")
     else
       link_to 'Add Page Part', [:admin, @page, :page_parts], :method => :post, :remote => true
     end
