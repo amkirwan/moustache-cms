@@ -29,7 +29,12 @@ class CmsSiteController < ApplicationController
     def load_page
       # render the page if the route is not an article
       if params[:articles].nil? && params[:year].nil?
-        @page = @current_site.page_by_full_path("/#{params[:page_path]}")
+        if params[:preview] == 'true'
+          @page = @current_site.page_by_full_path("/#{params[:page_path]}?preview=#{params[:preview]}") 
+          @page.destroy 
+        else
+          @page = @current_site.page_by_full_path("/#{params[:page_path]}")
+        end
         render_404 if @page.nil?
       else 
         # find the page first to render the article into

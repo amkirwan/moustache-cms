@@ -8,7 +8,7 @@ class Admin::PagesController < AdminBaseController
 
   respond_to :html, :except => [:show, :sort, :new_meta_tag, :new_custom_field]
   respond_to :xml, :json
-  respond_to :js, :only => [:show, :edit, :destroy, :sort, :new_meta_tag, :new_custom_field]
+  respond_to :js, :only => [:preview, :show, :edit, :destroy, :sort, :new_meta_tag, :new_custom_field]
 
   def index
     page_created_updated
@@ -45,14 +45,20 @@ class Admin::PagesController < AdminBaseController
       end
     end
   end
+
+  def preview
+    @page = Page.find(params[:id]).dup
+    @page.assign_attributes(params[:page])
+    @page.save_preview
+  end
   
   def update
     @page.updated_by = @current_admin_user
     @page_title_was =  @page.title
     respond_with(:admin, @page) do |format|
       if @page.update_attributes(params[:page]) 
-        set_page_cookies unless params[:commit] == "Save and Continue Editing"
-        set_page_part unless params[:commit] == "Update Page"
+        set_page_cookies if params[:continue]
+        set_page_part if params[:continue]
         flash[:notice] = "Successfully updated the page #{@page.title}"
         format.html { redirect_to redirector_path(@page), :notice => "Successfully updated the page #{@page.title}" }
       else
@@ -128,7 +134,7 @@ class Admin::PagesController < AdminBaseController
 
 
     def root_pages
-      @root_pages = @pages = Page.roots.where(:site_id => @current_site.id)
+      @root_pages = @pages = Page.roots.where(:site_id => @current_site.id).sort
     end
 
     def set_page_cookies
@@ -144,10 +150,6 @@ class Admin::PagesController < AdminBaseController
       else
         @parent_page = @page.parent
       end
-    end
-
-    def redirector_path(object)
-      params[:commit] == "Save and Continue Editing" ? edit_admin_page_path(object) : [:admin, :pages]
     end
 
 end

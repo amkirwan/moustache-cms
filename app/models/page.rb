@@ -113,11 +113,15 @@ class Page
     self.where(:slug => slug).first
   end
 
-  # -- Accepts_nested -----
-
   # -- Instance Methods -----------------------------------------------  
   def home_page?
     self.full_path == '/' ? true : false
+  end
+
+  def save_preview
+    self.write_attribute(:preview, true)
+    self.slug = self.slug + '?preview=true'
+    self.save
   end
 
   def delete_association_of_editor_id(editor_id)
@@ -133,6 +137,12 @@ class Page
       child.position = index
       child.save
     end
+  end
+
+  def full_path_with_params(params={})
+    new_path = self.full_path + '?'
+    params.each_pair { |k,v| new_path += (k.to_s + '=' + v.to_s) }
+    new_path
   end
   
   # -- Private Instance Methods -----------------------------------------------
@@ -160,6 +170,8 @@ class Page
         elsif self.root?
           self.slug = "/"
           self.parent = nil
+        elsif self.slug =~ /\?preview=true$/
+          self.slug = self.slug
         elsif self.slug.blank?
           self.slug = self.title.gsub('_', '-')
           self.slug = self.slug.parameterize

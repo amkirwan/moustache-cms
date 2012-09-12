@@ -45,11 +45,11 @@ class AdminBaseController < ApplicationController
   private
 
     def redirector_path(object)
-     params[:commit] == "Save and Continue Editing" ? [:edit, :admin, object] : [:admin, object.class.name.tableize.to_sym]
+     params[:continue] ? [:edit, :admin, object] : [:admin, object.class.name.tableize.to_sym]
     end
     
     def redirector(path_continue, path_redirect, notice=nil)
-      if params[:commit] == "Save and Continue Editing"
+      if params[:continue]
         redirect_to path_continue, :notice => notice
       else
         redirect_to path_redirect, :notice => notice
