@@ -122,6 +122,10 @@ class Site
   def meta_tag_by_name(name)
     self.meta_tags.where(:name => name).first
   end
+
+  def admin_page_path
+    self.subdomain + '.' + self.default_domain + '/admin'
+  end
   
   private  
     def old_domain

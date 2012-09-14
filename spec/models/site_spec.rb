@@ -212,6 +212,21 @@ describe Site do
         @site.meta_tag_by_name('foobar').should == meta_tag
       end
     end
+
+    describe "#admin_page_path" do
+      it "should return the path to the admin page for the site" do
+        @site.subdomain = 'foobar'
+        @site.admin_page_path.should == 'foobar.com/admin'  
+      end
+    end
+
+    describe "#admin_page_url" do
+      it "should return the url to the admin page for the site" do
+        @site.subdomain = 'foobar'
+        @site.admin_page_url.should == 'https://foobar.com/admin'  
+      end
+    end
+
   end
 end
 
