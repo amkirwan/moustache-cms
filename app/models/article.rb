@@ -61,12 +61,14 @@ class Article
   validates :title,
             :presence => true
 
-  validate :unique_title
+  # validate :unique_title, 
+  #          :message => "The title %{value} within this collection is already taken"
 
   validates :permalink,
             :presence => true
 
-  validate :unique_permalink
+  validate :unique_permalink,
+           :message => "The permalink %{value} is already being used by another article"
 
   validates :slug,
             :presence => true
@@ -86,11 +88,11 @@ class Article
   validates :filter_name,
             :presence => true
 
-  def unique_title
-    if Article.exists?(:conditions => { :id => { "$ne" => self.id}, :title => /^#{self.title}$/, :article_collection_id => self.article_collection_id, :site_id => self.site_id})
-      errors.add(:title, 'within this collection is already taken')
-    end
-  end
+  # def unique_title
+  #   if Article.exists?(:conditions => { :id => { "$ne" => self.id}, :title => /^#{self.title}$/, :article_collection_id => self.article_collection_id, :site_id => self.site_id})
+  #     errors.add(:title, 'within this collection is already taken')
+  #   end
+  # end
 
   def unique_permalink
     if Article.exists?(:conditions => { :id => { "$ne" => self.id}, :permalink => /^#{self.permalink}$/, :article_collection_id => self.article_collection_id, :site_id => self.site_id})
@@ -114,6 +116,12 @@ class Article
   alias_method :full_path, :permalink
   alias_method :full_path=, :permalink=
 
+  def save_preview
+    self.write_attribute(:preview, true)
+    self.slug = self.slug + '?preview=true'
+    self.permalink = self.permalink + '?preview=true'
+    self.save
+  end
 
   # This date is for an associated date like a meeting or event that is distinct from when the article was published or created.
   def datetime
@@ -171,6 +179,8 @@ class Article
       if self.slug.nil? || self.slug.empty? 
         self.slug = self.title.gsub('_', '-')
         self.slug = self.slug.parameterize
+      elsif self.slug =~ /\?preview=true$/
+        self.slug = self.slug
       else
         parse_slug(self.slug)
       end

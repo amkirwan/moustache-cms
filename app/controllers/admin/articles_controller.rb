@@ -4,7 +4,7 @@ class Admin::ArticlesController < AdminBaseController
   load_and_authorize_resource :article, :through => :article_collection, :except => :new_meta_tag
 
   respond_to :html, :xml, :json
-  respond_to :js, :only => :new_meta_tag
+  respond_to :js, :only => [:preview, :new_meta_tag]
 
   # GET /admin/article_collections/1/articles
   def index
@@ -55,6 +55,13 @@ class Admin::ArticlesController < AdminBaseController
     @base_class = Page.new
     @meta_tag = MetaTag.new
     render 'admin/meta_tags/new.js'
+  end
+
+  def preview
+    @article = Article.find(params[:article_id])
+    @article = @article.dup
+    @article.assign_attributes(params[:article])
+    @article.save_preview
   end
 
 end

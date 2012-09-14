@@ -95,6 +95,7 @@ $(document).ready ->
 
   else if $("body.articles #article_content").length
     hbEditorContent = new MoustacheEditor elementId: "article_content", filter: $('#article_filter_name').val(), useWrapMode: true
+    MoustacheEditor.editors.push hbEditorContent
 
     $('#article_filter_name').change ->
       hbEditorContent.contentSettings $(@).val() 

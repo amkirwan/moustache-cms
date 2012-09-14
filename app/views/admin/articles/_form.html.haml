@@ -1,4 +1,4 @@
-= form_for([:admin, @article_collection, @article], :html => {:class => "site_prop", :autocomplete => :off}) do |f|
+= form_for([:admin, @article_collection, @article], :html => {:class => "site_prop article", :autocomplete => :off}) do |f|
   %ol.form_fields
     = render :partial => "shared/error_messages", :locals => { :target => @article }
     = render :partial => 'form_general', :locals => { :f => f, :button_label => button_label }

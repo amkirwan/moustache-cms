@@ -45,12 +45,6 @@ class Admin::PagesController < AdminBaseController
       end
     end
   end
-
-  def preview
-    @page = Page.find(params[:id]).dup
-    @page.assign_attributes(params[:page])
-    @page.save_preview
-  end
   
   def update
     @page.updated_by = @current_admin_user
@@ -71,6 +65,12 @@ class Admin::PagesController < AdminBaseController
     @page.destroy
     flash[:notice] = "Successfully deleted the page #{@page.title}"
     respond_with(:admin, @page) 
+  end
+
+  def preview
+    @page = @page.dup
+    @page.assign_attributes(params[:page])
+    @page.save_preview
   end
 
   def sort

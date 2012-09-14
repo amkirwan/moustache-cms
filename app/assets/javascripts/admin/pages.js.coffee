@@ -167,7 +167,7 @@ $(document).ready ->
       e.preventDefault()
       $.each MoustacheEditor.editors, (index, editor) ->
         editor.updateTextarea()
-      form = $('form.site_prop')
+      form = $('form.page')
       action = form.attr('action').split('/')
       page_id = action[action.length - 1]
       url = '/admin/pages/' + page_id + '/preview'
