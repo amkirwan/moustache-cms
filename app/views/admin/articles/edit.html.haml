@@ -6,7 +6,7 @@
 - inner_content "shared/inner_wrapper" do
   %div.breadcrumb
     = link_to "&laquo; #{@article_collection.name.titleize} Collection".html_safe, [:admin, @article_collection]
+  %div.view
     = link_to 'View Page', @article.full_path, :target => "_blank", :class => 'view_page'
     = link_to 'Preview Changes', @article.full_path, :target => "_blank", :class => 'view_page preview'
-
   = render :partial => "form",:locals => { :button_label => "Update Article" }

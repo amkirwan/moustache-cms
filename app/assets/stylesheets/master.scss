@@ -238,9 +238,18 @@ div#content_inner_wrapper {
   }
   a.view_page:link, a.view_page:visited {
     @extend  .action;
+    margin: 0 1em;
   }
 }
 
+.view {
+  text-align: center;
+  margin: 1em 0;
+  a.view_page:link, a.view_page:visited {
+    @extend  .action;
+    margin: 0 1em;
+  }
+}
 
 a:hover.action, a:focus.action {
   text-decoration: none;
