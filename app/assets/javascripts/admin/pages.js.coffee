@@ -163,6 +163,7 @@ $(document).ready ->
             answer = $.rails.confirm('Deleteing the page ' + page_name + ' will delete the page and all child pages it is the parent of!')
         answer
 
+    # Handle page preview   
     $('.preview').click (e) ->
       e.preventDefault()
       $.each MoustacheEditor.editors, (index, editor) ->
@@ -173,3 +174,9 @@ $(document).ready ->
       url = '/admin/pages/' + page_id + '/preview'
       $.post url, form.serialize(), -> 
         
+    # Display Moustache Tags Helpers  
+    $('.mustache_tags').fancybox 
+      maxheight: 600
+      height: '70%'
+    
+
