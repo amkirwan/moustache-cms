@@ -175,7 +175,7 @@ $(document).ready ->
       $.post url, form.serialize(), -> 
         
     # Display Moustache Tags Helpers  
-    $('.mustache_tags').fancybox 
+    $('.documentation').fancybox 
       maxHeight: 400
       maxWidth: 600
       height: '70%'

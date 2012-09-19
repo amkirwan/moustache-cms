@@ -1,6 +1,16 @@
 %p.label_for.ace_label Content
 %select.line_wrap
   = grouped_options_for_select({'Line Wrap' => ['No wrap', 'Soft wrap']})
+%ul.doc
+  %li
+    = link_to 'Available Tags', '/mustache_tags.html', :class => 'mustache_tags fancybox.iframe documentation'
+  %li
+    %span.menu_separator &#124;
+    = link_to 'Markdown', 'http://daringfireball.net/projects/markdown/', :class => 'markdown fancybox.iframe documentation'
+  %li
+    %span.menu_separator &#124;
+    = link_to 'Textile', 'http://textile.thresholdstate.com', :class => 'textile fancybox.iframe documentation'
+    %span.menu_separator &#124;
 
 - if builder
   %pre{:id => "#{builder.object.id}_content", :class => "page_part_content"}= builder.object.content

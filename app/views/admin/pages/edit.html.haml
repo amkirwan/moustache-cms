@@ -8,5 +8,4 @@
   %div.view
     = link_to 'View Page', @page.full_path, :target => "_blank", :class => 'view_page'
     = link_to 'Preview Changes', @page.full_path, :target => '_blank', :class => 'view_page preview'
-    = link_to 'tags', '/mustache_tags.html', :class => 'mustache_tags fancybox.iframe'
   = render :partial => "form", :locals => { :button_label => "Update Page"}

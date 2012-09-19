@@ -771,5 +771,14 @@ div.markItUp {
   color: $med_text !important;
 }
 
-
-
+ul.doc {
+  float: right;
+  display: inline;
+  margin-right: 5px;
+  margin-top: 1em;
+  li { 
+    display: inline-block; 
+    margin: 0;
+    padding: 0 !important;
+  }
+}
