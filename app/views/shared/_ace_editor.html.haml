@@ -2,10 +2,12 @@
 %select.line_wrap
   = grouped_options_for_select({'Line Wrap' => ['No wrap', 'Soft wrap']})
 %ul.doc
+  - if @article.nil?
+    %li
+      = link_to 'Available Tags', '/mustache_tags.html', :class => 'mustache_tags fancybox.iframe documentation'
   %li
-    = link_to 'Available Tags', '/mustache_tags.html', :class => 'mustache_tags fancybox.iframe documentation'
-  %li
-    %span.menu_separator &#124;
+    - if @article.nil? 
+      %span.menu_separator &#124;
     = link_to 'Markdown', 'http://daringfireball.net/projects/markdown/', :class => 'markdown fancybox.iframe documentation'
   %li
     %span.menu_separator &#124;
