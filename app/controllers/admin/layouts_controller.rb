@@ -6,7 +6,7 @@ class Admin::LayoutsController < AdminBaseController
   respond_to :xml, :json
 
   def index 
-    @layouts = @layouts.where(:site_id => current_admin_user.site_id)
+    @layouts = @layouts.where(:site_id => current_admin_user.site_id).order_by(:name => 'ASC')
     respond_with(:admin, @layouts)
   end
 

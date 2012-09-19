@@ -176,7 +176,8 @@ $(document).ready ->
         
     # Display Moustache Tags Helpers  
     $('.mustache_tags').fancybox 
-      maxheight: 600
+      maxHeight: 400
+      maxWidth: 600
       height: '70%'
     
 

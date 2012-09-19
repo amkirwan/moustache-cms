@@ -5,20 +5,29 @@ module MoustacheCms
       # This tag will display the list of articles paginated. From within the paginated list you can
       # access all the properties of an article to display in your view. Using this tag will only show
       # the paginated list of articles so you will also want to define an {{ article }} 
+      # You will most likely want to use this tag in conjunction with the
+      # {{{paginate_articles}}} tag
       def articles_list_for(name)
         find_articles(name)
         articles_to_list
       end
 
-      # You will either a list of articles for the collection or it will return a single article
+      # You will use a list of articles for the collection or it will return a single article
       # if the url matches a permalink in your collection. This tag will be usefull if you display your 
       # articles the same as in the list view and the permalink view. If you want to display your articles
       # between the paginated list of articles and an individual artcile then you will want to use the 
-      # articles_list_for tag and the articles. You will most likely want to use this tag inconjunction with the
+      # You will most likely want to use this tag in conjunction with the
       # {{{paginate_articles}}} tag
       def articles_for(name)
         @article.nil? ? find_articles(name) : (@articles = [@article])
         articles_to_list
+      end
+
+      def articles_list(name)
+        if @article.nil?
+          find_articles(name) 
+          articles_to_list
+        end
       end
 
       def article
@@ -31,8 +40,24 @@ module MoustacheCms
         end
       end
 
-      def paginate
-        paginator  
+      def link_to_next_page
+        lambda do |text|
+          paginate_next(text)
+        end
+      end
+
+      def link_to_previous_page
+        lambda do |text|
+          paginate_previous(text)
+        end
+      end
+
+      def page_entries_info
+        unless @articles.nil?
+          engine = gen_haml('page_entries_info.haml')
+          context = action_view_context(File.join("#{Rails.root}", 'lib', 'moustache_cms', 'mustache', 'templates'))
+          engine.render(context, {:articles => @articles})
+        end
       end
 
       def respond_to?(method)
@@ -68,9 +93,39 @@ module MoustacheCms
         if @article.nil?  
           options = text.nil? ? {} : parse_text(text)
           engine = gen_haml('paginate_articles.haml')
-          context = action_view_context("#{Rails.root}/lib/moustache_cms/mustache/templates")
+          context = action_view_context(File.join("#{Rails.root}", 'lib', 'moustache_cms', 'mustache', 'templates'))
           engine.render(context, {:articles => @articles, :options => options})
         end
+      end
+
+      def paginate_next(text)
+        if @article.nil?  
+          options = parse_text(text)
+          if options['link_text']
+            link_text = options['link_text']
+            options.delete('link_text')
+          else
+            link_text = 'Next Page'
+          end
+          engine = gen_haml('paginate_next.haml')
+          context = action_view_context(File.join("#{Rails.root}", 'lib', 'moustache_cms', 'mustache', 'templates'))
+          engine.render(context, {:articles => @articles, :link_text => link_text, :options => options})
+        end
+      end
+
+      def paginate_previous(text)
+       if @article.nil?  
+          options = parse_text(text)
+          if options['link_text']
+            link_text = options['link_text']
+            options.delete('link_text')
+          else
+            link_text = 'Previous Page'
+          end
+          engine = gen_haml('paginate_previous.haml')
+          context = action_view_context(File.join("#{Rails.root}", 'lib', 'moustache_cms', 'mustache', 'templates'))
+          engine.render(context, {:articles => @articles, :link_text => link_text, :options => options})
+        end 
       end
 
       def articles_to_list

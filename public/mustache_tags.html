@@ -1,1 +1,227 @@
-<h1> Mustache Tags </h1>
+<!DOCTYPE html>
+<html>
+  <head lang="en">
+    <meta charset="utf-8">
+    <title>Moustache Cms - Available Mustache Tags</title>
+    <link href="/assets/html5reset.css" media="screen" rel="stylesheet">
+    <style> 
+      div.section {
+        margin-bottom: 1em;
+      }
+      div.section p {
+        margin-bottom: 0;
+      }
+      h1 { 
+       color: #FFF;
+       padding: 0.2em;
+       font-size: 1.5em;
+       font: bold 1.5em/1.2 "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+       border-bottom: 1px solid #989898;
+       background: #434343;
+      }
+      h2 {
+        padding: 0.5em 0;
+        border-bottom: 1px solid #989898;
+        font: bold 1.25em/1.2 "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+      }
+      h3 {
+        color: #E56039;
+        padding-top: 1.125em;
+        padding-bottom: 0.25em;
+        font: bold 1em/1.2 "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+      }
+      div.main-content {
+        padding: 0 0.5em;
+      }
+      p { 
+        margin-bottom: 1em;
+        font: 1em/1.5 "Times New Roman", Times, serif;
+      }
+      p.first-paragraph { margin-top: 1em; }
+      pre {
+        overflow: auto;
+        width: 93%;
+        margin-top: 0.25em;
+        padding: 6px 10px;
+        border: 1px solid #CCCCCC;
+        background: #F8F8F8;
+      }
+      pre code {
+        line-height: 1.2;
+        font-size: 0.8125em; // 13/16 = 0.8125
+      }
+      code {
+        font-family: "Courier New", Courier, monospace, sans-serif;
+        text-align: left;
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Mustache Tags Available</h1>
+    <div class='main-content'>
+      <p class="first-paragraph">Tags that insert HTML require the triple mustaches {{{tag}}} and tags that render just text can use the double mustaches {{tag}}.</p>
+      <p>Tags that loop over a sections using the section tags. A section begins with a pound and ends with a slash. That is, {{#person}} begins a "person" section while {{/person}} ends it.</p>
+      <p>You can learn more about <a link href="https://github.com/defunkt/mustache">Mustache</a> tags and templates on the projects site.</p>
+      <div class="section">
+        <h2>Head Tags</h2>
+        <div class="tag">
+          <h3>{{{title}}}</h3>
+          <p>Defines an HTML title tag for your document with the page or article title used as the title.<br />
+            <b>Usage:</b>
+          </p>
+         <pre><code>{{{title}}}</code></pre> 
+        </div>
+        <div class="tag">
+          <h3>{{page_title}} || {{article_title}}</h3>
+          <p>Returns the title of the page or article.<br />
+            <b>Usage:</b>
+          </p>
+          <pre><code>{{page_title}}</code></pre> 
+        </div>
+        <div class="tag">
+          <h3>{{#stylesheet}}theme_name, name{{/stylesheet}}</h3>
+          <p>Generates a HTML link tag for a CSS file that is in the given theme collection. The theme_name and name are required for generating the tag. Optional paramerters are: media, rel, title, charset. This tag generates a link to the MD5 fingerprinted version of the file. Any additional attributes for the link tag can be assigned in the custom attribute fields for the asset.
+            <b>Usage:</b>
+          </p>
+         <pre><code>{{#stylesheet}}theme_name:the_theme_name, name:the_stylesheet_name{{/stylesheet}}</code></pre> 
+        </div>
+        <div class="tag">
+          <h3>{{{stylesheets_all}}}</h3>
+          <p>Generates HTML link tags for all the CSS files that have been uploaded to the current stie. Any additional attributes for the link tag can be assigned in the custom attribute fields for the asset.<br /> 
+            <b>Usage:</b>
+          </p>
+          <pre><code>{{{stylesheets_all}}}</code></pre> 
+        </div>
+        <div class="tag">
+          <h3>{{#js_file}}theme_name, name{{/jsfile}}</h3>
+          <p>Generates a HTML script tag for a Javascript file that is in the given theme collection. The theme_name and name are required to generate the tag. This tag generates a link to the MD5 fingerprinted version of the file. Any additional attributes for the script tag can be assigned in the custom attribute fields for the asset.<br />
+            <b>Usage:</b>
+          </p>
+          <pre><code>{{#js_file}}theme_name:the_theme_name, name:the_javascript_name{{/js_file}}</code></pre> 
+        </div>
+        <div class="tag">
+          <h3>{{{meta_tag_[name]}}}</h3>
+          <p>Generates a HTML meta tag for the meta tag named after 'meta_tag_' in the moustache tag. Meta tags can be assign on for the entire site which would apply to all pages the tag is used in. If a page or article also defines the same tag then the content defined on the page or article will be used for the meta tag.<br />
+            <b>Usage:</b>
+          </p> 
+          <pre><code>{{{meta_tag_foobar}}}</code></pre> 
+        </div>
+      </div>
+      <div class="section">
+        <div class="tag">
+          <h2>Media Tags</h2>
+          <h3>{{#image}}collection_name, name{{/image}}</h3>
+          <p>Generates a HTML image tag from the given collection_name and the name of the image file. Optional This tag generates a link to the MD5 fingerprinted version of the file. The collection_name and name are required for generating the tag. Optional paramerters are: id, class, alt, title.<br />
+            <b>Usage:</b>
+          </p>
+          <pre><code>{{#image}}collection_name:the_collection_name, name:the_image_name.jpg, alt: example image tag{{/image}}</code></pre> 
+        </div>
+      </div> 
+      <div class="section">
+        <h2>Navigation Tags</h2>
+        <div class="tag">
+          <h3>{{{nav_primary}}}</h3> 
+          <p>It will generate an unordered list of links suitable for creating a navigation section on the page from the pages that are children of the homepage. This would typically be used to create a top level navigation section.<br />
+            <b>Usage:</b>
+          </p>
+          <pre><code>{{{nav_primary}}}</code></pre>
+        </div>
+        <div class="tag">
+          <h3>{{{nav_child_pages}}}</h3>
+          <p>It will generate an unordered list of links suitable for creating a navigation section on the page from the pages that are children of the current page that is being viewed.<br />
+            <b>Usage:</b>
+          </p>
+          <pre><code>{{{nav_child_pages}}}</code></pre>
+        </div>
+        <div class="tag">
+          <h3>{{{nav_children_[name]}}}</h3>
+          <p>It will generate an unordered list of links suitable for creating a navigation section on the page from the pages that are children of the page title named after nav_children_. In this example it would be the page with the title foobar.<br />
+            <b>Usage:</b>
+          </p>
+          <pre><code>{{{nav_child_foobar}}}</code></pre>
+        </div>
+        <div class="tag">
+          <h3>{{{nav_children_and_self}}}</h3>
+          <p>It will generate an unordered list of links suitable for creating a navigation section on the page from the pages are siblings of the current page and will also include the current page being rendered.<br />
+          <b>Usage:</b>
+          </p>
+          <pre><code>{{{nav_children_and_self}}}</code></pre>
+        </div>
+      <div class="section">
+        <div class="tag">
+          <h2>Page Tags</h2>  
+          <h3>{{{page_part_[name]}}} or {{#page_part}}name{{/page_part}}</h3>
+          <p>This will render the page part with the given name for the page that is currently being rendered. In this example it would be the page part named foobar.<br />
+            <b>Usage:</b>
+          </p>
+          <pre><code>{{{page_part_foobar}}}</code></pre>
+        </div>
+        <div class="tag">
+          <h3>{{{editable_text_[name]}}} or {{#editable_text}}name{{/editable_text}}</h3>
+          <p>This will render the page part with the given name for the page that is currently being rendered. In this example it would be the page part named foobar. This tag is the same as the page part tag.<br />
+            <b>Usage:</b>
+          </p>
+          <pre><code>{{{editable_text_foobar}}}</code></pre>
+        </div>
+        <div class="tag">
+          <h3>{{{snippet_[name]}}} or {{#snippet}}name{{/snippet}}}</h3>
+          <p>This will render the snippet with the given name for the page that is currently being rendered. In this example the snippet rendered would be foobar.<br />
+            <b>Usage:</b>
+          </p>
+          <pre><code>{{{snippet_foobar}}}</code></pre>
+        </div>
+      </div> 
+      <h2>Article Tags</h2>
+      <div class="tag">
+        <h3>{{#articles_for_[name]}}{{/articles_for_[name]}}</h3>
+        <p>This tag will render the list of articles for the article collection paginated along with the permalink view for a specific article. From within the paginated list you can access all the properties of an article to display in your view. This tag will generate the same view of the article for both the paginated view and the permalink view. You will most likely want to use the {{{paginate_articles}}} tag in the page to generate the pagination links.<br />
+          <b>Usage:</b>
+        </p> 
+        <pre><code>{{{articles_for_foobar}}}</code></pre>
+      </div>
+      <div class="tag">
+        <h3>{{#articles_list_for_[name]}}{{/articles_list_for_[name]}}</h3>
+        <p>This tag will render the list of articles for the article collection paginated. From within the paginated list you can access all the properties of an article to display in your view. This tag will not generate the view for the permalink url of an article. To generate the views for the individual articles you will need to define the hYou will most likely want to use the {{{paginate_articles}}} tag in the page to generate the pagination links.<br />
+          <b>Usage:</b>
+        </p>
+        <pre><code>{{{articles_list_for_foobar}}}</code></pre>
+      </div>
+      <div class="tag">
+        <h3>{{#article}}{{/article}}</h3>
+        <p>This tag will be rendered when the individual article is viewed from the permalink.<br />
+          <b>Usage:</b>
+        </p> 
+        <pre><code>{{#article}}&lt;&lt;article_title&gt;&gt;{{/article}}</code></pre>
+      </div>
+      <div class="tag">
+        <h3>{{#paginate_articles}}options{{/paginate_articles}}</h3>
+        <p>This will render several ?page=N pagination links surrounded by an HTML5 &lt;nav&gt; tag the default items per page is 25. MoustacheCms uses the Kaminari gem for generating pagination links. Any options the Kaminari helper paginate takes can be passed to this tag.
+          <b>Usage:</b>
+        </p>
+        <pre><code>{{#paginate_articles}}{{/paginate_articles}}</code></pre>
+      </div>
+      <div class="tag">
+        <h3>{{#link_to_next_page}}link_text, options{{/link_to_next_page}}</h3>
+        <p>This renders a paginated link to the next page. This would be helpful for creating "Twitter like" pagination feature. The example below passes in the remote option for ajax links<br />
+          <b>Usage:</b>
+        </p>
+        <pre><code>{{#link_to_next_page}}link_text:More Articles, remote:true{{/link_to_next_page}}</code></pre>
+      </div>
+      <div class="tag">
+        <h3>{{#link_to_previous_page}}link_text, options{{/link_to_previous_page}}</h3>
+        <p>This renders a paginated link to the previous page. This would be helpful for creating "Twitter like" pagination feature. The example below passes in the remote option for ajax links<br />
+          <b>Usage:</b>
+        </p>
+        <pre><code>{{#link_to_previous_page}}link_text:More Articles, remote:true{{/link_to_previous_page}}</code></pre>
+      </div>
+      <div class="tag">
+        <h3>{{{page_entries_info}}}</h3>
+        <p>This renders a helpful message with numbers of displayed vs. total entries for paginated pages.<br />
+          <b>Usage:</b>
+        </p>
+        <pre><code>{{{page_entries_info}}}</pre></code>
+      </div>
+    </div>
+  </body>
+</html>

@@ -11,6 +11,7 @@ module MoustacheCms
       def page_title
         @page.title
       end
+      alias_method :article_title, :page_title
       
       # -- Css ----
       def stylesheet

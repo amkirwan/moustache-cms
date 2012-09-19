@@ -13,5 +13,5 @@
       = f.text_area :content, :cols => "100", :class => "code"
     %li
       = f.submit button_label, :class => "submit"
-      = f.submit "Save and Continue Editing", :class => "submit"
+      = f.submit "Save and Continue Editing", :name => 'continue', :class => "submit"
       = link_to "Cancel", [:admin, :snippets], :class => "cancel"
