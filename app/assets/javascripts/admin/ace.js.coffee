@@ -93,12 +93,11 @@ $(document).ready ->
     $('#snippet_filter_name').change ->
       hbEditor.contentSettings $(@).val()
 
-  else if $("body.articles #article_content").length
-    hbEditorContent = new MoustacheEditor elementId: "article_content", filter: $('#article_filter_name').val(), useWrapMode: true
-    MoustacheEditor.editors.push hbEditorContent
+  else if $("body.articles #asset_content").length
+    hbEditor = new MoustacheEditor elementId: 'asset_content', filter: $('#article_filter_name').val(), useWrapMode: true
 
     $('#article_filter_name').change ->
-      hbEditorContent.contentSettings $(@).val() 
+      hbEditor.contentSettings $(@).val() 
 
   else if $("body.theme_assets #asset_content").length
     if $('li.css_asset')

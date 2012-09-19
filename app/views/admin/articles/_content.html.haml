@@ -1,13 +1,11 @@
-%li#article_content_area
+%li.article_content_area
   = foldable_fieldset 'Content' do
-    %div.fields_wrap
-      %ol
-        %li.inline
-          = f.label :filter_name, mark_required('Filter')
-          = f.collection_select :filter_name, Filter.all, :id, :name, {}, {:class => "page_part_filter"}
-        %li.content
-          %p.label_for.ace_label Content
-          %pre#article_content= @article.content
-        %li.content_submit
-          = f.label :content
-          = f.text_area :content, :class => "code"
+    %ol.form_fields
+      %li.inline
+        = f.label :filter_name, mark_required('Filter')
+        = f.collection_select :filter_name, Filter.all, :id, :name, {}, {:class => "page_part_filter"}
+      %li.content
+        = render :partial => 'shared/ace_editor', :locals => { :asset => @article.content, :builder => nil }
+      %li.content_submit 
+        = f.label :content
+        = f.text_area :content, :class => "code"
