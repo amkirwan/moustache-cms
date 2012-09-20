@@ -28,8 +28,7 @@ class Admin::ArticlesController < AdminBaseController
     created_updated_by_for @article
     respond_with(:admin, @article_collection, @article) do |format|
       if @article.save
-        # format.html { redirect_to [:admin, @article_collection, :articles], :notice => "Successfully created the article #{@article.title} in the collection #{@article_collection.name}" }
-        format.html { redirector [:edit, :admin, @article_collection, @article], [:admin, @article_collection, :article], "Successfully created the article #{@article.title} in the collection #{@article_collection.name}" }
+        format.html { redirector [:edit, :admin, @article_collection, @article], [:admin, @article_collection, :articles], "Successfully created the article #{@article.title} in the collection #{@article_collection.name}" }
       end
     end
   end
@@ -39,8 +38,7 @@ class Admin::ArticlesController < AdminBaseController
     @article.updated_by = @current_admin_user
     respond_with(:admin, @article_collection, @article) do |format| 
       if @article.update_attributes(params[:article])
-        #format.html { redirect_to [:admin, @article_collection, :articles], :notice =>  "Successfully updated the article #{@article.title} in the collection #{@article_collection.name}"}
-        format.html { redirector [:edit, :admin, @article_collection, @article], [:admin, @article_collection, :article], "Successfully updated the article #{@article.title} in the collection #{@article_collection.name}" }
+        format.html { redirector [:edit, :admin, @article_collection, @article], [:admin, @article_collection, :articles], "Successfully updated the article #{@article.title} in the collection #{@article_collection.name}" }
       end
     end
   end
