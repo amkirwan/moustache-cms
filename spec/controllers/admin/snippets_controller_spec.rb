@@ -16,7 +16,7 @@ describe Admin::SnippetsController do
 
     before(:each) do
       Snippet.stub(:accessible_by).and_return(snippets)
-      snippets.stub(:where).and_return(snippets)
+      snippets.stub_chain(:where, :order_by).and_return(snippets)
     end
 
     it "should assign the snippet" do
