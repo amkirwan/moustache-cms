@@ -12,7 +12,7 @@ describe Admin::LayoutsController do
       
     before(:each) do
       Layout.stub(:accessible_by).and_return(layouts)
-      layouts.stub(:where).and_return(layouts)
+      layouts.stub_chain(:where, :order_by).and_return(layouts)
     end
     
     def do_get
@@ -118,9 +118,9 @@ describe Admin::LayoutsController do
         response.should redirect_to(admin_layouts_path)
       end
 
-      it "should redirect to edit layout when commit == 'save and continue editing'" do
+      it "should redirect to edit layout when the continue param is set" do
         new_params = params
-        new_params["commit"] = "Save and Continue Editing"
+        new_params["continue"] = "Save and Continue Editing"
         do_post new_params
         response.should redirect_to(edit_admin_layout_path(@layout))
       end
@@ -218,9 +218,9 @@ describe Admin::LayoutsController do
         response.should redirect_to(admin_layouts_path)
       end
 
-      it "should redirect to edit layout when commit == 'save and continue editing'" do
+      it "should redirect to edit layout when there is a continue param set" do
         new_params = params
-        new_params["commit"] = "Save and Continue Editing"
+        new_params["continue"] = "Save and Continue Editing"
         do_put new_params
         response.should redirect_to(edit_admin_layout_path(@layout))
       end
