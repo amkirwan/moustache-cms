@@ -167,8 +167,8 @@ describe Admin::PagesController do
         response.should redirect_to(admin_pages_path)
       end     
 
-      it "should redirect to edit page when commit == 'save and continue editing'" do
-        params["commit"] = "Save and Continue Editing"
+      it "should redirect to edit page when continue param is set" do
+        params["continue"] = "Save and Continue Editing"
         do_post
         response.should redirect_to(edit_admin_page_path(@page))
       end     
@@ -284,8 +284,8 @@ describe Admin::PagesController do
         response.should redirect_to(admin_pages_path)
       end
 
-      it "should redirect to edit page when commit == 'save and continue editing'" do
-        params["commit"] = "Save and Continue Editing"
+      it "should redirect to edit page when the continue param is set" do
+        params["continue"] = "Save and Continue Editing"
         do_puts
         response.should redirect_to(edit_admin_page_path(@page))
       end     
