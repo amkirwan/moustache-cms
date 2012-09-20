@@ -11,7 +11,7 @@ class ArticleCollection
 
     # -- Fields --------------- 
   field :name
-  field :permalink_prefix, :type => Boolean
+  field :permalink_prefix, :type => Boolean, :default => false
   
   # -- Associations -------------
   belongs_to :site
@@ -35,9 +35,6 @@ class ArticleCollection
   validates :updated_by_id,
             :presence => true
 
-  after_initialize do |ac|
-    ac.permalink_prefix = false if ac.permalink_prefix.nil?
-  end
 
   # -- Class Methods --
   def self.articles_by_collection_name(name)

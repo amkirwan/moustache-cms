@@ -51,7 +51,7 @@ describe CurrentState do
     describe "#formatted_date_time" do
       it "should return the date formatted with the date" do
         @current_state.time = "2012-08-08 15:08:44 -0400"
-        @current_state.formatted_date_time.should == "8 Aug 2012 at  3pm EDT"
+        @current_state.formatted_date_time.should == "8 Aug 2012 at  3pm" 
       end
     end
 

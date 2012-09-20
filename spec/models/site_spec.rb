@@ -223,7 +223,7 @@ describe Site do
     describe "#admin_page_url" do
       it "should return the url to the admin page for the site" do
         @site.subdomain = 'foobar'
-        @site.admin_page_url.should == 'https://foobar.com/admin'  
+        @site.admin_page_path.should == 'foobar.com/admin'  
       end
     end
 

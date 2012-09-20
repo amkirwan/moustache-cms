@@ -343,7 +343,7 @@ describe Page do
 
     describe "#full_path_with_params" do
       it "should return the pages full_path wth the params" do
-        @page.full_path_with_param(:preview => true).should == @page.full_path + '?preview=true'
+        @page.full_path_with_params(:preview => true).should == @page.full_path + '?preview=true'
       end
     end
     

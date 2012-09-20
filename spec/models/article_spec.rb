@@ -140,18 +140,17 @@ describe Article do
         @collection_name = @article.article_collection.name.gsub(/[\s_]/, '-')
       end
 
-      it "should set the permalink" do
-        @article.permalink = nil
-        @article.save
-        @article.permalink.should == "/#{@collection_name}/#{@year}/#{@month}/#{@day}/#{@article.slug}"
-      end
-
-      it "should not set the prefix to the path" do
-        @article_collection.permalink_prefix = false
-        @article_collection.save
+      it "should not the prefix path to the permalink" do
         @article.permalink = nil
         @article.save
         @article.permalink.should == "/#{@year}/#{@month}/#{@day}/#{@article.slug}"
+      end
+
+      it "should add the prefix path to the permalink" do
+        @article_collection.permalink_prefix = true
+        @article.permalink = nil
+        @article.save
+        @article.permalink.should == "/#{@collection_name}/#{@year}/#{@month}/#{@day}/#{@article.slug}"
       end
     end
   end
