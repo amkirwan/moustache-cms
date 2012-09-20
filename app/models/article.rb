@@ -130,24 +130,24 @@ class Article
   end
 
   # This returns the associated datetime in words in the format January 06, 2012 at 3pm
-  def formatted_date_time
+  def status_formatted_date_time
     self.current_state.formatted_date_time
   end
 
-  def formatted_date_time_with_zone
-    self.current_state.formatted_date_time
+  def status_formatted_date_time_with_zone
+    self.current_state.formatted_date_time_with_zone
   end
 
-  def formatted_date
+  def status_formatted_date
     self.current_state.formatted_date
   end
 
-  def formatted_time
+  def status_formatted_time
     self.current_state.formatted_time
   end
 
-  def formatted_time_with_zone
-    self.current_state.formatted_time_with_zone
+  def status_formatted_time_zone
+    self.current_state.formatted_time_zone
   end
 
   def date_at_with_time
