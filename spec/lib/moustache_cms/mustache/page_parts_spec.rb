@@ -11,17 +11,9 @@ describe MoustacheCms::Mustache::PageParts do
   end
 
   describe "it should define the ghost method calls" do
-    it "should define a method for the call to editable_text_(name)" do
-      @cmsp.respond_to?(:editable_text_content).should be_true
-    end
-
-    it "should define a method for the call to page_part_(name)" do
-      @cmsp.respond_to?(:page_part_content).should be_true  
-    end
-
-    it "should define a method for the call to snippet_(name)" do
-      @cmsp.respond_to?(:snippet_foobar).should be_true  
-    end
+    specify { @cmsp.respond_to?(:editable_text_content).should be_true }
+    specify { @cmsp.respond_to?(:page_part_content).should be_true }
+    specify { @cmsp.respond_to?(:snippet_foobar).should be_true }
   end
 
   describe "it should create methods from ghost method calls" do
