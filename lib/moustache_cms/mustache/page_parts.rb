@@ -47,12 +47,12 @@ module MoustacheCms
       
       def snippet_method(name)
         snippet = @current_site.snippet_by_name(name)
-        process_with_filter(snippet) unless snippet.nil?
+        process_with_filter(snippet).chomp unless snippet.nil?
       end
 
       def page_part_method(name)
         part = @page.page_parts.find_by_name(name)
-        process_with_filter(part) unless part.nil?
+        process_with_filter(part).chomp unless part.nil?
       end
 
     end
