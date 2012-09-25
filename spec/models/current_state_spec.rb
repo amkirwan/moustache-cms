@@ -48,31 +48,33 @@ describe CurrentState do
       end
     end
 
-    describe "#formatted_date_time" do
-      it "should return the date formatted with the date" do
-        @current_state.time = "2012-08-08 15:08:44 -0400"
-        @current_state.formatted_date_time.should == "8 Aug 2012 at  3pm" 
+    describe "time formats" do
+      before(:each) do
+        @current_state.time = "2012-08-08 15:08:44"
       end
-    end
 
-    describe "#formatted_date" do
-      it "should return the date formatted" do
-        @current_state.time = "2012-08-08 15:08:44 -0400"
-        @current_state.formatted_date.should == "8 Aug 2012"
+      describe "#formatted_date_time" do
+        it "should return the date formatted with the date" do
+          @current_state.formatted_date_time.should == "8 Aug 2012 at  3pm" 
+        end
       end
-    end
 
-    describe "#formatted_time" do
-      it "should return the time formatted" do
-        @current_state.time = "2012-08-08 15:08:44 -0400"
-        @current_state.formatted_time.should == "3pm"
+      describe "#formatted_date" do
+        it "should return the date formatted" do
+          @current_state.formatted_date.should == "8 Aug 2012"
+        end
       end
-    end
 
-    describe "#formatted_time_zone" do
-      it "should return the time zone" do
-        @current_state.time = "2012-08-08 15:08:44 -0400"
-        @current_state.formatted_time_zone.should == "EDT"
+      describe "#formatted_time" do
+        it "should return the time formatted" do
+          @current_state.formatted_time.should == "3pm"
+        end
+      end
+
+      describe "#formatted_time_zone" do
+        it "should return the time zone" do
+          @current_state.formatted_time_zone.should == @current_state.time.zone
+        end
       end
     end
   end
