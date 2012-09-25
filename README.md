@@ -1,4 +1,4 @@
-[![Build Status](https://secure.travis-ci.org/amkirwan/moustache_cms.png)][![Build Status](https://secure.travis-ci.org/amkirwan/moustache-cms.png)](http://travis-ci.org/amkirwan/moustache-cms) 
+[![Build Status](https://secure.travis-ci.org/amkirwan/moustache-cms.png)](http://travis-ci.org/amkirwan/moustache-cms)
 
 # Moustache CMS
 
