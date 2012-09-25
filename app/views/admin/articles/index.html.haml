@@ -2,7 +2,8 @@
   = render :partial => 'admin/articles/submenu'
 
 - inner_content "shared/inner_wrapper" do
-  %div.breadcrumb
+  .breadcrumb
     = link_to "&laquo; Site Article Collections".html_safe, [:admin, :article_collections]
 
-  = list_objects @articles, :message => 'Add An Article', :collection => @article_collection, :link => :article
+  .articles_pag
+    = list_objects @articles, :message => 'Add An Article', :collection => @article_collection, :link => :article

@@ -3,4 +3,5 @@
 
 - inner_content "shared/inner_wrapper" do
 
-  = list_objects @article_collections, :message => 'Add An Article Collection', :link => :article_collection 
+  .article_collection_pag
+    = list_objects @article_collections, :message => 'Add An Article Collection', :link => :article_collection 

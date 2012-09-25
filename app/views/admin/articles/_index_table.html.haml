@@ -6,3 +6,5 @@
     %th Status
     %th Delete Article
   = render @articles
+= paginate @articles, :remote => true
+

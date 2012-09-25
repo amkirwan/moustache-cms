@@ -26,6 +26,7 @@ MoustacheCms::Application.routes.draw do
 
     resources :article_collections do
       resources :articles do
+        get 'page/:page', :action => :index, :on => :collection
         get :new_meta_tag, :on => :collection
         put :preview, :as => :preview
         resources :meta_tags, :except => [:index, :show] 
