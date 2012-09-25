@@ -3,10 +3,10 @@ require 'haml'
 class MoustacheCms::Mustache::CmsPage < Mustache
 
   include AttributeMethods
-  include Head
-  include Navigation
+  include HeadTags
+  include NavigationTags
   include MediaTags
-  include PageParts
+  include PagePartTags
   include ArticleTags
   include CustomTags
   
@@ -56,6 +56,10 @@ class MoustacheCms::Mustache::CmsPage < Mustache
     context
   end
 
+  def templates_dir
+    File.join("#{Rails.root}", 'lib', 'moustache_cms', 'mustache', 'templates') 
+  end
+
   def controller_ivars_set
     variables = @controller.instance_variable_names
     variables.each do |var_name|
@@ -92,7 +96,7 @@ class MoustacheCms::Mustache::CmsPage < Mustache
   end
 
   def process_with_textile(content)
-    RedCloth.new(preprocessed_content).to_html
+    RedCloth.new(content).to_html
   end
 
   def gen_haml(template_name)

@@ -1,6 +1,6 @@
 module MoustacheCms
   module Mustache
-    module Navigation
+    module NavigationTags
 
       def nav_primary
         engine = gen_haml('nav_primary.haml')
@@ -8,7 +8,7 @@ module MoustacheCms
       end
       
       def nav_child_pages
-        engine = gen_haml('nav_child_pages.haml')
+        engine = gen_haml('nav_children.haml')
         engine.render(action_view_helpers_context, {:request => @request, :parent_page => @page})  
       end   
       
@@ -39,9 +39,9 @@ module MoustacheCms
         method_name = method.to_s
         case method_name
         when /^(nav_children)_(.*)/
-          self.class.define_attribure_method(method_name, $1, $2)
+          self.class.define_attribute_method(method_name, $1, $2)
         when /^(nav_siblings_and_self)_(.*)/
-          self.class.define_attribure_method(method_name, $1, $2)
+          self.class.define_attribute_method(method_name, $1, $2)
         else
           super
         end

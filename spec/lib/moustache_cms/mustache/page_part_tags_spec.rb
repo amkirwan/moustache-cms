@@ -3,12 +3,26 @@ require 'spec_helper'
 class Simple < MoustacheCms::Mustache::CmsPage
 end
 
-describe MoustacheCms::Mustache::PageParts do
+describe MoustacheCms::Mustache::PagePartTags do
   include_context "mustache page setup"
 
   before(:each) do
     @snippet = FactoryGirl.create(:snippet, :name => "foobar", :site => site, :created_by => user, :updated_by => user, :filter_name => "markdown",:content => "snippet **{{page_title}}**" )
+
+    @page.page_parts << FactoryGirl.build(:page_part, 
+                                      :name => "main_content", 
+                                      :content => "# main_content #\n {{{ page_part_content }}}",
+                                      :filter_name => "markdown") 
+
+    @page.page_parts << FactoryGirl.build(:page_part, 
+                                      :name => "render_snippet", 
+                                      :content => "{{{ snippet_foobar }}}",
+                                      :filter_name => "markdown") 
+
+    @page.save
+    @cmsp.instance_variable_set("@page", @page)
   end
+
 
   describe "it should define the ghost method calls" do
     specify { @cmsp.respond_to?(:editable_text_content).should be_true }
@@ -35,23 +49,17 @@ describe MoustacheCms::Mustache::PageParts do
   
   describe "it should render the page_part with the correct filter" do
     it "should return the page part rendered as markdown" do
-      if @cmsp.editable_text_content
-        @cmsp.editable_text_content.should == "<p>define editable text method <strong>strong</strong></p>"    
-      end
+      @cmsp.editable_text_content.should == "<p>define editable text method <strong>strong</strong></p>"    
     end
     
     it "should return the page part rendered as textile" do
-      @page.page_parts.last.filter_name = "textile"
-      if @cmsp.editable_text_content
-        @cmsp.editable_text_content.should == "<p>define editable text method <b>strong</b></p>"    
-      end    
+      @page.page_parts.where(:name => 'content').first.filter_name = "textile"
+      @cmsp.editable_text_content.should == "<p>define editable text method <b>strong</b></p>"    
     end
     
     it "should render as HTML" do
-      @page.page_parts.last.filter_name = "html"
-      if @cmsp.editable_text_content
-        @cmsp.editable_text_content.should == "define editable text method **strong**"    
-      end
+      @page.page_parts.where(:name => 'content').first.filter_name = "html"
+      @cmsp.editable_text_content.should == "define editable text method **strong**"    
     end
   end
 
@@ -73,6 +81,16 @@ describe MoustacheCms::Mustache::PageParts do
       @snippet.save
       @cmsp.snippet_foobar
       @cmsp.snippet_foobar.should == "snippet **foobar**"
+    end
+  end
+
+  describe "render page part in another" do
+    it "should render the page part content within main_content" do
+      @cmsp.page_part_main_content.should == "<h1>main_content</h1>\n\n<p>define editable text method <strong>strong</strong></p>"
+    end  
+
+    it "should render the snippet within the page part" do
+      @cmsp.page_part_render_snippet.should == "<p>snippet <strong>foobar</strong></p>"
     end
   end
   

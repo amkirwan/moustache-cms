@@ -1,4 +1,0 @@
-%ul{:class => "nav_#{parent_page.title.downcase.gsub(/\s/, '_')}"}
-  - parent_page.children.each do |page|
-    %li 
-      = link_to page.title, page.full_path, {:id => page.title.downcase.gsub(/\s/, '_') } 

@@ -8,8 +8,10 @@ module MoustacheCms
       # You will most likely want to use this tag in conjunction with the
       # {{{paginate_articles}}} tag
       def articles_list_for(name)
-        find_articles(name)
-        articles_to_list
+        if @article.nil?
+          find_articles(name) 
+          articles_to_list
+        end
       end
 
       # You will use a list of articles for the collection or it will return a single article
@@ -23,17 +25,14 @@ module MoustacheCms
         articles_to_list
       end
 
-      def articles_list(name)
-        if @article.nil?
-          find_articles(name) 
-          articles_to_list
-        end
-      end
-
       def article
         @article
       end
-
+      
+      def paginate
+        paginator(nil)
+      end
+      
       def paginate_articles
         lambda do |text|
           paginator(text)
@@ -74,7 +73,7 @@ module MoustacheCms
       def method_missing(method, *arguments, &block)
         method_name = method.to_s
         case method_name
-        when /^(articles_list)_for_(.*)/
+        when /^(articles_list_for)_(.*)/
           self.class.define_attribute_method(method_name, $1, $2)
         when /^(articles_for)_(.*)/
           self.class.define_attribute_method(method_name, $1, $2)
@@ -108,7 +107,7 @@ module MoustacheCms
             link_text = 'Next Page'
           end
           engine = gen_haml('paginate_next.haml')
-          context = action_view_context(File.join("#{Rails.root}", 'lib', 'moustache_cms', 'mustache', 'templates'))
+          context = action_view_context(templates_dir)
           engine.render(context, {:articles => @articles, :link_text => link_text, :options => options})
         end
       end

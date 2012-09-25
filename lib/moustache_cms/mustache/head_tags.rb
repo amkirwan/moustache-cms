@@ -1,6 +1,6 @@
 module MoustacheCms
   module Mustache
-    module Head 
+    module HeadTags 
       
       # -- Title ---- 
       def title

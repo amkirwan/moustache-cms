@@ -1,6 +1,6 @@
 module MoustacheCms
   module Mustache
-    module PageParts
+    module PagePartTags
 
       def page_part
         lambda do |text|
