@@ -1,4 +1,4 @@
-[![Build Status](https://secure.travis-ci.org/amkirwan/moustache_cms.png)](http://travis-ci.org/amkirwan/moustache_cms) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/amkirwan/moustache_cms)
+[![Build Status](https://secure.travis-ci.org/amkirwan/moustache_cms.png)][![Build Status](https://secure.travis-ci.org/amkirwan/moustache-cms.png)](http://travis-ci.org/amkirwan/moustache-cms) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/amkirwan/moustache_cms)
 
 # Moustache CMS
 
