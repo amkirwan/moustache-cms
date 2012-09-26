@@ -183,8 +183,8 @@ describe Site do
     describe "#articles_by_collection_name_desc(name)" do
       it "should return all the articles for the article collection" do
         article_collection = FactoryGirl.create(:article_collection, :site => @site, :name => "news")
-        article_collection.articles << FactoryGirl.build(:article)
-        article_collection.articles << FactoryGirl.build(:article)
+        article_collection.articles.unshift(FactoryGirl.build(:article))
+        article_collection.articles.unshift(FactoryGirl.build(:article))
         @site.articles_by_collection_name_desc('news').to_a.should == article_collection.articles.to_a
         
       end
