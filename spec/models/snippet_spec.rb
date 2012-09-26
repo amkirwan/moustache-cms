@@ -7,20 +7,6 @@ describe Snippet do
     @snippet = FactoryGirl.create(:snippet, :site => site, :created_by_id => user.id, :updated_by_id => user.id)
   end 
   
-  # -- Mass Assignment ---
-  context "mass assignment" do
-    it "should protect against mass assignment of username and role" do
-      snippet = Snippet.new(:created_by_id => "ak730", :updated_by_id => "ak730")
-      snippet.created_by_id.should be_nil
-      snippet.updated_by_id.should be_nil
-    end
-    
-    it "should allow mass assignment of" do
-      @snippet.should allow_mass_assignment_of(:name => "foobar", :content => "content", :filter_name => "markdown")
-    end
-  end
-  
-  
   # -- Associations ---
   context "Associations" do          
     it "should belong to a site" do

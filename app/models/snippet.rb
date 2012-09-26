@@ -10,10 +10,10 @@ class Snippet
                    
   # -- Assocations ----
   belongs_to :site
-  belongs_to :created_by, :class_name => "User"
-  belongs_to :updated_by, :class_name => "User" 
+  belongs_to :created_by, :class_name => "User", :inverse_of => :user
+  belongs_to :updated_by, :class_name => "User", :inverse_of => :user 
 
-  accepts_nested_attributes_for :filter        
+  # accepts_nested_attributes_for :filter        
   
   # -- Validations ----
   validates :name,
@@ -29,7 +29,7 @@ class Snippet
             :presence => true
             
   #-- Scopes ----      
-  scope :find_by_site_and_name, lambda { |site, name| { :where => { :name => name, :site_id => site.id  }} } 
+  scope :find_by_site_and_name, ->(site, name) { where(:name => name, :site_id => site.id) }
 
   #-- Class Methods --
   def self.snippet_by_name(name)
