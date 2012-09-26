@@ -6,7 +6,7 @@ class Page
 
   include Mongoid::Tree 
   include Mongoid::Tree::Ordering
-  include Mongoid::TaggableWithContext
+  # include Mongoid::TaggableWithContext
 
   attr_accessible :parent_id,
                   :title, 
@@ -30,11 +30,11 @@ class Page
   field :full_path
   field :breadcrumb
 
-  taggable
+  # taggable
 
   # -- Index -------------------------------
-  index :title
-  index :full_path
+  index :title => 1
+  index :full_path => 1
   
   # -- Associations-------------------------
   embeds_one :current_state, :as => :publishable, :cascade_callbacks => true 
