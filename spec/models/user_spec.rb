@@ -90,7 +90,7 @@ describe User do
   context "callbacks" do
     context "before validation it should check that the page_ids are unique" do
       it "should do something" do
-        @user.page_ids = [BSON::ObjectId('4d7fe2397353202ab60000e9'), BSON::ObjectId('4d7fe2397353202ab60000e9')]
+        @user.page_ids = [Moped::BSON::ObjectId('4d7fe2397353202ab60000e9'), Moped::BSON::ObjectId('4d7fe2397353202ab60000e9')]
         @user.save
         @user.page_ids.count.should == 1
       end

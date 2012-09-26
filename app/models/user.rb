@@ -23,8 +23,8 @@ class User
   field :time_zone
 
   # -- Devise Authenticatable -----
-  field :email, :null => false
-  field :encrypted_password, :null => false
+  field :email
+  field :encrypted_password
 
   # -- Devise Recoverable ---
   field :reset_password_token
@@ -42,32 +42,32 @@ class User
 
 
   # -- Index -------------------------------
-  index :username
+  index :username => 1
   
   #-- Associations-----------------------------------------------
-  has_many :layouts_created, :class_name => "Layout", :foreign_key => :created_by_id
-  has_many :layouts_updated, :class_name => "Layout", :foreign_key => :updated_by_id
+  has_many :layouts_created, :class_name => "Layout", :inverse_of => :created_by
+  has_many :layouts_updated, :class_name => "Layout", :inverse_of => :updated_by
 
-  has_many :pages_created, :class_name => "Page", :foreign_key => :created_by_id
-  has_many :pages_updated, :class_name => "Page", :foreign_key => :updated_by_id
+  has_many :pages_created, :class_name => "Page", :inverse_of => :created_by
+  has_many :pages_updated, :class_name => "Page", :inverse_of => :updated_by
 
-  has_many :snippets_created, :class_name => "Snippet", :foreign_key => :created_by_id
-  has_many :snippets_updated, :class_name => "Snippet", :foreign_key => :updated_by_id
+  has_many :snippets_created, :class_name => "Snippet", :inverse_of => :created_by
+  has_many :snippets_updated, :class_name => "Snippet", :inverse_of => :updated_by
 
-  has_many :asset_collections_created, :class_name => "AssetCollection", :foreign_key => :created_by_id
-  has_many :asset_collections_updated, :class_name => "AssetCollection", :foreign_key => :updated_by_id
+  has_many :asset_collections_created, :class_name => "AssetCollection", :inverse_of => :created_by
+  has_many :asset_collections_updated, :class_name => "AssetCollection", :inverse_of => :updated_by
 
-  has_many :theme_collections_created, :class_name => "ThemeCollection", :foreign_key => :created_by_id
-  has_many :theme_collections_updated, :class_name => "ThemeCollection", :foreign_key => :updated_by_id
+  has_many :theme_collections_created, :class_name => "ThemeCollection", :inverse_of => :created_by
+  has_many :theme_collections_updated, :class_name => "ThemeCollection", :inverse_of => :updated_by
 
-  has_many :article_collections_created, :class_name => "ArticleCollection", :foreign_key => :created_by_id
-  has_many :article_collections_updated, :class_name => "ArticleCollection", :foreign_key => :updated_by_id
+  has_many :article_collections_created, :class_name => "ArticleCollection", :inverse_of => :created_by
+  has_many :article_collections_updated, :class_name => "ArticleCollection", :inverse_of => :updated_by
 
-  has_many :authors_created, :class_name => "Author", :foreign_key => :created_by_id
-  has_many :authors_updated, :class_name => "Author", :foreign_key => :updated_by_id
+  has_many :authors_created, :class_name => "Author", :inverse_of => :created_by
+  has_many :authors_updated, :class_name => "Author", :inverse_of => :updated_by
 
-  has_many :articles_created, :class_name => "Article", :foreign_key => :created_by_id
-  has_many :articles_updated, :class_name => "Article", :foreign_key => :updated_by_id
+  has_many :articles_created, :class_name => "Article", :inverse_of => :created_by
+  has_many :articles_updated, :class_name => "Article", :inverse_of => :updated_by
 
   has_and_belongs_to_many :pages, :class_name => "Page", :inverse_of => :editors
   has_and_belongs_to_many :article_collections, :class_name => "ArticleCollection", :inverse_of => :editors
@@ -104,7 +104,7 @@ class User
             :presence => true
 
   # -- Scopes ---------
-  scope :all_from_current_site, lambda { |current_site| { :where => { :site_id => current_site.id }} }
+  scope :all_from_current_site, ->(current_site) { where(:site_id => current_site.id) } 
 
   # -- Class Methods -----------------------------------------------
   def self.find_by_username(name)
