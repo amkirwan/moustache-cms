@@ -58,7 +58,7 @@ FactoryGirl.define do
     association :site, strategy: :build
     sequence(:name) { |n| "layout_#{n}" }
     content "Hello, World!"
-    after_build { |layout| assign_created_updated_by(layout, :layouts) }
+    after(:build) { |layout| assign_created_updated_by(layout, :layouts) }
   end
 
   factory :current_state do
@@ -71,7 +71,7 @@ FactoryGirl.define do
     sequence(:name) { |n| "name_#{n}" }
     content "snippet content"
     filter_name "snippet filter"
-    after_build { |snippet| assign_created_updated_by(snippet, :snippets) }
+    after(:build) { |snippet| assign_created_updated_by(snippet, :snippets) }
   end
 
   factory :page_type do 
@@ -95,7 +95,7 @@ FactoryGirl.define do
     current_state { FactoryGirl.build(:current_state) }
     editors { [ FactoryGirl.build(:user, site_id: "#{site.id}") ] }
     page_parts { [ FactoryGirl.build(:page_part) ] }
-    after_build { |page| assign_created_updated_by(page, :pages) }
+    after(:build) { |page| assign_created_updated_by(page, :pages) }
   end
 
   factory :parent_page, :parent => :page do
@@ -113,7 +113,7 @@ FactoryGirl.define do
     lastname "baz"
     profile "this is the author profile"
     image { File.open("#{Rails.root}/spec/fixtures/assets/rails.png") }
-    after_build { |author| assign_created_updated_by(author, :authors) }
+    after(:build) { |author| assign_created_updated_by(author, :authors) }
   end
 
   factory :article_collection do 
@@ -121,7 +121,7 @@ FactoryGirl.define do
     sequence(:name) { |n| "name_#{n}" }
     editors {[ FactoryGirl.build(:user) ]}
     permalink_prefix false
-    after_build { |article_collection| assign_created_updated_by(article_collection, :article_collections) }
+    after(:build) { |article_collection| assign_created_updated_by(article_collection, :article_collections) }
   end
 
   factory :article do 
@@ -137,14 +137,14 @@ FactoryGirl.define do
     authors { [FactoryGirl.build(:user, site_id: "#{site.id}")] }
     filter_name "published"
     article_collection { FactoryGirl.build(:article_collection, site_id: "#{site.id}") }
-    after_build { |article| assign_created_updated_by(article, :articles) }
+    after(:build) { |article| assign_created_updated_by(article, :articles) }
   end
 
   factory :asset_collection do 
     association :site, strategy: :build
     sequence(:name) { |n| "name_#{n}" }
     site_assets { [ FactoryGirl.build(:site_asset) ] }
-    after_build { |asset_collection| assign_created_updated_by(asset_collection, :asset_collections) }
+    after(:build) { |asset_collection| assign_created_updated_by(asset_collection, :asset_collections) }
   end
 
   factory :site_asset do 
@@ -175,6 +175,6 @@ FactoryGirl.define do
   factory :theme_collection do 
     association :site, strategy: :build
     sequence(:name) { |n| "name_#{n}" }
-    after_build { |theme_collection| assign_created_updated_by(theme_collection, :theme_collections) }
+    after(:build) { |theme_collection| assign_created_updated_by(theme_collection, :theme_collections) }
   end
 end
