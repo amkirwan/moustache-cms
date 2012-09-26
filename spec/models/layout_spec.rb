@@ -9,24 +9,8 @@ describe Layout do
     @layout = FactoryGirl.create(:layout, :site_id => site.id, :created_by_id => user.id, :updated_by_id => user.id)
   end
 
-  # -- Assignment -------------------------------------------------------------- 
-  describe "mass assignment" do
-    it "should protect against mass assignment of created_by_id and updated_by_id" do
-      layout = Layout.new(:updated_by_id => mock_model("User").id, :created_by_id => mock_model("User").id)
-      layout.created_by_id.should be_nil
-      layout.updated_by_id.should be_nil
-    end
-    
-    it "should not allow mass assignment of" do
-      @layout.should_not allow_mass_assignment_of(:created_by_id => mock_model("User").id, :updated_by_id => mock_model("User").id)
-    end
-    
-    it "should allow mass assignment of" do
-      @layout.should allow_mass_assignment_of(:name => "foobar", :content => "Hello,World!")
-    end
-  end
-  
-    # -- Before Save Callback -----------------------------------------------------
+ 
+  # -- Before Save Callback -----------------------------------------------------
   describe "before_save" do
     describe "#format_content" do
       it "should remove any leading or trailing whitespace from the content" do
