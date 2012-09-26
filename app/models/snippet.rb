@@ -10,8 +10,8 @@ class Snippet
                    
   # -- Assocations ----
   belongs_to :site
-  belongs_to :created_by, :class_name => "User", :inverse_of => :user
-  belongs_to :updated_by, :class_name => "User", :inverse_of => :user 
+  belongs_to :created_by, :class_name => "User", :inverse_of => :snippets_created
+  belongs_to :updated_by, :class_name => "User", :inverse_of => :snippets_updated
 
   # accepts_nested_attributes_for :filter        
   
