@@ -80,7 +80,8 @@ describe "ArticleCollection" do
   describe "Class Methods" do
     describe "#articles_by_collection_name" do
       it "should return all the articles from a collection" do
-        ArticleCollection.articles_by_collection_name_desc(@article_collection.name).to_a.should == @article_collection.articles  
+        articles_desc = @article_collection.articles.reverse
+        ArticleCollection.articles_by_collection_name_desc(@article_collection.name).to_a.should == articles_desc
       end
     end   
 

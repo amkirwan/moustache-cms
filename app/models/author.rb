@@ -21,8 +21,8 @@ class Author
 
   # -- Associations ---
   belongs_to :site
-  belongs_to :created_by, :class_name => "User"
-  belongs_to :updated_by, :class_name => "User"
+  belongs_to :created_by, :class_name => "User", :inverse_of => :authors_created
+  belongs_to :updated_by, :class_name => "User", :inverse_of => :authors_updated
   has_and_belongs_to_many :articles
 
   # -- Validations ----

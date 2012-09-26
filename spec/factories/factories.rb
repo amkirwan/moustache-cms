@@ -89,7 +89,7 @@ FactoryGirl.define do
     sequence(:title) { |n| "title_#{n}" }
     sequence(:slug) { |n| "slug_#{n}" }
     sequence(:breadcrumb) { |n| "breadcrumb_#{n}" }
-    tags "page"
+    tag_list "page"
     meta_tags { set_meta_tags('page') }
     layout { FactoryGirl.build(:layout, site_id: "#{site.id}") }
     current_state { FactoryGirl.build(:current_state) }
@@ -129,7 +129,7 @@ FactoryGirl.define do
     sequence(:title) { |n| "title_#{n}" }
     subheading 'subheading'  
     sequence(:slug) { |n| "slug_#{n}" }
-    tags "article"
+    tag_list "article"
     layout { FactoryGirl.build(:layout, site_id: "#{site.id}") }
     current_state { FactoryGirl.build(:current_state) }
     meta_tags { set_meta_tags('article') }

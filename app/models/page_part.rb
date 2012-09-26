@@ -9,7 +9,7 @@ class PagePart
   # -- Associations ---------
   embedded_in :page, :inverse_of => :page_parts
   
-  accepts_nested_attributes_for :filter
+  # accepts_nested_attributes_for :filterable
   
   # -- Validations ------------
   validates :name,
@@ -31,7 +31,7 @@ class PagePart
     # -- callbacks methods --
     def filter_check
       if filter_name.nil?
-        fitler_name = "haml"
+        fitler_name = "html"
       end
     end
 end

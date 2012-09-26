@@ -7,7 +7,7 @@ class Filter
   
   # -- Fields -------
   field :name
-  key :name
+  field :_id, type: String, default: ->{ name }
   
   # -- Associations -------
   embedded_in :filterable, :polymorphic => true

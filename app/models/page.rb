@@ -6,7 +6,7 @@ class Page
 
   include Mongoid::Tree 
   include Mongoid::Tree::Ordering
-  # include Mongoid::TaggableWithContext
+  include Mongoid::Document::Taggable
 
   attr_accessible :parent_id,
                   :title, 
@@ -22,15 +22,13 @@ class Page
                   :post_container,
                   :meta_tags_attributes,
                   :custom_fields_attributes,
-                  :tags
+                  :tag_list
                   
   # -- Fields -----------------------------
   field :title
   field :slug
   field :full_path
   field :breadcrumb
-
-  # taggable
 
   # -- Index -------------------------------
   index :title => 1
@@ -43,8 +41,8 @@ class Page
   embeds_many :page_parts 
   belongs_to :site
   belongs_to :layout
-  belongs_to :created_by, :class_name => "User"
-  belongs_to :updated_by, :class_name => "User"
+  belongs_to :created_by, :class_name => "User", :inverse_of => :pages_created
+  belongs_to :updated_by, :class_name => "User", :inverse_of => :pages_updated
   has_and_belongs_to_many :editors, :class_name => "User", :inverse_of => :pages
   
   accepts_nested_attributes_for :current_state
@@ -94,7 +92,7 @@ class Page
   before_destroy :destroy_children
 
   # -- Scopes ----------------------------------------------------------
-  scope :all_from_current_site, lambda { |current_site| { :where => { :site_id => current_site.id }} }
+  scope :all_from_current_site, ->(current_site) { where(:site_id => current_site.id) }
   
   # -- Class Mehtods --------------------------------------------------
   def self.find_by_id(page_id)

@@ -79,6 +79,12 @@ describe Article do
                     :article_collection => @article_collection).should_not be_valid
     end
 
+    it "should raise an error when the " do
+      lambda do
+        FactoryGirl.create(:article, :site => site, :permalink => @article.permalink)  
+      end.should raise_error(Mongoid::Errors::Validations)
+    end
+
     it "should not be valid without a slug" do
       @article.stub(:slug_set).and_return(nil)
       @article.slug = nil

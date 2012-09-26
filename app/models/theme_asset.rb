@@ -61,13 +61,13 @@ class ThemeAsset
   end
 
     # -- Class Methods --------
-  scope :css_files, lambda { { :where => { :content_type => "text/css" }} }
-  scope :js_files, lambda { { :where => { :content_type => /.*javascript$/i } }}
-  scope :javascripts, lambda { { :where => { :content_type => /.*javascript$/i } }}
-  scope :images, lambda { { :where => { :content_type => /^image\/*/i }} }
-  scope :other_files, lambda { { :where => { :content_type => {"$nin" => ['text/css', 'application/javascript', 'application/x-javascript', 'text/javascript', 'image/jpg', 'image/jpeg', 'image/gif', 'image/png', 'image/vnd.microsoft.icon'] } } }}
+  scope :css_files, ->{ where(:content_type => "text/css") }
+  scope :js_files, ->{ where(:content_type => /.*javascript$/i) }
+  scope :javascripts, ->{ where(:content_type => /.*javascript$/i) }
+  scope :images, ->{ where(:content_type => /^image\/*/i) }
+  scope :other_files, ->{ where({ :content_type => {"$nin" => ['text/css', 'application/javascript', 'application/x-javascript', 'text/javascript', 'image/jpg', 'image/jpeg', 'image/gif', 'image/png', 'image/vnd.microsoft.icon'] } }) } 
 
-  scope :find_by_name, lambda { |name| { :where => { :name => name }} }
+  scope :find_by_name, ->(name) { where(:name => name) }
 
   def self.find_by_content_type_and_site_id(opts={})
     [:content_type, :site].inject(scoped) do |combined_scope, attr| 

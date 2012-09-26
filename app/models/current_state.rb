@@ -3,7 +3,7 @@ class CurrentState
   
   # -- Fields --------------------------------------------------
   field :name
-  key :name
+  field :_id, type: String, default: ->{ name }
   field :time, type: Time
 
   # -- Associations ---

@@ -10,7 +10,7 @@ class Site
   field :domain_names, :type => Array, :default => []
   
   # -- Index ---------------------------------------
-  index :domain_names
+  index :domain_names => 1
   
   # -- Associations ---------------------------------------
   embeds_many :meta_tags, :as => :meta_taggable
@@ -41,7 +41,7 @@ class Site
   after_initialize :default_meta_tags
             
   # -- Scopes ---------------------------------------
-  scope :match_domain, lambda { |domain| { :any_in => { :domain_names => [*domain] }} }
+  scope :match_domain, ->(domain) { any_in(:domain_names => [*domain]) }
  
   # -- Instance Methods ----------------------------------------
   def full_subdomain
@@ -105,17 +105,19 @@ class Site
   end
   
   def css_file_by_name(theme_name, css_name)
-    theme_collection = ThemeCollection.first(:conditions => {:name => theme_name, :site_id => self.id})
+    theme_collection = ThemeCollection.where(:name => theme_name, :site_id => self.id).first
     theme_collection.theme_assets.css_files.where(:name => css_name).first
   end 
 
   def js_file_by_name(theme_name, js_name)
-    theme_collection = ThemeCollection.first(:conditions => {:name => theme_name, :site_id => self.id})
+    theme_collection = ThemeCollection.where(:name => theme_name, :site_id => self.id).first
+    #theme_collection = ThemeCollection.first(:conditions => {:name => theme_name, :site_id => self.id})
     theme_collection.theme_assets.js_files.where(:name => js_name).first
   end 
   
   def site_asset_by_name(asset_collection, file_name)
-    asset_collection = AssetCollection.first(:conditions => {:name => asset_collection, :site_id => self.id})
+    asset_collection = AssetCollection.where(:name => asset_collection, :site_id => self.id).first
+    #asset_collection = AssetCollection.first(:conditions => {:name => asset_collection, :site_id => self.id})
     asset_collection.site_assets.where(:name => file_name).first
   end
 

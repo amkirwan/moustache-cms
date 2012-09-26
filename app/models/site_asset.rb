@@ -2,7 +2,7 @@ class SiteAsset
   include Mongoid::Document
   include Mongoid::Timestamps
   
-  include Mongoid::TaggableWithContext
+  # include Mongoid::TaggableWithContext
   include MoustacheCms::CalcMd5
 
   attr_accessible :name,
@@ -24,7 +24,7 @@ class SiteAsset
   field :updator_id
   mount_uploader :asset, SiteAssetUploader  
 
-  taggable
+  # taggable
   
   set_asset_folder :site_assets
 

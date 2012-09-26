@@ -1,7 +1,5 @@
 # Use this hook to configure devise mailer, warden hooks and so forth. The first
 # four configuration values can also be set straight in your models.
-Devise.apply_schema = false
-
 Devise.setup do |config|
 
   # ==> Mailer Configuration
@@ -206,5 +204,4 @@ Devise.setup do |config|
   #   manager.intercept_401 = false
   #   manager.default_strategies(:scope => :user).unshift :some_external_strategy
   # end
-  config.use_salt_as_remember_token = nil
 end
