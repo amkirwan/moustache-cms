@@ -134,7 +134,7 @@ class Admin::PagesController < AdminBaseController
 
 
     def root_pages
-      @root_pages = @pages = Page.roots.where(:site_id => @current_site.id).sort
+      @root_pages = @pages = Page.roots.where(:site_id => @current_site.id).order_by(:created_at => :asc)
     end
 
     def set_page_cookies

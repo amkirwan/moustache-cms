@@ -2,8 +2,8 @@ class SiteAsset
   include Mongoid::Document
   include Mongoid::Timestamps
   
-  # include Mongoid::TaggableWithContext
   include MoustacheCms::CalcMd5
+  include Mongoid::Document::Taggable
 
   attr_accessible :name,
                   :description,
@@ -12,7 +12,7 @@ class SiteAsset
                   :height, 
                   :file_size, 
                   :asset, 
-                  :tags
+                  :tag_list
   
   # -- Fields 
   field :name

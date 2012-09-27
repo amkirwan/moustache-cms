@@ -94,4 +94,11 @@ describe Layout do
       @layout.should belong_to(:updated_by).of_type(User)
     end
   end
+
+  # -- Scopes ---
+  context "scopes" do
+    it "should return all the layouts from the current site" do
+      Layout.all_from_current_site(site).should == [@layout]
+    end
+  end
 end

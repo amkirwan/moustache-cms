@@ -154,6 +154,7 @@ FactoryGirl.define do
     width 200
     height 200
     file_size 200
+    tag_list "site asset"
   end
 
   factory :custom_field do 
