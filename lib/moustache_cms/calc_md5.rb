@@ -110,5 +110,3 @@ module MoustacheCms
 
   end
 end
-
-

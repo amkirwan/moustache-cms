@@ -3,6 +3,7 @@ class Page
   include Mongoid::Timestamps
  
   include MoustacheCms::Published
+  include MoustacheCms::DefaultMetaTags
 
   include Mongoid::Tree 
   include Mongoid::Tree::Ordering
@@ -20,7 +21,6 @@ class Page
                   :page_parts,
                   :page_parts_attributes,
                   :post_container,
-                  :meta_tags_attributes,
                   :custom_fields_attributes,
                   :tag_list
                   
@@ -36,7 +36,6 @@ class Page
   
   # -- Associations-------------------------
   embeds_one :current_state, :as => :publishable, :cascade_callbacks => true 
-  embeds_many :meta_tags, :as => :meta_taggable
   embeds_many :custom_fields, :as => :custom_fieldable
   embeds_many :page_parts 
   belongs_to :site
@@ -46,7 +45,6 @@ class Page
   has_and_belongs_to_many :editors, :class_name => "User", :inverse_of => :pages
   
   accepts_nested_attributes_for :current_state
-  accepts_nested_attributes_for :meta_tags
   accepts_nested_attributes_for :custom_fields
   accepts_nested_attributes_for :page_parts
   
@@ -85,7 +83,6 @@ class Page
   end
   
   # -- Callbacks -----------------------------------------------
-  after_initialize :default_meta_tags
   before_validation :format_title, :slug_set, :full_path_set, :breadcrumb_set
   before_save :uniq_editor_ids, :strip_page_parts
   after_save :update_user_pages
@@ -145,15 +142,7 @@ class Page
   
   # -- Private Instance Methods -----------------------------------------------
   private 
-
-    def default_meta_tags
-      if self.new_record? && self.meta_tags.size == 0
-        self.meta_tags.build(:name => "title", :content => "")
-        self.meta_tags.build(:name => "keywords", :content => "")
-        self.meta_tags.build(:name => "description", :content => "")
-      end
-    end
-
+  
     def format_title
       self.title.strip! unless self.title.nil?
     end

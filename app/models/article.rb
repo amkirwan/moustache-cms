@@ -4,6 +4,8 @@ class Article
   include Mongoid::MultiParameterAttributes
 
   include MoustacheCms::Published
+  include MoustacheCms::DefaultMetaTags
+
   include Mongoid::Document::Taggable
 
   attr_accessible :title,
@@ -14,7 +16,6 @@ class Article
                   :content,
                   :current_state, 
                   :current_state_attributes,
-                  :meta_tags_attributes,
                   :filter_name,
                   :authors,
                   :layout_id,
@@ -43,7 +44,6 @@ class Article
 
   # -- Associations -------------
   embeds_one :current_state, :as => :publishable, :cascade_callbacks => true
-  embeds_many :meta_tags, :as => :meta_taggable
   belongs_to :site
   belongs_to :article_collection
   belongs_to :created_by, :class_name => "User", :inverse_of => :articles_created
@@ -52,7 +52,6 @@ class Article
   has_and_belongs_to_many :authors
 
   accepts_nested_attributes_for :current_state
-  accepts_nested_attributes_for :meta_tags
 
   # -- Validations -----------------------------------------------
   validates :site_id,
@@ -87,7 +86,6 @@ class Article
   before_validation :format_title, :slug_set, :permalink_set
   before_save :set_date?
   before_update :update_slug_permalink
-  after_initialize :default_meta_tags
 
   # -- Class Methods --
   def self.article_by_permalink(path)
@@ -191,14 +189,6 @@ class Article
         permalink = permalink_split.join('/')
         permalink.gsub!('_', '-')
         self.permalink = '/' + permalink.parameterize('/') + '/' + self.slug
-      end
-    end
-
-    def default_meta_tags
-      if self.new_record? && self.meta_tags.size == 0
-        self.meta_tags.build(:name => "title", :content => "")
-        self.meta_tags.build(:name => "keywords", :content => "")
-        self.meta_tags.build(:name => "description", :content => "")
       end
     end
 

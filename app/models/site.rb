@@ -1,8 +1,10 @@
 class Site
   include Mongoid::Document
   include Mongoid::Timestamps 
+
+  include MoustacheCms::DefaultMetaTags
   
-  attr_accessible :name, :subdomain, :domain_names, :default_domain, :meta_tags_attributes
+  attr_accessible :name, :subdomain, :domain_names, :default_domain
   
   field :name
   field :subdomain
@@ -13,7 +15,6 @@ class Site
   index :domain_names => 1
   
   # -- Associations ---------------------------------------
-  embeds_many :meta_tags, :as => :meta_taggable
   has_many :users, :dependent => :destroy
   has_many :pages, :dependent => :destroy
   has_many :layouts, :dependent => :destroy
@@ -24,7 +25,6 @@ class Site
   has_many :articles, :dependent => :destroy
   has_many :theme_collections, :dependent => :destroy
     
-  accepts_nested_attributes_for :meta_tags
 
   # -- Validations ----------------------------------------
   validates :name,
@@ -38,7 +38,6 @@ class Site
             
   # -- Callbacks -----------------------------------------------
   before_save :add_subdomain_to_domain_names
-  after_initialize :default_meta_tags
             
   # -- Scopes ---------------------------------------
   scope :match_domain, ->(domain) { any_in(:domain_names => [*domain]) }

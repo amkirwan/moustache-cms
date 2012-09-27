@@ -9,20 +9,6 @@ describe Page do
     @page = FactoryGirl.create(:page, :site_id => site.id, :parent => parent , :layout_id => layout.id, :created_by_id => user.id, :updated_by_id => user.id, :editor_ids => [user.id])
   end
   
-  # -- Assignment -------------------------------------------
-  describe "mass assignment" do
-    it "should protect against mass assignment of created_by and updated_by" do
-      page = Page.new(:updated_by_id => mock_model("User").id, :created_by_id => mock_model("User").id)
-      page.created_by_id.should be_nil
-      page.updated_by_id.should be_nil
-    end
-    
-    it "should not allow mass assignment of" do
-      @page.should_not allow_mass_assignment_of(:created_by_id => mock_model("User").id, :updated_by_id => mock_model("User").id)
-    end
-    
-  end
-
   # --  Associations -----------------------------------------------
   describe "Associations" do
     
@@ -143,19 +129,6 @@ describe Page do
     end
   end
 
-
-  # -- After Initialze ----------------
-  context "after initialize callback" do
-    describe "#default_meta_tags" do
-      it "should assign the default meta tags" do
-        @page.meta_tags.count.should == 3
-        @page.meta_tags[0].name.should == 'title'
-        @page.meta_tags[1].name.should == 'keywords'
-        @page.meta_tags[2].name.should == 'description'
-      end
-    end
-  end
-  
 
   # -- Before Validation Callback -------------------------------------------  
   context "before_validation callback" do
