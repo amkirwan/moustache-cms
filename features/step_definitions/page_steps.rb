@@ -157,6 +157,8 @@ When /^I delete the last custom field added to the page$/ do
     click_link 'Delete'
   end  
   dialog_ok
+  wait_for_ajax
+  click_button 'Save and Continue Editing'
 end
 
 Then /^"([^"]*)" should be expanded in the view$/ do |child_title|
