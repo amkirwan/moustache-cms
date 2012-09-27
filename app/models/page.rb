@@ -66,22 +66,6 @@ class Page
                         :created_by_id, 
                         :updated_by_id                    
 
-  validate :site_id_match_create, :on => :create unless Rails.env == "test"
-  validate :site_id_match_update, :on => :update unless Rails.env == "test"
-
-  # protect against creating a page in a site the user does not have permission to
-  def site_id_match_create
-    unless User.find(created_by_id).site_id == site_id && User.find(updated_by_id).site_id == site_id
-      errors.add(:site_id, "The pages site_id must match the users site_id")
-    end
-  end
-
-  def site_id_match_update
-    unless User.find(updated_by_id).site_id == site_id
-      errors.add(:site_id, "The pages site_id must match the users site_id")
-    end
-  end
-  
   # -- Callbacks -----------------------------------------------
   before_validation :format_title, :slug_set, :full_path_set, :breadcrumb_set
   before_save :uniq_editor_ids, :strip_page_parts
@@ -154,6 +138,7 @@ class Page
           self.slug = ""
         elsif self.title == "404"
           self.slug = "404"
+          self.parent = nil
         elsif self.root?
           self.slug = "/"
           self.parent = nil
