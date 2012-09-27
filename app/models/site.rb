@@ -133,12 +133,4 @@ class Site
       "#{self.subdomain_was}.#{self.default_domain_was}"
     end
 
-    def default_meta_tags
-      if self.new_record? && self.meta_tags.size == 0
-        self.meta_tags.build(:name => "title", :content => "")
-        self.meta_tags.build(:name => "keywords", :content => "")
-        self.meta_tags.build(:name => "description", :content => "")
-      end
-    end
-
 end
