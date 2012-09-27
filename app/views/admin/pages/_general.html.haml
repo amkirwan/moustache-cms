@@ -4,7 +4,7 @@
       %ol 
         %li
           = f.label :parent_id
-          = f.collection_select :parent_id, Page.all_from_current_site(@current_site).order_by(:title => :asc), :id, :title, { :include_blank => true, :selected => parent_selected(@parent_page) }
+          = f.collection_select :parent_id, parent_pages_asc, :id, :title, { :include_blank => true, :selected => parent_selected(@parent_page) }
         %li
           = f.label :title, mark_required('Title')
           = f.text_field :title

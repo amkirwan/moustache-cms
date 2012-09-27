@@ -149,4 +149,8 @@ module Admin::PagesHelper
     page_parent.nil? ? '' : page_parent.id.to_s
   end
 
+  def parent_pages_asc
+    Page.all_from_current_site(@current_site).order_by(:title => :asc) 
+  end
+
 end
