@@ -12,14 +12,9 @@ gem "jquery-rails"
 gem "haml-rails", "~> 0.3"
 
 # mongoid
-#gem "mongoid", "~> 2.4"
 gem "mongoid", "~> 3.0"
-# gem "mongoid-tree", :git => "git://github.com/benedikt/mongoid-tree", :tag=> 'v0.7.0', :require => "mongoid/tree"
 gem "mongoid-tree", :git => "git://github.com/benedikt/mongoid-tree"
 gem "mongoid-simple-tags", :git => "git://github.com/chebyte/mongoid-simple-tags.git"
-#gem "mongoid_taggable_with_context", :git => "git://github.com/amkirwan/mongoid_taggable_with_context.git", :branch => "master"
-#gem "carrierwave-mongoid", :require => "carrierwave/mongoid"
-#gem "carrierwave-mongoid", :git => "git://github.com/jnicklas/carrierwave-mongoid.git", :branch => "carrierwave-0.6-support"
 gem "carrierwave-mongoid", :git => "git://github.com/jnicklas/carrierwave-mongoid.git", :branch =>  "mongoid-3.0"
 
 # authorization
