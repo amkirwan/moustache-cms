@@ -1,20 +1,20 @@
 require 'spec_helper'
 
 describe MoustacheCms::FriendlyFilename  do
-  class DummyClass
+  class FriendlyFilenameDummy
     include Mongoid::Document
     include MoustacheCms::FriendlyFilename
 
     field :name
   end
 
-  class DummyController < ActionController::Base
+  class FriendlyFilenameDummyController < ActionController::Base
     include MoustacheCms::FriendlyFilename
   end
 
   before(:each) do
-    @dummy_class = DummyClass.new(:name => 'foo bar')
-    @dummy_controller = DummyController.new
+    @dummy_class = FriendlyFilenameDummy.new(:name => 'foo bar')
+    @dummy_controller = FriendlyFilenameDummyController.new
   end
 
   describe "#before_save" do

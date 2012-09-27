@@ -1,13 +1,13 @@
 require 'spec_helper'
 
 describe MoustacheCms::Published do
-  class DummyClass
+  class PublishedDummy
     include Mongoid::Document  
     embeds_one :current_state 
   end
 
   before(:each) do
-    @dummy_class = DummyClass.new
+    @dummy_class = PublishedDummy.new
     @dummy_class.current_state = FactoryGirl.build(:current_state)
     @dummy_class.extend(MoustacheCms::Published)
   end

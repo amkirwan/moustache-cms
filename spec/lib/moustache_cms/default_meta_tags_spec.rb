@@ -1,13 +1,13 @@
 require 'spec_helper'
 
 describe MoustacheCms::DefaultMetaTags do
-  class DummyClass
+  class DefaultMetaTagsDummy
     include Mongoid::Document 
     include MoustacheCms::DefaultMetaTags
   end
 
   before(:each) do
-    @dummy_class = DummyClass.new
+    @dummy_class = DefaultMetaTagsDummy.new
   end
   # -- After Initialze ----------------
   context "after initialize callback" do
