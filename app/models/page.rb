@@ -2,6 +2,7 @@ class Page
   include Mongoid::Document 
   include Mongoid::Timestamps
  
+  include MoustacheCms::Models::StateSetable
   include MoustacheCms::Published
   include MoustacheCms::DefaultMetaTags
 
@@ -15,8 +16,6 @@ class Page
                   :full_path,
                   :breadcrumb,
                   :editor_ids,
-                  :current_state, 
-                  :current_state_attributes,
                   :layout_id,
                   :page_parts,
                   :page_parts_attributes,
@@ -35,7 +34,6 @@ class Page
   index :full_path => 1
   
   # -- Associations-------------------------
-  embeds_one :current_state, :as => :publishable, :cascade_callbacks => true 
   embeds_many :custom_fields, :as => :custom_fieldable
   embeds_many :page_parts 
   belongs_to :site
@@ -44,7 +42,6 @@ class Page
   belongs_to :updated_by, :class_name => "User", :inverse_of => :pages_updated
   has_and_belongs_to_many :editors, :class_name => "User", :inverse_of => :pages
   
-  accepts_nested_attributes_for :current_state
   accepts_nested_attributes_for :custom_fields
   accepts_nested_attributes_for :page_parts
   

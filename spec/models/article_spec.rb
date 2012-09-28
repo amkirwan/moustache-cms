@@ -18,10 +18,6 @@ describe Article do
       @article.should belong_to(:site)
     end
 
-    it "should embed one current state" do
-      @article.should embed_one :current_state
-    end
-
     it "should embed_many meta_tags" do 
       @article.should embed_many :meta_tags
     end 

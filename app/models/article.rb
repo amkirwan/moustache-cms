@@ -3,6 +3,7 @@ class Article
   include Mongoid::Timestamps
   include Mongoid::MultiParameterAttributes
 
+  include MoustacheCms::Models::StateSetable
   include MoustacheCms::Published
   include MoustacheCms::DefaultMetaTags
 
@@ -14,8 +15,6 @@ class Article
                   :permalink,
                   :slug,
                   :content,
-                  :current_state, 
-                  :current_state_attributes,
                   :filter_name,
                   :authors,
                   :layout_id,
@@ -43,7 +42,6 @@ class Article
   index :permalink => 1
 
   # -- Associations -------------
-  embeds_one :current_state, :as => :publishable, :cascade_callbacks => true
   belongs_to :site
   belongs_to :article_collection
   belongs_to :created_by, :class_name => "User", :inverse_of => :articles_created
@@ -51,7 +49,6 @@ class Article
   belongs_to :layout, :class_name => "Layout"
   has_and_belongs_to_many :authors
 
-  accepts_nested_attributes_for :current_state
 
   # -- Validations -----------------------------------------------
   validates :site_id,
@@ -68,9 +65,6 @@ class Article
             :presence => true
 
   validates :article_collection_id,
-            :presence => true
-
-  validates :current_state,
             :presence => true
 
   validates :created_by_id,

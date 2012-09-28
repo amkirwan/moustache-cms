@@ -12,10 +12,6 @@ describe Page do
   # --  Associations -----------------------------------------------
   describe "Associations" do
     
-    it "should embed one current state" do
-      @page.should embed_one :current_state
-    end
-
     it "should embed_many meta_tags" do 
       @page.should embed_many :meta_tags
     end 
@@ -104,11 +100,6 @@ describe Page do
       @page.should_not be_valid
     end
 
-    it "should not be valid without a current state" do
-      @page.current_state = nil
-      @page.should_not be_valid
-    end
-    
     it "should not be valid without a layout" do
       @page.layout_id = nil
       @page.should_not be_valid
