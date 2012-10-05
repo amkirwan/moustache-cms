@@ -2,7 +2,7 @@ class Page
   include Mongoid::Document 
   include Mongoid::Timestamps
  
-  include MoustacheCms::Models::StateSetable
+  include MoustacheCms::StateSetable
   include MoustacheCms::Published
   include MoustacheCms::DefaultMetaTags
 

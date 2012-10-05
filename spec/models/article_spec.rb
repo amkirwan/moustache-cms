@@ -169,35 +169,6 @@ describe Article do
   # -- Instance Methods -----
   describe "Instance Methods" do
 
-    describe "#status_formatted_date_time" do
-      it "returns the formatted_date_time of the current state" do
-        @article.status_formatted_date_time.should == @article.current_state.formatted_date_time  
-      end
-    end
-
-    describe "#status_formatted_date_time_with_zone" do
-      it "returns the formatted_date_time_with_zone of the current state" do
-        @article.status_formatted_date_time_with_zone.should == @article.current_state.formatted_date_time_with_zone
-      end
-    end
-
-    describe "#status_formatted_date" do
-      it "returns the formatted_date for the current state" do
-        @article.status_formatted_date.should == @article.current_state.formatted_date
-      end  
-    end
-
-    describe "#status_formatted_time" do
-      it "returns the formatted_time of the current state" do
-        @article.status_formatted_time.should == @article.current_state.formatted_time  
-      end
-    end
-
-    describe "#status_formatted_time_zone" do
-      it "returns the formatted_time with zone for the current state" do
-        @article.status_formatted_time_zone.should == @article.current_state.formatted_time_zone
-      end
-    end
     describe "#datetime" do
       it "returns a dateime in iso8601 format for a associated date associated with the artcile" do
         @article.date = "2012-01-06 15:41:01"

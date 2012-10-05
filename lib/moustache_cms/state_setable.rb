@@ -1,4 +1,6 @@
-module MoustacheCms::Models
+require 'time_formatted'
+
+module MoustacheCms
   module StateSetable
     extend ActiveSupport::Concern
 
@@ -12,6 +14,16 @@ module MoustacheCms::Models
       accepts_nested_attributes_for :current_state
 
       validates :current_state, :presence => true
+
     end
+
+    MoustacheCms::TimeFormatted.instance_methods(false).each do |method|
+      delegate method, :to => :current_state_humanize
+    end
+
+    def current_state_humanize
+      MoustacheCms::TimeFormatted.new(self.current_state)
+    end
+
   end
 end

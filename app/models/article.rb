@@ -3,7 +3,7 @@ class Article
   include Mongoid::Timestamps
   include Mongoid::MultiParameterAttributes
 
-  include MoustacheCms::Models::StateSetable
+  include MoustacheCms::StateSetable
   include MoustacheCms::Published
   include MoustacheCms::DefaultMetaTags
 
@@ -86,7 +86,6 @@ class Article
     self.where(:permalink => path).first
   end
 
-
   # -- Instance Methods -----
   alias_method :full_path, :permalink
   alias_method :full_path=, :permalink=
@@ -105,25 +104,25 @@ class Article
   end
 
   # This returns the associated datetime in words in the format January 06, 2012 at 3pm
-  def status_formatted_date_time
-    self.current_state.formatted_date_time
-  end
+  # def status_formatted_date_time
+  #   self.current_state.formatted_date_time
+  # end
 
-  def status_formatted_date_time_with_zone
-    self.current_state.formatted_date_time_with_zone
-  end
+  # def status_formatted_date_time_with_zone
+  #   self.current_state.formatted_date_time_with_zone
+  # end
 
-  def status_formatted_date
-    self.current_state.formatted_date
-  end
+  # def status_formatted_date
+  #   self.current_state.formatted_date
+  # end
 
-  def status_formatted_time
-    self.current_state.formatted_time
-  end
+  # def status_formatted_time
+  #   self.current_state.formatted_time
+  # end
 
-  def status_formatted_time_zone
-    self.current_state.formatted_time_zone
-  end
+  # def status_formatted_time_zone
+  #   self.current_state.formatted_time_zone
+  # end
 
   def date_at_with_time
     return "" if self.date.nil?
