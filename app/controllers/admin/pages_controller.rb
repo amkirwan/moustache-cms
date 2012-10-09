@@ -34,8 +34,7 @@ class Admin::PagesController < AdminBaseController
   end
    
   def create
-    @page.site = current_site
-    created_updated_by_for @page
+    assign_protected_attributes
     respond_with(:admin, @page) do |format|
       if @page.save
         set_page_cookies
@@ -68,13 +67,13 @@ class Admin::PagesController < AdminBaseController
   end
 
   def preview
-    @page = @page.dup
-    @page.assign_attributes(params[:page])
+    @page = Page.new(params[:page])
+    assign_protected_attributes
     @page.save_preview
   end
 
   def sort
-    @page = current_site.pages.find(params[:id])
+    @page = current_site.find_page(params[:id])
     @page.sort_children(params[:children])
     flash.now[:notice] = "Updated Page Positions"
   end
@@ -93,6 +92,11 @@ class Admin::PagesController < AdminBaseController
 
   private 
 
+    def assign_protected_attributes
+      @page.site = current_site
+      created_updated_by_for @page
+    end
+
     def set_page_part
       if params[:view]
         session[:selected_page_part_id] = params[:view]
@@ -104,9 +108,9 @@ class Admin::PagesController < AdminBaseController
     def page_created_updated
       @page_created_updated_id = cookies[:page_created_updated_id]
       begin
-        @page = Page.where(:site_id => current_site.id).find(@page_created_updated_id) unless @page_created_updated_id.nil?
+        @page = current_site.find_page(@page_created_updated_id) unless @page_created_updated_id.nil?
       rescue
-        @page = Page.where(:site_id => current_site.id).first
+        @page = current_site.pages.first
       end
     end
 

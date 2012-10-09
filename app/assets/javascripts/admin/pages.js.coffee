@@ -172,7 +172,12 @@ $(document).ready ->
       action = form.attr('action').split('/')
       page_id = action[action.length - 1]
       url = '/admin/pages/' + page_id + '/preview'
+      disabled = form.find(":input[type=hidden]")
+      disabled.splice(0,3) #remove hidden fields needed to submit form for rails 
+      disabled.each -> $(@).attr('disabled', 'disabled') # disable hidden form elements so they are not serialized
       $.post url, form.serialize(), -> 
+      disabled.each -> $(@).removeAttr('disabled') # enable form elements so they can be submit for an update
+
         
     # Display Moustache Tags Helpers  
     $('.documentation').fancybox 

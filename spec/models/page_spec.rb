@@ -142,7 +142,7 @@ describe Page do
       
       it "should set the full path to '404' when the page title is '404" do
         page2 = FactoryGirl.create(:page, :title => "404", :site => site, :layout => layout, :created_by => user, :updated_by => user)
-        page2.full_path.should == "404"
+        page2.full_path.should == "/404"
       end
     end
     

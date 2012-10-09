@@ -126,6 +126,13 @@ describe Site do
         @site.domain_names.should have(2).items
       end
     end
+
+    describe "#find_page" do
+      it "should return the page by id" do
+        @site.pages << page = FactoryGirl.create(:page, :title => "foobar", :site => @site, :layout => @layout, :created_by => @user, :updated_by => @user)
+        @site.find_page(page.id).should == page  
+      end
+    end
     
     describe "#page_by_title" do
       it "should return the page by the title" do   

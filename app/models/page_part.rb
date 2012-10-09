@@ -1,6 +1,6 @@
 class PagePart
   include Mongoid::Document 
-  
+
   # -- Fields -------
   field :name
   field :content                               
@@ -8,8 +8,6 @@ class PagePart
   
   # -- Associations ---------
   embedded_in :page, :inverse_of => :page_parts
-  
-  # accepts_nested_attributes_for :filterable
   
   # -- Validations ------------
   validates :name,

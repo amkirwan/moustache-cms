@@ -97,7 +97,7 @@ class Page
   def save_preview
     self.write_attribute(:preview, true)
     self.slug = self.slug + '?preview=true'
-    self.save
+    self.save!
   end
 
   def delete_association_of_editor_id(editor_id)
@@ -130,34 +130,31 @@ class Page
     
     # slug is "foobar" in http://example.com/10/02/2011/foobar
     def slug_set
-      unless self.title.nil?
+      unless self.title.nil? || self.slug =~ /\?preview=true$/
         if self.site_id.nil?
           self.slug = ""
-        elsif self.title == "404"
-          self.slug = "404"
-          self.parent = nil
         elsif self.root?
-          self.slug = "/"
-          self.parent = nil
-        elsif self.slug =~ /\?preview=true$/
-          self.slug = self.slug
-        elsif self.slug.blank?
-          self.slug = self.title.gsub('_', '-')
-          self.slug = self.slug.parameterize
+          set_root_page_slug
         else
-          self.slug = self.slug.gsub('_', '-')
-          self.slug = self.slug.parameterize
+          set_child_page_slug
         end
       end
     end
-  
+
+    def set_root_page_slug
+      self.parent = nil
+      self.title == '404' ? self.slug = '404' : self.slug = '/'
+    end
+
+    def set_child_page_slug
+      self.slug = self.slug.blank? ? self.title.gsub('_', '-') : self.slug.gsub('_', '-') 
+
+      self.slug = self.slug.parameterize
+    end
+      
     # full_path is "/foobar/baz/qux" in http://example.com/foobar/baz/qux
     def full_path_set
-      if self.slug == "404"
-        self.full_path = "404"
-      else
-        self.full_path = self.parent ? "#{self.parent.full_path}/#{self.slug}".squeeze("/") : "/"
-      end
+      self.full_path = self.parent ? "#{self.parent.full_path}/#{self.slug}".squeeze("/") : "/#{self.slug}".squeeze("/")
     end
   
     def breadcrumb_set

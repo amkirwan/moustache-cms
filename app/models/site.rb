@@ -66,6 +66,10 @@ class Site
   end
 
   alias :add_domain :add_full_subdomain
+
+  def find_page(id)
+    self.pages.find(id)
+  end
   
   def page_by_full_path(path)   
     self.pages.find_by_full_path(path)
