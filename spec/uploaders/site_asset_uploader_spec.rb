@@ -17,7 +17,7 @@ describe SiteAssetUploader do
   
   after do
     SiteAssetUploader.enable_processing = false
-    @uploader.remove!
+    AssetFixtureHelper.remove_asset!(@uploader)
   end 
   
   describe "before_filer" do

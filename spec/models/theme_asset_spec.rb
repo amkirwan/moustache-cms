@@ -37,42 +37,8 @@ describe ThemeAsset do
      it "should be valid" do
        @theme_asset_image.should be_valid
      end    
+   end
      
-     it "should not be valid without a name" do
-       @theme_asset_image.name = nil
-       @theme_asset_image.should_not be_valid
-     end
-
-     it "should not be valid without a asset file" do
-       @theme_asset_js.remove_asset!
-       @theme_asset_js.should_not be_valid
-     end
-   end
-   
-   # -- Callbacks -----------
-   describe "before_save" do
-     describe "#update_asset_attributes" do
-       it "should set the size of the file" do
-         @theme_asset_image.file_size.should == 6646
-       end  
-
-       it "should set the file content_type" do   
-         @theme_asset_image.content_type.should == "image/png"         
-       end
-     end
-   end
-
-   describe "before_update" do
-     describe "#recreate" do
-       it "should update the filename and recreate version when a new name is given" do
-         asset = theme_collection.theme_assets.where(:name => "image").first
-         asset.name = "new_name"
-         asset.save
-         asset = theme_collection.theme_assets.where(:name => "new_name").first
-       end  
-     end
-   end
-   
    # -- Scopes ------------------------------------------------------
    describe "scopes" do
      describe "css_files" do

@@ -1,29 +1,10 @@
-class ThemeAsset 
-  include Mongoid::Document
-  include Mongoid::Timestamps
+class ThemeAsset < BaseAsset 
 
-  include MoustacheCms::CalcMd5
-
-  attr_accessible :name, 
-                  :description, 
-                  :content_type,
-                  :width,
-                  :height,
-                  :file_size,
-                  :asset,
-                  :theme_asset_attributes,
+  attr_accessible :theme_asset_attributes,
                   :custom_fields_attributes
 
-  # -- Fields --------------- 
-  field :name
+  # -- Fields ---
   field :description
-  field :content_type
-  field :width, :type => Integer
-  field :height, :type => Integer
-  field :file_size, :type => Integer 
-  field :creator_id
-  field :updator_id
-
   mount_uploader :asset, ThemeAssetUploader
 
   # -- Associations ----------
@@ -31,36 +12,13 @@ class ThemeAsset
   embeds_many :custom_fields, :as => :custom_fieldable
   accepts_nested_attributes_for :custom_fields
 
-  # -- Validations --------------
-  validates :name, :presence => true 
-  validates :asset, :presence => true
-  
   # -- Callbacks
-  before_validation :set_name
   before_save :update_asset_attributes
   before_update :recreate
 
   set_asset_folder :theme_assets
 
-  def set_name
-    unless self.name.nil?
-      if self.name.strip.empty?
-        name_split = self.asset.file.filename.split('.')
-        self.name = name_split.slice(0, name_split.length - 1).join('.')
-      end
-    end
-  end
-
-  def recreate
-    self.asset.recreate_versions!
-  end
-  
-  def update_asset_attributes         
-    self.content_type = asset.file.content_type unless asset.file.content_type.nil?
-    self.file_size = asset.file.size 
-  end
-
-    # -- Class Methods --------
+  # -- Class Methods --------
   scope :css_files, ->{ where(:content_type => "text/css") }
   scope :js_files, ->{ where(:content_type => /.*javascript$/i) }
   scope :javascripts, ->{ where(:content_type => /.*javascript$/i) }

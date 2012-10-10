@@ -140,6 +140,15 @@ FactoryGirl.define do
     after(:build) { |article| assign_created_updated_by(article, :articles) }
   end
 
+  factory :base_asset do
+    name "asset_name"
+    content_type "content_type"
+    asset { File.open("#{Rails.root}/spec/fixtures/assets/rails.png") }
+    width 200
+    height 200
+    file_size 200
+  end
+
   factory :asset_collection do 
     association :site, strategy: :build
     sequence(:name) { |n| "name_#{n}" }
@@ -147,30 +156,16 @@ FactoryGirl.define do
     after(:build) { |asset_collection| assign_created_updated_by(asset_collection, :asset_collections) }
   end
 
-  factory :site_asset do 
-    name "asset_name"
-    content_type "content_type"
-    asset { File.open("#{Rails.root}/spec/fixtures/assets/rails.png") }
-    width 200
-    height 200
-    file_size 200
-    tag_list "site asset"
-  end
-
   factory :custom_field do 
     sequence(:name) { |n| "name_#{n}" }
     content "tag attribute value"
   end
 
-  factory :theme_asset do 
-    name "asset_name"
-    content_type "content_type"
-    asset { File.open("#{Rails.root}/spec/fixtures/assets/rails.png") }
-    width 200
-    height 200
-    file_size 200
-    creator_id { FactoryGirl.build(:user).id }
-    updator_id { FactoryGirl.build(:user).id }
+  factory :site_asset, class: SiteAsset, parent: :base_asset do 
+    tag_list "site asset"
+  end
+
+  factory :theme_asset, class: ThemeAsset, parent: :base_asset do 
   end
 
   factory :theme_collection do 

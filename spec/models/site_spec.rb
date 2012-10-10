@@ -78,6 +78,10 @@ describe Site do
     it "should embed many meta_tags" do
       @site.should embed_many :meta_tags
     end
+
+    it "should have many base assets" do
+      @site.should have_many(:base_assets)
+    end
   end
   
   # -- Callbacks ---
