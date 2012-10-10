@@ -19,22 +19,7 @@ describe AuthorUploader do
     FileUtils.rm_rf(File.join(Rails.root, 'public', 'authors', @uploader.model.site_id.to_s))
   end 
 
-  describe "before_filer" do
-    describe "#remember_cache_id" do
-      it "should assign file cache_id" do
-        @uploader.instance_variable_get(:@cache_id_was).should_not be_nil
-      end  
-    end                    
-  end                                                                  
-       
-  describe "after_filter" do
-    describe "delete_tmp_dir" do
-      it "should delete the tmp directory" do     
-        File.exist?(File.join(Rails.root, "spec", "tmp", @uploader.cache_dir, @uploader.instance_variable_get(:@cache_id_was))).should be_false
-      end
-    end  
-  end                   
-  
+                  
   it "should change the uploaded filename to the name of the full_name of the author" do
     @uploader.filename.should ==  "anthony-kirwan.png"
   end
@@ -47,11 +32,9 @@ describe AuthorUploader do
     @uploader.image?(@uploader.file).should be_true
   end
   
-  describe "storeage paths" do
-    
-    it "should set the storage directory to image for image files" do
-      @uploader.store_dir.should == "authors/#{@uploader.model.site_id}"
-    end
+  it "should set the storage directory to image for image files" do
+    @uploader.store_dir.should == "authors/#{@uploader.model.site_id}"
   end
+
 end
 

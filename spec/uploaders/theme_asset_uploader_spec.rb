@@ -30,36 +30,43 @@ describe ThemeAssetUploader do
     AssetFixtureHelper.remove_asset!(File.join(Rails.root, 'public', 'theme_assets', @uploader.model._parent.site_id.to_s))
   end  
   
-  describe "before_filer" do
-    describe "#remember_cache_id" do
-      it "should assign file cache_id" do
-        @uploader.instance_variable_get(:@cache_id_was).should_not be_nil
-      end  
-    end                    
-  end                                                                  
-       
-  describe "after_filter" do
-    describe "delete_tmp_dir" do
-      it "should delete the tmp directory" do     
-        File.exist?(File.join(Rails.root, "spec", "tmp", @uploader.cache_dir, @uploader.instance_variable_get(:@cache_id_was))).should be_false
-      end
-    end  
-  end                   
-  
-  it "should change the uploaded filename to the name of the theme_asset" do
-    @uploader.filename.should =~  /^foobar.png$/
-  end
-  
   it "should white list these extenstiosn" do
     @uploader.extension_white_list.should == %w(jpg jpeg gif png css js swf flv eot svg ttf woff otf ico pdf mp4 m4v ogv webm flv)
   end       
   
-  it "should return true when the file is an image" do
-    @uploader.image?(@uploader.file).should be_true
+  describe "asset_type" do
+    it "should return true when the file is an image" do
+      @uploader.image?(@uploader.file).should be_true
+    end
+
+    it "should return true when the file is a stylesheet" do
+      @uploader_css.stylesheet?(@uploader_css.file).should be_true
+    end
+
+    it "should return true when the file is a javascript file" do
+      @uploader_js.javascript?(@uploader_js.file).should be_true
+    end
+  end
+
+  describe "set the directory asset type for storing the file in" do
+    it "should return images if the file is an image file" do
+      @uploader.asset_type(@uploader.file).should == 'images'
+    end
+
+    it "should return javascripts if the file is a javascript file" do
+      @uploader_js.asset_type(@uploader_js.file).should == 'javascripts'
+    end
+
+    it "should return stylesheets if the file is a css file" do
+      @uploader_css.asset_type(@uploader_css.file).should == 'stylesheets'
+    end
+
+    it "should return assets fi the file is not a image, javascript or css file" do
+      @uploader_otf.asset_type(@uploader_otf.file).should == 'assets'
+    end
   end
   
   describe "storeage paths" do
-   
     it "should set the storage directory to image for image files" do
       @uploader.store_dir.should == "theme_assets/#{@uploader.model._parent.site_id}/#{@uploader.model._parent.name}/images"
     end
