@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe BaseAsset do
 
+  let(:site) { FactoryGirl.create(:site) }
+
   after(:all) do
     AssetFixtureHelper.reset!
   end
