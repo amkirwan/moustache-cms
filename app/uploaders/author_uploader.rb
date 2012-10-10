@@ -16,13 +16,5 @@ class AuthorUploader < BaseAssetUploader
     "#{model.firstname.parameterize}-#{model.lastname.parameterize}.#{model.image.file.extension}"
   end
 
-   def image?(sanitized_file)    
-     types = mime_types(sanitized_file)
-     if types.empty?
-       false
-     else
-       types.first.content_type.include? 'image'
-     end
-   end
 end
 

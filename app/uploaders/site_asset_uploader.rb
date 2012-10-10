@@ -7,17 +7,8 @@ class SiteAssetUploader < BaseAssetUploader
   
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
-   def extension_white_list
-     %w(jpg jpeg gif png pdf mp4 m4v ogv webm flv otf)
-   end
+  def extension_white_list
+   %w(jpg jpeg gif png pdf mp4 m4v ogv webm flv otf)
+  end
     
-   def image?(sanitized_file)    
-     types = mime_types(sanitized_file)
-     if types.empty?
-       false
-      else
-        types.first.content_type.include? 'image'
-      end
-   end
-
 end

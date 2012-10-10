@@ -28,11 +28,7 @@ describe AuthorUploader do
     @uploader.extension_white_list.should == %w(jpg jpeg gif png)
   end       
   
-  it "should return true when the file is an image" do
-    @uploader.image?(@uploader.file).should be_true
-  end
-  
-  it "should set the storage directory to image for image files" do
+  it "should set the storage directory for the authors directory" do
     @uploader.store_dir.should == "authors/#{@uploader.model.site_id}"
   end
 

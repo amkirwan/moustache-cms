@@ -33,36 +33,22 @@ describe ThemeAssetUploader do
   it "should white list these extenstiosn" do
     @uploader.extension_white_list.should == %w(jpg jpeg gif png css js swf flv eot svg ttf woff otf ico pdf mp4 m4v ogv webm flv)
   end       
-  
-  describe "asset_type" do
-    it "should return true when the file is an image" do
-      @uploader.image?(@uploader.file).should be_true
-    end
-
-    it "should return true when the file is a stylesheet" do
-      @uploader_css.stylesheet?(@uploader_css.file).should be_true
-    end
-
-    it "should return true when the file is a javascript file" do
-      @uploader_js.javascript?(@uploader_js.file).should be_true
-    end
-  end
-
+ 
   describe "set the directory asset type for storing the file in" do
     it "should return images if the file is an image file" do
-      @uploader.asset_type(@uploader.file).should == 'images'
+      @uploader.asset_type.should == 'images'
     end
 
     it "should return javascripts if the file is a javascript file" do
-      @uploader_js.asset_type(@uploader_js.file).should == 'javascripts'
+      @uploader_js.asset_type.should == 'javascripts'
     end
 
     it "should return stylesheets if the file is a css file" do
-      @uploader_css.asset_type(@uploader_css.file).should == 'stylesheets'
+      @uploader_css.asset_type.should == 'stylesheets'
     end
 
     it "should return assets fi the file is not a image, javascript or css file" do
-      @uploader_otf.asset_type(@uploader_otf.file).should == 'assets'
+      @uploader_otf.asset_type.should == 'assets'
     end
   end
   

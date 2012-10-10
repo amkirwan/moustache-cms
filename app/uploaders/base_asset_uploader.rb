@@ -14,7 +14,7 @@ class BaseAssetUploader < CarrierWave::Uploader::Base
 
   process :set_content_type
 
-  def mime_types(file)
+  def mime_types
     MIME::Types.of(file.extension)
   end
 
@@ -37,5 +37,32 @@ class BaseAssetUploader < CarrierWave::Uploader::Base
       end
     end
   end          
+    
+  def image?
+   types = mime_types
+   if types.empty?
+     false
+    else
+      types.first.content_type.include? 'image'
+    end
+  end
+
+  def stylesheet?
+   types = mime_types
+   if types.empty?
+     false
+    else
+      types.first.content_type.include? 'css'
+    end
+  end
+
+  def javascript?
+   types = mime_types
+   if types.empty?
+     false
+    else
+      types.first.content_type.include? 'javascript'
+    end
+  end
 
 end

@@ -28,8 +28,4 @@ describe SiteAssetUploader do
     @uploader.extension_white_list.should == %w(jpg jpeg gif png pdf mp4 m4v ogv webm flv otf)
   end       
   
-  
-  it "should return true when the file is an image" do
-    @uploader.image?(@uploader.file).should be_true
-  end
 end
