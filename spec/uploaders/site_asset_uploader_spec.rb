@@ -17,7 +17,7 @@ describe SiteAssetUploader do
   
   after do
     SiteAssetUploader.enable_processing = false
-    AssetFixtureHelper.remove_asset!(@uploader)
+    AssetFixtureHelper.remove_asset!(File.join(Rails.root, 'public', @uploader.store_dir))
   end 
   
   describe "before_filer" do

@@ -27,7 +27,7 @@ describe ThemeAssetUploader do
   
   after do
     ThemeAssetUploader.enable_processing = false
-    AssetFixtureHelper.remove_asset!(@uploader)
+    AssetFixtureHelper.remove_asset!(File.join(Rails.root, 'public', 'theme_assets', @uploader.model._parent.site_id.to_s))
   end  
   
   describe "before_filer" do

@@ -15,7 +15,7 @@ describe BaseAssetUploader do
 
   after do
     BaseAssetUploader.enable_processing = false
-    AssetFixtureHelper.remove_asset!(@uploader)
+    AssetFixtureHelper.remove_asset!(File.join(Rails.root, 'public', @uploader.store_dir))
   end 
 
   describe "before_filter" do
