@@ -35,8 +35,6 @@ class Article
   field :set_date, :type => Boolean
   field :date, :type => Time
 
-  # taggable
-
   # -- Index -----
   index :title => 1
   index :permalink => 1

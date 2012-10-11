@@ -1,23 +1,15 @@
-class ArticleCollection
-  include Mongoid::Document
-  include Mongoid::Timestamps
+class ArticleCollection < BaseCollection
 
-  include MoustacheCms::FriendlyFilename
-
-  attr_accessible :name,
-                  :layout_id,
+  attr_accessible :layout_id,
                   :editor_ids,
                   :permalink_prefix
 
     # -- Fields --------------- 
-  field :name
   field :permalink_prefix, :type => Boolean, :default => false
   
   # -- Associations -------------
-  belongs_to :site
   belongs_to :layout
-  belongs_to :created_by, :class_name => "User", :inverse_of => :article_collections_created
-  belongs_to :updated_by, :class_name => "User", :inverse_of => :article_collections_updated
+  created_updated(:article_collections)
   has_many :articles
   has_and_belongs_to_many :editors, :class_name => "User", :inverse_of => :article_collections
 
