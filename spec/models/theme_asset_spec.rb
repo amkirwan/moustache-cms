@@ -115,16 +115,6 @@ describe ThemeAsset do
    
    # -- Instance Methods ----------
    describe "Instance Methods" do
-     describe "#image?" do
-       it "should return true that the theme_asset is an image" do
-         @theme_asset_image.should be_image
-       end     
-       
-       it "should return false when the site_asset is not an image" do  
-          @theme_asset_css.image?.should be_false
-       end  
-     end 
-     
      describe "#update_file_content" do
        it "should return when true when saving the updated file content" do
           @theme_asset_css.update_file_content("hello, world").should be_true

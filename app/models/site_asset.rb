@@ -11,9 +11,4 @@ class SiteAsset < BaseAsset
   # -- Associations ------
   embedded_in :asset_collection  
   
-  # -- Instance Methods     
-  def image?
-    self.asset.image?(self.asset.file)
-  end
-
 end

@@ -2,7 +2,7 @@ class ThemeAssetUploader < BaseAssetUploader
 
   # Set the storage directory
   def store_dir
-    "theme_assets/#{model._parent.site_id}/#{model._parent.name}/#{asset_type}" 
+    "theme_assets/#{model._parent.site_id}/#{model._parent.name}/#{asset_type}"
   end
   
   # Add a white list of extensions which are allowed to be uploaded.
@@ -23,4 +23,5 @@ class ThemeAssetUploader < BaseAssetUploader
       "assets"
     end
   end
+
 end

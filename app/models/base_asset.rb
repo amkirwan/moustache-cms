@@ -33,6 +33,12 @@ class BaseAsset
   before_save :update_asset_attributes
   before_update :recreate
 
+  %w{image stylesheet javascript}.each do |type|
+    define_method("#{type}?") do
+      self.asset.send("#{type}?")
+    end
+  end
+
   protected
 
   def set_name

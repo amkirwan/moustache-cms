@@ -33,13 +33,6 @@ class ThemeAsset < BaseAsset
     end
   end
 
-  # -- Instance Methods ----------
-  %w{image stylesheet javascript}.each do |type|
-    define_method("#{type}?") do
-      self.asset.send("#{type}?", self.asset.file)
-    end
-  end
-
   def css_file_by_name(name)
     self.css_files.where(:name => name).first
   end

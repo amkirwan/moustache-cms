@@ -39,7 +39,6 @@ When /^I edit the theme asset "([^"]*)" and delete it$/ do |asset_name|
     Then "#{asset_name}" should be listed within the image assets
   }
   click_link asset_name
-  click_link "Delete Theme Asset"
 end
 
 When /^I delete the theme asset "([^"]*)" from the theme assets list$/ do |asset_name|
