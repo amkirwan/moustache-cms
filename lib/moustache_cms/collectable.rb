@@ -2,8 +2,8 @@ module MoustacheCms
   module Collectable
     extend ActiveSupport::Concern
 
-    def destroy_collection_folder
-      FileUtils.rm_rf(File.join(Rails.root, 'public', self.name, site.id.to_s, name))
+    def destroy_collection_folder(asset_folder)
+      FileUtils.rm_rf(File.join(Rails.root, 'public', asset_folder, site.id.to_s, self.name))
     end
 
     module ClassMethods

@@ -7,7 +7,7 @@ class AssetCollection < BaseCollection::Metal
   collectable(:site_assets)
   
   def remove_folder
-    destroy_collection_folder
+    destroy_collection_folder('site_assets')
   end
 
 end
