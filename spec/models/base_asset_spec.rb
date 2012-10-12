@@ -6,6 +6,7 @@ describe BaseAsset do
 
   after(:all) do
     AssetFixtureHelper.reset!
+    FileUtils.rm_rf(File.join(Rails.root, 'public', 'base_assets'))
   end
 
   before do
