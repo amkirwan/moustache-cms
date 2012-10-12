@@ -54,7 +54,9 @@ describe MoustacheCms::CalcMd5 do
 
   describe "#destroy_md5" do
     it "should destroy the md5 file" do
-      pending
+      File.exists?(@site_asset.current_path_md5).should be_true
+      @site_asset.destroy_md5
+      File.exists?(@site_asset.current_path_md5).should be_false
     end
   end
 
