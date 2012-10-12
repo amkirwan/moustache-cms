@@ -3,18 +3,15 @@ class BaseCollection
   include Mongoid::Timestamps
   
   include MoustacheCms::FriendlyFilename
-  include MoustacheCms::AssetCollectable
+  include MoustacheCms::Collectable
 
   attr_accessible :name
 
   # -- Field --
   field :name
 
-  # -- Associations -------------
+  # -- Associations ----
   belongs_to :site
-
-  # -- Callbacks ---
-  before_destroy :remove_folder 
 
   # -- Validations ---------------
   validates :name,
@@ -23,5 +20,9 @@ class BaseCollection
             
   validates :site_id,
             :presence => true
+
+  class Metal < BaseCollection
+    include MoustacheCms::CreatedUpdatedBy
+  end
    
 end

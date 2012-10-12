@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-
 describe "AssetCollection" do
   let(:site) { FactoryGirl.create(:site) }
   let(:user) { FactoryGirl.create(:user) }
@@ -9,7 +8,7 @@ describe "AssetCollection" do
     @asset_collection = FactoryGirl.create(:asset_collection, :site => site, :created_by => user, :updated_by => user)           
   end
   
-  # --  Associations ---- 
+  # -- Associations --- 
   describe "associations" do
     it "should belong_to a site" do
       @asset_collection.should belong_to(:site)

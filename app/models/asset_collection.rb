@@ -1,4 +1,5 @@
-class AssetCollection < BaseCollection
+class AssetCollection < BaseCollection::Metal
+
   # -- Callbacks
   before_destroy :remove_folder 
   

@@ -116,9 +116,12 @@ FactoryGirl.define do
     after(:build) { |author| assign_created_updated_by(author, :authors) }
   end
 
-  factory :article_collection do 
+  factory :base_collection do
     association :site, strategy: :build
     sequence(:name) { |n| "name_#{n}" }
+  end
+
+  factory :article_collection, parent: :base_collection, class: ArticleCollection do 
     editors {[ FactoryGirl.build(:user) ]}
     permalink_prefix false
     after(:build) { |article_collection| assign_created_updated_by(article_collection, :article_collections) }
@@ -149,9 +152,7 @@ FactoryGirl.define do
     file_size 200
   end
 
-  factory :asset_collection do 
-    association :site, strategy: :build
-    sequence(:name) { |n| "name_#{n}" }
+  factory :asset_collection, parent: :base_collection, class: AssetCollection do 
     site_assets { [ FactoryGirl.build(:site_asset) ] }
     after(:build) { |asset_collection| assign_created_updated_by(asset_collection, :asset_collections) }
   end
@@ -168,9 +169,7 @@ FactoryGirl.define do
   factory :theme_asset, class: ThemeAsset, parent: :base_asset do 
   end
 
-  factory :theme_collection do 
-    association :site, strategy: :build
-    sequence(:name) { |n| "name_#{n}" }
+  factory :theme_collection, parent: :base_collection, class: ThemeCollection  do 
     after(:build) { |theme_collection| assign_created_updated_by(theme_collection, :theme_collections) }
   end
 end

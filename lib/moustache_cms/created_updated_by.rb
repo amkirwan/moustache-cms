@@ -18,5 +18,6 @@ module MoustacheCms
         belongs_to :updated_by, :class_name => "User", :inverse_of => updated.to_sym
       end
     end
+
   end
 end

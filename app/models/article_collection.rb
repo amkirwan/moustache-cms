@@ -1,4 +1,4 @@
-class ArticleCollection < BaseCollection
+class ArticleCollection < BaseCollection::Metal
 
   attr_accessible :layout_id,
                   :editor_ids,
