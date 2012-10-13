@@ -38,20 +38,23 @@ class Admin::UsersController < AdminBaseController
   def update                    
     admin_only
     respond_with(:admin, @user) do |format|
-      if @user.update_with_password(params[:user])
-        if params[:user][:password] && params[:user][:password_confirmation]
-          flash[:notice] = "Successfully updated the password for #{@user.full_name}"
-          sign_in(@user, :bypass => true)
-          format.html { redirect_to [:admin, @user] }
-        else
-          flash[:notice] = "Successfully updated the user profile for #{@user.full_name}"
-          format.html { redirect_to [:admin, :users] }
-        end
+      if @user.update_without_password(params[:user])
+        flash[:notice] = "Successfully updated the user profile for #{@user.full_name}"
+        format.html { redirect_to [:admin, :users] }
       else
-        if params[:user][:password] && params[:user][:password_confirmation]
-          format.html { render :change_password }
-        end
+        format.html { render :edit}
       end
+    end
+  end
+
+  def update_password
+    admin_only  
+    if @user.update_with_password(params[:user])
+      flash[:notice] = "Successfully updated the password for #{@user.full_name}"
+      sign_in(@user, :bypass => true)
+      respond_with(:admin, @user)
+    else
+      render :change_password
     end
   end
 
@@ -71,19 +74,12 @@ class Admin::UsersController < AdminBaseController
     end
   end 
 
-
-  def change_password
-  end
-
   private
 
     def admin_only
-      if @user.new_record?
-        @user.username = params[:user][:username]  if admin?
-        @user.role = params[:user][:role] if admin?
-      else
-        @user.username = params[:user][:username] if admin? && (params[:user][:passowrd].blank? && params[:user][:password_confirmation].blank?) 
-        @user.role = params[:user][:role] if admin? && (params[:user][:passowrd].blank? && params[:user][:password_confirmation].blank?) 
+      if admin?
+        @user.username = params[:user][:username] 
+        @user.role = params[:user][:role] 
       end
     end
 

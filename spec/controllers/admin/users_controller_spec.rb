@@ -219,43 +219,22 @@ describe Admin::UsersController do
     end
     
     it "should should set attr_accessable attributes" do
-      @admin_user.should_receive(:update_with_password).with(params["user"])
+      @admin_user.should_receive(:update_without_password).with(params["user"])
       do_put
     end
       
-    context "when it updates the password" do
-      before(:each) do
-        @params_with_password = params
-        @params_with_password['user']["password"] = 'password'
-        @params_with_password['user']["password_confirmation"] = 'password'
-        @admin_user.stub(:update_with_password).and_return(true)
-      end
-      it "should set the flash[:notice] message" do
-        do_put
-        flash[:notice].should == "Successfully updated the password for #{@admin_user.full_name}"
-      end
-
-      it "should redirecto the users page" do
-        do_put
-        response.should redirect_to(admin_user_path(@admin_user)) 
-      end
-    end
-
-    context "when the update updates just the profile" do
-      it "should set a flash[:notice] message" do
-        do_put
-        flash[:notice].should == "Successfully updated the user profile for #{@admin_user.full_name}"
-      end         
-      
-      it "should redirect to INDEX" do
-        do_put
-        response.should redirect_to(admin_users_path)
-      end                                                                       
-    end
-  
+    it "should set a flash[:notice] message" do
+      do_put
+      flash[:notice].should == "Successfully updated the user profile for #{@admin_user.full_name}"
+    end         
+    
+    it "should redirect to list of users" do
+      do_put
+      response.should redirect_to(admin_users_path)
+    end                                                                       
     context "when update_attributes fails" do
       it "should render the edit template" do
-        @admin_user.stub(:update_with_password).and_return(false)
+        @admin_user.stub(:update_without_password).and_return(false)
         @admin_user.stub(:errors => { :user => "user errors" })
         do_put  
         response.should render_template("admin/users/edit")

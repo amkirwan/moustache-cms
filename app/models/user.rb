@@ -124,27 +124,48 @@ class User
     end
   end
 
-  def update_with_password(params={})
+  def update_with_password(params, *options)
     current_password = params.delete(:current_password)
 
-    if params[:password].blank?
-      params.delete(:password)
-      params.delete(:password_confirmation) if params[:password_confirmation].blank?
-    end
-
-    if ((params[:password].blank? && params[:password_confirmation].blank?) || valid_password?(current_password))
-      result = update_attributes(params)
-    else
-      self.attributes = params
-      self.valid?
-      self.errors.add(:current_password, current_password.blank? ? :blank : :invalid)
-      false
-    end
-
-    clean_up_passwords if self.respond_to?(:password)
+    result = check_if_passwords_are_blank(params)
+    result = check_if_passwords_are_equal(params) unless result == false
+    result = check_if_password_is_valid(params, current_password, result)  unless result == false
+    clean_up_passwords 
     result
   end
 
+  def check_if_password_is_valid(params, current_password, result)
+    if valid_password?(current_password) 
+      update_attributes(params) 
+    else
+      set_password_update_error(params, :current_password, current_password.blank? ? :blank : :invalid)
+    end
+  end
+
+  def check_if_passwords_are_equal(params)
+    if params[:password] != params[:password_confirmation] 
+      set_password_update_error(params, :password, 'does not match confirmation password')
+      set_password_update_error(params, :password_confirmation, 'does not match password')
+    end
+  end
+
+  def check_if_passwords_are_blank(params)
+    result = if params[:password].blank? 
+      set_password_update_error(params)
+    end
+    
+    result = if params[:password_confirmation].blank?
+      set_password_update_error(params, :password_confirmation)
+    end
+    result
+  end
+
+  def set_password_update_error(params, field=:password, msg=:blank)
+    self.assign_attributes(params)
+    self.errors.add(field.to_sym, msg)
+    false
+  end
+    
   def clone_and_add_to_site(site)
     new_user = self.clone
     new_user.password = self.password
@@ -158,6 +179,26 @@ class User
       true
     end
     
+    def uniq_page_ids
+      self.page_ids.uniq!
+    end
+  
+    def lower
+      self.username.downcase!
+      self.email.downcase!
+    end
+  
+    def set_username
+      self.username = self.username
+    end
+      
+    def clone_and_add_to_site(site)
+      new_user = self.clone
+      new_user.password = self.password
+      new_user.site_id = site.id
+      new_user.save
+    end
+ 
     def uniq_page_ids
       self.page_ids.uniq!
     end

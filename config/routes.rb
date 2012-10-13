@@ -9,6 +9,7 @@ MoustacheCms::Application.routes.draw do
     resources :users do
       member do
         get :change_password
+        put :update_password
       end
     end
     resources :layouts
