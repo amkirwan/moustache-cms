@@ -133,6 +133,27 @@ class User
     clean_up_passwords 
     result
   end
+  def clone_and_add_to_site(site)
+      new_user = self.clone
+    new_user.password = self.password
+    new_user.site_id = site.id
+    new_user.save
+  end
+
+  def lower
+    self.username.downcase!
+    self.email.downcase!
+  end
+
+  private 
+
+  def uniq_page_ids
+    self.page_ids.uniq!
+  end
+
+  def set_username
+    self.username = self.username
+  end
 
   def check_if_password_is_valid(params, current_password, result)
     if valid_password?(current_password) 
@@ -165,50 +186,6 @@ class User
     self.errors.add(field.to_sym, msg)
     false
   end
-    
-  def clone_and_add_to_site(site)
-    new_user = self.clone
-    new_user.password = self.password
-    new_user.site_id = site.id
-    new_user.save
-  end
- 
-  private
-  
-    def tester?
-      true
-    end
-    
-    def uniq_page_ids
-      self.page_ids.uniq!
-    end
-  
-    def lower
-      self.username.downcase!
-      self.email.downcase!
-    end
-  
-    def set_username
-      self.username = self.username
-    end
-      
-    def clone_and_add_to_site(site)
-      new_user = self.clone
-      new_user.password = self.password
-      new_user.site_id = site.id
-      new_user.save
-    end
- 
-    def uniq_page_ids
-      self.page_ids.uniq!
-    end
-  
-    def lower
-      self.username.downcase!
-      self.email.downcase!
-    end
-  
-    def set_username
-      self.username = self.username
-    end
+
 end
+
