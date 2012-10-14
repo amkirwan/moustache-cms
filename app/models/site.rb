@@ -50,16 +50,10 @@ class Site
   
   def add_subdomain_to_domain_names
     self.domain_names ||= []
-    if self.subdomain_changed? || self.default_domain_changed?
-      if self.subdomain_was.nil?
-        self.domain_names << self.full_subdomain
-      else
-        domain_names.delete(old_domain) if domain_names.include?(old_domain)
-        (self.domain_names << self.full_subdomain).uniq!
-      end
-    else
-      (self.domain_names << self.full_subdomain).uniq!
-   end
+    if domain_names.include?(old_domain)
+      domain_names.delete(old_domain)
+    end
+    (self.domain_names << self.full_subdomain).uniq!
   end
 
   def add_full_subdomain(domain)
