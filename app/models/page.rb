@@ -5,6 +5,7 @@ class Page
   include MoustacheCms::StateSetable
   include MoustacheCms::Published
   include MoustacheCms::DefaultMetaTags
+  include MoustacheCms::CreatedUpdatedBy
 
   include Mongoid::Tree 
   include Mongoid::Tree::Ordering
@@ -38,8 +39,7 @@ class Page
   embeds_many :page_parts 
   belongs_to :site
   belongs_to :layout
-  belongs_to :created_by, :class_name => "User", :inverse_of => :pages_created
-  belongs_to :updated_by, :class_name => "User", :inverse_of => :pages_updated
+  created_updated(:pages)
   has_and_belongs_to_many :editors, :class_name => "User", :inverse_of => :pages
   
   accepts_nested_attributes_for :custom_fields
