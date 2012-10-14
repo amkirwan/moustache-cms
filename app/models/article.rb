@@ -101,27 +101,6 @@ class Article
     self.date.iso8601
   end
 
-  # This returns the associated datetime in words in the format January 06, 2012 at 3pm
-  # def status_formatted_date_time
-  #   self.current_state.formatted_date_time
-  # end
-
-  # def status_formatted_date_time_with_zone
-  #   self.current_state.formatted_date_time_with_zone
-  # end
-
-  # def status_formatted_date
-  #   self.current_state.formatted_date
-  # end
-
-  # def status_formatted_time
-  #   self.current_state.formatted_time
-  # end
-
-  # def status_formatted_time_zone
-  #   self.current_state.formatted_time_zone
-  # end
-
   def date_at_with_time
     return "" if self.date.nil?
     self.date.strftime("%B %d, %Y at%l%P")

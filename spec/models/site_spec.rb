@@ -224,6 +224,14 @@ describe Site do
       end
     end
 
+    describe "#theme_collecton_by_name(theme_name)" do
+      it "should return the theme coolection with the name" do
+        theme_collection = FactoryGirl.build(:theme_collection, :name => 'foobar')
+        @site.theme_collections << theme_collection
+        @site.theme_collection_by_name('foobar').should == theme_collection  
+      end
+    end
+
     describe "#admin_page_path" do
       it "should return the path to the admin page for the site" do
         @site.subdomain = 'foobar'
