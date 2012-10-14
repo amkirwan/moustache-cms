@@ -120,7 +120,7 @@ describe Admin::SiteAssetsController do
       
       it "should assign a flash message that the site_asset was saved" do
         do_post
-        flash[:notice].should == "Successfully created the asset #{@site_asset.name}"
+        flash[:notice].should == "Successfully created the site asset #{@site_asset.name}"
       end
       
       it "should redirect to the admin/site_assets/index" do

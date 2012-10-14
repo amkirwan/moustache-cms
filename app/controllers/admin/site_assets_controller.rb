@@ -35,10 +35,8 @@ class Admin::SiteAssetsController < AdminBaseController
     process_create_params
     creator_updator_set_id @site_asset    
     @site_asset.asset = params[:file]
-    respond_with(:admin, @asset_collection, @site_asset) do |format|
-      if @site_asset.save
-        format.html { redirect_to [:admin, @asset_collection, :site_assets], :notice => "Successfully created the asset #{@site_asset.name}" }
-      end
+    asset_create_respond_with( @asset_collection, @site_asset, :site_assets) do
+      "Successfully created the site asset #{@site_asset.name}"
     end
   end
 
@@ -61,12 +59,7 @@ class Admin::SiteAssetsController < AdminBaseController
   end
 
   private
-    def try_site_asset_cache                                                                  
-      if !params[:site_asset][:asset_cache].empty? && params[:site_asset][:asset].nil?
-        set_from_cache(:cache_name => params[:site_asset][:asset_cache], :asset => @site_asset) 
-      end
-    end 
-    
+   
     def process_name(original_filename)
       @site_asset.name = original_filename
     end

@@ -29,11 +29,9 @@ class Admin::ThemeAssetsController < AdminBaseController
   # POST /admin/theme_assets
   def create
     creator_updator_set_id @theme_asset    
-    try_theme_asset_cache 
-    respond_with(:admin, @theme_collection, @theme_asset) do |format| 
-      if @theme_asset.save
-        format.html { redirect_to [:admin, @theme_collection, :theme_assets], :notice => "Successfully created the theme asset #{@theme_asset.name}"  }
-      end
+    try_theme_asset_cache(:theme_asset, @theme_asset) 
+    asset_create_respond_with( @theme_collection, @theme_asset, :theme_assets) do
+      "Successfully created the theme asset #{@theme_asset.name}"
     end
   end    
   
@@ -65,12 +63,6 @@ class Admin::ThemeAssetsController < AdminBaseController
   end   
   
   private
-    def try_theme_asset_cache 
-      if !params[:theme_asset][:asset_cache].empty? && params[:theme_asset][:asset].nil?
-        set_from_cache(:cache_name => params[:theme_asset][:asset_cache], :asset => @theme_asset)
-      end
-    end
-
     def md5_update(data)
       md5 = ::Digest::MD5.hexdigest(data)
       @theme_asset.filename_md5 = "#{@theme_asset.name}-#{md5}.#{@theme_asset.asset.file.extension}"
