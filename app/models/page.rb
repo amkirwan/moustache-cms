@@ -2,10 +2,11 @@ class Page
   include Mongoid::Document 
   include Mongoid::Timestamps
  
+  include MoustacheCms::Siteable
+  include MoustacheCms::CreatedUpdatedBy
   include MoustacheCms::StateSetable
   include MoustacheCms::Published
   include MoustacheCms::DefaultMetaTags
-  include MoustacheCms::CreatedUpdatedBy
 
   include Mongoid::Tree 
   include Mongoid::Tree::Ordering
@@ -37,7 +38,6 @@ class Page
   # -- Associations-------------------------
   embeds_many :custom_fields, :as => :custom_fieldable
   embeds_many :page_parts 
-  belongs_to :site
   belongs_to :layout
   created_updated(:pages)
   has_and_belongs_to_many :editors, :class_name => "User", :inverse_of => :pages
@@ -56,12 +56,9 @@ class Page
   validates :breadcrumb,
             :presence => true
 
-  validates_presence_of :site_id,
-                        :slug, 
+  validates_presence_of :slug, 
                         :current_state,
-                        :layout_id, 
-                        :created_by_id, 
-                        :updated_by_id                    
+                        :layout_id
 
   # -- Callbacks -----------------------------------------------
   before_validation :format_title, :slug_set, :full_path_set, :breadcrumb_set
