@@ -2,6 +2,7 @@ class User
   include Mongoid::Document
   include Mongoid::Timestamps
 
+  include MoustacheCms::Siteable
   
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :timeoutable
    
@@ -45,34 +46,15 @@ class User
   index :username => 1
   
   #-- Associations-----------------------------------------------
-  has_many :layouts_created, :class_name => "Layout", :inverse_of => :created_by
-  has_many :layouts_updated, :class_name => "Layout", :inverse_of => :updated_by
-
-  has_many :pages_created, :class_name => "Page", :inverse_of => :created_by
-  has_many :pages_updated, :class_name => "Page", :inverse_of => :updated_by
-
-  has_many :snippets_created, :class_name => "Snippet", :inverse_of => :created_by
-  has_many :snippets_updated, :class_name => "Snippet", :inverse_of => :updated_by
-
-  has_many :asset_collections_created, :class_name => "AssetCollection", :inverse_of => :created_by
-  has_many :asset_collections_updated, :class_name => "AssetCollection", :inverse_of => :updated_by
-
-  has_many :theme_collections_created, :class_name => "ThemeCollection", :inverse_of => :created_by
-  has_many :theme_collections_updated, :class_name => "ThemeCollection", :inverse_of => :updated_by
-
-  has_many :article_collections_created, :class_name => "ArticleCollection", :inverse_of => :created_by
-  has_many :article_collections_updated, :class_name => "ArticleCollection", :inverse_of => :updated_by
-
-  has_many :authors_created, :class_name => "Author", :inverse_of => :created_by
-  has_many :authors_updated, :class_name => "Author", :inverse_of => :updated_by
-
-  has_many :articles_created, :class_name => "Article", :inverse_of => :created_by
-  has_many :articles_updated, :class_name => "Article", :inverse_of => :updated_by
-
+  %w(Layout Page Snippet AssetCollection ThemeCollection ArticleCollection Author Article).each do |name|
+    created = name.underscore.pluralize + '_created'
+    updated = name.underscore.pluralize + '_updated'
+    has_many created.to_sym, class_name: name, inverse_of: :created_by
+    has_many updated.to_sym, class_name: name, inverse_of: :updated_by
+  end
+  
   has_and_belongs_to_many :pages, :class_name => "Page", :inverse_of => :editors
   has_and_belongs_to_many :article_collections, :class_name => "ArticleCollection", :inverse_of => :editors
-
-  belongs_to :site
 
   # -- Before Validations -----------------------------------------------
   before_validation :uniq_page_ids
@@ -97,9 +79,6 @@ class User
             :uniqueness => { :scope => :site_id },
             :format => { :with => /^([^\s]+)((?:[-a-z0-9]\.)[a-z]{2,})$/i }
   
-  validates :site_id,
-            :presence => true
-
   validates :time_zone,
             :presence => true
 
