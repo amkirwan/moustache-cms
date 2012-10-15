@@ -38,11 +38,11 @@ class ThemeAsset < BaseAsset
   end
   
   def update_file_content(file_contents)
-    if self.content_type == "text/css" || self.content_type == "application/javascript" || self.content_type == 'application/x-javascript' || self.content_type == 'text/javascript'
-      File.open(self.asset.path, "w") { |f| f.write(file_contents) }
-      File.open(self.current_path_md5, 'w') { |f| f.write(file_contents) }
+    if self.content_type == "text/css" || self.content_type =~ "javascript" 
+      %W(#{self.asset.path} #{self.current_path_md5}).each do |file_path|
+        File.open(file_path, "w") { |f| f.write(file_contents) }
+      end
     elsif !File.exists?(self.current_path_md5)
-      logger.debug "old=#{self.current_path_md5} " * 5
       File.rename(File.join(Rails.root, 'public', self.store_dir_md5, self.filename_md5_was), self.current_path_md5)
     else 
      true
