@@ -1,4 +1,4 @@
-class ThemeCollection < BaseCollection::Metal
+class ThemeCollection < MoustacheCollection::Metal
 
   # -- Callbacks ---
   before_destroy :remove_folder 

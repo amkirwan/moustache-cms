@@ -1,4 +1,4 @@
-class BaseCollection
+class MoustacheCollection
   include Mongoid::Document
   include Mongoid::Timestamps
   
@@ -21,7 +21,7 @@ class BaseCollection
   validates :site_id,
             :presence => true
 
-  class Metal < BaseCollection
+  class Metal < MoustacheCollection
     include MoustacheCms::CreatedUpdatedBy
   end
    
