@@ -5,7 +5,8 @@ describe BaseAssetUploader do
   include CarrierWave::Test::Matchers
 
   let(:site) { FactoryGirl.create(:site) }
-  let(:mca) { FactoryGirl.create(:base_asset, site_id: site.id) }
+  let(:mca) { FactoryGirl.create(:moustache_asset, site_id: site.id) }
+  let(:folder) { 'moustache_assets' }
   before do
     BaseAssetUploader.enable_processing = true
     @uploader = BaseAssetUploader.new(mca, :asset)
@@ -15,7 +16,7 @@ describe BaseAssetUploader do
   after do
     BaseAssetUploader.enable_processing = false
     AssetFixtureHelper.remove_asset!(File.join(Rails.root, 'public', @uploader.store_dir))
-    FileUtils.rm_rf(File.join(Rails.root, 'public', 'base_assets'))
+    FileUtils.rm_rf(File.join(Rails.root, 'public', folder))
   end 
 
   describe "before_filter" do
@@ -35,7 +36,7 @@ describe BaseAssetUploader do
   end
 
   it "should set the storage directory" do
-    @uploader.store_dir.should == "base_assets/#{site.id}"
+    @uploader.store_dir.should == "#{folder}/#{site.id}"
   end
- 
+   
 end

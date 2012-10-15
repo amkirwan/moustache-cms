@@ -4,7 +4,7 @@ describe MoustacheCms::CreatedUpdatedBy do
   let(:site) { FactoryGirl.create(:site) }
   let(:asset_folder) { 'collectable_dummy' }
 
-  class CreatedUpdatedByDummy < BaseCollection::Metal
+  class CreatedUpdatedByDummy < MoustacheCollection::Metal
     created_updated(:base_assets)
   end
 

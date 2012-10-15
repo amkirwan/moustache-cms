@@ -24,7 +24,7 @@ class Site
   has_many :article_collections, :dependent => :destroy
   has_many :articles, :dependent => :destroy
   has_many :theme_collections, :dependent => :destroy
-  has_many :base_assets 
+  has_many :moustache_assets 
     
 
   # -- Validations ----------------------------------------

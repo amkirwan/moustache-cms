@@ -1,4 +1,4 @@
-class SiteAsset < BaseAsset
+class SiteAsset < MoustacheAsset
   include Mongoid::Document::Taggable
 
   attr_accessible :tag_list

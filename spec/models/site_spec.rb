@@ -79,8 +79,8 @@ describe Site do
       @site.should embed_many :meta_tags
     end
 
-    it "should have many base assets" do
-      @site.should have_many(:base_assets)
+    it "should have many moustache assets" do
+      @site.should have_many(:moustache_assets)
     end
   end
   

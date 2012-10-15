@@ -143,7 +143,7 @@ FactoryGirl.define do
     after(:build) { |article| assign_created_updated_by(article, :articles) }
   end
 
-  factory :base_asset do
+  factory :moustache_asset do
     name "asset_name"
     content_type "content_type"
     asset { File.open("#{Rails.root}/spec/fixtures/assets/rails.png") }
@@ -162,14 +162,14 @@ FactoryGirl.define do
     content "tag attribute value"
   end
 
-  factory :site_asset, class: SiteAsset, parent: :base_asset do 
+  factory :site_asset, class: SiteAsset, parent: :moustache_asset do 
     tag_list "site asset"
   end
 
-  factory :theme_asset, class: ThemeAsset, parent: :base_asset do 
+  factory :theme_asset, class: ThemeAsset, parent: :moustache_asset do 
   end
 
-  factory :theme_collection, parent: :base_collection, class: ThemeCollection  do 
+  factory :theme_collection, parent: :moustache_collection, class: ThemeCollection  do 
     after(:build) { |theme_collection| assign_created_updated_by(theme_collection, :theme_collections) }
   end
 end

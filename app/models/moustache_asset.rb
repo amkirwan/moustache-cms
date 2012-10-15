@@ -1,4 +1,4 @@
-class BaseAsset
+class MoustacheAsset
   include Mongoid::Document
   include Mongoid::Timestamps
 

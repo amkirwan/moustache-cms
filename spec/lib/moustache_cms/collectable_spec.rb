@@ -4,8 +4,8 @@ describe MoustacheCms::Collectable do
   let(:site) { FactoryGirl.create(:site) }
   let(:asset_folder) { 'collectable_dummy' }
 
-  class CollectableDummy < BaseCollection
-    collectable(:base_assets)
+  class CollectableDummy < MoustacheCollection
+    collectable(:moustache_assets)
   end
 
   before(:each) do
@@ -19,8 +19,8 @@ describe MoustacheCms::Collectable do
 
   describe "validations" do
     subject { @dummy_class }
-    it { should embed_many(:base_assets) }
-    it { should validate_associated(:base_assets) }
+    it { should embed_many(:moustache_assets) }
+    it { should validate_associated(:moustache_assets) }
   end
 
   describe "#destroy_collection_folder" do
