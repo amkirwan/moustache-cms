@@ -10,6 +10,7 @@ admin = User.find_or_create_by(:firstname => "Admin", :lastname => "Moustache", 
   user.role = "admin"
   user.site_id = site.id
   user.password = "moustache"
+  user.time_zone = MoustacheCms::Application.config.time_zone
 end
 
 # Create Layout
@@ -30,7 +31,7 @@ if Page.root.nil?
                 p.editor_ids = [ admin.id ]
                 p.created_by_id = admin.id
                 p.updated_by_id = admin.id
-                p.current_state = CurrentState.find("draft")
+                p.current_state = CurrentStatedraft
                 p.page_parts = [ PagePart.new(:name => "content", :content => "This is the home page!", :filter_name => Filter.find_by_name("html").name) ]
   end           
 end
