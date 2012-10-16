@@ -31,7 +31,7 @@ if Page.root.nil?
                 p.editor_ids = [ admin.id ]
                 p.created_by_id = admin.id
                 p.updated_by_id = admin.id
-                p.current_state = CurrentStatedraft
+                p.current_state = CurrentState.draft
                 p.page_parts = [ PagePart.new(:name => "content", :content => "This is the home page!", :filter_name => Filter.find_by_name("html").name) ]
   end           
 end
