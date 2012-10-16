@@ -21,7 +21,7 @@ class Admin::MetaTagsController < AdminBaseController
   def create
     respond_with(:admin, @meta_tag) do |format|
       if @meta_tag.save
-        format.html { redirect_to [:edit, :admin, @base_class], :notice => "Successfully created the meta tag #{@meta_tag.name}" }
+        meta_tag_redirect format, "Successfully created the meta tag #{@meta_tag.name}", :edit, :admin, @base_class
       end
     end
   end
@@ -29,7 +29,7 @@ class Admin::MetaTagsController < AdminBaseController
   def update
     respond_with(:admin, @meta_tag) do |format|
       if @meta_tag.update_attributes(params[:meta_tag])
-        format.html { redirect_to [:edit, :admin, @base_class], :notice => "Successfully updated the meta tag #{@meta_tag.name}" }
+        meta_tag_redirect format, "Successfully updated the meta tag #{@meta_tag.name}", :edit, :admin, @base_class
       end
     end
   end
@@ -37,12 +37,16 @@ class Admin::MetaTagsController < AdminBaseController
   def destroy
     respond_with(:admin, @meta_tag) do |format|
       if @meta_tag.destroy
-        format.html { redirect_to [:edit, :admin, @base_class], :notice => "Successfully deleted the meta tag #{@meta_tag.name}" }
+        meta_tag_redirect format, "Successfully deleted the meta tag #{@meta_tag.name}", :edit, :admin, @base_class
       end
     end
   end
 
   private
+    def meta_tag_redirect(format, notice, *route)
+      format.html { redirect_to route, :notice => notice }
+    end
+
     def assign_base_class
       if params[:page_id]
         @base_class = @page
