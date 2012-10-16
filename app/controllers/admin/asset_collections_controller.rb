@@ -27,8 +27,7 @@ class Admin::AssetCollectionsController < AdminBaseController
   
   #POST /admin/asset_collections
   def create
-    created_updated_by_for @asset_collection
-    @asset_collection.site = current_site
+    assign_protected_attributes @asset_collection
     if @asset_collection.save
       flash[:notice] = "Successfully created the asset collection #{@asset_collection.name}"
     end
@@ -37,7 +36,7 @@ class Admin::AssetCollectionsController < AdminBaseController
   
   #PUT /admin/asset_collections/1
   def update
-    @asset_collection.updated_by = @current_admin_user
+    assign_updated_by @asset_collection
     move_directory(@asset_collection.name, params[:asset_collection][:name], @asset_collection.site_id, 'site_assets')
     if @asset_collection.update_attributes(params[:asset_collection])
       flash[:notice] = "Successfully updated the asset collection #{@asset_collection.name}"

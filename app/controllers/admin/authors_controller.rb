@@ -33,7 +33,7 @@ class Admin::AuthorsController < AdminBaseController
   
   # PUT /admin/authors/1
   def update
-    @author.updated_by = @current_admin_user
+    assign_updated_by @author
     update_and_assign_notice(@author, params[:author], "Successfully updated the author", :full_name)
     respond_with(:admin, @author, :location => [:admin, :authors])
   end

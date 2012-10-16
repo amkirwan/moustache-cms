@@ -23,8 +23,7 @@ class Admin::LayoutsController < AdminBaseController
   end
   
   def create
-    created_updated_by_for @layout
-    @layout.site = @current_site
+    assign_protected_attributes @layout
     respond_with(:admin, @layout) do |format|
       if @layout.save
         format.html { redirect_to redirector_path(@layout), :notice => "Successfully created the layout #{@layout.name}" }
@@ -33,7 +32,7 @@ class Admin::LayoutsController < AdminBaseController
   end
   
   def update    
-    @layout.updated_by = @current_admin_user
+    assign_updated_by @layout
     respond_with(:admin, @layout) do |format|
       if @layout.update_attributes(params[:layout]) 
         format.html { redirect_to redirector_path(@layout), :notice => "Successfully updated the layout #{@layout.name}" }

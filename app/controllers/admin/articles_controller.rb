@@ -24,8 +24,7 @@ class Admin::ArticlesController < AdminBaseController
 
   # POST /admin/article_collections/1/articles
   def create
-    @article.site = @current_site
-    created_updated_by_for @article
+    assign_protected_attributes @article
     respond_with(:admin, @article_collection, @article) do |format|
       if @article.save
         format.html { redirector [:edit, :admin, @article_collection, @article], [:admin, @article_collection, :articles], "Successfully created the article #{@article.title} in the collection #{@article_collection.name}" }
@@ -35,7 +34,7 @@ class Admin::ArticlesController < AdminBaseController
 
   # PUT /admin/article_collections/1/articles/1
   def update
-    @article.updated_by = @current_admin_user
+    assign_updated_by @article
     respond_with(:admin, @article_collection, @article) do |format| 
       if @article.update_attributes(params[:article])
         format.html { redirector [:edit, :admin, @article_collection, @article], [:admin, @article_collection, :articles], "Successfully updated the article #{@article.title} in the collection #{@article_collection.name}" }

@@ -34,7 +34,7 @@ class Admin::PagesController < AdminBaseController
   end
    
   def create
-    assign_protected_attributes(@page)
+    assign_protected_attributes @page
     respond_with(:admin, @page) do |format|
       if @page.save
         set_page_cookies
@@ -46,7 +46,7 @@ class Admin::PagesController < AdminBaseController
   end
   
   def update
-    @page.updated_by = @current_admin_user
+    assign_updated_by @page
     @page_title_was =  @page.title
     respond_with(:admin, @page) do |format|
       if @page.update_attributes(params[:page]) 

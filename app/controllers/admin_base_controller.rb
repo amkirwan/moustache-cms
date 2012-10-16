@@ -86,27 +86,27 @@ class AdminBaseController < ApplicationController
       Time.zone = current_admin_user.time_zone if admin_user_signed_in?
     end
 
-    def assign_protected_attributes(the_instance)
-      the_instance.site = current_site
-      created_updated_by_for the_instance
+    def assign_protected_attributes(object)
+      object.site = current_site
+      created_updated_by_for object
     end
 
-    def save_and_assign_notice(the_instance, notice)
-      assign_protected_attributes(the_instance)
-      if the_instance.save
+    def save_and_assign_notice(object, notice)
+      assign_protected_attributes(object)
+      if object.save
         flash[:notice] = notice
       end
     end
 
-    def assign_updated_by(the_instance)
-      the_instance.updated_by = @current_admin_user
+    def assign_updated_by(object)
+      object.updated_by = @current_admin_user
     end
 
-    def update_and_assign_notice(the_instance, param, notice, notice_name)
-      assign_updated_by(the_instance)
-      the_instance.updated_by = @current_admin_user
-      if the_instance.update_attributes(param)
-        flash[:notice] = notice + ' ' + the_instance.send(notice_name)
+    def update_and_assign_notice(object, param, notice, notice_name)
+      assign_updated_by(object)
+      object.updated_by = @current_admin_user
+      if object.update_attributes(param)
+        flash[:notice] = notice + ' ' + object.send(notice_name)
       end
     end
 

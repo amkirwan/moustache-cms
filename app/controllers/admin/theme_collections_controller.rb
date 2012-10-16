@@ -42,7 +42,7 @@ class Admin::ThemeCollectionsController < AdminBaseController
   
   #PUT /admin/asset_collections/1
   def update
-    @theme_collection.updated_by = @current_admin_user
+    assign_updated_by @theme_collection
     move_directory(@theme_collection.name, params[:theme_collection][:name], @theme_collection.site_id, 'theme_assets')
     respond_with(:admin, @theme_collection) do |format| 
       if @theme_collection.update_attributes(params[:theme_collection]) 
