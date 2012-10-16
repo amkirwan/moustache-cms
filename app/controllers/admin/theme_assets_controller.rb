@@ -47,7 +47,7 @@ class Admin::ThemeAssetsController < AdminBaseController
     if params[:theme_asset_file_content]
       md5_update(params[:theme_asset_file_content]) 
     else
-      change_name_md5
+      change_name_md5(@theme_asset, params[:theme_asset][:name])
     end
     respond_with(:admin, @theme_collection, @theme_asset) do |format|
       if @theme_asset.update_file_content(params[:theme_asset_file_content]) && @theme_asset.update_attributes(params[:theme_asset]) 
@@ -68,13 +68,4 @@ class Admin::ThemeAssetsController < AdminBaseController
       @theme_asset.filename_md5 = "#{@theme_asset.name}-#{md5}.#{@theme_asset.asset.file.extension}"
     end
 
-    def change_name_md5
-      if @theme_asset.name_changed?
-        @theme_asset.filename_md5_old = @theme_asset.filename_md5_was
-        old_name_split = @theme_asset.filename_md5_was.split('-')
-        hash_ext = old_name_split.pop
-        hash = hash_ext.split('.').shift
-        @theme_asset.filename_md5 = "#{@theme_asset.name.split('.').first}-#{hash}.#{@theme_asset.asset.file.extension}"
-      end
-    end
 end

@@ -110,4 +110,23 @@ class AdminBaseController < ApplicationController
       end
     end
 
+    def change_name_md5(the_asset, param_name)
+      the_asset.name = param_name
+      if the_asset.name_changed?
+        old_name_split = the_asset.filename_md5_was.split('-')
+        hash_ext = old_name_split.pop
+        hash = hash_ext.split('.').shift
+        the_asset.filename_md5 = "#{the_asset.name.split('.').first}-#{hash}.#{the_asset.asset.file.extension}"
+        generate_paths(the_asset)
+      end
+    end
+    
+
+    def generate_paths(the_asset)
+      the_asset.file_path_md5 = File.join(Rails.root, 'public', the_asset.asset.store_dir, '/', the_asset.filename_md5)
+      the_asset.url_md5 = "/#{the_asset.asset.store_dir}/#{the_asset.filename_md5}"
+      the_asset.file_path_md5_old = the_asset.file_path_md5_was if the_asset.file_path_md5_changed?
+    end    
+
+
 end
