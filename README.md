@@ -1,5 +1,7 @@
 [![Build Status](https://secure.travis-ci.org/amkirwan/moustache-cms.png)](http://travis-ci.org/amkirwan/moustache-cms)
 
+[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/amkirwan/moustache-cms)
+
 # Moustache CMS
 
 Moustache CMS is a open source content management system design for creating great sites and blogs. It features an easy to use interface for putting your site together and managing your content. With the power of [Mustache](https://github.com/defunkt/mustache) for templating Moustache CMS can be easily customized to your layout by simply creating your own mustache tags. 
