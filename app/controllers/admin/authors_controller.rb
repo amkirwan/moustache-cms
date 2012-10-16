@@ -27,20 +27,14 @@ class Admin::AuthorsController < AdminBaseController
 
   # POST /admin/authors
   def create
-    created_updated_by_for @author
-    @author.site = @current_site
-    if @author.save
-      flash[:notice] = "Successfully created the author #{@author.full_name}"
-    end
+    save_and_assign_notice(@author, "Successfully created the author #{@author.full_name}")
     respond_with(:admin, @author, :location => [:admin, :authors])
   end
-
+  
   # PUT /admin/authors/1
   def update
     @author.updated_by = @current_admin_user
-    if @author.update_attributes(params[:author])
-      flash[:notice] = "Successfully updated the author #{@author.full_name}"
-    end
+    update_and_assign_notice(@author, params[:author], "Successfully updated the author", :full_name)
     respond_with(:admin, @author, :location => [:admin, :authors])
   end
 

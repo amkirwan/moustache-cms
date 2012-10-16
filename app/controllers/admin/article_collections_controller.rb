@@ -24,23 +24,16 @@ class Admin::ArticleCollectionsController < AdminBaseController
   def edit
     respond_with(:admin, @article_collection)
   end
-
+  
   # POST /admin/article_collections
   def create
-    created_updated_by_for @article_collection
-    @article_collection.site = @current_site
-    if @article_collection.save
-      flash[:notice] = "Successfully created the article collection #{@article_collection.name}"
-    end
+    save_and_assign_notice(@article_collection, "Successfully created the article collection #{@article_collection.name}")
     respond_with(:admin, @article_collection, :location => [:admin, :article_collections])
   end
 
   # PUT /admin/article_collections/1
   def update
-    @article_collection.updated_by = @current_admin_user
-    if @article_collection.update_attributes(params[:article_collection])
-      flash[:notice] = "Successfully updated the article collection #{@article_collection.name}"
-    end
+    update_and_assign_notice(@article_collection, params[:article_collection], "Successfully updated the article collection", :name)
     respond_with(:admin, @article_collection, :location => [:admin, :article_collections])
   end
 

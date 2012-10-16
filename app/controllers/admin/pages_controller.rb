@@ -34,7 +34,7 @@ class Admin::PagesController < AdminBaseController
   end
    
   def create
-    assign_protected_attributes
+    assign_protected_attributes(@page)
     respond_with(:admin, @page) do |format|
       if @page.save
         set_page_cookies
@@ -68,7 +68,7 @@ class Admin::PagesController < AdminBaseController
 
   def preview
     @page = Page.new(params[:page])
-    assign_protected_attributes
+    assign_protected_attributes(@page)
     @page.save_preview
   end
 
@@ -91,11 +91,6 @@ class Admin::PagesController < AdminBaseController
   end
 
   private 
-
-    def assign_protected_attributes
-      @page.site = current_site
-      created_updated_by_for @page
-    end
 
     def set_page_part
       if params[:view]

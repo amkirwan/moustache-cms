@@ -29,29 +29,9 @@ class CmsSiteController < ApplicationController
     def load_page
       # render the page if the route is not an article
       if params[:articles].nil? && params[:year].nil?
-        if params[:preview] == 'true'
-          @page = @current_site.page_by_full_path("/#{params[:page_path]}?preview=#{params[:preview]}") 
-          @page.destroy unless @page.nil?
-        else
-          @page = @current_site.page_by_full_path("/#{params[:page_path]}")
-        end
-        return render_404 if @page.nil?
+        current_site_load_page
       else # handle article rendering
-        # assign the article by permalink
-        if params[:preview] == 'true'
-          @article = article_by_permalink("preview=#{params[:preview]}") 
-          @article.destroy unless @article.nil?
-        else
-          @article = article_by_permalink
-        end
-        # find the page first to render the article into
-        @page = params[:articles] ? @current_site.page_by_full_path("/#{params[:articles]}") : @current_site.page_by_full_path('/')
-          
-        # Check if the page is the home page and that the article is not nil. 
-        # If it is render 404 because we don't want to render the home page when the
-        # user is looking for a permalink. The root path would 
-        return render_404 if @page.home_page? && @article.nil?
-        return render_404 if @page.nil?
+        current_site_load_article
       end
     end
 
@@ -70,6 +50,44 @@ class CmsSiteController < ApplicationController
       else 
         render :file => "#{Rails.root}/public/404.html", :status => 404
       end
+    end
+
+    protected
+
+    # Returns the page for the site if it exists with the params[:page_path] given.
+    # If the params[:preview] is set then it will look for the preview version of the page.
+    # Otherwise it will attemtpt to load the page by the full path. If the page does not exist.
+    # The 404 page will be rendered.
+    def current_site_load_page
+      if params[:preview] == 'true'
+        @page = @current_site.page_by_full_path("/#{params[:page_path]}?preview=#{params[:preview]}") 
+        @page.destroy unless @page.nil?
+      else
+        @page = @current_site.page_by_full_path("/#{params[:page_path]}")
+      end
+      return render_404 if @page.nil?
+    end
+
+    # Returns the article by permalink 
+    # If the params[:preview] is set then it will look for the preview version of the article.
+    # Otherwise load the article from the permalink.
+    # Then find the page that the article should be rendered into from the params[:articles].
+    # Render 404 if the page is nil or the page is the home_page and the article is does not exist.
+    def current_site_load_article
+      # assign the article by permalink
+      if params[:preview] == 'true'
+        @article = article_by_permalink("preview=#{params[:preview]}") 
+        @article.destroy unless @article.nil?
+      else
+        @article = article_by_permalink
+      end
+      # find the page that the article will be rendered in.
+      @page = params[:articles] ? @current_site.page_by_full_path("/#{params[:articles]}") : @current_site.page_by_full_path('/')
+        
+      # Check if the page is the home page and that the article is not nil. 
+      # If it is render 404 because we don't want to render the home page when the
+      # user is looking for a permalink. The root path would 
+      return render_404 if @page.nil? || (@page.home_page? && @article.nil?)
     end
 
 end
