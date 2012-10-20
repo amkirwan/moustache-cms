@@ -39,7 +39,6 @@ class MoustacheCms::Mustache::CmsPage < Mustache
     Hash[*text.scan(/(\w+):([&.\w\s\-]+)/).to_a.flatten]
   end
 
-
   def action_view_helpers_context
     @action_view_context ||= Class.new do
       include Singleton
