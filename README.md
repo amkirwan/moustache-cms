@@ -34,6 +34,7 @@ bundle exec rake db:seed
 ```
 bundle exec rails start
 ````
+- Have fun using MoustacheCms!
 
 Checkout the [wiki](http://github.com/amkirwan/moustache-cms/wiki) for more information and go to the [Demo](https://demo.moustachecms.org/admin) page to see Moustache CMS in action. 
 
