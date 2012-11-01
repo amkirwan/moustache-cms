@@ -28,6 +28,10 @@ class MoustacheCms::Mustache::CmsPage < Mustache
       @page.layout.content
     end
   end
+
+  def articles
+      
+  end
   
   def yield
     part = @page.page_parts.first
@@ -87,7 +91,7 @@ class MoustacheCms::Mustache::CmsPage < Mustache
   end
 
   def markdown
-    @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML, :autolink => true, :no_intra_emphasis => true, :space_after_headers => true) 
+    @markdown ||= Redcarpet::Markdown.new(HTMLWithPants, :autolink => true, :no_intra_emphasis => true, :space_after_headers => true, :strikethrough => true, :tables => true, :fenced_code_blocks => true)
   end
 
   def process_with_markdown(content)
@@ -115,4 +119,8 @@ class MoustacheCms::Mustache::CmsPage < Mustache
     @controller.params
   end
   #-- END protected 
+end
+
+class HTMLWithPants < Redcarpet::Render::HTML
+  include Redcarpet::Render::SmartyPants
 end
