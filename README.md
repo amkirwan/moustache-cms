@@ -33,7 +33,7 @@ bundle exec rake db:seed
 - You can access MoustacheCms now in two ways. If you are using [POW](https://github.com/37signals/pow) create an symlink to moustache-cms and then go to 'http://moustache-cms/admin' to login. If you can also start the Rails server and access the cms via the localhost, then go to 'http://127.0.0.1:3000/admin to login.
 ```
 bundle exec rails start
-````
+```
 - Have fun using MoustacheCms!
 
 Checkout the [wiki](http://github.com/amkirwan/moustache-cms/wiki) for more information and go to the [Demo](https://demo.moustachecms.org/admin) page to see Moustache CMS in action. 
