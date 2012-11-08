@@ -1,6 +1,6 @@
-require File.expand_path(File.join(Rails.root, 'lib', 'moustache_cms', 'articles_constraint'))
+require File.expand_path(File.join(MoustacheCms::Engine.root, 'lib', 'moustache_cms', 'articles_constraint'))
 
-MoustacheCms::Application.routes.draw do   
+MoustacheCms::Engine.routes.draw do   
 
   namespace :admin do
 

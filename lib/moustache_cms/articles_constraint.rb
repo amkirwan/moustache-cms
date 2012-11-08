@@ -1,3 +1,5 @@
+#require File.expand_path('../request_current_site.rb', __FILE__)
+
 module MoustacheCms
   class ArticlesConstraint
     include MoustacheCms::RequestCurrentSite

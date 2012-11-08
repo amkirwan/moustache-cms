@@ -5,3 +5,6 @@ require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
 MoustacheCms::Application.load_tasks
+
+require 'app2engine/rake/tasks'
+App2Engine::Rake::Tasks.new
