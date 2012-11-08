@@ -4,6 +4,7 @@ require 'devise'
 
 Devise.setup do |config|
 
+  config.router_name = :moustache_cms
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class with default "from" parameter.

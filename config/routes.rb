@@ -4,7 +4,7 @@ MoustacheCms::Engine.routes.draw do
 
   namespace :admin do
 
-    devise_for :users, :path => '', :controllers => { :sessions => 'admin/sessions', :passwords => 'admin/passwords' } 
+    devise_for :users, class_name: 'MoustacheCms::User', path: '', controllers: { sessions: 'admin/sessions', passwords: 'admin/passwords' } 
 
     resources :users do
       member do
