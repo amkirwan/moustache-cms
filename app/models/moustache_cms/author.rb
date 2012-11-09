@@ -17,13 +17,13 @@ class MoustacheCms::Author
   field :middlename
   field :lastname
   field :profile
-  mount_uploader :image, AuthorUploader
+  mount_uploader :image, ::MoustacheCms::AuthorUploader
 
   # -- Associations ---
-  belongs_to :site
-  belongs_to :created_by, :class_name => "User", :inverse_of => :authors_created
-  belongs_to :updated_by, :class_name => "User", :inverse_of => :authors_updated
-  has_and_belongs_to_many :articles
+  belongs_to :site, class_name: 'MoustacheCms::Site'
+  belongs_to :created_by, class_name: 'MoustacheCms::User', inverse_of: :authors_created
+  belongs_to :updated_by, class_name: 'MoustacheCms::User', inverse_of: :authors_updated
+  has_and_belongs_to_many :articles, class_name: 'MoustacheCms::Article'
 
   # -- Validations ----
   validates :firstname,

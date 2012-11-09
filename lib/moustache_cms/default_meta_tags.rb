@@ -1,3 +1,5 @@
+require File.expand_path(File.join(MoustacheCms::Engine.root, "app", "models", "moustache_cms", "meta_tag"))
+
 module MoustacheCms
   module DefaultMetaTags
     extend ActiveSupport::Concern

@@ -1,4 +1,4 @@
-class MoustacheCms::AuthorUploader < BaseAssetUploader
+class MoustacheCms::AuthorUploader < MoustacheCms::BaseAssetUploader
 
   # set the storage directory
   def store_dir

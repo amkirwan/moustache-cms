@@ -1,4 +1,4 @@
-require 'time_formatted'
+require_relative 'time_formatted'
 
 module MoustacheCms
   module StateSetable

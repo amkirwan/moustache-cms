@@ -15,16 +15,16 @@ class MoustacheCms::Site
   index :domain_names => 1
   
   # -- Associations ---------------------------------------
-  has_many :users, :dependent => :destroy
-  has_many :pages, :dependent => :destroy
-  has_many :layouts, :dependent => :destroy
-  has_many :asset_collections, :dependent => :destroy
-  has_many :snippets, :dependent => :destroy
-  has_many :authors, :dependent => :destroy
-  has_many :article_collections, :dependent => :destroy
-  has_many :articles, :dependent => :destroy
-  has_many :theme_collections, :dependent => :destroy
-  has_many :moustache_assets 
+  has_many :users, class_name: 'MoustacheCms::User', dependent: :destroy
+  has_many :pages, class_name: 'MoustacheCms::Page', dependent: :destroy
+  has_many :layouts, class_name: 'MoustacheCms::Layout', dependent: :destroy
+  has_many :asset_collections, class_name: 'MoustacheCms::AssetCollection', dependent: :destroy
+  has_many :snippets, class_name: 'MoustacheCms::Snippet', dependent: :destroy
+  has_many :authors, class_name: 'MoustacheCms::Author', dependent: :destroy
+  has_many :article_collections, class_name: 'MoustacheCms::ArticleCollection', dependent: :destroy
+  has_many :articles, class_name: 'MoustacheCms::Article', dependent: :destroy
+  has_many :theme_collections, class_name: 'MoustacheCms::ThemeCollection', dependent: :destroy
+  has_many :moustache_assets, class_name: 'MoustacheCms::MoustacheAsset', dependent: :destroy
     
 
   # -- Validations ----------------------------------------

@@ -40,12 +40,12 @@ class MoustacheCms::Article
   index :permalink => 1
 
   # -- Associations -------------
-  belongs_to :site
-  belongs_to :article_collection
-  belongs_to :created_by, :class_name => "User", :inverse_of => :articles_created
-  belongs_to :updated_by, :class_name => "User", :inverse_of => :articles_updated
-  belongs_to :layout, :class_name => "Layout"
-  has_and_belongs_to_many :authors
+  belongs_to :site, class_name: 'MoustacheCms::Site'
+  belongs_to :article_collection, class_name: 'MoustacheCms::ArticleCollection'
+  belongs_to :created_by, class_name: "MoustacheCms::User", inverse_of: :articles_created
+  belongs_to :updated_by, class_name: "MoustacheCms::User", inverse_of: :articles_updated
+  belongs_to :layout, class_name: "MoustacheCms::Layout"
+  has_and_belongs_to_many :authors, class_name: "MoustacheCms::Author' 
 
 
   # -- Validations -----------------------------------------------

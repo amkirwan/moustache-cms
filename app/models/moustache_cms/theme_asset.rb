@@ -1,4 +1,4 @@
-class MoustacheCms::ThemeAsset < MoustacheAsset 
+class MoustacheCms::ThemeAsset < MoustacheCms::MoustacheAsset 
 
   attr_accessible :theme_asset_attributes,
                   :custom_fields_attributes

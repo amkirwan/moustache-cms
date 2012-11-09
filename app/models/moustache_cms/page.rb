@@ -36,11 +36,11 @@ class MoustacheCms::Page
   index :full_path => 1
   
   # -- Associations-------------------------
-  embeds_many :custom_fields, :as => :custom_fieldable
+  embeds_many :custom_fields, as: :custom_fieldable
   embeds_many :page_parts 
-  belongs_to :layout
+  belongs_to :layout, class_name: 'MoustacheCms::Layout' 
   created_updated(:pages)
-  has_and_belongs_to_many :editors, :class_name => "User", :inverse_of => :pages
+  has_and_belongs_to_many :editors, class_name: "MoustacheCms::User", inverse_of: :pages
   
   accepts_nested_attributes_for :custom_fields
   accepts_nested_attributes_for :page_parts

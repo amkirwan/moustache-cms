@@ -12,12 +12,12 @@ class MoustacheCms::Layout
   index :name => 1
   
   #-- Associations-----------------------------------------------
-  has_many :pages, :dependent => :nullify
-  has_many :article_collections
-  has_many :articles
-  belongs_to :site
-  belongs_to :created_by, :class_name => "User", :inverse_of => :layouts_created
-  belongs_to :updated_by, :class_name => "User", :inverse_of => :layouts_updated
+  has_many :pages, class_name: 'MoustacheCms::Page', dependent: :nullify
+  has_many :article_collections, class_name: 'MoustacheCms::ArticleCollection' 
+  has_many :articles, class_name: 'MoustacheCms::Article'
+  belongs_to :site, class_name: 'MoustacheCms::Site' 
+  belongs_to :created_by, class_name: 'MoustacheCms::User', inverse_of: :layouts_created
+  belongs_to :updated_by, class_name: 'MoustacheCms::User', inverse_of: :layouts_updated
   
   #-- Validations -----------------------------------------------
   before_save :format_content

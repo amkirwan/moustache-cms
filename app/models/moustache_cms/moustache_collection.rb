@@ -11,7 +11,7 @@ class MoustacheCms::MoustacheCollection
   field :name
 
   # -- Associations ----
-  belongs_to :site
+  belongs_to :site, class_name: 'MoustacheCms::Site' 
 
   # -- Validations ---------------
   validates :name,
@@ -21,7 +21,7 @@ class MoustacheCms::MoustacheCollection
   validates :site_id,
             :presence => true
 
-  class Metal < MoustacheCollection
+  class Metal < MoustacheCms::MoustacheCollection
     include MoustacheCms::CreatedUpdatedBy
   end
    

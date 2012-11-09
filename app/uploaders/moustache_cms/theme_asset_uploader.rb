@@ -1,4 +1,4 @@
-class MoustacheCms::ThemeAssetUploader < BaseAssetUploader
+class MoustacheCms::ThemeAssetUploader < MoustacheCms::BaseAssetUploader
 
   # Set the storage directory
   def store_dir

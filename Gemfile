@@ -2,8 +2,6 @@ source 'http://rubygems.org'
 
 gemspec
 
-gem "carrierwave-mongoid", :git => "git://github.com/jnicklas/carrierwave-mongoid.git", :branch =>  "mongoid-3.0"
-
 # source 'http://rubygems.org'
 
 # gem "rails", "3.2.8"   

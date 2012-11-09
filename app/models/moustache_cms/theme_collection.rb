@@ -1,4 +1,4 @@
-class MoustacheCms::ThemeCollection < MoustacheCollection::Metal
+class MoustacheCms::ThemeCollection < ::MoustacheCollection::Metal
 
   # -- Callbacks ---
   before_destroy :remove_folder 

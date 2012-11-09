@@ -9,9 +9,9 @@ class MoustacheCms::Snippet
   field :filter_name
                    
   # -- Assocations ----
-  belongs_to :site
-  belongs_to :created_by, :class_name => "User", :inverse_of => :snippets_created
-  belongs_to :updated_by, :class_name => "User", :inverse_of => :snippets_updated
+  belongs_to :site, class_name: 'MoustacheCms::Site' 
+  belongs_to :created_by, class_name: 'MoustacheCms::User', inverse_of: :snippets_created
+  belongs_to :updated_by, class_name: 'MoustacheCms::User', inverse_of: :snippets_updated
 
   # accepts_nested_attributes_for :filter        
   

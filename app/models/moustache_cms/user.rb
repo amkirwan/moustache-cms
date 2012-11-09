@@ -30,12 +30,12 @@ class MoustacheCms::User
   %w(Layout Page Snippet AssetCollection ThemeCollection ArticleCollection Author Article).each do |name|
     created = name.underscore.pluralize + '_created'
     updated = name.underscore.pluralize + '_updated'
-    has_many created.to_sym, class_name: name, inverse_of: :created_by
-    has_many updated.to_sym, class_name: name, inverse_of: :updated_by
+    has_many created.to_sym, class_name: 'MoustacheCms::' + name.to_s, inverse_of: :created_by
+    has_many updated.to_sym, class_name: 'MoustacheCms::' + name.to_s, inverse_of: :updated_by
   end
   
-  has_and_belongs_to_many :pages, :class_name => "Page", :inverse_of => :editors
-  has_and_belongs_to_many :article_collections, :class_name => "ArticleCollection", :inverse_of => :editors
+  has_and_belongs_to_many :pages, class_name: 'MoustacheCms::Page', inverse_of: :editors
+  has_and_belongs_to_many :article_collections, class_name: 'MoustacheCms::ArticleCollection', inverse_of: :editors
 
   # -- Before Validations -----------------------------------------------
   before_validation :uniq_page_ids
