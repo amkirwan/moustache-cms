@@ -34,35 +34,27 @@ describe MoustacheCms::TimeFormatted do
     end
   end
 
-    # describe "#status_formatted_date_time" do
-    #   it "returns the formatted_date_time of the current state" do
-    #     @article.formatted_date_time.should == "foobar"
-    #   end
-    # end
+  it "returns the iso860 date format" do
+    @dummy_class.datetime_iso8601.should == @current_state.time.iso8601.to_s 
+  end
 
-    # describe "#status_formatted_date_time_with_zone" do
-    #   it "returns the formatted_date_time_with_zone of the current state" do
-    #     @article.formatted_date_time_with_zone.should == @article.current_state.formatted_date_time_with_zone
-    #   end
-    # end
+  it "returns the datetime with just the date" do
+    @dummy_class.datetime_date.should == @current_state.time.strftime("%Y-%m-%d")
+  end
 
-    # describe "#status_formatted_date" do
-    #   it "returns the formatted_date for the current state" do
-    #     @article.formatted_date.should == @article.current_state.formatted_date
-    #   end  
-    # end
+  it "returns the year of the current state as a string number" do
+    @dummy_class.year.should == @current_state.time.year.to_s
+  end
 
-    # describe "#status_formatted_time" do
-    #   it "returns the formatted_time of the current state" do
-    #     @article.formatted_time.should == @article.current_state.formatted_time  
-    #   end
-    # end
+  it "returns the day of the current state as a string day" do
+    @dummy_class.day.should == @current_state.time.day.to_s
+  end
 
-    # describe "#status_formatted_time_zone" do
-    #   it "returns the formatted_time with zone for the current state" do
-    #     @article.formatted_time_zone.should == @article.current_state.formatted_time_zone
-    #   end
-    # end
+  it "returns the month of the current state as a string day" do
+    @dummy_class.month.should == @current_state.time.month.to_s
+  end
 
- 
+  it "returns the time zone as a string" do
+    @dummy_class.zone.should == @current_state.time.zone
+  end
 end
