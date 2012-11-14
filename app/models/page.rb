@@ -58,7 +58,8 @@ class Page
 
   validates_presence_of :slug, 
                         :current_state,
-                        :layout_id
+                        :layout_id,
+                        :site_id
 
   # -- Callbacks -----------------------------------------------
   before_validation :format_title, :slug_set, :full_path_set, :breadcrumb_set

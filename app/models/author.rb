@@ -8,7 +8,11 @@ class Author
                   :firstname,
                   :middlename,
                   :lastname,
+                  :honorific_suffix,
+                  :title,
+                  :organization,
                   :image,
+                  :image_cache,
                   :profile
 
   # -- Fields ------
@@ -16,6 +20,9 @@ class Author
   field :firstname
   field :middlename
   field :lastname
+  field :honorific_suffix
+  field :title
+  field :organization
   field :profile
   mount_uploader :image, AuthorUploader
 
@@ -32,7 +39,8 @@ class Author
   validates :lastname,
             :presence => true
 
-  validates :image, :presence => true
+  validates :site_id,
+            :presence => true
 
   # -- Callbacks ---
   before_save :strip_whitespace
@@ -53,4 +61,5 @@ class Author
       self.middlename.strip! unless self.middlename.nil?
       self.lastname.strip! unless self.lastname.nil?
     end
+
 end

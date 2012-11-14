@@ -13,7 +13,16 @@
       = f.label :lastname, "Lastname<abbr title='required' class='required'>*</abbr>".html_safe
       = f.text_field :lastname
     %li
-      = f.label :image, "Author Photo<abbr title='required' class='required'>*</abbr>".html_safe
+      = f.label :honorific_suffix 
+      = f.text_field :honorific_suffix
+    %li
+      = f.label :title
+      = f.text_field :title
+    %li
+      = f.label :organization
+      = f.text_field :organization
+    %li
+      = f.label :image, "Author Photo"
       = f.file_field :image, :class => "file_field"
       = f.hidden_field :image_cache
     - if !@author.new_record?

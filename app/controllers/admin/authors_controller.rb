@@ -27,6 +27,7 @@ class Admin::AuthorsController < AdminBaseController
 
   # POST /admin/authors
   def create
+    @author.image = File.open("#{Rails.root}/app/assets/images/blank-person.jpg") if params[:author][:image].nil?
     save_and_assign_notice(@author, "Successfully created the author #{@author.full_name}")
     respond_with(:admin, @author, :location => [:admin, :authors])
   end
