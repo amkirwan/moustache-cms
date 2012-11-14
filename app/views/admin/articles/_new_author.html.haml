@@ -1,0 +1,2 @@
+= collection_select @article, :author_ids, Author.all_from_current_site(@current_site).order_by(:firstname.asc), :id, :full_name, {include_blank: true}
+

@@ -1,0 +1,3 @@
+module Admin::ArticleCollectionsHelper
+
+end

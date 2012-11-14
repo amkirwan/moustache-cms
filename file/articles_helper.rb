@@ -24,16 +24,8 @@ module Admin::ArticlesHelper
     end
   end
 
-  def add_authors(message, base_object, path)
-    if base_object.new_record?
-      content_tag :p, :id => 'meta_tag_message' do
-        content_tag :i, message
-      end
-    else
-      link_to "Add Meta Tag", path, :remote => true
-    end
+  def author_selected(page_parent)
+    author.nil? ? '' : page_parent.id.to_s
   end
-
-
 
 end

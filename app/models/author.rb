@@ -50,6 +50,9 @@ class Author
 
   set_asset_folder :authors
 
+  # -- Scopes ----
+  scope :all_from_current_site, ->(current_site) { where(:site_id => current_site.id) }
+
   def full_name
     if self.middlename.nil? || self.middlename.empty?
       self.firstname.capitalize + ' ' + self.lastname.capitalize

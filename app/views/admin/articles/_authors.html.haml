@@ -1,0 +1,13 @@
+%li#author_fields
+  = foldable_fieldset 'Authors' do
+    %div.fields_wrap
+      %ol
+        %li{class: 'inline'}
+        - if @article.authors.empty?
+          = f.collection_select :author_ids, Author.all_from_current_site(@current_site).order_by(:firstname.asc), :id, :full_name, {include_blank: true}
+        - else
+          = f.fields_for(:authors, @article.authors) do |builder|
+            = builder.label :author
+            = builder.collection_select :id, Author.all_from_current_site(@current_site), :id, :full_name, {include_blank: true}
+        %li#add_author
+          = link_to 'Add Author', [:new, :author, :admin, @article_collection, @article], remote: true

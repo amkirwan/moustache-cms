@@ -4,7 +4,7 @@ class Admin::ArticlesController < AdminBaseController
   load_and_authorize_resource :article, :through => :article_collection, :except => :new_meta_tag
 
   respond_to :html, :xml, :json
-  respond_to :js, :only => [:index, :preview, :new_meta_tag]
+  respond_to :js, :only => [:index, :preview, :new_meta_tag, :new_author]
 
   # GET /admin/article_collections/1/articles
   def index
@@ -61,6 +61,11 @@ class Admin::ArticlesController < AdminBaseController
     @article = @article.dup
     @article.assign_attributes(params[:article])
     @article.save_preview
+  end
+
+  def new_author
+    @current_site = current_site
+    @article = Article.find(params[:id])
   end
 
 end

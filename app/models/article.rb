@@ -16,7 +16,7 @@ class Article
                   :slug,
                   :content,
                   :filter_name,
-                  :authors,
+                  :author_ids,
                   :layout_id,
                   :tag_list,
                   :set_date,
@@ -47,6 +47,7 @@ class Article
   belongs_to :layout, :class_name => "Layout"
   has_and_belongs_to_many :authors
 
+  accepts_nested_attributes_for :authors
 
   # -- Validations -----------------------------------------------
   validates :site_id,
