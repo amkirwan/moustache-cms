@@ -38,7 +38,7 @@ class ThemeAsset < MoustacheAsset
   end
   
   def update_file_content(file_contents)
-    if self.content_type == "text/css" || self.content_type =~ "javascript" 
+    if self.content_type == "text/css" || self.content_type =~ /javascript/ 
       %W(#{self.asset.path} #{self.current_path_md5}).each do |file_path|
         File.open(file_path, "w") { |f| f.write(file_contents) }
       end
