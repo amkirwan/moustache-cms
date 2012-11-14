@@ -82,10 +82,10 @@ module ApplicationHelper
   end
 
   def view_identifier(object)
-    if object.respond_to?(:title)
-      object.title
-    elsif object.respond_to?(:full_name)
+    if object.respond_to?(:full_name)
       object.full_name 
+    elsif object.respond_to?(:title)
+      object.title
     else
       object.name
     end
