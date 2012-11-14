@@ -1,2 +1,4 @@
-= collection_select @article, :author_ids, Author.all_from_current_site(@current_site).order_by(:firstname.asc), :id, :full_name, {include_blank: true}
+%li{class: 'inline'}
+  = label_tag @author
+  = collection_select @article.author, :author_ids, Author.all_from_current_site(@current_site).order_by(:firstname.asc), :id, :full_name, {include_blank: true}
 

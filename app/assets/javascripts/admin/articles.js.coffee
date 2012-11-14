@@ -4,6 +4,9 @@ $(document).ready ->
     # hide initial form elements 
     $('#advanced_fields legend').siblings().first().hide()
     $('#advanced_fields legend').find('span').removeClass('rotate')
+    
+    $('#author_fields legend').siblings().first().hide()
+    $('#author_fields legend').find('span').removeClass('rotate')
 
     $('#meta_tags_fields legend').siblings().first().hide()
     $('#meta_tags_fields legend').find('span').removeClass('rotate')
