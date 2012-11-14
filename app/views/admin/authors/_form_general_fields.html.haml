@@ -37,6 +37,7 @@
     %li
       = f.label :profile
       = f.text_area :profile, :cols => '80'
+    = render :partial => 'custom_fields', :locals => {:f => f}
     %li
       = f.submit button_label, :class => "submit"
       = link_to "Cancel", [:admin, :layouts], :class => "cancel" 

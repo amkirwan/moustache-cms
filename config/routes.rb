@@ -23,7 +23,10 @@ MoustacheCms::Application.routes.draw do
       resources :page_parts, :except => [:index, :new, :update] 
     end
 
-    resources :authors
+    resources :authors do
+      resources :custom_fields, :only => [:new, :destroy]
+    end
+
 
     resources :article_collections do
       resources :articles do

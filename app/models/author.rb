@@ -13,6 +13,7 @@ class Author
                   :organization,
                   :image,
                   :image_cache,
+                  :custom_fields_attributes,
                   :profile
 
   # -- Fields ------
@@ -31,7 +32,9 @@ class Author
   belongs_to :created_by, :class_name => "User", :inverse_of => :authors_created
   belongs_to :updated_by, :class_name => "User", :inverse_of => :authors_updated
   has_and_belongs_to_many :articles
+  embeds_many :custom_fields, :as => :custom_fieldable
 
+  accepts_nested_attributes_for :custom_fields
   # -- Validations ----
   validates :firstname,
             :presence => true

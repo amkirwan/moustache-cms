@@ -1,10 +1,11 @@
 class Admin::CustomFieldsController < AdminBaseController 
 
   load_resource :page
+  load_resource :author
   load_resource :article
   load_resource :theme_collection
   load_resource :theme_asset, :through => :theme_collection
-  load_and_authorize_resource :custom_field, :through => [:page, :article, :theme_asset]
+  load_and_authorize_resource :custom_field, :through => [:page, :author, :article, :theme_asset]
   before_filter :assign_base_class
 
   respond_to :js, :only => [:new, :destroy]
@@ -32,6 +33,8 @@ class Admin::CustomFieldsController < AdminBaseController
           @base_class = @page
         elsif params[:theme_collection_id]
           @base_class = @theme_asset
+        elsif params[:author_id]
+          @base_class = @author
         else params[:article_id]
           @base_class = @article
         end

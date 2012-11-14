@@ -30,6 +30,7 @@ describe Author do
       @author.should have_and_belong_to_many(:articles)
     end
 
+    it { should embed_many :custom_fields }
   end
 
   # -- Validations  -----------------------------------------------
