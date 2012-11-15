@@ -9,6 +9,7 @@ module MoustacheCms
       end   
 
       def page_title
+        return @article.title unless @article.nil?
         @page.title
       end
       alias_method :article_title, :page_title
