@@ -81,7 +81,7 @@ class MoustacheCms::Mustache::CmsPage < Mustache
   end
 
   def markdown
-    @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML, :autolink => true, :no_intra_emphasis => true, :space_after_headers => true) 
+    @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML, table: true, autolink: true, no_intra_emphasis: true, space_after_headers: true, strikethrough: true, fenced_code_blocks: true) 
   end
 
   def process_with_markdown(content)
