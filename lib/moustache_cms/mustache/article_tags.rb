@@ -146,7 +146,7 @@ module MoustacheCms
       end
 
       def find_articles(name)
-        @articles = @current_site.articles_by_collection_name_desc(name.to_s).page(params[:page]).per(MoustacheCms::Application.config.default_per_page)  
+        @articles = @current_site.articles_by_collection_name(name.to_s).desc(:published_on).page(params[:page]).per(MoustacheCms::Application.config.default_per_page)
       end
 
       def process_article_with_filter(article, hash)
