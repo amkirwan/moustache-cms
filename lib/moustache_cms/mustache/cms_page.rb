@@ -17,8 +17,7 @@ class MoustacheCms::Mustache::CmsPage < Mustache
   
   def template
     if @article
-      @template = @article.layout.content unless @article.layout.nil?
-      @template = @article.article_collection.layout.content
+      @template = @article.layout ? @article.layout.content : @article.article_collection.layout.content 
     else
       @template = @page.layout.content
     end
