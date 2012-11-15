@@ -16,16 +16,11 @@ class MoustacheCms::Mustache::CmsPage < Mustache
   end
   
   def template
-    if @page.class == Page
-      @page.layout.content
-    elsif @page.class == Article
-      if @page.layout.nil?
-        @page.article_collection.layout.content
-      else
-        @page.layout.content
-      end
+    if @article
+      @template = @article.layout.content unless @article.layout.nil?
+      @template = @article.article_collection.layout.content
     else
-      @page.layout.content
+      @template = @page.layout.content
     end
   end
   
