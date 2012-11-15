@@ -40,7 +40,7 @@ class CmsSiteController < ApplicationController
     # if the article is routed within an article collection then the articles param will be set in the route
     permalink = "/#{params[:articles]}/#{params[:year]}/#{params[:month]}/#{params[:day]}/#{params[:title]}"
     permalink += "?#{extra_params}" unless extra_params.nil?
-    permalink.squeeze!  
+    permalink.squeeze!('/')  
     @current_site.article_by_permalink(permalink)
   end
   
