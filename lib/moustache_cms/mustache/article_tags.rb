@@ -28,6 +28,11 @@ module MoustacheCms
       def article
         @article
       end
+
+      # process the article contents with the filter
+      def content
+        process_with_filter(@article)  
+      end
       
       def paginate
         paginator(nil)
