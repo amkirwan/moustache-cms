@@ -30,7 +30,7 @@ module MoustacheCms
       end
 
       # process the article contents with the filter
-      def content
+      def article_content
         process_with_filter(@article)  
       end
       
