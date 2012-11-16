@@ -1,6 +1,9 @@
 %p.label_for.ace_label Content
 %select.line_wrap
-  = grouped_options_for_select({'Line Wrap' => ['No wrap', 'Soft wrap']})
+  - if @article.nil?
+    = grouped_options_for_select({'Line Wrap' => ['No wrap', 'Soft wrap']}, selected: 'No wrap')
+  - else  
+    = grouped_options_for_select({'Line Wrap' => ['No wrap', 'Soft wrap']}, selected: 'Soft wrap')
 %ul.doc
   - if @article.nil?
     %li
