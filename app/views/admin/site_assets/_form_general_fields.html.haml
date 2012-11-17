@@ -11,6 +11,10 @@
         = f.text_field :tag_list
       = render :partial => 'site_asset'
     %li#submit_fields
+    - if @site_asset.new_record?
+      = link_to "back to collection", [:admin, @asset_collection, :site_assets], class: 'cancel'
+      = link_to 'reset form', [:new, :admin, @asset_collection, :site_asset], class: 'cancel'
+    - else
       = f.submit button_label, :class => "submit"
       = link_to "Cancel", [:admin, @asset_collection], :class => "cancel"
 

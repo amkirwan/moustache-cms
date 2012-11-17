@@ -28,12 +28,27 @@ class Admin::ThemeAssetsController < AdminBaseController
   
   # POST /admin/theme_assets
   def create
+    process_create_params
     creator_updator_set_id @theme_asset    
-    try_theme_asset_cache(:theme_asset, @theme_asset) 
-    asset_create_respond_with( @theme_collection, @theme_asset, :theme_assets) do
+    # try_theme_asset_cache(:theme_asset, @theme_asset) 
+    @theme_asset.asset = params[:file]
+    asset_create_respond_with(@theme_collection, @theme_asset, :theme_assets) do
       "Successfully created the theme asset #{@theme_asset.name}"
     end
   end    
+
+    def process_name(original_filename)
+      @theme_asset.name = original_filename
+    end
+
+   def process_create_params
+      if params[:theme_asset].nil?
+        process_name(params[:name])
+      else
+        try_site_asset_cache
+        process_name(params[:theme_asset][:name])
+      end
+    end
   
   # GET /admin/theme_asset/1/edit
   def edit

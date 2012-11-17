@@ -35,7 +35,7 @@ class Admin::SiteAssetsController < AdminBaseController
     process_create_params
     creator_updator_set_id @site_asset    
     @site_asset.asset = params[:file]
-    asset_create_respond_with( @asset_collection, @site_asset, :site_assets) do
+    asset_create_respond_with(@asset_collection, @site_asset, :site_assets) do
       "Successfully created the site asset #{@site_asset.name}"
     end
   end

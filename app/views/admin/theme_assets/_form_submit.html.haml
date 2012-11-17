@@ -1,3 +1,8 @@
-%li#form_submit_fields
-  = f.submit button_label, :class => "submit"
-  = link_to "cancel", [:admin, @theme_collection, :theme_assets], :class => "cancel"
+- if @theme_asset.new_record?
+  %li#submit_fields
+  = link_to "back to collection", [:admin, @theme_collection, :theme_assets], class: 'cancel'
+  = link_to 'reset form', [:new, :admin, @theme_collection, :theme_asset], class: 'cancel'
+- else
+  %li#form_submit_fields
+    = f.submit button_label, :class => "submit"
+    = link_to "cancel", [:admin, @theme_collection, :theme_assets], :class => "cancel"

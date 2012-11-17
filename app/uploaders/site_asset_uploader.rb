@@ -11,8 +11,4 @@ class SiteAssetUploader < BaseAssetUploader
    %w(jpg jpeg gif png pdf mp4 m4v ogv webm flv otf)
   end
 
-  def filename
-    "#{model.name}"  
-  end
-    
 end

@@ -1,4 +1,7 @@
-%li#theme_asset_upload_fields
-  = new_theme_asset.label :asset, "Theme Asset Source<abbr title='required' class='required'>*</abbr>".html_safe
-  = new_theme_asset.file_field :asset, :class => "file_field"
-  = new_theme_asset.hidden_field :asset_cache
+%li
+  #uploader
+    = new_theme_asset.label :name, "Name<abbr title='required' class='required'>*</abbr>".html_safe
+    = new_theme_asset.text_field :name
+    = new_theme_asset.label :asset, "Asset Source<abbr title='required' class='required'>*</abbr>".html_safe
+    = new_theme_asset.file_field :asset, :class => "file_field"
+    = new_theme_asset.hidden_field :asset_cache

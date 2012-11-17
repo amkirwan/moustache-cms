@@ -20,7 +20,7 @@ class BaseAssetUploader < CarrierWave::Uploader::Base
 
   # Override the filename of the uploaded files:
   def filename
-    "#{model.name}.#{file.extension}"
+    "#{model.name}"
   end
   
   def remember_cache_id(new_file)
