@@ -1,0 +1,8 @@
+%li.img_thumb 
+  = link_to image_tag(@theme_asset.asset.url, :class => "theme_asset_thumb"), "http://#{request.host}#{@theme_asset.asset.url}"
+%li
+  %span= "Filename "
+  = link_to "#{@theme_asset.asset.file.filename}", "http://#{request.host}#{@theme_asset.asset.url}"
+%li
+  %span= "Filename with MD5 fingerprint "
+  = link_to "#{@theme_asset.filename_md5}", "http://#{request.host}#{@theme_asset.url_md5}"
