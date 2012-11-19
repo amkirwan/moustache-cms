@@ -144,8 +144,7 @@ FactoryGirl.define do
   end
 
   factory :moustache_asset do
-    name "asset_name"
-    content_type "content_type"
+    name "asset_name.png"
     asset { File.open("#{Rails.root}/spec/fixtures/assets/rails.png") }
     width 200
     height 200

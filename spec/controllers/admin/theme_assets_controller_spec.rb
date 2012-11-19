@@ -91,13 +91,6 @@ describe Admin::ThemeAssetsController do
       end
     end
     
-    context "using asset_cache when asset is nil on redisplay, ie validation fails" do
-      it "should set the asset to the asset_cache when the asset_cache is not empty and the asset is nil" do   
-        controller.should_receive(:try_theme_asset_cache)
-        do_post({ "asset_cache" => "1/rails.png" })
-      end
-    end
-    
     context "with invalid params" do
       before(:each) do
         @theme_asset.stub(:save).and_return(false)

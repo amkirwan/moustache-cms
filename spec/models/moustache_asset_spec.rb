@@ -40,7 +40,7 @@ describe MoustacheAsset do
       it "should set the asset name to the name of the file if it is blank" do
         @moustache_asset.name = nil
         @moustache_asset.save
-        @moustache_asset.name.should == "asset_name"
+        @moustache_asset.name.should == "asset_name.png"
       end
     end
   end
@@ -61,7 +61,7 @@ describe MoustacheAsset do
     describe "#recreate" do
       it "should update the filename and recreate version when a new name is given" do
         @moustache_asset.update_attributes(:name => "new_name")
-        @moustache_asset.asset.filename.should == "new_name.png"
+        @moustache_asset.asset.filename.should == "new_name"
       end  
     end
   end

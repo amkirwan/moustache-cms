@@ -9,10 +9,10 @@ describe ThemeAssetUploader do
   let(:theme_collection) { FactoryGirl.create(:theme_collection, :site => site) }
   
   before do
-    theme_collection.theme_assets << @theme_asset = FactoryGirl.build(:theme_asset, :name => "foobar") 
-    theme_collection.theme_assets << @theme_asset_css = FactoryGirl.build(:theme_asset, :name => "foobar", :asset => AssetFixtureHelper.open("theme_css.css")) 
-    theme_collection.theme_assets << @theme_asset_js = FactoryGirl.build(:theme_asset, :name => "foobar", :asset => AssetFixtureHelper.open("theme_js.js")) 
-    theme_collection.theme_assets << @theme_asset_otf = FactoryGirl.build(:theme_asset, :name => "foobar", :asset => AssetFixtureHelper.open("Inconsolata.otf"))
+    theme_collection.theme_assets << @theme_asset = FactoryGirl.build(:theme_asset, :name => "foobar", content_type: 'png/image') 
+    theme_collection.theme_assets << @theme_asset_css = FactoryGirl.build(:theme_asset, :name => "foobar", :asset => AssetFixtureHelper.open("theme_css.css"), content_type: 'text/css') 
+    theme_collection.theme_assets << @theme_asset_js = FactoryGirl.build(:theme_asset, :name => "foobar", :asset => AssetFixtureHelper.open("theme_js.js"), content_type: 'text/javascript') 
+    theme_collection.theme_assets << @theme_asset_otf = FactoryGirl.build(:theme_asset, :name => "foobar", :asset => AssetFixtureHelper.open("Inconsolata.otf"), content_type: 'application/x-font-opentype')
     
     ThemeAssetUploader.enable_processing = true
     @uploader = ThemeAssetUploader.new(@theme_asset, :asset)
@@ -25,9 +25,12 @@ describe ThemeAssetUploader do
     @uploader_otf.store!(AssetFixtureHelper.open("Inconsolata.otf"))
   end
   
-  after do
+  after(:each) do
     ThemeAssetUploader.enable_processing = false
-    AssetFixtureHelper.remove_asset!(File.join(Rails.root, 'public', 'theme_assets', @uploader.model._parent.site_id.to_s))
+    FileUtils.rm_rf(File.join(Rails.root, 'public', 'theme_assets', @uploader.model.site_id.to_s))
+    FileUtils.rm_rf(File.join(Rails.root, 'public', 'theme_assets', @uploader_css.model.site_id.to_s))
+    FileUtils.rm_rf(File.join(Rails.root, 'public', 'theme_assets', @uploader_js.model.site_id.to_s))
+    FileUtils.rm_rf(File.join(Rails.root, 'public', 'theme_assets', @uploader_otf.model.site_id.to_s))
   end  
   
   it "should white list these extenstiosn" do
