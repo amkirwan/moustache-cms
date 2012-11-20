@@ -14,13 +14,9 @@ class BaseAssetUploader < CarrierWave::Uploader::Base
 
   process :set_content_type
 
-  def mime_types
-    MIME::Types.of(model.asset_identifier)
-  end
-
   # Override the filename of the uploaded files:
   def filename
-    "#{model.name}"
+    model.name.to_s
   end
   
   def remember_cache_id(new_file)
@@ -39,30 +35,18 @@ class BaseAssetUploader < CarrierWave::Uploader::Base
   end          
     
   def image?
-    types = mime_types
-    if types.empty?
-      false
-    else
-      types.first.content_type.include? 'image'
-    end
+    content_type = model.content_type
+    content_type.empty? ? false : content_type.include?('image')
   end
 
   def stylesheet?
-    types = mime_types
-    if types.empty?
-     false
-    else
-      types.first.content_type.include? 'css'
-    end
+    content_type = model.content_type
+    content_type.empty? ? false : content_type.include?('css')
   end
 
   def javascript?
-    types = mime_types
-    if types.empty?
-      false
-    else
-      types.first.content_type.include? 'javascript'
-    end
+    content_type = model.content_type
+    content_type.empty? ? false : content_type.include?('javascript')
   end
 
 end

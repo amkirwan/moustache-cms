@@ -43,8 +43,7 @@ class MoustacheAsset
 
   def set_name
     if self.name.blank?
-      name_split = self.asset.file.filename.split('.')
-      self.name = name_split.slice(0, name_split.length - 1).join('.')
+      self.name = self.asset.file.filename
     end
   end
   

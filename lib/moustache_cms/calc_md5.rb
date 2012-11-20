@@ -66,7 +66,7 @@ module MoustacheCms
         if self.class == Author
           "#{self.image.filename.split('.').first}-#{md5}.#{self.image.file.extension}"
         else
-          "#{self.name}-#{md5}.#{self.asset.file.extension}"          
+          "#{self.name.split('.').first}-#{md5}.#{self.asset.file.extension}"          
         end
       end
 

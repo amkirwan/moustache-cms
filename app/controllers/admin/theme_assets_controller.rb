@@ -36,20 +36,6 @@ class Admin::ThemeAssetsController < AdminBaseController
       "Successfully created the theme asset #{@theme_asset.name}"
     end
   end    
-
-    def process_name(original_filename)
-      @theme_asset.name = original_filename
-    end
-
-   def process_create_params
-      if params[:theme_asset].nil?
-        process_name(params[:name])
-      else
-        try_site_asset_cache
-        process_name(params[:theme_asset][:name])
-      end
-    end
-  
   # GET /admin/theme_asset/1/edit
   def edit
     respond_with(:admin, @theme_collection, @theme_asset)
@@ -78,9 +64,20 @@ class Admin::ThemeAssetsController < AdminBaseController
   end   
   
   private
-    def md5_update(data)
-      md5 = ::Digest::MD5.hexdigest(data)
-      @theme_asset.filename_md5 = "#{@theme_asset.name}-#{md5}.#{@theme_asset.asset.file.extension}"
+
+  def md5_update(data)
+    md5 = ::Digest::MD5.hexdigest(data)
+    @theme_asset.filename_md5 = "#{@theme_asset.name}-#{md5}.#{@theme_asset.asset.file.extension}"
+  end
+
+  def process_name(original_filename)
+    @theme_asset.name = original_filename
+  end
+
+  def process_create_params
+    if params[:theme_asset].nil?
+      process_name(params[:name])
     end
+  end
 
 end

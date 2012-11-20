@@ -41,12 +41,6 @@ class AdminBaseController < ApplicationController
       end
     end
 
-    def try_theme_asset_cache(asset_param, asset)
-      if !params[asset_param.to_sym][:asset_cache].empty? && params[asset_param.to_sym][:asset].nil?
-        set_from_cache(:cache_name => params[asset_param.to_sym][:asset_cache], :asset => asset) 
-      end
-    end 
-
     def asset_create_respond_with(collection, asset, redirect, &block)
       respond_with(:admin, collection, asset) do |format|
         if asset.save

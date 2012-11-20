@@ -1,7 +1,9 @@
 - if @theme_asset.new_record?
   %li#submit_fields
-  = link_to "back to collection", [:admin, @theme_collection, :theme_assets], class: 'cancel'
-  = link_to 'reset form', [:new, :admin, @theme_collection, :theme_asset], class: 'cancel'
+  = link_to "back to collection", [:admin, @theme_collection, :theme_assets], class: 'cancel plupload hidden'
+  = link_to 'reset form', [:new, :admin, @theme_collection, :theme_asset], class: 'cancel plupload hidden'
+  = f.submit button_label, :class => "submit no-plupload"
+  = link_to "cancel", [:admin, @theme_collection, :theme_assets], :class => "cancel no-plupload"
 - else
   %li#form_submit_fields
     = f.submit button_label, :class => "submit"

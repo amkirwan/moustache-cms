@@ -67,9 +67,6 @@ class Admin::SiteAssetsController < AdminBaseController
     def process_create_params
       if params[:site_asset].nil?
         process_name(params[:name])
-      else
-        try_site_asset_cache
-        process_name(params[:site_asset][:name])
       end
     end
 

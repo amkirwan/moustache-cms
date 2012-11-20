@@ -1,0 +1,10 @@
+%li#submit_fields
+- if @site_asset.new_record?
+  = link_to "back to collection", [:admin, @asset_collection, :site_assets], class: 'cancel plupload hidden'
+  = link_to 'reset form', [:new, :admin, @asset_collection, :site_asset], class: 'cancel plupload hidden'
+  = f.submit button_label, :class => "submit no-plupload"
+  = link_to "cancel", [:admin, @asset_collection], :class => "cancel no-plupload"
+- else
+  = f.submit button_label, :class => "submit"
+  = link_to "Cancel", [:admin, @asset_collection], :class => "cancel"
+
