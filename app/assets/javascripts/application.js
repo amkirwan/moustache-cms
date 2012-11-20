@@ -12,9 +12,7 @@
 //= require admin/theme_assets
 //= require admin/site_assets
 //= require admin/current_site
-//= require plupload/plupload.full
-//= require plupload/jquery.plupload.queue/jquery.plupload.queue
-//= require site_asset_plupload
+//= require plupload_uploader 
 //= require nested/jquery.ui.nestedSortable
 //= require jquery.fancybox.pack
 //= require_self
