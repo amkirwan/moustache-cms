@@ -1,16 +1,6 @@
-= foldable_fieldset 'General' do
-  %ol.form_fields
-    - unless @theme_asset.new_record?
-      %li
-        = f.label :name, "Name"
-        = f.text_field :name
-      %li
-        = render :partial => 'theme_asset'
-      %li
-        = render :partial => 'form_custom_fields', :locals => { :f => f }
-    - else
-      %li
-        = render :partial => 'theme_asset_type', :locals => { :f => f }
-    %li
-      = render :partial => 'form_submit', :locals => { :f => f, :button_label => button_label }
+= render :partial => 'new_theme_asset', :object => f, :locals => { :theme_asset => @theme_asset }
+- unless @theme_asset.new_record?
+  = render :partial => 'edit_asset'
+  = render :partial => 'form_custom_fields', :locals => { :f => f }
+= render :partial => 'form_submit', :locals => { :f => f, :button_label => button_label }
 

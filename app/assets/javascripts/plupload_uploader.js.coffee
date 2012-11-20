@@ -12,6 +12,7 @@ jQuery ->
           authenticity_token: $('input[name=authenticity_token]').val()
 
     if $('form#new_theme_asset').length
+      $('.name').hide()
       $('.no-plupload').hide()
       $('.plupload').show()
       $("div#uploader").pluploadQueue
