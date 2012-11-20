@@ -1,2 +1,2 @@
 %div{:id => "delete_#{class_name}", :class => "delete"}
-  = link_to "Delete #{title}", [:admin, parent, object], :data => { :confirm => "Are you sure you want to delete the #{class_name} #{view_identifier(object)}", :method => :delete, :class => "action delete" }
+  = link_to "Delete #{title}", [:admin, parent, object], :data => { :confirm => "Are you sure you want to delete the #{class_name} #{view_identifier(object)}" }, :method => :delete, :class => "action delete" 
