@@ -92,9 +92,10 @@ class Page
     self.full_path == '/' ? true : false
   end
 
-  def save_preview
+  def save_preview(site)
     self.write_attribute(:preview, true)
     self.slug = self.slug + '?preview=true'
+    Page.where(site_id: site.id, slug: self.slug).destroy # destroy a preview page if one exists 
     self.save!
   end
 

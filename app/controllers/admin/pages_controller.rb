@@ -69,7 +69,7 @@ class Admin::PagesController < AdminBaseController
   def preview
     @page = Page.new(params[:page])
     assign_protected_attributes(@page)
-    @page.save_preview
+    @page.save_preview(current_site)
   end
 
   def sort
