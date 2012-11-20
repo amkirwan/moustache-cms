@@ -26,12 +26,9 @@
     - if admin?
       %li{:id => "role", :class => "inline"}
         %p.label_for Role <abbr title='required' class='required'>*</abbr>
-        = f.radio_button :role, 'admin' 
-        = f.label :role_admin, 'Admin'
-        = f.radio_button :role, 'designer'
-        = f.label :role_designer, 'Designer'
-        = f.radio_button :role, 'editor'
-        = f.label :role_editor, 'Editor'
+        - User::Roles.each do |role|
+          = f.radio_button :role, role.to_s
+          = f.label "role_#{role}".to_sym, role.capitalize
     %li
       = f.label :time_zone
       = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, :default => "Eastern Time (US & Canada)"
