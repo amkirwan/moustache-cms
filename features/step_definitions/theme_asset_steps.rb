@@ -78,7 +78,6 @@ Then /^"([^"]*)" should be listed within the javascript assets$/ do |asset_name|
   end
 end
 
-
 Then /^"([^"]*)" should be listed within the css assets$/ do |asset_name|
   within '.theme_asset_css' do
     step %{I should see "#{asset_name}" in the theme assets list} 

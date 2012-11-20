@@ -32,11 +32,18 @@ Background: Login to site and create layouts
     When I edit the site asset collection "images" and delete it
     Then the site asset collection "images" should be removed from the asset collections list
     And I should see the flash message "Successfully deleted the asset collection images"
+    
+# Site Assets
+  @create_site_asset_image @upload
+  Scenario: Create a image asset in the collection blog
+    Given I view the site asset collection "blog"
+    When I create the site asset named "rails.png"
+    Then "rails.png" should be listed within the site assets
 
-  @javascript @delete_asset_collection_from_index @upload
-  Scenario: Delete an asset collection from the asset collection index page
-    Given I view the site assets for the site
-    When I delete the site assets collection "images" from the articles list
-    Then the site asset collection "images" should be removed from the asset collections list
-    And I should see the flash message "Successfully deleted the asset collection images"
-
+  @delete_site_asset @upload
+  Scenario: Delete a asset
+    Given I view the site asset collection "image"
+    When I create the site asset named "rails.png"
+    And I edit the site asset "rails.png" and delete it
+    Then I should not see the "rails.png" in the image list
+    And I should see the flash message "Successfully deleted the asset rails.png"

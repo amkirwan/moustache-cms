@@ -12,6 +12,14 @@ Given /^these asset collections exist$/ do |table|
   end
 end
 
+Given /^I view the site asset collection "([^"]*)"$/ do |name|
+  steps %{
+    Given I view the site assets for the site
+    When I create a new site asset collection with the name "#{name}"
+  }
+  click_link name
+end
+
 When /^I create a new site asset collection with the name "([^"]*)"$/ do |name|
   click_link 'New Asset Collection'
   fill_in 'Name', :with => name
@@ -40,10 +48,14 @@ When /^I delete the site assets collection "([^"]*)" from the articles list$/ do
   wait_for_ajax
 end
 
-When /^I upload "([^"]*)" to the asset collection "([^"]*)"$/ do |file_name, asset_collection|
-  asset_collection = asset_collection(asset_collection) 
-  visit "/admin/asset_collections/#{asset_collection.id}/site_assets/new"
-  click_link 'Add files'
+When /^I edit the site asset "([^"]*)" and delete it$/ do |name|
+  click_link name
+  click_link 'Delete Site Asset'
+end
+
+When /^I create the site asset named "([^"]*)"$/ do |filename|
+  attach_file :site_asset, File.join(Rails.root, 'spec', 'fixtures', 'assets', filename) 
+  click_button 'Save Asset'
 end
 
 Then /^I should see the site assets collections$/ do
@@ -60,4 +72,16 @@ end
 
 Then /^the "([^"]*)" should be added to the asset collection$/ do |file_name|
   pending
+end
+
+Then /^"([^"]*)" should be listed within the site assets$/ do |asset_name|
+  within '.show_asset_collection' do
+    step %{I should see "#{asset_name}" in the theme assets list} 
+  end
+end
+
+Then /^I should not see the "(.*?)" in the image list$/ do |name|
+  within '.show_asset_collection' do
+    page.should_not have_content name 
+  end
 end

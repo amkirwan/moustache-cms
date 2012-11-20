@@ -59,6 +59,10 @@ Then /^I should see "([^"]*)" in the (?:.*) list$/ do |content|
   page.should have_content content
 end
 
+Then /^I should not see "([^"]*)" in the (?:.*) list$/ do |content|
+  page.should_not have_content content
+end
+
 Then /^I should see the flash message "(.*)"$/ do |message|
   page.should have_content message
 end
