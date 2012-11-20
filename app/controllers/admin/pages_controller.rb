@@ -8,7 +8,7 @@ class Admin::PagesController < AdminBaseController
 
   respond_to :html, :except => [:show, :sort, :new_meta_tag, :new_custom_field]
   respond_to :xml, :json
-  respond_to :js, :only => [:preview, :show, :edit, :destroy, :sort, :new_meta_tag, :new_custom_field]
+  respond_to :js, :only => [:show, :edit, :destroy, :sort, :new_meta_tag, :new_custom_field]
 
   def index
     page_created_updated
