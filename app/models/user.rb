@@ -41,7 +41,7 @@ class User
   before_validation :uniq_page_ids
   before_save :lower, :set_username
                        
-  Roles = %w[editor designer admin superadmin] unless defined?(Roles)
+  Roles = %w[editor designer admin] unless defined?(Roles)
   
   # -- Validations -----------------------------------------------
   validates :username,
