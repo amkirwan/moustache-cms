@@ -28,6 +28,11 @@ class MoustacheCms::Mustache::CmsPage < Mustache
     process_with_filter(part)
   end
 
+  def article_list_or_article
+    part = @article.nil? ? @page.page_parts.where(name: '_article_list').first : @page.page_parts.where(name: '_article').first
+    process_with_filter(part)
+  end
+
   protected 
   def parse_text(text)
     Hash[*text.scan(/(\w+):([&.\w\s\-]+)/).to_a.flatten]
@@ -59,7 +64,6 @@ class MoustacheCms::Mustache::CmsPage < Mustache
       self.instance_variable_set(var_name, @controller.instance_variable_get(var_name))
     end
   end  
-
  
   def process_with_filter(part)
     preprocessed_content = preprocess(part) 
