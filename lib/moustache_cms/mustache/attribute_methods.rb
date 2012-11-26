@@ -5,39 +5,39 @@ module MoustacheCms
 
       module ClassMethods
         def define_attribute_method(method_name, calling_method, name)
-          class_eval do
+          class_eval <<-EOT, __FILE__, __LINE__ + 1
             define_method method_name do
               self.send(calling_method, name)
             end
-          end
+          EOT
           add_generated_method(method_name) 
         end
 
         def define_snippet_method(method_name, name)
-          class_eval do
+          class_eval <<-EOT, __FILE__, __LINE__ + 1
             define_method method_name do
               snippet_method(name)
             end  
-          end
+          EOT
           add_generated_method(method_name) 
         end
 
         def define_page_part_method(method_name, name)
-          class_eval do
+          class_eval <<-EOT, __FILE__, __LINE__ + 1
             define_method method_name do
               page_part_method(name)
             end
-          end
+          EOT
           add_generated_method(method_name) 
         end
 
         def define_meta_tag_method(method_name, name)
-          class_eval do
+          class_eval <<-EOT, __FILE__, __LINE__ + 1
             define_method method_name do
               engine = gen_haml('meta_tag.haml')
               engine.render(nil, {:name => name, :content => meta_tag_name(name).content})
             end
-          end
+          EOT
           add_generated_method(method_name) 
         end
 
@@ -53,9 +53,6 @@ module MoustacheCms
           self.generated_methods << method_name.to_sym
         end
 
-        # def attribute_fields(klass)
-        #   klass.fields.keys.delete_if { |field| field =~ /(.*)(_ids?)$/ || field =~ /^_(.*)/ }
-        # end
       end
 
     end
