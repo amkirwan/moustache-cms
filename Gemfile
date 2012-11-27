@@ -41,6 +41,7 @@ group :development, :test do
   gem "syntax"   
   gem "relish"
   gem "guard"
+  gem 'rb-fsevent', '~> 0.9.1'
   gem "guard-cucumber", :git => "git://github.com/netzpirat/guard-cucumber.git"
   gem "guard-rspec"
   gem "guard-spork"
