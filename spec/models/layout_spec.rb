@@ -1,5 +1,5 @@
 # spec for Layout Model
-require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
+require 'spec_helper'
 
 describe Layout do   
   let(:user) { FactoryGirl.create(:user) }

@@ -1,5 +1,5 @@
 # spec for CurrentState
-require File.expand_path(File.dirname(__FILE__) + '../../spec_helper')
+require 'spec_helper'
 
 describe CurrentState do  
   before(:each) do
