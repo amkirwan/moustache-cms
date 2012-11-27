@@ -14,7 +14,6 @@ describe CmsSiteController do
       Site.stub(:match_domain).with("test.host").and_return(@criteria_sites = [current_site])
       @criteria_sites.stub(:first).and_return(current_site)
       current_site.stub(:page_by_full_path).and_return(page)
-      controller.stub(:current_site).and_return(current_site)
     end
     
     def do_get
