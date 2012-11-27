@@ -3,6 +3,7 @@ class Article
   include Mongoid::Timestamps
   include Mongoid::MultiParameterAttributes
 
+  include MoustacheCms::Siteable
   include MoustacheCms::StateSetable
   include MoustacheCms::Published
   include MoustacheCms::DefaultMetaTags
@@ -40,7 +41,6 @@ class Article
   index :permalink => 1
 
   # -- Associations -------------
-  belongs_to :site
   belongs_to :article_collection
   belongs_to :created_by, :class_name => "User", :inverse_of => :articles_created
   belongs_to :updated_by, :class_name => "User", :inverse_of => :articles_updated
@@ -50,9 +50,6 @@ class Article
   accepts_nested_attributes_for :authors
 
   # -- Validations -----------------------------------------------
-  validates :site_id,
-            :presence => true
-
   validates :title,
             :presence => true
 

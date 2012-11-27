@@ -2,6 +2,7 @@ class Author
   include Mongoid::Document 
   include Mongoid::Timestamps
 
+  include MoustacheCms::Siteable
   include MoustacheCms::CalcMd5
 
   attr_accessible :prefix,
@@ -28,7 +29,6 @@ class Author
   mount_uploader :image, AuthorUploader
 
   # -- Associations ---
-  belongs_to :site
   belongs_to :created_by, :class_name => "User", :inverse_of => :authors_created
   belongs_to :updated_by, :class_name => "User", :inverse_of => :authors_updated
   has_and_belongs_to_many :articles
@@ -40,9 +40,6 @@ class Author
             :presence => true
 
   validates :lastname,
-            :presence => true
-
-  validates :site_id,
             :presence => true
 
   # -- Callbacks ---

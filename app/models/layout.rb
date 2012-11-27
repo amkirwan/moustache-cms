@@ -2,6 +2,8 @@ class Layout
   include Mongoid::Document 
   include Mongoid::Timestamps
   
+  include MoustacheCms::Siteable
+
   attr_accessible :name, :content
 
   #-- Fields -----------------------------------------------  
@@ -15,7 +17,6 @@ class Layout
   has_many :pages, :dependent => :nullify
   has_many :article_collections
   has_many :articles
-  belongs_to :site
   belongs_to :created_by, :class_name => "User", :inverse_of => :layouts_created
   belongs_to :updated_by, :class_name => "User", :inverse_of => :layouts_updated
   
@@ -26,7 +27,7 @@ class Layout
             :presence => true,
             :uniqueness => { :scope => :site_id }
             
-  validates_presence_of :content, :created_by_id, :updated_by_id, :site_id
+  validates_presence_of :content, :created_by_id, :updated_by_id
 
   # -- Scopes ----
   scope :all_from_current_site, ->(current_site) { where(:site_id => current_site.id) }

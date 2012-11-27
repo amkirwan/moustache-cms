@@ -2,6 +2,8 @@ class Snippet
   include Mongoid::Document
   include Mongoid::Timestamps
   
+  include MoustacheCms::Siteable
+
   attr_accessible :name, :content, :filter_name
   # -- Fields ----
   field :name
@@ -12,7 +14,6 @@ class Snippet
   index :name => 1
                    
   # -- Assocations ----
-  belongs_to :site
   belongs_to :created_by, :class_name => "User", :inverse_of => :snippets_created
   belongs_to :updated_by, :class_name => "User", :inverse_of => :snippets_updated
 
@@ -22,8 +23,6 @@ class Snippet
   validates :name,
             :presence => true,
             :uniqueness => { :scope => :site_id }   
-  validates :site,
-            :presence => true
   validates :filter_name,
             :presence => true
   validates :created_by_id,
