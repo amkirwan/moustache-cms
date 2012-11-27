@@ -7,6 +7,9 @@ class Snippet
   field :name
   field :content
   field :filter_name
+
+  # -- Index ---------------------------------------
+  index :name => 1
                    
   # -- Assocations ----
   belongs_to :site

@@ -25,6 +25,7 @@ class User
 
   # -- Index -------------------------------
   index :username => 1
+  index :role => 1
   
   #-- Associations-----------------------------------------------
   %w(Layout Page Snippet AssetCollection ThemeCollection ArticleCollection Author Article).each do |name|

@@ -28,6 +28,9 @@ class MoustacheAsset
   validates :name, :presence => true 
   validates :asset, :presence => { :message => "must have a file selected" }
 
+  # -- Index ---------------------------------------
+  index :name => 1
+
   # -- Callbacks
   before_validation :set_name
   before_save :update_asset_attributes

@@ -10,6 +10,9 @@ class MoustacheCollection
   # -- Field --
   field :name
 
+  # -- Index -----
+  index :name => 1
+
   # -- Associations ----
   belongs_to :site
 

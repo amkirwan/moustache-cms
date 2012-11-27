@@ -12,7 +12,7 @@ class Site
   field :domain_names, :type => Array, :default => []
   
   # -- Index ---------------------------------------
-  index :domain_names => 1
+  index({ domain_names: 1 }, { unique: true })
   
   # -- Associations ---------------------------------------
   has_many :users, :dependent => :destroy
