@@ -9,3 +9,36 @@ Scenario: When I go to the index page I should see the root page for the site
   When I go to the sites homepage
   Then I should see the homepage
 
+@show_about_page
+  Scenario: When I go the another page in the site that is a child of the homepage
+    Given the "about" page exists in the site "foobar.example.com"
+    When I go to the sites "about" page
+    Then I should see the "about" page
+
+@show_blog
+  Scenario: Show the articles for the article collection blog
+    Given the "blog" collection page exists in the site "foobar.example.com"
+    And these article collections exist with the permalink prefix
+      | name |
+      | blog |
+    And these articles exist in the collection "blog"
+      | title  |
+      | foobar |
+      | baz    |
+      | qux    |
+    When I go to the sites "blog" page
+    Then I should see the list of article titles for the article collection "blog"
+
+@show_blog_post
+  Scenario: Go to the aritcle in the blog collection 
+    Given the "blog" collection page exists in the site "foobar.example.com"
+    And these article collections exist with the permalink prefix
+      | name |
+      | blog |
+    And these articles exist in the collection "blog"
+      | title  |
+      | foobar |
+      | baz    |
+      | qux    |
+    When I view the "blog" post with the title "foobar"
+    Then I should see the blog post "foobar"

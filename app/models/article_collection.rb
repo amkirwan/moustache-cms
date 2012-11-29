@@ -7,6 +7,8 @@ class ArticleCollection < MoustacheCollection::Metal
     # -- Fields --------------- 
   field :permalink_prefix, :type => Boolean, :default => false
   
+  validates :layout_id, presence: true
+  
   # -- Associations -------------
   belongs_to :layout
   created_updated(:article_collections)

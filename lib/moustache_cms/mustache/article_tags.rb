@@ -15,22 +15,11 @@ module MoustacheCms
       # the paginated list of articles so you will also want to define an {{ article }} 
       # You will most likely want to use this tag in conjunction with the
       # {{{paginate_articles}}} tag
-      def articles_list_for(name)
+      def articles_for(name)
         if @article.nil?
           find_articles(name) 
           articles_to_list
         end
-      end
-
-      # You will use a list of articles for the collection or it will return a single article
-      # if the url matches a permalink in your collection. This tag will be usefull if you display your 
-      # articles the same as in the list view and the permalink view. If you want to display your articles
-      # between the paginated list of articles and an individual artcile then you will want to use the 
-      # You will most likely want to use this tag in conjunction with the
-      # {{{paginate_articles}}} tag
-      def articles_for(name)
-        @article.nil? ? find_articles(name) : (@articles = [@article])
-        articles_to_list
       end
 
       def feed_for(name)
@@ -125,8 +114,6 @@ module MoustacheCms
       def method_missing(method, *arguments, &block)
         method_name = method.to_s
         case method_name
-        when /^(articles_list_for)_(.*)/
-          self.class.define_attribute_method(method_name, $1, $2)
         when /^(articles_for)_(.*)/
           self.class.define_attribute_method(method_name, $1, $2)
         when /^(feed_for)_(.*)/

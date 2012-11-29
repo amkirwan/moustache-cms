@@ -52,8 +52,12 @@ module Create
     @article_collection = FactoryGirl.create(:article_collection, :name => name, :site => @site)
   end
 
+  def create_article_collection_with_permalink_prefix(name)
+    @article_collection = FactoryGirl.create(:article_collection, :name => name, :site => @site, :permalink_prefix => true)
+  end
+
   def create_article(title, article_collection)
-    @article = FactoryGirl.create(:article, :article_collection => article_collection, :site => @site, :title => title)
+    @article = FactoryGirl.create(:article, :article_collection => article_collection, :site => @site, :title => title, :slug => title)
   end
 
   def create_asset_collection(name)

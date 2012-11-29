@@ -21,6 +21,7 @@ class MoustacheCms::Mustache::CmsPage < Mustache
     else
       @template = @page.layout.content
     end
+    @template
   end
   
   def yield

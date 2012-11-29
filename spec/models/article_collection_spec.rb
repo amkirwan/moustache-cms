@@ -2,13 +2,26 @@ require 'spec_helper'
 
 describe "ArticleCollection" do
   let(:site) { FactoryGirl.create(:site) }
+  let(:layout) { FactoryGirl.create(:layout, site: site) }
   let(:user) { FactoryGirl.create(:user) }
 
   before(:each) do
-    @article_collection = FactoryGirl.create(:article_collection, :site => site, :created_by => user, :updated_by => user)           
+    @article_collection = FactoryGirl.create(:article_collection, :site => site, :layout => layout, :created_by => user, :updated_by => user)           
     @article_collection.articles << FactoryGirl.build(:article)
     @article_collection.articles << FactoryGirl.build(:article)
   end
+
+  # -- Validation ---
+  describe "validations" do
+    it "should be valid" do
+      @article_collection.should be_valid
+    end
+
+    it "should validate the presence of a layout" do
+      @article_collection.layout_id = nil
+      @article_collection.should_not be_valid
+    end
+  end 
 
   # --  Associations ---- 
   describe "associations" do

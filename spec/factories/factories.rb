@@ -118,6 +118,7 @@ FactoryGirl.define do
 
   factory :moustache_collection do
     association :site, strategy: :build
+    association :layout, strategy: :build
     sequence(:name) { |n| "name_#{n}" }
   end
 
@@ -133,12 +134,11 @@ FactoryGirl.define do
     subheading 'subheading'  
     sequence(:slug) { |n| "slug_#{n}" }
     tag_list "article"
-    layout { FactoryGirl.build(:layout, site_id: "#{site.id}") }
     current_state { FactoryGirl.build(:current_state) }
     meta_tags { set_meta_tags('article') }
     content "article content"
     authors { [FactoryGirl.build(:user, site_id: "#{site.id}")] }
-    filter_name "published"
+    filter_name "html"
     article_collection { FactoryGirl.build(:article_collection, site_id: "#{site.id}") }
     after(:build) { |article| assign_created_updated_by(article, :articles) }
   end

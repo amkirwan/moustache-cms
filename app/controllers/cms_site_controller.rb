@@ -8,7 +8,6 @@ class CmsSiteController < ApplicationController
   
   def render_html
     if !@page.nil? && (@page.published? || current_admin_user)
-      doc = MoustacheCms::Mustache::CmsPage.new(self)
       document = MoustacheCms::Mustache::CmsPage.new(self).render
       # response.etag = document
       if request.fresh?(response)
@@ -84,9 +83,9 @@ class CmsSiteController < ApplicationController
       @article = article_by_permalink
     end
     # find the page that the article will be rendered in.
-    @page = params[:articles] ? @current_site.page_by_full_path("/#{params[:articles]}") : @current_site.page_by_full_path('/')
+    @page = params[:articles] ? @current_site.page_by_full_path("/#{params[:articles]}") : @current_site.homepage
       
-    # Check if the page is the home page and that the article is not nil. 
+    # Check if the page is the homepage and that the article is not nil. 
     # If it is render 404 because we don't want to render the home page when the
     # user is looking for a permalink. The root path would 
     return render_404 if @page.nil? || (@page.homepage? && @article.nil?)

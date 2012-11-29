@@ -6,7 +6,7 @@ describe Site do
     @site = FactoryGirl.create(:site)  
     @user = FactoryGirl.create(:user, :site => @site)    
     @layout = FactoryGirl.create(:layout, :site => @site, :created_by => @user, :updated_by => @user) 
-    @homepage = FactoryGirl.create(:page, :site_id => @site.id, :layout_id => @layout.id, :created_by_id => @user.id, :updated_by_id => @user.id, :editor_ids => [@user.id]) 
+    @homepage = FactoryGirl.create(:page, :site_id => @site.id, :layout_id => @layout.id, :created_by_id => @user.id, :updated_by_id => @user.id, :editor_ids => [@user.id], :slug => '/', :full_path => '/') 
   end
   
   after(:each) do
@@ -138,21 +138,21 @@ describe Site do
 
     describe "#find_page" do
       it "should return the page by id" do
-        @site.pages << page = FactoryGirl.create(:page, :title => "foobar", :site => @site, :layout => @layout, :created_by => @user, :updated_by => @user)
+        @site.pages << page = FactoryGirl.create(:page, parent: @homepage, title: "foobar", site: @site, layout: @layout, created_by: @user, updated_by: @user, slug: 'foobar', full_path: '/foobar')
         @site.find_page(page.id).should == page  
       end
     end
     
     describe "#page_by_title" do
       it "should return the page by the title" do   
-        @site.pages << page = FactoryGirl.create(:page, :title => "foobar", :site => @site, :layout => @layout, :created_by => @user, :updated_by => @user)
+        @site.pages << page = FactoryGirl.create(:page, parent: @homepage, title: "foobar", site: @site, layout: @layout, created_by: @user, updated_by: @user, slug: 'foobar', full_path: '/foobar')
         @site.page_by_title(page.title).should == page
       end
     end
     
     describe "#page_by_full_path" do
       it "should return the page" do    
-        @site.pages << page = FactoryGirl.create(:page, :site => @site, :layout => @layout, :created_by => @user, :updated_by => @user)
+        @site.pages << page = FactoryGirl.create(:page, parent: @homepage, title: "foobar", site: @site, layout: @layout, created_by: @user, updated_by: @user, slug: 'foobar', full_path: '/foobar')
         @site.page_by_full_path(page.full_path).should == page
       end
     end
