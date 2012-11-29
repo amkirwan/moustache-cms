@@ -74,7 +74,7 @@ class CmsSiteController < ApplicationController
   # If the params[:preview] is set then it will look for the preview version of the article.
   # Otherwise load the article from the permalink.
   # Then find the page that the article should be rendered into from the params[:articles].
-  # Render 404 if the page is nil or the page is the home_page and the article is does not exist.
+  # Render 404 if the page is nil or the page is the homepage and the article is does not exist.
   def current_site_load_article
     # assign the article by permalink
     if params[:preview] == 'true'
@@ -89,6 +89,6 @@ class CmsSiteController < ApplicationController
     # Check if the page is the home page and that the article is not nil. 
     # If it is render 404 because we don't want to render the home page when the
     # user is looking for a permalink. The root path would 
-    return render_404 if @page.nil? || (@page.home_page? && @article.nil?)
+    return render_404 if @page.nil? || (@page.homepage? && @article.nil?)
   end
 end

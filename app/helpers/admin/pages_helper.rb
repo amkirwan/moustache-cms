@@ -59,9 +59,9 @@ module Admin::PagesHelper
 
   def page_classes(page)
     if page.published?
-      page.home_page? ? 'home_page published' : 'published'
+      page.homepage? ? 'homepage published' : 'published'
     elsif page.draft?
-      page.home_page? ? 'home_page draft' : 'draft'
+      page.homepage? ? 'homepage draft' : 'draft'
     end
   end
 
