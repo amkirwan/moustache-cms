@@ -32,7 +32,6 @@ CONTENT
 
   describe "articles should respond to the following tags" do
     specify { @cmsp.respond_to?(:articles_for).should be_true }
-    specify { @cmsp.respond_to?(:articles_list_for).should be_true }
     specify { @cmsp.respond_to?(:article).should be_true }
     specify { @cmsp.respond_to?(:paginate_articles).should be_true }
     specify { @cmsp.respond_to?(:link_to_next_page).should be_true }
@@ -42,11 +41,6 @@ CONTENT
 
 
   describe "it should create methods from ghost method calls" do
-    it "should define a method for the call to articles_list_for_blog_(name)" do
-      @cmsp.articles_list_for_blog
-      @cmsp.class.attribute_method_generated?(:articles_list_for_blog).should be_true   
-    end  
-
     it "should define a method for the call to articles__for_(name)" do
       @cmsp.articles_for_blog  
       @cmsp.class.attribute_method_generated?(:articles_for_blog).should be_true   
@@ -57,18 +51,9 @@ CONTENT
     it "should return a list of the articles for articles_for_(name)" do
       @cmsp.articles_for_blog.should == [@article]  
     end
-
-    it "should return the list of the articles for articles_list_for_(name)" do 
-      @cmsp.instance_variable_set("@article", nil)
-      @cmsp.articles_list_for_blog.should == [@article]  
-    end
   end
 
   describe "it should render the article" do
-    it "should return nil if the article instance variable @article is not nil" do
-      @cmsp.articles_list_for_blog.should be_nil
-    end
-
     it "should return the article" do
       @cmsp.article.should == @article
     end

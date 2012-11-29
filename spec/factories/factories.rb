@@ -118,13 +118,13 @@ FactoryGirl.define do
 
   factory :moustache_collection do
     association :site, strategy: :build
-    association :layout, strategy: :build
     sequence(:name) { |n| "name_#{n}" }
   end
 
   factory :article_collection, parent: :moustache_collection, class: ArticleCollection do 
     editors {[ FactoryGirl.build(:user) ]}
     permalink_prefix false
+    association :layout, strategy: :build
     after(:build) { |article_collection| assign_created_updated_by(article_collection, :article_collections) }
   end
 

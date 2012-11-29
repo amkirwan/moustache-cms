@@ -16,10 +16,8 @@ module MoustacheCms
       # You will most likely want to use this tag in conjunction with the
       # {{{paginate_articles}}} tag
       def articles_for(name)
-        if @article.nil?
-          find_articles(name) 
-          articles_to_list
-        end
+        find_articles(name) 
+        articles_to_list
       end
 
       def feed_for(name)
@@ -100,9 +98,7 @@ module MoustacheCms
 
       def respond_to?(method)
         method_name = method.to_s
-        if method_name =~ /^articles_list_for_(.*)/ && @current_site.article_collection_by_name($1)
-          return true
-        elsif method_name =~ /^articles_for_(.*)/ && @current_site.article_collection_by_name($1)
+        if method_name =~ /^articles_for_(.*)/ && @current_site.article_collection_by_name($1)
           return true
         elsif method_name =~ /^feed_for_(.*)/ && @current_site.article_collection_by_name($1)
           return true
