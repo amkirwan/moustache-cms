@@ -30,7 +30,7 @@ describe MoustacheCms::Mustache::HeadTags do
 
 describe "head tags" do  
     it "should return the page title" do
-      @cmsp.title.should == %{<title>#{@page.title}</title>\n}
+      @cmsp.title_tag.should == %{<title>#{@page.title}</title>\n}
     end  
 
     it "should return the javascript file" do
