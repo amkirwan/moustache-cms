@@ -87,10 +87,16 @@ class Page
     self.where(:slug => slug).first
   end
 
+  def self.find_homepage(site)
+    roots = self.where(:site => site).roots  
+    roots.where(full_path: '/').first
+  end
+
   # -- Instance Methods -----------------------------------------------  
-  def home_page?
+  def homepage?
     self.full_path == '/' ? true : false
   end
+
 
   def save_preview(site)
     self.write_attribute(:preview, true)

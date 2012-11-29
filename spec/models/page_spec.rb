@@ -248,21 +248,27 @@ describe Page do
     end
 
     describe "Page#find_by_slug" do
-      it "should find the pae by the slug" do
+      it "should find the page by the slug" do
         Page.find_by_slug(@page.slug).should == @page
+      end
+    end
+
+    describe "Page#find_homepage" do
+      it "should return the homepage for the site" do
+        Page.find_homepage(site).should == parent
       end
     end
   end
   
   # -- Instance Methods -----------------------------------------------
   context "Instance Methods" do
-    describe "home_page?" do
+    describe "homepage?" do
       it "should return true if the page is the home page" do
-        parent.home_page?.should be_true
+        parent.homepage?.should be_true
       end
 
       it "should return false if the page is not the home page" do
-        @page.home_page?.should be_false
+        @page.homepage?.should be_false
       end
     end
 
