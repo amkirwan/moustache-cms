@@ -3,7 +3,7 @@ module MoustacheCms
     module HeadTags 
       
       # -- Title ---- 
-      def title
+      def title_tag
         engine = Haml::Engine.new(%{%title= title})
         engine.render(nil, {:title => @page.title})
       end   

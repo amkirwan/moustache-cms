@@ -27,15 +27,14 @@ class MoustacheCms::Mustache::CmsPage < Mustache
     part = @page.page_parts.first
     process_with_filter(part)
   end
-
-  def article_list_or_article
-    part = @article.nil? ? @page.page_parts.where(name: '_article_list').first : @page.page_parts.where(name: '_article').first
-    process_with_filter(part)
-  end
-
+  
   protected 
   def parse_text(text)
     Hash[*text.scan(/(\w+):([&.\w\s\-]+)/).to_a.flatten]
+  end
+
+  def full_request(relative_link)
+    'http://' + @controller.request.host + relative_link
   end
 
   def action_view_helpers_context

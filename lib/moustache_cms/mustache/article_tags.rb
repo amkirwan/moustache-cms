@@ -1,6 +1,14 @@
+require 'builder'
+
 module MoustacheCms
   module Mustache
     module ArticleTags
+
+    # This tag will render a page part named either '_articles' or '_article'. This allows you to render a page either as the collection of articles or an article with the permalink.
+    def articles_or_article
+      part = @article.nil? ? @page.page_parts.where(name: '_articles').first : @page.page_parts.where(name: '_article').first
+      process_with_filter(part)
+    end
 
       # This tag will display the list of articles paginated. From within the paginated list you can
       # access all the properties of an article to display in your view. Using this tag will only show
@@ -25,8 +33,45 @@ module MoustacheCms
         articles_to_list
       end
 
+      def feed_for(name)
+        find_articles(name) 
+        articles_to_list
+        feed = @page.page_parts.where(name: 'feed').first
+        process_with_filter(feed)    
+      end
+
+      def feed_updated
+        @articles.first.updated_at.xmlschema if @articles.length > 0
+      end
+
+      def generate_feed
+        xml = ""
+        builder = Builder::XmlMarkup.new
+        @articles_published.each do |article|
+          content = process_with_filter(article)
+          xml = builder.entry do |b|
+            b.title(type: "html") { |t| t.cdata!(article.title) }
+            b.author { |a| a.name(article.authors.first.full_name) }
+            b.link(rel: 'alternate', type: 'text/html', href: full_request(article.permalink))
+            b.id(full_request(article.permalink))
+            b.updated(article.updated_at.xmlschema)
+            b.published(article.published_on.xmlschema)
+            b.content(type: "html") { |c| c.cdata!(content) }
+          end
+        end
+        { xml: xml }
+      end
+
       def article
         @article
+      end
+
+      def articles
+        @articles
+      end
+
+      def articles_published
+        @articles_published
       end
 
       # process the article contents with the filter
@@ -70,6 +115,8 @@ module MoustacheCms
           return true
         elsif method_name =~ /^articles_for_(.*)/ && @current_site.article_collection_by_name($1)
           return true
+        elsif method_name =~ /^feed_for_(.*)/ && @current_site.article_collection_by_name($1)
+          return true
         else
           super
         end
@@ -81,6 +128,8 @@ module MoustacheCms
         when /^(articles_list_for)_(.*)/
           self.class.define_attribute_method(method_name, $1, $2)
         when /^(articles_for)_(.*)/
+          self.class.define_attribute_method(method_name, $1, $2)
+        when /^(feed_for)_(.*)/
           self.class.define_attribute_method(method_name, $1, $2)
         end
 
@@ -133,21 +182,13 @@ module MoustacheCms
       end
 
       def articles_to_list
-        @articles_list = [] 
+        @articles_published = [] 
         @articles.each do |article|
           if article.published?
-            # hash = {}
-            #attrs = self.class.attribute_fields(Article)
-            #attrs.each do |attr_name|
-              # hash[attr_name] = article.send(attr_name)
-            # end
-            # hash['created_by'] = article.created_by.attributes
-            # process_article_with_filter(article, hash)
-            # @articles_list << hash
-            @articles_list << article
+            @articles_published << article
           end
         end
-        @articles_list
+        @articles_published
       end
 
       def find_articles(name)

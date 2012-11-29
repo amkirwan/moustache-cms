@@ -8,12 +8,16 @@ class CmsSiteController < ApplicationController
   
   def render_html
     if !@page.nil? && (@page.published? || current_admin_user)
+      doc = MoustacheCms::Mustache::CmsPage.new(self)
       document = MoustacheCms::Mustache::CmsPage.new(self).render
-      response.etag = document
+      # response.etag = document
       if request.fresh?(response)
         head :not_modified
       else
-        render :text => document.clean_html, :status => 200
+        respond_to do |format|
+          format.html { render text: document.clean_html, status: 200 }
+          format.atom { render text: Nokogiri::XML(document, &:noblanks).to_xml(indent: 2) }
+        end
       end
     else
       render_404
@@ -87,5 +91,4 @@ class CmsSiteController < ApplicationController
     # user is looking for a permalink. The root path would 
     return render_404 if @page.nil? || (@page.home_page? && @article.nil?)
   end
-
 end
