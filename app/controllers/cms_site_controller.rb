@@ -62,10 +62,10 @@ class CmsSiteController < ApplicationController
   # The 404 page will be rendered.
   def current_site_load_page
     if params[:preview] == 'true'
-      @page = @current_site.page_by_full_path("/#{params[:page_path]}?preview=#{params[:preview]}") 
+      @page = current_site.page_by_full_path("/#{params[:page_path]}?preview=#{params[:preview]}") 
       @page.destroy unless @page.nil?
     else
-      @page = @current_site.page_by_full_path("/#{params[:page_path]}")
+      @page = current_site.page_by_full_path("/#{params[:page_path]}")
     end
     return render_404 if @page.nil?
   end
