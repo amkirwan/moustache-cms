@@ -6,6 +6,7 @@ describe Site do
     @site = FactoryGirl.create(:site)  
     @user = FactoryGirl.create(:user, :site => @site)    
     @layout = FactoryGirl.create(:layout, :site => @site, :created_by => @user, :updated_by => @user) 
+    @homepage = FactoryGirl.create(:page, :site_id => @site.id, :layout_id => @layout.id, :created_by_id => @user.id, :updated_by_id => @user.id, :editor_ids => [@user.id]) 
   end
   
   after(:each) do
@@ -114,9 +115,13 @@ describe Site do
     end
   end
   
-
   # -- Instance Methods ------------------------------------------------------
   describe "instance methods" do
+    describe "#homepage" do
+      it "should return the homepage for the site" do
+        @site.homepage.should == @homepage
+      end
+    end
     describe "#full_subdomain" do
       it "should return the full domain" do
         @site.full_subdomain.should == "#{@site.subdomain}.com"

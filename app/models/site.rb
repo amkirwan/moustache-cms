@@ -44,6 +44,9 @@ class Site
   scope :match_domain, ->(domain) { any_in(:domain_names => [*domain]) }
  
   # -- Instance Methods ----------------------------------------
+  def homepage
+    self.pages.find_homepage(self)
+  end
   def full_subdomain
     "#{self.subdomain}.#{self.default_domain}"
   end
