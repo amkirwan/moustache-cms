@@ -96,10 +96,10 @@ class MoustacheCms::Mustache::CmsPage < Mustache
   end
 
   def gen_haml(template_name)
-    if File.exists?("#{File.dirname(__FILE__)}/templates/#{template_name}")
-      template = File.read("#{File.dirname(__FILE__)}/templates/#{template_name}")
-    elsif File.exists?("#{File.dirname(__FILE__)}/custom_templates/#{template_name}")
-      template = File.read("#{File.dirname(__FILE__)}/custom_templates/#{template_name}") 
+    if File.exists?(File.expand_path("../templates/#{template_name}", __FILE__))
+      template = File.read(File.expand_path("../templates/#{template_name}", __FILE__))
+    elsif File.exists?(File.expand_path("../custom_templates/#{template_name}", __FILE__))
+      template = File.read(File.expand_path("../custom_templates/#{template_name}", __FILE__))
     end
     Haml::Engine.new(template, :attr_wrapper => "\"")
   end
