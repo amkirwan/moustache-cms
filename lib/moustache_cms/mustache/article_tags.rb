@@ -31,7 +31,7 @@ module MoustacheCms
         @articles.first.updated_at.xmlschema if @articles.length > 0
       end
 
-      def generate_feed
+      def generate_atom_feed
         xml = ""
         builder = Builder::XmlMarkup.new
         @articles_published.each do |article|

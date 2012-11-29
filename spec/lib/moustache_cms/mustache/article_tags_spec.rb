@@ -13,10 +13,17 @@ describe MoustacheCms::Mustache::ArticleTags do
   <h2>{{subheading}}</h2>
 {{/articles_for_blog}}
 CONTENT
+    feed_content = "<title>Qux</title>"
+
     @page.page_parts << FactoryGirl.build(:page_part, 
                                       :name => "main_content", 
                                       :content => main_content,
                                       :filter_name => "markdown") 
+    @page.page_parts << FactoryGirl.build(:page_part,
+                                          name: 'feed',
+                                          content: feed_content,
+                                          filter_name: 'html')
+
     @page.save
 
     @article_collection = FactoryGirl.build(:article_collection, :site => site, :name => 'blog')
@@ -33,6 +40,11 @@ CONTENT
   describe "articles should respond to the following tags" do
     specify { @cmsp.respond_to?(:articles_for).should be_true }
     specify { @cmsp.respond_to?(:article).should be_true }
+    specify { @cmsp.respond_to?(:articles).should be_true }
+    specify { @cmsp.respond_to?(:articles_published).should be_true }
+    specify { @cmsp.respond_to?(:feed_for).should be_true }
+    specify { @cmsp.respond_to?(:feed_updated).should be_true }
+    specify { @cmsp.respond_to?(:generate_atom_feed).should be_true }
     specify { @cmsp.respond_to?(:paginate_articles).should be_true }
     specify { @cmsp.respond_to?(:link_to_next_page).should be_true }
     specify { @cmsp.respond_to?(:link_to_previous_page).should be_true }
@@ -41,9 +53,14 @@ CONTENT
 
 
   describe "it should create methods from ghost method calls" do
-    it "should define a method for the call to articles__for_(name)" do
+    it "should define a method for the call to articles_for_(name)" do
       @cmsp.articles_for_blog  
       @cmsp.class.attribute_method_generated?(:articles_for_blog).should be_true   
+    end
+
+    it "should define a method for the call to feed_for_(name)" do
+      @cmsp.feed_for_blog
+      @cmsp.class.attribute_method_generated?(:feed_for_blog).should be_true   
     end
   end
 
