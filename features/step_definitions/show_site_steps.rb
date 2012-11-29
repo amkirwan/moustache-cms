@@ -1,30 +1,30 @@
-def layout_content
-'
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    {{{ meta_data }}}
-    <title>BWH Anesthesia, Perioperative and Pain Medicine</title>
-  </head>
-  <body id="index" class="home">
-    <div id="content">
-      {{{ yield }}}
-    </div>
-  </body>
-</htm
-'
+def homepage_layout
+  <<-EOS
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="utf-8" />
+        {{{ meta_data }}}
+        <title>BWH Anesthesia, Perioperative and Pain Medicine</title>
+      </head>
+      <body id="index" class="home">
+        <div id="content">
+          {{{ yield }}}
+        </div>
+      </body>
+    </html>
+  EOS
 end
 
-def page_content
+def homepage_content
   "<p>Hello, World!</p>"
 end
 
-Given /^the page "([^"]*)" exists with the layout "([^"]*)" in the site "([^"]*)"$/ do |page_name, layout_name, site|
-  FactoryGirl.create(:page, :title => page_name,
+Given /^the Homepage exists in the site "([^"]*)"$/ do |site|
+  FactoryGirl.create(:page, :title => 'Homepage',
                  :site => Site.match_domain(site).first,
-                 :page_parts => [ FactoryGirl.build(:page_part, :name => "content", :content => page_content) ],
-                 :layout => FactoryGirl.create(:layout, :name => layout_name, :content => layout_content))
+                 :page_parts => [ FactoryGirl.build(:page_part, :name => "content", :content => homepage_content) ],
+                 :layout => FactoryGirl.create(:layout, :name => 'homepage_layout', :content => homepage_layout))
 end
 
 When /^I go to the sites homepage$/ do
