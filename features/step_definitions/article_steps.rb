@@ -13,6 +13,13 @@ Given /^these article collections exist with the permalink prefix$/ do |table|
     create_article_collection_with_permalink_prefix(hash[:name])
   end
 end
+Given /^these article collections exist without a permalink prefix$/ do |table|
+  table.hashes.each do |hash|
+    create_article_collection_without_permalink_prefix(hash[:name])
+  end
+end
+
+
 
 Given /^these articles exist in the collection "([^"]*)"$/ do |ac_title, table|
   ac = article_collection(ac_title)

@@ -28,7 +28,7 @@ def get_homepage(site)
   Site.match_domain(site).first.homepage
 end
 
-def page_parts_for_article(ac_name)
+def page_parts_for_article(ac_name=nil)
   [ FactoryGirl.build(:page_part, name: "content", content: "{{{ articles_or_article }}}"), 
     FactoryGirl.build(:page_part, name: '_articles', content: "{{#articles_for_blog}}<h1>{{title}}</h1>\nCheckout the [{{title}}]({{permalink}}){{/articles_for_blog}}", filter_name: 'markdown'), 
     FactoryGirl.build(:page_part, name: '_article', content: "{{#article}}<h1>{{title}}</h1><p>{{content}}</p>{{/article}}") ]
@@ -49,6 +49,13 @@ end
 
 Then /^I should see the homepage$/ do
   page.should have_content 'Hello, World!'
+end
+
+Given /^the Homepage is a blog in the site "(.*?)"$/ do |site|
+  FactoryGirl.create(:page, :title => 'Homepage',
+                 :site => Site.match_domain(site).first,
+                 :page_parts => page_parts_for_article('homepage'),
+                 :layout => FactoryGirl.create(:layout, :name => 'homepage_layout', :content => homepage_layout))
 end
 
 
@@ -78,10 +85,17 @@ Given /^the "(.*?)" collection page exists in the site "(.*?)"$/ do |ac_name, si
 
 end
 
-
-
 When /^I go to the sites "(.*?)" page$/ do |page_name|
   visit "/" + page_name
+end
+When /^I go to the sites homepage with the article collection "(.*?)"$/ do |ac_name|
+  @ac = article_collection(ac_name)
+  @ac.layout.update_attributes(content: homepage_layout)
+  step %{I go to the sites homepage}
+end
+
+When /^I view the article "(.*?)"$/ do |title|
+  click_link title
 end
 
 When /^I view the "(.*?)" post with the title "(.*?)"$/ do |ac_name, title|
@@ -105,7 +119,7 @@ Then /^I should see the list of article titles for the article collection "(.*?)
 end
 
 Then /^I should see the blog post "(.*?)"$/ do |title|
-  article = @ac.articles.where(title: title).first
+  article = @site.articles.where(title: title).first
   page.should have_content "#{article.title}"
   page.should have_content "#{article.content}"
 end

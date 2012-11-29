@@ -56,6 +56,10 @@ module Create
     @article_collection = FactoryGirl.create(:article_collection, :name => name, :site => @site, :permalink_prefix => true)
   end
 
+  def create_article_collection_without_permalink_prefix(name)
+    @article_collection = FactoryGirl.create(:article_collection, :name => name, :site => @site, :permalink_prefix => false)
+  end
+
   def create_article(title, article_collection)
     @article = FactoryGirl.create(:article, :article_collection => article_collection, :site => @site, :title => title, :slug => title)
   end
