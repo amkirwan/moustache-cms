@@ -35,6 +35,8 @@ CONTENT
     @cmsp.instance_variable_set(:@controller, @controller)
     @cmsp.instance_variable_set("@page", @page)
     @cmsp.instance_variable_set("@article", @article)
+    @cmsp.instance_variable_set("@articles", [@article])
+    @cmsp.instance_variable_set("@articles_published", [@article])
   end
 
   describe "articles should respond to the following tags" do
@@ -64,15 +66,25 @@ CONTENT
     end
   end
 
-  describe "it should render the articles" do
+  describe "#methods" do
     it "should return a list of the articles for articles_for_(name)" do
       @cmsp.articles_for_blog.should == [@article]  
     end
-  end
-
-  describe "it should render the article" do
+    
     it "should return the article" do
       @cmsp.article.should == @article
+    end
+
+    it "should return feed updated date in xml format" do
+      @cmsp.feed_updated.should == @article.updated_at.xmlschema
+    end
+
+    it "should retun all the articles" do
+      @cmsp.articles.should == [@article]
+    end
+
+    it "should return the feed" do
+      @cmsp.feed_for_blog.should == "<title>Qux</title>"
     end
   end
 

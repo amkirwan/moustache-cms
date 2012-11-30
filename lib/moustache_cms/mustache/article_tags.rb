@@ -20,6 +20,7 @@ module MoustacheCms
         articles_to_list
       end
 
+      # This tag will find the page part named feed and process it 
       def feed_for(name)
         find_articles(name) 
         articles_to_list
@@ -27,10 +28,12 @@ module MoustacheCms
         process_with_filter(feed)    
       end
 
+      # Returns the latest updated at date in xmlschema format for the articles that are published .
       def feed_updated
-        @articles.first.updated_at.xmlschema if @articles.length > 0
+        @articles_published.first.updated_at.xmlschema if @articles_published.length > 0
       end
 
+      # Returns a atom feed for the articles published
       def generate_atom_feed
         xml = ""
         builder = Builder::XmlMarkup.new
