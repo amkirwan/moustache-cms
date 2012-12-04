@@ -49,14 +49,17 @@ class MoustacheCms::Mustache::CmsPage < Mustache
   def action_view_context(template=nil)
     template = File.join("#{Rails.root}", 'lib', 'moustache_cms', 'mustache', 'templates') if template.nil?
     context = ActionView::Base.new(template, {}, @controller, nil)
-    _controller = @controller
-    context.class_eval do
+
+    context.class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
       include Rails.application.routes.url_helpers
-      include Rails.application.routes.mounted_helpers
-      # hackish but can't seem to get helper_methods to working from views otherwise.
-      _controller._helper_methods.each do |method_name|
-        define_method(method_name) { @controller.send(method_name) } unless self.method_defined?(method_name)
-      end
+    RUBY_EVAL
+
+    @controller._helper_methods.each do |method_name|
+      context.class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
+        def #{method_name.to_s}
+          #{@controller}.send(#{method_name}) unless #{context}.method_defined?(#{method_name})
+        end
+      RUBY_EVAL
     end
     context
   end
