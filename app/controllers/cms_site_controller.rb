@@ -1,7 +1,6 @@
 require 'ext/string'
 
 class CmsSiteController < ApplicationController
-  
   before_filter :request_set
   before_filter :load_page, :only => :render_html
   layout nil

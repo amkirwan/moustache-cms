@@ -88,6 +88,7 @@ end
 When /^I go to the sites "(.*?)" page$/ do |page_name|
   visit "/" + page_name
 end
+
 When /^I go to the sites homepage with the article collection "(.*?)"$/ do |ac_name|
   @ac = article_collection(ac_name)
   @ac.layout.update_attributes(content: homepage_layout)
@@ -107,6 +108,11 @@ When /^I view the "(.*?)" post with the title "(.*?)"$/ do |ac_name, title|
   click_link title
 end
 
+When /^I go to the article "(.*?)" in the collection "(.*?)"$/ do |title, ac_name|
+  step %{I go to the sites homepage with the article collection "#{ac_name}"}
+  step %{I view the article "#{title}"}
+end
+
 Then /^I should see the "(.*?)" page$/ do |page_name|
   page.should have_content "#{page_name}"
 end
@@ -122,4 +128,12 @@ Then /^I should see the blog post "(.*?)"$/ do |title|
   article = @site.articles.where(title: title).first
   page.should have_content "#{article.title}"
   page.should have_content "#{article.content}"
+end
+
+When /^I add a comment with the name "(.*?)", email "(.*?)" and comment "(.*?)"$/ do |name, email, comment|
+    pending # express the regexp above with the code you wish you had
+end
+
+Then /^I should see the comment on the page$/ do
+    pending # express the regexp above with the code you wish you had
 end

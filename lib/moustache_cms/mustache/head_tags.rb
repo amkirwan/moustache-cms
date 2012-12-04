@@ -17,7 +17,7 @@ module MoustacheCms
       # -- Css ----
       def stylesheet
         lambda do |text|
-          hash = Hash[*text.scan(/(\w+):([&.\w\s\-]+)/).to_a.flatten]
+          hash = parse_text(text) #Hash[*text.scan(/(\w+):([&.\w\s\-]+)/).to_a.flatten]
           attributes = style_attributes.merge(hash)
           file = @current_site.css_file_by_name(hash['theme_name'], hash['name'])
           unless file.nil?

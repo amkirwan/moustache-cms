@@ -26,6 +26,7 @@ gem "RedCloth", "~> 4.2"
 gem "redcarpet", "~> 2.0"
 gem "mime-types"
 gem "kaminari"
+gem "rakismet"
 
 gem "unicorn"
 

@@ -71,3 +71,20 @@ Scenario: When I go to the index page I should see the root page for the site
     When I go to the sites homepage with the article collection "blog"
     And I view the article "foobar"
     Then I should see the blog post "foobar"
+
+@add_comment_to_blog_post
+  Scenario: Go to the aritcle foobar and add a comment
+    Given the Homepage is a blog in the site "foobar.example.com"
+    And these article collections exist without a permalink prefix
+      | name |
+      | blog |
+    And these articles exist in the collection "blog"
+      | title  |
+      | foobar |
+      | baz    |
+      | qux    |
+    When I go to the article "foobar" in the collection "blog"
+    When I add a comment with the name "foobar baz", email "foobar@example.com" and comment "Hello, World"
+    Then I should see the comment on the page
+
+

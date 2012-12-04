@@ -33,6 +33,16 @@ module MoustacheCms
         @articles_published.first.updated_at.xmlschema if @articles_published.length > 0
       end
 
+      def comment_form
+        lambda do |text|
+          hash = parse_text(text) 
+          options = { 'id' => nil, 'class' => nil }.merge(hash)
+          engine = gen_haml('comment_form.haml')
+          context = action_view_context
+          engine.render(action_view_context, {article: @article, comment: Comment.new, options: options, :@controller => @controller})
+        end
+      end
+
       # Returns a atom feed for the articles published
       def generate_atom_feed
         xml = ""
@@ -94,7 +104,7 @@ module MoustacheCms
       def page_entries_info
         unless @articles.nil?
           engine = gen_haml('page_entries_info.haml')
-          context = action_view_context(File.join("#{Rails.root}", 'lib', 'moustache_cms', 'mustache', 'templates'))
+          context = action_view_context
           engine.render(context, {:articles => @articles})
         end
       end
@@ -132,7 +142,7 @@ module MoustacheCms
         if @article.nil?  
           options = text.nil? ? {} : parse_text(text)
           engine = gen_haml('paginate_articles.haml')
-          context = action_view_context(File.join("#{Rails.root}", 'lib', 'moustache_cms', 'mustache', 'templates'))
+          context = action_view_context
           engine.render(context, {:articles => @articles, :options => options})
         end
       end
@@ -162,7 +172,7 @@ module MoustacheCms
             link_text = 'Previous Page'
           end
           engine = gen_haml('paginate_previous.haml')
-          context = action_view_context(File.join("#{Rails.root}", 'lib', 'moustache_cms', 'mustache', 'templates'))
+          context = action_view_context
           engine.render(context, {:articles => @articles, :link_text => link_text, :options => options})
         end 
       end

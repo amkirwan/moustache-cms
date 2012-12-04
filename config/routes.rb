@@ -58,6 +58,8 @@ MoustacheCms::Application.routes.draw do
     end
   end
 
+  resource :comments
+
   match "/admin" => redirect("/admin/pages")
 
   match "*articles" => 'cms_site#render_html', :as => :articles, :constraints => MoustacheCms::ArticlesConstraint.new

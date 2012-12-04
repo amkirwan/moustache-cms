@@ -1,0 +1,31 @@
+class Comment
+  include Mongoid::Document
+  # include Rakismet::Model
+
+  embedded_in :article
+
+  field :author
+  field :author_url
+  field :author_email
+  field :comment_type, default: 'comment'
+  field :content
+  field :permalink
+  field :user_ip
+  field :user_agent
+  field :referrer
+
+  attr_accessible :author, :author_email, :author_url, :content
+
+  # --- validations -------
+  validates :content, presence: true
+
+  private 
+
+  def request=(request)
+    self.permalink = request.url
+    self.user_ip = request.remote_ip
+    self.user_agent = request.user_agent
+    self.referrer = request.referer
+  end
+
+end

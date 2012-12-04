@@ -42,6 +42,7 @@ describe Article do
       @article.should have_and_belong_to_many(:authors)
     end
     
+    it { should embed_many(:comments) } 
   end
 
   # -- Validations ------

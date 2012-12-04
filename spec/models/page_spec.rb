@@ -43,7 +43,6 @@ describe Page do
     it "should have many editors" do
       @page.should have_and_belong_to_many(:editors).of_type(User)
     end
-
   end
 
   
