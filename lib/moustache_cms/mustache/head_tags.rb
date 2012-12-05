@@ -64,7 +64,6 @@ module MoustacheCms
       def meta_tags_csrf
         engine = gen_haml('meta_tags_csrf.haml')
         engine.render(action_view_context, {:@controller => @controller})
-        'here'
       end
     
       def respond_to?(method)
