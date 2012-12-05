@@ -33,12 +33,11 @@ module MoustacheCms
         @articles_published.first.updated_at.xmlschema if @articles_published.length > 0
       end
 
-      def comment_form
+      def form_for_comment
         lambda do |text|
           hash = parse_text(text) 
           options = { 'id' => nil, 'class' => nil }.merge(hash)
-          engine = gen_haml('comment_form.haml')
-          context = action_view_context
+          engine = gen_haml('form_for_comment.haml')
           engine.render(action_view_context, {article: @article, comment: Comment.new, options: options, :@controller => @controller})
         end
       end

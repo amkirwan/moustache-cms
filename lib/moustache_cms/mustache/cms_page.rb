@@ -50,14 +50,14 @@ class MoustacheCms::Mustache::CmsPage < Mustache
     template = File.join("#{Rails.root}", 'lib', 'moustache_cms', 'mustache', 'templates') if template.nil?
     view_context = ActionView::Base.new(template, {}, @controller, nil)
     _helper_methods = @controller._helper_methods
-    view_context.class_eval %{
+    view_context.class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
       include Rails.application.routes.url_helpers
       include ApplicationHelper
 
       #{_helper_methods}.each do |method_name|
         define_method(method_name) { @controller.send(method_name) }
       end
-    }, __FILE__, __LINE__ + 1
+    RUBY_EVAL
     view_context
   end
 

@@ -57,10 +57,14 @@ module MoustacheCms
       
       # -- Meta Tags ----
       def meta_tag
-        lambda do |text|
-          engine = gen_haml('meta_tag.haml')
-          engine.render(nil, {:name => name, :content => meta_tag_name(text).content})
-        end
+        engine = gen_haml('meta_tag.haml')
+        engine.render(nil, {:name => name, :content => meta_tag_name(text).content})
+      end
+
+      def meta_tags_csrf
+        engine = gen_haml('meta_tags_csrf.haml')
+        engine.render(action_view_context, {:@controller => @controller})
+        'here'
       end
     
       def respond_to?(method)
