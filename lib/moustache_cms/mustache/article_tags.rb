@@ -4,11 +4,22 @@ module MoustacheCms
   module Mustache
     module ArticleTags
 
-    # This tag will render a page part named either '_articles' or '_article'. This allows you to render a page either as the collection of articles or an article with the permalink.
-    def articles_or_article
-      part = @article.nil? ? @page.page_parts.where(name: '_articles').first : @page.page_parts.where(name: '_article').first
-      process_with_filter(part)
-    end
+      def error_messages
+        unless @comment.nil?
+          engine = gen_haml('error_messages.haml')
+          engine.render(action_view_context, {target: @comment, :@controller => @controller})
+        else
+      end
+
+      def flash_message
+        
+      end
+
+      # This tag will render a page part named either '_articles' or '_article'. This allows you to render a page either as the collection of articles or an article with the permalink.
+      def articles_or_article
+        part = @article.nil? ? @page.page_parts.where(name: '_articles').first : @page.page_parts.where(name: '_article').first
+        process_with_filter(part)
+      end
 
       # This tag will display the list of articles paginated. From within the paginated list you can
       # access all the properties of an article to display in your view. Using this tag will only show

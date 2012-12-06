@@ -1,20 +1,14 @@
-class CommentsController < ApplicationController
+class CommentsController < CmsSiteController
 
-  respond_to :html
-
-  def name
-    @comment = Comment.new(article_id: params[:article_id])
-  end
+  before_filter :load_page, only: :create
 
   def create  
     @article = Article.find(params[:article_id])
     @comment = @article.comments.build(params[:comment])
     @comment.request = request
-    if @comment.save
-      flash[:notice] = "Thanks for the comment."
-      redirect_to request.protocol + request.host + @article.permalink
-    else
-      render :text => 'hello, world error'
-    end
+    flash[:notice] = "Thanks for the comment." if @comment.save
+    document = MoustacheCms::Mustache::CmsPage.new(self).render
+    render text: document.clean_html
   end
+
 end

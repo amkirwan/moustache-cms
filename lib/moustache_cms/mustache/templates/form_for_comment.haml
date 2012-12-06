@@ -1,6 +1,7 @@
 = form_for(comment) do |f|
   %div{style: 'margin:0;padding:0;display:inline'} 
     = hidden_field_tag 'article_id', article.id.to_s
+  {{{ error_messages}}}
   %p.comment_name_field
     = f.label :author, 'Name* (required)'
     = f.text_field :author
