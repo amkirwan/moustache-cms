@@ -28,6 +28,10 @@ class CmsSiteController < ApplicationController
     @request = request
   end
 
+  def request_permalink
+    request.protocol + request.host + @article.permalink  
+  end
+
   def load_page
     # render the page if the route is not an article
     if params[:articles].nil? && params[:year].nil?
