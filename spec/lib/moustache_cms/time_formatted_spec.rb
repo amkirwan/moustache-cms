@@ -43,15 +43,15 @@ describe MoustacheCms::TimeFormatted do
   end
 
   it "returns the year of the current state as a string number" do
-    @dummy_class.year.should == @current_state.time.year.to_s
-  end
-
-  it "returns the day of the current state as a string day" do
-    @dummy_class.day.should == @current_state.time.day.to_s
+    @dummy_class.year.should == @current_state.time.strftime("%Y")
   end
 
   it "returns the month of the current state as a string day" do
-    @dummy_class.month.should == @current_state.time.month.to_s
+    @dummy_class.month.should == @current_state.time.strftime("%m")
+  end
+
+  it "returns the day of the current state as a string day" do
+    @dummy_class.day.should == @current_state.time.strftime("%d")
   end
 
   it "returns the time zone as a string" do

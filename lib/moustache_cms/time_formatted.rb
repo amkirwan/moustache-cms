@@ -61,17 +61,17 @@ module MoustacheCms
 
     def year
       return "" if @current_state.time.nil?
-      @current_state.time.year.to_s
+      @current_state.time.strftime("%Y")
     end
 
     def month
       return "" if @current_state.time.nil?
-      @current_state.time.month.to_s
+      @current_state.time.strftime("%m")
     end
 
     def day
       return "" if @current_state.time.nil?
-      @current_state.time.day.to_s
+      @current_state.time.strftime("%d")
     end
 
     def zone
