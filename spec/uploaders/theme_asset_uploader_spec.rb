@@ -28,10 +28,6 @@ describe ThemeAssetUploader do
   after(:each) do
     ThemeAssetUploader.enable_processing = false
     FileUtils.rm_rf(File.join(Rails.root, 'public', 'theme_assets', theme_collection.site_id.to_s))
-    # FileUtils.rm_rf(File.join(Rails.root, 'public', 'theme_assets', @uploader.model.site_id.to_s))
-    # FileUtils.rm_rf(File.join(Rails.root, 'public', 'theme_assets', @uploader_css.model.site_id.to_s))
-    # FileUtils.rm_rf(File.join(Rails.root, 'public', 'theme_assets', @uploader_js.model.site_id.to_s))
-    # FileUtils.rm_rf(File.join(Rails.root, 'public', 'theme_assets', @uploader_otf.model.site_id.to_s))
   end  
   
   it "should white list these extenstiosn" do

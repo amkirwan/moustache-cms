@@ -1,6 +1,5 @@
 def remove_theme_assets
   FileUtils.rm_rf(File.join(Rails.root, 'public', 'theme_assets', @theme_collection.site_id.to_s))
-  
 end
 
 def remove_author_assets
