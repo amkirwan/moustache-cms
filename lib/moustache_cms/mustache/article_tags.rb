@@ -8,11 +8,12 @@ module MoustacheCms
         unless @comment.nil?
           engine = gen_haml('error_messages.haml')
           engine.render(action_view_context, {target: @comment, :@controller => @controller})
-        else
+        end
       end
 
-      def flash_message
-        
+      def flash_notice
+        engine = gen_haml('flash_notice.haml')
+        engine.render(action_view_context, {flash: @controller.flash})
       end
 
       # This tag will render a page part named either '_articles' or '_article'. This allows you to render a page either as the collection of articles or an article with the permalink.

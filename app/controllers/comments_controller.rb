@@ -6,9 +6,13 @@ class CommentsController < CmsSiteController
     @article = Article.find(params[:article_id])
     @comment = @article.comments.build(params[:comment])
     @comment.request = request
-    flash[:notice] = "Thanks for the comment." if @comment.save
-    document = MoustacheCms::Mustache::CmsPage.new(self).render
-    render text: document.clean_html
+    if @comment.save
+      flash[:notice] = "Thanks for the comment." 
+      redirect_to request.protocol + request.host + @article.permalink
+    else
+      document = MoustacheCms::Mustache::CmsPage.new(self).render
+      render text: document.clean_html
+    end
   end
 
 end
