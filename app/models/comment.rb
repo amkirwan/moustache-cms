@@ -3,6 +3,7 @@ class Comment
   # include Rakismet::Model
 
   embedded_in :article
+  embeds_many :comments, class_name: 'Comment'
 
   field :author
   field :author_url

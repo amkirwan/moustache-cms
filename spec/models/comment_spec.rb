@@ -1,8 +1,10 @@
 require 'spec_helper'
 
 describe Comment do
+
   describe "associations" do
     it { should be_embedded_in(:article) }
+    it { should embed_many(:comments) }
   end
 
   describe "validations" do
