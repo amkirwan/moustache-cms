@@ -19,8 +19,6 @@ class Comment
   # --- validations -------
   validates :content, presence: true
 
-  private 
-
   def request=(request)
     self.permalink = request.url
     self.user_ip = request.remote_ip

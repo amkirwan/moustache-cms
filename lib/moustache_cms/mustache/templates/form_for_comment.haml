@@ -1,7 +1,17 @@
 = form_for(comment) do |f|
-  %p
-    = f.label :author
+  %div{style: 'margin:0;padding:0;display:inline'} 
+    = hidden_field_tag 'article_id', article.id.to_s
+  %p.comment_name_field
+    = f.label :author, 'Name* (required)'
     = f.text_field :author
-
--# = @controller.send(:form_authenticity_token)
--# = self.send(:request_forgery_protection_token)
+  %p.comment_email_field
+    = f.label :author_email, "E-Mail* (required, will not be published)"
+    = f.email_field :author_email
+  %p.comment_url
+    = f.label :author_url, 'Website'
+    = f.url_field :author_url
+  %p.comment_field
+    = f.label :content, 'Comment'
+    = f.text_area :content
+  %p.comment_submit
+    = f.submit 'Submit Comment'
