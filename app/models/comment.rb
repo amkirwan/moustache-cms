@@ -17,6 +17,8 @@ class Comment
   attr_accessible :author, :author_email, :author_url, :content
 
   # --- validations -------
+  validates :author, presence: true
+  validates :author_email, presence: true
   validates :content, presence: true
 
   def request=(request)
