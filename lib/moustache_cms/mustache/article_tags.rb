@@ -4,6 +4,7 @@ module MoustacheCms
   module Mustache
     module ArticleTags
 
+      # returns error messages for the forms
       def error_messages
         unless @comment.nil?
           engine = gen_haml('error_messages.haml')
@@ -11,6 +12,7 @@ module MoustacheCms
         end
       end
 
+      # shows the flash notice
       def flash_notice
         engine = gen_haml('flash_notice.haml')
         engine.render(action_view_context, {flash: @controller.flash})
