@@ -66,20 +66,6 @@
       <div class="section">
         <h2>Head Tags</h2>
         <div class="tag">
-          <h3>{{{title_tag}}}</h3>
-          <p>Defines an HTML title tag for your document with the page or article title used as the title.<br />
-            <b>Usage:</b>
-          </p>
-         <pre><code>{{{title_tag}}}</code></pre> 
-        </div>
-        <div class="tag">
-          <h3>{{page_title}} or {{article_title}}</h3>
-          <p>Returns the title of the page or article.<br />
-            <b>Usage:</b>
-          </p>
-          <pre><code>{{page_title}}</code></pre> 
-        </div>
-        <div class="tag">
           <h3>{{#stylesheet}}theme_name, name{{/stylesheet}}</h3>
           <p>Generates a HTML link tag for a CSS file that is in the given theme collection. The theme_name and name are required for generating the tag. Optional paramerters are: media, rel, title, charset. This tag generates a link to the MD5 fingerprinted version of the file. Any additional attributes for the link tag can be assigned in the custom attribute fields for the asset.
             <b>Usage:</b>
@@ -110,53 +96,28 @@
       </div>
       <div class="section">
         <div class="tag">
-          <h2>Media Tags</h2>
-          <h3>{{#image}}collection_name, name{{/image}}</h3>
-          <p>Generates a HTML image tag from the given collection_name and the name of the image file. Optional This tag generates a link to the MD5 fingerprinted version of the file. The collection_name and name are required for generating the tag. Optional paramerters are: id, class, alt, title.<br />
-            <b>Usage:</b>
-          </p>
-          <pre><code>{{#image}}collection_name:the_collection_name, name:the_image_name.jpg, alt: example image tag{{/image}}</code></pre> 
-        </div>
-      </div> 
-      <div class="section">
-        <h2>Navigation Tags</h2>
-        <div class="tag">
-          <h3>{{{nav_primary}}}</h3> 
-          <p>It will generate an unordered list of links suitable for creating a navigation section on the page from the pages that are children of the homepage. This would typically be used to create a top level navigation section.<br />
-            <b>Usage:</b>
-          </p>
-          <pre><code>{{{nav_primary}}}</code></pre>
-        </div>
-        <div class="tag">
-          <h3>{{{nav_child_pages}}}</h3>
-          <p>It will generate an unordered list of links suitable for creating a navigation section on the page from the pages that are children of the current page that is being viewed.<br />
-            <b>Usage:</b>
-          </p>
-          <pre><code>{{{nav_child_pages}}}</code></pre>
-        </div>
-        <div class="tag">
-          <h3>{{{nav_children_[name]}}}</h3>
-          <p>It will generate an unordered list of links suitable for creating a navigation section on the page from the pages that are children of the page title named after nav_children_. In this example it would be the page with the title foobar.<br />
-            <b>Usage:</b>
-          </p>
-          <pre><code>{{{nav_child_foobar}}}</code></pre>
-        </div>
-        <div class="tag">
-          <h3>{{{nav_children_and_self}}}</h3>
-          <p>It will generate an unordered list of links suitable for creating a navigation section on the page from the pages are siblings of the current page and will also include the current page being rendered.<br />
-          <b>Usage:</b>
-          </p>
-          <pre><code>{{{nav_children_and_self}}}</code></pre>
-        </div>
-      <div class="section">
-        <div class="tag">
           <h2>Page Tags</h2>  
-          <h3>{{{page_part_[name]}}} or {{#page_part}}name{{/page_part}}</h3>
-          <p>This will render the page part with the given name for the page that is currently being rendered. In this example it would be the page part named foobar.<br />
-            <b>Usage:</b>
-          </p>
-          <pre><code>{{{page_part_foobar}}}</code></pre>
-        </div>
+          <div class="tag">
+            <h3>{{{title_tag}}}</h3>
+            <p>Defines an HTML title tag for your document with the page or article title used as the title.<br />
+              <b>Usage:</b>
+            </p>
+            <pre><code>{{{title_tag}}}</code></pre> 
+          </div>
+          <div class="tag">
+            <h3>{{page_title}} or {{article_title}}</h3>
+            <p>Returns the title of the page or article.<br />
+              <b>Usage:</b>
+            </p>
+            <pre><code>{{page_title}}</code></pre> 
+          </div>
+          <div class="tag">
+            <h3>{{{page_part_[name]}}} or {{#page_part}}name{{/page_part}}</h3>
+            <p>This will render the page part with the given name for the page that is currently being rendered. In this example it would be the page part named foobar.<br />
+              <b>Usage:</b>
+            </p>
+            <pre><code>{{{page_part_foobar}}}</code></pre>
+          </div>
         <div class="tag">
           <h3>{{{editable_text_[name]}}} or {{#editable_text}}name{{/editable_text}}</h3>
           <p>This will render the page part with the given name for the page that is currently being rendered. In this example it would be the page part named foobar. This tag is the same as the page part tag.<br />
@@ -186,6 +147,41 @@
           <b>Usage:</b>
         </p>
         <pre><code>{{{articles_for_foobar}}}</code></pre>
+      </div>
+      <div class="tag">
+        <h3>{{#comments}}{{/comments}}</h3>
+        <p>Will render any comments for the given article. This tag will not render if comments are turned off for the article.
+          <b>Usage:</b>
+        </p>
+        <pre><code>{{#comments}}{{author_name}}{{content}}{{/comments}}</code></pre>
+      </div>
+      <div class="tag">
+        <h3>{{#form_for_comments}}options_text{{/form_for_comments}}</h3>
+        <p>Renders the comments form for the article. This tag will not render if comments are turned off for the article. This tag excepts the same options as rails form_for method.
+          <b>Usage:</b>
+        </p>
+        <pre><code>{{#form_for_comments}}id: 'qux', class:'foobar', remote: true{{form_for_comments}}</code></pre>
+      </div>
+      <div class="tag">
+        <h3>{{{feed_for_[article_collection_name]}}}</h3>
+        <p>Renders the page part named 'feed' for the page to renderign as a atomo or rss feed
+          <b>Usage:</b>
+        </p>
+        <pre><code>{{{feed_for_foobar}}}</code></pre>
+      </div>
+      <div class="tag">
+        <h3>{{{feed_updated}}}</h3>
+        <p>Returns the latest updated at date for an article in the collection in xmlschema format
+          <b>Usage:</b>
+        </p>
+        <pre><code>{{{feed_updated}}}</code></pre>
+      </div>
+      <div class="tag">
+        <h3>{{#generate_atom_feed}}{{xml}}{{/generate_atom_feed}}</h3>
+        <p>Generates an XML feed for the articles in the collection. This should be used within a feed_for_[article_collection_name] tag
+          <b>Usage:</b>
+        </p>
+        <pre><code>{{#generate_atom_feed}}{{xml}}{{/generate_atom_feed}}</code></pre>
       </div>
       <div class="tag">
         <h3>{{#article}}{{/article}}</h3>
@@ -228,6 +224,47 @@
           <b>Usage:</b>
         </p>
         <pre><code>{{{page_entries_info}}}</pre></code>
+      </div>
+      <div class="section">
+        <div class="tag">
+          <h2>Media Tags</h2>
+          <h3>{{#image}}collection_name, name{{/image}}</h3>
+          <p>Generates a HTML image tag from the given collection_name and the name of the image file. Optional This tag generates a link to the MD5 fingerprinted version of the file. The collection_name and name are required for generating the tag. Optional paramerters are: id, class, alt, title.<br />
+            <b>Usage:</b>
+          </p>
+          <pre><code>{{#image}}collection_name:the_collection_name, name:the_image_name.jpg, alt: example image tag{{/image}}</code></pre> 
+        </div>
+      </div> 
+      <div class="section">
+        <h2>Navigation Tags</h2>
+        <div class="tag">
+          <h3>{{{nav_primary}}}</h3> 
+          <p>It will generate an unordered list of links suitable for creating a navigation section on the page from the pages that are children of the homepage. This would typically be used to create a top level navigation section.<br />
+            <b>Usage:</b>
+          </p>
+          <pre><code>{{{nav_primary}}}</code></pre>
+        </div>
+        <div class="tag">
+          <h3>{{{nav_child_pages}}}</h3>
+          <p>It will generate an unordered list of links suitable for creating a navigation section on the page from the pages that are children of the current page that is being viewed.<br />
+            <b>Usage:</b>
+          </p>
+          <pre><code>{{{nav_child_pages}}}</code></pre>
+        </div>
+        <div class="tag">
+          <h3>{{{nav_children_[name]}}}</h3>
+          <p>It will generate an unordered list of links suitable for creating a navigation section on the page from the pages that are children of the page title named after nav_children_. In this example it would be the page with the title foobar.<br />
+            <b>Usage:</b>
+          </p>
+          <pre><code>{{{nav_child_foobar}}}</code></pre>
+        </div>
+        <div class="tag">
+          <h3>{{{nav_children_and_self}}}</h3>
+          <p>It will generate an unordered list of links suitable for creating a navigation section on the page from the pages are siblings of the current page and will also include the current page being rendered.<br />
+          <b>Usage:</b>
+          </p>
+          <pre><code>{{{nav_children_and_self}}}</code></pre>
+        </div>
       </div>
     </div>
   </body>
