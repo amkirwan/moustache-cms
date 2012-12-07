@@ -18,6 +18,11 @@
             = f.label :permlink_prefix_true, 'Add prefix to path'
             = f.radio_button :permalink_prefix, 'false'
             = f.label :permlink_prefix_false, 'Do not add prefix to path'
+          %li{class: 'inline'}
+            = f.radio_button :commentable, 'true'
+            = f.label :commentable_true, 'Comments ON'
+            = f.radio_button :commentable, 'false'
+            = f.label :commentable_false, 'Comments OFF'
     %li#editor_fields
       = foldable_fieldset "Editors" do
         %ol.form_fields

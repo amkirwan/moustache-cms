@@ -2,10 +2,12 @@ class ArticleCollection < MoustacheCollection::Metal
 
   attr_accessible :layout_id,
                   :editor_ids,
-                  :permalink_prefix
+                  :permalink_prefix,
+                  :commentable
 
     # -- Fields --------------- 
   field :permalink_prefix, :type => Boolean, :default => false
+  field :commentable, type: Boolean, default:  true
   
   validates :layout_id, presence: true
   

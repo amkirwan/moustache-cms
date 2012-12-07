@@ -21,7 +21,8 @@ class Article
                   :layout_id,
                   :tag_list,
                   :set_date,
-                  :date
+                  :date,
+                  :commentable
 
   # -- Fields -----------
   field :title
@@ -35,6 +36,7 @@ class Article
   field :author_ids, :type => Array
   field :set_date, :type => Boolean
   field :date, :type => Time
+  field :commentable, type: Boolean, default: -> { self.article_collection.commentable }
 
   # -- Index -----
   index :title => 1

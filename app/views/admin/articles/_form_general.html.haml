@@ -18,3 +18,9 @@
             = builder.collection_select :name, CurrentState.all, :id, :name
           %li
             = builder.hidden_field :id
+          %li{class: 'inline'}
+            = f.radio_button :commentable, 'true'
+            = f.label :commentable_true, 'Comments ON for this article'
+            = f.radio_button :commentable, 'false'
+            = f.label :commentable_false, 'Comments OFF for this article'
+
