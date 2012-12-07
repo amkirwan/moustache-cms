@@ -84,7 +84,7 @@ Scenario: When I go to the index page I should see the root page for the site
       | baz    |
       | qux    |
     When I go to the article "foobar" in the collection "blog"
-    When I add a comment with the name "foobar baz", email "foobar@example.com" and comment "Hello, World"
+    When I add a comment with the name "foobar qux", email "foobar@example.com" and comment "Hello, World"
     Then I should see the comment on the page
 
 

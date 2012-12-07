@@ -21,17 +21,43 @@ def homepage_content
 end
 
 def page_content(page_name)
-  "<p>#{page_name}</p>"
+  <<-PAGE_CONTENT
+    #{page_name}
+  PAGE_CONTENT
 end
 
 def get_homepage(site)
   Site.match_domain(site).first.homepage
 end
 
+def articles_list
+  <<-PAGE_CONTENT
+    {{#articles_for_blog}}
+      <h1>{{title}}</h1>
+      \n\nCheckout the [{{title}}]({{permalink}})
+    {{/articles_for_blog}}
+  PAGE_CONTENT
+end
+
+def article_content
+  <<-PAGE_CONTENT
+    {{#article}}
+      <h1>{{title}}</h1>
+      <p>{{content}}</p>
+      {{#comments}}
+        {{author}}
+        {{author_email}}
+        {{content}}
+      {{/comments}}
+    {{/article}}
+    {{#form_for_comment}}class: new-comment{{/form_for_comment}}
+  PAGE_CONTENT
+end
+
 def page_parts_for_article(ac_name=nil)
-  [ FactoryGirl.build(:page_part, name: "content", content: "{{{ articles_or_article }}}"), 
-    FactoryGirl.build(:page_part, name: '_articles', content: "{{#articles_for_blog}}<h1>{{title}}</h1>\nCheckout the [{{title}}]({{permalink}}){{/articles_for_blog}}", filter_name: 'markdown'), 
-    FactoryGirl.build(:page_part, name: '_article', content: "{{#article}}<h1>{{title}}</h1><p>{{content}}</p>{{/article}}") ]
+  [ FactoryGirl.build(:page_part, name: "content", content: "{{{articles_or_article}}}"), 
+    FactoryGirl.build(:page_part, name: '_articles', content: articles_list, filter_name: 'markdown'), 
+    FactoryGirl.build(:page_part, name: '_article', content: article_content)]
 end
 
 #######
@@ -130,10 +156,18 @@ Then /^I should see the blog post "(.*?)"$/ do |title|
   page.should have_content "#{article.content}"
 end
 
-When /^I add a comment with the name "(.*?)", email "(.*?)" and comment "(.*?)"$/ do |name, email, comment|
-    pending # express the regexp above with the code you wish you had
+When /^I add a comment with the name "(.*?)", email "(.*?)" and comment "(.*?)"$/ do |author_name, author_email, content|
+  @author_name = author_name
+  @author_email = author_email
+  @content = content
+  fill_in 'comment[author]', with: author_name
+  fill_in 'comment[author_email]', with: author_email
+  fill_in 'comment[content]', with: content
+  click_button 'Submit Comment'
 end
 
 Then /^I should see the comment on the page$/ do
-    pending # express the regexp above with the code you wish you had
+  page.should have_content @author_name
+  page.should have_content @author_email
+  page.should have_content @content
 end
