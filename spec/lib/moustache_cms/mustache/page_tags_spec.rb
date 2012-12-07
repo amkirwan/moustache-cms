@@ -3,7 +3,7 @@ require 'spec_helper'
 class Simple < MoustacheCms::Mustache::CmsPage
 end
 
-describe MoustacheCms::Mustache::PagePartTags do
+describe MoustacheCms::Mustache::PageTags do
   include_context "mustache page setup"
 
   before(:each) do

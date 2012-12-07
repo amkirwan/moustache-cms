@@ -6,8 +6,10 @@ class MoustacheCms::Mustache::CmsPage < Mustache
   include HeadTags
   include NavigationTags
   include MediaTags
-  include PagePartTags
+  include SnippetTags
+  include PageTags
   include ArticleTags
+  include FlashMessageTags
   include CustomTags
   
   def initialize(controller)

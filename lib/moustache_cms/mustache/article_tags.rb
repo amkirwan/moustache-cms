@@ -4,20 +4,6 @@ module MoustacheCms
   module Mustache
     module ArticleTags
 
-      # returns error messages for the forms
-      def error_messages
-        unless @comment.nil?
-          engine = gen_haml('error_messages.haml')
-          engine.render(action_view_context, {target: @comment, :@controller => @controller})
-        end
-      end
-
-      # shows the flash notice
-      def flash_notice
-        engine = gen_haml('flash_notice.haml')
-        engine.render(action_view_context, {flash: @controller.flash})
-      end
-
       # This tag will render a page part named either '_articles' or '_article'. This allows you to render a page either as the collection of articles or an article with the permalink.
       def articles_or_article
         part = @article.nil? ? @page.page_parts.where(name: '_articles').first : @page.page_parts.where(name: '_article').first
@@ -47,6 +33,7 @@ module MoustacheCms
         @articles_published.first.updated_at.xmlschema if @articles_published.length > 0
       end
 
+      # Renders the form for comments
       def form_for_comment
         lambda do |text|
           if @article.commentable
@@ -60,8 +47,17 @@ module MoustacheCms
         end
       end
 
+      # Renders comments if they are on for the article
       def comments
         @article.commentable ? @article.comments : false
+      end
+
+      # returns error messages for the comment form
+      def error_messages
+        unless @comment.nil?
+          engine = gen_haml('error_messages.haml')
+          engine.render(action_view_context, {target: @comment, :@controller => @controller})
+        end
       end
 
       # Returns a atom feed for the articles published
@@ -91,6 +87,7 @@ module MoustacheCms
         @articles
       end
 
+      # returns only the published articles
       def articles_published
         @articles_published
       end

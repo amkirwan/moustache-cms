@@ -2,18 +2,7 @@ module MoustacheCms
   module Mustache
     module HeadTags 
       
-      # -- Title ---- 
-      def title_tag
-        engine = Haml::Engine.new(%{%title= title})
-        engine.render(nil, {:title => @page.title})
-      end   
-
-      def page_title
-        return @article.title unless @article.nil?
-        @page.title
-      end
-      alias_method :article_title, :page_title
-      
+     
       # -- Css ----
       def stylesheet
         lambda do |text|
