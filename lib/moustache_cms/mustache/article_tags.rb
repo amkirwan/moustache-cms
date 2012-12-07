@@ -49,11 +49,19 @@ module MoustacheCms
 
       def form_for_comment
         lambda do |text|
-          hash = parse_text(text) 
-          options = { 'id' => nil, 'class' => nil }.merge(hash)
-          engine = gen_haml('form_for_comment.haml')
-          engine.render(action_view_context, {article: @article, comment: Comment.new, options: options, :@controller => @controller})
+          if @article.commentable
+            hash = parse_text(text) 
+            options = { 'id' => nil, 'class' => nil }.merge(hash)
+            engine = gen_haml('form_for_comment.haml')
+            engine.render(action_view_context, {article: @article, comment: Comment.new, options: options, :@controller => @controller})
+          else
+            false
+          end
         end
+      end
+
+      def comments
+        @article.commentable ? @article.comments : false
       end
 
       # Returns a atom feed for the articles published

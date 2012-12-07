@@ -15,6 +15,7 @@ class Admin::ArticlesController < AdminBaseController
   # GET /admin/article_collections/1/articles/new
   def new
     @article.build_current_state
+    @article.commentable = @article_collection.commentable
     respond_with(:admin, @article_collection, @articles)
   end
 

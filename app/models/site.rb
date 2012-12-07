@@ -82,7 +82,7 @@ class Site
   end
 
   def article_collection_by_name(name)
-    self.article_collections.where(:name => name).first
+    self.article_collections.where(:name => name)
   end
 
   def articles_by_collection_name(name)

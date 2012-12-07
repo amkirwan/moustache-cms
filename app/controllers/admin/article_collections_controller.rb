@@ -6,7 +6,7 @@ class Admin::ArticleCollectionsController < AdminBaseController
 
   # GET /admin/article_collections
   def index
-    @article_collections = @article_collections.where(:site_id => @current_admin_user.site_id).order_by(:name => 'ASC')
+    @article_collections = current_site.article_collections.order_by(name: 'ASC')
     respond_with(:admin, @article_collections)
   end
 

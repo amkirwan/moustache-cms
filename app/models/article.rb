@@ -36,7 +36,7 @@ class Article
   field :author_ids, :type => Array
   field :set_date, :type => Boolean
   field :date, :type => Time
-  field :commentable, type: Boolean, default: -> { self.article_collection.commentable }
+  field :commentable, type: Boolean, default: true
 
   # -- Index -----
   index :title => 1
