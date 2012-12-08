@@ -25,6 +25,10 @@ class MoustacheCms::Mustache::CmsPage < Mustache
     end
     @template
   end
+
+  def controller
+    @controller
+  end
   
   def yield
     part = @page.page_parts.first

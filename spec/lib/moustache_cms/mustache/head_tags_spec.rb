@@ -29,10 +29,6 @@ describe MoustacheCms::Mustache::HeadTags do
  
 
 describe "head tags" do  
-    it "should return the page title" do
-      @cmsp.title_tag.should == %{<title>#{@page.title}</title>\n}
-    end  
-
     it "should return the javascript file" do
       @page.layout.content = "{{#js_file}}theme_name:thorn, name:jquery-1.7.2.min{{/js_file}}"  
       cms_page = MoustacheCms::Mustache::CmsPage.new(@controller)
@@ -51,11 +47,6 @@ describe "head tags" do
   end 
 
   describe "meta tags" do
-  
-    it "should return the meta title from the page" do
-      @cmsp.meta_tag_title.should == %(<meta content="title page" name="title" />\n)
-    end
-
     it "should return the meta keywords from the page" do
       @cmsp.meta_tag_keywords.should == %(<meta content="keywords page" name="keywords" />\n)
     end

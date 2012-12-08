@@ -46,6 +46,9 @@ CONTENT
     specify { @cmsp.respond_to?(:articles_published).should be_true }
     specify { @cmsp.respond_to?(:feed_for).should be_true }
     specify { @cmsp.respond_to?(:feed_updated).should be_true }
+    specify { @cmsp.respond_to?(:form_for_comment).should be_true }
+    specify { @cmsp.respond_to?(:comments).should be_true }
+    specify { @cmsp.respond_to?(:error_messages).should be_true }
     specify { @cmsp.respond_to?(:generate_atom_feed).should be_true }
     specify { @cmsp.respond_to?(:paginate_articles).should be_true }
     specify { @cmsp.respond_to?(:link_to_next_page).should be_true }
@@ -75,12 +78,12 @@ CONTENT
       @cmsp.article.should == @article
     end
 
-    it "should return feed updated date in xml format" do
-      @cmsp.feed_updated.should == @article.updated_at.xmlschema
-    end
-
     it "should retun all the articles" do
       @cmsp.articles.should == [@article]
+    end
+
+    it "should return feed updated date in xml format" do
+      @cmsp.feed_updated.should == @article.updated_at.xmlschema
     end
 
     it "should return the feed" do
