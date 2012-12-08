@@ -184,7 +184,7 @@ describe Site do
     describe "#article_collection_by_name" do
       it "should return the article collection by the name" do
         article_collection = FactoryGirl.create(:article_collection, :site => @site, :name => "news")
-        @site.article_collection_by_name('news').should == article_collection
+        @site.article_collection_by_name('news').first.should == article_collection
       end
     end
 

@@ -2,18 +2,23 @@ module MoustacheCms
   module Mustache
     module PageTags
 
+      def title_tag
+        engine = Haml::Engine.new(%{%title= title})
+        engine.render(nil, {title: @page.title})
+      end
+
+      def page_title
+        return @article.title unless @article.nil?
+        @page.title
+      end
+      alias_method :article_title, :page_title
+
       def page_part
         lambda do |text|
           page_part_method(text)
         end
       end
       alias_method :editable_text, :page_part
-
-      def snippet
-        lambda do |text|
-          snippet_method(text)
-        end
-      end
 
       def respond_to?(method)
         method_name = method.to_s

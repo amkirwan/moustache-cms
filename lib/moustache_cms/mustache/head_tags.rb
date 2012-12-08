@@ -2,7 +2,6 @@ module MoustacheCms
   module Mustache
     module HeadTags 
       
-     
       # -- Css ----
       def stylesheet
         lambda do |text|
