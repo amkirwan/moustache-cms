@@ -22,7 +22,7 @@
       = f.label :organization
       = f.text_field :organization
     %li
-      = f.label :image, "Author Photo"
+      = f.label :image, "Author Image"
       = f.file_field :image, :class => "file_field"
       = f.hidden_field :image_cache
     - if !@author.new_record?

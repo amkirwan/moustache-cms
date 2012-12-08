@@ -15,7 +15,7 @@ end
 
 When /^I create a author with the firstname "([^"]*)" and the lastname "([^"]*)"$/ do |firstname, lastname|
   fill_in_name(firstname, lastname)
-  attach_file :image, File.join(Rails.root, 'spec', 'fixtures', 'assets', 'columbo.png')
+  attach_file 'Author Image' , File.join(Rails.root, 'spec', 'fixtures', 'assets', 'columbo.png')
   click_button 'Create Author'
 end
 
