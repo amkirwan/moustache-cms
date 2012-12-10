@@ -202,6 +202,7 @@ Then /^it should be the selected page part$/ do
 end
 
 Then /^the page part baz should be removed from the page$/ do
+  pause_for_step
   page.should_not have_content 'baz'
 end
 
