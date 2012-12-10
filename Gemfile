@@ -26,7 +26,7 @@ gem "RedCloth", "~> 4.2"
 gem "redcarpet", "~> 2.0"
 gem "mime-types"
 gem "kaminari"
-gem "rakismet"
+# gem "rakismet" #uncomment to spam filter comments on articles
 
 gem "unicorn"
 
