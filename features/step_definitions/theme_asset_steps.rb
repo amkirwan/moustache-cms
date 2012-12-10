@@ -21,7 +21,7 @@ end
 
 When /^I create a theme asset named "([^"]*)"$/ do |filename|
   click_link 'Add Some Theme Assets to the theme Blog'
-  attach_file :theme_asset, File.join(Rails.root, 'spec', 'fixtures', 'assets', filename) 
+  attach_file 'Asset Source*', File.join(Rails.root, 'spec', 'fixtures', 'assets', filename) 
   click_button 'Save Theme Asset'
 end
 

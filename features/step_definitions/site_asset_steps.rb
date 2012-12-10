@@ -54,7 +54,7 @@ When /^I edit the site asset "([^"]*)" and delete it$/ do |name|
 end
 
 When /^I create the site asset named "([^"]*)"$/ do |filename|
-  attach_file :site_asset, File.join(Rails.root, 'spec', 'fixtures', 'assets', filename) 
+  attach_file 'Asset Source*', File.join(Rails.root, 'spec', 'fixtures', 'assets', filename) 
   click_button 'Save Asset'
 end
 

@@ -22,7 +22,7 @@ Background: Login to site and create users
 
   @update_user
   Scenario: Edit a user account and change the first and lastname
-    When I change the fullname to Patrick Kane and username to pk88 of the user foo
+    When I change the fullname to Patrick Kane and username to pk88 of the user qux
     Then I should see the flash message "Successfully updated the user profile for Patrick Kane"
 
   @update_user_password

@@ -27,7 +27,7 @@ end
 
 When /^I update the site name to "([^"]*)"$/ do |new_name|
   step %{I view the site settings}
-  fill_in 'Name', :with => new_name
+  fill_in 'site[name]', :with => new_name
   click_button 'Update Site'
 end
 
@@ -75,5 +75,5 @@ Then /^the additional meta tag should be removed from the site$/ do
 end
 
 Then /^the site should be deleted$/ do
-  page.should have_content '404'  
+  page.find(:xpath, "//title[contains(., '404')]")
 end

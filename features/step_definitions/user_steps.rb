@@ -20,8 +20,8 @@ When /^I create the user Patrick Kane$/ do
   click_button 'Create User' 
 end
 
-When /^I change the fullname to Patrick Kane and username to pk88 of the user foo$/ do
-  click_link 'Foo Moustache'
+When /^I change the fullname to Patrick Kane and username to pk88 of the user qux/ do
+  click_link 'Qux Moustache'
   fill_in 'Username*', :with => 'pk88'
   fill_in 'Firstname*', :with => 'Patrick'
   fill_in 'Lastname*', :with => 'Kane'
@@ -34,8 +34,8 @@ When /^I change my password to "([^"]*)"$/ do |new_password|
   end
   click_link 'Change Password'
   fill_in 'Enter Your Current Password to Confirm Your Changes', :with => 'foobar7'
-  fill_in 'New Password', :with => new_password
-  fill_in 'Confirm New Password', :with => new_password
+  page.find('#user_password').set new_password
+  page.find('#user_password_confirmation').set new_password
   click_button 'Change Password'
 end
 
