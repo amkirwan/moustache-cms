@@ -1,3 +1,4 @@
+require 'nokogiri'
 # Remove empty nodes. When using mustache tags within markdown it can cause 
 # empty paragraph tags because of spacing issues.
 # 
