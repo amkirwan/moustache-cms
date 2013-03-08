@@ -48,6 +48,7 @@ When /^I delete the last meta tag added to the (.*)$/ do |page|
   within(:xpath, "//ol[contains(@class, 'meta_tags')]/li[last()-2]") do
     click_link 'Delete'
   end
+  wait_for_ajax
   dialog_ok
 end
 
