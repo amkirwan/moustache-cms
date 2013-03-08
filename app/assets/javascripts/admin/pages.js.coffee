@@ -31,6 +31,11 @@ $(document).ready ->
     $('fieldset.page_parts legend').siblings().first().show()
     $('fieldset.page_parts legend').find('span').removeClass 'rotate-ccw'
 
+    # delete meta tag
+    $('span.delete_new_meta_tag').live 'click', ->      
+      $(this).parent().fadeToggle 'slow', 'linear', ->
+        $(this).remove()
+      false 
     
     root.setSessionStore = (key, val) ->
       sessionStorage.setItem key, JSON.stringify(val)

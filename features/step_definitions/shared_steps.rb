@@ -48,7 +48,6 @@ When /^I delete the last meta tag added to the (.*)$/ do |page|
   within(:xpath, "//ol[contains(@class, 'meta_tags')]/li[last()-2]") do
     click_link 'Delete'
   end
-  wait_for_ajax
   dialog_ok
 end
 
@@ -56,9 +55,18 @@ When /^I add an additional meta tag with the name "([^"]*)" and the content "([^
   add_meta_tag(name, content, button_name)
 end
 
+
+Then /^the meta tag "([^"]*)" should be removed from the page$/ do |meta_tag_name|
+  wait_for_ajax
+  all(:xpath, "//ol[contains(@class, 'meta_tags')]/li/input").each do |input|
+    input.value.should_not == meta_tag_name
+  end
+end
+
 Then /^I should see "([^"]*)" in the (?:.*) list$/ do |content|
   page.should have_content content
 end
+
 
 Then /^I should not see "([^"]*)" in the (?:.*) list$/ do |content|
   page.should_not have_content content
