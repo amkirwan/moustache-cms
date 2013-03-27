@@ -42,6 +42,10 @@ class MoustacheAsset
     end
   end
 
+  def url
+    asset.url
+  end
+
   protected
 
   def set_name

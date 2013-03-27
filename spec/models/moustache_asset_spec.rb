@@ -66,6 +66,8 @@ describe MoustacheAsset do
     end
   end
 
+  # --- methods --- 
+  
   describe "asset_type" do
     it "#image?" do
       @uploader = BaseAssetUploader.new(@moustache_asset, :asset)
@@ -84,6 +86,12 @@ describe MoustacheAsset do
       @uploader_js.store!(AssetFixtureHelper.open("theme_js.js"))
       @moustache_asset_js.should be_javascript
     end
+  end
+
+  describe "#url" do
+    it "should return the url of the asset" do
+      @moustache_asset.url.should == @moustache_asset.asset.url
+    end  
   end
 
 end

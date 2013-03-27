@@ -46,7 +46,7 @@ describe MoustacheCms::Mustache::MediaTags do
       set_page_part_content do
         "{{#image}}collection_name:blog, name:rails, alt:rails logo, class:rails-image, fingerprint:false{{/image}}"
       end
-      @cmsp.page_part_content.should == %{<p><img alt="rails logo" class="rails-image" src="#{@image.asset.url}" /></p>}
+      @cmsp.page_part_content.should == %{<p><img alt="rails logo" class="rails-image" src="#{@image.url}" /></p>}
     end
 
     it "should render a theme asset image" do
