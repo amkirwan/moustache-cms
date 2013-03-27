@@ -49,12 +49,12 @@ describe MoustacheCms::Mustache::MediaTags do
       @cmsp.page_part_content.should == %{<p><img alt="rails logo" class="rails-image" src="#{@image.asset.url}" /></p>}
     end
 
-    # it "should render a theme asset image" do
-    #   set_page_part_content 'foobar_image' do
-    #     "{{#image}}theme_collection_name:blog, name:image, alt:rails logo, class:rails-image, fingerprint:false{{/image}}"
-    #   end
-    #   @cmsp.page_part_main_content.should == %{<p><img alt="rails logo" class="rails-image" src="#{@image.asset.url}" /></p>}
-    # end
+    it "should render a theme asset image" do
+      set_page_part_content do
+        "{{#image}}theme_collection_name:foobar, name:image, alt:rails logo, class:rails-image{{/image}}"
+      end
+      @cmsp.page_part_content.should == %{<p><img alt="rails logo" class="rails-image" src="#{@theme_asset_image.url_md5}" /></p>}
+    end
 
   end
 

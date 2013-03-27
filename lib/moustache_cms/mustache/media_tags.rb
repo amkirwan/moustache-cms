@@ -5,7 +5,12 @@ module MoustacheCms
       def image
         lambda do |text|
           hash = parse_text(text)
-          image = @current_site.site_asset_by_name(hash['collection_name'], hash['name'])
+
+          if hash['theme_collection_name']
+            image = @current_site.theme_image_file_by_name(hash['theme_collection_name'], hash['name'])
+          else
+            image = @current_site.site_asset_by_name(hash['collection_name'], hash['name'])
+          end
 
           if hash['fingerprint'] == 'false'
             src = image.asset.url
