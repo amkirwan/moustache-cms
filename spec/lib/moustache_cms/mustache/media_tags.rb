@@ -19,56 +19,42 @@ describe MoustacheCms::Mustache::MediaTags do
     @theme_collection.theme_assets << @theme_asset_type = FactoryGirl.build(:theme_asset, :name => "other", :asset => AssetFixtureHelper.open("Inconsolata.otf"), :content_type => "application/octet-stream", :creator_id => user.id, :updator_id => user.id)
     @theme_collection.save
 
-
-    @page.page_parts << FactoryGirl.build(:page_part, 
-                                      :name => "main_content", 
-                                      :content => "{{#image}}collection_name:blog, name:rails{{/image}}",
-                                      :filter_name => "markdown") 
-
-    @page.page_parts << FactoryGirl.build(:page_part, 
-                                      :name => "alt", 
-                                      :content => "{{#image}}collection_name:blog, name:rails, alt:rails logo{{/image}}",
-                                      :filter_name => "markdown") 
-
-    @page.page_parts << FactoryGirl.build(:page_part, 
-                                      :name => "foobar_image", 
-                                      :content => "{{#image}}theme_collection_name:foobar, name:image, alt:theme image{{/image}}",
-                                      :filter_name => "markdown") 
-    @page.save
-    @cmsp.instance_variable_set("@page", @page)
   end
 
-  def set_page_part_content(name, &block) 
-    @page.page_parts.where(:name => name).first.content = block.call
+  def set_page_part_content(name=nil, &block) 
+    @page.page_parts.where(:name => 'content').first.content = block.call
     @page.save
     @cmsp.instance_variable_set("@page", @page)
   end
 
   describe "image tags" do
     it "should render the image tag" do
-      @cmsp.page_part_main_content.should == %{<p><img src="#{@image.url_md5}" /></p>}
-    end
-
-    it "should render the image tag with an alt option" do
-      set_page_part_content 'main_content' do
-        "{{#image}}collection_name:blog, name:rails, alt:rails logo{{/image}}"
+      set_page_part_content do
+        "{{#image}}collection_name:blog, name:rails{{/image}}"
       end
-      @cmsp.page_part_main_content.should == %{<p><img alt="rails logo" src="#{@image.url_md5}" /></p>}
+      @cmsp.page_part_content.should == %{<p><img src="#{@image.url_md5}" /></p>}
     end
 
-    it "should render the image tag with an alt and class" do
-      set_page_part_content 'main_content' do
-        "{{#image}}collection_name:blog, name:rails, alt:rails logo, class:rails-image{{/image}}"
+    it "should render the image tag options title, id, class, alt" do
+      set_page_part_content do
+        "{{#image}}collection_name:blog, name:rails, alt:rails logo, id:rails logo image, title: rails logo, class:rails-image{{/image}}"
       end
-      @cmsp.page_part_main_content.should == %{<p><img alt="rails logo" class="rails-image" src="#{@image.url_md5}" /></p>}
+      @cmsp.page_part_content.should == %{<p><img alt="rails logo" class="rails-image" id="rails logo image" src="#{@image.url_md5}" title="rails logo" /></p>}
     end
 
-    it "should render the the image src without the fingerprint" do
-      set_page_part_content 'main_content' do
+    it "should render the image src without the fingerprint" do
+      set_page_part_content do
         "{{#image}}collection_name:blog, name:rails, alt:rails logo, class:rails-image, fingerprint:false{{/image}}"
       end
-      @cmsp.page_part_main_content.should == %{<p><img alt="rails logo" class="rails-image" src="#{@image.asset.url}" /></p>}
+      @cmsp.page_part_content.should == %{<p><img alt="rails logo" class="rails-image" src="#{@image.asset.url}" /></p>}
     end
+
+    # it "should render a theme asset image" do
+    #   set_page_part_content 'foobar_image' do
+    #     "{{#image}}theme_collection_name:blog, name:image, alt:rails logo, class:rails-image, fingerprint:false{{/image}}"
+    #   end
+    #   @cmsp.page_part_main_content.should == %{<p><img alt="rails logo" class="rails-image" src="#{@image.asset.url}" /></p>}
+    # end
 
   end
 
