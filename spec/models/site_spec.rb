@@ -165,21 +165,29 @@ describe Site do
       end
     end
 
-    describe "#css_file_by_name(theme_name, name)" do
+    describe "#theme_css_file_by_name(theme_name, name)" do
       it "should return the css file by the given name" do
         theme_collection = FactoryGirl.create(:theme_collection, :name => 'baz', :site => @site)
         theme_collection.theme_assets << theme_asset_css = FactoryGirl.build(:theme_asset, :name => 'foobar', :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css")
-        @site.css_file_by_name("baz", "foobar").should == theme_asset_css
+        @site.theme_css_file_by_name("baz", "foobar").should == theme_asset_css
       end
     end   
 
-    describe "#js_file_by_name(theme_name, name)" do
+    describe "#theme_js_file_by_name(theme_name, name)" do
       it "should return the css file by the given name" do
         theme_collection = FactoryGirl.create(:theme_collection, :name => 'baz', :site => @site)
         theme_collection.theme_assets << theme_asset_js = FactoryGirl.build(:theme_asset, :name => 'foobar', :asset => AssetFixtureHelper.open("theme_js.js"), :content_type => "application/x-javascript")
-        @site.js_file_by_name("baz", "foobar").should == theme_asset_js
+        @site.theme_js_file_by_name("baz", "foobar").should == theme_asset_js
       end
     end   
+
+    describe "#theme_image_file_by_name(theme_name, name)" do
+      it "should return the image file by the given name" do
+        theme_collection = FactoryGirl.create(:theme_collection, :name => 'baz', :site => @site)
+        theme_collection.theme_assets << theme_asset_image = FactoryGirl.build(:theme_asset, :name => "image", :asset => AssetFixtureHelper.open("rails.png"), :content_type => "image/png")
+        @site.theme_image_file_by_name("baz", "image").should == theme_asset_image
+      end
+    end
 
     describe "#article_collection_by_name" do
       it "should return the article collection by the name" do

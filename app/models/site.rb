@@ -105,16 +105,21 @@ class Site
     css_files.flatten
   end
   
-  def css_file_by_name(theme_name, css_name)
+  def theme_css_file_by_name(theme_name, css_name)
     theme_collection = theme_collection_by_name(theme_name)
     theme_collection.theme_assets.css_files.where(:name => css_name).first
   end 
 
-  def js_file_by_name(theme_name, js_name)
+  def theme_js_file_by_name(theme_name, js_name)
     theme_collection = theme_collection_by_name(theme_name)
     theme_collection.theme_assets.js_files.where(:name => js_name).first
   end 
   
+  def theme_image_file_by_name(theme_name, image_name)
+    theme_collection = theme_collection_by_name(theme_name)
+    theme_collection.theme_assets.images.where(:name => image_name).first
+  end
+
   def site_asset_by_name(asset_collection, file_name)
     asset_collection = AssetCollection.where(:name => asset_collection, :site_id => self.id).first
     asset_collection.site_assets.where(:name => file_name).first
