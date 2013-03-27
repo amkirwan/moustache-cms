@@ -7,7 +7,7 @@ module MoustacheCms
         lambda do |text|
           hash = parse_text(text) #Hash[*text.scan(/(\w+):([&.\w\s\-]+)/).to_a.flatten]
           attributes = style_attributes.merge(hash)
-          file = @current_site.css_file_by_name(hash['theme_name'], hash['name'])
+          file = @current_site.theme_css_file_by_name(hash['theme_name'], hash['name'])
           unless file.nil?
             set_default_attribute_values(attributes, file)
             set_link_attributes(attributes, file)
@@ -35,7 +35,7 @@ module MoustacheCms
       def js_file
         lambda do |text|
           hash = Hash[*text.scan(/(\w+):([&.\w\s\-]+)/).to_a.flatten]
-          file = @current_site.js_file_by_name(hash['theme_name'], hash['name'])
+          file = @current_site.theme_js_file_by_name(hash['theme_name'], hash['name'])
           unless file.nil?
             engine = gen_haml('javascript.haml')
             engine.render(nil, {:src => file.url_md5})
