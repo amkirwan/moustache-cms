@@ -22,6 +22,7 @@ class Article
                   :tag_list,
                   :set_date,
                   :date,
+                  :custom_fields_attributes,
                   :commentable
 
   # -- Fields -----------
@@ -49,8 +50,10 @@ class Article
   belongs_to :layout, :class_name => "Layout"
   has_and_belongs_to_many :authors
   embeds_many :comments
+  embeds_many :custom_fields, :as => :custom_fieldable
 
   accepts_nested_attributes_for :authors
+  accepts_nested_attributes_for :custom_fields
 
   # -- Validations -----------------------------------------------
   validates :title,

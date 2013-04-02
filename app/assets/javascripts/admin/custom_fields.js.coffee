@@ -6,13 +6,13 @@ $(document).ready ->
         $(this).remove()
       false
 
-    # new page ajax add custom_field 
+    # new articles ajax add custom_field 
     if $('p#custom_field_message').length
       $('#custom_field_message').remove()
       $('#add_custom_field').append('<span class="fake_link">Add Custom Field</span>')
       $('#add_custom_field').click ->
         $('#custom_fields_fieldset .spinner').removeClass('hidden')
-        $.get '/admin/pages/new_custom_field', ->
+        $.get '/admin/articles/new_custom_field', ->
           $('#custom_fields_fieldset .spinner').addClass('hidden')
 
     # custom_field ajax spinner 

@@ -4,7 +4,7 @@ class Admin::ArticlesController < AdminBaseController
   load_and_authorize_resource :article, :through => :article_collection, :except => :new_meta_tag
 
   respond_to :html, :xml, :json
-  respond_to :js, :only => [:index, :preview, :new_meta_tag, :new_author]
+  respond_to :js, :only => [:index, :preview, :new_meta_tag, :new_author, :new_custom_field]
 
   # GET /admin/article_collections/1/articles
   def index
@@ -67,6 +67,12 @@ class Admin::ArticlesController < AdminBaseController
   def new_author
     @current_site = current_site
     @article = Article.find(params[:id])
+  end
+
+  def new_custom_field
+    @base_class = Page.new
+    @custom_field = CustomField.new
+    render 'admin/custom_fields/new'
   end
 
 end

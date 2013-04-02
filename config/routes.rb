@@ -35,6 +35,7 @@ MoustacheCms::Application.routes.draw do
         get :new_author, :on => :member
         put :preview, :as => :preview
         resources :meta_tags, :except => [:index, :show] 
+        resources :custom_fields, :only => [:new, :destroy]
       end
     end
 

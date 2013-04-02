@@ -41,6 +41,10 @@ describe Article do
     it "should has_and_belong_to_many authors" do
       @article.should have_and_belong_to_many(:authors)
     end
+
+    it "should embed many custom fields" do
+      @article.should embed_many :custom_fields
+    end
     
     it { should embed_many(:comments) } 
   end
