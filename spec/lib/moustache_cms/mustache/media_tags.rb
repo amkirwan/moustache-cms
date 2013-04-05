@@ -56,6 +56,13 @@ describe MoustacheCms::Mustache::MediaTags do
       @cmsp.page_part_content.should == %{<p><img alt="rails logo" class="rails-image" src="#{@theme_asset_image.url_md5}" /></p>}
     end
 
+    it "should return the img src" do
+      set_page_part_content do
+        %(<img src="{{#image_src}}theme_collection_name:foobar, name:image{{/image_src}}" alt="only src">)
+      end
+      @cmsp.page_part_content.should == %{<p><img src="#{@theme_asset_image.url_md5}" alt="only src"></p>}
+    end
+
   end
 
 end

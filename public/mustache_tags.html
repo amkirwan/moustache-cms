@@ -226,13 +226,20 @@
         <pre><code>{{{page_entries_info}}}</pre></code>
       </div>
       <div class="section">
+        <h2>Media Tags</h2>
         <div class="tag">
-          <h2>Media Tags</h2>
           <h3>{{#image}}collection_name, name{{/image}}</h3>
           <p>Generates a HTML image tag from the given collection_name and the name of the image file. Optional This tag generates a link to the MD5 fingerprinted version of the file. The collection_name and name are required for generating the tag. Optional paramerters are: id, class, alt, title.<br />
             <b>Usage:</b>
           </p>
           <pre><code>{{#image}}collection_name:the_collection_name, name:the_image_name.jpg, alt: example image tag{{/image}}</code></pre> 
+        </div>
+        <div class="tag">
+          <h3>{{#image_src}}collection_name, name{{/image}}</h3>
+          <p>It returns the src for the image</p> 
+            <b>Usage:</b>
+          </p>
+          <pre><code><img src="{{#image_src}}theme_collection_name:foobar, name:image{{/image_src}}" alt="only src"></code></pre>
         </div>
       </div> 
       <div class="section">
