@@ -1,7 +1,3 @@
-/*
-*= require_self
-*/
-
 @import "reset";
 @import "colors_layout";
 @import "mixin_links";
@@ -77,8 +73,8 @@ img, embed, object, video { max-width: 100%; }
 .hidden { display: none; }
 
 .group {
-  content: "";
-  display: table;
+  content: ""; 
+  display: table; 
   clear: both;
 }
 
@@ -596,37 +592,30 @@ ol.pages {
 /* fold-arrow */
 
 ol#page_parts_nav {
+  height: 25px;
   list-style: none;
-  width: 100%;
   li {
-    display: inline-block;
     float: left;
+    margin-top: 3px;
+    margin-bottom: 5px;
+    padding: calc_em(5px, 14px) calc_em(5px, 14px); 
     cursor:pointer;
-    padding-top: 2px;
-    padding-bottom: 0;
-    margin-top: 5px;
-    height: 20px;
   }
   li.add_page_part, li.delete_page_part {
+    padding-right: 0;
     margin-right: 5px;
     float: right;
-    p { margin: 0; }
+    p {
+      margin: 0;
+    }
   }
-  a {
-    display: block;
-    width: 100%;
-    margin-top: 3px;
-    padding: 0 0.5em;
-    &:link,
-    &:visited {
-      text-decoration: none;
-      color: lighten($link_text, 40%);
-    }
-    &:hover,
-    &:focus {
-      color: $hover_text;
-      text-decoration: none;
-    }
+  a:link, a:visited {
+    text-decoration: none;
+    color: lighten($link_text, 40%);
+  }
+  a:hover, a:focus {
+    color: $hover_text;
+    text-decoration: none;
   }
   .tab:first-child {
     margin-left: 5px;
@@ -637,9 +626,9 @@ ol#page_parts_nav {
     border-top: 1px solid $foldable_header_selected;
     border-left: 1px solid $foldable_header_selected;
     border-right: 1px solid $foldable_header_selected;
-    a {
-      &:link, &:visited { color: $link_text; }
-    }  
+    a:link, a:visited {
+      color: $link_text;
+    }
   }
   .menu_separator {
     color: $foldable_header;
