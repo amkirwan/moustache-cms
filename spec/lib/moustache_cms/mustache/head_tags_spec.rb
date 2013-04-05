@@ -70,6 +70,11 @@ describe "head tags" do
       @cmsp.meta_tag_description.should == %(<meta content="description site" name="description" />\n)
     end
 
+    it "should return the meta tag with a hypen" do
+      @page.meta_tags.create(name: 'apple-mobile-web-app-capable', content: 'yes')
+      @cmsp.meta_tag_apple_mobile_web_app_capable.should ==  %(<meta content="yes" name="apple-mobile-web-app-capable" />\n)
+    end
+
   end
 
 end

@@ -35,7 +35,7 @@ module MoustacheCms
           class_eval <<-EOT, __FILE__, __LINE__ + 1
             define_method method_name do
               engine = gen_haml('meta_tag.haml')
-              engine.render(nil, {:name => name, :content => meta_tag_name(name).content})
+              engine.render(nil, {:name => name.gsub(/_/, '-'), :content => meta_tag_name(name).content})
             end
           EOT
           add_generated_method(method_name) 

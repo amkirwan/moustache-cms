@@ -44,10 +44,6 @@ module MoustacheCms
       end
       
       # -- Meta Tags ----
-      def meta_tag
-        engine = gen_haml('meta_tag.haml')
-        engine.render(nil, {:name => name, :content => meta_tag_name(text).content})
-      end
 
       def meta_tags_csrf
         engine = gen_haml('meta_tags_csrf.haml')

@@ -12,4 +12,10 @@ class MetaTag
             :presence => true,
             :uniqueness => true
 
+  before_save :format_name
+ 
+  def format_name
+    self.name.gsub!(/-/, '_')  
+  end
+
 end
