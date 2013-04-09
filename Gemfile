@@ -30,6 +30,8 @@ gem "kaminari"
 
 gem "unicorn"
 
+# gem "capistrano" #uncomment to capify
+
 group :development, :test do
   gem "rspec-rails", "~> 2.9"
   gem "cucumber-rails", "~> 1.3", :require => false
