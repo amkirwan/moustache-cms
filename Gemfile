@@ -28,6 +28,7 @@ gem "mime-types"
 gem "kaminari"
 # gem "rakismet" #uncomment to spam filter comments on articles
 
+gem "nokogiri", "~> 1.5"
 gem "unicorn"
 
 # gem "capistrano" #uncomment to capify

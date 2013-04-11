@@ -301,6 +301,7 @@ DEPENDENCIES
   mongoid-simple-tags!
   mongoid-tree!
   mustache (>= 0.99)
+  nokogiri (~> 1.5)
   rails (= 3.2.13)
   rb-fsevent (~> 0.9.1)
   redcarpet (~> 2.0)
