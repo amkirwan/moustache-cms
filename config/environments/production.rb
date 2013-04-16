@@ -57,6 +57,9 @@ MoustacheCms::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
+  config.to_prepare { Devise::SessionsController.force_ssl }
+  config.to_prepare { Devise::RegistrationsController.force_ssl }
+  config.to_prepare { Devise::PasswordsController.force_ssl }
 
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 end
