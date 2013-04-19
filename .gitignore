@@ -1,5 +1,6 @@
 .DS_Store
 .bundle
+vendor/bundle
 capistrano/*
 .sass-cache/*
 .rbenv-version
@@ -15,7 +16,6 @@ public/theme_assets/**/*
 public/authors/**/*
 public/base_assets/*
 public/cached
-public/assets
 spec/tmp/**/*
 config/mongoid_production.yml
 config/deploy.rb
