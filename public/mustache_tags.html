@@ -139,14 +139,36 @@
         <p>This tag will render a page part named either '_articles' or '_article'. This allows you to render a page either as the collection of articles or an article with the permalink.<br />
           <b>Usage:</b>
         </p>
-        <pre><code>{{{article_list_or_article}}}</code></pre>
+        <pre><code>{{{article_or_article}}}</code></pre>
       </div>
       <div class="tag">
         <h3>{{#articles_for_[name]}}{{/articles_for_[name]}}</h3>
-        <p>This tag will render the list of articles for the article collection paginated. From within the paginated list you can access all the properties of an article to display in your view. This tag will not generate the view for the permalink url of an article. To generate the views for the individual articles you will need to define the hYou will most likely want to use the {{{paginate}}} or {{{paginate_articles}}} tag in the page to generate the pagination links.<br />
+        <p>This tag will render the list of articles for the article collection paginated. From within the paginated list you can access all the properties of an article to display in your view. This tag will not generate the view for the permalink url of an article. To generate the views for the individual articles you will need to define a the view using the {{article}} tags. You will most likely want to use the {{{paginate}}} or {{{paginate_articles}}} tag in the page to generate the pagination links.<br />
           <b>Usage:</b>
         </p>
         <pre><code>{{{articles_for_foobar}}}</code></pre>
+        <b>Usage example with article tag.</b>
+        <pre>
+        <code>
+        {{#articles_list_for_events}}
+          {{title}}
+        {{{subheading}}}
+          {{{ content }}}
+        Checkout the [article]({{permalink}})
+          {{#created_by}}
+            {{ username }}
+          {{/created_by}}
+        {{/articles_list_for_events}}
+
+        {{#article}}
+          {{title}}
+        {{{ content }}}
+        {{/article}}
+
+
+        {{#paginate_articles}}{{/paginate_articles}}
+        </code>
+        </pre>
       </div>
       <div class="tag">
         <h3>{{#comments}}{{/comments}}</h3>
