@@ -42,6 +42,8 @@ CONTENT
   describe "articles should respond to the following tags" do
     specify { @cmsp.respond_to?(:articles_for).should be_true }
     specify { @cmsp.respond_to?(:article).should be_true }
+    specify { @cmsp.respond_to?(:next_article).should be_true }
+    specify { @cmsp.respond_to?(:previous_article).should be_true }
     specify { @cmsp.respond_to?(:articles).should be_true }
     specify { @cmsp.respond_to?(:articles_published).should be_true }
     specify { @cmsp.respond_to?(:feed_for).should be_true }
@@ -56,11 +58,10 @@ CONTENT
     specify { @cmsp.respond_to?(:page_entries_info).should be_true }
   end
 
-
   describe "it should create methods from ghost method calls" do
     it "should define a method for the call to articles_for_(name)" do
       @cmsp.articles_for_blog  
-      @cmsp.class.attribute_method_generated?(:articles_for_blog).should be_true   
+      @cmsp.class.attribute_method_generated?(:articles_for_blog).should be_false
     end
 
     it "should define a method for the call to feed_for_(name)" do

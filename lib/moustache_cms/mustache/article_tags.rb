@@ -85,6 +85,14 @@ module MoustacheCms
         @article
       end
 
+      def next_article
+        @article.next_article
+      end
+
+      def previous_article
+        @article.previous_article
+      end
+
       def articles
         @articles
       end
