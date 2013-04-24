@@ -61,7 +61,7 @@ CONTENT
   describe "it should create methods from ghost method calls" do
     it "should define a method for the call to articles_for_(name)" do
       @cmsp.articles_for_blog  
-      @cmsp.class.attribute_method_generated?(:articles_for_blog).should be_false
+      @cmsp.class.attribute_method_generated?(:articles_for_blog).should be_true
     end
 
     it "should define a method for the call to feed_for_(name)" do
