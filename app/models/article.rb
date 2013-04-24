@@ -120,6 +120,14 @@ class Article
     self.date.strftime("%l%P")
   end
 
+  def next_article
+    Article.where({:created_at.gt => self.created_at}).first
+  end
+
+  def previous_article
+    Article.where({:created_at.lt => self.created_at}).last
+  end
+
   private 
     def set_date?
       if !self.set_date

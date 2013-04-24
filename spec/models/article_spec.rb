@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-
 describe Article do
 
   let(:site) { FactoryGirl.create(:site) }
@@ -199,10 +198,26 @@ describe Article do
       end  
     end
     
-    describe "#dat_at_time_only" do
+    describe "#date_at_time_only" do
       it "returns an assigned date time for the article" do
         @article.date = "2012-01-06 15:41:01"
         @article.date == "3pm"    
+      end
+    end
+
+    describe "#next_article" do
+      it "returns the next article by create_at" do
+        article1 = FactoryGirl.create(:article, :site => site, :created_by_id => user.id, :updated_by_id => user.id, :article_collection => @article_collection)
+        article2 = FactoryGirl.create(:article, :site => site, :created_by_id => user.id, :updated_by_id => user.id, :article_collection => @article_collection)
+        @article.next_article.should == article1
+      end
+    end
+
+    describe "#previous_article" do
+      it "returns the previous artcile by created_at" do
+        article1 = FactoryGirl.create(:article, :site => site, :created_by_id => user.id, :updated_by_id => user.id, :article_collection => @article_collection)
+        article2 = FactoryGirl.create(:article, :site => site, :created_by_id => user.id, :updated_by_id => user.id, :article_collection => @article_collection)
+        article2.previous_article.should == article1
       end
     end
   end
