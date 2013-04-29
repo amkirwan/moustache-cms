@@ -48,6 +48,7 @@ When /^I add an additional domain name field and delete it$/ do
     And I view the site settings
     And I add the domain name "blog.com"
   }
+  wait_for_ajax
   within(:xpath, "//ol[contains(@class, 'domains_list')]/li[last()-1]") do
     click_link 'Delete'
   end
