@@ -26,7 +26,7 @@ describe Filter do
     
     describe "Filter#all" do
       it "should find return all of the filters" do
-        Filter.all.should have(3).items
+        Filter.all.should have(4).items
       end
     
       it "should return an array of Filter objects" do
