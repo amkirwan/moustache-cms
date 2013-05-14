@@ -3,6 +3,7 @@
   %head{:lang => "en"}
     %meta{:charset => "UTF-8"}
     %title= "#{@current_site.name.titleize} - #{yield :title}"
+    %script{src: "http://rawgithub.com/ajaxorg/ace-builds/master/src-noconflict/ace.js", charset: "utf-8"}
     = stylesheet_link_tag "application"
     = csrf_meta_tag
   %body{:class => body_id_set}

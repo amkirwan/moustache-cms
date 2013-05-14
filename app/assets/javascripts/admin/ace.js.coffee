@@ -20,7 +20,7 @@ $(document).ready ->
       @elementId = args.elementId
       @element = $('#' + @elementId)
       @editor = ace.edit @elementId
-      @editor.setTheme "ace/theme/twilight"
+      @editor.setTheme "ace/theme/monokai"
       @editor.session.setUseWrapMode @options.useWrapMode
       @editor.session.setWrapLimitRange @options.wrapLimit, @options.wrapLimit
       @editor.session.setTabSize @options.tabSize
@@ -30,11 +30,12 @@ $(document).ready ->
       @setupView()
 
     @modes = [  
-      new Mode("css", "CSS", ace.require("ace/mode/css").Mode, ["css"]),
-      new Mode("html", "HTML", ace.require("ace/mode/html").Mode, ["html", "htm"]),
-      new Mode("javascript", "JavaScript", ace.require("ace/mode/javascript").Mode, ["js"]),
-      new Mode("markdown", "Markdown", ace.require("ace/mode/markdown").Mode, ["md", "markdown"]),
-      new Mode("textile", "Textile", ace.require("ace/mode/textile").Mode, ["textile"])
+      {name: 'css', mode: 'ace/mode/css'}
+      {name: 'javascript', mode: 'ace/mode/javascript'}
+      {name: 'html', mode: 'ace/mode/html'}
+      {name: 'markdown', mode: 'ace/mode/markdown'}
+      {name: 'textile', mode: 'ace/mode/textile'}
+      {name: 'haml', mode: 'ace/mode/haml'}
       ]
 
     @modesByName: {}
@@ -117,8 +118,8 @@ $(document).ready ->
 
     # hide all page parts that are not selected 
     # after adding editor to view otherwise they don't render correctly
-    $('ol.page_part').each ->
-      $(@).hide()
+    # $('ol.page_part').each ->
+    #   $(@).hide()
 
     $('.page_part_filter').on 'change', ->
       editor = MoustacheEditor.editors[$('.page_part_filter').index(@)]

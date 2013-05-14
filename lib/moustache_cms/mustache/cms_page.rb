@@ -88,6 +88,8 @@ class MoustacheCms::Mustache::CmsPage < Mustache
       process_with_markdown(preprocessed_content)
     when "textile"
       process_with_textile(preprocessed_content)
+    when "haml"
+      process_with_haml(preprocessed_content)
     when "html"
       preprocessed_content  
     else
@@ -109,6 +111,10 @@ class MoustacheCms::Mustache::CmsPage < Mustache
 
   def process_with_textile(content)
     RedCloth.new(content).to_html
+  end
+
+  def process_with_haml(content)
+    Haml::Engine.new(content).render
   end
 
   def gen_haml(template_name)
