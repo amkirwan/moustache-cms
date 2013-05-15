@@ -2,9 +2,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
+//= require externals
 //= require admin/ace
-//= require ace_editor
-//= require admin/jquery.cookies.min
 //= require admin/pages
 //= require admin/articles
 //= require admin/meta_tags
@@ -13,8 +12,6 @@
 //= require admin/site_assets
 //= require admin/current_site
 //= require plupload_uploader 
-//= require nested/jquery.ui.nestedSortable
-//= require jquery.fancybox.pack
 //= require_self
 
 $(document).ready(function() {
