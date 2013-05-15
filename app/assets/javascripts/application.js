@@ -22,6 +22,13 @@ $(document).ready(function() {
     $(this).remove()
   }); 
 
+  //Display Moustache Tags Helpers  
+  $('.documentation').fancybox({
+    'maxHeight': 400,
+    'maxWidth': 600,
+    'height': '70%'
+  });
+
   $('.foldable legend').mouseup(function() {
     var legend = $(this);
     legend.siblings().slideToggle('slow', 'linear', function() {

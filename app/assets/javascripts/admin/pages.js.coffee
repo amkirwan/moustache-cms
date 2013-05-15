@@ -189,10 +189,5 @@ $(document).ready ->
       disabled.each -> $(@).removeAttr('disabled') # enable form elements so they can be submit for an update
 
         
-    # Display Moustache Tags Helpers  
-    $('.documentation').fancybox 
-      maxHeight: 400
-      maxWidth: 600
-      height: '70%'
-    
+   
 
