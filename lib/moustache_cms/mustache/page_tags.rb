@@ -22,7 +22,9 @@ module MoustacheCms
 
       def respond_to?(method)
         method_name = method.to_s
-        if method_name =~ /^editable_text_(.*)/ && @page.page_parts.find_by_name($1)
+        if method_name =~ /^page_part_(.*)_indent_(.*)/ && @page.page_parts.find_by_name($1)
+          return true
+        elsif method_name =~ /^editable_text_(.*)/ && @page.page_parts.find_by_name($1)
           return true
         elsif method_name =~ /^page_part_(.*)/ && @page.page_parts.find_by_name($1)
           return true
@@ -33,7 +35,9 @@ module MoustacheCms
 
       def method_missing(method, *args, &block)
         method_name = method.to_s
-        if method_name =~ /^editable_text_(.*)/ || method_name =~ /^page_part_(.*)/
+        if method_name =~ /^page_part_(.*)_indent_(.*)/
+          self.class.define_page_part_indent_method(method_name, $1, $2)
+        elsif method_name =~ /^editable_text_(.*)/ || method_name =~ /^page_part_(.*)/
           self.class.define_page_part_method(method_name, $1)
         end
 
@@ -46,9 +50,12 @@ module MoustacheCms
 
       private
       
-      def page_part_method(name)
+      def page_part_method(name, indentation='')
         part = @page.page_parts.find_by_name(name)
-        process_with_filter(part).chomp unless part.nil?
+        unless part.nil?
+          processed_part = process_with_filter(part).chomp 
+          processed_part.gsub(/^/, indentation)
+        end
       end
 
     end

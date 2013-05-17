@@ -31,6 +31,16 @@ module MoustacheCms
           add_generated_method(method_name) 
         end
 
+        def define_page_part_indent_method(method_name, name, indent=0)
+          class_eval <<-EOT, __FILE__, __LINE__ + 1
+            define_method method_name do
+              indentation = ' '*indent.to_i
+              page_part_method(name, indentation)
+            end
+          EOT
+          add_generated_method(method_name) 
+        end
+
         def define_meta_tag_method(method_name, name)
           class_eval <<-EOT, __FILE__, __LINE__ + 1
             define_method method_name do
