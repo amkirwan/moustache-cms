@@ -26,9 +26,7 @@ module MoustacheCms
           return true
         elsif method_name =~ /^page_part_(.*)/ && @page.page_parts.find_by_name($1)
           return true
-        elsif method_name =~ /^snippet_(.*)/ && @current_site.snippet_by_name($1)
-          return true
-        else
+        else 
           super
         end
       end
@@ -37,8 +35,6 @@ module MoustacheCms
         method_name = method.to_s
         if method_name =~ /^editable_text_(.*)/ || method_name =~ /^page_part_(.*)/
           self.class.define_page_part_method(method_name, $1)
-        elsif method_name =~ /^snippet_(.*)/
-          self.class.define_snippet_method(method_name, $1)
         end
 
         if self.class.attribute_method_generated?(method)
@@ -50,11 +46,6 @@ module MoustacheCms
 
       private
       
-      def snippet_method(name)
-        snippet = @current_site.snippet_by_name(name)
-        process_with_filter(snippet).chomp unless snippet.nil?
-      end
-
       def page_part_method(name)
         part = @page.page_parts.find_by_name(name)
         process_with_filter(part).chomp unless part.nil?
