@@ -118,6 +118,15 @@
             </p>
             <pre><code>{{{page_part_foobar}}}</code></pre>
           </div>
+          <div class="tag">
+            <h3>{{{page_part_[name]_indent_[number of spaces]}}}</h3>
+            <p>This will render the page part with the given name for the page that is currently being rendered. The page part will be indented by the number of spaces in the parent document. This is mostly needed for when rendering a page part using Haml into a parent page using haml. Haml is space sensitive and when page part is rendered into a parent page the spacing must be specified. Also when rendering a Haml page part into a parent page using Haml you will need to use the :preserve filter as the child page is rendered first into the parent page and then the parent page is rendered. Adding HTML to a Haml document will result in a render error unless the preserve filter is used. 
+              <b>Usage:</b>
+            </p>
+            <pre><code>
+:preserve
+  {{{page_part_foobar_indent_2}}}</code></pre>
+          </div>
         <div class="tag">
           <h3>{{{editable_text_[name]}}} or {{#editable_text}}name{{/editable_text}}</h3>
           <p>This will render the page part with the given name for the page that is currently being rendered. In this example it would be the page part named foobar. This tag is the same as the page part tag.<br />
