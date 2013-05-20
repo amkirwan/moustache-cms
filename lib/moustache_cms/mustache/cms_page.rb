@@ -34,7 +34,31 @@ class MoustacheCms::Mustache::CmsPage < Mustache
     part = @page.page_parts.first
     process_with_filter(part)
   end
-  
+
+  def indent(indentation=0)
+    lambda do |text|
+      render(text).gsub(/^/, ' '*indentation.to_i) 
+    end
+  end
+
+  def respond_to?(method)
+    method_name = method.to_s
+    if method_name =~ /^indent_(.*)/
+      return true
+    else
+      super
+    end
+  end
+
+  def method_missing(method, *args, &block)
+    method_name = method.to_s  
+    if method_name =~ /^(indent)_(.*)/
+      self.send($1, $2)
+    else
+      super
+    end
+  end
+
   protected 
   def parse_text(text)
     hash = Hash[*text.scan(/(\w+):([&.\w\s\-]+)/).to_a.flatten]
