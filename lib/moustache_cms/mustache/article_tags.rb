@@ -6,8 +6,8 @@ module MoustacheCms
 
       # This tag will render a page part named either '_articles' or '_article'. This allows you to render a page either as the collection of articles or an article with the permalink.
       def articles_or_article
-        part = @article.nil? ? @page.page_parts.where(name: '_articles').first : @page.page_parts.where(name: '_article').first
-        process_with_filter(part)
+        @page_part = @article.nil? ? @page.page_parts.where(name: '_articles').first : @page.page_parts.where(name: '_article').first
+        process_with_filter(@page_part)
       end
 
       # This tag will display the list of articles paginated. From within the paginated list you can

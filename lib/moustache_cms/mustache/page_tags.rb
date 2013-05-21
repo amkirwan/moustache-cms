@@ -50,11 +50,17 @@ module MoustacheCms
 
       private
       
-      def page_part_method(name, indentation='')
-        part = @page.page_parts.find_by_name(name)
-        unless part.nil?
-          processed_part = process_with_filter(part).chomp 
-          processed_part.gsub(/^/, indentation)
+      def page_part_method(name, indentation=0)
+        indentation = indentation.to_i
+        @page_part = @page.page_parts.find_by_name(name)
+        unless @page_part.nil?
+          processed_part = process_with_filter(@page_part).chomp 
+          if indentation > 0 
+            rendered_text = processed_part.gsub(/^/, ' '*indentation + ' '*2)
+            ":preserve\n" + rendered_text
+          else
+            processed_part
+          end
         end
       end
 

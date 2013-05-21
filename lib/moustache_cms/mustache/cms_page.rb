@@ -31,13 +31,19 @@ class MoustacheCms::Mustache::CmsPage < Mustache
   end
   
   def yield
-    part = @page.page_parts.first
-    process_with_filter(part)
+    @page_part = @page.page_parts.first
+    process_with_filter(@page_part)
   end
 
   def indent(indentation=0)
+    indentation = indentation.to_i
     lambda do |text|
-      render(text).gsub(/^/, ' '*indentation.to_i) 
+      if @page_part.filter_name == 'haml'
+        rendered_text = render(text).gsub(/^/, ' '*indentation + ' '*2)
+        ' '*indentation + ":preserve\n" + rendered_text
+      else
+        render(text).gsub(/^/, ' '*indentation)
+      end
     end
   end
 
@@ -138,6 +144,8 @@ class MoustacheCms::Mustache::CmsPage < Mustache
   end
 
   def process_with_haml(content)
+    Rails.logger.debug "*"*20
+    Rails.logger.debug content
     Haml::Engine.new(content).render
   end
 
