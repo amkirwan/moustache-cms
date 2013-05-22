@@ -144,8 +144,6 @@ class MoustacheCms::Mustache::CmsPage < Mustache
   end
 
   def process_with_haml(content)
-    Rails.logger.debug "*"*20
-    Rails.logger.debug content
     Haml::Engine.new(content).render
   end
 
