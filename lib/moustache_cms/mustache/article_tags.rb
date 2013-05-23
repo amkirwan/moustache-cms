@@ -103,8 +103,12 @@ module MoustacheCms
       end
 
       # process the article contents with the filter
-      def article_content
-        process_with_filter(@article)  
+      def article_render_content(article = nil)
+        if @article 
+          process_with_filter(@article)  
+        elsif article
+          process_with_filter(article)  
+        end
       end
       
       def paginate
@@ -209,6 +213,8 @@ module MoustacheCms
         @articles_published = [] 
         @articles.each do |article|
           if article.published?
+            mustache = self
+            article.define_singleton_method(:article_render_content) { mustache.send(:article_render_content, article) }
             @articles_published << article
           end
         end
