@@ -7,12 +7,12 @@ module MoustacheCms
         engine.render(action_view_helpers_context, {:request => @request, :homepage => @current_site.page_by_full_path('/')})  
       end
       
-      def nav_child_pages(title=nil)
+      def nav_child_pages(page_title=nil)
         engine = gen_haml('nav_children.haml')
-        if @page
-          engine.render(action_view_helpers_context, {:request => @request, :parent_page => @page})  
-        else
+        if page_title
           engine.render(action_view_helpers_context, {:request => @request, :parent_page => @current_site.page_by_title(page_title) })  
+        else
+          engine.render(action_view_helpers_context, {:request => @request, :parent_page => @page})  
         end
       end   
 
