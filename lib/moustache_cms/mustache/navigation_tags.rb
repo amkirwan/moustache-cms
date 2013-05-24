@@ -29,9 +29,11 @@ module MoustacheCms
       
       def respond_to?(method)
         method_name = method.to_s
-        if method_name =~ /^(nav_children)_(.*)$/ && @current_site.page_by_title($1)
+        if method_name =~ /^(nav_children)_(.*)$/ && @current_site.page_by_title($2)
           return true
-        elsif method_name =~ /^(nav_siblings_and_self)_(.*)/ && @current_site.page_by_title($1)
+        elsif method_name =~ /^(nav_child_pages)_(.*)$/ && @current_site.page_by_title($2)
+          return true
+        elsif method_name =~ /^(nav_siblings_and_self)_(.*)/ && @current_site.page_by_title($2)
           return true
         else
           super
