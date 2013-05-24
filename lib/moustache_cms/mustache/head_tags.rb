@@ -61,7 +61,7 @@ module MoustacheCms
 
       def method_missing(method, *args, &block)
         method_name = method.to_s
-        if method_name.to_s =~ /^(meta_tag)_(.*)/
+        if method_name =~ /^(meta_tag)_(.*)/
           self.class.define_meta_tag_method(method_name, $2)
         end
 
