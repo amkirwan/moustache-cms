@@ -7,12 +7,15 @@ module MoustacheCms
         engine.render(action_view_helpers_context, {:request => @request, :homepage => @current_site.page_by_full_path('/')})  
       end
       
-      def nav_child_pages
+      def nav_child_pages(title=nil)
         engine = gen_haml('nav_children.haml')
-        engine.render(action_view_helpers_context, {:request => @request, :parent_page => @page})  
+        if @page
+          engine.render(action_view_helpers_context, {:request => @request, :parent_page => @page})  
+        else
+          engine.render(action_view_helpers_context, {:request => @request, :parent_page => @current_site.page_by_title(page_title) })  
+        end
       end   
-      
-      
+
       def nav_children(page_title)
         engine = gen_haml('nav_children.haml')
         engine.render(action_view_helpers_context, {:request => @request, :parent_page => @current_site.page_by_title(page_title)})  
@@ -38,6 +41,8 @@ module MoustacheCms
       def method_missing(method, *arguments, &block)
         method_name = method.to_s
         case method_name
+        when /^(nav_child_pages)_(.*)/  
+          self.class.define_attribute_method(method_name, $1, $2)
         when /^(nav_children)_(.*)/
           self.class.define_attribute_method(method_name, $1, $2)
         when /^(nav_siblings_and_self)_(.*)/
