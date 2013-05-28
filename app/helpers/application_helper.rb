@@ -57,7 +57,7 @@ module ApplicationHelper
       options.merge!(:body => "", :title => "Create A New #{object_class_to_title(options[:object])}")
     else
       title = title_for_header(options)
-      options.merge!(:body => capture(&block), :title => "#{title} #{view_identifier(options[:object]).titleize}")
+      options.merge!(:body => capture(&block), :title => "#{title} #{view_identifier(options[:object])}")
     end
     concat(render(:partial => partial_name, :locals => options))
   end
