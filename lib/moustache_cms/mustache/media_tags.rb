@@ -4,13 +4,17 @@ module MoustacheCms
 
       def image
         lambda do |text|
-          hash = parse_text(text)
-          image = find_image(hash)
-          src = get_image_src(hash, image)
+          begin 
+            hash = parse_text(text)
+            image = find_image(hash)
+            src = get_image_src(hash, image)
 
-          unless image.nil?
-            engine = gen_haml('image.haml')
-            engine.render(nil, {:src => src, :id => hash['id'], :class_name => hash['class'], :alt => hash['alt'], :title => hash['title']})
+            unless image.nil?
+              engine = gen_haml('image.haml')
+              engine.render(nil, {:src => src, :id => hash['id'], :class_name => hash['class'], :alt => hash['alt'], :title => hash['title']})
+            end
+          rescue NoMethodError => e
+            Rails.logger.error "#{e} could not find image with the params: #{text}"
           end
         end
       end
