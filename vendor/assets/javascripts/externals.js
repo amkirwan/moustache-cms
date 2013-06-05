@@ -4,3 +4,10 @@
 //= require plupload/jquery.plupload.queue/jquery.plupload.queue
 //= require nested/jquery.ui.nestedSortable
 //= require ace-builds/src-min-noconflict/ace
+//= require ace-builds/src-min-noconflict/theme-monokai
+//= require ace-builds/src-min-noconflict/mode-css
+//= require ace-builds/src-min-noconflict/mode-javascript
+//= require ace-builds/src-min-noconflict/mode-html
+//= require ace-builds/src-min-noconflict/mode-markdown
+//= require ace-builds/src-min-noconflict/mode-textile
+//= require ace-builds/src-min-noconflict/mode-haml
