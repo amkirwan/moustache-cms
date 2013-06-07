@@ -26,6 +26,7 @@ module MoustacheCms
           src = get_image_src(hash, image)
         end
       end
+      alias_method :media_url, :image_src
 
       private 
 
