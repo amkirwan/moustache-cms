@@ -222,7 +222,11 @@ module MoustacheCms
       end
 
       def find_articles(name)
-        @articles = @current_site.articles_by_collection_name(name.to_s).desc('current_state.time').page(params[:page]).per(MoustacheCms::Application.config.default_per_page)
+        if params[:tag]
+          @articles = @current_site.articles_by_collection_name(name.to_s).where(:tags.in => [params[:tag]]).desc('current_state.time').page(params[:page]).per(MoustacheCms::Application.config.default_per_page)
+        else
+          @articles = @current_site.articles_by_collection_name(name.to_s).desc('current_state.time').page(params[:page]).per(MoustacheCms::Application.config.default_per_page)
+        end
       end
 
       def process_article_with_filter(article, hash)
