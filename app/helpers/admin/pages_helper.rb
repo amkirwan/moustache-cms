@@ -83,7 +83,8 @@ module Admin::PagesHelper
     case meta_tag.name
     when "title", "keywords", "description"
     else
-      link_to "Delete", [:admin, page, meta_tag], :data => { :confirm => "Are you sure you want to delete the meta tag #{meta_tag.name}" }, :method => :delete, :class => "delete", :remote => true
+      path = page.class == Article ? [:admin, page.article_collection, page, meta_tag] : [:admin, page, meta_tag]
+      link_to "Delete", path, :data => { :confirm => "Are you sure you want to delete the meta tag #{meta_tag.name}" }, :method => :delete, :class => "delete", :remote => true
     end
   end
 
