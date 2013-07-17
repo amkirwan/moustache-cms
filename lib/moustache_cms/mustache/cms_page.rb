@@ -65,15 +65,15 @@ class MoustacheCms::Mustache::CmsPage < Mustache
     end
   end
 
+  def full_request(permalink=@article.permalink)
+    'http://' + @controller.request.host + permalink
+  end
+
   protected 
   def parse_text(text)
     hash = Hash[*text.scan(/(\w+):([&.\w\s\-]+)/).to_a.flatten]
     hash.collect { |k,v| v.strip! }
     hash
-  end
-
-  def full_request(relative_link)
-    'http://' + @controller.request.host + relative_link
   end
 
   def action_view_helpers_context

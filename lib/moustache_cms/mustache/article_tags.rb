@@ -71,7 +71,7 @@ module MoustacheCms
             unless article.authors.empty?
               b.author { |a| a.name(article.authors.first.full_name) }
             end
-            b.link(rel: 'alternate', type: 'text/html', href: full_request(article.permalink))
+            b.link(rel: 'alternate', type: 'text/html', href: full_request(article.permalink)
             b.id(full_request(article.permalink))
             b.updated(article.updated_at.xmlschema)
             b.published(article.published_on.xmlschema)
