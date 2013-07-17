@@ -37,9 +37,9 @@ class MoustacheCms::Mustache::CmsPage < Mustache
 
   def full_path
     if @article
-      @current_site.subdomain + @current_site.default_domain + '/' + @article.permalink
+      @current_site.full_subdomain + @article.permalink
     else
-      @current_site.subdomain + @current_site.default_domain + '/' + @page.full_path
+      @current_site.full_subdomain + @page.full_path
     end
   end
 
