@@ -35,6 +35,14 @@ class MoustacheCms::Mustache::CmsPage < Mustache
     process_with_filter(@page_part)
   end
 
+  def full_path
+    if @article
+      @current_site.subdomain + @current_site.default_domain + '/' + @article.permalink
+    else
+      @current_site.subdomain + @current_site.default_domain + '/' + @page.full_path
+    end
+  end
+
   def indent(indentation=0)
     indentation = indentation.to_i
     lambda do |text|
