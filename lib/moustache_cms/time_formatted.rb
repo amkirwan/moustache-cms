@@ -3,15 +3,13 @@ module MoustacheCms
 
     attr_reader :current_state, :published_at, :created_at, :updated_at
 
-    @methods =  %w(formatted_date formatted_time formatted_time_zone formatted_date_and_time formatted_date_and_time_with_zone formatted_date_and_time datetime_date datetime_iso8601 full_weekday_name abbv_weekday_name full_month_name abbv_month_name year month day zone)
-
     @meth_prefix = ['', 'published_at_', 'created_at_', 'updated_at_']
+    
     def initialize(klass)
       @current_state = klass.current_state.time 
       @published_at = klass.current_state.time
       @created_at = klass.created_at
       @updated_at = klass.updated_at
-
     end  
 
     @meth_prefix.each_with_index do |prefix, index|
