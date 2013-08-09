@@ -9,6 +9,7 @@ describe MoustacheCms::TimeFormatted do
 
   end
 
+
   before(:each) do
     @current_state = FactoryGirl.build(:current_state)
     @dummy_time_class = TimeDummyClass.create
@@ -16,61 +17,133 @@ describe MoustacheCms::TimeFormatted do
     @dummy_class = MoustacheCms::TimeFormatted.new(@dummy_time_class)
   end
 
-  describe "respond_to?" do
-    it "should respond to the following methods" do
-      methods =  %w(formatted_date formatted_time formatted_time_zone formatted_date_and_time formatted_date_and_time_with_zone formatted_date_and_time datetime_date datetime_iso8601 full_weekday_name abbv_weekday_name full_month_name abbv_month_name year month day zone)
-      methods.each do |m|
-        @dummy_class.should respond_to m
-        @dummy_class.should respond_to 'published_at_' + m
-        @dummy_class.should respond_to 'created_at_' + m
-        @dummy_class.should respond_to 'updated_at_' + m
+  describe "humanized methods for" do
+    meth_prefix = %w(published_at created_at updated_at)
+
+    it "#formatted date" do
+      @dummy_class.formatted_date.should == @dummy_class.created_at.strftime("%e %b %Y").strip  
+      meth_prefix.each do |pre| 
+        @dummy_class.send(pre + '_' + 'formatted_date').should == @dummy_class.send(pre).strftime("%e %b %Y").strip
       end
     end
-  end
 
-  describe "#status_formatted_date_time" do
-    it "returns the abbreviated time zone" do
-      @dummy_class.formatted_time_zone.should == @current_state.time.strftime("%Z").strip  
+    it "#formatted time" do
+      @dummy_class.formatted_time.should == @dummy_class.created_at.strftime("%l%P").strip  
+      meth_prefix.each do |pre| 
+        @dummy_class.send(pre + '_' + 'formatted_time').should == @dummy_class.send(pre).strftime("%l%P").strip  
+      end
     end
 
-    it "returns the humnanized formatted time" do
-      @dummy_class.formatted_time.should == @current_state.time.strftime("%l%P").strip  
+    it "#formatted_time_zone returns abbreviated zone" do
+      @dummy_class.formatted_time_zone.should == @dummy_class.created_at.strftime("%Z").strip  
+      meth_prefix.each do |pre| 
+        @dummy_class.send(pre + '_' + 'formatted_time_zone').should == @dummy_class.send(pre).strftime("%Z").strip  
+      end
     end
 
-    it "returns the humanized formatted date" do
-      @dummy_class.formatted_date.should == @current_state.time.strftime("%e %b %Y").strip  
+    it "#formatted_date_and_time returns formatted date and time" do
+      @dummy_class.formatted_date_and_time.should == @dummy_class.created_at.strftime("%e %b %Y at %l%P").squeeze(" ").strip  
+
+      meth_prefix.each do |pre| 
+        @dummy_class.send(pre + '_' + 'formatted_date_and_time').should == @dummy_class.send(pre).strftime("%e %b %Y at %l%P").squeeze(" ").strip  
+      end
     end
 
     it "returns a humanized formatted date time of the current state with the time zone" do
-      @dummy_class.formatted_date_and_time_with_zone.should == @current_state.time.strftime("%e %b %Y at %l%P %Z").squeeze(" ").strip  
+      @dummy_class.formatted_date_and_time_with_zone.should == @dummy_class.created_at.strftime("%e %b %Y at %l%P %Z").squeeze(" ").strip  
+
+      meth_prefix.each do |pre| 
+        @dummy_class.send(pre + '_' + 'formatted_date_and_time_with_zone').should == @dummy_class.send(pre).strftime("%e %b %Y at %l%P %Z").squeeze(" ").strip
+      end
     end
 
-    it "returns a humanized formatted date time of the current state" do
-      @dummy_class.formatted_date_and_time.should == @current_state.time.strftime("%e %b %Y at %l%P").squeeze(" ").strip  
+    it "returns the datetime with just the date" do
+      @dummy_class.datetime_date.should == @dummy_class.created_at.strftime("%Y-%m-%d")
+
+      meth_prefix.each do |pre| 
+        @dummy_class.send(pre + '_' + 'datetime_date').should == @dummy_class.send(pre).strftime("%Y-%m-%d")
+      end
     end
-  end
 
-  it "returns the iso860 date format" do
-    @dummy_class.datetime_iso8601.should == @current_state.time.iso8601.to_s 
-  end
+    it "returns the iso860 date format" do
+      @dummy_class.datetime_iso8601.should == @dummy_class.created_at.iso8601.to_s 
 
-  it "returns the datetime with just the date" do
-    @dummy_class.datetime_date.should == @current_state.time.strftime("%Y-%m-%d")
-  end
+      meth_prefix.each do |pre| 
+        @dummy_class.send(pre + '_' + 'datetime_iso8601').should == @dummy_class.send(pre).iso8601.to_s
+      end
+    end
 
-  it "returns the year of the current state as a string number" do
-    @dummy_class.year.should == @current_state.time.strftime("%Y")
-  end
+    it "returns the full day name" do
+      @dummy_class.full_day_name.should == @dummy_class.created_at.strftime('%A')
 
-  it "returns the month of the current state as a string day" do
-    @dummy_class.month.should == @current_state.time.strftime("%m")
-  end
+      meth_prefix.each do |pre| 
+        @dummy_class.send(pre + '_' + 'full_day_name').should == @dummy_class.send(pre).strftime('%A')
+      end
+    end
 
-  it "returns the day of the current state as a string day" do
-    @dummy_class.day.should == @current_state.time.strftime("%d")
-  end
+    it "returns the abbv day name" do
+      @dummy_class.abbv_day_name.should == @dummy_class.created_at.strftime('%a')
 
-  it "returns the time zone as a string" do
-    @dummy_class.zone.should == @current_state.time.zone
+      meth_prefix.each do |pre| 
+        @dummy_class.send(pre + '_' + 'abbv_day_name').should == @dummy_class.send(pre).strftime('%a')
+      end
+    end
+
+    it "returns the full month name" do
+      @dummy_class.full_month_name.should == @dummy_class.created_at.strftime('%B')
+
+      meth_prefix.each do |pre| 
+        @dummy_class.send(pre + '_' + 'full_month_name').should == @dummy_class.send(pre).strftime('%B')
+      end
+    end
+
+    it "returns the full month name" do
+      @dummy_class.full_month_name.should == @dummy_class.created_at.strftime('%B')
+
+      meth_prefix.each do |pre| 
+        @dummy_class.send(pre + '_' + 'full_month_name').should == @dummy_class.send(pre).strftime('%B')
+      end
+    end
+
+    it "returns the abbv month name" do
+      @dummy_class.abbv_month_name.should == @dummy_class.created_at.strftime('%b')
+
+      meth_prefix.each do |pre| 
+        @dummy_class.send(pre + '_' + 'abbv_month_name').should == @dummy_class.send(pre).strftime('%b')
+      end
+    end
+
+    it "returns the year, ie 1973" do
+      @dummy_class.year.should == @dummy_class.created_at.strftime("%Y")
+
+      meth_prefix.each do |pre| 
+        @dummy_class.send(pre + '_' + 'year').should == @dummy_class.send(pre).strftime('%Y')
+      end
+    end
+
+    it "returns the month 1-12 " do
+      @dummy_class.month.should == @dummy_class.created_at.strftime("%m")
+
+      meth_prefix.each do |pre| 
+        @dummy_class.send(pre + '_' + 'month').should == @dummy_class.send(pre).strftime('%m')
+      end
+    end
+
+    it "returns the day, ie 01-31" do
+      @dummy_class.day.should == @dummy_class.created_at.strftime("%d")
+
+      meth_prefix.each do |pre| 
+        @dummy_class.send(pre + '_' + 'day').should == @dummy_class.send(pre).strftime('%d')
+      end
+    end
+
+    it "returns the time zone as a string" do
+      @dummy_class.zone.should == @dummy_class.created_at.zone
+
+      meth_prefix.each do |pre| 
+        @dummy_class.send(pre + '_' + 'zone').should == @dummy_class.send(pre).zone
+      end
+    end
+
   end
 end
