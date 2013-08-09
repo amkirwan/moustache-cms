@@ -3,12 +3,14 @@ require 'spec_helper'
 describe MoustacheCms::StateSetable do
   class StateSetableDummy
     include Mongoid::Document
+    include Mongoid::Timestamps
     include MoustacheCms::StateSetable
   end 
 
   before(:each) do
     @dummy_class = StateSetableDummy.new
     @dummy_class.current_state = FactoryGirl.build(:current_state)
+    @dummy_class.save
   end
 
   describe "included" do

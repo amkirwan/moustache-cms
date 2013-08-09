@@ -22,7 +22,7 @@ module MoustacheCms
     end
 
     def current_state_humanize
-      MoustacheCms::TimeFormatted.new(self.current_state)
+      MoustacheCms::TimeFormatted.new(self)
     end
 
   end
