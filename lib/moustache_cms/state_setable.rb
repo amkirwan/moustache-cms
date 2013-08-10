@@ -18,7 +18,7 @@ module MoustacheCms
     end
 
     MoustacheCms::TimeFormatted.instance_methods(false).each do |method|
-      delegate method, :to => :current_state_humanize
+      delegate method, :to => :current_state_humanize, :allow_nil => true
     end
 
     def current_state_humanize
