@@ -76,5 +76,5 @@ Then /^the additional meta tag should be removed from the site$/ do
 end
 
 Then /^the site should be deleted$/ do
-  page.find(:xpath, "//title[contains(., '404')]")
+  page.has_title? '404 | Oops!'
 end
