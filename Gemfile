@@ -37,7 +37,7 @@ group :development, :test do
   gem "rspec-rails", "~> 2.9"
   gem "cucumber-rails", "~> 1.3", :require => false
   gem "capybara"
-  gem 'selenium-webdriver'
+  gem "selenium-webdriver", "~> 2.34.0"
   gem "launchy"
   gem "database_cleaner"
   gem "factory_girl_rails", "~> 3.1"

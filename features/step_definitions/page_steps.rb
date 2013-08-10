@@ -16,7 +16,7 @@ def page_part_selected(selected_id)
 end
 
 def page_part_not_selected(pp_id)
-  find("#page_part_" + pp_id).should_not be_visible # other page part should be hidden
+  find("#page_part_" + pp_id, visible: false).should_not be_visible # other page part should be hidden
   page.should_not have_xpath("//li[@class='tab selected' and @id='#{pp_id}_nav']") 
 end
 
@@ -169,7 +169,7 @@ end
 Then /^"([^"]*)" should not be expanded within "([^"]*)"$/ do |child_title, parent_title|
   @parent_page = find_page_by_title(parent_title)
   wait_for_ajax
-  find(page_id_selector(@parent_page) + " ol.pages").should_not be_visible
+  find(page_id_selector(@parent_page) + ' > .pages', visible: false).should_not be_visible
 end
 
 Then /^I should see the pages listed$/ do 
