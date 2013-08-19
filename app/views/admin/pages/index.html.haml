@@ -2,8 +2,10 @@
   = can_create? Page
 
 - inner_content "shared/inner_wrapper" do
-  = form_tag '/admin/pages/publish_all', id: 'publish_all', class: 'site_prop', method: 'post' do
-    = submit_tag 'Publish All Pages', class: 'submit', confirm: 'Are you sure you want to publish all the pages?'
+  - if admin?
+    = form_tag '/admin/pages/set_state', id: 'publish_all', class: 'site_prop', method: 'post' do
+      = submit_tag 'Publish All Pages', name: 'publish', class: 'submit', confirm: 'Are you sure you want to publish all the pages?'
+      = submit_tag 'Draft All Pages', name: 'draft', class: 'submit', confirm: 'Are you sure you want to set all pages status to draft?'
 
   %div.spinner_wrapper
     = image_tag 'ajax-loader.gif', :class => 'spinner hidden'

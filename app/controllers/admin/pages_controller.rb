@@ -1,12 +1,12 @@
 class Admin::PagesController < AdminBaseController
   
-  before_filter :root_pages, :only => :index
+  before_filter :root_pages, :only => [:index, :set_state]
 
   load_and_authorize_resource 
 
   before_filter :remove_selected_page_part, :except => :edit
 
-  respond_to :html, :except => [:show, :sort, :new_meta_tag, :new_custom_field, :publish_all]
+  respond_to :html, :except => [:show, :sort, :new_meta_tag, :new_custom_field, :set_state]
   respond_to :xml, :json
   respond_to :js, :only => [:show, :edit, :destroy, :sort, :new_meta_tag, :new_custom_field]
 
@@ -66,10 +66,14 @@ class Admin::PagesController < AdminBaseController
     respond_with(:admin, @page) 
   end
 
-  def publish_all
-    # pages = Page.where(site: current_site).update_all('current_state.name' => 'published')
-    pages = Page.publish_all(current_site)
-    flash[:notice] = "Published all the pages for the site"
+  def set_state 
+    if params[:publish]
+      pages = Page.publish_all(current_site)
+      flash[:notice] = "Published all the pages for the site."
+    elsif params[:draft]
+      pages = Page.draft_all(current_site)
+      flash[:notice] = "All pages set to draft for the site."
+    end
     redirect_to [:admin, :pages]
   end
 

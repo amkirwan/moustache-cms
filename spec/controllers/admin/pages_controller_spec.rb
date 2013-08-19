@@ -338,29 +338,53 @@ describe Admin::PagesController do
     end
   end
 
-  describe "POST publish_all" do
+  describe "POST set_state" do
 
     before(:each) do
-      Page.stub(:publish_all).and_return(true)
+      Page.stub(:set_state).and_return(true)
     end
 
-    def do_post
-      post :publish_all
+    def do_post(params)
+      post :set_state, params
     end
     
-    it "should create a new page from the params" do
-      Page.should_receive(:publish_all).with(instance_of(Site))
-      do_post
+    describe "publish all" do
+      let(:params) {{ "publish" => "Publish All Pages" }}
+
+      it "should create a new page from the params" do
+        Page.should_receive(:publish_all).with(instance_of(Site))
+        do_post(params)
+      end
+
+      it "should create a flash message that the pages were published" do
+        do_post(params)
+        flash[:notice].should == "Published all the pages for the site."
+      end
+
+      it "should redirect to the admin/layout#index" do
+        do_post(params)
+        response.should redirect_to(admin_pages_path)
+      end
     end
 
-    it "should create a flash message that the pages were published" do
-      do_post
-      flash[:notice].should == "Published all the pages for the site"
-    end
+    
+    describe "draft all" do
+      let(:params) {{ "draft" => "Draft All Pages" }}
 
-    it "should redirect to the admin/layout#index" do
-      do_post
-      response.should redirect_to(admin_pages_path)
+      it "should create a new page from the params" do
+        Page.should_receive(:draft_all).with(instance_of(Site))
+        do_post(params)
+      end
+
+      it "should create a flash message that the pages were published" do
+        do_post(params)
+        flash[:notice].should == "All pages set to draft for the site."
+      end
+
+      it "should redirect to the admin/layout#index" do
+        do_post(params)
+        response.should redirect_to(admin_pages_path)
+      end
     end
 
   end
