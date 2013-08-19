@@ -18,6 +18,7 @@ MoustacheCms::Application.routes.draw do
       put :sort, :on => :member
       get :new_meta_tag, :on => :collection
       put :preview, :on => :member, :as => :preview
+      post :publish_all, on: :collection
       resources :meta_tags, :except => [:index, :show] 
       resources :custom_fields, :only => [:new, :destroy]
       resources :page_parts, :except => [:index, :new, :update] 
