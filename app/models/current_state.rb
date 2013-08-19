@@ -39,6 +39,10 @@ class CurrentState
   end
 
   # -- Instance Methods --------------------------------------------------
+  %w(published draft).each do |method|
+    define_method(method) { self.name = method }
+  end
+
   def published?
     self.name == 'published'
   end

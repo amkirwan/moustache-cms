@@ -25,7 +25,23 @@ describe CurrentState do
         @current_state.published?.should be_false
       end
     end  
-    
+
+    describe "#published" do
+      it "should change the state name to published" do
+        @current_state.name = "draft"
+        @current_state.published
+        @current_state.published?.should be_true
+      end
+    end
+  
+    describe "#draft" do
+      it "should change the state name to draft" do
+        @current_state.name = "published"
+        @current_state.draft
+        @current_state.draft?.should be_true
+      end
+    end
+     
     describe "#published_on" do
       it "should return the DateTime if published" do
         @current_state.published_on.should == @current_state.time
