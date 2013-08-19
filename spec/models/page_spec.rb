@@ -257,8 +257,23 @@ describe Page do
         Page.find_homepage(site).should == parent
       end
     end
-  end
+
+    describe "Page#publish_all" do
+      it "should publish all the pages for the site" do
+        pages = Page.publish_all(site)
+        pages.each { |p| p.current_state.name.should == 'published' }
+      end
+    end
   
+    describe "Page#draft_all" do
+      it "should set all the pages status to draft for the site" do
+        pages = Page.draft_all(site)
+        pages.each { |p| p.current_state.name.should == 'draft' }
+      end
+    end
+
+  end
+
   # -- Instance Methods -----------------------------------------------
   context "Instance Methods" do
     describe "homepage?" do

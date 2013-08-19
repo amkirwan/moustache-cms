@@ -92,6 +92,18 @@ class Page
     roots.where(full_path: '/').first
   end
 
+  def self.publish_all(site)
+    Page.where(site: site).entries.each do |p| 
+      p.current_state.published 
+    end
+  end
+
+  def self.draft_all(site)
+    Page.where(site: site).entries.each do |p| 
+      p.current_state.draft
+    end
+  end
+
   # -- Instance Methods -----------------------------------------------  
   def homepage?
     self.full_path == '/' ? true : false
