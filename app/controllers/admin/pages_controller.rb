@@ -6,7 +6,7 @@ class Admin::PagesController < AdminBaseController
 
   before_filter :remove_selected_page_part, :except => :edit
 
-  respond_to :html, :except => [:show, :sort, :new_meta_tag, :new_custom_field]
+  respond_to :html, :except => [:show, :sort, :new_meta_tag, :new_custom_field, :publish_all]
   respond_to :xml, :json
   respond_to :js, :only => [:show, :edit, :destroy, :sort, :new_meta_tag, :new_custom_field]
 
@@ -64,6 +64,13 @@ class Admin::PagesController < AdminBaseController
     @page.destroy
     flash[:notice] = "Successfully deleted the page #{@page.title}"
     respond_with(:admin, @page) 
+  end
+
+  def publish_all
+    # pages = Page.where(site: current_site).update_all('current_state.name' => 'published')
+    pages = Page.publish_all(current_site)
+    flash[:notice] = "Published all the pages for the site"
+    redirect_to [:admin, :pages]
   end
 
   def preview

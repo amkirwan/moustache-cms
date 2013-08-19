@@ -338,4 +338,31 @@ describe Admin::PagesController do
     end
   end
 
+  describe "POST publish_all" do
+
+    before(:each) do
+      Page.stub(:publish_all).and_return(true)
+    end
+
+    def do_post
+      post :publish_all
+    end
+    
+    it "should create a new page from the params" do
+      Page.should_receive(:publish_all).with(instance_of(Site))
+      do_post
+    end
+
+    it "should create a flash message that the pages were published" do
+      do_post
+      flash[:notice].should == "Published all the pages for the site"
+    end
+
+    it "should redirect to the admin/layout#index" do
+      do_post
+      response.should redirect_to(admin_pages_path)
+    end
+
+  end
+
 end
