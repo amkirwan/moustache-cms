@@ -1,6 +1,6 @@
 class Admin::PagesController < AdminBaseController
   
-  before_filter :root_pages, :only => [:index, :set_state]
+  before_filter :root_pages, only: :index
 
   load_and_authorize_resource 
 
