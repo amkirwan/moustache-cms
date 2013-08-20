@@ -4,8 +4,8 @@
 - inner_content "shared/inner_wrapper" do
   - if admin?
     = form_tag '/admin/pages/set_state', id: 'publish_all', class: 'site_prop', method: 'post' do
-      = submit_tag 'Publish All Pages', name: 'publish', class: 'submit', confirm: 'Are you sure you want to publish all the pages?'
-      = submit_tag 'Draft All Pages', name: 'draft', class: 'submit', confirm: 'Are you sure you want to set all pages status to draft?'
+      = submit_tag 'Publish Site', name: 'publish', class: 'submit', confirm: 'Are you sure you want to publish all the pages?'
+      = submit_tag 'Unpublish Site', name: 'draft', class: 'submit', confirm: 'Are you sure you want to set all the pages to draft?'
 
   %div.spinner_wrapper
     = image_tag 'ajax-loader.gif', :class => 'spinner hidden'
