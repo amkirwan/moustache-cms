@@ -39,7 +39,10 @@ class CurrentState
 
   # -- Instance Methods --------------------------------------------------
   @states.each do |state|
-    define_method(state) { self.name = state; self.save }
+    define_method(state) do 
+      self.name = state
+      self.save  unless self._parent.nil?
+    end
   end
 
   def published?
