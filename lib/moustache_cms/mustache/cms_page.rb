@@ -81,10 +81,13 @@ class MoustacheCms::Mustache::CmsPage < Mustache
     hash
   end
 
-  def full_request(permalink=@article.permalink)
-    'http://' + @controller.request.host + permalink
+  def request
+    @controller.request
   end
 
+  def full_request(permalink=@article.permalink)
+    self.request.protocol + self.request.host + permalink
+  end
 
   def action_view_helpers_context
     @action_view_context ||= Class.new do
