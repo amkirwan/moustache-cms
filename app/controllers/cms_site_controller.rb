@@ -14,7 +14,7 @@ class CmsSiteController < ApplicationController
         head :not_modified
       else
         respond_to do |format|
-          format.html { render text: document.clean_html, status: 200 }
+          format.html { render text: document, status: 200 }
           format.atom { render text: Nokogiri::XML(document, &:noblanks).to_xml(indent: 2) }
         end
       end
