@@ -14,7 +14,7 @@ class CmsSiteController < ApplicationController
         head :not_modified
       else
         respond_to do |format|
-          format.html { render text: document, status: 200 }
+          format.html { render text: document.clean_html, status: 200 }
           format.atom { render text: Nokogiri::XML(document, &:noblanks).to_xml(indent: 2) }
         end
       end
@@ -92,6 +92,6 @@ class CmsSiteController < ApplicationController
     # Check if the page is the homepage and that the article is not nil. 
     # If it is render 404 because we don't want to render the home page when the
     # user is looking for a permalink. The root path would 
-    return render_404 if @page.nil? || (@page.homepage? && @article.nil?)
+    return render_404 if @article.nil?
   end
 end

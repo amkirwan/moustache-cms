@@ -64,7 +64,6 @@ MoustacheCms::Application.routes.draw do
 
   match "/admin" => redirect("/admin/pages")
 
-  match "*articles" => 'cms_site#render_html', :as => :articles, :constraints => MoustacheCms::ArticlesConstraint.new
   match "*articles/page/:page" => 'cms_site#render_html', :as => :articles_page, :constraints => MoustacheCms::ArticlesConstraint.new
   match "*articles/:year/:month/:day/:title" => 'cms_site#render_html', :as => :article_permalink, :constraints => MoustacheCms::ArticlesConstraint.new
   match "*articles/#{MoustacheCms::Application.config.filter}/:tag" => 'cms_site#render_html', as: :articles_filter_page, :constraints => MoustacheCms::ArticlesConstraint.new
