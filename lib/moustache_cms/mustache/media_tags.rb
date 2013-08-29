@@ -11,7 +11,7 @@ module MoustacheCms
 
             unless image.nil?
               engine = gen_haml('image.haml')
-              engine.render(nil, {:src => src, :id => hash['id'], :class_name => hash['class'], :alt => hash['alt'], :title => hash['title']})
+              engine.render(nil, {:src => src, :id => hash['id'], :class_name => hash['class'], :alt => hash['alt'], :title => hash['title'], :itemprop => hash['itemprop']})
             end
           rescue NoMethodError => e
             Rails.logger.error "#{e} could not find image with the params: #{text}"
