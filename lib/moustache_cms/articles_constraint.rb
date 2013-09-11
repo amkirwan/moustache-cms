@@ -3,7 +3,7 @@ module MoustacheCms
     include MoustacheCms::RequestCurrentSite
 
     def matches?(request)
-      articles(request).map { |a| a.name }.include?(request.params[:articles])
+      articles(request).map { |a| a.name }.include?(request.params[:articles] || request.params[:page_path])
     end
 
     def articles(request)
