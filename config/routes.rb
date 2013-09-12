@@ -63,13 +63,18 @@ MoustacheCms::Application.routes.draw do
 
   match "/admin" => redirect("/admin/pages")
 
-  # match paginated pages
+  # filter articles by tag
+  match "*page_path/#{MoustacheCms::Application.config.filter}/:tag/page", to: redirect('/%{page_path}/#{MoustacheCms::Application.config.filter}')
+  match "*page_path/#{MoustacheCms::Application.config.filter}/:tag/page/:page" => 'cms_site#render_html', as: :articles_filter_page, :constraints => MoustacheCms::ArticlesConstraint.new
+  match "*page_path/#{MoustacheCms::Application.config.filter}/:tag" => 'cms_site#render_html', as: :articles_filter, :constraints => MoustacheCms::ArticlesConstraint.new
+
+  # match paginated pages for a collection
   match "*page_path/page", to: redirect('/%{page_path}')
   match "*page_path/page/:page" => 'cms_site#render_html', :as => :articles_page, :constraints => MoustacheCms::ArticlesConstraint.new, page: /\d+/
   match "page/:page" => 'cms_site#render_html', :constraints => { page: /\d+/ }
 
+  # find article
   match "*articles/:year/:month/:day/:title" => 'cms_site#render_html', :as => :article_permalink, :constraints => MoustacheCms::ArticlesConstraint.new
-  match "*articles/#{MoustacheCms::Application.config.filter}/:tag" => 'cms_site#render_html', as: :articles_filter_page, :constraints => MoustacheCms::ArticlesConstraint.new
   match ":year/:month/:day/:title" => 'cms_site#render_html', :constraints => { :year => /\d{4}/, :month => /\d{1,2}/, :day => /\d{1,2}/ }
 
   scope :controller => "cms_site" do
