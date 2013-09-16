@@ -112,7 +112,9 @@ module MoustacheCms
       end
       
       def paginate
-        paginator(nil)
+        lambda do |text|
+          paginator(text)
+        end
       end
       
       def paginate_articles
@@ -175,7 +177,7 @@ module MoustacheCms
           options = text.nil? ? {} : parse_text(text)
           engine = gen_haml('paginate_articles.haml')
           context = action_view_context
-          engine.render(context, {:articles => @articles, :options => options})
+          engine.render(context, {:articles => @articles, :options => options.symbolize_keys})
         end
       end
 
@@ -190,7 +192,7 @@ module MoustacheCms
           end
           engine = gen_haml('paginate_next.haml')
           context = action_view_context(templates_dir)
-          engine.render(context, {:articles => @articles, :link_text => link_text, :options => options})
+          engine.render(context, {:articles => @articles, :link_text => link_text, :options => options.symbolize_keys})
         end
       end
 
@@ -205,7 +207,7 @@ module MoustacheCms
           end
           engine = gen_haml('paginate_previous.haml')
           context = action_view_context
-          engine.render(context, {:articles => @articles, :link_text => link_text, :options => options})
+          engine.render(context, {:articles => @articles, :link_text => link_text, :options => options.symbolize_keys})
         end 
       end
 
