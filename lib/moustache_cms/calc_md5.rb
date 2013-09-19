@@ -63,10 +63,12 @@ module MoustacheCms
       end
 
       def set_filename_md5(md5)
+        split = self.name.split('.')
+        name_split = split[0, split.length - 1].join('.')
         if self.class == Author
-          "#{self.image.filename.split('.').first}-#{md5}.#{self.image.file.extension}"
+          "#{name_split}-#{md5}.#{self.image.file.extension}"
         else
-          "#{self.name.split('.').first}-#{md5}.#{self.asset.file.extension}"          
+          "#{name_split}-#{md5}.#{self.asset.file.extension}"
         end
       end
 
