@@ -112,9 +112,7 @@ module MoustacheCms
       end
       
       def paginate
-        lambda do |text|
-          paginator(text)
-        end
+        paginator(nil)
       end
       
       def paginate_articles
