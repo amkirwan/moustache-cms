@@ -33,6 +33,10 @@ module MoustacheCms
         end
       end
 
+      def page  
+        @page
+      end
+
       def method_missing(method, *args, &block)
         method_name = method.to_s
         if method_name =~ /^page_part_(.*)indent_(.*)/
