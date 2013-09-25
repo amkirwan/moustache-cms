@@ -18,7 +18,7 @@ class CmsSiteController < ApplicationController
           format.html { render text: document.clean_html, status: 200 }
           format.atom { render text: Nokogiri::XML(document, &:noblanks).to_xml(indent: 2) }
         end
-      # end
+      end
     else
       render_404
     end
