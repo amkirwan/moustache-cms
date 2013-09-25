@@ -8,16 +8,17 @@ class CmsSiteController < ApplicationController
   def render_html
     if !@page.nil? && (@page.published? || current_admin_user)
       document = MoustacheCms::Mustache::CmsPage.new(self).render
-      document = Redcarpet::Render::SmartyPants.render(document)
+      document = Redcarpet::Render::SmartyPants.render(document) unless request.xhr?
       response.etag = document
       if request.fresh?(response)
         head :not_modified
       else
         respond_to do |format|
+          format.js { render text: document }
           format.html { render text: document.clean_html, status: 200 }
           format.atom { render text: Nokogiri::XML(document, &:noblanks).to_xml(indent: 2) }
         end
-      end
+      # end
     else
       render_404
     end
