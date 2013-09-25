@@ -18,10 +18,14 @@ class MoustacheCms::Mustache::CmsPage < Mustache
   end
   
   def template
-    if @article
-      @template = @article.layout ? @article.layout.content : @article.article_collection.layout.content 
+    if request.xhr?
+      @template = "{{{yield}}}"
     else
-      @template = @page.layout.content
+      if @article
+        @template = @article.layout ? @article.layout.content : @article.article_collection.layout.content 
+      else
+        @template = @page.layout.content
+      end
     end
     @template
   end
@@ -31,7 +35,11 @@ class MoustacheCms::Mustache::CmsPage < Mustache
   end
   
   def yield
-    @page_part = @page.page_parts.first
+    if request.xhr?
+      @page_part = @page.page_parts.where(name: '_ajax').first
+    else
+      @page_part = @page.page_parts.first
+    end
     process_with_filter(@page_part)
   end
 
@@ -54,6 +62,16 @@ class MoustacheCms::Mustache::CmsPage < Mustache
       end
     end
   end
+
+  def escape_javascript
+    lambda do |text|
+      rendered = render(text)
+      engine = gen_haml('escape_javascript.haml')
+      x = engine.render(action_view_context, {text: rendered})
+      x.strip!
+    end
+  end
+  alias :j :escape_javascript
 
   def respond_to?(method)
     method_name = method.to_s
