@@ -5,7 +5,7 @@
       = f.text_field :name
     %li
       = f.label :filter_name
-      = f.collection_select :filter_name, Filter.all, :id, :name
+      = f.collection_select :filter_name, Filter.all_filters, :id, :name
     %li.content
       = render :partial => 'shared/ace_editor', :locals => { :asset => @snippet.content, :builder => nil }
     %li.content_submit
