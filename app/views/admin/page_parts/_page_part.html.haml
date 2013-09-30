@@ -5,7 +5,7 @@
       = builder.text_field :name
     %li.inline
       = builder.label :filter_name, mark_required('Filter')
-      = builder.collection_select :filter_name, Filter.all, :id, :name, {}, {:class => "page_part_filter"}
+      = builder.collection_select :filter_name, Filter.page_filters, :id, :name, {}, {:class => "page_part_filter"}
     %li.content
       %p.label_for Content
       %pre{:id => "#{builder.object.id}_content", :class => "page_part_content"}= builder.object.content
