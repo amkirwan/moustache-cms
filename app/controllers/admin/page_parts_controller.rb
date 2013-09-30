@@ -15,7 +15,7 @@ class Admin::PagePartsController < AdminBaseController
 
   def create
     @page_part.name = "page part #{@page.page_parts.size}"
-    @page_part.filter_name = "markdown"
+    @page_part.filter_name = "html"
     respond_with(:admin, @page, @page_part) do |format|
       if @page_part.save
         @selected_page_part = @page_part
