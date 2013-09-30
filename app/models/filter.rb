@@ -1,10 +1,6 @@
 class Filter
   include Mongoid::Document 
   
-  class << self
-    attr_reader :filters, :filters_admin
-  end
-  
   # -- Fields -------
   field :name
   field :_id, type: String, default: ->{ name }
@@ -16,11 +12,36 @@ class Filter
   validates :name,
             :presence => true
   
-  # -- ClassMethods
+  class << self
+    attr_reader :page_filters, :article_filters, :all_filters
+  end
+
+  @page_filters = [
+    Filter.new(:name => "html"),
+    Filter.new(:name => "markdown"),
+    Filter.new(:name => "textile"),
+    Filter.new(:name => "javascript")
+  ]
+  
+  @article_filters = [
+    Filter.new(:name => "markdown"),
+    Filter.new(:name => "textile"),
+    Filter.new(:name => "html")
+  ]  
+  
+  @all_filters = [
+    Filter.new(:name => "html"),
+    Filter.new(:name => "markdown"),
+    Filter.new(:name => "textile"),
+    Filter.new(:name => "haml"),
+    Filter.new(:name => "javascript")
+  ]
+
   def self.all
     @filters
   end
-  
+
+  # -- ClassMethods
   def self.find(id)
     filter = @filters.find { |filter| filter.id == id.to_s.downcase }
     filter unless filter.nil?
@@ -31,11 +52,5 @@ class Filter
     filter = @filters.find { |filter| filter.name == name.to_s.downcase }
     filter unless filter.nil?
   end
-  
-  @filters = [
-    Filter.new(:name => "markdown"),
-    Filter.new(:name => "textile"),
-    Filter.new(:name => "haml"),
-    Filter.new(:name => "html")
-  ]
+
 end
