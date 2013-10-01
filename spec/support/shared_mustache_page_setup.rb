@@ -12,9 +12,9 @@ shared_context "mustache page setup" do
                                       :filter_name => "markdown") 
 
 
-    @request = mock_model("Request", :host => "test.com", :protocol => 'http').as_null_object
+    @request = mock_model("Request", :host => "test.com", :protocol => 'http', :xhr? => false).as_null_object
     @controller.instance_variable_set(:@page, @page)
-    @controller.instance_variable_set(:@request, @request)
+    @controller.instance_variable_set(:@_request, @request)
     @controller.instance_variable_set(:@current_site, site)
     @cmsp = MoustacheCms::Mustache::CmsPage.new(@controller)
   end
