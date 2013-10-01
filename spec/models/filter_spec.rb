@@ -24,13 +24,32 @@ describe Filter do
       #Filter.filters << Filter.new(:name => "foobar")  
     end
     
-    describe "Filter#all" do
+    describe "different filters groups" do
       it "should find return all of the filters" do
-        Filter.all.should have(4).items
+        Filter.all.should have(5).items
       end
-    
-      it "should return an array of Filter objects" do
-        Filter.all.first.should be_a(Filter)
+
+      it "all filter names" do
+        filter_names = Filter.all.collect { |f| f.name }
+        filter_names.should == %w{html markdown textile haml javascript}
+      end
+
+      it "should find return page filters" do
+        Filter.page_filters.should have(4).items
+      end
+
+      it "page filter names" do
+        filter_names = Filter.page_filters.collect { |f| f.name }
+        filter_names.should == %w{html markdown textile javascript}
+      end
+
+      it "should find return article_filters" do
+        Filter.article_filters.should have(3).items
+      end
+
+      it "page filter names" do
+        filter_names = Filter.article_filters.collect { |f| f.name }
+        filter_names.should == %w{markdown textile html}
       end
     end
   

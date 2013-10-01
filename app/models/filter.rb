@@ -38,18 +38,18 @@ class Filter
   ]
 
   def self.all
-    @filters
+    @all_filters
   end
 
   # -- ClassMethods
   def self.find(id)
-    filter = @filters.find { |filter| filter.id == id.to_s.downcase }
+    filter = @all_filters.find { |filter| filter.id == id.to_s.downcase }
     filter unless filter.nil?
   end
   
   def self.find_by_name(name)
     name = name.to_s
-    filter = @filters.find { |filter| filter.name == name.to_s.downcase }
+    filter = @all_filters.find { |filter| filter.name == name.to_s.downcase }
     filter unless filter.nil?
   end
 
