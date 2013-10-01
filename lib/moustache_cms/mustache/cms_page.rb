@@ -51,18 +51,6 @@ class MoustacheCms::Mustache::CmsPage < Mustache
     end
   end
 
-  def indent(indentation=0)
-    indentation = indentation.to_i
-    lambda do |text|
-      if @page_part.filter_name == 'haml'
-        rendered_text = render(text).gsub(/^/, ' '*indentation + ' '*2)
-        ' '*indentation + ":preserve\n" + rendered_text
-      else
-        render(text).gsub(/^/, ' '*indentation)
-      end
-    end
-  end
-
   def escape_javascript
     lambda do |text|
       rendered = render(text)
@@ -73,24 +61,6 @@ class MoustacheCms::Mustache::CmsPage < Mustache
   end
   alias :j :escape_javascript
 
-  def respond_to?(method)
-    method_name = method.to_s
-    if method_name =~ /^indent_(.*)/
-      return true
-    else
-      super
-    end
-  end
-
-  def method_missing(method, *args, &block)
-    method_name = method.to_s  
-    if method_name =~ /^(indent)_(.*)/
-      self.send($1, $2)
-    else
-      super
-    end
-  end
-
   protected 
 
   def parse_text(text)
@@ -100,7 +70,7 @@ class MoustacheCms::Mustache::CmsPage < Mustache
   end
 
   def request
-    @controller.request
+    controller.request
   end
 
   def full_request(permalink=@article.permalink)
