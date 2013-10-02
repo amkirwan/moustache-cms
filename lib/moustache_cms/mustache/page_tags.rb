@@ -22,9 +22,7 @@ module MoustacheCms
 
       def respond_to?(method)
         method_name = method.to_s
-        if method_name =~ /^page_part_(.*)indent_(.*)/ && @page.page_parts.find_by_name(remove_trailing_underscore($1))
-          return true
-        elsif method_name =~ /^editable_text_(.*)/ && @page.page_parts.find_by_name($1)
+        if method_name =~ /^editable_text_(.*)/ && @page.page_parts.find_by_name($1)
           return true
         elsif method_name =~ /^page_part_(.*)/ && @page.page_parts.find_by_name($1)
           return true
@@ -39,9 +37,7 @@ module MoustacheCms
 
       def method_missing(method, *args, &block)
         method_name = method.to_s
-        if method_name =~ /^page_part_(.*)indent_(.*)/
-          self.class.define_page_part_indent_method(method_name, remove_trailing_underscore($1), $2)
-        elsif method_name =~ /^editable_text_(.*)/ || method_name =~ /^page_part_(.*)/
+        if method_name =~ /^editable_text_(.*)/ || method_name =~ /^page_part_(.*)/
           self.class.define_page_part_method(method_name, $1)
         end
 
@@ -54,18 +50,9 @@ module MoustacheCms
 
       private
       
-      def page_part_method(name, indentation=0)
-        indentation = indentation.to_i
+      def page_part_method(name)
         @page_part = @page.page_parts.find_by_name(name)
-        unless @page_part.nil?
-          processed_part = process_with_filter(@page_part).chomp 
-          if indentation > 0 
-            rendered_text = processed_part.gsub(/^/, ' '*indentation + ' '*2)
-            ":preserve\n" + rendered_text
-          else
-            processed_part
-          end
-        end
+        process_with_filter(@page_part).chomp unless @page_part.nil?
       end
 
       def remove_trailing_underscore(name)
