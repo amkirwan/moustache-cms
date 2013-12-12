@@ -23,6 +23,11 @@ class ArticleCollection < MoustacheCollection::Metal
     article_collection.nil? ? [] : article_collection.articles(:created_at)
   end
 
+  def self.articles_by_collection_name_and_tag(name, tag)
+    article_collection = articles_by_collection_name(name)
+    article_collection.in(tags: [tag])
+  end
+
   def self.articles_by_collection_name_desc(name)
     article_collection = self.where(:name => name.to_s).first
     article_collection.nil? ? [] : article_collection.articles.desc(:created_at)

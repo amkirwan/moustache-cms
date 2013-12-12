@@ -104,6 +104,11 @@ describe "ArticleCollection" do
       end
       
     end
-  end
 
+    describe "#articles_by_collection_name_and_tag" do
+      it "should return all the articles from the collection with the given tag" do
+        ArticleCollection.articles_by_collection_name_and_tag(@article_collection.name, 'article').to_a.should == @article_collection.articles
+      end
+    end
+  end
 end
