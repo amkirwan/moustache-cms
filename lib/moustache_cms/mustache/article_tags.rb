@@ -224,7 +224,7 @@ module MoustacheCms
       def find_articles(name)
         if params[:tag]
           # filter artiles by the given tag param
-          @articles = @current_site.articles_by_collection_name(name.to_s).where(:tags.in => [params[:tag]]).desc('current_state.time').page(params[:page]).per(MoustacheCms::Application.config.default_per_page)
+          @articles = @current_site.articles_by_collection_name_and_tag(name.to_s, params[:tag]).desc('current_state.time').page(params[:page]).per(MoustacheCms::Application.config.default_per_page)
         else
           @articles = @current_site.articles_by_collection_name(name.to_s).desc('current_state.time').page(params[:page]).per(MoustacheCms::Application.config.default_per_page)
         end
