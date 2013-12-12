@@ -204,6 +204,14 @@ describe Site do
       end
     end
 
+    describe "#article_by_collection_name_and_tag(name, tag)" do
+      it "should return all the articles for the given article collection and tag" do
+        article_collection = FactoryGirl.create(:article_collection, :site => @site, :name => "news")
+        article_collection.articles << FactoryGirl.build(:article, tag_list: 'foobar')
+        @site.articles_by_collection_name_and_tag('news', 'foobar').should == article_collection.articles
+      end
+    end
+
     describe "#articles_by_collection_name_desc(name)" do
       it "should return all the articles for the article collection" do
         article_collection = FactoryGirl.create(:article_collection, :site => @site, :name => "news")

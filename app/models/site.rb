@@ -89,6 +89,10 @@ class Site
     self.article_collections.articles_by_collection_name(name)
   end
 
+  def articles_by_collection_name_and_tag(name, tag)
+    self.article_collections.articles_by_collection_name_and_tag(name, tag)
+  end
+
   def articles_by_collection_name_desc(name)
     self.article_collections.articles_by_collection_name_desc(name)
   end
