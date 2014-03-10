@@ -1,4 +1,5 @@
 %ul.nav-primary
   - homepage.children.each do |page|
-    %li
-      = link_to page.title, page.full_path, {:class => "nav nav-primary-#{page.title.downcase.gsub(/\s/, '_')}" } 
+    - if page.published?
+      %li
+        = link_to page.title, page.full_path, {:class => "nav nav-primary-#{page.title.downcase.gsub(/\s/, '_')}" } 

@@ -1,4 +1,5 @@
 %ul{:class => "nav-#{page.title.downcase.gsub(/\s/, '_')}"}
   - page.siblings_and_self.each do |sibling|
-    %li 
-      = link_to sibling.title, sibling.full_path, {:class => "nav nav-#{sibling.title.downcase.gsub(/\s/, '_')}" } 
+    - if page.published?
+      %li 
+        = link_to sibling.title, sibling.full_path, {:class => "nav nav-#{sibling.title.downcase.gsub(/\s/, '_')}" } 
