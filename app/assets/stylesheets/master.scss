@@ -674,7 +674,7 @@ ul#assets {
     padding-bottom: 1.5em;
     width: percentage(75px / $content_section_width);
   }
-  div.figcaption {
+  div.figcaption, div.filesize {
     overflow: hidden;
     font-size: 0.785714286em;
     text-align: center;

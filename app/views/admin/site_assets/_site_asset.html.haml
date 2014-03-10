@@ -6,3 +6,5 @@
 %li
   %span= "Filename with MD5 fingerprint "
   = link_to "#{@site_asset.filename_md5}", "http://#{request.host}#{@site_asset.url_md5}"
+%li 
+  %span= 'Size: ' + number_to_human_size(@site_asset.file_size)

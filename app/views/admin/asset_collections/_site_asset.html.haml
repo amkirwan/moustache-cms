@@ -2,3 +2,4 @@
   = link_to [:edit, :admin, @asset_collection, site_asset] do 
     %div.image= image_tag(site_asset.asset.url)
     %div.figcaption= site_asset.name
+    %div.filesize= 'size: ' +  number_to_human_size(site_asset.file_size)
