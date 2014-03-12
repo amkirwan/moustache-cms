@@ -72,6 +72,9 @@ module MoustacheCms
         ActiveSupport::Dependencies.mechanism = :load
       end
     end
+
+    config.css_path = 'sites'
+    config.assets.precompile += ['application.css', "#{MoustacheCms::Application.config.css_path}/moustache.css"]
   end
 end
 
