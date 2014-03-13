@@ -31,6 +31,14 @@ module MoustacheCms
       end
       alias_method :stylesheets_all, :stylesheets
 
+      def stylesheet_link_tag
+        lambda do |text|
+          hash = Hash[*text.scan(/(\w+):([&.\w\s\-]+)/).to_a.flatten]
+          engine = gen_haml('stylesheet_link_tag.haml')
+          engine.render(action_view_context, {:name => "#{MoustacheCms::Application.config.css_path}/#{hash['name'].strip!}"})
+        end
+      end
+
       # -- js ---
       def js_file
         lambda do |text|
