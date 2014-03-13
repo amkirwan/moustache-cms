@@ -75,7 +75,7 @@ module MoustacheCms
 
     config.css_path = 'sites'
     config.js_path = 'sites'
-    config.assets.precompile += ['application.css', "#{MoustacheCms::Application.config.css_path}/moustache.css", "#{MoustacheCms::Application.config.js_path}/moustache.js"]
+    config.assets.precompile += ["#{MoustacheCms::Application.config.css_path}/moustache.css", "#{MoustacheCms::Application.config.js_path}/moustache.js"]
   end
 end
 
