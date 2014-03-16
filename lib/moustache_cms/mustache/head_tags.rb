@@ -39,6 +39,14 @@ module MoustacheCms
         end
       end
 
+      def javascript_include_tag
+        lambda do |text|
+          hash = Hash[*text.scan(/(\w+):([&.\w\s\-]+)/).to_a.flatten]
+          engine = gen_haml('javascript_include_tag.haml')
+          engine.render(action_view_context, {:name => "#{MoustacheCms::Application.config.js_path}/#{hash['name'].strip!}"})
+        end
+      end
+
       # -- js ---
       def js_file
         lambda do |text|
