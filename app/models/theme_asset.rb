@@ -25,8 +25,8 @@ class ThemeAsset
 
   # -- Class Methods --------
   scope :css_files, ->{ where(content_type: "text/css") }
-  scope :js_files, ->{ where(:content_type: /.*javascript$/i) }
-  scope :javascripts, ->{ where(:content_type: /.*javascript$/i) }
+  scope :js_files, ->{ where(content_type: /.*javascript$/i) }
+  scope :javascripts, ->{ where(content_type: /.*javascript$/i) }
   scope :images, ->{ where(content_type: /^image\/*/i) }
   scope :other_files, ->{ where({ content_type: {"$nin" => ['text/css', 'application/javascript', 'application/x-javascript', 'text/javascript', 'image/jpg', 'image/jpeg', 'image/gif', 'image/png', 'image/vnd.microsoft.icon'] } }) } 
 
