@@ -21,7 +21,8 @@ class ThemeCollection
   after_initialize do |theme_collection|
     if theme_collection.persisted?
       theme_collection.theme_assets = nil
-      files = Dir.glob("#{Rails.root}/vendor/assets/*/#{theme_collection.name}/**")
+      base_dir = Rails.env == 'development' ? 'vendor' : 'public'
+      files = Dir.glob("#{Rails.root}/#{base_dir}/assets/*/#{theme_collection.name}/**")
       files.each do |file|
         theme_collection.theme_assets << ThemeAsset.new(asset_path: file)
       end
