@@ -18,14 +18,16 @@ class ThemeCollection
   has_many :theme_assets
 
   # -- Initialize assets ---
-  after_initialize do |theme_collection|
-    if theme_collection.persisted?
-      theme_collection.theme_assets = nil
+  
+  def load_assets
+    if self.persisted?
+      self.theme_assets.delete_all
       base_dir = Rails.env == 'development' ? 'vendor' : 'public'
-      files = Dir.glob("#{Rails.root}/#{base_dir}/assets/*/#{theme_collection.name}/**")
+      files = Dir.glob("#{Rails.root}/#{base_dir}/assets/*/#{self.name}/**")
       files.each do |file|
-        theme_collection.theme_assets << ThemeAsset.new(asset_path: file)
+        self.theme_assets << ThemeAsset.new(asset_path: file, asset_collection_name: self.name)
       end
+      self.save
     end
   end
   

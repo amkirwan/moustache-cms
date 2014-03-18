@@ -2,40 +2,11 @@ module MoustacheCms
   module Mustache
     module HeadTags 
       
-      # -- Css ----
-      def stylesheet
-        lambda do |text|
-          hash = parse_text(text) #Hash[*text.scan(/(\w+):([&.\w\s\-]+)/).to_a.flatten]
-          attributes = style_attributes.merge(hash)
-          file = @current_site.theme_css_file_by_name(hash['theme_name'], hash['name'])
-          unless file.nil?
-            set_default_attribute_values(attributes, file)
-            set_link_attributes(attributes, file)
-            engine = gen_haml('stylesheet.haml')
-            engine.render(nil, attributes)
-          end
-        end
-      end
-
-      def stylesheets
-        @css_files = @current_site.css_files
-        haml_render = ""
-        @css_files.each do |file|
-          attributes = style_attributes
-          set_default_attribute_values(attributes, file)
-          set_link_attributes(attributes, file)
-          engine = gen_haml('stylesheet.haml')
-          haml_render += engine.render(nil, attributes)
-        end
-        haml_render
-      end
-      alias_method :stylesheets_all, :stylesheets
-
       def stylesheet_link_tag
         lambda do |text|
           hash = Hash[*text.scan(/(\w+):([&.\w\s\-]+)/).to_a.flatten]
           engine = gen_haml('stylesheet_link_tag.haml')
-          engine.render(action_view_context, {:name => "#{MoustacheCms::Application.config.css_path}/#{hash['name'].strip!}"})
+          engine.render(action_view_context, {:name => hash[name]})
         end
       end
 
@@ -43,22 +14,10 @@ module MoustacheCms
         lambda do |text|
           hash = Hash[*text.scan(/(\w+):([&.\w\s\-]+)/).to_a.flatten]
           engine = gen_haml('javascript_include_tag.haml')
-          engine.render(action_view_context, {:name => "#{MoustacheCms::Application.config.js_path}/#{hash['name'].strip!}"})
+          engine.render(action_view_context, {:name => hash[name]})
         end
       end
 
-      # -- js ---
-      def js_file
-        lambda do |text|
-          hash = Hash[*text.scan(/(\w+):([&.\w\s\-]+)/).to_a.flatten]
-          file = @current_site.theme_js_file_by_name(hash['theme_name'], hash['name'])
-          unless file.nil?
-            engine = gen_haml('javascript.haml')
-            engine.render(nil, {:src => file.url_md5})
-          end
-        end
-      end
-      
       # -- Meta Tags ----
 
       def meta_tags_csrf

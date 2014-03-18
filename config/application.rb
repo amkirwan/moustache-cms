@@ -73,7 +73,7 @@ module MoustacheCms
       end
     end
 
-    // compile theme assets
+    # compile theme assets
     # config.theme_css = "**/moustache.css"
     # config.assets.precompile += [MoustacheCms::Application.config.theme_css]
 

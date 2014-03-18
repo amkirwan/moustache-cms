@@ -11,7 +11,7 @@ module MoustacheCms
 
             unless image.nil?
               engine = gen_haml('image.haml')
-              engine.render(nil, {:src => src, :id => hash['id'], :class_name => hash['class'], :alt => hash['alt'], :title => hash['title'], :itemprop => hash['itemprop']})
+              engine.render(nil, {:src => src, :id => hash['id'], :class_name => hash['class'], :alt => hash['alt'], :title => hash['title'], :itemprop => hash['itemprop'], :height => hash['height'], :width => hash['width']})
             end
           rescue NoMethodError => e
             Rails.logger.error "#{e} could not find image with the params: #{text}"
@@ -27,6 +27,14 @@ module MoustacheCms
         end
       end
       alias_method :media_url, :image_src
+
+      def image_tag
+        lambda do |text|
+          hash = parse_text(text)
+          engine = gen_haml('image_tag.haml')
+          engine.render(nil, {:name => hash['name'], :id => hash['id'], :class_name => hash['class'], :alt => hash['alt'], :title => hash['title'], :itemprop => hash['itemprop'], :height => hash['height'], :width => hash['width']})
+        end
+      end
 
       private 
 

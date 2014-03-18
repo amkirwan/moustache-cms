@@ -12,6 +12,7 @@ class Admin::ThemeCollectionsController < AdminBaseController
   
   # GET /admin/asset_collections/1
   def show
+    @theme_collection.load_assets
     @css_files = @theme_collection.theme_assets.css_files.asc(:name)
     @js_files = @theme_collection.theme_assets.js_files.asc(:name)
     @images = @theme_collection.theme_assets.images.asc(:name)

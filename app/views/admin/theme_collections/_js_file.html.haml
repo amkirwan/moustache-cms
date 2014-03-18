@@ -1,4 +1,2 @@
-%tr{:id => "#{js_file.name}_js", :class => "#{cycle('even', 'odd', :name => 'table_list')}"}
-  %td.name= link_to js_file.name, [:edit, :admin, @theme_collection, js_file]
-  - if can? :destroy, js_file
-    %td.delete= link_to "Delete", [:admin, @theme_collection, js_file], :method => :delete, :data => { :confirm => "Are you sure you want to delete the JS theme file #{js_file.name}" }, :class => "delete"
+%tr{:id => "#{js_file.filename}_js", :class => "#{cycle('even', 'odd', :name => 'table_list')}"}
+  %td.name= link_to js_file.filename, js_file.root_relative
