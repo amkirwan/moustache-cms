@@ -4,7 +4,7 @@ module MoustacheCms
       
       def stylesheet_link_tag
         lambda do |text|
-          hash = Hash[*text.scan(/(\w+):([&.\w\s\-]+)/).to_a.flatten]
+          hash = parse_text(text)
           engine = gen_haml('stylesheet_link_tag.haml')
           engine.render(action_view_context, {:name => hash['name']})
         end
@@ -12,7 +12,7 @@ module MoustacheCms
 
       def javascript_include_tag
         lambda do |text|
-          hash = Hash[*text.scan(/(\w+):([&.\w\s\-]+)/).to_a.flatten]
+          hash = parse_text(text)
           engine = gen_haml('javascript_include_tag.haml')
           engine.render(action_view_context, {:name => hash['name']})
         end
