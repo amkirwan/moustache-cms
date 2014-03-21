@@ -25,7 +25,9 @@ class ThemeCollection
       base_dir = Rails.env == 'development' ? 'vendor' : 'public'
       files = Dir.glob("#{Rails.root}/#{base_dir}/assets/*/#{self.name}/**")
       files.each do |file|
-        self.theme_assets << ThemeAsset.new(asset_path: file, asset_collection_name: self.name)
+        unless File.basename(file) =~ /^_.*/ # don't load partials
+          self.theme_assets << ThemeAsset.new(asset_path: file, asset_collection_name: self.name)
+        end
       end
       self.save
     end
