@@ -66,25 +66,18 @@
       <div class="section">
         <h2>Head Tags</h2>
         <div class="tag">
-          <h3>{{#stylesheet}}theme_name, name{{/stylesheet}}</h3>
-          <p>Generates a HTML link tag for a CSS file that is in the given theme collection. The theme_name and name are required for generating the tag. Optional paramerters are: media, rel, title, charset. This tag generates a link to the MD5 fingerprinted version of the file. Any additional attributes for the link tag can be assigned in the custom attribute fields for the asset.
+          <h3>{{#stylesheet_link_tag}}theme_name, name{{/stylesheet_link_tag}}</h3>
+          <p>Generates a HTML link tag for a CSS file that is in the given theme collection. Works similar to Rails stylesheet_link_tag. The name parameter is required and should use a relative path to the asset including the theme name and asset name.
             <b>Usage:</b>
           </p>
-         <pre><code>{{#stylesheet}}theme_name:the_theme_name, name:the_stylesheet_name{{/stylesheet}}</code></pre> 
+         <pre><code>{{#stylesheet_link_tag}} name:theme_name/the_stylesheet_name{{/stylesheet_link_tag}}</code></pre> 
         </div>
         <div class="tag">
-          <h3>{{{stylesheets_all}}}</h3>
-          <p>Generates HTML link tags for all the CSS files that have been uploaded to the current stie. Any additional attributes for the link tag can be assigned in the custom attribute fields for the asset.<br /> 
+          <h3>{{#javascript_include_tag}}name{{/javascript_include_tag}}</h3>
+          <p>Generates a HTML script tag for a Javascript file that is in the given theme collection. Works similar to Rails javascript_include_tag. The name parameter is required and should use a relative path to the asset including the theme name and asset name.<br />
             <b>Usage:</b>
           </p>
-          <pre><code>{{{stylesheets_all}}}</code></pre> 
-        </div>
-        <div class="tag">
-          <h3>{{#js_file}}theme_name, name{{/jsfile}}</h3>
-          <p>Generates a HTML script tag for a Javascript file that is in the given theme collection. The theme_name and name are required to generate the tag. This tag generates a link to the MD5 fingerprinted version of the file. Any additional attributes for the script tag can be assigned in the custom attribute fields for the asset.<br />
-            <b>Usage:</b>
-          </p>
-          <pre><code>{{#js_file}}theme_name:the_theme_name, name:the_javascript_name{{/js_file}}</code></pre> 
+          <pre><code>{{#javascript_include_tag}}name: theme_name/the_javascript_file_name{{/javascript_include_tag}}</code></pre> 
         </div>
         <div class="tag">
           <h3>{{{meta_tag_[name]}}}</h3>
