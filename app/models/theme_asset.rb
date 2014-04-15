@@ -32,7 +32,7 @@ class ThemeAsset
   end
 
   def asset_digest_path
-    '/' + self.asset.digest_path
+    MoustacheCms::Application.config.assets.prefix + '/' + self.asset.digest_path
   end
 
   def content_type
