@@ -31,6 +31,10 @@ class ThemeAsset
     MoustacheCms::Application.config.assets.prefix + '/' + self.asset_collection_name + '/' + filename
   end
 
+  def asset_digest_path
+    '/' + self.asset.digest_path
+  end
+
   def content_type
     @content_type ||= asset.content_type
   end
