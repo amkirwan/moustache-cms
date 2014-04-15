@@ -82,7 +82,7 @@ module MoustacheCms
         end
       end
 
-      def url_md5
+      def asset_digest_path
         if self.class == Author
           File.join('/', "#{self.asset_folder}", self.site_id.to_s, "#{self.filename_md5}")
         elsif self.class == ThemeAsset
@@ -91,6 +91,7 @@ module MoustacheCms
           File.join('/', "#{self.asset_folder}", self._parent.site_id.to_s, self._parent.name, "#{self.filename_md5}")
         end
       end
+      alias_method :url_md5, :asset_digest_path
 
       def theme_asset_url_md5
         file_type = nil
