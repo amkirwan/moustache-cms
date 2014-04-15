@@ -3,7 +3,7 @@ require 'haml'
 class MoustacheCms::Mustache::CmsPage < Mustache
 
   include AttributeMethods
-  include HeadTags
+  include MetaTags
   include NavigationTags
   include MediaTags
   include SnippetTags

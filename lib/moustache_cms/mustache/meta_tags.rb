@@ -1,6 +1,6 @@
 module MoustacheCms
   module Mustache
-    module HeadTags 
+    module MetaTags 
       
       # -- Meta Tags ----
 
