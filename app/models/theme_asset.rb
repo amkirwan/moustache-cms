@@ -27,7 +27,7 @@ class ThemeAsset
     self.asset_collection_name + '/' + filename
   end
 
-  def asset_path
+  def asset_root_path
     MoustacheCms::Application.config.assets.prefix + '/' + self.asset_collection_name + '/' + filename
   end
 
