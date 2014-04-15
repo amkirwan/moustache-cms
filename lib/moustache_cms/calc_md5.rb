@@ -93,18 +93,6 @@ module MoustacheCms
       end
       alias_method :url_md5, :asset_digest_path
 
-      def theme_asset_url_md5
-        file_type = nil
-        %w{image? stylesheet? javascript?}.each do |type|
-          if self.send(type)
-            file_type = type.sub(/\?/, 's') 
-            break
-          end
-        end
-        file_type = 'assets' if file_type.nil?
-        File.join('/', "#{self.asset_folder}", self._parent.site_id.to_s, self._parent.name, file_type, "#{self.filename_md5}")
-      end
-
       def make_dirs
         if self.class == Author
           FileUtils.mkdir_p File.join(Rails.root, 'public', self.image.store_dir)
