@@ -34,14 +34,12 @@ class ThemeAsset
   def asset_digest_path
     MoustacheCms::Application.config.assets.prefix + '/' + self.asset.digest_path
   end
+  alias_method :url_md5, :asset_digest_path
 
   def content_type
     @content_type ||= asset.content_type
   end
 
-  def url_md5
-    MoustacheCms::Application.config.assets.prefix + '/' + asset.digest_path
-  end
 
   # -- Associations ----------
   belongs_to :theme_collection
