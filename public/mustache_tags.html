@@ -64,21 +64,46 @@
       <p>Tags that loop over a sections using the section tags. A section begins with a pound and ends with a slash. That is, {{#person}} begins a "person" section while {{/person}} ends it.</p>
       <p>You can learn more about <a link href="https://github.com/defunkt/mustache">Mustache</a> tags and templates on the projects site.</p>
       <div class="section">
-        <h2>Head Tags</h2>
+        <h2>Asset Tag Helpers</h2>
+        <p>These helpers all follow the format Rails <a href="http://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html">AssetTagHelper methods</a> The following methods have been defined from Rails audio_tag, auto_discovery_link_tag, favicon_link_tag, image_alt, image_tag, javascript_include_tag, stylesheet_link_tag and video_tag. A few examples are listed below of how to use the methods.<p>      
         <div class="tag">
-          <h3>{{#stylesheet_link_tag}}theme_name, name{{/stylesheet_link_tag}}</h3>
+          <div class="tag">
+            <h3>{{#image_tag}}collection_name, source, options{{/image_tag}}</h3>
+            <p>Returns an HTML image tag for the source. The source can be a full path or a file. If the image is from a theme only the <i>source</i> option is required. When pulling an image from a site asset the <i>collection_name</i> option is required as well as the <i>source</i> option.<br />
+              <b>Usage:</b>
+            </p>
+            <pre>
+              <code>{{#image_tag}}source: theme_name/image_name{{/image_tag}}</code><br />
+              <code>{{#image_tag}}collection_name: foobar, name: the-image.jpg, class: full, alt: the image{{/image_tag}}</code>
+            </pre> 
+          </div>       
+          <h3>{{#stylesheet_link_tag}}source{{/stylesheet_link_tag}}</h3>
           <p>Generates a HTML link tag for a CSS file that is in the given theme collection. Works similar to Rails stylesheet_link_tag. The name parameter is required and should use a relative path to the asset including the theme name and asset name.
             <b>Usage:</b>
           </p>
-         <pre><code>{{#stylesheet_link_tag}} name:theme_name/the_stylesheet_name{{/stylesheet_link_tag}}</code></pre> 
-        </div>
+         <pre><code>{{#stylesheet_link_tag}}source:theme_name/the_stylesheet_name{{/stylesheet_link_tag}}</code></pre> 
+        </div>        
         <div class="tag">
-          <h3>{{#javascript_include_tag}}name{{/javascript_include_tag}}</h3>
+          <h3>{{#javascript_include_tag}}source{{/javascript_include_tag}}</h3>
           <p>Generates a HTML script tag for a Javascript file that is in the given theme collection. Works similar to Rails javascript_include_tag. The name parameter is required and should use a relative path to the asset including the theme name and asset name.<br />
             <b>Usage:</b>
           </p>
-          <pre><code>{{#javascript_include_tag}}name: theme_name/the_javascript_file_name{{/javascript_include_tag}}</code></pre> 
+          <pre><code>{{#javascript_include_tag}}source: theme_name/the_javascript_file_name{{/javascript_include_tag}}</code></pre> 
+        </div>       
+        <div class="tag">
+          <h3>{{#favicon_link_tag}}source, options{{/favicon_link_tag}}</h3>
+          <p>Returns a link loading a favicon file. You may specify a different file in the first argument. The helper accepts an additional options hash where you can override “rel” and “type”.<br />
+            <b>Usage:</b>
+          </p>
+          <pre> <code>{{#favicon_link_tag}}source: theme_name/the_javascript_file_name{{/favicon_link_tag}}</code><br /> <code>{{#favicon_link_tag}}source: theme_name/the_javascript_file_name, rel: apple-touch-icon, type: image/png{{/favicon_link_tag}}</code> </pre> 
         </div>
+        <div class="tag">
+          <h3>{{#auto_discovery_link_tag}}source, options{{/auto_discovery_link_tag}}</h3>
+          <p>Returns a link tag that browsers and feed readers can use to auto-detect an RSS or Atom feed. The type can either be :rss (default) or :atom. Control the link options in url_for format using the url_options. You can modify the LINK tag itself in tag_options.<br />
+            <b>Usage:</b>
+          </p>
+          <pre> <code>{{#auto_discovery_link_tag}}type: atom, title: The Title{{/auto_discovery_link_tag}}</code> </pre> 
+        </div>        
         <div class="tag">
           <h3>{{{meta_tag_[name]}}}</h3>
           <p>Generates a HTML meta tag for the meta tag named after 'meta_tag_' in the moustache tag. Meta tags can be assign on for the entire site which would apply to all pages the tag is used in. If a page or article also defines the same tag then the content defined on the page or article will be used for the meta tag.<br />
@@ -87,6 +112,33 @@
           <pre><code>{{{meta_tag_foobar}}}</code></pre> 
         </div>
       </div>
+      <div class="section">
+        <h2>Asset Tag Helpers</h2>
+        <p>These helpers all follow the format Rails <a href="http://api.rubyonrails.org/classes/ActionView/Helpers/AssetUrlHelper.html">AssetUrlHelper methods</a> The following methods have been defined from Rails asset_path, image_path, image_alt, audio_path, video_path, font_path, javascript_path, and stylesheet_path. A few examples are listed below of how to use the methods.
+        <div class="tag">
+          <div class="tag">
+            <h3>{{#image_path}}source{{/image_tag}}</h3>
+            <p>Computes the path to an image asset. Full paths from the document root will be passed through. Used internally by image_tag to build the image path:<br />
+              <b>Usage:</b>
+            </p>
+            <pre> <code>{{#image_path}}source: theme_name/image_name{{/image_path}}</code><br /> <code>{{#image_path}}collection_name: foobar, name: the-image.jpg, class: full, alt: the image{{/image_path}}</code> </pre> 
+          </div>
+          <div class="tag">
+            <h3>{{#asset_path}}source, options{{/asset_path}}</h3>
+            <p>Computes the path to asset in public directory. If :type options is set, a file extension will be appended and scoped to the corresponding public directory.<br />
+              <b>Usage:</b>
+            </p>
+            <pre> <code>{{#asset_path}}source: theme_name/image_name{{/asset_path}}</code><br /> <code>{{#asset_path}}source: theme_name/image_name, type: stylesheet{{/asset_path}}</code> </pre> 
+          </div>
+          <div class="tag">
+            <h3>{{#video_path}}source{{/video_path}}</h3>
+            <p>Computes the path to a video asset in the public videos directory. Full paths from the document root will be passed through. Used internally by video_tag to build the video path.<br />
+              <b>Usage:</b>
+            </p>
+            <pre> <code>{{#video_path}}source: 'hd.avi'{{/asset_path}}</code><br /></pre> 
+          </div>
+        </div>
+      </div>   
       <div class="section">
         <div class="tag">
           <h2>Page Tags</h2>  
