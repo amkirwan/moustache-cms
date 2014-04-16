@@ -22,7 +22,15 @@ module MoustacheCms
             hash['source'] = hash['name'] if hash.has_key?('name')
 
             engine = Haml::Engine.new("= #{method} source")
-            engine.render(action_view_context, {source: hash['source']})
+            if hash.has_key?('collection_name')
+              # for site assets 
+              image = find_image(hash)
+              src = get_image_src(hash, image)
+              engine.render(action_view_context, {source: src })
+            else
+              # for theme assets
+              engine.render(action_view_context, {source: hash['source']})
+            end
           end
         end
       end
