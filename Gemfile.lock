@@ -292,7 +292,7 @@ DEPENDENCIES
   guard-pow
   guard-rspec
   guard-spork
-  haml-rails (~> 0.3)
+  haml-rails (~> 0.4)
   hpricot
   jquery-rails
   kaminari
