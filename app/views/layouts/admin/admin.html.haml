@@ -1,6 +1,6 @@
 !!!5
-%html
-  %head{:lang => "en"}
+%html{:lang => "en"}
+  %head
     %meta{:charset => "UTF-8"}
     %title= "#{@current_site.name.titleize} - #{yield :title}"
     = stylesheet_link_tag "application"

@@ -1,6 +1,7 @@
 !!! 5
 %html
-  %head{:charset => "UTF-8"}
+  %head
+    %meta{:charset => "UTF-8"}
     %title= "#{@current_site.name.titleize} - #{yield :title}"|| "MoustacheCMS"
     = stylesheet_link_tag "login"
     = javascript_include_tag "login_focus"
