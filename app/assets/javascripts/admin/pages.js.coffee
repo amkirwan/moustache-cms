@@ -9,8 +9,7 @@ $(document).ready ->
         axis: 'y'
         opacity: 0.6
         update: (event, ui) ->
-          params = $(this).sortable 'serialize'
-            'key': 'children[]' 
+          params = $(this).sortable 'serialize', 'key': 'children[]' 
           params += '&_method=put'
           params += '&' + $('meta[name=csrf-param]').attr('content') + '=' + $('meta[name=csrf-token]').attr('content')
           $.post $(this).attr('data-url'), params
@@ -63,7 +62,7 @@ $(document).ready ->
           complete: ->
             if page_id == $.cookies.get('page_parent_id') 
               page_id = $.cookies.get('page_created_updated_id')
-              el = $("li").find("[data-page_id='" + page_id + "']")
+              el = $("li").find("[data-page-id='" + page_id + "']")
               highlight el
           error: ->
             pageListGet page_ids
@@ -77,8 +76,8 @@ $(document).ready ->
     if $('#pages_list').length && sessionStorage?.pagesState?
       page_id = $.cookies.get('page_created_updated_id')
       # highlight root pages and pages that are children of the root page
-      if $("[data-page_id='" + page_id + "']").length
-        el = $("[data-page_id='" + page_id + "']")
+      if $("[data-page-id='" + page_id + "']").length
+        el = $("[data-page-id='" + page_id + "']")
         highlight el
       pagesList = getSessionStore('pagesState')
       # recursivley get other page parts
@@ -91,7 +90,7 @@ $(document).ready ->
       $('.edit_page').live 'click', ->
         pagesList = page_ids: []
         $('.page_fold_arrow_ccw').each ->
-          pagesList.page_ids.push $(@).parent().attr('data-page_id')
+          pagesList.page_ids.push $(@).parent().attr('data-page-id')
         setSessionStore 'pagesState', pagesList
 
     $('.preview').click 'ajax:beforeSend', ->

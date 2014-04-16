@@ -769,7 +769,6 @@ div.markItUp {
 }
 
 #article_subheading_content {
-  @extend #snippet_content;
   height: calc_em(150px, 12px);
 }
 
