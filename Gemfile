@@ -1,15 +1,15 @@
 source 'http://rubygems.org'
 
-gem "rails", "3.2.13"   
+gem "rails", "3.2.17"   
 
 group :assets do
-  gem "sass-rails", "~> 3.2.3"
-  gem "uglifier", ">= 1.0.3"
+  gem "sass-rails", "~> 3.2.6"
+  gem "uglifier", ">= 2.5.0"
 end
 gem "coffee-rails", "~> 3.2.1"
 
 gem "jquery-rails"
-gem "haml-rails", "~> 0.3"
+gem "haml-rails", "~> 0.4"
 
 # mongoid
 gem "mongoid", "~> 3.0"
