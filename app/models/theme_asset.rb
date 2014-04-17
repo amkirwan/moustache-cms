@@ -1,45 +1,37 @@
 class ThemeAsset 
   include Mongoid::Document
 
-  attr_accessible :filename, :asset_path, :content_type, :asset_collection_name
+  attr_accessible :filename, :content_type, :pathname, :logical_path, :digest_path
 
   # -- Fields ---
   field :filename
-  field :asset_path 
   field :content_type
-  field :asset_collection_name
+  field :pathname
+  field :logical_path
+  field :digest_path
+  
 
   after_initialize do |theme_asset|
-    theme_asset.asset 
-    theme_asset.content_type = theme_asset.asset.content_type
-    theme_asset.filename = File.basename(theme_asset.asset.pathname)
+    theme_asset.asset
+    %w{content_type pathname logical_path digest_path}.each do |method|
+      val = theme_asset.asset.send(method.to_sym)
+      theme_asset.send("#{method}=".to_sym, val.to_s)
+    end
   end
 
   def asset
-    @asset ||= MoustacheCms::Application.assets.find_asset(self.asset_path)
+    @asset ||= MoustacheCms::Application.assets.find_asset(self.filename)
   end
 
-  def filename
-    @filename ||= File.basename(asset.pathname)
-  end
-
-  def asset_filename
-    self.asset_collection_name + '/' + filename
-  end
-
-  def asset_root_path
-    MoustacheCms::Application.config.assets.prefix + '/' + self.asset_collection_name + '/' + filename
+  def asset_path
+    MoustacheCms::Application.config.assets.prefix + '/' + self.logical_path
   end
 
   def asset_digest_path
-    MoustacheCms::Application.config.assets.prefix + '/' + self.asset.digest_path
+    MoustacheCms::Application.config.assets.prefix + '/' + self.digest_path
   end
+
   alias_method :url_md5, :asset_digest_path
-
-  def content_type
-    @content_type ||= asset.content_type
-  end
-
 
   # -- Associations ----------
   belongs_to :theme_collection
