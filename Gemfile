@@ -2,10 +2,10 @@ source 'http://rubygems.org'
 
 gem "rails", "3.2.17"   
 
-group :assets do
-  gem "sass-rails", "~> 3.2.6"
-  gem "uglifier", ">= 2.5.0"
-end
+
+gem "sass-rails", "~> 3.2.6"
+gem "uglifier", ">= 2.5.0"
+
 gem "coffee-rails", "~> 3.2.1"
 
 gem "jquery-rails"
