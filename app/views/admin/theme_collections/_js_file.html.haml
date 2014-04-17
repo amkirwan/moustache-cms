@@ -1,2 +1,2 @@
 %tr{:id => "#{js_file.filename}_js", :class => "#{cycle('even', 'odd', :name => 'table_list')}"}
-  %td.name= link_to js_file.asset_filename, js_file.asset_digest_path
+  %td.name= link_to js_file.logical_path, js_file.asset_path

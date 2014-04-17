@@ -1,3 +1,2 @@
 %tr{:id => "#{image.filename}_image", :class => "#{cycle('even', 'odd', :name => 'table_list')}"}
-  %td.name
-    = link_to image.asset_filename, image.asset_digest_path
+  %td.name= link_to image.logical_path, image.asset_path
