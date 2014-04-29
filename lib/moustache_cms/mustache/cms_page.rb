@@ -64,7 +64,7 @@ class MoustacheCms::Mustache::CmsPage < Mustache
   protected 
 
   def parse_text(text)
-    hash = Hash[*text.scan(/(\w+):([&.\w\s\-\/]+)/).to_a.flatten]
+    hash = Hash[*text.scan(/([\w-]+):([&.\w\s\-\/@]+)/).to_a.flatten]
     hash.collect { |k,v| v.strip! }
     hash
   end
