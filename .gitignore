@@ -4,6 +4,7 @@ vendor/bundle
 capistrano/*
 .sass-cache/*
 .rbenv-version
+.ruby-version
 *.swp
 db/*.sqlite3
 log/*.log
