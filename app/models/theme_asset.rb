@@ -1,15 +1,18 @@
 class ThemeAsset 
   include Mongoid::Document
+  include MoustacheCms::Siteable
 
   attr_accessible :filename, :content_type, :pathname, :logical_path, :digest_path
 
-  # -- Fields ---
+  # -- fields ---
   field :filename
   field :content_type
   field :pathname
   field :logical_path
   field :digest_path
-  
+
+  # -- validations ---
+  validates :filename, :content_type, :pathname, :logical_path, :digest_path, presence: true
 
   after_initialize do |theme_asset|
     theme_asset.asset

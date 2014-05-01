@@ -16,11 +16,7 @@ describe ThemeAsset do
 
   before(:each) do
     @theme_collection = theme_collection
-    theme_collection.theme_assets << @theme_asset_image = FactoryGirl.build(:theme_asset, :name => "image", :asset => AssetFixtureHelper.open("rails.png"), :content_type => "image/png", :creator_id => user.id, :updator_id => user.id)
-    theme_collection.theme_assets << @theme_asset_css = FactoryGirl.build(:theme_asset, :name => "css",  :asset => AssetFixtureHelper.open("theme_css.css"), :content_type => "text/css", :creator_id => user.id, :updator_id => user.id)
-    theme_collection.theme_assets << @theme_asset_js = FactoryGirl.build(:theme_asset, :name => "js", :asset => AssetFixtureHelper.open("theme_js.js"), :creator_id => user.id, :updator_id => user.id, :content_type => 'text/javascript')
-    theme_collection.theme_assets << @theme_asset_type = FactoryGirl.build(:theme_asset, :name => "other", :asset => AssetFixtureHelper.open("Inconsolata.otf"), :content_type => "application/octet-stream", :creator_id => user.id, :updator_id => user.id)
-
+    theme_collection.theme_assets << @theme_asset_image = FactoryGirl.build(:theme_asset, filename: 'rails.png')
   end
   
   after(:each) do
@@ -38,10 +34,35 @@ describe ThemeAsset do
    end
    
    # -- Validations  -----------------------------------------------
-   describe "Validation" do
+   describe "Validations" do
      it "should be valid" do
        @theme_asset_image.should be_valid
      end    
+
+      it "should not be valid without a filename" do
+        @theme_asset_image.filename = nil
+        @theme_asset_image.should_not be_valid
+      end
+
+      it "should not be valid without a content_type" do
+        @theme_asset_image.content_type = nil
+        @theme_asset_image.should_not be_valid
+      end
+
+      it "should not be valid without a pathname" do
+        @theme_asset_image.pathname = nil
+        @theme_asset_image.should_not be_valid
+      end
+
+      it "should not be valid without a logical_path" do
+        @theme_asset_image.logical_path = nil
+        @theme_asset_image.should_not be_valid
+      end
+
+      it "should not be valid without a digest_path" do
+        @theme_asset_image.digest_path = nil
+        @theme_asset_image.should_not be_valid
+      end
    end
      
    # -- Scopes ------------------------------------------------------
