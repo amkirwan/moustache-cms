@@ -22,7 +22,7 @@ describe ThemeCollection do
     end
 
     it "should embed many theme_assets" do
-      @theme_collection.should embed_many(:theme_assets)
+      @theme_collection.should have_many(:theme_assets)
     end
   end
 

@@ -5,7 +5,6 @@ class ThemeCollection
   include MoustacheCms::Siteable
   include MoustacheCms::CreatedUpdatedBy
   # -- Callbacks ---
-  # before_destroy :remove_folder 
   
   created_updated(:theme_collections)
   
@@ -14,8 +13,12 @@ class ThemeCollection
   # -- Fields ---
   field :name
 
-  # -- Associations ----------
+  # -- Associations ---
   has_many :theme_assets
+
+  # -- Validation ---
+  validates :name,
+            :presence => true
 
   # -- Initialize assets ---
   
