@@ -165,7 +165,10 @@ FactoryGirl.define do
     tag_list "site asset"
   end
 
-  factory :theme_asset, class: ThemeAsset, parent: :moustache_asset do 
+  factory :theme_asset, class: ThemeAsset do
+    filename 'rails.png'
+    association :site, strategy: :build
+    initialize_with { new(filename: filename) }
   end
 
   factory :theme_collection, parent: :moustache_collection, class: ThemeCollection  do 

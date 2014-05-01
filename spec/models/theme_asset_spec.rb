@@ -4,9 +4,14 @@ describe ThemeAsset do
   let(:site) { FactoryGirl.create(:site) }
   let(:user) { FactoryGirl.create(:user, :site => site) }
   let(:theme_collection) { FactoryGirl.create(:theme_collection, :site => site) }
+
+  before(:all) do
+    FactoryGirl.duplicate_attribute_assignment_from_initialize_with = false
+  end
   
   after(:all) do
     AssetFixtureHelper.reset!
+    FactoryGirl.duplicate_attribute_assignment_from_initialize_with = true
   end
 
   before(:each) do
