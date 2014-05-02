@@ -29,7 +29,7 @@ class ThemeCollection
       files.each do |file|
         unless File.basename(file) =~ /^_.*/ || File.directory?(file) # don't load partials or sub directories
           filename = self.name + '/' + File.basename(file)
-          self.theme_assets << ThemeAsset.new(filename: filename)
+          self.theme_assets << ThemeAsset.new(filename: filename, site: self.site, theme_collection: self)
         end
       end
       self.save
