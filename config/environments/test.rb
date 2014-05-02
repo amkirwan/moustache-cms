@@ -39,4 +39,6 @@ MoustacheCms::Application.configure do
 
   I18n.enforce_available_locales = false
   #config.active_record.auto_explain_threshold_in_seconds = 0.5
+  #
+  config.assets.paths += ["#{Rails.root}/spec/fixtures/assets"]
 end
