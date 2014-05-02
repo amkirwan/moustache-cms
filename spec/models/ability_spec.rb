@@ -2,6 +2,14 @@ require 'spec_helper'
 require "cancan/matchers"
 
 describe Ability do
+  before(:all) do
+    FactoryGirl.duplicate_attribute_assignment_from_initialize_with = false
+  end
+
+  after(:all) do
+    FactoryGirl.duplicate_attribute_assignment_from_initialize_with = true
+  end
+
   let(:site) { FactoryGirl.create(:site) }
   let(:other_site) { FactoryGirl.create(:site) }
 
@@ -44,8 +52,8 @@ describe Ability do
   let(:snippet) { FactoryGirl.build(:snippet, :site => site) }
   let(:snippet_other_site) { FactoryGirl.build(:snippet, :site => other_site) }
 
-  let(:theme_asset) { FactoryGirl.build(:theme_asset, :creator_id => admin.id, :updator_id => admin.id) }
-  let(:theme_asset_other_site) { FactoryGirl.build(:theme_asset, :creator_id => admin_other_site.id, :updator_id => admin_other_site.id) }
+  let(:theme_asset) { FactoryGirl.build(:theme_asset) }
+  let(:theme_asset_other_site) { FactoryGirl.build(:theme_asset, :site => other_site) }
 
   let(:theme_collection) { FactoryGirl.build(:theme_collection, :site => site, :created_by => admin, :theme_assets => [theme_asset]) }
 
