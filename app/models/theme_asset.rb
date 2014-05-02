@@ -2,27 +2,27 @@ class ThemeAsset
   include Mongoid::Document
   include MoustacheCms::Siteable
 
-  attr_accessible :filename, :content_type, :pathname, :logical_path, :digest_path
+  attr_accessible :filename
 
   # -- fields ---
   field :filename
-  field :content_type
-  field :pathname
-  field :logical_path
-  field :digest_path
+  field :asset
 
   # -- validations ---
-  validates :filename, :content_type, :pathname, :logical_path, :digest_path, presence: true
+  validates :filename, presence: true
 
+  # -- initialize -- 
   after_initialize do |theme_asset|
     theme_asset.asset
-    %w{content_type pathname logical_path digest_path}.each do |method|
-      val = theme_asset.asset.send(method.to_sym)
-      theme_asset.send("#{method}=".to_sym, val.to_s)
-    end
+  end
+  
+  # -- delegate methods to asset
+  %w{content_type pathname logical_path digest_path}.each do |method|
+    delegate method.to_sym, to: :asset
   end
 
   def asset
+    return nil if self.filename.nil?
     @asset ||= MoustacheCms::Application.assets.find_asset(self.filename)
   end
 
