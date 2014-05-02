@@ -16,7 +16,7 @@ describe ThemeAsset do
 
   before(:each) do
     @theme_collection = theme_collection
-    theme_collection.theme_assets << @theme_asset_image = FactoryGirl.build(:theme_asset, filename: 'rails.png')
+    theme_collection.theme_assets << @theme_asset_image = FactoryGirl.build(:theme_asset)
     theme_collection.theme_assets << @theme_asset_css = FactoryGirl.build(:theme_asset, filename: 'theme_css.css')
     theme_collection.theme_assets << @theme_asset_js = FactoryGirl.build(:theme_asset, filename: 'theme_js.js')
     theme_collection.theme_assets << @theme_asset_other = FactoryGirl.build(:theme_asset, filename: 'Inconsolata.otf')
