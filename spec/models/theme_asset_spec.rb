@@ -17,55 +17,45 @@ describe ThemeAsset do
   before(:each) do
     @theme_collection = theme_collection
     theme_collection.theme_assets << @theme_asset_image = FactoryGirl.build(:theme_asset, filename: 'rails.png')
+    theme_collection.theme_assets << @theme_asset_css = FactoryGirl.build(:theme_asset, filename: 'theme_css.css')
+    theme_collection.theme_assets << @theme_asset_js = FactoryGirl.build(:theme_asset, filename: 'theme_js.js')
+    theme_collection.theme_assets << @theme_asset_other = FactoryGirl.build(:theme_asset, filename: 'Inconsolata.otf')
   end
-  
-  after(:each) do
-    remove_theme_assets
+
+  # -- Validations  -----------------------------------------------
+  describe "Validations" do
+    it "should be valid" do
+      @theme_asset_image.should be_valid
+    end    
+
+    it "should not be valid without a filename" do
+      @theme_asset_image.filename = nil
+      @theme_asset_image.should_not be_valid
+    end
+
+    it "should not be valide without a site_id" do
+      @theme_asset_image.site_id = nil
+      @theme_asset_image.should_not be_valid
+    end
   end
-  # --  Associations -----------------------------------------------
-   describe "associations" do
-     it "shouldbe embedded_in the article_collection" do
-       @theme_asset_css.should be_embedded_in(:article_collection)
-     end
 
-     it "should embed many custom_fields as custom_fieldable" do
-      @theme_asset_css.should embed_many(:custom_fields)
-     end
-   end
-   
-   # -- Validations  -----------------------------------------------
-   describe "Validations" do
-     it "should be valid" do
-       @theme_asset_image.should be_valid
-     end    
+  # -- associations ---
+  describe "associations" do
+    it "should belong to a theme_collection" do
+      @theme_asset_image.should belong_to(:theme_collection)
+    end
+  end
 
-      it "should not be valid without a filename" do
-        @theme_asset_image.filename = nil
-        @theme_asset_image.should_not be_valid
+  # -- instance methods --
+  describe "instance methods" do
+    describe "#asset" do
+      it "should return the asset" do
+        @theme_asset_image.asset.should be_kind_of(Sprockets::StaticAsset)
       end
+    end    
+  end
 
-      it "should not be valid without a content_type" do
-        @theme_asset_image.content_type = nil
-        @theme_asset_image.should_not be_valid
-      end
-
-      it "should not be valid without a pathname" do
-        @theme_asset_image.pathname = nil
-        @theme_asset_image.should_not be_valid
-      end
-
-      it "should not be valid without a logical_path" do
-        @theme_asset_image.logical_path = nil
-        @theme_asset_image.should_not be_valid
-      end
-
-      it "should not be valid without a digest_path" do
-        @theme_asset_image.digest_path = nil
-        @theme_asset_image.should_not be_valid
-      end
-   end
-     
-   # -- Scopes ------------------------------------------------------
+   # -- Scopes ---
    describe "scopes" do
      describe "css_files" do
        it "should return all the theme assets css files" do
@@ -110,43 +100,8 @@ describe ThemeAsset do
        it "should return all the other theme asset files" do
          other = theme_collection.theme_assets.other_files
          other.size.should == 1
-         other.last.should == @theme_asset_type
+         other.last.should == @theme_asset_other
        end
      end
-     
-     describe "find_by_name" do
-       it "should return the asset by name" do
-         theme_collection.theme_assets.find_by_name("css").first.should == @theme_asset_css
-       end
-     end
-   end 
-   
-   # -- Class Methods ------------------------
-   describe "Dynamic Scoped for content_type" do
-     it "should return all the theme assets css files" do
-       css_files = theme_collection.theme_assets.find_by_content_type_and_site_id(:content_type => "text/css", :site_id => site.id)
-       css_files.size.should == 1
-       css_files.first.should == @theme_asset_css
-     end
-
-     it "should return empty Criteria if it cannot find the domain" do
-       theme_collection.theme_assets.find(@theme_asset_css.id).delete
-       theme_collection.theme_assets.find_by_content_type_and_site_id(:content_type => "text/css", :site_id => site.id).should be_empty
-     end   
-
-     it "should return all the image files" do
-       theme_collection.theme_assets.images.count.should == 1
-     end
-   end
-   
-   # -- Instance Methods ----------
-   describe "Instance Methods" do
-     describe "#update_file_content" do
-       it "should return when true when saving the updated file content" do
-          @theme_asset_css.update_file_content("hello, world").should be_true
-       end
-     end
-
    end
 end
-
