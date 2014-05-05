@@ -25,7 +25,7 @@ class ThemeCollection
   def load_assets
     if self.persisted?
       self.theme_assets.delete_all
-      files = Dir.glob("#{Rails.root}/vendor/assets/*/#{self.name}/*")
+      files = Dir.glob(MoustacheCms::Application.config.theme_asset_path)
       files.each do |file|
         unless File.basename(file) =~ /^_.*/ || File.directory?(file) # don't load partials or sub directories
           filename = self.name + '/' + File.basename(file)

@@ -41,4 +41,7 @@ MoustacheCms::Application.configure do
   #config.active_record.auto_explain_threshold_in_seconds = 0.5
   #
   config.assets.paths += ["#{Rails.root}/spec/fixtures/assets"]
+
+  # path to read assets from
+  config.theme_asset_path  = "#{Rails.root}/spec/fixtures/assets/*"
 end
