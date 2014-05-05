@@ -76,9 +76,11 @@ module Create
     @theme_collection = FactoryGirl.create(:theme_collection, :name => props[:name], :site => @site)
   end
 
-  def create_theme_asset(props, theme_collection)
-    @theme_asset = FactoryGirl.build(:theme_asset, :name => props[:name]) 
-    theme_collection.theme_assets << @theme_asset
+  def create_theme_asset(filename, theme_collection_name)
+    @theme_collection = ThemeCollection.where(name: theme_collection_name).first
+    @theme_asset = FactoryGirl.build(:theme_asset, filename:  filename, site: @theme_collection.site, theme_collection: @theme_collection) 
+    @theme_collection.theme_assets << @theme_asset
+    @theme_collection.save
   end
 end
 

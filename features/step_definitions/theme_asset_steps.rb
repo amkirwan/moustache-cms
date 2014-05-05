@@ -1,3 +1,12 @@
+Before('@theme_asset') do
+  FactoryGirl.duplicate_attribute_assignment_from_initialize_with = false
+end
+
+After('@theme_asset') do
+  AssetFixtureHelper.reset!
+  FactoryGirl.duplicate_attribute_assignment_from_initialize_with = true
+end
+
 def theme_collection(name)
   tc = ThemeCollection.where(:name => name).first
 end
@@ -19,10 +28,8 @@ When /^I change the theme collection name "([^"]*)" to "([^"]*)"$/ do |old_name,
   click_button 'Update Theme Collection'
 end
 
-When /^I create a theme asset named "([^"]*)"$/ do |filename|
-  click_link 'Add Some Theme Assets to the theme Blog'
-  attach_file 'Asset Source*', File.join(Rails.root, 'spec', 'fixtures', 'assets', filename) 
-  click_button 'Save Theme Asset'
+Given /^a theme asset named "(.*?)" exists in the collection "(.*?)"$/ do |filename, theme_collection_name|
+  create_theme_asset(filename, theme_collection_name)
 end
 
 When /^I edit the theme collection "([^"]*)" and delete it$/ do |name|
