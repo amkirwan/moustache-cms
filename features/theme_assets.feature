@@ -28,8 +28,24 @@ Background: Login to site and create theme assets
     And I should see the flash message "Successfully deleted the asset collection blog"
 
   # Theme Assets
-  @show_theme_asset_image @theme_asset 
+  @show_theme_asset_image @theme_asset @image_asset
   Scenario: Create a image asset in the collection blog
     Given I view the theme collection "blog"
-    Then "columbo" should be listed within the image assets
-    Then "rails" should be listed within the image assets
+    Then "columbo.png" should be listed within the image assets
+    Then "rails.png" should be listed within the image assets
+
+  @show_theme_asset_css @theme_asset @css_asset
+  Scenario: Create a image asset in the collection blog
+    Given I view the theme collection "blog"
+    Then "theme_css.css" should be listed within the css assets
+
+  @show_theme_asset_js @theme_asset @js_asset
+  Scenario: Create a image asset in the collection blog
+    Given I view the theme collection "blog"
+    Then "theme_js.js" should be listed within the javascript assets
+    Then "jquery-1.7.2.min.js" should be listed within the javascript assets
+
+  @show_theme_asset_other @theme_asset @other_asset
+  Scenario: Create a image asset in the collection blog
+    Given I view the theme collection "blog"
+    Then "hello.pdf" should be listed within the other assets

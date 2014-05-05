@@ -28,10 +28,6 @@ When /^I change the theme collection name "([^"]*)" to "([^"]*)"$/ do |old_name,
   click_button 'Update Theme Collection'
 end
 
-Given /^a theme asset named "(.*?)" exists in the collection "(.*?)"$/ do |filename, theme_collection_name|
-  create_theme_asset(filename, theme_collection_name)
-end
-
 When /^I edit the theme collection "([^"]*)" and delete it$/ do |name|
   delete_within_item name, 'Delete Collection'
 end
@@ -93,7 +89,7 @@ end
 
 Then /^"([^"]*)" should be listed within the other assets$/ do |asset_name|
   tc = ThemeCollection.where(:name => 'blog').first
-  within '.theme_asset_other' do
+  within '.theme_asset_other_files' do
     step %{I should see "#{asset_name}" in the theme assets list} 
   end
 end
