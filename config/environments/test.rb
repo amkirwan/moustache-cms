@@ -43,5 +43,5 @@ MoustacheCms::Application.configure do
   config.assets.paths += ["#{Rails.root}/spec/fixtures/assets"]
 
   # path to read assets from
-  config.theme_asset_path  = "#{Rails.root}/spec/fixtures/assets/*"
+  config.theme_asset_path  = { blog: "#{Rails.root}/spec/fixtures/assets/*" }
 end

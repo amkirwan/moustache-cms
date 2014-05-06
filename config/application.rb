@@ -73,9 +73,6 @@ module MoustacheCms
       end
     end
 
-  # path to read assets from
-    config.theme_asset_path = "#{Rails.root}/vendor/assets/*/#{self.name}/*"
-
     # compile theme assets
     # config.theme_css = "**/moustache.css"
     # config.assets.precompile += [MoustacheCms::Application.config.theme_css]
