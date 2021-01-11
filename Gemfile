@@ -23,7 +23,7 @@ gem "cancan", ">= 1.6" # must come after mongoid in Gemfile
 
 gem "mustache", ">= 0.99"
 gem "RedCloth", "~> 4.2"
-gem "redcarpet", "~> 2.0"
+gem "redcarpet", "~> 3.5"
 gem "mime-types"
 gem "kaminari"
 # gem "rakismet" #uncomment to spam filter comments on articles
